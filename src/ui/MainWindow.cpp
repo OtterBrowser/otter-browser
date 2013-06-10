@@ -2,6 +2,9 @@
 
 #include "ui_MainWindow.h"
 
+namespace Qoper
+{
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     m_ui(new Ui::MainWindow)
 {
@@ -26,4 +29,6 @@ void MainWindow::changeEvent(QEvent *event)
         default:
             break;
     }
+}
+
 }

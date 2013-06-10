@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef QOPER_MAINWINDOW_H
+#define QOPER_MAINWINDOW_H
 
 #include <QMainWindow>
 
@@ -7,6 +7,9 @@ namespace Ui
 {
     class MainWindow;
 }
+
+namespace Qoper
+{
 
 class MainWindow : public QMainWindow
 {
@@ -22,5 +25,7 @@ protected:
 private:
     Ui::MainWindow *m_ui;
 };
+
+}
 
 #endif

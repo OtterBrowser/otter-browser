@@ -1,11 +1,11 @@
-#include "windows/MainWindow.h"
+#include "ui/MainWindow.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
-    MainWindow window;
+    Qoper::MainWindow window;
     window.show();
 
     return application.exec();
