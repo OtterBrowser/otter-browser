@@ -12,8 +12,11 @@ TARGET = qoper
 TEMPLATE = app
 
 SOURCES += src/main.cpp\
-    src/ui/MainWindow.cpp
+    src/ui/MainWindow.cpp \
+    src/ui/PreferencesDialog.cpp
 
-HEADERS += src/ui/MainWindow.h
+HEADERS += src/ui/MainWindow.h \
+    src/ui/PreferencesDialog.h
 
-FORMS += src/ui/MainWindow.ui
+FORMS += src/ui/MainWindow.ui \
+    src/ui/PreferencesDialog.ui
