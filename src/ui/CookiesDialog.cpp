@@ -1,22 +1,22 @@
-#include "CokiesDialog.h"
+#include "CookiesDialog.h"
 
-#include "ui_CokiesDialog.h"
+#include "ui_CookiesDialog.h"
 
 namespace Qoper
 {
 
-CokiesDialog::CokiesDialog(QWidget *parent) : QDialog(parent),
-    m_ui(new Ui::CokiesDialog)
+CookiesDialog::CookiesDialog(QWidget *parent) : QDialog(parent),
+    m_ui(new Ui::CookiesDialog)
 {
     m_ui->setupUi(this);
 }
 
-CokiesDialog::~CokiesDialog()
+CookiesDialog::~CookiesDialog()
 {
     delete m_ui;
 }
 
-void CokiesDialog::changeEvent(QEvent *event)
+void CookiesDialog::changeEvent(QEvent *event)
 {
     QDialog::changeEvent(event);
 
