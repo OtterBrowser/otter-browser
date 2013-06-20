@@ -13,10 +13,13 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp\
     src/ui/MainWindow.cpp \
-    src/ui/PreferencesDialog.cpp
+    src/ui/PreferencesDialog.cpp \
+    src/ui/CokiesDialog.cpp
 
 HEADERS += src/ui/MainWindow.h \
-    src/ui/PreferencesDialog.h
+    src/ui/PreferencesDialog.h \
+    src/ui/CokiesDialog.h
 
 FORMS += src/ui/MainWindow.ui \
-    src/ui/PreferencesDialog.ui
+    src/ui/PreferencesDialog.ui \
+    src/ui/CokiesDialog.ui
