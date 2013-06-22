@@ -103,11 +103,17 @@
     <property name="title">
      <string>Bookmarks</string>
     </property>
+    <addaction name="actionAddBookmark"/>
+    <addaction name="actionManageBookmarks"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuFeeds">
     <property name="title">
      <string>Feeds</string>
     </property>
+    <addaction name="actionReadFeeds"/>
+    <addaction name="actionManageFeeds"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -270,6 +276,26 @@
   <action name="actionFind_Next">
    <property name="text">
     <string>Find Next</string>
+   </property>
+  </action>
+  <action name="actionAddBookmark">
+   <property name="text">
+    <string>Add Bookmark....</string>
+   </property>
+  </action>
+  <action name="actionManageBookmarks">
+   <property name="text">
+    <string>Manage Bookmarks...</string>
+   </property>
+  </action>
+  <action name="actionReadFeeds">
+   <property name="text">
+    <string>Read Feeds</string>
+   </property>
+  </action>
+  <action name="actionManageFeeds">
+   <property name="text">
+    <string>Manage Feeds...</string>
    </property>
   </action>
  </widget>
