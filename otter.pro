@@ -6,7 +6,7 @@
 
 QT += core gui widgets webkitwidgets
 
-TARGET = qoper
+TARGET = otter
 TEMPLATE = app
 
 SOURCES += src/main.cpp\

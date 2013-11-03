@@ -1,7 +1,7 @@
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
 
-namespace Qoper
+namespace Otter
 {
 
 PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent),

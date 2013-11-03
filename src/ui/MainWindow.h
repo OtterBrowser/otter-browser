@@ -3,13 +3,13 @@
 
 #include <QMainWindow>
 
+namespace Otter
+{
+
 namespace Ui
 {
     class MainWindow;
 }
-
-namespace Qoper
-{
 
 class MainWindow : public QMainWindow
 {

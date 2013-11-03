@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>840</width>
-    <height>771</height>
-   </rect>
-  </property>
+ <class>Otter::MainWindow</class>
+ <widget class="QMainWindow" name="Otter::MainWindow">
   <property name="windowTitle">
-   <string>Qoper</string>
+   <string>Otter</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -30,8 +22,8 @@
          </layout>
         </item>
         <item>
-         <widget class="QWebView" name="webView">
-          <property name="url">
+         <widget class="QWebView" name="webView" native="true">
+          <property name="url" stdset="0">
            <url>
             <string>about:blank</string>
            </url>
@@ -49,7 +41,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>840</width>
+     <width>651</width>
      <height>24</height>
     </rect>
    </property>

@@ -2,7 +2,7 @@
 
 #include "ui_MainWindow.h"
 
-namespace Qoper
+namespace Otter
 {
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),

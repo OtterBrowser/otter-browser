@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Qoper::PreferencesDialog</class>
- <widget class="QDialog" name="Qoper::PreferencesDialog">
+ <class>Otter::PreferencesDialog</class>
+ <widget class="QDialog" name="Otter::PreferencesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Qoper::PreferencesDialog</receiver>
+   <receiver>Otter::PreferencesDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -51,7 +51,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Qoper::PreferencesDialog</receiver>
+   <receiver>Otter::PreferencesDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

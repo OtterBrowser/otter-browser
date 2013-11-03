@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-namespace Qoper
+namespace Otter
 {
 
 namespace Ui

@@ -2,7 +2,7 @@
 
 #include "ui_CookiesDialog.h"
 
-namespace Qoper
+namespace Otter
 {
 
 CookiesDialog::CookiesDialog(QWidget *parent) : QDialog(parent),
