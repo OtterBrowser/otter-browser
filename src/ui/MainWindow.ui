@@ -2,46 +2,29 @@
 <ui version="4.0">
  <class>Otter::MainWindow</class>
  <widget class="QMainWindow" name="Otter::MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>867</width>
+    <height>771</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Otter</string>
   </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AnimatedDocks</set>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Tab 1</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLineEdit" name="lineEdit"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QWebView" name="webView" native="true">
-          <property name="url" stdset="0">
-           <url>
-            <string>about:blank</string>
-           </url>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>651</width>
+     <width>867</width>
      <height>24</height>
     </rect>
    </property>
@@ -134,25 +117,23 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget">
+  <widget class="QDockWidget" name="panelWidget">
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents"/>
+   <widget class="QWidget" name="panelWidgetContents"/>
+  </widget>
+  <widget class="QDockWidget" name="tabsWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="tabsWidgetContents"/>
   </widget>
   <action name="actionNewTab">
    <property name="text">
@@ -292,13 +273,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
