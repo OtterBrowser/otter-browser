@@ -8,22 +8,23 @@ namespace Otter
 
 namespace Ui
 {
-    class MainWindow;
+	class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = NULL);
-    ~MainWindow();
+	explicit MainWindow(QWidget *parent = NULL);
+	~MainWindow();
 
 protected:
-    void changeEvent(QEvent *event);
+	void closeEvent(QCloseEvent *event);
+	void changeEvent(QEvent *event);
 
 private:
-    Ui::MainWindow *m_ui;
+	Ui::MainWindow *m_ui;
 };
 
 }
