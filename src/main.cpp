@@ -1,12 +1,17 @@
 #include "ui/MainWindow.h"
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
-    QApplication application(argc, argv);
-    Otter::MainWindow window;
-    window.show();
+	QApplication application(argc, argv);
+	application.setApplicationName("Otter");
+	application.setApplicationVersion("0.0.01");
+	application.setOrganizationName("eSoftware");
+	application.setOrganizationDomain("otter.emdek.pl");
 
-    return application.exec();
+	Otter::MainWindow window;
+	window.show();
+
+	return application.exec();
 }
