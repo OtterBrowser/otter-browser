@@ -109,21 +109,18 @@ void Application::newConnection()
 	QTextStream stream(socket);
 	stream >> url;
 
-	if (!url.isEmpty())
+	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool())
 	{
-		if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool())
-		{
-			window = newWindow();
-		}
-		else
-		{
-			window = getWindow();
-		}
+		window = newWindow();
+	}
+	else
+	{
+		window = getWindow();
+	}
 
-		if (window)
-		{
-			window->openUrl(QUrl(url));
-		}
+	if (window)
+	{
+		window->openUrl(QUrl(url));
 	}
 
 	delete socket;

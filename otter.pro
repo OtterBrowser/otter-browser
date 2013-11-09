@@ -15,14 +15,16 @@ SOURCES += src/main.cpp\
     src/ui/PreferencesDialog.cpp \
     src/ui/TabWidget.cpp \
     src/core/SettingsManager.cpp \
-    src/core/Application.cpp
+    src/core/Application.cpp \
+    src/ui/TabBarWidget.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
     src/ui/PreferencesDialog.h \
     src/ui/TabWidget.h \
     src/core/SettingsManager.h \
-    src/core/Application.h
+    src/core/Application.h \
+    src/ui/TabBarWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

@@ -1,5 +1,5 @@
-#ifndef SETTINGSMANAGER_H
-#define SETTINGSMANAGER_H
+#ifndef OTTER_SETTINGSMANAGER_H
+#define OTTER_SETTINGSMANAGER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QHash>
