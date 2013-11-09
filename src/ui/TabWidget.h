@@ -5,8 +5,9 @@
 
 namespace Otter {
 
-namespace Ui {
-class TabWidget;
+namespace Ui
+{
+	class TabWidget;
 }
 
 class TabWidget : public QWidget
@@ -18,12 +19,12 @@ public:
 	~TabWidget();
 
 protected:
-	void changeEvent(QEvent *e);
+	void changeEvent(QEvent *event);
 
 private:
-	Ui::TabWidget *ui;
+	Ui::TabWidget *m_ui;
 };
 
+}
 
-} // namespace Otter
-#endif // OTTER_TABWIDGET_H
+#endif

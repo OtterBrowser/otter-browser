@@ -19,6 +19,9 @@ public:
 	explicit MainWindow(QWidget *parent = NULL);
 	~MainWindow();
 
+public slots:
+	void openUrl(const QUrl &url);
+
 protected:
 	void closeEvent(QCloseEvent *event);
 	void changeEvent(QEvent *event);

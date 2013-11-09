@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 {
 	m_ui->setupUi(this);
 
-	SettingsManager::createInstance(this);
-
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
@@ -23,6 +21,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 MainWindow::~MainWindow()
 {
 	delete m_ui;
+}
+
+void MainWindow::openUrl(const QUrl &url)
+{
+	Q_UNUSED(url)
+
+///TODO
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

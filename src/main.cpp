@@ -1,28 +1,15 @@
-#include "ui/MainWindow.h"
-
-#include <QtCore/QLocale>
-#include <QtCore/QTranslator>
-#include <QtCore/QLibraryInfo>
-#include <QtWidgets/QApplication>
+#include "core/Application.h"
 
 int main(int argc, char *argv[])
 {
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	Otter::Application application(argc, argv);
 
-	QTranslator applicationTranslator;
-	applicationTranslator.load(":/translations/otter_" + QLocale::system().name());
+	if (application.isRunning())
+	{
+		return 0;
+	}
 
-	QApplication application(argc, argv);
-	application.setApplicationName("Otter");
-	application.setApplicationVersion("0.0.01");
-	application.setOrganizationName("eSoftware");
-	application.setOrganizationDomain("otter.emdek.pl");
-	application.installTranslator(&qtTranslator);
-	application.installTranslator(&applicationTranslator);
-
-	Otter::MainWindow window;
-	window.show();
+	application.newWindow();
 
 	return application.exec();
 }

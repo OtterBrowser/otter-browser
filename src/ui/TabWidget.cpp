@@ -1,30 +1,33 @@
 #include "TabWidget.h"
 #include "ui_TabWidget.h"
 
-namespace Otter {
-
-TabWidget::TabWidget(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::TabWidget)
+namespace Otter
 {
-	ui->setupUi(this);
+
+TabWidget::TabWidget(QWidget *parent) : QWidget(parent),
+	m_ui(new Ui::TabWidget)
+{
+	m_ui->setupUi(this);
 }
 
 TabWidget::~TabWidget()
 {
-	delete ui;
+	delete m_ui;
 }
 
-void TabWidget::changeEvent(QEvent *e)
+void TabWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(e);
-	switch (e->type()) {
+	QWidget::changeEvent(event);
+
+	switch (event->type())
+	{
 	case QEvent::LanguageChange:
-		ui->retranslateUi(this);
-		break;
-	default:
-		break;
+			m_ui->retranslateUi(this);
+
+			break;
+		default:
+			break;
 	}
 }
 
-} // namespace Otter
+}

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui widgets webkitwidgets
+QT += core network gui widgets webkitwidgets
 
 TARGET = otter
 TEMPLATE = app
@@ -14,13 +14,15 @@ SOURCES += src/main.cpp\
     src/ui/CookiesDialog.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/TabWidget.cpp \
-    src/core/SettingsManager.cpp
+    src/core/SettingsManager.cpp \
+    src/core/Application.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
     src/ui/PreferencesDialog.h \
     src/ui/TabWidget.h \
-    src/core/SettingsManager.h
+    src/core/SettingsManager.h \
+    src/core/Application.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
