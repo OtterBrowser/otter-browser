@@ -9,6 +9,9 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1)
 {
+	setTabsClosable(true);
+
+	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 }
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -37,7 +40,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	if (tabAt(event->pos()) < 0)
 	{
-		emit requestOpen();
+		emit requestedOpen();
 	}
 }
 
@@ -49,7 +52,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		if (tab >= 0)
 		{
-			emit requestClose(tab);
+			emit requestedClose(tab);
 		}
 	}
 }
@@ -58,7 +61,7 @@ void TabBarWidget::closeCurrent()
 {
 	if (m_clickedTab >= 0)
 	{
-		emit requestClose(m_clickedTab);
+		emit requestedClose(m_clickedTab);
 	}
 }
 
@@ -66,7 +69,7 @@ void TabBarWidget::closeOther()
 {
 	if (m_clickedTab >= 0)
 	{
-		emit requestCloseOther(m_clickedTab);
+		emit requestedCloseOther(m_clickedTab);
 	}
 }
 

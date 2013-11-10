@@ -1,29 +1,29 @@
-#ifndef QOPER_COOKIESDIALOG_H
-#define QOPER_COOKIESDIALOG_H
+#ifndef OTTER_COOKIESDIALOG_H
+#define OTTER_COOKIESDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
 namespace Ui
 {
-    class CookiesDialog;
+class CookiesDialog;
 }
 
 class CookiesDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit CookiesDialog(QWidget *parent = NULL);
-    ~CookiesDialog();
+	explicit CookiesDialog(QWidget *parent = NULL);
+	~CookiesDialog();
 
 protected:
-    void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event);
 
 private:
-    Ui::CookiesDialog *m_ui;
+	Ui::CookiesDialog *m_ui;
 };
 
 }

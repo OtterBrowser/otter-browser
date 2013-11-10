@@ -1,7 +1,7 @@
-#ifndef QOPER_MAINWINDOW_H
-#define QOPER_MAINWINDOW_H
+#ifndef OTTER_MAINWINDOW_H
+#define OTTER_MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QtWidgets/QMainWindow>
 
 namespace Otter
 {
@@ -10,6 +10,8 @@ namespace Ui
 {
 	class MainWindow;
 }
+
+class WindowsManager;
 
 class MainWindow : public QMainWindow
 {
@@ -27,6 +29,7 @@ protected:
 	void changeEvent(QEvent *event);
 
 private:
+	WindowsManager *m_windowsManager;
 	Ui::MainWindow *m_ui;
 };
 

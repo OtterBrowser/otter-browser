@@ -1,29 +1,29 @@
-#ifndef QOPER_PREFERENCESDIALOG_H
-#define QOPER_PREFERENCESDIALOG_H
+#ifndef OTTER_PREFERENCESDIALOG_H
+#define OTTER_PREFERENCESDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
 namespace Ui
 {
-    class PreferencesDialog;
+	class PreferencesDialog;
 }
 
 class PreferencesDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget *parent = NULL);
-    ~PreferencesDialog();
+	explicit PreferencesDialog(QWidget *parent = NULL);
+	~PreferencesDialog();
 
 protected:
-    void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event);
 
 private:
-    Ui::PreferencesDialog *m_ui;
+	Ui::PreferencesDialog *m_ui;
 };
 
 }

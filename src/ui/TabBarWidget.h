@@ -26,9 +26,9 @@ private:
 	int m_clickedTab;
 
 signals:
-	void requestOpen();
-	void requestClose(int tab);
-	void requestCloseOther(int tab);
+	void requestedOpen();
+	void requestedClose(int tab);
+	void requestedCloseOther(int tab);
 };
 
 }

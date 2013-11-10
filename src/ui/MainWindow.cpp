@@ -1,17 +1,28 @@
 #include "MainWindow.h"
+#include "TabBarWidget.h"
 #include "../core/SettingsManager.h"
+#include "../core/WindowsManager.h"
 
 #include "ui_MainWindow.h"
 
 #include <QtGui/QCloseEvent>
+#include <QtWidgets/QMdiSubWindow>
 
 namespace Otter
 {
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+	m_windowsManager(NULL),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
+
+	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
+
+	m_ui->tabsWidgetContents->layout()->addWidget(tabBar);
+	m_ui->tabsWidget->setTitleBarWidget(NULL);
+
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar);
 
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
@@ -25,9 +36,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::openUrl(const QUrl &url)
 {
-	Q_UNUSED(url)
-
-///TODO
+	m_windowsManager->open(url);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
