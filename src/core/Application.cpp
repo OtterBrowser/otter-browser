@@ -8,6 +8,7 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QUrl>
 #include <QtNetwork/QLocalSocket>
+#include <QtWebKit/QWebSettings>
 
 namespace Otter
 {
@@ -44,9 +45,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		return;
 	}
 
-	SettingsManager::createInstance(this);
-	SettingsManager::setDefaultValue("General/OpenLinksInNewWindow", false);
-
 	m_localServer = new QLocalServer(this);
 
 	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
@@ -60,6 +58,19 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 			m_localServer->listen(applicationName());
 		}
 	}
+
+	SettingsManager::createInstance(this);
+	SettingsManager::setDefaultValue("General/OpenLinksInNewWindow", false);
+	SettingsManager::setDefaultValue("General/EnablePlugins", true);
+	SettingsManager::setDefaultValue("General/EnableJava", true);
+	SettingsManager::setDefaultValue("General/EnableJavaScript", true);
+
+	QWebSettings *globalSettings = QWebSettings::globalSettings();
+	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("General/EnablePlugins").toBool());
+	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("General/EnableJava").toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("General/EnableJavaScript").toBool());
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
