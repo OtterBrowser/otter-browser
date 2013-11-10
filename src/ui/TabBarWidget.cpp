@@ -10,6 +10,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1)
 {
 	setTabsClosable(true);
+	setExpanding(false);
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 }

@@ -144,10 +144,10 @@ void WindowsManager::closeWindow(int index)
 		return;
 	}
 
-	m_tabBar->removeTab(index);
-
 	m_windows.at(index)->deleteLater();
 	m_windows.removeAt(index);
+
+	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
 
