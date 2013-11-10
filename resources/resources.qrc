@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/application-exit.png</file>
+        <file>icons/arrow-down.png</file>
+        <file>icons/arrow-left.png</file>
+        <file>icons/arrow-right.png</file>
+        <file>icons/arrow-up.png</file>
+        <file>icons/configure-shortcuts.png</file>
+        <file>icons/configure-toolbars.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/document-new.png</file>
+        <file>icons/document-open.png</file>
+        <file>icons/document-print-preview.png</file>
+        <file>icons/document-print.png</file>
+        <file>icons/document-save.png</file>
+        <file>icons/edit-copy.png</file>
+        <file>icons/edit-cut.png</file>
+        <file>icons/edit-delete.png</file>
+        <file>icons/edit-find.png</file>
+        <file>icons/edit-paste.png</file>
+        <file>icons/edit-redo.png</file>
+        <file>icons/edit-select-all.png</file>
+        <file>icons/edit-undo.png</file>
+        <file>icons/go-down.png</file>
+        <file>icons/go-next.png</file>
+        <file>icons/go-previous.png</file>
+        <file>icons/go-up.png</file>
+        <file>icons/help-contents.png</file>
+        <file>icons/qt.png</file>
+        <file>icons/tab-close-other.png</file>
+        <file>icons/tab-close.png</file>
+        <file>icons/tab-new.png</file>
+        <file>icons/view-history.png</file>
+        <file>icons/window-close.png</file>
+        <file>icons/zoom-in.png</file>
+        <file>icons/zoom-original.png</file>
+        <file>icons/zoom-out.png</file>
+    </qresource>
+</RCC>

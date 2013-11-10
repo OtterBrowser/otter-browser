@@ -33,7 +33,31 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="panelWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="panelWidgetContents"/>
+  </widget>
+  <widget class="QDockWidget" name="tabsWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="tabsWidgetContents">
+    <layout class="QVBoxLayout" name="tabsLayout"/>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -96,14 +120,6 @@
     <addaction name="actionManageBookmarks"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuFeeds">
-    <property name="title">
-     <string>Feeds</string>
-    </property>
-    <addaction name="actionReadFeeds"/>
-    <addaction name="actionManageFeeds"/>
-    <addaction name="separator"/>
-   </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
      <string>Tools</string>
@@ -118,30 +134,8 @@
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuBookmarks"/>
-   <addaction name="menuFeeds"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="panelWidget">
-   <property name="features">
-    <set>QDockWidget::DockWidgetMovable</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="panelWidgetContents"/>
-  </widget>
-  <widget class="QDockWidget" name="tabsWidget">
-   <property name="features">
-    <set>QDockWidget::DockWidgetMovable</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>4</number>
-   </attribute>
-   <widget class="QWidget" name="tabsWidgetContents">
-    <layout class="QVBoxLayout" name="tabsLayout"/>
-   </widget>
   </widget>
   <action name="actionNewTab">
    <property name="text">

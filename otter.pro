@@ -32,3 +32,6 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/Window.ui
+
+RESOURCES += \
+    resources/resources.qrc
