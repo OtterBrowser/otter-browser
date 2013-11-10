@@ -323,7 +323,7 @@ void WindowsManager::setTitle(const QString &title) const
 
 void WindowsManager::setIcon(const QIcon &icon) const
 {
-	m_tabBar->setTabIcon(m_windows.indexOf(qobject_cast<Window*>(sender())), icon);
+	m_tabBar->setTabIcon(m_windows.indexOf(qobject_cast<Window*>(sender())), (icon.isNull() ? QIcon(":/icons/tab.png") : icon));
 }
 
 Window* WindowsManager::getWindow(int index) const

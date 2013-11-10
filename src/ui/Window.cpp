@@ -136,7 +136,9 @@ QUrl Window::getUrl() const
 
 QIcon Window::getIcon() const
 {
-	return m_ui->webView->icon();
+	const QIcon icon = m_ui->webView->icon();
+
+	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
 
 int Window::getZoom() const

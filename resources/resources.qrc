@@ -35,5 +35,6 @@
         <file>icons/zoom-in.png</file>
         <file>icons/zoom-original.png</file>
         <file>icons/zoom-out.png</file>
+        <file>icons/tab.png</file>
     </qresource>
 </RCC>
