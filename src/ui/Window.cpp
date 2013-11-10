@@ -92,7 +92,17 @@ void Window::setZoom(int zoom)
 
 void Window::setUrl(const QUrl &url)
 {
-	m_ui->webView->setUrl(url);
+	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
+	{
+		QUrl httpUrl = url;
+		httpUrl.setScheme("http");
+
+		m_ui->webView->setUrl(httpUrl);
+	}
+	else
+	{
+		m_ui->webView->setUrl(url);
+	}
 }
 
 void Window::loadUrl()
