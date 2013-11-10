@@ -318,7 +318,7 @@ void WindowsManager::setCurrentWindow(int index)
 
 void WindowsManager::setTitle(const QString &title) const
 {
-	m_tabBar->setTabText(m_windows.indexOf(qobject_cast<Window*>(sender())), title);
+	m_tabBar->setTabText(m_windows.indexOf(qobject_cast<Window*>(sender())), (title.isEmpty() ? tr("Empty") : title));
 }
 
 void WindowsManager::setIcon(const QIcon &icon) const

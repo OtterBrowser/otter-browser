@@ -124,7 +124,9 @@ QUndoStack *Window::getUndoStack()
 
 QString Window::getTitle() const
 {
-	return m_ui->webView->title();
+	const QString title = m_ui->webView->title();
+
+	return (title.isEmpty() ? tr("New Tab") : title);
 }
 
 QUrl Window::getUrl() const

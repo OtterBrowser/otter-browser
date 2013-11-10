@@ -19,7 +19,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	m_clickedTab = tabAt(event->pos());
 
 	QMenu menu(this);
-	menu.addAction(QIcon(":/icons/tab-new.png"), tr("New Tab"), this, SIGNAL(requestOpen()));
+	menu.addAction(QIcon(":/icons/tab-new.png"), tr("New Tab"), this, SIGNAL(requestedOpen()));
 
 	if (m_clickedTab >= 0)
 	{
