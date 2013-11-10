@@ -2,9 +2,11 @@
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QLocale>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
 #include <QtCore/QUrl>
 #include <QtNetwork/QLocalSocket>
@@ -59,6 +61,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
+	const QString iconsPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/icons";
+
+	QDir().mkpath(iconsPath);
+
 	SettingsManager::createInstance(this);
 	SettingsManager::setDefaultValue("General/OpenLinksInNewWindow", false);
 	SettingsManager::setDefaultValue("General/EnablePlugins", true);
@@ -71,6 +77,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("General/EnablePlugins").toBool());
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("General/EnableJava").toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("General/EnableJavaScript").toBool());
+	globalSettings->setIconDatabasePath(iconsPath);
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
