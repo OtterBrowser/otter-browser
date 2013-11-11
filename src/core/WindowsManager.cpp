@@ -8,6 +8,9 @@
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QMdiSubWindow>
 
+
+#include <QDebug>
+
 namespace Otter
 {
 
@@ -63,13 +66,20 @@ void WindowsManager::closeOther(int index)
 	{
 		index = getCurrentWindow();
 	}
-///TODO verify
-	for (int i = 0; i < m_windows.count(); ++i)
+
+	if (index >= m_windows.count())
 	{
-		if (i != index)
-		{
-			closeWindow(i);
-		}
+		return;
+	}
+
+	for (int i = (m_windows.count() - 1); i > index; --i)
+	{
+		closeWindow(i);
+	}
+
+	for (int i = 0; i < index; ++i)
+	{
+		closeWindow(0);
 	}
 }
 
@@ -144,17 +154,24 @@ void WindowsManager::closeWindow(int index)
 		return;
 	}
 
+	if (m_windows.count() == 1)
+	{
+		m_windows.at(0)->setUrl(QUrl("about:blank"));
+
+		return;
+	}
+
+	if (index < m_currentWindow)
+	{
+		--m_currentWindow;
+	}
+
 	m_windows.at(index)->deleteLater();
 	m_windows.removeAt(index);
 
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
-
-	if (m_windows.isEmpty())
-	{
-		open();
-	}
 }
 
 void WindowsManager::undo()
@@ -274,7 +291,7 @@ void WindowsManager::setCurrentWindow(int index)
 		index = 0;
 	}
 
-	Window *window = ((m_currentWindow >= 0) ? m_windows.at(m_currentWindow) : NULL);
+	Window *window = ((m_currentWindow >= 0 && m_currentWindow < m_windows.count()) ? m_windows.at(m_currentWindow) : NULL);
 
 	if (window)
 	{
