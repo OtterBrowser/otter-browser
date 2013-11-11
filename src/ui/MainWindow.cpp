@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
+
+	m_ui->panelWidget->hide();
 }
 
 MainWindow::~MainWindow()
