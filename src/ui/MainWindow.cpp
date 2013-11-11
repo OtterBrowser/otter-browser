@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "TabBarWidget.h"
+#include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/WindowsManager.h"
 
@@ -41,15 +42,6 @@ void MainWindow::openUrl(const QUrl &url)
 	m_windowsManager->open(url);
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-	SettingsManager::setValue("Window/size", size());
-	SettingsManager::setValue("Window/position", pos());
-	SettingsManager::setValue("Window/state", saveState());
-
-	event->accept();
-}
-
 void MainWindow::changeEvent(QEvent *event)
 {
 	QMainWindow::changeEvent(event);
@@ -63,6 +55,25 @@ void MainWindow::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	SettingsManager::setValue("Window/size", size());
+	SettingsManager::setValue("Window/position", pos());
+	SettingsManager::setValue("Window/state", saveState());
+
+	event->accept();
+}
+
+bool MainWindow::event(QEvent *event)
+{
+	if (event->type() == QEvent::WindowActivate)
+	{
+		ActionsManager::setActiveWindow(this);
+	}
+
+	return QMainWindow::event(event);
 }
 
 }

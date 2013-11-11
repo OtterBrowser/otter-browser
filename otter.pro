@@ -17,7 +17,8 @@ SOURCES += src/main.cpp\
     src/core/Application.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/Window.cpp \
-    src/core/WindowsManager.cpp
+    src/core/WindowsManager.cpp \
+    src/core/ActionsManager.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -26,7 +27,8 @@ HEADERS += src/ui/MainWindow.h \
     src/core/Application.h \
     src/ui/TabBarWidget.h \
     src/ui/Window.h \
-    src/core/WindowsManager.h
+    src/core/WindowsManager.h \
+    src/core/ActionsManager.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

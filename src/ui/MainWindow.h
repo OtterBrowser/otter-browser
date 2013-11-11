@@ -25,8 +25,9 @@ public slots:
 	void openUrl(const QUrl &url);
 
 protected:
-	void closeEvent(QCloseEvent *event);
 	void changeEvent(QEvent *event);
+	void closeEvent(QCloseEvent *event);
+	bool event(QEvent *event);
 
 private:
 	WindowsManager *m_windowsManager;

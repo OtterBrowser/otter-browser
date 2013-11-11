@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ActionsManager.h"
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -70,6 +71,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("General/EnablePlugins", true);
 	SettingsManager::setDefaultValue("General/EnableJava", true);
 	SettingsManager::setDefaultValue("General/EnableJavaScript", true);
+
+	ActionsManager::createInstance(this);
 
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
@@ -153,6 +156,8 @@ void Application::newConnection()
 MainWindow* Application::newWindow()
 {
 	MainWindow *window = new MainWindow();
+
+	ActionsManager::registerWindow(window);
 
 	m_windows.prepend(window);
 
