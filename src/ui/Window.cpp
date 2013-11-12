@@ -10,7 +10,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui->setupUi(this);
 
 	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
-	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SIGNAL(titleChanged(const QString)));
+	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_ui->webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 }
@@ -110,6 +110,11 @@ void Window::loadUrl()
 	setUrl(QUrl(m_ui->lineEdit->text()));
 }
 
+void Window::notifyTitleChanged()
+{
+	emit titleChanged(getTitle());
+}
+
 void Window::notifyUrlChanged(const QUrl &url)
 {
 	m_ui->lineEdit->setText(url.toString());
@@ -135,8 +140,9 @@ QUndoStack *Window::getUndoStack()
 QString Window::getTitle() const
 {
 	const QString title = m_ui->webView->title();
+	const QUrl url = m_ui->webView->url();
 
-	return (title.isEmpty() ? tr("New Tab") : title);
+	return (title.isEmpty() ? ((url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank")) ? tr("New Tab") : tr("Empty")) : title);
 }
 
 QUrl Window::getUrl() const

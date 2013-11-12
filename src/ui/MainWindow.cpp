@@ -28,8 +28,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
+	setWindowTitle(m_windowsManager->getTitle());
 
 	m_ui->panelWidget->hide();
+
+	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 }
 
 MainWindow::~MainWindow()

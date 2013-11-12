@@ -19,6 +19,7 @@ public:
 	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar);
 
 	Window* getWindow(int index = -1) const;
+	QString getTitle() const;
 	int getCurrentWindow() const;
 	int getZoom() const;
 	bool canUndo() const;
@@ -46,8 +47,8 @@ protected slots:
 	void printPreview(QPrinter *printer);
 	void closeWindow(int index);
 	void setCurrentWindow(int index);
-	void setTitle(const QString &title) const;
-	void setIcon(const QIcon &icon) const;
+	void setTitle(const QString &title);
+	void setIcon(const QIcon &icon);
 
 private:
 	QMdiArea *m_area;
@@ -60,6 +61,7 @@ signals:
 	void windowAdded(int index);
 	void windowRemoved(int index);
 	void currentWindowChanged(int index);
+	void windowTitleChanged(QString title);
 	void undoTextChanged(QString undoText);
 	void redoTextChanged(QString redoText);
 	void canUndoChanged(bool canUndo);

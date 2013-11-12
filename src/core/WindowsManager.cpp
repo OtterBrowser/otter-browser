@@ -319,6 +319,7 @@ void WindowsManager::setCurrentWindow(int index)
 			}
 		}
 
+		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
 		emit undoTextChanged(window->getUndoStack()->undoText());
 		emit redoTextChanged(window->getUndoStack()->redoText());
 		emit canUndoChanged(window->getUndoStack()->canUndo());
@@ -333,12 +334,20 @@ void WindowsManager::setCurrentWindow(int index)
 	emit currentWindowChanged(index);
 }
 
-void WindowsManager::setTitle(const QString &title) const
+void WindowsManager::setTitle(const QString &title)
 {
-	m_tabBar->setTabText(m_windows.indexOf(qobject_cast<Window*>(sender())), (title.isEmpty() ? tr("Empty") : title));
+	const QString text = (title.isEmpty() ? tr("Empty") : title);
+	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+
+	m_tabBar->setTabText(index, text);
+
+	if (index == getCurrentWindow())
+	{
+		emit windowTitleChanged(QString("%1 - Otter").arg(text));
+	}
 }
 
-void WindowsManager::setIcon(const QIcon &icon) const
+void WindowsManager::setIcon(const QIcon &icon)
 {
 	m_tabBar->setTabIcon(m_windows.indexOf(qobject_cast<Window*>(sender())), (icon.isNull() ? QIcon(":/icons/tab.png") : icon));
 }
@@ -356,6 +365,13 @@ Window* WindowsManager::getWindow(int index) const
 	}
 
 	return m_windows.at(index);
+}
+
+QString WindowsManager::getTitle() const
+{
+	Window *window = m_windows.at(getCurrentWindow());
+
+	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
 }
 
 int WindowsManager::getCurrentWindow() const

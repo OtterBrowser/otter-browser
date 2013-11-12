@@ -41,6 +41,18 @@ public slots:
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 
+protected:
+	void changeEvent(QEvent *event);
+
+protected slots:
+	void loadUrl();
+	void notifyTitleChanged();
+	void notifyUrlChanged(const QUrl &url);
+	void notifyIconChanged();
+
+private:
+	Ui::Window *m_ui;
+
 signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
@@ -49,17 +61,6 @@ signals:
 	void redoTextChanged(const QString &redoText);
 	void canUndoChanged(bool canUndo);
 	void canRedoChanged(bool canRedo);
-
-protected:
-	void changeEvent(QEvent *event);
-
-protected slots:
-	void loadUrl();
-	void notifyUrlChanged(const QUrl &url);
-	void notifyIconChanged();
-
-private:
-	Ui::Window *m_ui;
 };
 
 }
