@@ -73,7 +73,7 @@
     <addaction name="actionNewPrivateWindow"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
-    <addaction name="actionSaveAs"/>
+    <addaction name="actionSave"/>
     <addaction name="actionCloseTab"/>
     <addaction name="separator"/>
     <addaction name="actionSessions"/>
@@ -108,8 +108,14 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionZoomOriginal"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Bookmarks</string>
     </property>
@@ -118,6 +124,9 @@
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuTools">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Tools</string>
     </property>
@@ -142,16 +151,25 @@
    </property>
   </action>
   <action name="actionNewPrivateTab">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New Private Tab</string>
    </property>
   </action>
   <action name="actionNewWindow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New Window</string>
    </property>
   </action>
   <action name="actionNewPrivateWindow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New Private Window</string>
    </property>
@@ -161,17 +179,26 @@
     <string>Open...</string>
    </property>
   </action>
-  <action name="actionSaveAs">
+  <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Save As...</string>
+    <string>Save...</string>
    </property>
   </action>
   <action name="actionSessions">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Sessions</string>
    </property>
   </action>
   <action name="actionImportAndExport">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Import and Export</string>
    </property>
@@ -190,6 +217,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Work Offline</string>
    </property>
@@ -197,6 +227,9 @@
   <action name="actionShowMenubar">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Show Menubar</string>
@@ -213,21 +246,33 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
   </action>
   <action name="actionRedo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
   </action>
   <action name="actionCut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
   </action>
   <action name="actionCopy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Copy</string>
    </property>
@@ -243,11 +288,17 @@
    </property>
   </action>
   <action name="actionFind">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Find...</string>
    </property>
   </action>
   <action name="actionFindNext">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Find Next</string>
    </property>
@@ -280,6 +331,21 @@
   <action name="actionAboutQt">
    <property name="text">
     <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+  </action>
+  <action name="actionZoomOriginal">
+   <property name="text">
+    <string>Zoom Original</string>
    </property>
   </action>
  </widget>

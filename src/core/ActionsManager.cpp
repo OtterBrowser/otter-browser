@@ -27,9 +27,9 @@ void ActionsManager::addWindow(QWidget *window)
 	if (!m_actions.contains(window))
 	{
 		m_actions[window] = QHash<QString, QAction*>();
-	}
 
-	connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(removeWindow(QObject*)));
+		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(removeWindow(QObject*)));
+	}
 }
 
 void ActionsManager::removeWindow(QObject *window)

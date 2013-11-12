@@ -71,6 +71,17 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("General/EnablePlugins", true);
 	SettingsManager::setDefaultValue("General/EnableJava", true);
 	SettingsManager::setDefaultValue("General/EnableJavaScript", true);
+	SettingsManager::setDefaultValue("Actions/NewTab", QVariant(QKeySequence(QKeySequence::New).toString()));
+	SettingsManager::setDefaultValue("Actions/Open", QVariant(QKeySequence(QKeySequence::Open).toString()));
+	SettingsManager::setDefaultValue("Actions/Save", QVariant(QKeySequence(QKeySequence::Save).toString()));
+	SettingsManager::setDefaultValue("Actions/Exit", QVariant(QKeySequence(QKeySequence::Quit).toString()));
+	SettingsManager::setDefaultValue("Actions/Undo", QVariant(QKeySequence(QKeySequence::Undo).toString()));
+	SettingsManager::setDefaultValue("Actions/Redo", QVariant(QKeySequence(QKeySequence::Redo).toString()));
+	SettingsManager::setDefaultValue("Actions/ZoomIn", QVariant(QKeySequence(QKeySequence::ZoomIn).toString()));
+	SettingsManager::setDefaultValue("Actions/ZoomOut", QVariant(QKeySequence(QKeySequence::ZoomOut).toString()));
+	SettingsManager::setDefaultValue("Actions/Help", QVariant(QKeySequence(QKeySequence::HelpContents).toString()));
+	SettingsManager::setDefaultValue("Actions/ApplicationConfiguration", QVariant(QKeySequence(QKeySequence::Preferences).toString()));
+	SettingsManager::setDefaultValue("Actions/Fullscreen", QVariant(QKeySequence("F11").toString()));
 
 	ActionsManager::createInstance(this);
 
@@ -156,8 +167,6 @@ void Application::newConnection()
 MainWindow* Application::newWindow()
 {
 	MainWindow *window = new MainWindow();
-
-	ActionsManager::registerWindow(window);
 
 	m_windows.prepend(window);
 
