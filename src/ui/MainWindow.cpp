@@ -35,9 +35,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	ActionsManager::registerActions(this, m_ui->menuHelp->actions());
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
-	m_ui->actionNewPrivateTab->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));
+	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));
 	m_ui->actionNewWindow->setIcon(QIcon::fromTheme("window-new", QIcon(":/icons/window-new.png")));
-	m_ui->actionNewPrivateWindow->setIcon(QIcon::fromTheme("window-new-private", QIcon(":/icons/window-new-private.png")));
+	m_ui->actionNewWindowPrivate->setIcon(QIcon::fromTheme("window-new-private", QIcon(":/icons/window-new-private.png")));
 	m_ui->actionOpen->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
 	m_ui->actionCloseTab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/icons/tab-close.png")));
 	m_ui->actionSave->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/document-save.png")));
@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
+	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
@@ -149,6 +150,11 @@ bool MainWindow::event(QEvent *event)
 	}
 
 	return QMainWindow::event(event);
+}
+
+void MainWindow::actionNewTabPrivate()
+{
+	m_windowsManager->open(QUrl(), true);
 }
 
 }

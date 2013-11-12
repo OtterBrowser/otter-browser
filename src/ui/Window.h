@@ -29,6 +29,7 @@ public:
 	virtual QIcon getIcon() const;
 	virtual int getZoom() const;
 	virtual bool isEmpty() const;
+	virtual bool isPrivate() const;
 
 public slots:
 	virtual void reload();
@@ -47,6 +48,7 @@ public slots:
 	virtual void zoomOriginal();
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
+	virtual void setPrivate(bool enabled);
 
 protected:
 	void changeEvent(QEvent *event);

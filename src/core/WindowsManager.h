@@ -16,7 +16,7 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar);
+	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privateSession = false);
 
 	Window* getWindow(int index = -1) const;
 	QString getTitle() const;
@@ -26,7 +26,7 @@ public:
 	bool canRedo() const;
 
 public slots:
-	void open(const QUrl &url = QUrl());
+	void open(const QUrl &url = QUrl(), bool privateWindow = false);
 	void close(int index = -1);
 	void closeOther(int index = -1);
 	void print(int index = -1);
@@ -60,6 +60,7 @@ private:
 	QList<Window*> m_windows;
 	int m_currentWindow;
 	int m_printedWindow;
+	bool m_privateSession;
 
 signals:
 	void windowAdded(int index);

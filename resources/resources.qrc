@@ -44,5 +44,6 @@
         <file>icons/process-stop.png</file>
         <file>icons/view-refresh.png</file>
         <file>icons/edit-clear-history.png</file>
+        <file>icons/tab-private.png</file>
     </qresource>
 </RCC>

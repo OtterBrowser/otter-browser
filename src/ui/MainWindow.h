@@ -30,6 +30,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
+	void actionNewTabPrivate();
 	void actionOpen();
 	void actionAboutApplication();
 

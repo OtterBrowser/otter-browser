@@ -136,6 +136,13 @@ void Window::setUrl(const QUrl &url)
 	notifyIconChanged();
 }
 
+void Window::setPrivate(bool enabled)
+{
+	m_ui->webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
+
+	notifyIconChanged();
+}
+
 void Window::loadUrl()
 {
 	setUrl(QUrl(m_ui->lineEdit->text()));
@@ -155,7 +162,7 @@ void Window::notifyUrlChanged(const QUrl &url)
 
 void Window::notifyIconChanged()
 {
-	emit iconChanged(m_ui->webView->icon());
+	emit iconChanged(getIcon());
 }
 
 QWidget *Window::getDocument()
@@ -182,6 +189,11 @@ QUrl Window::getUrl() const
 
 QIcon Window::getIcon() const
 {
+	if (isPrivate())
+	{
+		return QIcon(":/icons/tab-private.png");
+	}
+
 	const QIcon icon = m_ui->webView->icon();
 
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
@@ -197,6 +209,11 @@ bool Window::isEmpty() const
 	const QUrl url = m_ui->webView->url();
 
 	return (url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank"));
+}
+
+bool Window::isPrivate() const
+{
+	return m_ui->webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
 }

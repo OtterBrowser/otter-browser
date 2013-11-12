@@ -93,9 +93,9 @@
      </property>
     </widget>
     <addaction name="actionNewTab"/>
-    <addaction name="actionNewPrivateTab"/>
+    <addaction name="actionNewTabPrivate"/>
     <addaction name="actionNewWindow"/>
-    <addaction name="actionNewPrivateWindow"/>
+    <addaction name="actionNewWindowPrivate"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
@@ -212,10 +212,7 @@
     <string>New Tab</string>
    </property>
   </action>
-  <action name="actionNewPrivateTab">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <action name="actionNewTabPrivate">
    <property name="text">
     <string>New Private Tab</string>
    </property>
@@ -228,7 +225,7 @@
     <string>New Window</string>
    </property>
   </action>
-  <action name="actionNewPrivateWindow">
+  <action name="actionNewWindowPrivate">
    <property name="enabled">
     <bool>false</bool>
    </property>

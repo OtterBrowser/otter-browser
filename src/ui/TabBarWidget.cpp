@@ -23,6 +23,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction("NewTab"));
+	menu.addAction(ActionsManager::getAction("NewTabPrivate"));
 
 	if (m_clickedTab >= 0)
 	{

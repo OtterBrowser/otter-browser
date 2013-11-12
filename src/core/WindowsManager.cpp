@@ -12,11 +12,12 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(area),
+WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privateSession) : QObject(area),
 	m_area(area),
 	m_tabBar(tabBar),
 	m_currentWindow(-1),
-	m_printedWindow(-1)
+	m_printedWindow(-1),
+	m_privateSession(privateSession)
 {
 	QTimer::singleShot(250, this, SLOT(open()));
 
@@ -25,7 +26,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(a
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
 
-void WindowsManager::open(const QUrl &url)
+void WindowsManager::open(const QUrl &url, bool privateWindow)
 {
 	Window *window = NULL;
 
@@ -36,12 +37,14 @@ void WindowsManager::open(const QUrl &url)
 		if (window && window->isEmpty())
 		{
 			window->setUrl(url);
+			window->setPrivate(m_privateSession || privateWindow);
 
 			return;
 		}
 	}
 
 	window = new Window(m_area);
+	window->setPrivate(m_privateSession || privateWindow);
 
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
 	mdiWindow->showMaximized();
