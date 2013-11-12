@@ -1,4 +1,7 @@
 #include "core/Application.h"
+#include "ui/MainWindow.h"
+
+#include <QtCore/QUrl>
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +12,22 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	application.createWindow();
+	QCommandLineParser *parser = application.getParser();
+	parser->process(application);
+
+	Otter::MainWindow *window = application.createWindow();
+
+	if (window && !parser->positionalArguments().isEmpty())
+	{
+		QStringList urls = parser->positionalArguments();
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			window->openUrl(QUrl(urls.at(i)));
+		}
+	}
+
+	delete parser;
 
 	return application.exec();
 }

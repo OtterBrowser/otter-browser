@@ -3,6 +3,7 @@
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QLibraryInfo>
@@ -29,18 +30,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (socket.waitForConnected(500))
 	{
+		QByteArray byteArray;
+		QBuffer buffer(&byteArray);
+		QDataStream out(&buffer);
+		out << arguments();
+
 		QTextStream stream(&socket);
-		QStringList args = arguments();
-
-		if (args.count() > 1)
-		{
-			stream << args.last();
-		}
-		else
-		{
-			stream << QString();
-		}
-
+		stream << byteArray.toBase64();
 		stream.flush();
 
 		socket.waitForBytesWritten();
@@ -146,9 +142,17 @@ void Application::newConnection()
 	socket->waitForReadyRead(1000);
 
 	MainWindow *window = NULL;
-	QString url;
+	QString data;
+	QStringList arguments;
 	QTextStream stream(socket);
-	stream >> url;
+	stream >> data;
+
+	QByteArray byteArray = QByteArray::fromBase64(data.toUtf8());
+	QDataStream in(&byteArray, QIODevice::ReadOnly);
+	in >> arguments;
+
+	QCommandLineParser *parser = getParser();
+	parser->parse(arguments);
 
 	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool())
 	{
@@ -159,9 +163,14 @@ void Application::newConnection()
 		window = getWindow();
 	}
 
-	if (window)
+	if (window && !parser->positionalArguments().isEmpty())
 	{
-		window->openUrl(QUrl(url));
+		QStringList urls = parser->positionalArguments();
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			window->openUrl(QUrl(urls.at(i)));
+		}
 	}
 
 	delete socket;
@@ -171,6 +180,8 @@ void Application::newConnection()
 		window->raise();
 		window->activateWindow();
 	}
+
+	delete parser;
 }
 
 void Application::newWindow()
@@ -207,6 +218,16 @@ MainWindow *Application::getWindow()
 	}
 
 	return m_windows[0];
+}
+
+QCommandLineParser* Application::getParser() const
+{
+	QCommandLineParser *parser = new QCommandLineParser();
+	parser->addHelpOption();
+	parser->addVersionOption();
+	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
+
+	return parser;
 }
 
 bool Application::isRunning() const

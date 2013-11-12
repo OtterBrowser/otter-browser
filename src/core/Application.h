@@ -1,6 +1,7 @@
 #ifndef OTTER_APPLICATION_H
 #define OTTER_APPLICATION_H
 
+#include <QtCore/QCommandLineParser>
 #include <QtCore/QPointer>
 #include <QtWidgets/QApplication>
 #include <QtNetwork/QLocalServer>
@@ -20,6 +21,7 @@ public:
 
 	MainWindow* createWindow(bool privateSession = false);
 	MainWindow* getWindow();
+	QCommandLineParser* getParser() const;
 	bool isRunning() const;
 
 protected:
