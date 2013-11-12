@@ -14,7 +14,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_ui(new Ui::MainWindow)
 {
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar);
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, privateSession);
 
 	setWindowTitle(m_windowsManager->getTitle());
 
@@ -77,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
+	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
+	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SIGNAL(requestedNewWindowPrivate()));
 	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));

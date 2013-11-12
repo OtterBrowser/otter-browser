@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	application.newWindow();
+	application.createWindow();
 
 	return application.exec();
 }

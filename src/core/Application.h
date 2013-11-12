@@ -18,7 +18,7 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	MainWindow* newWindow();
+	MainWindow* createWindow(bool privateSession = false);
 	MainWindow* getWindow();
 	bool isRunning() const;
 
@@ -27,6 +27,8 @@ protected:
 
 protected slots:
 	void newConnection();
+	void newWindow();
+	void newWindowPrivate();
 
 private:
 	QLocalServer *m_localServer;

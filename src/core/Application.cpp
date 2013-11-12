@@ -152,7 +152,7 @@ void Application::newConnection()
 
 	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool())
 	{
-		window = newWindow();
+		window = createWindow();
 	}
 	else
 	{
@@ -173,13 +173,26 @@ void Application::newConnection()
 	}
 }
 
-MainWindow* Application::newWindow()
+void Application::newWindow()
 {
-	MainWindow *window = new MainWindow();
+	createWindow(false);
+}
+
+void Application::newWindowPrivate()
+{
+	createWindow(true);
+}
+
+MainWindow* Application::createWindow(bool privateSession)
+{
+	MainWindow *window = new MainWindow(privateSession);
 
 	m_windows.prepend(window);
 
 	window->show();
+
+	connect(window, SIGNAL(requestedNewWindow()), this, SLOT(newWindow()));
+	connect(window, SIGNAL(requestedNewWindowPrivate()), this, SLOT(newWindowPrivate()));
 
 	return window;
 }
@@ -190,7 +203,7 @@ MainWindow *Application::getWindow()
 
 	if (m_windows.isEmpty())
 	{
-		return newWindow();
+		return createWindow();
 	}
 
 	return m_windows[0];

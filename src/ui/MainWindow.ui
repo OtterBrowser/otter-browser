@@ -218,17 +218,11 @@
    </property>
   </action>
   <action name="actionNewWindow">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>New Window</string>
    </property>
   </action>
   <action name="actionNewWindowPrivate">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>New Private Window</string>
    </property>

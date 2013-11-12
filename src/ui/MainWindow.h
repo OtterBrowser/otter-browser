@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget *parent = NULL);
+	explicit MainWindow(bool privateSession = false, QWidget *parent = NULL);
 	~MainWindow();
 
 public slots:
@@ -37,6 +37,10 @@ protected slots:
 private:
 	WindowsManager *m_windowsManager;
 	Ui::MainWindow *m_ui;
+
+signals:
+	void requestedNewWindow();
+	void requestedNewWindowPrivate();
 };
 
 }
