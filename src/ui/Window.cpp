@@ -44,6 +44,26 @@ void Window::changeEvent(QEvent *event)
 	}
 }
 
+void Window::reload()
+{
+	m_ui->webView->page()->triggerAction(QWebPage::Reload);
+}
+
+void Window::stop()
+{
+	m_ui->webView->page()->triggerAction(QWebPage::Stop);
+}
+
+void Window::goBack()
+{
+	m_ui->webView->page()->triggerAction(QWebPage::Back);
+}
+
+void Window::goForward()
+{
+	m_ui->webView->page()->triggerAction(QWebPage::Forward);
+}
+
 void Window::undo()
 {
 	m_ui->webView->page()->undoStack()->undo();

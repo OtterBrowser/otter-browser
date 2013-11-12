@@ -39,5 +39,10 @@
         <file>icons/window-new.png</file>
         <file>icons/tab-new-private.png</file>
         <file>icons/window-new-private.png</file>
+        <file>icons/go-first.png</file>
+        <file>icons/go-last.png</file>
+        <file>icons/process-stop.png</file>
+        <file>icons/view-refresh.png</file>
+        <file>icons/edit-clear-history.png</file>
     </qresource>
 </RCC>

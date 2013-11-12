@@ -98,6 +98,7 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionSelectAll"/>
     <addaction name="separator"/>
@@ -108,6 +109,9 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionReload"/>
+    <addaction name="actionStop"/>
+    <addaction name="separator"/>
     <addaction name="actionZoomIn"/>
     <addaction name="actionZoomOut"/>
     <addaction name="actionZoomOriginal"/>
@@ -138,9 +142,42 @@
     <addaction name="actionAboutApplication"/>
     <addaction name="actionAboutQt"/>
    </widget>
+   <widget class="QMenu" name="menuHistory">
+    <property name="title">
+     <string>History</string>
+    </property>
+    <widget class="QMenu" name="menuClosedTabs">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Closed Tabs</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
+    <widget class="QMenu" name="menuClosedWindows">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Closed Windows</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="actionBack"/>
+    <addaction name="actionForward"/>
+    <addaction name="separator"/>
+    <addaction name="menuClosedTabs"/>
+    <addaction name="menuClosedWindows"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewHistory"/>
+    <addaction name="separator"/>
+    <addaction name="actionClearHistory"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
+   <addaction name="menuHistory"/>
    <addaction name="menuBookmarks"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
@@ -346,6 +383,47 @@
   <action name="actionZoomOriginal">
    <property name="text">
     <string>Zoom Original</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionBack">
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </action>
+  <action name="actionForward">
+   <property name="text">
+    <string>Forward</string>
+   </property>
+  </action>
+  <action name="actionViewHistory">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>View History</string>
+   </property>
+  </action>
+  <action name="actionClearHistory">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clear History...</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="text">
+    <string>Reload</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
    </property>
   </action>
  </widget>

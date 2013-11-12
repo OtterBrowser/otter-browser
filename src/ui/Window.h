@@ -30,6 +30,10 @@ public:
 	virtual int getZoom() const;
 
 public slots:
+	virtual void reload();
+	virtual void stop();
+	virtual void goBack();
+	virtual void goForward();
 	virtual void undo();
 	virtual void redo();
 	virtual void cut();

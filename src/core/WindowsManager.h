@@ -31,6 +31,10 @@ public slots:
 	void closeOther(int index = -1);
 	void print(int index = -1);
 	void printPreview(int index = -1);
+	void reload();
+	void stop();
+	void goBack();
+	void goForward();
 	void undo();
 	void redo();
 	void cut();

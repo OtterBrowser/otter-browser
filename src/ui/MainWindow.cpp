@@ -25,28 +25,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
 	ActionsManager::registerWindow(this);
-	ActionsManager::registerAction(this, m_ui->actionNewTab);
-	ActionsManager::registerAction(this, m_ui->actionNewPrivateTab);
-	ActionsManager::registerAction(this, m_ui->actionNewWindow);
-	ActionsManager::registerAction(this, m_ui->actionNewPrivateWindow);
-	ActionsManager::registerAction(this, m_ui->actionOpen);
-	ActionsManager::registerAction(this, m_ui->actionCloseTab);
-	ActionsManager::registerAction(this, m_ui->actionSave);
-	ActionsManager::registerAction(this, m_ui->actionPrint);
-	ActionsManager::registerAction(this, m_ui->actionPrintPreview);
-	ActionsManager::registerAction(this, m_ui->actionExit);
-	ActionsManager::registerAction(this, m_ui->actionUndo);
-	ActionsManager::registerAction(this, m_ui->actionRedo);
-	ActionsManager::registerAction(this, m_ui->actionCut);
-	ActionsManager::registerAction(this, m_ui->actionCopy);
-	ActionsManager::registerAction(this, m_ui->actionPaste);
-	ActionsManager::registerAction(this, m_ui->actionSelectAll);
-	ActionsManager::registerAction(this, m_ui->actionFind);
-	ActionsManager::registerAction(this, m_ui->actionZoomIn);
-	ActionsManager::registerAction(this, m_ui->actionZoomOut);
-	ActionsManager::registerAction(this, m_ui->actionZoomOriginal);
-	ActionsManager::registerAction(this, m_ui->actionAboutApplication);
-	ActionsManager::registerAction(this, m_ui->actionAboutQt);
+	ActionsManager::registerActions(this, m_ui->menuFile->actions());
+	ActionsManager::registerActions(this, m_ui->menuEdit->actions());
+	ActionsManager::registerActions(this, m_ui->menuView->actions());
+	ActionsManager::registerActions(this, m_ui->menuHistory->actions());
+	ActionsManager::registerActions(this, m_ui->menuBookmarks->actions());
+	ActionsManager::registerActions(this, m_ui->menuTools->actions());
+	ActionsManager::registerActions(this, m_ui->menuHelp->actions());
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
 	m_ui->actionNewPrivateTab->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));
@@ -61,13 +46,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	m_ui->actionUndo->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/edit-undo.png")));
 	m_ui->actionRedo->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/edit-redo.png")));
 	m_ui->actionCut->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/edit-cut.png")));
-	m_ui->actionCopy->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/edit-copy.png")));
-	m_ui->actionPaste->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/edit-paste.png")));
+	m_ui->actionCopy->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/edit-copy.png")));
+	m_ui->actionPaste->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/edit-paste.png")));
+	m_ui->actionDelete->setIcon(QIcon::fromTheme("edit-delete", QIcon(":/icons/edit-delete.png")));
 	m_ui->actionSelectAll->setIcon(QIcon::fromTheme("edit-select-all", QIcon(":/icons/edit-select-all.png")));
 	m_ui->actionFind->setIcon(QIcon::fromTheme("edit-find", QIcon(":/icons/edit-find.png")));
+	m_ui->actionReload->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
+	m_ui->actionStop->setIcon(QIcon::fromTheme("process-stop", QIcon(":/icons/process-stop.png")));
 	m_ui->actionZoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom-in.png")));
 	m_ui->actionZoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom-out.png")));
 	m_ui->actionZoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/zoom-original.png")));
+	m_ui->actionBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
+	m_ui->actionForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
+	m_ui->actionViewHistory->setIcon(QIcon::fromTheme("view-history", QIcon(":/icons/view-history.png")));
+	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 
@@ -90,6 +82,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	connect(m_ui->actionZoomIn, SIGNAL(triggered()), m_windowsManager, SLOT(zoomIn()));
 	connect(m_ui->actionZoomOut, SIGNAL(triggered()), m_windowsManager, SLOT(zoomOut()));
 	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), m_windowsManager, SLOT(zoomOriginal()));
+	connect(m_ui->actionReload, SIGNAL(triggered()), m_windowsManager, SLOT(reload()));
+	connect(m_ui->actionStop, SIGNAL(triggered()), m_windowsManager, SLOT(stop()));
+	connect(m_ui->actionBack, SIGNAL(triggered()), m_windowsManager, SLOT(goBack()));
+	connect(m_ui->actionForward, SIGNAL(triggered()), m_windowsManager, SLOT(goForward()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 }

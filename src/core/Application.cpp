@@ -77,8 +77,17 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("Actions/Exit", QVariant(QKeySequence(QKeySequence::Quit).toString()));
 	SettingsManager::setDefaultValue("Actions/Undo", QVariant(QKeySequence(QKeySequence::Undo).toString()));
 	SettingsManager::setDefaultValue("Actions/Redo", QVariant(QKeySequence(QKeySequence::Redo).toString()));
+	SettingsManager::setDefaultValue("Actions/Redo", QVariant(QKeySequence(QKeySequence::Redo).toString()));
+    SettingsManager::setDefaultValue("Actions/Cut", QVariant(QKeySequence(QKeySequence::Cut).toString()));
+    SettingsManager::setDefaultValue("Actions/Copy", QVariant(QKeySequence(QKeySequence::Copy).toString()));
+    SettingsManager::setDefaultValue("Actions/Paste", QVariant(QKeySequence(QKeySequence::Paste).toString()));
+    SettingsManager::setDefaultValue("Actions/Delete", QVariant(QKeySequence(QKeySequence::Delete).toString()));
+	SettingsManager::setDefaultValue("Actions/SelectAll", QVariant(QKeySequence(QKeySequence::SelectAll).toString()));
+	SettingsManager::setDefaultValue("Actions/Reload", QVariant(QKeySequence(QKeySequence::Refresh).toString()));
 	SettingsManager::setDefaultValue("Actions/ZoomIn", QVariant(QKeySequence(QKeySequence::ZoomIn).toString()));
 	SettingsManager::setDefaultValue("Actions/ZoomOut", QVariant(QKeySequence(QKeySequence::ZoomOut).toString()));
+	SettingsManager::setDefaultValue("Actions/Back", QVariant(QKeySequence(QKeySequence::Back).toString()));
+	SettingsManager::setDefaultValue("Actions/Forward", QVariant(QKeySequence(QKeySequence::Forward).toString()));
 	SettingsManager::setDefaultValue("Actions/Help", QVariant(QKeySequence(QKeySequence::HelpContents).toString()));
 	SettingsManager::setDefaultValue("Actions/ApplicationConfiguration", QVariant(QKeySequence(QKeySequence::Preferences).toString()));
 	SettingsManager::setDefaultValue("Actions/Fullscreen", QVariant(QKeySequence("F11").toString()));

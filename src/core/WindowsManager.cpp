@@ -164,6 +164,46 @@ void WindowsManager::closeWindow(int index)
 	emit windowRemoved(index);
 }
 
+void WindowsManager::reload()
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	if (window)
+	{
+		window->reload();
+	}
+}
+
+void WindowsManager::stop()
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	if (window)
+	{
+		window->stop();
+	}
+}
+
+void WindowsManager::goBack()
+{
+	Window *window = m_windows.at(getCurrentWindow());
+
+	if (window)
+	{
+		window->goBack();
+	}
+}
+
+void WindowsManager::goForward()
+{
+	Window *window = m_windows.at(getCurrentWindow());
+
+	if (window)
+	{
+		window->goForward();
+	}
+}
+
 void WindowsManager::undo()
 {
 	Window *window = m_windows.at(getCurrentWindow());
