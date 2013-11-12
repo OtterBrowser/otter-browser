@@ -55,9 +55,6 @@
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -105,7 +102,7 @@
     <addaction name="actionSelectAll"/>
     <addaction name="separator"/>
     <addaction name="actionFind"/>
-    <addaction name="actionFind_Next"/>
+    <addaction name="actionFindNext"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -129,6 +126,8 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionAboutApplication"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -248,7 +247,7 @@
     <string>Find...</string>
    </property>
   </action>
-  <action name="actionFind_Next">
+  <action name="actionFindNext">
    <property name="text">
     <string>Find Next</string>
    </property>
@@ -271,6 +270,16 @@
   <action name="actionManageFeeds">
    <property name="text">
     <string>Manage Feeds...</string>
+   </property>
+  </action>
+  <action name="actionAboutApplication">
+   <property name="text">
+    <string>About Application...</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>About Qt...</string>
    </property>
   </action>
  </widget>

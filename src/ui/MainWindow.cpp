@@ -8,6 +8,7 @@
 
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMdiSubWindow>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -33,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 	m_ui->panelWidget->hide();
 
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
+	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
+	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +70,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	SettingsManager::setValue("Window/state", saveState());
 
 	event->accept();
+}
+
+void MainWindow::actionAboutApplication()
+{
+	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
 }
 
 bool MainWindow::event(QEvent *event)

@@ -29,6 +29,9 @@ protected:
 	void closeEvent(QCloseEvent *event);
 	bool event(QEvent *event);
 
+protected slots:
+	void actionAboutApplication();
+
 private:
 	WindowsManager *m_windowsManager;
 	Ui::MainWindow *m_ui;
