@@ -1,6 +1,7 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
+#include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QUndoStack>
 
@@ -20,6 +21,7 @@ public:
 	explicit Window(QWidget *parent = NULL);
 	~Window();
 
+	virtual void print(QPrinter *printer);
 	virtual QWidget* getDocument();
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const;

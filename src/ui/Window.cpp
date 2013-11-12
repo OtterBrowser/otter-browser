@@ -1,5 +1,9 @@
 #include "Window.h"
+
 #include "ui_Window.h"
+
+#include <QtWebKitWidgets/QWebFrame>
+#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
@@ -18,6 +22,11 @@ Window::Window(QWidget *parent) : QWidget(parent),
 Window::~Window()
 {
 	delete m_ui;
+}
+
+void Window::print(QPrinter *printer)
+{
+	m_ui->webView->print(printer);
 }
 
 void Window::changeEvent(QEvent *event)

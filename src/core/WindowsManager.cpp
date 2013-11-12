@@ -85,12 +85,9 @@ void WindowsManager::closeOther(int index)
 
 void WindowsManager::print(int index)
 {
-	if (index < 0)
-	{
-		index = getCurrentWindow();
-	}
+	Window *window = getWindow(m_printedWindow);
 
-	if (index < 0 || index >= m_windows.count())
+	if (!window)
 	{
 		return;
 	}
@@ -104,10 +101,7 @@ void WindowsManager::print(int index)
 		return;
 	}
 
-	QPainter painter(&printer);
-	painter.setRenderHint(QPainter::Antialiasing);
-
-	m_windows.at(index)->getDocument()->render(&painter);
+	window->print(&printer);
 }
 
 void WindowsManager::printPreview(int index)
@@ -136,15 +130,12 @@ void WindowsManager::printPreview(int index)
 
 void WindowsManager::printPreview(QPrinter *printer)
 {
-	if (m_printedWindow < 0)
+	Window *window = getWindow(m_printedWindow);
+
+	if (window)
 	{
-		return;
+		window->print(printer);
 	}
-
-	QPainter painter(printer);
-	painter.setRenderHint(QPainter::Antialiasing);
-
-	m_windows.at(m_printedWindow)->getDocument()->render(&painter);
 }
 
 void WindowsManager::closeWindow(int index)
