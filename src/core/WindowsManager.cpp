@@ -21,7 +21,6 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(a
 	m_printedWindow(-1)
 {
 	open();
-	setCurrentWindow(0);
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
@@ -30,7 +29,22 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(a
 
 void WindowsManager::open(const QUrl &url)
 {
-	Window *window = new Window(m_area);
+	Window *window = NULL;
+
+	if (!url.isEmpty())
+	{
+		window = getWindow(getCurrentWindow());
+
+		if (window && window->isEmpty())
+		{
+			window->setUrl(url);
+
+			return;
+		}
+	}
+
+	window = new Window(m_area);
+
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
 	mdiWindow->showMaximized();
 

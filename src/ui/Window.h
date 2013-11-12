@@ -28,6 +28,7 @@ public:
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
 	virtual int getZoom() const;
+	virtual bool isEmpty() const;
 
 public slots:
 	virtual void reload();

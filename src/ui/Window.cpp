@@ -171,9 +171,8 @@ QUndoStack *Window::getUndoStack()
 QString Window::getTitle() const
 {
 	const QString title = m_ui->webView->title();
-	const QUrl url = m_ui->webView->url();
 
-	return (title.isEmpty() ? ((url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank")) ? tr("New Tab") : tr("Empty")) : title);
+	return (title.isEmpty() ? (isEmpty() ? tr("New Tab") : tr("Empty")) : title);
 }
 
 QUrl Window::getUrl() const
@@ -191,6 +190,13 @@ QIcon Window::getIcon() const
 int Window::getZoom() const
 {
 	return (m_ui->webView->zoomFactor() * 100);
+}
+
+bool Window::isEmpty() const
+{
+	const QUrl url = m_ui->webView->url();
+
+	return (url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank"));
 }
 
 }
