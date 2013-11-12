@@ -226,7 +226,7 @@ QCommandLineParser* Application::getParser() const
 	parser->addHelpOption();
 	parser->addVersionOption();
 	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
-	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Start private session.")));
+	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Starts private session.")));
 
 	return parser;
 }

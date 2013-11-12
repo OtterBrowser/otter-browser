@@ -12,7 +12,13 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
+	m_ui->backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
+	m_ui->forwardButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
+	m_ui->reloadButton->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
 
+	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
+	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
+	connect(m_ui->reloadButton, SIGNAL(clicked()), this, SLOT(reload()));
 	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
 	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
