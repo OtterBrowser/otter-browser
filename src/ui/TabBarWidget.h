@@ -19,14 +19,12 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 
 protected slots:
-	void closeCurrent();
 	void closeOther();
 
 private:
 	int m_clickedTab;
 
 signals:
-	void requestedOpen();
 	void requestedClose(int tab);
 	void requestedCloseOther(int tab);
 };

@@ -1,4 +1,5 @@
 #include "TabBarWidget.h"
+#include "../core/ActionsManager.h"
 
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMenu>
@@ -21,11 +22,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	m_clickedTab = tabAt(event->pos());
 
 	QMenu menu(this);
-	menu.addAction(QIcon(":/icons/tab-new.png"), tr("New Tab"), this, SIGNAL(requestedOpen()));
+	menu.addAction(ActionsManager::getAction("NewTab"));
 
 	if (m_clickedTab >= 0)
 	{
-		menu.addAction(QIcon(":/icons/tab-close.png"), tr("Close Tab"), this, SLOT(closeCurrent()));
+		menu.addAction(ActionsManager::getAction("CloseTab"));
 
 		if (count() > 1)
 		{
@@ -42,7 +43,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	if (tabAt(event->pos()) < 0)
 	{
-		emit requestedOpen();
+		ActionsManager::triggerAction("NewTab");
 	}
 }
 
@@ -56,14 +57,6 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 		{
 			emit requestedClose(tab);
 		}
-	}
-}
-
-void TabBarWidget::closeCurrent()
-{
-	if (m_clickedTab >= 0)
-	{
-		emit requestedClose(m_clickedTab);
 	}
 }
 

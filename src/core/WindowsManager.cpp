@@ -24,7 +24,6 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(a
 	setCurrentWindow(0);
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
-	connect(m_tabBar, SIGNAL(requestedOpen()), this, SLOT(open()));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
@@ -85,7 +84,7 @@ void WindowsManager::closeOther(int index)
 
 void WindowsManager::print(int index)
 {
-	Window *window = getWindow(m_printedWindow);
+	Window *window = getWindow(index);
 
 	if (!window)
 	{

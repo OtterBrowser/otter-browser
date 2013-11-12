@@ -88,6 +88,16 @@ void ActionsManager::registerActions(QWidget *window, QList<QAction*> actions)
 	}
 }
 
+void ActionsManager::triggerAction(const QString &action)
+{
+	QAction *object = getAction(action);
+
+	if (object)
+	{
+		object->trigger();
+	}
+}
+
 void ActionsManager::restoreDefaultShortcut(QAction *action)
 {
 	if (!m_actions.contains(m_activeWindow))
