@@ -10,19 +10,27 @@ High priority / ASAP:
 Medium priority / soon:
 - custom searches
 - proxy configuration
+- private browsing
 - mail and feeds client (as module)
 - speed dial module
 - detailed load progress information
 - page preferences
 - content blocking
 - panels (page informations, notes, transfers, bookmarks etc.)
-- import of existing settings etc.
-- multiple backend support (at least Blink in upcoming QtWebEngine)
+- multiple backend support (at least Blink with upcoming QtWebEngine)
+- support for profiles / custom configuration directory
+- system tray icon
 
 Low priority / later:
-- extensions
+- import of existing settings etc.
+- delayed loading of Flash objects
+- tabs pinning
 - tabs grouping
+- form auto completion
+- passwords manager
+- extensions
 - Opera Link like solution
+- improved integration with different platforms (Windows taskbar integration etc.)
 
 Low priority / maybe:
 - support for Opera skins (through custom QStyle)
