@@ -67,6 +67,16 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuSessions">
+     <property name="title">
+      <string>Sessions</string>
+     </property>
+    </widget>
+    <widget class="QMenu" name="menuImport_and_Export">
+     <property name="title">
+      <string>Import and Export</string>
+     </property>
+    </widget>
     <addaction name="actionNewTab"/>
     <addaction name="actionNewPrivateTab"/>
     <addaction name="actionNewWindow"/>
@@ -76,8 +86,8 @@
     <addaction name="actionSave"/>
     <addaction name="actionCloseTab"/>
     <addaction name="separator"/>
-    <addaction name="actionSessions"/>
-    <addaction name="actionImportAndExport"/>
+    <addaction name="menuSessions"/>
+    <addaction name="menuImport_and_Export"/>
     <addaction name="separator"/>
     <addaction name="actionPrint"/>
     <addaction name="actionPrintPreview"/>
@@ -222,22 +232,6 @@
    </property>
    <property name="text">
     <string>Save...</string>
-   </property>
-  </action>
-  <action name="actionSessions">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Sessions</string>
-   </property>
-  </action>
-  <action name="actionImportAndExport">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Import and Export</string>
    </property>
   </action>
   <action name="actionPrint">

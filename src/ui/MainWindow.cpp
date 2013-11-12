@@ -7,6 +7,7 @@
 #include "ui_MainWindow.h"
 
 #include <QtGui/QCloseEvent>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMessageBox>
 
@@ -75,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
+	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
@@ -93,11 +95,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 MainWindow::~MainWindow()
 {
 	delete m_ui;
-}
-
-void MainWindow::openUrl(const QUrl &url)
-{
-	m_windowsManager->open(url);
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -122,6 +119,21 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	SettingsManager::setValue("Window/state", saveState());
 
 	event->accept();
+}
+
+void MainWindow::openUrl(const QUrl &url)
+{
+	m_windowsManager->open(url);
+}
+
+void MainWindow::actionOpen()
+{
+	const QUrl url = QFileDialog::getOpenFileUrl(this, tr("Open File"));
+
+	if (!url.isEmpty())
+	{
+		m_windowsManager->open(url);
+	}
 }
 
 void MainWindow::actionAboutApplication()
