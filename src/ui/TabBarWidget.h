@@ -17,6 +17,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void resizeEvent(QResizeEvent *event);
 	void tabInserted(int index);
 	void tabRemoved(int index);
 

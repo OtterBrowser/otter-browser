@@ -385,6 +385,7 @@ void WindowsManager::setTitle(const QString &title)
 	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
 
 	m_tabBar->setTabText(index, text);
+	m_tabBar->setTabToolTip(index, text);
 
 	if (index == getCurrentWindow())
 	{

@@ -64,6 +64,13 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
+void TabBarWidget::resizeEvent(QResizeEvent *event)
+{
+	QTabBar::resizeEvent(event);
+
+	tabWidthChanged();
+}
+
 void TabBarWidget::tabInserted(int index)
 {
 	QTabBar::tabInserted(index);
