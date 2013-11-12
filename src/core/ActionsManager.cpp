@@ -39,7 +39,7 @@ void ActionsManager::removeWindow(QObject *window)
 
 void ActionsManager::addAction(QWidget *window, QAction *action, QString name)
 {
-	if (!action || !m_actions.contains(window))
+	if (!action || action->isSeparator() || !m_actions.contains(window))
 	{
 		return;
 	}
