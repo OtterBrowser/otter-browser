@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	QCommandLineParser *parser = application.getParser();
 	parser->process(application);
 
-	Otter::MainWindow *window = application.createWindow();
+	Otter::MainWindow *window = application.createWindow(parser->isSet("privatesession"));
 
 	if (window && !parser->positionalArguments().isEmpty())
 	{

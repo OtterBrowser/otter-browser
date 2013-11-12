@@ -154,9 +154,9 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool())
+	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool() && !parser->isSet("privatesession"))
 	{
-		window = createWindow();
+		window = createWindow(parser->isSet("privatesession"));
 	}
 	else
 	{
@@ -226,6 +226,7 @@ QCommandLineParser* Application::getParser() const
 	parser->addHelpOption();
 	parser->addVersionOption();
 	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
+	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Start private session.")));
 
 	return parser;
 }
