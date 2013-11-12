@@ -132,6 +132,8 @@ void Window::setUrl(const QUrl &url)
 	{
 		m_ui->webView->setUrl(url);
 	}
+
+	notifyIconChanged();
 }
 
 void Window::loadUrl()
