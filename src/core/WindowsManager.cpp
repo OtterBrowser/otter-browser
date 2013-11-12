@@ -3,13 +3,11 @@
 #include "../ui/TabBarWidget.h"
 #include "../ui/Window.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QMdiSubWindow>
-
-
-#include <QDebug>
 
 namespace Otter
 {
@@ -20,7 +18,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar) : QObject(a
 	m_currentWindow(-1),
 	m_printedWindow(-1)
 {
-	open();
+	QTimer::singleShot(250, this, SLOT(open()));
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
@@ -200,7 +198,7 @@ void WindowsManager::stop()
 
 void WindowsManager::goBack()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -210,7 +208,7 @@ void WindowsManager::goBack()
 
 void WindowsManager::goForward()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -220,7 +218,7 @@ void WindowsManager::goForward()
 
 void WindowsManager::undo()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -230,7 +228,7 @@ void WindowsManager::undo()
 
 void WindowsManager::redo()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -240,7 +238,7 @@ void WindowsManager::redo()
 
 void WindowsManager::cut()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -250,7 +248,7 @@ void WindowsManager::cut()
 
 void WindowsManager::copy()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -260,7 +258,7 @@ void WindowsManager::copy()
 
 void WindowsManager::paste()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -270,7 +268,7 @@ void WindowsManager::paste()
 
 void WindowsManager::remove()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -280,7 +278,7 @@ void WindowsManager::remove()
 
 void WindowsManager::selectAll()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -290,7 +288,7 @@ void WindowsManager::selectAll()
 
 void WindowsManager::zoomIn()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -300,7 +298,7 @@ void WindowsManager::zoomIn()
 
 void WindowsManager::zoomOut()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -310,7 +308,7 @@ void WindowsManager::zoomOut()
 
 void WindowsManager::zoomOriginal()
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -320,7 +318,7 @@ void WindowsManager::zoomOriginal()
 
 void WindowsManager::setZoom(int zoom)
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	if (window)
 	{
@@ -413,7 +411,7 @@ Window* WindowsManager::getWindow(int index) const
 
 QString WindowsManager::getTitle() const
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
 }
@@ -425,21 +423,21 @@ int WindowsManager::getCurrentWindow() const
 
 int WindowsManager::getZoom() const
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	return (window ? window->getZoom() : 100);
 }
 
 bool WindowsManager::canUndo() const
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	return (window && window->getUndoStack()->canUndo());
 }
 
 bool WindowsManager::canRedo() const
 {
-	Window *window = m_windows.at(getCurrentWindow());
+	Window *window = getWindow(getCurrentWindow());
 
 	return (window && window->getUndoStack()->canRedo());
 }
