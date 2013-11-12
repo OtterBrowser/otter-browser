@@ -10,11 +10,14 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1)
 {
-	setExpanding(true);
+	setExpanding(false);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setTabsClosable(true);
+	setElideMode(Qt::ElideRight);
+	tabWidthChanged();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabWidthChanged()));
 }
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -61,12 +64,50 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
+void TabBarWidget::tabInserted(int index)
+{
+	QTabBar::tabInserted(index);
+
+	tabWidthChanged();
+}
+
+void TabBarWidget::tabRemoved(int index)
+{
+	QTabBar::tabRemoved(index);
+
+	tabWidthChanged();
+}
+
 void TabBarWidget::closeOther()
 {
 	if (m_clickedTab >= 0)
 	{
 		emit requestedCloseOther(m_clickedTab);
 	}
+}
+
+void TabBarWidget::tabWidthChanged()
+{
+	QString style;
+	const int width = qBound(40, (size().width() / ((count() == 0) ? 1 : count())), 300);
+	const bool narrow = (width < 60);
+
+	if (narrow)
+	{
+		style = "color:transparent;";
+	}
+
+	for (int i = 0; i < count(); ++i)
+	{
+		QWidget *button = tabButton(i, QTabBar::RightSide);
+
+		if (button)
+		{
+			button->setVisible(!narrow || (i == currentIndex()));
+		}
+	}
+
+	setStyleSheet(QString("QTabBar::tab {width:%1px;%2}").arg(width).arg(style));
 }
 
 }

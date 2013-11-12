@@ -17,9 +17,12 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void tabInserted(int index);
+	void tabRemoved(int index);
 
 protected slots:
 	void closeOther();
+	void tabWidthChanged();
 
 private:
 	int m_clickedTab;
