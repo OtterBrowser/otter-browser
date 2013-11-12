@@ -14,7 +14,7 @@ class SettingsManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void restore(const QString &key);
 	static void remove(const QString &key);
 	static void setDefaultValue(const QString &key, const QVariant &value);
@@ -25,12 +25,13 @@ public:
 	static bool contains(const QString &key);
 
 private:
-	explicit SettingsManager(QObject *parent = NULL);
+	explicit SettingsManager(const QString &path, QObject *parent = NULL);
 
 	QVariant keyValue(const QString &key);
 	QStringList valueKeys();
 
 	static SettingsManager *m_instance;
+	static QString m_path;
 	static QHash<QString, QVariant> m_defaultSettings;
 };
 

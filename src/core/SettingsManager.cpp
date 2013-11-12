@@ -6,25 +6,27 @@ namespace Otter
 {
 
 SettingsManager* SettingsManager::m_instance = NULL;
+QString SettingsManager::m_path;
 QHash<QString, QVariant> SettingsManager::m_defaultSettings;
 
-SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
+SettingsManager::SettingsManager(const QString &path, QObject *parent) : QObject(parent)
 {
+	m_path = path;
 }
 
-void SettingsManager::createInstance(QObject *parent)
+void SettingsManager::createInstance(const QString &path, QObject *parent)
 {
-	m_instance = new SettingsManager(parent);
+	m_instance = new SettingsManager(path, parent);
 }
 
 void SettingsManager::restore(const QString &key)
 {
-	QSettings().remove(key);
+	QSettings(m_path, QSettings::IniFormat).remove(key);
 }
 
 void SettingsManager::remove(const QString &key)
 {
-	QSettings().remove(key);
+	QSettings(m_path, QSettings::IniFormat).remove(key);
 }
 
 void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
@@ -34,7 +36,7 @@ void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
 
 void SettingsManager::setValue(const QString &key, const QVariant &value)
 {
-	QSettings().setValue(key, value);
+	QSettings(m_path, QSettings::IniFormat).setValue(key, value);
 }
 
 QVariant SettingsManager::keyValue(const QString &key)
@@ -51,7 +53,7 @@ QVariant SettingsManager::getValue(const QString &key, const QVariant &value)
 {
 	const QVariant defaultKeyValue = getDefaultValue(key);
 
-	return QSettings().value(key, (defaultKeyValue.isNull() ? value : defaultKeyValue));
+	return QSettings(m_path, QSettings::IniFormat).value(key, (defaultKeyValue.isNull() ? value : defaultKeyValue));
 }
 
 QStringList SettingsManager::valueKeys()

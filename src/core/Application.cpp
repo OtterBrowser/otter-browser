@@ -62,11 +62,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	QDir().mkpath(iconsPath);
 
-	SettingsManager::createInstance(this);
-	SettingsManager::setDefaultValue("General/OpenLinksInNewWindow", false);
-	SettingsManager::setDefaultValue("General/EnablePlugins", true);
-	SettingsManager::setDefaultValue("General/EnableJava", true);
-	SettingsManager::setDefaultValue("General/EnableJavaScript", true);
+	SettingsManager::createInstance(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/otter.conf", this);
+	SettingsManager::setDefaultValue("Browser/OpenLinksInNewWindow", false);
+	SettingsManager::setDefaultValue("Browser/EnablePlugins", true);
+	SettingsManager::setDefaultValue("Browser/EnableJava", true);
+	SettingsManager::setDefaultValue("Browser/EnableJavaScript", true);
 	SettingsManager::setDefaultValue("Actions/NewTab", QVariant(QKeySequence(QKeySequence::New).toString()));
 	SettingsManager::setDefaultValue("Actions/Open", QVariant(QKeySequence(QKeySequence::Open).toString()));
 	SettingsManager::setDefaultValue("Actions/Save", QVariant(QKeySequence(QKeySequence::Save).toString()));
@@ -74,10 +74,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("Actions/Undo", QVariant(QKeySequence(QKeySequence::Undo).toString()));
 	SettingsManager::setDefaultValue("Actions/Redo", QVariant(QKeySequence(QKeySequence::Redo).toString()));
 	SettingsManager::setDefaultValue("Actions/Redo", QVariant(QKeySequence(QKeySequence::Redo).toString()));
-    SettingsManager::setDefaultValue("Actions/Cut", QVariant(QKeySequence(QKeySequence::Cut).toString()));
-    SettingsManager::setDefaultValue("Actions/Copy", QVariant(QKeySequence(QKeySequence::Copy).toString()));
-    SettingsManager::setDefaultValue("Actions/Paste", QVariant(QKeySequence(QKeySequence::Paste).toString()));
-    SettingsManager::setDefaultValue("Actions/Delete", QVariant(QKeySequence(QKeySequence::Delete).toString()));
+	SettingsManager::setDefaultValue("Actions/Cut", QVariant(QKeySequence(QKeySequence::Cut).toString()));
+	SettingsManager::setDefaultValue("Actions/Copy", QVariant(QKeySequence(QKeySequence::Copy).toString()));
+	SettingsManager::setDefaultValue("Actions/Paste", QVariant(QKeySequence(QKeySequence::Paste).toString()));
+	SettingsManager::setDefaultValue("Actions/Delete", QVariant(QKeySequence(QKeySequence::Delete).toString()));
 	SettingsManager::setDefaultValue("Actions/SelectAll", QVariant(QKeySequence(QKeySequence::SelectAll).toString()));
 	SettingsManager::setDefaultValue("Actions/Reload", QVariant(QKeySequence(QKeySequence::Refresh).toString()));
 	SettingsManager::setDefaultValue("Actions/ZoomIn", QVariant(QKeySequence(QKeySequence::ZoomIn).toString()));
@@ -93,9 +93,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("General/EnablePlugins").toBool());
-	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("General/EnableJava").toBool());
-	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("General/EnableJavaScript").toBool());
+	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("Browser/EnablePlugins").toBool());
+	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("Browser/EnableJava").toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("Browser/EnableJavaScript").toBool());
 	globalSettings->setIconDatabasePath(iconsPath);
 
 	QTranslator qtTranslator;
@@ -154,7 +154,7 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (SettingsManager::getValue("General/OpenLinksInNewWindow").toBool() && !parser->isSet("privatesession"))
+	if (SettingsManager::getValue("Browser/OpenLinksInNewWindow").toBool() && !parser->isSet("privatesession"))
 	{
 		window = createWindow(parser->isSet("privatesession"));
 	}
