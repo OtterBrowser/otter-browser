@@ -64,6 +64,13 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
+void TabBarWidget::leaveEvent(QEvent *event)
+{
+	QTabBar::leaveEvent(event);
+
+	tabWidthChanged();
+}
+
 void TabBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QTabBar::resizeEvent(event);
@@ -95,6 +102,11 @@ void TabBarWidget::closeOther()
 
 void TabBarWidget::tabWidthChanged()
 {
+	if (underMouse())
+	{
+		return;
+	}
+
 	QString style;
 	const int width = qBound(40, (size().width() / ((count() == 0) ? 1 : count())), 300);
 	const bool narrow = (width < 60);
