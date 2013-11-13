@@ -22,7 +22,6 @@ public:
 	~Window();
 
 	virtual void print(QPrinter *printer);
-	virtual QWidget* getDocument();
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
@@ -55,17 +54,21 @@ protected:
 
 protected slots:
 	void loadUrl();
+	void loadStarted();
+	void loadFinished(bool ok);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 
 private:
+	bool m_isLoading;
 	Ui::Window *m_ui;
 
 signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
+	void loadingChanged(bool loading);
 	void undoTextChanged(const QString &undoText);
 	void redoTextChanged(const QString &redoText);
 	void canUndoChanged(bool canUndo);

@@ -52,12 +52,16 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 	m_windows.append(window);
 
 	const int index = (m_windows.count() - 1);
+	QVariantHash data;
+	data["private"] = privateWindow;
 
-	m_tabBar->addTab(window->getIcon(), window->getTitle());
+	m_tabBar->addTab(window->getTitle());
+	m_tabBar->setTabData(index, data);
 	m_tabBar->setCurrentIndex(index);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+	connect(window, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 
 	window->setUrl(url);
 
@@ -395,7 +399,22 @@ void WindowsManager::setTitle(const QString &title)
 
 void WindowsManager::setIcon(const QIcon &icon)
 {
-	m_tabBar->setTabIcon(m_windows.indexOf(qobject_cast<Window*>(sender())), (icon.isNull() ? QIcon(":/icons/tab.png") : icon));
+	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+	QVariantHash data = m_tabBar->tabData(index).toHash();
+	data["icon"] = icon;
+
+	m_tabBar->setTabData(index, data);
+	m_tabBar->updateTabs(index);
+}
+
+void WindowsManager::setLoading(bool loading)
+{
+	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+	QVariantHash data = m_tabBar->tabData(index).toHash();
+	data["loading"] = loading;
+
+	m_tabBar->setTabData(index, data);
+	m_tabBar->updateTabs(index);
 }
 
 Window* WindowsManager::getWindow(int index) const

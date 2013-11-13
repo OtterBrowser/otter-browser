@@ -13,6 +13,9 @@ class TabBarWidget : public QTabBar
 public:
 	explicit TabBarWidget(QWidget *parent = NULL);
 
+public slots:
+	void updateTabs(int index = -1);
+
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
@@ -24,7 +27,6 @@ protected:
 
 protected slots:
 	void closeOther();
-	void tabWidthChanged();
 
 private:
 	int m_clickedTab;

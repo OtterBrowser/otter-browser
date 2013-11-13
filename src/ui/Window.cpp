@@ -15,6 +15,7 @@ namespace Otter
 {
 
 Window::Window(QWidget *parent) : QWidget(parent),
+	m_isLoading(false),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
@@ -32,6 +33,8 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_ui->webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_ui->webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
+	connect(m_ui->webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+	connect(m_ui->webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
 }
 
 Window::~Window()
@@ -253,6 +256,22 @@ void Window::loadUrl()
 	setUrl(QUrl(m_ui->lineEdit->text()));
 }
 
+void Window::loadStarted()
+{
+	m_isLoading = true;
+
+	emit loadingChanged(true);
+}
+
+void Window::loadFinished(bool ok)
+{
+	Q_UNUSED(ok)
+
+	m_isLoading = false;
+
+	emit loadingChanged(false);
+}
+
 void Window::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -268,11 +287,6 @@ void Window::notifyUrlChanged(const QUrl &url)
 void Window::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
-}
-
-QWidget *Window::getDocument()
-{
-	return m_ui->webView;
 }
 
 QUndoStack *Window::getUndoStack()

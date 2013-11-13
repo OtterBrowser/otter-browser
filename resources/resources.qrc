@@ -48,5 +48,6 @@
         <file>files/listing.html</file>
         <file>icons/inode-directory.png</file>
         <file>icons/unknown.png</file>
+        <file>icons/loading.gif</file>
     </qresource>
 </RCC>

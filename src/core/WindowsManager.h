@@ -53,6 +53,7 @@ protected slots:
 	void setCurrentWindow(int index);
 	void setTitle(const QString &title);
 	void setIcon(const QIcon &icon);
+	void setLoading(bool loading);
 
 private:
 	QMdiArea *m_area;

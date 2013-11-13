@@ -2,7 +2,10 @@
 #include "../core/ActionsManager.h"
 
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QMovie>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -14,10 +17,10 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
-	tabWidthChanged();
+	updateTabs();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabWidthChanged()));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateTabs()));
 }
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -68,28 +71,32 @@ void TabBarWidget::leaveEvent(QEvent *event)
 {
 	QTabBar::leaveEvent(event);
 
-	tabWidthChanged();
+	updateTabs();
 }
 
 void TabBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QTabBar::resizeEvent(event);
 
-	tabWidthChanged();
+	updateTabs();
 }
 
 void TabBarWidget::tabInserted(int index)
 {
 	QTabBar::tabInserted(index);
+	QLabel *label = new QLabel();
+	label->setFixedSize(QSize(16, 16));
 
-	tabWidthChanged();
+	setTabButton(index, QTabBar::LeftSide, label);
+
+	updateTabs();
 }
 
 void TabBarWidget::tabRemoved(int index)
 {
 	QTabBar::tabRemoved(index);
 
-	tabWidthChanged();
+	updateTabs();
 }
 
 void TabBarWidget::closeOther()
@@ -100,33 +107,58 @@ void TabBarWidget::closeOther()
 	}
 }
 
-void TabBarWidget::tabWidthChanged()
+void TabBarWidget::updateTabs(int index)
 {
-	if (underMouse())
-	{
-		return;
-	}
-
+	const bool canResize = !underMouse();
 	QString style;
 	const int width = qBound(40, (size().width() / ((count() == 0) ? 1 : count())), 300);
 	const bool narrow = (width < 60);
 
-	if (narrow)
+	if (canResize)
 	{
-		style = "color:transparent;";
+		if (narrow)
+		{
+			style = "color:transparent;";
+		}
+
+		setStyleSheet(QString("QTabBar::tab {width:%1px;%2}").arg(width).arg(style));
 	}
 
-	for (int i = 0; i < count(); ++i)
-	{
-		QWidget *button = tabButton(i, QTabBar::RightSide);
+	const int limit = ((index >= 0) ? (index + 1) : count());
 
-		if (button)
+	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
+	{
+		const QVariantHash data = tabData(i).toHash();
+		const bool isLoading = data.value("loading", false).toBool();
+		QLabel *label = qobject_cast<QLabel*>(tabButton(i, QTabBar::LeftSide));
+
+		if (label)
 		{
-			button->setVisible(!narrow || (i == currentIndex()));
+			if (!isLoading && label->movie())
+			{
+				label->movie()->deleteLater();
+				label->setMovie(NULL);
+				label->setPixmap(data.value("icon", QIcon(data.value("private", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
+			}
+			else if (isLoading && !label->movie())
+			{
+				QMovie *movie = new QMovie(":/icons/loading.gif", QByteArray(), label);
+				movie->start();
+
+				label->setMovie(movie);
+			}
+		}
+
+		if (canResize)
+		{
+			QWidget *button = tabButton(i, QTabBar::RightSide);
+
+			if (button)
+			{
+				button->setVisible(!narrow || (i == currentIndex()));
+			}
 		}
 	}
-
-	setStyleSheet(QString("QTabBar::tab {width:%1px;%2} QTabBar::tab + QTabBar::tab{background:red;}").arg(width).arg(style));
 }
 
 }
