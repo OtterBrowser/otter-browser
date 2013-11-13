@@ -161,4 +161,27 @@ void TabBarWidget::updateTabs(int index)
 	}
 }
 
+void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
+{
+	switch (orientation)
+	{
+		case Qt::LeftDockWidgetArea:
+			setShape(QTabBar::RoundedWest);
+
+			break;
+		case Qt::RightDockWidgetArea:
+			setShape(QTabBar::RoundedEast);
+
+			break;
+		case Qt::BottomDockWidgetArea:
+			setShape(QTabBar::RoundedSouth);
+
+			break;
+		default:
+			setShape(QTabBar::RoundedNorth);
+
+			break;
+	}
+}
+
 }

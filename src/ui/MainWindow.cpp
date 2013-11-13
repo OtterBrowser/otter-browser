@@ -64,10 +64,6 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 
-	resize(SettingsManager::getValue("Window/size", size()).toSize());
-	move(SettingsManager::getValue("Window/position", pos()).toPoint());
-	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
-
 	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, privateSession);
 
 	setWindowTitle(m_windowsManager->getTitle());
@@ -75,6 +71,7 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->panelWidget->hide();
 
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
+	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -93,6 +90,10 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	connect(m_ui->actionForward, SIGNAL(triggered()), m_windowsManager, SLOT(goForward()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+
+	resize(SettingsManager::getValue("Window/size", size()).toSize());
+	move(SettingsManager::getValue("Window/position", pos()).toPoint());
+	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
 }
 
 MainWindow::~MainWindow()

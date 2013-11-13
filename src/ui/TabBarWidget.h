@@ -15,6 +15,7 @@ public:
 
 public slots:
 	void updateTabs(int index = -1);
+	void setOrientation(Qt::DockWidgetArea orientation);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
