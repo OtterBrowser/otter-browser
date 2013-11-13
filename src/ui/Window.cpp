@@ -2,6 +2,7 @@
 
 #include "ui_Window.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
@@ -207,7 +208,11 @@ void Window::setUrl(const QUrl &url)
 					}
 				}
 
-				variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\">%1</a></td>\n<td>%2</td>\n<td>%3</td>\n<td>%4</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
+				QByteArray byteArray;
+				QBuffer buffer(&byteArray);
+				QIcon::fromTheme(mimeType.iconName(), QIcon(entries.at(i).isDir() ? ":icons/inode-directory.png" : ":/icons/unknown.png")).pixmap(16, 16).save(&buffer, "PNG");
+
+				variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\">%3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
 			}
 
 			QString html = stream.readAll();
