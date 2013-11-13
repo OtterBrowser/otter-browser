@@ -2,8 +2,12 @@
 
 #include "ui_Window.h"
 
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QMimeDatabase>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebPage>
+#include <QtGui/QGuiApplication>
 
 namespace Otter
 {
@@ -15,6 +19,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui->backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
 	m_ui->forwardButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
 	m_ui->reloadButton->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
+	m_ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
 	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
 	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
@@ -23,6 +28,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_ui->webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
+	connect(m_ui->webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
 }
 
 Window::~Window()
@@ -134,11 +140,97 @@ void Window::setUrl(const QUrl &url)
 
 		m_ui->webView->setUrl(httpUrl);
 	}
+	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
+	{
+		QUrl localUrl = url;
+		localUrl.setScheme("file");
+
+		if (localUrl.isLocalFile() && QFileInfo(localUrl.toLocalFile()).isDir())
+		{
+			QFile file(":/files/listing.html");
+			file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+
+			QDir directory(localUrl.toLocalFile());
+			const QFileInfoList entries = directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst));
+			QStringList navigation;
+
+			do
+			{
+				navigation.prepend(QString("<a href=\"%1\">%2</a>%3").arg(directory.canonicalPath()).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
+			}
+			while (directory.cdUp());
+
+			QHash<QString, QString> variables;
+			variables["title"] = QFileInfo(localUrl.toLocalFile()).canonicalFilePath();
+			variables["description"] = tr("Directory Contents");
+			variables["dir"] = (QGuiApplication::isLeftToRight() ? "ltr" : "rtl");
+			variables["navigation"] = navigation.join(QString());
+			variables["header_name"] = tr("Name");
+			variables["header_type"] = tr("Type");
+			variables["header_size"] = tr("Size");
+			variables["header_date"] = tr("Date");
+			variables["body"] = QString();
+
+			QMimeDatabase database;
+
+			for (int i = 0; i < entries.count(); ++i)
+			{
+				const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
+				QString size;
+
+				if (!entries.at(i).isDir())
+				{
+					if (entries.at(i).size() > 1024)
+					{
+						if (entries.at(i).size() > 1048576)
+						{
+							if (entries.at(i).size() > 1073741824)
+							{
+								size = QString("%1 GB").arg((entries.at(i).size() / 1073741824.0), 0, 'f', 2);
+							}
+							else
+							{
+								size = QString("%1 MB").arg((entries.at(i).size() / 1048576.0), 0, 'f', 2);
+							}
+						}
+						else
+						{
+							size = QString("%1 KB").arg((entries.at(i).size() / 1024.0), 0, 'f', 2);
+						}
+					}
+					else
+					{
+						size = QString("%1 B").arg(entries.at(i).size());
+					}
+				}
+
+				variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\">%1</a></td>\n<td>%2</td>\n<td>%3</td>\n<td>%4</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
+			}
+
+			QString html = stream.readAll();
+			QHash<QString, QString>::iterator iterator;
+
+			for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+			{
+				html.replace(QString("{%1}").arg(iterator.key()), iterator.value());
+			}
+
+			m_ui->webView->setHtml(html, localUrl);
+		}
+		else
+		{
+			m_ui->webView->setUrl(localUrl);
+		}
+	}
 	else
 	{
 		m_ui->webView->setUrl(url);
 	}
 
+	notifyTitleChanged();
 	notifyIconChanged();
 }
 
@@ -185,7 +277,24 @@ QString Window::getTitle() const
 {
 	const QString title = m_ui->webView->title();
 
-	return (title.isEmpty() ? (isEmpty() ? tr("New Tab") : tr("Empty")) : title);
+	if (title.isEmpty())
+	{
+		if (isEmpty())
+		{
+			return tr("New Tab");
+		}
+
+		const QUrl url = getUrl();
+
+		if (url.isLocalFile())
+		{
+			return QFileInfo(url.toLocalFile()).canonicalFilePath();
+		}
+
+		return tr("Empty");
+	}
+
+	return title;
 }
 
 QUrl Window::getUrl() const

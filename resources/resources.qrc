@@ -45,5 +45,6 @@
         <file>icons/view-refresh.png</file>
         <file>icons/edit-clear-history.png</file>
         <file>icons/tab-private.png</file>
+        <file>files/listing.html</file>
     </qresource>
 </RCC>

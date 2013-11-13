@@ -208,7 +208,7 @@ MainWindow* Application::createWindow(bool privateSession)
 	return window;
 }
 
-MainWindow *Application::getWindow()
+MainWindow* Application::getWindow()
 {
 	cleanup();
 

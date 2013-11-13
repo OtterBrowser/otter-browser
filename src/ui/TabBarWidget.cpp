@@ -126,7 +126,7 @@ void TabBarWidget::tabWidthChanged()
 		}
 	}
 
-	setStyleSheet(QString("QTabBar::tab {width:%1px;%2}").arg(width).arg(style));
+	setStyleSheet(QString("QTabBar::tab {width:%1px;%2} QTabBar::tab + QTabBar::tab{background:red;}").arg(width).arg(style));
 }
 
 }
