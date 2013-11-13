@@ -20,6 +20,8 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 {
 	m_ui->setupUi(this);
 
+	setStyleSheet("QMainWindow::separator {width:0;height:0;}");
+
 	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
 
 	m_ui->tabsWidgetContents->layout()->addWidget(tabBar);

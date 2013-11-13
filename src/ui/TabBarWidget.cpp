@@ -1,11 +1,11 @@
 #include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -13,6 +13,7 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1)
 {
+	setDrawBase(false);
 	setExpanding(false);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setTabsClosable(true);
@@ -109,19 +110,25 @@ void TabBarWidget::closeOther()
 
 void TabBarWidget::updateTabs(int index)
 {
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+	const QSize size = getTabSize(isHorizontal);
 	const bool canResize = !underMouse();
-	QString style;
-	const int width = qBound(40, (size().width() / ((count() == 0) ? 1 : count())), 300);
-	const bool narrow = (width < 60);
+	const bool isNarrow = ((isHorizontal ? size.width() : size.height()) < 60);
 
 	if (canResize)
 	{
-		if (narrow)
+		if (isNarrow)
 		{
-			style = "color:transparent;";
+			setStyleSheet("QTabBar::tab {color:transparent;}");
+		}
+		else
+		{
+			setStyleSheet(QString());
 		}
 
-		setStyleSheet(QString("QTabBar::tab {width:%1px;%2}").arg(width).arg(style));
+		m_tabSize = size;
+
+		updateGeometry();
 	}
 
 	const int limit = ((index >= 0) ? (index + 1) : count());
@@ -155,7 +162,7 @@ void TabBarWidget::updateTabs(int index)
 
 			if (button)
 			{
-				button->setVisible(!narrow || (i == currentIndex()));
+				button->setVisible(!isNarrow || (i == currentIndex()));
 			}
 		}
 	}
@@ -182,6 +189,47 @@ void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
 
 			break;
 	}
+}
+
+void TabBarWidget::setShape(QTabBar::Shape shape)
+{
+	if (shape == QTabBar::RoundedNorth || shape == QTabBar::RoundedSouth)
+	{
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+		parentWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	}
+	else
+	{
+		setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
+		parentWidget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+	}
+
+	m_tabSize = getTabSize(shape == QTabBar::RoundedNorth || shape == QTabBar::RoundedSouth);
+
+	QTabBar::setShape(shape);
+
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
+}
+
+QSize TabBarWidget::tabSizeHint(int index) const
+{
+	Q_UNUSED(index)
+
+	return m_tabSize;
+}
+
+QSize TabBarWidget::getTabSize(bool isHorizontal) const
+{
+	const int size = qBound(40, ((isHorizontal ? geometry().width() : geometry().height()) / ((count() == 0) ? 1 : count())), 300);
+
+	if (isHorizontal)
+	{
+		return QSize(size, QTabBar::tabSizeHint(0).height());
+	}
+
+	return QSize(QTabBar::tabSizeHint(0).width(), size);
 }
 
 }

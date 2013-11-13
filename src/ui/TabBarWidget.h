@@ -16,6 +16,7 @@ public:
 public slots:
 	void updateTabs(int index = -1);
 	void setOrientation(Qt::DockWidgetArea orientation);
+	void setShape(QTabBar::Shape shape);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
@@ -25,11 +26,14 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void tabInserted(int index);
 	void tabRemoved(int index);
+	QSize tabSizeHint(int index) const;
+	QSize getTabSize(bool isHorizontal) const;
 
 protected slots:
 	void closeOther();
 
 private:
+	QSize m_tabSize;
 	int m_clickedTab;
 
 signals:
