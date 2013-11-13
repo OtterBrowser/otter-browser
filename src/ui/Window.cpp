@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../core/NetworkAccessManager.h"
 
 #include "ui_Window.h"
 
@@ -21,6 +22,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui->forwardButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
 	m_ui->reloadButton->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
 	m_ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+	m_ui->webView->page()->setNetworkAccessManager(new NetworkAccessManager(this));
 
 	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
 	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
