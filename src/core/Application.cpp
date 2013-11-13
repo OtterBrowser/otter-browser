@@ -58,9 +58,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	const QString iconsPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/icons";
+	const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 
-	QDir().mkpath(iconsPath);
+	QDir().mkpath(cachePath);
 
 	SettingsManager::createInstance(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/otter.conf", this);
 	SettingsManager::setDefaultValue("Browser/OpenLinksInNewWindow", false);
@@ -96,7 +96,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("Browser/EnablePlugins").toBool());
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("Browser/EnableJava").toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("Browser/EnableJavaScript").toBool());
-	globalSettings->setIconDatabasePath(iconsPath);
+	globalSettings->setIconDatabasePath(cachePath);
+	globalSettings->setOfflineStoragePath(cachePath);
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
