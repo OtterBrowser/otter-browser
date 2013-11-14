@@ -8,6 +8,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
+#include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
@@ -130,8 +131,6 @@ QAction *Window::getAction(WebAction action)
 			break;
 		case CopyAddressAction:
 			ActionsManager::setupLocalAction(actionObject, "CopyAddress");
-
-			actionObject->setEnabled(false);
 
 			break;
 		case ShowSourceAction:
@@ -589,7 +588,11 @@ void Window::triggerAction(WebAction action, bool checked)
 
 			break;
 		case RewindForwardAction:
-		m_ui->webView->page()->history()->goToItem(m_ui->webView->page()->history()->itemAt(m_ui->webView->page()->history()->count() - 1));
+			m_ui->webView->page()->history()->goToItem(m_ui->webView->page()->history()->itemAt(m_ui->webView->page()->history()->count() - 1));
+
+			break;
+		case CopyAddressAction:
+			QApplication::clipboard()->setText(getUrl().toString());
 
 			break;
 		case ZoomInAction:
