@@ -37,6 +37,7 @@ enum WebAction
 	StopScheduledPageRefreshAction,
 	ReloadAction,
 	ReloadAndBypassCacheAction,
+	ReloadTimeAction,
 	CutAction,
 	CopyAction,
 	PasteAction,
@@ -44,7 +45,15 @@ enum WebAction
 	SelectAllAction,
 	UndoAction,
 	RedoAction,
-	InspectElementAction
+	InspectElementAction,
+	PrintAction,
+	BookmarkAction,
+	CopyAddressAction,
+	ShowSourceAction,
+	ValidateAction,
+	ContentBlockingAction,
+	WebsitePreferencesAction,
+	FullScreenAction
 };
 
 class Window : public QWidget
@@ -79,6 +88,7 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
+	virtual void triggerAction(WebAction action, bool checked = false);
 	virtual void reload();
 	virtual void stop();
 	virtual void goBack();
@@ -103,14 +113,17 @@ protected:
 	QWebPage::WebAction mapAction(WebAction action) const;
 
 protected slots:
+	void triggerAction();
 	void loadUrl();
 	void loadStarted();
 	void loadFinished(bool ok);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
+	void showMenu(const QPoint &position);
 
 private:
+	QHash<WebAction, QAction*> m_customActions;
 	bool m_isLoading;
 	bool m_isPinned;
 	Ui::Window *m_ui;

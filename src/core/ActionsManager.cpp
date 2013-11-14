@@ -75,6 +75,11 @@ void ActionsManager::registerWindow(QWidget *window)
 	m_instance->addWindow(window);
 }
 
+void ActionsManager::registerAction(QWidget *window, const QString &name, const QString &text, const QIcon &icon)
+{
+	registerAction(window, new QAction(icon, text, window), name);
+}
+
 void ActionsManager::registerAction(QWidget *window, QAction *action, QString name)
 {
 	m_instance->addAction(window, action, name);

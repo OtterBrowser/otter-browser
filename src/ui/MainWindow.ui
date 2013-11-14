@@ -364,7 +364,7 @@
   </action>
   <action name="actionAddBookmark">
    <property name="text">
-    <string>Add Bookmark....</string>
+    <string>Add Bookmark...</string>
    </property>
   </action>
   <action name="actionManageBookmarks">

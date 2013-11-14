@@ -14,6 +14,7 @@ class ActionsManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(QWidget *window);
+	static void registerAction(QWidget *window, const QString &name, const QString &text, const QIcon &icon = QIcon());
 	static void registerAction(QWidget *window, QAction *action, QString name = QString());
 	static void registerActions(QWidget *window, QList<QAction*> getIdentifiers);
 	static void triggerAction(const QString &action);

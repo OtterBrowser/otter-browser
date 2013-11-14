@@ -8,9 +8,10 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
+#include <QtGui/QGuiApplication>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebPage>
-#include <QtGui/QGuiApplication>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -24,6 +25,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
 	m_ui->reloadButton->setDefaultAction(getAction(ReloadAction));
+	m_ui->webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	m_ui->webView->page()->setNetworkAccessManager(new NetworkAccessManager(this));
 
@@ -39,6 +41,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_ui->webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
+	connect(m_ui->webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
 	connect(m_ui->webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
 	connect(m_ui->webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
@@ -74,14 +77,103 @@ Window* Window::clone(QWidget *parent)
 
 QAction *Window::getAction(WebAction action)
 {
-	QWebPage::WebAction webAction = mapAction(action);
+	const QWebPage::WebAction webAction = mapAction(action);
 
 	if (webAction != QWebPage::NoWebAction)
 	{
 		return m_ui->webView->page()->action(webAction);
 	}
 
-	return NULL;
+	if (action == NoAction)
+	{
+		return NULL;
+	}
+
+	if (m_customActions.contains(action))
+	{
+		return m_customActions[action];
+	}
+
+	QAction *actionObject = new QAction(this);
+	actionObject->setData(action);
+
+	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	switch (action)
+	{
+		case RewindBackAction:
+			ActionsManager::setupLocalAction(actionObject, "RewindBack");
+
+			actionObject->setEnabled(getAction(GoBackAction)->isEnabled());
+
+			break;
+		case RewindForwardAction:
+			ActionsManager::setupLocalAction(actionObject, "RewindForward");
+
+			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
+
+			break;
+		case ReloadTimeAction:
+			ActionsManager::setupLocalAction(actionObject, "ReloadTime");
+
+			actionObject->setMenu(new QMenu(this));
+			actionObject->setEnabled(false);
+
+			break;
+		case PrintAction:
+			ActionsManager::setupLocalAction(actionObject, "Print");
+
+			break;
+		case BookmarkAction:
+			ActionsManager::setupLocalAction(actionObject, "AddBookmark");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case CopyAddressAction:
+			ActionsManager::setupLocalAction(actionObject, "CopyAddress");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case ShowSourceAction:
+			ActionsManager::setupLocalAction(actionObject, "ShowSource");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case ValidateAction:
+			ActionsManager::setupLocalAction(actionObject, "Validate");
+
+			actionObject->setMenu(new QMenu(this));
+			actionObject->setEnabled(false);
+
+			break;
+		case ContentBlockingAction:
+			ActionsManager::setupLocalAction(actionObject, "ContentBlocking");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case WebsitePreferencesAction:
+			ActionsManager::setupLocalAction(actionObject, "WebsitePreferences");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case FullScreenAction:
+			ActionsManager::setupLocalAction(actionObject, "FullScreen");
+
+			actionObject->setEnabled(false);
+
+			break;
+		default:
+			break;
+	}
+
+	m_customActions[action] = actionObject;
+
+	return actionObject;
 }
 
 void Window::changeEvent(QEvent *event)
@@ -346,6 +438,32 @@ void Window::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
+void Window::showMenu(const QPoint &position)
+{
+	QMenu menu;
+	menu.addAction(getAction(GoBackAction));
+	menu.addAction(getAction(GoForwardAction));
+	menu.addAction(getAction(RewindBackAction));
+	menu.addAction(getAction(RewindForwardAction));
+	menu.addSeparator();
+	menu.addAction(getAction(ReloadAction));
+	menu.addAction(getAction(ReloadTimeAction));
+	menu.addSeparator();
+	menu.addAction(getAction(BookmarkAction));
+	menu.addAction(getAction(CopyAddressAction));
+	menu.addAction(getAction(PrintAction));
+	menu.addSeparator();
+	menu.addAction(getAction(InspectElementAction));
+	menu.addAction(getAction(ShowSourceAction));
+	menu.addAction(getAction(ValidateAction));
+	menu.addSeparator();
+	menu.addAction(getAction(ContentBlockingAction));
+	menu.addAction(getAction(WebsitePreferencesAction));
+	menu.addSeparator();
+	menu.addAction(getAction(FullScreenAction));
+	menu.exec(m_ui->webView->mapToGlobal(position));
+}
+
 QUndoStack *Window::getUndoStack()
 {
 	return m_ui->webView->page()->undoStack();
@@ -451,6 +569,16 @@ QWebPage::WebAction Window::mapAction(WebAction action) const
 	return QWebPage::NoWebAction;
 }
 
+void Window::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WebAction>(action->data().toInt()));
+	}
+}
+
 int Window::getZoom() const
 {
 	return (m_ui->webView->zoomFactor() * 100);
@@ -481,6 +609,16 @@ bool Window::isPinned() const
 bool Window::isPrivate() const
 {
 	return m_ui->webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+}
+
+void Window::triggerAction(WebAction action, bool checked)
+{
+	const QWebPage::WebAction webAction = mapAction(action);
+
+	if (webAction != QWebPage::NoWebAction)
+	{
+		m_ui->webView->triggerPageAction(webAction, checked);
+	}
 }
 
 }
