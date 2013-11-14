@@ -22,6 +22,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privat
 	QTimer::singleShot(250, this, SLOT(open()));
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
+	connect(m_tabBar, SIGNAL(tabMoved(int,int)), this, SLOT(moveWindow(int,int)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
@@ -154,6 +155,11 @@ void WindowsManager::printPreview(QPrinter *printer)
 	{
 		window->print(printer);
 	}
+}
+
+void WindowsManager::moveWindow(int from, int to)
+{
+	m_windows.insert(to, m_windows.takeAt(from));
 }
 
 void WindowsManager::closeWindow(int index)

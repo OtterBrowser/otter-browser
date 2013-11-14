@@ -15,6 +15,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 {
 	setDrawBase(false);
 	setExpanding(false);
+	setMovable(true);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
@@ -66,6 +67,8 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 			emit requestedClose(tab);
 		}
 	}
+
+	QTabBar::mouseReleaseEvent(event);
 }
 
 void TabBarWidget::leaveEvent(QEvent *event)
