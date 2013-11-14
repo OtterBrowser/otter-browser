@@ -22,7 +22,6 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privat
 	QTimer::singleShot(250, this, SLOT(open()));
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
-	connect(m_tabBar, SIGNAL(tabMoved(int,int)), this, SLOT(moveWindow(int,int)));
 	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
@@ -51,19 +50,19 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
 	mdiWindow->showMaximized();
 
-	m_windows.append(window);
-
-	const int index = (m_windows.count() - 1);
+	const int index = m_tabBar->count();
 	QVariantHash data;
 	data["private"] = privateWindow;
+	data["window"] = QVariant::fromValue(window);
 
-	m_tabBar->addTab(window->getTitle());
+	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabData(index, data);
 	m_tabBar->setCurrentIndex(index);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 	connect(window, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
+	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
 	window->setUrl(url);
 
@@ -87,12 +86,12 @@ void WindowsManager::closeOther(int index)
 		index = getCurrentWindow();
 	}
 
-	if (index >= m_windows.count())
+	if (index >= m_tabBar->count())
 	{
 		return;
 	}
 
-	for (int i = (m_windows.count() - 1); i > index; --i)
+	for (int i = (m_tabBar->count() - 1); i > index; --i)
 	{
 		closeWindow(i);
 	}
@@ -131,7 +130,7 @@ void WindowsManager::printPreview(int index)
 		index = getCurrentWindow();
 	}
 
-	if (index < 0 || index >= m_windows.count())
+	if (index < 0 || index >= m_tabBar->count())
 	{
 		return;
 	}
@@ -156,11 +155,6 @@ void WindowsManager::printPreview(QPrinter *printer)
 	{
 		window->print(printer);
 	}
-}
-
-void WindowsManager::moveWindow(int from, int to)
-{
-	m_windows.insert(to, m_windows.takeAt(from));
 }
 
 void WindowsManager::pinWindow(int index, bool pin)
@@ -201,25 +195,27 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 void WindowsManager::closeWindow(int index)
 {
-	if (index < 0 || index >= m_windows.count() || m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
+	if (index < 0 || index >= m_tabBar->count() || m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
 	{
 		return;
 	}
 
-	if (m_windows.count() == 1)
+	if (m_tabBar->count() == 1)
 	{
-		m_windows.at(0)->setUrl(QUrl("about:blank"));
+		Window *window = getWindow(0);
 
-		return;
+		if (window)
+		{
+			window->setUrl(QUrl("about:blank"));
+
+			return;
+		}
 	}
 
 	if (index < m_currentWindow)
 	{
 		--m_currentWindow;
 	}
-
-	m_windows.at(index)->deleteLater();
-	m_windows.removeAt(index);
 
 	m_tabBar->removeTab(index);
 
@@ -378,12 +374,12 @@ void WindowsManager::setZoom(int zoom)
 
 void WindowsManager::setCurrentWindow(int index)
 {
-	if (index < 0 || index >= m_windows.count())
+	if (index < 0 || index >= m_tabBar->count())
 	{
 		index = 0;
 	}
 
-	Window *window = ((m_currentWindow >= 0 && m_currentWindow < m_windows.count()) ? m_windows.at(m_currentWindow) : NULL);
+	Window *window = getWindow(m_currentWindow);
 
 	if (window)
 	{
@@ -395,7 +391,7 @@ void WindowsManager::setCurrentWindow(int index)
 
 	m_currentWindow = index;
 
-	window = m_windows.at(m_currentWindow);
+	window = getWindow(m_currentWindow);
 
 	if (window)
 	{
@@ -429,7 +425,7 @@ void WindowsManager::setCurrentWindow(int index)
 void WindowsManager::setTitle(const QString &title)
 {
 	const QString text = (title.isEmpty() ? tr("Empty") : title);
-	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
 
 	if (!m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
 	{
@@ -446,7 +442,7 @@ void WindowsManager::setTitle(const QString &title)
 
 void WindowsManager::setIcon(const QIcon &icon)
 {
-	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
 	QVariantHash data = m_tabBar->tabData(index).toHash();
 	data["icon"] = icon;
 
@@ -456,7 +452,7 @@ void WindowsManager::setIcon(const QIcon &icon)
 
 void WindowsManager::setLoading(bool loading)
 {
-	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
+	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
 	QVariantHash data = m_tabBar->tabData(index).toHash();
 	data["loading"] = loading;
 
@@ -471,12 +467,12 @@ Window* WindowsManager::getWindow(int index) const
 		index = getCurrentWindow();
 	}
 
-	if (index < 0 || index >= m_windows.count())
+	if (index < 0 || index >= m_tabBar->count())
 	{
 		return NULL;
 	}
 
-	return m_windows.at(index);
+	return qvariant_cast<Window*>(m_tabBar->tabData(index).toHash().value("window", 0));
 }
 
 QString WindowsManager::getTitle() const
@@ -496,6 +492,19 @@ int WindowsManager::getZoom() const
 	Window *window = getWindow(getCurrentWindow());
 
 	return (window ? window->getZoom() : 100);
+}
+
+int WindowsManager::getWindowIndex(Window *window) const
+{
+	for (int i = 0; i < m_tabBar->count(); ++i)
+	{
+		if (window == qvariant_cast<Window*>(m_tabBar->tabData(i).toHash().value("window", 0)))
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 bool WindowsManager::canUndo() const

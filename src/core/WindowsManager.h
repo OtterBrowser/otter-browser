@@ -47,9 +47,11 @@ public slots:
 	void zoomOriginal();
 	void setZoom(int zoom);
 
+protected:
+	int getWindowIndex(Window *window) const;
+
 protected slots:
 	void printPreview(QPrinter *printer);
-	void moveWindow(int from, int to);
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
 	void setCurrentWindow(int index);
@@ -60,7 +62,6 @@ protected slots:
 private:
 	QMdiArea *m_area;
 	TabBarWidget *m_tabBar;
-	QList<Window*> m_windows;
 	int m_currentWindow;
 	int m_printedWindow;
 	bool m_privateSession;
