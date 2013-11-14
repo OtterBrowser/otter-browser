@@ -60,8 +60,8 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->actionZoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom-in.png")));
 	m_ui->actionZoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom-out.png")));
 	m_ui->actionZoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/zoom-original.png")));
-	m_ui->actionBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
-	m_ui->actionForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
+	m_ui->actionGoBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
+	m_ui->actionGoForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
 	m_ui->actionViewHistory->setIcon(QIcon::fromTheme("view-history", QIcon(":/icons/view-history.png")));
 	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
@@ -90,8 +90,8 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), m_windowsManager, SLOT(zoomOriginal()));
 	connect(m_ui->actionReload, SIGNAL(triggered()), m_windowsManager, SLOT(reload()));
 	connect(m_ui->actionStop, SIGNAL(triggered()), m_windowsManager, SLOT(stop()));
-	connect(m_ui->actionBack, SIGNAL(triggered()), m_windowsManager, SLOT(goBack()));
-	connect(m_ui->actionForward, SIGNAL(triggered()), m_windowsManager, SLOT(goForward()));
+	connect(m_ui->actionGoBack, SIGNAL(triggered()), m_windowsManager, SLOT(goBack()));
+	connect(m_ui->actionGoForward, SIGNAL(triggered()), m_windowsManager, SLOT(goForward()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 

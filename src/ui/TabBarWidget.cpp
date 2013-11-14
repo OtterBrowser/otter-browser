@@ -32,7 +32,6 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction("NewTab"));
 	menu.addAction(ActionsManager::getAction("NewTabPrivate"));
-	menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, "isClonable", false).toBool());
 
 	if (m_clickedTab >= 0)
 	{
@@ -49,6 +48,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			++amount;
 		}
 
+		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, "isClonable", false).toBool());
 		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
 		menu.addSeparator();
 

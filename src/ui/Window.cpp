@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../core/ActionsManager.h"
 #include "../core/NetworkAccessManager.h"
 
 #include "ui_Window.h"
@@ -20,11 +21,16 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
-	m_ui->backButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
-	m_ui->forwardButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
-	m_ui->reloadButton->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
+	m_ui->backButton->setDefaultAction(getAction(QWebPage::Back));
+	m_ui->forwardButton->setDefaultAction(getAction(QWebPage::Forward));
+	m_ui->reloadButton->setDefaultAction(getAction(QWebPage::Reload));
 	m_ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	m_ui->webView->page()->setNetworkAccessManager(new NetworkAccessManager(this));
+
+	ActionsManager::setupLocalAction(getAction(QWebPage::Back), "GoBack");
+	ActionsManager::setupLocalAction(getAction(QWebPage::Forward), "GoForward");
+	ActionsManager::setupLocalAction(getAction(QWebPage::Reload), "Reload");
+	ActionsManager::setupLocalAction(getAction(QWebPage::Stop), "Stop");
 
 	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
 	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
@@ -64,6 +70,11 @@ Window* Window::clone(QWidget *parent)
 ///TODO clone history
 
 	return window;
+}
+
+QAction *Window::getAction(QWebPage::WebAction action)
+{
+	return m_ui->webView->page()->action(action);
 }
 
 void Window::changeEvent(QEvent *event)

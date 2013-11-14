@@ -6,6 +6,7 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QUndoStack>
+#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
@@ -34,6 +35,7 @@ public:
 
 	virtual void print(QPrinter *printer);
 	virtual Window* clone(QWidget *parent = NULL);
+	virtual QAction* getAction(QWebPage::WebAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;

@@ -211,8 +211,8 @@
      </property>
      <addaction name="separator"/>
     </widget>
-    <addaction name="actionBack"/>
-    <addaction name="actionForward"/>
+    <addaction name="actionGoBack"/>
+    <addaction name="actionGoForward"/>
     <addaction name="separator"/>
     <addaction name="menuClosedTabs"/>
     <addaction name="menuClosedWindows"/>
@@ -412,12 +412,12 @@
     <string>Delete</string>
    </property>
   </action>
-  <action name="actionBack">
+  <action name="actionGoBack">
    <property name="text">
     <string>Back</string>
    </property>
   </action>
-  <action name="actionForward">
+  <action name="actionGoForward">
    <property name="text">
     <string>Forward</string>
    </property>
