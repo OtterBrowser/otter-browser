@@ -98,6 +98,29 @@ void ActionsManager::triggerAction(const QString &action)
 	}
 }
 
+void ActionsManager::setupLocalAction(QAction *localAction, const QString &globalAction, bool connectTrigger)
+{
+	if (!localAction)
+	{
+		return;
+	}
+
+	QAction *action = getAction(globalAction);
+
+	if (action)
+	{
+		localAction->setEnabled(action->isEnabled());
+		localAction->setIcon(action->icon());
+		localAction->setText(action->text());
+		localAction->setShortcut(action->shortcut());
+
+		if (connectTrigger)
+		{
+			connect(localAction, SIGNAL(triggered()), action, SLOT(trigger()));
+		}
+	}
+}
+
 void ActionsManager::restoreDefaultShortcut(QAction *action)
 {
 	if (!m_actions.contains(m_activeWindow))

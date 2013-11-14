@@ -26,6 +26,8 @@ Low priority / later:
 - tabs grouping
 - form auto completion
 - passwords manager
+- support for tab thumbnails embedded in tab bar
+- exposing MDI features
 - extensions
 - Opera Link like solution
 - improved integration with different platforms (Windows taskbar integration etc.)

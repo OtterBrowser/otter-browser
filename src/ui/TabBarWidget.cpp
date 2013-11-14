@@ -53,9 +53,10 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			QAction *globalCloseAction = ActionsManager::getAction("CloseTab");
-			QAction *closeAction = menu.addAction(globalCloseAction->icon(), globalCloseAction->text());
-			closeAction->setShortcut(globalCloseAction->shortcut());
+			QAction *closeAction = menu.addAction(QString());
+
+			ActionsManager::setupLocalAction(closeAction, "CloseTab");
+
 			closeAction->setEnabled(false);
 		}
 		else
