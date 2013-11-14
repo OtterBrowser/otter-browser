@@ -35,12 +35,35 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_clickedTab >= 0)
 	{
-		menu.addAction(ActionsManager::getAction("CloseTab"));
+		const bool isPinned = tabData(m_clickedTab).toHash().value("pinned", false).toBool();
+		int amount = 0;
 
-		if (count() > 1)
+		for (int i = 0; i < count(); ++i)
 		{
-			menu.addAction(QIcon(":/icons/tab-close-other.png"), tr("Close Other Tabs"), this, SLOT(closeOther()));
+			if (tabData(i).toHash().value("pinned", false).toBool() || i == m_clickedTab)
+			{
+				continue;
+			}
+
+			++amount;
 		}
+
+		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
+		menu.addSeparator();
+
+		if (isPinned)
+		{
+			QAction *globalCloseAction = ActionsManager::getAction("CloseTab");
+			QAction *closeAction = menu.addAction(globalCloseAction->icon(), globalCloseAction->text());
+			closeAction->setShortcut(globalCloseAction->shortcut());
+			closeAction->setEnabled(false);
+		}
+		else
+		{
+			menu.addAction(ActionsManager::getAction("CloseTab"));
+		}
+
+		menu.addAction(QIcon(":/icons/tab-close-other.png"), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0);
 	}
 
 	menu.exec(event->globalPos());
@@ -111,6 +134,11 @@ void TabBarWidget::closeOther()
 	}
 }
 
+void TabBarWidget::pinTab()
+{
+	emit requestedPin(m_clickedTab, !tabData(m_clickedTab).toHash().value("pinned", false).toBool());
+}
+
 void TabBarWidget::updateTabs(int index)
 {
 	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
@@ -138,8 +166,7 @@ void TabBarWidget::updateTabs(int index)
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
-		const QVariantHash data = tabData(i).toHash();
-		const bool isLoading = data.value("loading", false).toBool();
+		const bool isLoading = tabData(i).toHash().value("loading", false).toBool();
 		QLabel *label = qobject_cast<QLabel*>(tabButton(i, QTabBar::LeftSide));
 
 		if (label)
@@ -148,7 +175,7 @@ void TabBarWidget::updateTabs(int index)
 			{
 				label->movie()->deleteLater();
 				label->setMovie(NULL);
-				label->setPixmap(data.value("icon", QIcon(data.value("private", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
+				label->setPixmap(tabData(i).toHash().value("icon", QIcon(tabData(i).toHash().value("private", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
 			}
 			else if (isLoading && !label->movie())
 			{
@@ -165,7 +192,7 @@ void TabBarWidget::updateTabs(int index)
 
 			if (button)
 			{
-				button->setVisible(!isNarrow || (i == currentIndex()));
+				button->setVisible((!isNarrow || (i == currentIndex())) && !tabData(i).toHash().value("pinned", false).toBool());
 			}
 		}
 	}
@@ -218,14 +245,28 @@ void TabBarWidget::setShape(QTabBar::Shape shape)
 
 QSize TabBarWidget::tabSizeHint(int index) const
 {
-	Q_UNUSED(index)
+	if (tabData(index).toHash().value("pinned", false).toBool())
+	{
+		QSize size = m_tabSize;
+
+		if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+		{
+			size.setWidth(40);
+		}
+		else
+		{
+			size.setHeight(40);
+		}
+
+		return size;
+	}
 
 	return m_tabSize;
 }
 
 QSize TabBarWidget::getTabSize(bool isHorizontal) const
 {
-	const int size = qBound(40, ((isHorizontal ? geometry().width() : geometry().height()) / ((count() == 0) ? 1 : count())), 300);
+	const int size = qBound(40, ((isHorizontal ? geometry().width() : geometry().height()) / ((count() == 0) ? 1 : count())), 250);
 
 	if (isHorizontal)
 	{

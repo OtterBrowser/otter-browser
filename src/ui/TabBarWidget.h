@@ -31,14 +31,16 @@ protected:
 
 protected slots:
 	void closeOther();
+	void pinTab();
 
 private:
 	QSize m_tabSize;
 	int m_clickedTab;
 
 signals:
-	void requestedClose(int tab);
-	void requestedCloseOther(int tab);
+	void requestedPin(int index, bool pin);
+	void requestedClose(int index);
+	void requestedCloseOther(int index);
 };
 
 }

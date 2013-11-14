@@ -18,11 +18,11 @@ Medium priority / soon:
 - multiple backend support (at least Blink with upcoming QtWebEngine)
 - support for profiles / custom configuration directory
 - system tray icon
+- tabs previews
 
 Low priority / later:
 - import of existing settings etc.
 - delayed loading of Flash objects
-- tabs pinning
 - tabs grouping
 - form auto completion
 - passwords manager

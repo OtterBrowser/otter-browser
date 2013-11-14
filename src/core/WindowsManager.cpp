@@ -23,6 +23,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privat
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(tabMoved(int,int)), this, SLOT(moveWindow(int,int)));
+	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
@@ -162,9 +163,45 @@ void WindowsManager::moveWindow(int from, int to)
 	m_windows.insert(to, m_windows.takeAt(from));
 }
 
+void WindowsManager::pinWindow(int index, bool pin)
+{
+	int offset = 0;
+
+	for (int i = 0; i < m_tabBar->count(); ++i)
+	{
+		if (!m_tabBar->tabData(i).toHash().value("pinned", false).toBool())
+		{
+			break;
+		}
+
+		++offset;
+	}
+
+	if (!pin)
+	{
+		QVariantHash data = m_tabBar->tabData(index).toHash();
+		data["pinned"] = false;
+
+		m_tabBar->setTabData(index, data);
+		m_tabBar->setTabText(index, m_tabBar->tabToolTip(index));
+		m_tabBar->moveTab(index, offset);
+		m_tabBar->updateTabs();
+
+		return;
+	}
+
+	QVariantHash data = m_tabBar->tabData(index).toHash();
+	data["pinned"] = true;
+
+	m_tabBar->setTabData(index, data);
+	m_tabBar->setTabText(index, QString());
+	m_tabBar->moveTab(index, offset);
+	m_tabBar->updateTabs();
+}
+
 void WindowsManager::closeWindow(int index)
 {
-	if (index < 0 || index >= m_windows.count())
+	if (index < 0 || index >= m_windows.count() || m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
 	{
 		return;
 	}
@@ -394,7 +431,11 @@ void WindowsManager::setTitle(const QString &title)
 	const QString text = (title.isEmpty() ? tr("Empty") : title);
 	const int index = m_windows.indexOf(qobject_cast<Window*>(sender()));
 
-	m_tabBar->setTabText(index, text);
+	if (!m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
+	{
+		m_tabBar->setTabText(index, text);
+	}
+
 	m_tabBar->setTabToolTip(index, text);
 
 	if (index == getCurrentWindow())

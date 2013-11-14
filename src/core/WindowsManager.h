@@ -50,6 +50,7 @@ public slots:
 protected slots:
 	void printPreview(QPrinter *printer);
 	void moveWindow(int from, int to);
+	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
 	void setCurrentWindow(int index);
 	void setTitle(const QString &title);
