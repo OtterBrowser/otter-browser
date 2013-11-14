@@ -14,6 +14,7 @@
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -44,6 +45,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	connect(m_ui->webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
 	connect(m_ui->webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(m_ui->webView->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 }
 
 Window::~Window()
@@ -368,6 +370,18 @@ void Window::loadFinished(bool ok)
 	m_isLoading = false;
 
 	emit loadingChanged(false);
+}
+
+void Window::linkHovered(const QString &link, const QString &title)
+{
+	QString text;
+
+	if (!link.isEmpty())
+	{
+		text = (title.isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(title).arg(link));
+	}
+
+	QToolTip::showText(QCursor::pos(), text, m_ui->webView);
 }
 
 void Window::notifyTitleChanged()
