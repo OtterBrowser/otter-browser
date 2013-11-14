@@ -32,6 +32,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction("NewTab"));
 	menu.addAction(ActionsManager::getAction("NewTabPrivate"));
+	menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, "isClonable", false).toBool());
 
 	if (m_clickedTab >= 0)
 	{
@@ -138,6 +139,14 @@ void TabBarWidget::closeOther()
 	if (m_clickedTab >= 0)
 	{
 		emit requestedCloseOther(m_clickedTab);
+	}
+}
+
+void TabBarWidget::cloneTab()
+{
+	if (m_clickedTab >= 0)
+	{
+		emit requestedClone(m_clickedTab);
 	}
 }
 

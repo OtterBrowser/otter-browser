@@ -52,6 +52,8 @@ protected:
 
 protected slots:
 	void printPreview(QPrinter *printer);
+	void addWindow(Window *window);
+	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
 	void setCurrentWindow(int index);

@@ -22,6 +22,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privat
 	QTimer::singleShot(250, this, SLOT(open()));
 
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
@@ -46,24 +47,9 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 
 	window = new Window(m_area);
 	window->setPrivate(m_privateSession || privateWindow);
-
-	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
-	mdiWindow->showMaximized();
-
-	const int index = m_tabBar->count();
-
-	m_tabBar->insertTab(index, window->getTitle());
-	m_tabBar->setTabData(index, QVariant::fromValue(window));
-	m_tabBar->setCurrentIndex(index);
-
-	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
-	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
-	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
-	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
-
 	window->setUrl(url);
 
-	emit windowAdded(index);
+	addWindow(window);
 }
 
 void WindowsManager::close(int index)
@@ -151,6 +137,40 @@ void WindowsManager::printPreview(QPrinter *printer)
 	if (window)
 	{
 		window->print(printer);
+	}
+}
+
+void WindowsManager::addWindow(Window *window)
+{
+	if (!window)
+	{
+		return;
+	}
+
+	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
+	mdiWindow->showMaximized();
+
+	const int index = m_tabBar->count();
+
+	m_tabBar->insertTab(index, window->getTitle());
+	m_tabBar->setTabData(index, QVariant::fromValue(window));
+	m_tabBar->setCurrentIndex(index);
+
+	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
+	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
+	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
+	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
+
+	emit windowAdded(index);
+}
+
+void WindowsManager::cloneWindow(int index)
+{
+	Window *window = getWindow(index);
+
+	if (window && window->isClonable())
+	{
+		addWindow(window->clone(m_area));
 	}
 }
 

@@ -33,6 +33,7 @@ public:
 	~Window();
 
 	virtual void print(QPrinter *printer);
+	virtual Window* clone(QWidget *parent = NULL);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;

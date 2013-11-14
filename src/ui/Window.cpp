@@ -48,6 +48,24 @@ void Window::print(QPrinter *printer)
 	m_ui->webView->print(printer);
 }
 
+Window* Window::clone(QWidget *parent)
+{
+	if (!isClonable())
+	{
+		return NULL;
+	}
+
+	Window *window = new Window(parent);
+	window->setPinned(isPinned());
+	window->setPrivate(isPrivate());
+	window->setUrl(getUrl());
+	window->setZoom(getZoom());
+
+///TODO clone history
+
+	return window;
+}
+
 void Window::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
