@@ -36,6 +36,21 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerActions(this, m_ui->menuBookmarks->actions());
 	ActionsManager::registerActions(this, m_ui->menuTools->actions());
 	ActionsManager::registerActions(this, m_ui->menuHelp->actions());
+	ActionsManager::registerAction(this, "OpenLinkInThisTab", tr("Open"));
+	ActionsManager::registerAction(this, "OpenLinkInNewTab", tr("Open in New Tab"));
+	ActionsManager::registerAction(this, "OpenLinkInNewTabBackground", tr("Open in New Background Tab"));
+	ActionsManager::registerAction(this, "OpenLinkInNewWindow", tr("Open in New Window"));
+	ActionsManager::registerAction(this, "OpenLinkInNewWindowBackground", tr("Open in New Background Window"));
+	ActionsManager::registerAction(this, "CopyLinkToClipboard", tr("Copy Link to Clipboard"));
+	ActionsManager::registerAction(this, "OpenFrameInThisTab", tr("Open"));
+	ActionsManager::registerAction(this, "OpenFrameInNewTab", tr("Open in New Tab"));
+	ActionsManager::registerAction(this, "OpenFrameInNewTabBackground", tr("Open in New Background Tab"));
+	ActionsManager::registerAction(this, "CopyFrameLinkToClipboard", tr("Copy Frame Link to Clipboard"));
+	ActionsManager::registerAction(this, "ReloadFrame", tr("Reload"));
+	ActionsManager::registerAction(this, "ViewSourceFrame", tr("View Source"));
+	ActionsManager::registerAction(this, "SaveLinkToDisk", tr("Save Link Target As..."));
+	ActionsManager::registerAction(this, "SaveLinkToDownloads", tr("Save to Downloads"));
+	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."));
 	ActionsManager::registerAction(this, "RewindBack", tr("Rewind Back"), QIcon::fromTheme("go-first", QIcon(":/icons/go-first.png")));
 	ActionsManager::registerAction(this, "RewindForward", tr("Rewind Forward"), QIcon::fromTheme("go-last", QIcon(":/icons/go-last.png")));
 	ActionsManager::registerAction(this, "ReloadTime", tr("Reload Each"));
@@ -43,6 +58,11 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerAction(this, "Validate", tr("Validate"));
 	ActionsManager::registerAction(this, "ContentBlocking", tr("Content Blocking..."));
 	ActionsManager::registerAction(this, "WebsitePreferences", tr("Website Preferences..."));
+	ActionsManager::registerAction(this, "ImageProperties", tr("Image Properties..."));
+	ActionsManager::registerAction(this, "OpenImageInNewTab", tr("Open Image"));
+	ActionsManager::registerAction(this, "SaveImageToDisk", tr("Save Image..."));
+	ActionsManager::registerAction(this, "CopyImageToClipboard", tr("Copy Image to Clipboard."));
+	ActionsManager::registerAction(this, "CopyImageUrlToClipboard", tr("Copy Image Link to Clipboard"));
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
 	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));

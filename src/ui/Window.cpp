@@ -36,6 +36,15 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	ActionsManager::setupLocalAction(getAction(GoForwardAction), "GoForward");
 	ActionsManager::setupLocalAction(getAction(ReloadAction), "Reload");
 	ActionsManager::setupLocalAction(getAction(StopAction), "Stop");
+	ActionsManager::setupLocalAction(getAction(OpenLinkInThisTabAction), "OpenLinkInThisTab");
+	ActionsManager::setupLocalAction(getAction(OpenLinkInNewWindowAction), "OpenLinkInNewWindow");
+	ActionsManager::setupLocalAction(getAction(OpenFrameInNewTabAction), "OpenFrameInNewTab");
+	ActionsManager::setupLocalAction(getAction(SaveLinkToDiskAction), "SaveLinkToDisk");
+	ActionsManager::setupLocalAction(getAction(CopyLinkToClipboardAction), "CopyLinkToClipboard");
+	ActionsManager::setupLocalAction(getAction(OpenImageInNewTabAction), "OpenImageInNewTab");
+	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), "SaveImageToDisk");
+	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), "CopyImageToClipboard");
+	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), "CopyImageUrlToClipboard");
 
 	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
 	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
@@ -103,6 +112,60 @@ QAction *Window::getAction(WebAction action)
 
 	switch (action)
 	{
+		case OpenLinkInNewTabAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTab");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case OpenLinkInNewTabBackgroundAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTabBackground");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case OpenLinkInNewWindowBackgroundAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewWindowBackground");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case OpenFrameInThisTabAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenFrameInThisTab");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case OpenFrameInNewTabBackgroundAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenFrameInNewTabBackground");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case CopyFrameLinkToClipboardAction:
+			ActionsManager::setupLocalAction(actionObject, "CopyFrameLinkToClipboard");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case ViewSourceFrameAction:
+			ActionsManager::setupLocalAction(actionObject, "ViewSourceFrame");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case ReloadFrameAction:
+			ActionsManager::setupLocalAction(actionObject, "ReloadFrame");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case SaveLinkToDownloadsAction:
+			ActionsManager::setupLocalAction(actionObject, "SaveLinkToDownloads");
+
+			actionObject->setEnabled(false);
+
+			break;
 		case RewindBackAction:
 			ActionsManager::setupLocalAction(actionObject, "RewindBack");
 
@@ -128,6 +191,12 @@ QAction *Window::getAction(WebAction action)
 			break;
 		case BookmarkAction:
 			ActionsManager::setupLocalAction(actionObject, "AddBookmark");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case BookmarkLinkAction:
+			ActionsManager::setupLocalAction(actionObject, "BookmarkLink");
 
 			actionObject->setEnabled(false);
 
@@ -177,6 +246,12 @@ QAction *Window::getAction(WebAction action)
 			break;
 		case ZoomOriginalAction:
 			ActionsManager::setupLocalAction(actionObject, "ZoomOriginal");
+
+			break;
+		case ImagePropertiesAction:
+			ActionsManager::setupLocalAction(actionObject, "ImageProperties");
+
+			actionObject->setEnabled(false);
 
 			break;
 		default:
@@ -416,27 +491,89 @@ void Window::notifyIconChanged()
 
 void Window::showMenu(const QPoint &position)
 {
+	const QWebHitTestResult result = m_ui->webView->page()->frameAt(position)->hitTestContent(position);
 	QMenu menu;
-	menu.addAction(getAction(GoBackAction));
-	menu.addAction(getAction(GoForwardAction));
-	menu.addAction(getAction(RewindBackAction));
-	menu.addAction(getAction(RewindForwardAction));
-	menu.addSeparator();
-	menu.addAction(getAction(ReloadAction));
-	menu.addAction(getAction(ReloadTimeAction));
-	menu.addSeparator();
-	menu.addAction(getAction(BookmarkAction));
-	menu.addAction(getAction(CopyAddressAction));
-	menu.addAction(getAction(PrintAction));
-	menu.addSeparator();
-	menu.addAction(getAction(InspectElementAction));
-	menu.addAction(getAction(ViewSourceAction));
-	menu.addAction(getAction(ValidateAction));
-	menu.addSeparator();
-	menu.addAction(getAction(ContentBlockingAction));
-	menu.addAction(getAction(WebsitePreferencesAction));
-	menu.addSeparator();
-	menu.addAction(getAction(FullScreenAction));
+
+	if (!result.pixmap().isNull() || result.linkUrl().isValid())
+	{
+		if (result.linkUrl().isValid())
+		{
+			menu.addAction(getAction(OpenLinkInThisTabAction));
+			menu.addAction(getAction(OpenLinkInNewTabAction));
+			menu.addAction(getAction(OpenLinkInNewTabBackgroundAction));
+			menu.addSeparator();
+			menu.addAction(getAction(OpenLinkInNewWindowAction));
+			menu.addAction(getAction(OpenLinkInNewWindowBackgroundAction));
+			menu.addSeparator();
+			menu.addAction(getAction(BookmarkLinkAction));
+			menu.addAction(getAction(CopyLinkToClipboardAction));
+			menu.addSeparator();
+			menu.addAction(getAction(SaveLinkToDiskAction));
+			menu.addAction(getAction(SaveLinkToDownloadsAction));
+
+			if (result.pixmap().isNull())
+			{
+				menu.addAction(getAction(InspectElementAction));
+			}
+			else
+			{
+				menu.addSeparator();
+			}
+		}
+
+		if (!result.pixmap().isNull())
+		{
+			menu.addAction(getAction(OpenImageInNewTabAction));
+			menu.addAction(getAction(CopyImageUrlToClipboardAction));
+			menu.addSeparator();
+			menu.addAction(getAction(SaveImageToDiskAction));
+			menu.addAction(getAction(CopyImageToClipboardAction));
+			menu.addSeparator();
+			menu.addAction(getAction(InspectElementAction));
+			menu.addAction(getAction(ImagePropertiesAction));
+		}
+	}
+	else
+	{
+		menu.addAction(getAction(GoBackAction));
+		menu.addAction(getAction(GoForwardAction));
+		menu.addAction(getAction(RewindBackAction));
+		menu.addAction(getAction(RewindForwardAction));
+		menu.addSeparator();
+		menu.addAction(getAction(ReloadAction));
+		menu.addAction(getAction(ReloadTimeAction));
+		menu.addSeparator();
+		menu.addAction(getAction(BookmarkAction));
+		menu.addAction(getAction(CopyAddressAction));
+		menu.addAction(getAction(PrintAction));
+		menu.addSeparator();
+		menu.addAction(getAction(InspectElementAction));
+		menu.addAction(getAction(ViewSourceAction));
+		menu.addAction(getAction(ValidateAction));
+		menu.addSeparator();
+
+		if (result.frame() != m_ui->webView->page()->mainFrame())
+		{
+			QMenu *frameMenu = new QMenu(&menu);
+			frameMenu->setTitle(tr("Frame"));
+			frameMenu->addAction(getAction(OpenFrameInThisTabAction));
+			frameMenu->addAction(getAction(OpenFrameInNewTabAction));
+			frameMenu->addAction(getAction(OpenFrameInNewTabBackgroundAction));
+			frameMenu->addSeparator();
+			frameMenu->addAction(getAction(ViewSourceFrameAction));
+			frameMenu->addAction(getAction(ReloadFrameAction));
+			frameMenu->addAction(getAction(CopyFrameLinkToClipboardAction));
+
+			menu.addMenu(frameMenu);
+			menu.addSeparator();
+		}
+
+		menu.addAction(getAction(ContentBlockingAction));
+		menu.addAction(getAction(WebsitePreferencesAction));
+		menu.addSeparator();
+		menu.addAction(getAction(FullScreenAction));
+	}
+
 	menu.exec(m_ui->webView->mapToGlobal(position));
 }
 
@@ -494,17 +631,17 @@ QWebPage::WebAction Window::mapAction(WebAction action) const
 			return QWebPage::OpenLink;
 		case OpenLinkInNewWindowAction:
 			return QWebPage::OpenLinkInNewWindow;
-		case OpenLinkInThisWindowAction:
+		case OpenLinkInThisTabAction:
 			return QWebPage::OpenLinkInThisWindow;
-		case OpenFrameInNewWindowAction:
+		case OpenFrameInNewTabAction:
 			return QWebPage::OpenFrameInNewWindow;
-		case DownloadLinkToDiskAction:
+		case SaveLinkToDiskAction:
 			return QWebPage::DownloadLinkToDisk;
 		case CopyLinkToClipboardAction:
 			return QWebPage::CopyLinkToClipboard;
-		case OpenImageInNewWindowAction:
+		case OpenImageInNewTabAction:
 			return QWebPage::OpenImageInNewWindow;
-		case DownloadImageToDiskAction:
+		case SaveImageToDiskAction:
 			return QWebPage::DownloadImageToDisk;
 		case CopyImageToClipboardAction:
 			return QWebPage::CopyImageToClipboard;
