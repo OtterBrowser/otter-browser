@@ -48,7 +48,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="Otter::StatusBarWidget" name="statusBar"/>
   <widget class="QDockWidget" name="panelWidget">
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
@@ -450,6 +450,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::StatusBarWidget</class>
+   <extends>QStatusBar</extends>
+   <header>src/ui/StatusBarWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

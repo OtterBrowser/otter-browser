@@ -1,5 +1,6 @@
 #include "WindowsManager.h"
 #include "SettingsManager.h"
+#include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 #include "../ui/Window.h"
 
@@ -12,9 +13,10 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privateSession) : QObject(area),
+WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession) : QObject(area),
 	m_area(area),
 	m_tabBar(tabBar),
+	m_statusBar(statusBar),
 	m_currentWindow(-1),
 	m_printedWindow(-1),
 	m_privateSession(privateSession)
@@ -155,6 +157,8 @@ void WindowsManager::addWindow(Window *window)
 	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 	m_tabBar->setCurrentIndex(index);
+
+	setCurrentWindow(index);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
@@ -398,11 +402,13 @@ void WindowsManager::setCurrentWindow(int index)
 		disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(redoTextChanged(QString)));
 		disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(canUndoChanged(bool)));
 		disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(canRedoChanged(bool)));
+		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
+		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
 
 	m_currentWindow = index;
 
-	window = getWindow(m_currentWindow);
+	window = getWindow(index);
 
 	if (window)
 	{
@@ -418,6 +424,8 @@ void WindowsManager::setCurrentWindow(int index)
 			}
 		}
 
+		m_statusBar->setZoom(window->getZoom());
+
 		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
 		emit undoTextChanged(window->getUndoStack()->undoText());
 		emit redoTextChanged(window->getUndoStack()->redoText());
@@ -428,6 +436,8 @@ void WindowsManager::setCurrentWindow(int index)
 		connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(redoTextChanged(QString)));
 		connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(canUndoChanged(bool)));
 		connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(canRedoChanged(bool)));
+		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
+		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
 
 	emit currentWindowChanged(index);

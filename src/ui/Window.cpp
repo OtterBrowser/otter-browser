@@ -148,7 +148,7 @@ void Window::zoomOut()
 
 void Window::zoomOriginal()
 {
-	setZoom(1);
+	setZoom(100);
 }
 
 void Window::setZoom(int zoom)
@@ -156,9 +156,9 @@ void Window::setZoom(int zoom)
 	if (zoom != getZoom())
 	{
 		m_ui->webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
-	}
 
-	emit zoomChanged(zoom);
+		emit zoomChanged(zoom);
+	}
 }
 
 void Window::setUrl(const QUrl &url)

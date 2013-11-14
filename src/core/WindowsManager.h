@@ -8,15 +8,16 @@
 namespace Otter
 {
 
-class Window;
+class StatusBarWidget;
 class TabBarWidget;
+class Window;
 
 class WindowsManager : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, bool privateSession = false);
+	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
 
 	Window* getWindow(int index = -1) const;
 	QString getTitle() const;
@@ -62,6 +63,7 @@ protected slots:
 private:
 	QMdiArea *m_area;
 	TabBarWidget *m_tabBar;
+	StatusBarWidget *m_statusBar;
 	int m_currentWindow;
 	int m_printedWindow;
 	bool m_privateSession;

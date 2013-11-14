@@ -19,7 +19,8 @@ SOURCES += src/main.cpp\
     src/ui/Window.cpp \
     src/core/WindowsManager.cpp \
     src/core/ActionsManager.cpp \
-    src/core/NetworkAccessManager.cpp
+    src/core/NetworkAccessManager.cpp \
+    src/ui/StatusBarWidget.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -30,7 +31,8 @@ HEADERS += src/ui/MainWindow.h \
     src/ui/Window.h \
     src/core/WindowsManager.h \
     src/core/ActionsManager.h \
-    src/core/NetworkAccessManager.h
+    src/core/NetworkAccessManager.h \
+    src/ui/StatusBarWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

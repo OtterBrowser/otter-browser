@@ -27,6 +27,7 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->tabsWidgetContents->layout()->addWidget(tabBar);
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
+	ActionsManager::setActiveWindow(this);
 	ActionsManager::registerWindow(this);
 	ActionsManager::registerActions(this, m_ui->menuFile->actions());
 	ActionsManager::registerActions(this, m_ui->menuEdit->actions());
@@ -65,8 +66,9 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
+	m_ui->statusBar->setup();
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, privateSession);
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
 
 	setWindowTitle(m_windowsManager->getTitle());
 
