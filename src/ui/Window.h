@@ -16,6 +16,37 @@ namespace Ui
 	class Window;
 }
 
+enum WebAction
+{
+	NoAction = 0,
+	OpenLinkAction,
+	OpenLinkInNewWindowAction,
+	OpenLinkInThisWindowAction,
+	OpenFrameInNewWindowAction,
+	DownloadLinkToDiskAction,
+	CopyLinkToClipboardAction,
+	OpenImageInNewWindowAction,
+	DownloadImageToDiskAction,
+	CopyImageToClipboardAction,
+	CopyImageUrlToClipboardAction,
+	GoBackAction,
+	GoForwardAction,
+	RewindBackAction,
+	RewindForwardAction,
+	StopAction,
+	StopScheduledPageRefreshAction,
+	ReloadAction,
+	ReloadAndBypassCacheAction,
+	CutAction,
+	CopyAction,
+	PasteAction,
+	DeleteAction,
+	SelectAllAction,
+	UndoAction,
+	RedoAction,
+	InspectElementAction
+};
+
 class Window : public QWidget
 {
 	Q_OBJECT
@@ -35,7 +66,7 @@ public:
 
 	virtual void print(QPrinter *printer);
 	virtual Window* clone(QWidget *parent = NULL);
-	virtual QAction* getAction(QWebPage::WebAction action);
+	virtual QAction* getAction(WebAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
@@ -69,6 +100,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	QWebPage::WebAction mapAction(WebAction action) const;
 
 protected slots:
 	void loadUrl();

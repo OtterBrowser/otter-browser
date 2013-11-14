@@ -21,16 +21,16 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
-	m_ui->backButton->setDefaultAction(getAction(QWebPage::Back));
-	m_ui->forwardButton->setDefaultAction(getAction(QWebPage::Forward));
-	m_ui->reloadButton->setDefaultAction(getAction(QWebPage::Reload));
+	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
+	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
+	m_ui->reloadButton->setDefaultAction(getAction(ReloadAction));
 	m_ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	m_ui->webView->page()->setNetworkAccessManager(new NetworkAccessManager(this));
 
-	ActionsManager::setupLocalAction(getAction(QWebPage::Back), "GoBack");
-	ActionsManager::setupLocalAction(getAction(QWebPage::Forward), "GoForward");
-	ActionsManager::setupLocalAction(getAction(QWebPage::Reload), "Reload");
-	ActionsManager::setupLocalAction(getAction(QWebPage::Stop), "Stop");
+	ActionsManager::setupLocalAction(getAction(GoBackAction), "GoBack");
+	ActionsManager::setupLocalAction(getAction(GoForwardAction), "GoForward");
+	ActionsManager::setupLocalAction(getAction(ReloadAction), "Reload");
+	ActionsManager::setupLocalAction(getAction(StopAction), "Stop");
 
 	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
 	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
@@ -72,9 +72,16 @@ Window* Window::clone(QWidget *parent)
 	return window;
 }
 
-QAction *Window::getAction(QWebPage::WebAction action)
+QAction *Window::getAction(WebAction action)
 {
-	return m_ui->webView->page()->action(action);
+	QWebPage::WebAction webAction = mapAction(action);
+
+	if (webAction != QWebPage::NoWebAction)
+	{
+		return m_ui->webView->page()->action(webAction);
+	}
+
+	return NULL;
 }
 
 void Window::changeEvent(QEvent *event)
@@ -383,6 +390,65 @@ QIcon Window::getIcon() const
 	const QIcon icon = m_ui->webView->icon();
 
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
+}
+
+QWebPage::WebAction Window::mapAction(WebAction action) const
+{
+	switch (action)
+	{
+		case OpenLinkAction:
+			return QWebPage::OpenLink;
+		case OpenLinkInNewWindowAction:
+			return QWebPage::OpenLinkInNewWindow;
+		case OpenLinkInThisWindowAction:
+			return QWebPage::OpenLinkInThisWindow;
+		case OpenFrameInNewWindowAction:
+			return QWebPage::OpenFrameInNewWindow;
+		case DownloadLinkToDiskAction:
+			return QWebPage::DownloadLinkToDisk;
+		case CopyLinkToClipboardAction:
+			return QWebPage::CopyLinkToClipboard;
+		case OpenImageInNewWindowAction:
+			return QWebPage::OpenImageInNewWindow;
+		case DownloadImageToDiskAction:
+			return QWebPage::DownloadImageToDisk;
+		case CopyImageToClipboardAction:
+			return QWebPage::CopyImageToClipboard;
+		case CopyImageUrlToClipboardAction:
+			return QWebPage::CopyImageUrlToClipboard;
+		case GoBackAction:
+			return QWebPage::Back;
+		case GoForwardAction:
+			return QWebPage::Forward;
+		case StopAction:
+			return QWebPage::Stop;
+		case StopScheduledPageRefreshAction:
+			return QWebPage::StopScheduledPageRefresh;
+		case ReloadAction:
+			return QWebPage::Reload;
+		case ReloadAndBypassCacheAction:
+			return QWebPage::ReloadAndBypassCache;
+		case CutAction:
+			return QWebPage::Cut;
+		case CopyAction:
+			return QWebPage::Copy;
+		case PasteAction:
+			return QWebPage::Paste;
+		case DeleteAction:
+			return QWebPage::DeleteEndOfWord;
+		case SelectAllAction:
+			return QWebPage::SelectAll;
+		case UndoAction:
+			return QWebPage::Undo;
+		case RedoAction:
+			return QWebPage::Redo;
+		case InspectElementAction:
+			return QWebPage::InspectElement;
+		default:
+			return QWebPage::NoWebAction;
+	}
+
+	return QWebPage::NoWebAction;
 }
 
 int Window::getZoom() const
