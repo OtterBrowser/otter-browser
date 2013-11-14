@@ -1,6 +1,8 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
+#include <QtCore/QUrl>
+#include <QtGui/QIcon>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QUndoStack>
@@ -16,6 +18,15 @@ namespace Ui
 class Window : public QWidget
 {
 	Q_OBJECT
+	Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
+	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
+	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
+	Q_PROPERTY(int zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
+	Q_PROPERTY(bool isClonable READ isClonable)
+	Q_PROPERTY(bool isEmpty READ isEmpty)
+	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
+	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
+	Q_PROPERTY(bool isPrivate READ isPrivate WRITE setPrivate NOTIFY isPrivateChanged)
 
 public:
 	explicit Window(QWidget *parent = NULL);
@@ -27,7 +38,10 @@ public:
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
 	virtual int getZoom() const;
+	virtual bool isClonable() const;
 	virtual bool isEmpty() const;
+	virtual bool isLoading() const;
+	virtual bool isPinned() const;
 	virtual bool isPrivate() const;
 
 public slots:
@@ -47,6 +61,7 @@ public slots:
 	virtual void zoomOriginal();
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
+	virtual void setPinned(bool pinned);
 	virtual void setPrivate(bool enabled);
 
 protected:
@@ -62,6 +77,7 @@ protected slots:
 
 private:
 	bool m_isLoading;
+	bool m_isPinned;
 	Ui::Window *m_ui;
 
 signals:
@@ -71,6 +87,9 @@ signals:
 	void loadingChanged(bool loading);
 	void undoTextChanged(const QString &undoText);
 	void redoTextChanged(const QString &redoText);
+	void zoomChanged(int zoom);
+	void isPinnedChanged(bool pinned);
+	void isPrivateChanged(bool pinned);
 	void canUndoChanged(bool canUndo);
 	void canRedoChanged(bool canRedo);
 };

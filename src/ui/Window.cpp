@@ -16,6 +16,7 @@ namespace Otter
 
 Window::Window(QWidget *parent) : QWidget(parent),
 	m_isLoading(false),
+	m_isPinned(false),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
@@ -119,22 +120,27 @@ void Window::selectAll()
 
 void Window::zoomIn()
 {
-	m_ui->webView->setZoomFactor(qMin((m_ui->webView->zoomFactor() + 0.1), (qreal) 100));
+	setZoom(qMin((getZoom() + 10), 10000));
 }
 
 void Window::zoomOut()
 {
-	m_ui->webView->setZoomFactor(qMax((m_ui->webView->zoomFactor() - 0.1), 0.1));
+	setZoom(qMax((getZoom() - 10), 10));
 }
 
 void Window::zoomOriginal()
 {
-	m_ui->webView->setZoomFactor(1);
+	setZoom(1);
 }
 
 void Window::setZoom(int zoom)
 {
-	m_ui->webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+	if (zoom != getZoom())
+	{
+		m_ui->webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+	}
+
+	emit zoomChanged(zoom);
 }
 
 void Window::setUrl(const QUrl &url)
@@ -244,11 +250,26 @@ void Window::setUrl(const QUrl &url)
 	notifyIconChanged();
 }
 
+void Window::setPinned(bool pinned)
+{
+	if (pinned != m_isPinned)
+	{
+		m_isPinned = pinned;
+
+		emit isPinnedChanged(pinned);
+	}
+}
+
 void Window::setPrivate(bool enabled)
 {
-	m_ui->webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
+	if (enabled != m_ui->webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
+	{
+		m_ui->webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
 
-	notifyIconChanged();
+		notifyIconChanged();
+
+		emit isPrivateChanged(enabled);
+	}
 }
 
 void Window::loadUrl()
@@ -340,11 +361,26 @@ int Window::getZoom() const
 	return (m_ui->webView->zoomFactor() * 100);
 }
 
+bool Window::isClonable() const
+{
+	return true;
+}
+
 bool Window::isEmpty() const
 {
 	const QUrl url = m_ui->webView->url();
 
 	return (url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank"));
+}
+
+bool Window::isLoading() const
+{
+	return m_isLoading;
+}
+
+bool Window::isPinned() const
+{
+	return m_isPinned;
 }
 
 bool Window::isPrivate() const

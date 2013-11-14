@@ -13,10 +13,13 @@ class TabBarWidget : public QTabBar
 public:
 	explicit TabBarWidget(QWidget *parent = NULL);
 
+	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
+
 public slots:
 	void updateTabs(int index = -1);
 	void setOrientation(Qt::DockWidgetArea orientation);
 	void setShape(QTabBar::Shape shape);
+	void setTabProperty(int index, const QString &key, const QVariant &value);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);

@@ -51,17 +51,14 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 	mdiWindow->showMaximized();
 
 	const int index = m_tabBar->count();
-	QVariantHash data;
-	data["private"] = privateWindow;
-	data["window"] = QVariant::fromValue(window);
 
 	m_tabBar->insertTab(index, window->getTitle());
-	m_tabBar->setTabData(index, data);
+	m_tabBar->setTabData(index, QVariant::fromValue(window));
 	m_tabBar->setCurrentIndex(index);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
-	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-	connect(window, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
+	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
+	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
 	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
 	window->setUrl(url);
@@ -163,7 +160,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 	for (int i = 0; i < m_tabBar->count(); ++i)
 	{
-		if (!m_tabBar->tabData(i).toHash().value("pinned", false).toBool())
+		if (!m_tabBar->getTabProperty(i, "isPinned", false).toBool())
 		{
 			break;
 		}
@@ -173,10 +170,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 	if (!pin)
 	{
-		QVariantHash data = m_tabBar->tabData(index).toHash();
-		data["pinned"] = false;
-
-		m_tabBar->setTabData(index, data);
+		m_tabBar->setTabProperty(index, "isPinned", false);
 		m_tabBar->setTabText(index, m_tabBar->tabToolTip(index));
 		m_tabBar->moveTab(index, offset);
 		m_tabBar->updateTabs();
@@ -184,10 +178,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 		return;
 	}
 
-	QVariantHash data = m_tabBar->tabData(index).toHash();
-	data["pinned"] = true;
-
-	m_tabBar->setTabData(index, data);
+	m_tabBar->setTabProperty(index, "isPinned", true);
 	m_tabBar->setTabText(index, QString());
 	m_tabBar->moveTab(index, offset);
 	m_tabBar->updateTabs();
@@ -195,7 +186,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 void WindowsManager::closeWindow(int index)
 {
-	if (index < 0 || index >= m_tabBar->count() || m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
+	if (index < 0 || index >= m_tabBar->count() || m_tabBar->getTabProperty(index, "isPinned", false).toBool())
 	{
 		return;
 	}
@@ -427,7 +418,7 @@ void WindowsManager::setTitle(const QString &title)
 	const QString text = (title.isEmpty() ? tr("Empty") : title);
 	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
 
-	if (!m_tabBar->tabData(index).toHash().value("pinned", false).toBool())
+	if (!m_tabBar->getTabProperty(index, "isPinned", false).toBool())
 	{
 		m_tabBar->setTabText(index, text);
 	}
@@ -438,26 +429,6 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		emit windowTitleChanged(QString("%1 - Otter").arg(text));
 	}
-}
-
-void WindowsManager::setIcon(const QIcon &icon)
-{
-	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
-	QVariantHash data = m_tabBar->tabData(index).toHash();
-	data["icon"] = icon;
-
-	m_tabBar->setTabData(index, data);
-	m_tabBar->updateTabs(index);
-}
-
-void WindowsManager::setLoading(bool loading)
-{
-	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
-	QVariantHash data = m_tabBar->tabData(index).toHash();
-	data["loading"] = loading;
-
-	m_tabBar->setTabData(index, data);
-	m_tabBar->updateTabs(index);
 }
 
 Window* WindowsManager::getWindow(int index) const
@@ -472,7 +443,7 @@ Window* WindowsManager::getWindow(int index) const
 		return NULL;
 	}
 
-	return qvariant_cast<Window*>(m_tabBar->tabData(index).toHash().value("window", 0));
+	return qvariant_cast<Window*>(m_tabBar->tabData(index));
 }
 
 QString WindowsManager::getTitle() const
@@ -498,7 +469,7 @@ int WindowsManager::getWindowIndex(Window *window) const
 {
 	for (int i = 0; i < m_tabBar->count(); ++i)
 	{
-		if (window == qvariant_cast<Window*>(m_tabBar->tabData(i).toHash().value("window", 0)))
+		if (window == qvariant_cast<Window*>(m_tabBar->tabData(i)))
 		{
 			return i;
 		}
