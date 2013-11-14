@@ -136,8 +136,8 @@ QAction *Window::getAction(WebAction action)
 			ActionsManager::setupLocalAction(actionObject, "CopyAddress");
 
 			break;
-		case ShowSourceAction:
-			ActionsManager::setupLocalAction(actionObject, "ShowSource");
+		case ViewSourceAction:
+			ActionsManager::setupLocalAction(actionObject, "ViewSource");
 
 			actionObject->setEnabled(false);
 
@@ -430,7 +430,7 @@ void Window::showMenu(const QPoint &position)
 	menu.addAction(getAction(PrintAction));
 	menu.addSeparator();
 	menu.addAction(getAction(InspectElementAction));
-	menu.addAction(getAction(ShowSourceAction));
+	menu.addAction(getAction(ViewSourceAction));
 	menu.addAction(getAction(ValidateAction));
 	menu.addSeparator();
 	menu.addAction(getAction(ContentBlockingAction));

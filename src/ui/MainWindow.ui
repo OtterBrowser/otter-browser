@@ -156,12 +156,26 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuTextEncoding">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Text Encoding</string>
+     </property>
+    </widget>
     <addaction name="actionReload"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionZoomIn"/>
     <addaction name="actionZoomOut"/>
     <addaction name="actionZoomOriginal"/>
+    <addaction name="separator"/>
+    <addaction name="actionFullScreen"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewSource"/>
+    <addaction name="separator"/>
+    <addaction name="menuTextEncoding"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
     <property name="enabled">
@@ -446,6 +460,22 @@
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionViewSource">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>View Source</string>
+   </property>
+  </action>
+  <action name="actionFullScreen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Full Screen</string>
    </property>
   </action>
  </widget>

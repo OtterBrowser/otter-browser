@@ -40,11 +40,9 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerAction(this, "RewindForward", tr("Rewind Forward"), QIcon::fromTheme("go-last", QIcon(":/icons/go-last.png")));
 	ActionsManager::registerAction(this, "ReloadTime", tr("Reload Each"));
 	ActionsManager::registerAction(this, "CopyAddress", tr("Copy Address"));
-	ActionsManager::registerAction(this, "ShowSource", tr("Show Source"));
 	ActionsManager::registerAction(this, "Validate", tr("Validate"));
 	ActionsManager::registerAction(this, "ContentBlocking", tr("Content Blocking..."));
 	ActionsManager::registerAction(this, "WebsitePreferences", tr("Website Preferences..."));
-	ActionsManager::registerAction(this, "FullScreen", tr("Toggle Fullscreen"));
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
 	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));
