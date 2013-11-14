@@ -73,9 +73,15 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (tabAt(event->pos()) < 0)
+	const int tab = tabAt(event->pos());
+
+	if (tab < 0)
 	{
 		ActionsManager::triggerAction("NewTab");
+	}
+	else
+	{
+		emit requestedClose(tab);
 	}
 }
 
