@@ -123,7 +123,6 @@ void TabBarWidget::tabInserted(int index)
 	label->setFixedSize(QSize(16, 16));
 
 	setTabButton(index, QTabBar::LeftSide, label);
-
 	updateTabs();
 }
 
@@ -200,9 +199,13 @@ void TabBarWidget::updateTabs(int index)
 
 		if (label)
 		{
-			if (!isLoading && label->movie())
+			if (!isLoading && (label->movie() || !label->pixmap()))
 			{
-				label->movie()->deleteLater();
+				if (label->movie())
+				{
+					label->movie()->deleteLater();
+				}
+
 				label->setMovie(NULL);
 				label->setPixmap(getTabProperty(i, "icon", QIcon(getTabProperty(i, "isPrivate", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
 			}
