@@ -119,6 +119,7 @@ private:
 	Ui::Window *m_ui;
 
 signals:
+	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);

@@ -45,6 +45,7 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	connect(m_ui->webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
 	connect(m_ui->webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(m_ui->webView->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_ui->webView->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 }
 
@@ -382,6 +383,8 @@ void Window::linkHovered(const QString &link, const QString &title)
 	}
 
 	QToolTip::showText(QCursor::pos(), text, m_ui->webView);
+
+	emit statusMessageChanged(link, 0);
 }
 
 void Window::notifyTitleChanged()
