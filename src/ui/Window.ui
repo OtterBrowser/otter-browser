@@ -72,6 +72,13 @@
    <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>webView</tabstop>
+  <tabstop>forwardButton</tabstop>
+  <tabstop>reloadButton</tabstop>
+  <tabstop>backButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
