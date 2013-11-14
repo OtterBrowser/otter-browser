@@ -2,12 +2,12 @@
 #include "SettingsManager.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
-#include "../ui/Window.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QMdiSubWindow>
 
 namespace Otter
@@ -142,6 +142,26 @@ void WindowsManager::printPreview(QPrinter *printer)
 	}
 }
 
+void WindowsManager::triggerAction(WebAction action, bool checked)
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	if (window)
+	{
+		window->triggerAction(action, checked);
+	}
+}
+
+void WindowsManager::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WebAction>(action->data().toInt()));
+	}
+}
+
 void WindowsManager::addWindow(Window *window)
 {
 	if (!window)
@@ -235,146 +255,6 @@ void WindowsManager::closeWindow(int index)
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
-}
-
-void WindowsManager::reload()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->reload();
-	}
-}
-
-void WindowsManager::stop()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->stop();
-	}
-}
-
-void WindowsManager::goBack()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->goBack();
-	}
-}
-
-void WindowsManager::goForward()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->goForward();
-	}
-}
-
-void WindowsManager::undo()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->undo();
-	}
-}
-
-void WindowsManager::redo()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->redo();
-	}
-}
-
-void WindowsManager::cut()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->cut();
-	}
-}
-
-void WindowsManager::copy()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->copy();
-	}
-}
-
-void WindowsManager::paste()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->paste();
-	}
-}
-
-void WindowsManager::remove()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->remove();
-	}
-}
-
-void WindowsManager::selectAll()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->selectAll();
-	}
-}
-
-void WindowsManager::zoomIn()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->zoomIn();
-	}
-}
-
-void WindowsManager::zoomOut()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->zoomOut();
-	}
-}
-
-void WindowsManager::zoomOriginal()
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	if (window)
-	{
-		window->zoomOriginal();
-	}
 }
 
 void WindowsManager::setZoom(int zoom)

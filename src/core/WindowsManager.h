@@ -1,6 +1,8 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
+#include "../ui/Window.h"
+
 #include <QtCore/QUrl>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMdiArea>
@@ -10,7 +12,6 @@ namespace Otter
 
 class StatusBarWidget;
 class TabBarWidget;
-class Window;
 
 class WindowsManager : public QObject
 {
@@ -32,20 +33,7 @@ public slots:
 	void closeOther(int index = -1);
 	void print(int index = -1);
 	void printPreview(int index = -1);
-	void reload();
-	void stop();
-	void goBack();
-	void goForward();
-	void undo();
-	void redo();
-	void cut();
-	void copy();
-	void paste();
-	void remove();
-	void selectAll();
-	void zoomIn();
-	void zoomOut();
-	void zoomOriginal();
+	void triggerAction(WebAction action, bool checked = false);
 	void setZoom(int zoom);
 
 protected:
@@ -53,6 +41,7 @@ protected:
 
 protected slots:
 	void printPreview(QPrinter *printer);
+	void triggerAction();
 	void addWindow(Window *window);
 	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);

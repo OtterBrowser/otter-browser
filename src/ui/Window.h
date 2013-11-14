@@ -53,7 +53,10 @@ enum WebAction
 	ValidateAction,
 	ContentBlockingAction,
 	WebsitePreferencesAction,
-	FullScreenAction
+	FullScreenAction,
+	ZoomInAction,
+	ZoomOutAction,
+	ZoomOriginalAction
 };
 
 class Window : public QWidget
@@ -89,20 +92,6 @@ public:
 
 public slots:
 	virtual void triggerAction(WebAction action, bool checked = false);
-	virtual void reload();
-	virtual void stop();
-	virtual void goBack();
-	virtual void goForward();
-	virtual void undo();
-	virtual void redo();
-	virtual void cut();
-	virtual void copy();
-	virtual void paste();
-	virtual void remove();
-	virtual void selectAll();
-	virtual void zoomIn();
-	virtual void zoomOut();
-	virtual void zoomOriginal();
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 	virtual void setPinned(bool pinned);

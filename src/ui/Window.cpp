@@ -9,6 +9,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
 #include <QtGui/QGuiApplication>
+#include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QMenu>
@@ -34,9 +35,6 @@ Window::Window(QWidget *parent) : QWidget(parent),
 	ActionsManager::setupLocalAction(getAction(ReloadAction), "Reload");
 	ActionsManager::setupLocalAction(getAction(StopAction), "Stop");
 
-	connect(m_ui->backButton, SIGNAL(clicked()), this, SLOT(goBack()));
-	connect(m_ui->forwardButton, SIGNAL(clicked()), this, SLOT(goForward()));
-	connect(m_ui->reloadButton, SIGNAL(clicked()), this, SLOT(reload()));
 	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
 	connect(m_ui->webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_ui->webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
@@ -167,6 +165,18 @@ QAction *Window::getAction(WebAction action)
 			actionObject->setEnabled(false);
 
 			break;
+		case ZoomInAction:
+			ActionsManager::setupLocalAction(actionObject, "ZoomIn");
+
+			break;
+		case ZoomOutAction:
+			ActionsManager::setupLocalAction(actionObject, "ZoomOut");
+
+			break;
+		case ZoomOriginalAction:
+			ActionsManager::setupLocalAction(actionObject, "ZoomOriginal");
+
+			break;
 		default:
 			break;
 	}
@@ -189,76 +199,6 @@ void Window::changeEvent(QEvent *event)
 		default:
 			break;
 	}
-}
-
-void Window::reload()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Reload);
-}
-
-void Window::stop()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Stop);
-}
-
-void Window::goBack()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Back);
-}
-
-void Window::goForward()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Forward);
-}
-
-void Window::undo()
-{
-	m_ui->webView->page()->undoStack()->undo();
-}
-
-void Window::redo()
-{
-	m_ui->webView->page()->undoStack()->redo();
-}
-
-void Window::cut()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Cut);
-}
-
-void Window::copy()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Copy);
-}
-
-void Window::paste()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::Paste);
-}
-
-void Window::remove()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::DeleteEndOfWord);
-}
-
-void Window::selectAll()
-{
-	m_ui->webView->page()->triggerAction(QWebPage::SelectAll);
-}
-
-void Window::zoomIn()
-{
-	setZoom(qMin((getZoom() + 10), 10000));
-}
-
-void Window::zoomOut()
-{
-	setZoom(qMax((getZoom() - 10), 10));
-}
-
-void Window::zoomOriginal()
-{
-	setZoom(100);
 }
 
 void Window::setZoom(int zoom)
@@ -409,6 +349,16 @@ void Window::loadStarted()
 {
 	m_isLoading = true;
 
+	if (m_customActions.contains(RewindBackAction))
+	{
+		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	}
+
+	if (m_customActions.contains(RewindForwardAction))
+	{
+		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	}
+
 	emit loadingChanged(true);
 }
 
@@ -429,6 +379,16 @@ void Window::notifyTitleChanged()
 void Window::notifyUrlChanged(const QUrl &url)
 {
 	m_ui->lineEdit->setText(url.toString());
+
+	if (m_customActions.contains(RewindBackAction))
+	{
+		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	}
+
+	if (m_customActions.contains(RewindForwardAction))
+	{
+		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	}
 
 	emit urlChanged(url);
 }
@@ -618,6 +578,34 @@ void Window::triggerAction(WebAction action, bool checked)
 	if (webAction != QWebPage::NoWebAction)
 	{
 		m_ui->webView->triggerPageAction(webAction, checked);
+
+		return;
+	}
+
+	switch (action)
+	{
+		case RewindBackAction:
+			m_ui->webView->page()->history()->goToItem(m_ui->webView->page()->history()->itemAt(0));
+
+			break;
+		case RewindForwardAction:
+		m_ui->webView->page()->history()->goToItem(m_ui->webView->page()->history()->itemAt(m_ui->webView->page()->history()->count() - 1));
+
+			break;
+		case ZoomInAction:
+			setZoom(qMin((getZoom() + 10), 10000));
+
+			break;
+		case ZoomOutAction:
+			setZoom(qMax((getZoom() - 10), 10));
+
+			break;
+		case ZoomOriginalAction:
+			setZoom(100);
+
+			break;
+		default:
+			break;
 	}
 }
 
