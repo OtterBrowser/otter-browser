@@ -15,17 +15,18 @@ enum WebAction
 	OpenLinkInNewTabBackgroundAction,
 	OpenLinkInNewWindowAction,
 	OpenLinkInNewWindowBackgroundAction,
+	CopyLinkToClipboardAction,
+	SaveLinkToDiskAction,
+	SaveLinkToDownloadsAction,
 	OpenFrameInThisTabAction,
 	OpenFrameInNewTabAction,
 	OpenFrameInNewTabBackgroundAction,
 	CopyFrameLinkToClipboardAction,
-	SaveLinkToDiskAction,
-	SaveLinkToDownloadsAction,
-	CopyLinkToClipboardAction,
 	OpenImageInNewTabAction,
 	SaveImageToDiskAction,
 	CopyImageToClipboardAction,
 	CopyImageUrlToClipboardAction,
+	ImagePropertiesAction,
 	GoBackAction,
 	GoForwardAction,
 	RewindBackAction,
@@ -57,7 +58,9 @@ enum WebAction
 	ZoomInAction,
 	ZoomOutAction,
 	ZoomOriginalAction,
-	ImagePropertiesAction
+	SearchAction,
+	SearchMenuAction,
+	OpenSelectionAsLinkAction
 };
 
 class WebWidget;

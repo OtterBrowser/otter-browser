@@ -10,6 +10,19 @@
 namespace Otter
 {
 
+enum MenuFlag
+{
+	NoMenu = 0,
+	StandardMenu = 1,
+	LinkMenu = 2,
+	ImageMenu = 4,
+	SelectionMenu = 8,
+	EditMenu = 16,
+	FrameMenu = 32
+};
+
+Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
+
 class WebWidget : public QWidget
 {
 	Q_OBJECT
@@ -28,12 +41,12 @@ public:
 	virtual bool isLoading() const;
 	virtual bool isPrivate() const;
 
-
 public slots:
 	virtual void triggerAction(WebAction action, bool checked = false);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 	virtual void setPrivate(bool enabled);
+	void showMenu(const QPoint &position, MenuFlags flags);
 
 signals:
 	void statusMessageChanged(const QString &message, int timeout = 5);

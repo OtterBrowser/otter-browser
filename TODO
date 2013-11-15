@@ -30,6 +30,7 @@ Low priority / later:
 - support for tab thumbnails embedded in tab bar
 - exposing MDI features
 - mouse gestures
+- allow to overwrite list of available context menu actions
 - extensions
 - Opera Link like solution
 - improved integration with different platforms (Windows taskbar integration etc.)

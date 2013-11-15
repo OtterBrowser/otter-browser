@@ -448,89 +448,39 @@ void WebWidgetWebKit::notifyIconChanged()
 void WebWidgetWebKit::showMenu(const QPoint &position)
 {
 	const QWebHitTestResult result = m_webWidget->page()->frameAt(position)->hitTestContent(position);
-	QMenu menu;
+	MenuFlags flags = NoMenu;
 
-	if (!result.pixmap().isNull() || result.linkUrl().isValid())
+	if (result.pixmap().isNull() && result.isContentSelected() && !m_webWidget->selectedText().isEmpty())
 	{
-		if (result.linkUrl().isValid())
-		{
-			menu.addAction(getAction(OpenLinkInThisTabAction));
-			menu.addAction(getAction(OpenLinkInNewTabAction));
-			menu.addAction(getAction(OpenLinkInNewTabBackgroundAction));
-			menu.addSeparator();
-			menu.addAction(getAction(OpenLinkInNewWindowAction));
-			menu.addAction(getAction(OpenLinkInNewWindowBackgroundAction));
-			menu.addSeparator();
-			menu.addAction(getAction(BookmarkLinkAction));
-			menu.addAction(getAction(CopyLinkToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(SaveLinkToDiskAction));
-			menu.addAction(getAction(SaveLinkToDownloadsAction));
-
-			if (result.pixmap().isNull())
-			{
-				menu.addAction(getAction(InspectElementAction));
-			}
-			else
-			{
-				menu.addSeparator();
-			}
-		}
-
-		if (!result.pixmap().isNull())
-		{
-			menu.addAction(getAction(OpenImageInNewTabAction));
-			menu.addAction(getAction(CopyImageUrlToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(SaveImageToDiskAction));
-			menu.addAction(getAction(CopyImageToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(InspectElementAction));
-			menu.addAction(getAction(ImagePropertiesAction));
-		}
+		flags |= SelectionMenu;
 	}
-	else
+
+	if (result.linkUrl().isValid())
 	{
-		menu.addAction(getAction(GoBackAction));
-		menu.addAction(getAction(GoForwardAction));
-		menu.addAction(getAction(RewindBackAction));
-		menu.addAction(getAction(RewindForwardAction));
-		menu.addSeparator();
-		menu.addAction(getAction(ReloadAction));
-		menu.addAction(getAction(ReloadTimeAction));
-		menu.addSeparator();
-		menu.addAction(getAction(BookmarkAction));
-		menu.addAction(getAction(CopyAddressAction));
-		menu.addAction(getAction(PrintAction));
-		menu.addSeparator();
-		menu.addAction(getAction(InspectElementAction));
-		menu.addAction(getAction(ViewSourceAction));
-		menu.addAction(getAction(ValidateAction));
-		menu.addSeparator();
+		flags |= LinkMenu;
+	}
+
+	if (!result.pixmap().isNull())
+	{
+		flags |= ImageMenu;
+	}
+
+	if (result.isContentEditable())
+	{
+		flags |= EditMenu;
+	}
+
+	if (flags == NoMenu)
+	{
+		flags = StandardMenu;
 
 		if (result.frame() != m_webWidget->page()->mainFrame())
 		{
-			QMenu *frameMenu = new QMenu(&menu);
-			frameMenu->setTitle(tr("Frame"));
-			frameMenu->addAction(getAction(OpenFrameInThisTabAction));
-			frameMenu->addAction(getAction(OpenFrameInNewTabAction));
-			frameMenu->addAction(getAction(OpenFrameInNewTabBackgroundAction));
-			frameMenu->addSeparator();
-			frameMenu->addAction(getAction(ViewSourceFrameAction));
-			frameMenu->addAction(getAction(ReloadFrameAction));
-			frameMenu->addAction(getAction(CopyFrameLinkToClipboardAction));
-
-			menu.addMenu(frameMenu);
-			menu.addSeparator();
+			flags |= FrameMenu;
 		}
-
-		menu.addAction(getAction(ContentBlockingAction));
-		menu.addAction(getAction(WebsitePreferencesAction));
-		menu.addSeparator();
-		menu.addAction(getAction(FullScreenAction));
 	}
 
-	menu.exec(m_webWidget->mapToGlobal(position));
+	WebWidget::showMenu(position, flags);
 }
 
 QUndoStack *WebWidgetWebKit::getUndoStack()
