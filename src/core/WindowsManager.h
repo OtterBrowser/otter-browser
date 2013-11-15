@@ -1,7 +1,7 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
-#include "../ui/Window.h"
+#include "../backends/web/WebBackend.h"
 
 #include <QtCore/QUrl>
 #include <QtPrintSupport/QPrinter>
@@ -12,6 +12,7 @@ namespace Otter
 
 class StatusBarWidget;
 class TabBarWidget;
+class Window;
 
 class WindowsManager : public QObject
 {

@@ -1,12 +1,14 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
+#include "../backends/web/WebBackend.h"
+#include "../backends/web/WebWidget.h"
+
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QUndoStack>
-#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
@@ -15,60 +17,6 @@ namespace Ui
 {
 	class Window;
 }
-
-enum WebAction
-{
-	NoAction = 0,
-	OpenLinkAction,
-	OpenLinkInThisTabAction,
-	OpenLinkInNewTabAction,
-	OpenLinkInNewTabBackgroundAction,
-	OpenLinkInNewWindowAction,
-	OpenLinkInNewWindowBackgroundAction,
-	OpenFrameInThisTabAction,
-	OpenFrameInNewTabAction,
-	OpenFrameInNewTabBackgroundAction,
-	CopyFrameLinkToClipboardAction,
-	SaveLinkToDiskAction,
-	SaveLinkToDownloadsAction,
-	CopyLinkToClipboardAction,
-	OpenImageInNewTabAction,
-	SaveImageToDiskAction,
-	CopyImageToClipboardAction,
-	CopyImageUrlToClipboardAction,
-	GoBackAction,
-	GoForwardAction,
-	RewindBackAction,
-	RewindForwardAction,
-	StopAction,
-	StopScheduledPageRefreshAction,
-	ReloadAction,
-	ReloadFrameAction,
-	ReloadAndBypassCacheAction,
-	ReloadTimeAction,
-	CutAction,
-	CopyAction,
-	PasteAction,
-	DeleteAction,
-	SelectAllAction,
-	UndoAction,
-	RedoAction,
-	InspectElementAction,
-	PrintAction,
-	BookmarkAction,
-	BookmarkLinkAction,
-	CopyAddressAction,
-	ViewSourceAction,
-	ViewSourceFrameAction,
-	ValidateAction,
-	ContentBlockingAction,
-	WebsitePreferencesAction,
-	FullScreenAction,
-	ZoomInAction,
-	ZoomOutAction,
-	ZoomOriginalAction,
-	ImagePropertiesAction
-};
 
 class Window : public QWidget
 {
@@ -84,7 +32,7 @@ class Window : public QWidget
 	Q_PROPERTY(bool isPrivate READ isPrivate WRITE setPrivate NOTIFY isPrivateChanged)
 
 public:
-	explicit Window(QWidget *parent = NULL);
+	explicit Window(WebWidget *widget, QWidget *parent = NULL);
 	~Window();
 
 	virtual void print(QPrinter *printer);
@@ -110,38 +58,25 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	QWebPage::WebAction mapAction(WebAction action) const;
 
 protected slots:
-	void triggerAction();
 	void loadUrl();
-	void loadStarted();
-	void loadFinished(bool ok);
-	void linkHovered(const QString &link, const QString &title);
-	void notifyTitleChanged();
-	void notifyUrlChanged(const QUrl &url);
-	void notifyIconChanged();
-	void showMenu(const QPoint &position);
+	void updateUrl(const QUrl &url);
 
 private:
-	QHash<WebAction, QAction*> m_customActions;
-	bool m_isLoading;
+	WebWidget *m_webWidget;
 	bool m_isPinned;
 	Ui::Window *m_ui;
 
 signals:
-	void statusMessageChanged(const QString &message, int timeout = 5);
+	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
 	void loadingChanged(bool loading);
-	void undoTextChanged(const QString &undoText);
-	void redoTextChanged(const QString &redoText);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
 	void isPrivateChanged(bool pinned);
-	void canUndoChanged(bool canUndo);
-	void canRedoChanged(bool canRedo);
 };
 
 }

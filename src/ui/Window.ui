@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>629</height>
+    <width>268</width>
+    <height>29</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -54,27 +54,10 @@
      </item>
     </layout>
    </item>
-   <item>
-    <widget class="QWebView" name="webView">
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>lineEdit</tabstop>
-  <tabstop>webView</tabstop>
   <tabstop>forwardButton</tabstop>
   <tabstop>reloadButton</tabstop>
   <tabstop>backButton</tabstop>

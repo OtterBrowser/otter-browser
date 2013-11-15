@@ -2,6 +2,7 @@
 #include "SettingsManager.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
+#include "../ui/Window.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
@@ -47,7 +48,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 		}
 	}
 
-	window = new Window(m_area);
+	window = new Window(NULL, m_area);
 	window->setPrivate(m_privateSession || privateWindow);
 	window->setUrl(url);
 
@@ -278,6 +279,8 @@ void WindowsManager::setCurrentWindow(int index)
 
 	if (window)
 	{
+		window->showMinimized();
+
 		disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(undoTextChanged(QString)));
 		disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(redoTextChanged(QString)));
 		disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(canUndoChanged(bool)));
@@ -286,6 +289,8 @@ void WindowsManager::setCurrentWindow(int index)
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
+
+	m_statusBar->clearMessage();
 
 	m_currentWindow = index;
 
@@ -300,6 +305,8 @@ void WindowsManager::setCurrentWindow(int index)
 			if (window == windows.at(i)->widget())
 			{
 				m_area->setActiveSubWindow(windows.at(i));
+
+				window->showMaximized();
 
 				break;
 			}

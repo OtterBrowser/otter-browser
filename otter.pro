@@ -20,7 +20,12 @@ SOURCES += src/main.cpp\
     src/core/WindowsManager.cpp \
     src/core/ActionsManager.cpp \
     src/core/NetworkAccessManager.cpp \
-    src/ui/StatusBarWidget.cpp
+    src/ui/StatusBarWidget.cpp \
+    src/backends/web/WebBackend.cpp \
+    src/backends/web/qtwebkit/WebBackendWebKit.cpp \
+    src/backends/web/WebWidget.cpp \
+    src/backends/web/qtwebkit/WebWidgetWebKit.cpp \
+    src/backends/web/WebBackendsManager.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -32,7 +37,12 @@ HEADERS += src/ui/MainWindow.h \
     src/core/WindowsManager.h \
     src/core/ActionsManager.h \
     src/core/NetworkAccessManager.h \
-    src/ui/StatusBarWidget.h
+    src/ui/StatusBarWidget.h \
+    src/backends/web/WebBackend.h \
+    src/backends/web/qtwebkit/WebBackendWebKit.h \
+    src/backends/web/WebWidget.h \
+    src/backends/web/qtwebkit/WebWidgetWebKit.h \
+    src/backends/web/WebBackendsManager.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

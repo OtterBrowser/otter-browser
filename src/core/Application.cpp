@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ActionsManager.h"
 #include "SettingsManager.h"
+#include "../backends/web/WebBackendsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
@@ -89,6 +90,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("Actions/Fullscreen", QVariant(QKeySequence("F11").toString()));
 
 	ActionsManager::createInstance(this);
+
+	WebBackendsManager::createInstance(this);
 
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);

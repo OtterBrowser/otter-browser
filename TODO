@@ -14,8 +14,9 @@ Medium priority / soon:
 - detailed load progress information
 - page preferences
 - content blocking
+- spell checking
 - panels (page informations, notes, transfers, bookmarks etc.)
-- multiple backend support (at least Blink with upcoming QtWebEngine)
+- additional backends (at least Blink with upcoming QtWebEngine)
 - support for profiles / custom configuration directory
 - system tray icon
 - tabs previews
