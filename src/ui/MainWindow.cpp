@@ -66,6 +66,9 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerAction(this, "Search", tr("Search"));
 	ActionsManager::registerAction(this, "SearchMenu", tr("Search Using"));
 	ActionsManager::registerAction(this, "OpenSelectionAsLink", tr("Go to This Address"));
+	ActionsManager::registerAction(this, "ClearAll", tr("Clear All"));
+	ActionsManager::registerAction(this, "SpellCheck", tr("Check Spelling"));
+	ActionsManager::registerAction(this, "CreateSearch", tr("Create Search..."));
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
 	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));

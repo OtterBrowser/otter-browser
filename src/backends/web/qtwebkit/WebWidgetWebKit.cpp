@@ -8,6 +8,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtGui/QClipboard>
 #include <QtWebKit/QWebHistory>
+#include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QApplication>
@@ -262,8 +263,26 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 			actionObject->setEnabled(false);
 
 			break;
+		case ClearAllAction:
+			ActionsManager::setupLocalAction(actionObject, "ClearAll");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case SpellCheckAction:
+			ActionsManager::setupLocalAction(actionObject, "SpellCheck");
+
+			actionObject->setEnabled(false);
+
+			break;
 		case ImagePropertiesAction:
 			ActionsManager::setupLocalAction(actionObject, "ImageProperties");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case CreateSearchAction:
+			ActionsManager::setupLocalAction(actionObject, "CreateSearch");
 
 			actionObject->setEnabled(false);
 
@@ -475,6 +494,11 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 {
 	const QWebHitTestResult result = m_webWidget->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
+
+	if (result.element().tagName().toLower() == "textarea" || (result.element().tagName().toLower() == "input" && (result.element().attribute("type").isEmpty() || result.element().attribute("type").toLower() == "text")))
+	{
+		flags |= FormMenu;
+	}
 
 	if (result.pixmap().isNull() && result.isContentSelected() && !m_webWidget->selectedText().isEmpty())
 	{

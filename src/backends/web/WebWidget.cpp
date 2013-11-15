@@ -83,13 +83,48 @@ void WebWidget::showMenu(const QPoint &position, MenuFlags flags)
 	}
 	else
 	{
+		if (flags & EditMenu)
+		{
+			menu.addAction(getAction(UndoAction));
+			menu.addAction(getAction(RedoAction));
+			menu.addSeparator();
+			menu.addAction(getAction(CutAction));
+			menu.addAction(getAction(CopyAction));
+			menu.addAction(getAction(PasteAction));
+			menu.addAction(getAction(DeleteAction));
+			menu.addSeparator();
+			menu.addAction(getAction(SelectAllAction));
+			menu.addAction(getAction(ClearAllAction));
+			menu.addSeparator();
+
+			if (flags & FormMenu)
+			{
+				menu.addAction(getAction(CreateSearchAction));
+				menu.addSeparator();
+			}
+
+			if (flags == EditMenu || flags == (EditMenu | FormMenu))
+			{
+				menu.addAction(getAction(InspectElementAction));
+				menu.addSeparator();
+			}
+
+			menu.addAction(getAction(SpellCheckAction));
+			menu.addSeparator();
+		}
+
 		if (flags & SelectionMenu)
 		{
 			menu.addAction(getAction(SearchAction));
 			menu.addAction(getAction(SearchMenuAction));
 			menu.addSeparator();
-			menu.addAction(getAction(CopyAction));
-			menu.addSeparator();
+
+			if (!(flags & EditMenu))
+			{
+				menu.addAction(getAction(CopyAction));
+				menu.addSeparator();
+			}
+
 			menu.addAction(getAction(OpenSelectionAsLinkAction));
 			menu.addSeparator();
 		}

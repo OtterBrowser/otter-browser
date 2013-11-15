@@ -42,6 +42,8 @@ enum WebAction
 	PasteAction,
 	DeleteAction,
 	SelectAllAction,
+	ClearAllAction,
+	SpellCheckAction,
 	UndoAction,
 	RedoAction,
 	InspectElementAction,
@@ -60,7 +62,8 @@ enum WebAction
 	ZoomOriginalAction,
 	SearchAction,
 	SearchMenuAction,
-	OpenSelectionAsLinkAction
+	OpenSelectionAsLinkAction,
+	CreateSearchAction
 };
 
 class WebWidget;

@@ -118,6 +118,7 @@ void ActionsManager::setupLocalAction(QAction *localAction, const QString &globa
 		localAction->setIcon(action->icon());
 		localAction->setText(action->text());
 		localAction->setShortcut(action->shortcut());
+		localAction->setObjectName(action->objectName());
 
 		if (connectTrigger)
 		{
