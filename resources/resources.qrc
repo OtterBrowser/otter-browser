@@ -51,5 +51,6 @@
         <file>icons/loading.gif</file>
         <file>icons/view-fullscreen.png</file>
         <file>icons/view-restore.png</file>
+        <file>files/error.html</file>
     </qresource>
 </RCC>

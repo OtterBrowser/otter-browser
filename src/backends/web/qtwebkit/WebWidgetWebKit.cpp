@@ -1,4 +1,5 @@
 #include "WebWidgetWebKit.h"
+#include "WebPageWebKit.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkAccessManager.h"
 
@@ -29,6 +30,7 @@ WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
 
 	setLayout(layout);
 
+	m_webWidget->setPage(new WebPageWebKit(m_webWidget));
 	m_webWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	m_webWidget->page()->setNetworkAccessManager(new NetworkAccessManager(this));
