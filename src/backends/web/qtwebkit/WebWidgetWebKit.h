@@ -27,7 +27,7 @@ public:
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
-
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void triggerAction(WebAction action, bool checked = false);
@@ -52,6 +52,7 @@ protected slots:
 private:
 	QWebView *m_webWidget;
 	QHash<WebAction, QAction*> m_customActions;
+	bool m_isLinkHovered;
 	bool m_isLoading;
 
 signals:

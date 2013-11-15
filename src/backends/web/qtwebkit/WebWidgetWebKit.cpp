@@ -22,6 +22,7 @@ namespace Otter
 
 WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
 	m_webWidget(new QWebView(this)),
+	m_isLinkHovered(false),
 	m_isLoading(false)
 {
 	QVBoxLayout *layout = new QVBoxLayout(this);
@@ -30,6 +31,7 @@ WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
 
 	setLayout(layout);
 
+	m_webWidget->installEventFilter(this);
 	m_webWidget->setPage(new WebPageWebKit(m_webWidget));
 	m_webWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
@@ -298,6 +300,48 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 	return actionObject;
 }
 
+void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
+{
+	const QWebPage::WebAction webAction = mapAction(action);
+
+	if (webAction != QWebPage::NoWebAction)
+	{
+		m_webWidget->triggerPageAction(webAction, checked);
+
+		return;
+	}
+
+	switch (action)
+	{
+		case RewindBackAction:
+			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(0));
+
+			break;
+		case RewindForwardAction:
+			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(m_webWidget->page()->history()->count() - 1));
+
+			break;
+		case CopyAddressAction:
+			QApplication::clipboard()->setText(getUrl().toString());
+
+			break;
+		case ZoomInAction:
+			setZoom(qMin((getZoom() + 10), 10000));
+
+			break;
+		case ZoomOutAction:
+			setZoom(qMax((getZoom() - 10), 10));
+
+			break;
+		case ZoomOriginalAction:
+			setZoom(100);
+
+			break;
+		default:
+			break;
+	}
+}
+
 void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
 {
 	m_webWidget->settings()->setDefaultTextEncoding(encoding);
@@ -467,6 +511,8 @@ void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
 	{
 		text = (title.isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(title).arg(link));
 	}
+
+	m_isLinkHovered = !text.isEmpty();
 
 	QToolTip::showText(QCursor::pos(), text, m_webWidget);
 
@@ -676,46 +722,14 @@ bool WebWidgetWebKit::isPrivate() const
 	return m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
-void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
+bool WebWidgetWebKit::eventFilter(QObject *object, QEvent *event)
 {
-	const QWebPage::WebAction webAction = mapAction(action);
-
-	if (webAction != QWebPage::NoWebAction)
+	if (object == m_webWidget && event->type() == QEvent::ToolTip && m_isLinkHovered)
 	{
-		m_webWidget->triggerPageAction(webAction, checked);
-
-		return;
+		return true;
 	}
 
-	switch (action)
-	{
-		case RewindBackAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(0));
-
-			break;
-		case RewindForwardAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(m_webWidget->page()->history()->count() - 1));
-
-			break;
-		case CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
-
-			break;
-		case ZoomInAction:
-			setZoom(qMin((getZoom() + 10), 10000));
-
-			break;
-		case ZoomOutAction:
-			setZoom(qMax((getZoom() - 10), 10));
-
-			break;
-		case ZoomOriginalAction:
-			setZoom(100);
-
-			break;
-		default:
-			break;
-	}
+	return QObject::eventFilter(object, event);
 }
 
 }
