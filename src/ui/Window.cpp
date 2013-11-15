@@ -23,7 +23,7 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	m_ui->setupUi(this);
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
-	m_ui->reloadButton->setDefaultAction(getAction(ReloadAction));
+	m_ui->reloadOrStopButton->setDefaultAction(getAction(ReloadOrStopAction));
 	m_ui->verticalLayout->addWidget(m_webWidget);
 	m_ui->lineEdit->setFocus();
 

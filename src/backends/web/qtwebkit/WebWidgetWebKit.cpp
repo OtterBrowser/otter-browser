@@ -291,6 +291,12 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 			actionObject->setEnabled(false);
 
 			break;
+		case ReloadOrStopAction:
+			ActionsManager::setupLocalAction(actionObject, "Reload", false);
+
+			actionObject->setShortcut(QKeySequence());
+
+			break;
 		default:
 			break;
 	}
@@ -335,6 +341,17 @@ void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
 			break;
 		case ZoomOriginalAction:
 			setZoom(100);
+
+			break;
+		case ReloadOrStopAction:
+			if (isLoading())
+			{
+				triggerAction(StopAction);
+			}
+			else
+			{
+				triggerAction(ReloadAction);
+			}
 
 			break;
 		default:
@@ -491,6 +508,15 @@ void WebWidgetWebKit::loadStarted()
 		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 	}
 
+	if (m_customActions.contains(ReloadOrStopAction))
+	{
+		QAction *action = getAction(ReloadOrStopAction);
+
+		ActionsManager::setupLocalAction(action, "Stop", false);
+
+		action->setShortcut(QKeySequence());
+	}
+
 	emit loadingChanged(true);
 }
 
@@ -499,6 +525,15 @@ void WebWidgetWebKit::loadFinished(bool ok)
 	Q_UNUSED(ok)
 
 	m_isLoading = false;
+
+	if (m_customActions.contains(ReloadOrStopAction))
+	{
+		QAction *action = getAction(ReloadOrStopAction);
+
+		ActionsManager::setupLocalAction(action, "Reload", false);
+
+		action->setShortcut(QKeySequence());
+	}
 
 	emit loadingChanged(false);
 }

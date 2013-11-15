@@ -34,6 +34,7 @@ enum WebAction
 	StopAction,
 	StopScheduledPageRefreshAction,
 	ReloadAction,
+	ReloadOrStopAction,
 	ReloadFrameAction,
 	ReloadAndBypassCacheAction,
 	ReloadTimeAction,
