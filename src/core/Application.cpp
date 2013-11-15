@@ -21,10 +21,8 @@ namespace Otter
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
-	setApplicationName("otter");
+	setApplicationName("Otter");
 	setApplicationVersion("0.0.01");
-	setOrganizationName("eSoftware");
-	setOrganizationDomain("otter.emdek.pl");
 
 	QLocalSocket socket;
 	socket.connectToServer(applicationName());
