@@ -39,6 +39,7 @@ public:
 	virtual Window* clone(QWidget *parent = NULL);
 	virtual QAction* getAction(WebAction action);
 	virtual QUndoStack* getUndoStack();
+	virtual QString getDefaultTextEncoding() const;
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
@@ -51,6 +52,7 @@ public:
 
 public slots:
 	virtual void triggerAction(WebAction action, bool checked = false);
+	virtual void setDefaultTextEncoding(const QString &encoding);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 	virtual void setPinned(bool pinned);

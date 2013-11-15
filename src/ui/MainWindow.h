@@ -1,6 +1,7 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
+#include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMainWindow>
 
 namespace Otter
@@ -32,10 +33,14 @@ protected:
 protected slots:
 	void actionNewTabPrivate();
 	void actionOpen();
+	void actionTextEncoding(QAction *action);
 	void actionAboutApplication();
+	void menuTextEncodingAboutToShow();
+	void triggerWindowAction();
 
 private:
 	WindowsManager *m_windowsManager;
+	QActionGroup *m_textEncodingGroup;
 	Ui::MainWindow *m_ui;
 
 signals:

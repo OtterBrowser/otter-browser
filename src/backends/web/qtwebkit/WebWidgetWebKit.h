@@ -20,6 +20,7 @@ public:
 	WebWidget* clone(QWidget *parent = NULL);
 	QAction* getAction(WebAction action);
 	QUndoStack* getUndoStack();
+	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
@@ -30,6 +31,7 @@ public:
 
 public slots:
 	void triggerAction(WebAction action, bool checked = false);
+	void setDefaultTextEncoding(const QString &encoding);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 	void setPrivate(bool enabled);

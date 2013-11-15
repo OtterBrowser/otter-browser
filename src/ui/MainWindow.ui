@@ -160,9 +160,6 @@
      <string>View</string>
     </property>
     <widget class="QMenu" name="menuTextEncoding">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="title">
       <string>Text Encoding</string>
      </property>

@@ -22,6 +22,7 @@ public:
 	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
 
 	Window* getWindow(int index = -1) const;
+	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
 	int getCurrentWindow() const;
 	int getZoom() const;
@@ -35,6 +36,7 @@ public slots:
 	void print(int index = -1);
 	void printPreview(int index = -1);
 	void triggerAction(WebAction action, bool checked = false);
+	void setDefaultTextEncoding(const QString &encoding);
 	void setZoom(int zoom);
 
 protected:
@@ -42,7 +44,6 @@ protected:
 
 protected slots:
 	void printPreview(QPrinter *printer);
-	void triggerAction();
 	void addWindow(Window *window);
 	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);

@@ -121,6 +121,11 @@ QUndoStack *Window::getUndoStack()
 	return m_webWidget->getUndoStack();
 }
 
+QString Window::getDefaultTextEncoding() const
+{
+	return m_webWidget->getDefaultTextEncoding();
+}
+
 QString Window::getTitle() const
 {
 	return m_webWidget->getTitle();
@@ -171,6 +176,11 @@ bool Window::isPrivate() const
 void Window::triggerAction(WebAction action, bool checked)
 {
 	m_webWidget->triggerAction(action, checked);
+}
+
+void Window::setDefaultTextEncoding(const QString &encoding)
+{
+	m_webWidget->setDefaultTextEncoding(encoding);
 }
 
 }

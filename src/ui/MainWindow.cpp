@@ -6,6 +6,7 @@
 
 #include "ui_MainWindow.h"
 
+#include <QtCore/QTextCodec>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMdiSubWindow>
@@ -16,6 +17,7 @@ namespace Otter
 
 MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
+	m_textEncodingGroup(NULL),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -125,15 +127,16 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
-	connect(m_ui->actionZoomIn, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionZoomOut, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionReload, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionStop, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionGoBack, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
-	connect(m_ui->actionGoForward, SIGNAL(triggered()), m_windowsManager, SLOT(triggerAction()));
+	connect(m_ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionReload, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionStop, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionGoBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
@@ -184,9 +187,93 @@ void MainWindow::actionOpen()
 	}
 }
 
+void MainWindow::actionTextEncoding(QAction *action)
+{
+	QString encoding;
+
+	if (action && action->data().toInt() > 0)
+	{
+		QTextCodec *codec = QTextCodec::codecForMib(action->data().toInt());
+
+		if (codec)
+		{
+			encoding = codec->name();
+		}
+	}
+
+	m_windowsManager->setDefaultTextEncoding(encoding.toLower());
+}
+
 void MainWindow::actionAboutApplication()
 {
 	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
+}
+
+void MainWindow::menuTextEncodingAboutToShow()
+{
+	if (!m_textEncodingGroup)
+	{
+		QList<int> textCodecs;
+		textCodecs << 106 << 1015 << 1017 << 4 << 5 << 6 << 7 << 8 << 82 << 10 << 85 << 12 << 13 << 109 << 110 << 112 << 2250 << 2251 << 2252 << 2253 << 2254 << 2255 << 2256 << 2257 << 2258 << 18 << 39 << 17 << 38 << 2026;
+
+		m_textEncodingGroup = new QActionGroup(this);
+		m_textEncodingGroup->setExclusive(true);
+
+		QAction *defaultAction = m_ui->menuTextEncoding->addAction(tr("Auto Detect"));
+		defaultAction->setData(-1);
+		defaultAction->setCheckable(true);
+
+		m_textEncodingGroup->addAction(defaultAction);
+
+		m_ui->menuTextEncoding->addSeparator();
+
+		for (int i = 0; i < textCodecs.count(); ++i)
+		{
+			QTextCodec *codec = QTextCodec::codecForMib(textCodecs.at(i));
+
+			if (!codec)
+			{
+				continue;
+			}
+
+			QAction *textCodecAction = m_ui->menuTextEncoding->addAction(codec->name());
+			textCodecAction->setData(textCodecs.at(i));
+			textCodecAction->setCheckable(true);
+
+			m_textEncodingGroup->addAction(textCodecAction);
+		}
+
+		connect(m_ui->menuTextEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionTextEncoding(QAction*)));
+	}
+
+	const QString encoding = m_windowsManager->getDefaultTextEncoding().toLower();
+
+	for (int i = 2; i < m_ui->menuTextEncoding->actions().count(); ++i)
+	{
+		QAction *action = m_ui->menuTextEncoding->actions().at(i);
+
+		if (action && encoding == action->text().toLower())
+		{
+			action->setChecked(true);
+
+			break;
+		}
+	}
+
+	if (!m_textEncodingGroup->checkedAction())
+	{
+		m_ui->menuTextEncoding->actions().first()->setChecked(true);
+	}
+}
+
+void MainWindow::triggerWindowAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		m_windowsManager->triggerAction(static_cast<WebAction>(action->data().toInt()));
+	}
 }
 
 bool MainWindow::event(QEvent *event)

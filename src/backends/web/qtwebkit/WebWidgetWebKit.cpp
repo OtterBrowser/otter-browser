@@ -296,6 +296,12 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 	return actionObject;
 }
 
+void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
+{
+	m_webWidget->settings()->setDefaultTextEncoding(encoding);
+	m_webWidget->reload();
+}
+
 void WebWidgetWebKit::setZoom(int zoom)
 {
 	if (zoom != getZoom())
@@ -536,6 +542,11 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 QUndoStack *WebWidgetWebKit::getUndoStack()
 {
 	return m_webWidget->page()->undoStack();
+}
+
+QString WebWidgetWebKit::getDefaultTextEncoding() const
+{
+	return m_webWidget->settings()->defaultTextEncoding();
 }
 
 QString WebWidgetWebKit::getTitle() const

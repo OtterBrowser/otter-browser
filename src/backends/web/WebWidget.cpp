@@ -22,6 +22,11 @@ void WebWidget::triggerAction(WebAction action, bool checked)
 	Q_UNUSED(checked)
 }
 
+void WebWidget::setDefaultTextEncoding(const QString &encoding)
+{
+	Q_UNUSED(encoding)
+}
+
 void WebWidget::setZoom(int zoom)
 {
 	Q_UNUSED(zoom)
@@ -186,6 +191,11 @@ QAction* WebWidget::getAction(WebAction action)
 QUndoStack* WebWidget::getUndoStack()
 {
 	return NULL;
+}
+
+QString WebWidget::getDefaultTextEncoding() const
+{
+	return QString();
 }
 
 QString WebWidget::getTitle() const

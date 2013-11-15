@@ -153,16 +153,6 @@ void WindowsManager::triggerAction(WebAction action, bool checked)
 	}
 }
 
-void WindowsManager::triggerAction()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		triggerAction(static_cast<WebAction>(action->data().toInt()));
-	}
-}
-
 void WindowsManager::addWindow(Window *window)
 {
 	if (!window)
@@ -256,6 +246,16 @@ void WindowsManager::closeWindow(int index)
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
+}
+
+void WindowsManager::setDefaultTextEncoding(const QString &encoding)
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	if (window)
+	{
+		window->setDefaultTextEncoding(encoding);
+	}
 }
 
 void WindowsManager::setZoom(int zoom)
@@ -363,6 +363,13 @@ Window* WindowsManager::getWindow(int index) const
 	}
 
 	return qvariant_cast<Window*>(m_tabBar->tabData(index));
+}
+
+QString WindowsManager::getDefaultTextEncoding() const
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	return (window ? window->getDefaultTextEncoding() : QString());
 }
 
 QString WindowsManager::getTitle() const
