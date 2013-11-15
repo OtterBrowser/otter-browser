@@ -114,8 +114,6 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 
 	setWindowTitle(m_windowsManager->getTitle());
 
-	m_ui->panelWidget->hide();
-
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
@@ -141,6 +139,8 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
+
+	m_ui->panelWidget->hide();
 }
 
 MainWindow::~MainWindow()

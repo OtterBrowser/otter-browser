@@ -4,6 +4,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
+#include <QtWidgets/QDockWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
@@ -250,6 +251,20 @@ void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
 			setShape(QTabBar::RoundedNorth);
 
 			break;
+	}
+
+	QDockWidget *widget = qobject_cast<QDockWidget*>(parentWidget()->parentWidget());
+
+	if (widget)
+	{
+		if (orientation == Qt::LeftDockWidgetArea || orientation == Qt::RightDockWidgetArea)
+		{
+			widget->setFeatures(widget->features() & ~QDockWidget::DockWidgetVerticalTitleBar);
+		}
+		else
+		{
+			widget->setFeatures(widget->features() | QDockWidget::DockWidgetVerticalTitleBar);
+		}
 	}
 }
 
