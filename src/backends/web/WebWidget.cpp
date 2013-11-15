@@ -83,6 +83,17 @@ void WebWidget::showMenu(const QPoint &position, MenuFlags flags)
 	}
 	else
 	{
+		if (flags & SelectionMenu)
+		{
+			menu.addAction(getAction(SearchAction));
+			menu.addAction(getAction(SearchMenuAction));
+			menu.addSeparator();
+			menu.addAction(getAction(CopyAction));
+			menu.addSeparator();
+			menu.addAction(getAction(OpenSelectionAsLinkAction));
+			menu.addSeparator();
+		}
+
 		if (flags & LinkMenu)
 		{
 			menu.addAction(getAction(OpenLinkInThisTabAction));

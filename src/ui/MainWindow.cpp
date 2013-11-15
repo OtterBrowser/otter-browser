@@ -63,6 +63,9 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerAction(this, "SaveImageToDisk", tr("Save Image..."));
 	ActionsManager::registerAction(this, "CopyImageToClipboard", tr("Copy Image to Clipboard."));
 	ActionsManager::registerAction(this, "CopyImageUrlToClipboard", tr("Copy Image Link to Clipboard"));
+	ActionsManager::registerAction(this, "Search", tr("Search"));
+	ActionsManager::registerAction(this, "SearchMenu", tr("Search Using"));
+	ActionsManager::registerAction(this, "OpenSelectionAsLink", tr("Go to This Address"));
 
 	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
 	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));

@@ -32,6 +32,13 @@ WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
 	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 	m_webWidget->page()->setNetworkAccessManager(new NetworkAccessManager(this));
 
+	ActionsManager::setupLocalAction(getAction(CutAction), "Cut");
+	ActionsManager::setupLocalAction(getAction(CopyAction), "Copy");
+	ActionsManager::setupLocalAction(getAction(PasteAction), "Paste");
+	ActionsManager::setupLocalAction(getAction(DeleteAction), "Delete");
+	ActionsManager::setupLocalAction(getAction(SelectAllAction), "SelectAll");
+	ActionsManager::setupLocalAction(getAction(UndoAction), "Undo");
+	ActionsManager::setupLocalAction(getAction(RedoAction), "Redo");
 	ActionsManager::setupLocalAction(getAction(GoBackAction), "GoBack");
 	ActionsManager::setupLocalAction(getAction(GoForwardAction), "GoForward");
 	ActionsManager::setupLocalAction(getAction(ReloadAction), "Reload");
@@ -234,6 +241,25 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 			break;
 		case ZoomOriginalAction:
 			ActionsManager::setupLocalAction(actionObject, "ZoomOriginal");
+
+			break;
+		case SearchAction:
+			ActionsManager::setupLocalAction(actionObject, "Search");
+
+			actionObject->setEnabled(false);
+
+			break;
+		case SearchMenuAction:
+			ActionsManager::setupLocalAction(actionObject, "SearchMenu");
+
+			actionObject->setMenu(new QMenu(this));
+			actionObject->setEnabled(false);
+
+			break;
+		case OpenSelectionAsLinkAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenSelectionAsLink");
+
+			actionObject->setEnabled(false);
 
 			break;
 		case ImagePropertiesAction:
