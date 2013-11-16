@@ -689,7 +689,7 @@ HistoryInformation WebWidgetWebKit::getHistory() const
 	{
 		const QWebHistoryItem item = history->itemAt(i);
 		HistoryEntry entry;
-		entry.url = item.originalUrl().toString();
+		entry.url = item.url().toString();
 		entry.title = item.title();
 		entry.position = item.userData().toHash().value("position").toPoint();
 
