@@ -34,9 +34,10 @@ protected slots:
 	void actionNewTabPrivate();
 	void actionOpen();
 	void actionTextEncoding(QAction *action);
+	void actionClosedWindows(QAction *action);
 	void actionAboutApplication();
 	void menuTextEncodingAboutToShow();
-	void menuClosedWindosAboutToShow();
+	void menuClosedWindowsAboutToShow();
 	void triggerWindowAction();
 
 private:

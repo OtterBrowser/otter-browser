@@ -138,8 +138,9 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
-	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindosAboutToShow()));
-	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindosAboutToShow()));
+	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	connect(m_closedWindowsAction->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClosedWindows(QAction*)));
+	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
@@ -233,6 +234,24 @@ void MainWindow::actionTextEncoding(QAction *action)
 	m_windowsManager->setDefaultTextEncoding(encoding.toLower());
 }
 
+void MainWindow::actionClosedWindows(QAction *action)
+{
+	const int index = action->data().toInt();
+
+	if (index == 0)
+	{
+		m_windowsManager->clearClosedWindows();
+	}
+	else if (index > 0)
+	{
+		m_windowsManager->restore(index - 1);
+	}
+	else
+	{
+		SessionsManager::restoreClosedWindow(-(index - 1));
+	}
+}
+
 void MainWindow::actionAboutApplication()
 {
 	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
@@ -295,7 +314,7 @@ void MainWindow::menuTextEncodingAboutToShow()
 	}
 }
 
-void MainWindow::menuClosedWindosAboutToShow()
+void MainWindow::menuClosedWindowsAboutToShow()
 {
 	m_ui->menuClosedWindows->clear();
 
@@ -325,7 +344,7 @@ void MainWindow::menuClosedWindosAboutToShow()
 	for (int i = 0; i < tabs.count(); ++i)
 	{
 		QAction *action = m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title());
-		action->setData(i);
+		action->setData(i + 1);
 	}
 
 	m_closedWindowsAction->menu()->addActions(m_ui->menuClosedWindows->actions());

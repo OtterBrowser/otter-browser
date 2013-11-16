@@ -27,6 +27,11 @@ void WebWidget::setDefaultTextEncoding(const QString &encoding)
 	Q_UNUSED(encoding)
 }
 
+void WebWidget::setHistory(const HistoryInformation &history)
+{
+	Q_UNUSED(history)
+}
+
 void WebWidget::setZoom(int zoom)
 {
 	Q_UNUSED(zoom)

@@ -33,6 +33,7 @@ public:
 public slots:
 	void triggerAction(WebAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
+	void setHistory(const HistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 	void setPrivate(bool enabled);

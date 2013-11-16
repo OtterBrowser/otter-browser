@@ -13,6 +13,9 @@ struct HistoryEntry
 	QString url;
 	QString title;
 	QPoint position;
+	int zoom;
+
+	HistoryEntry() : zoom(100) {}
 };
 
 struct HistoryInformation
@@ -51,6 +54,16 @@ struct SessionEntry
 		}
 
 		return QCoreApplication::translate("main", "(Untitled)");
+	}
+
+	int zoom() const
+	{
+		if (index >= 0 && index < history.count())
+		{
+			return history.at(index).zoom;
+		}
+
+		return 100;
 	}
 };
 

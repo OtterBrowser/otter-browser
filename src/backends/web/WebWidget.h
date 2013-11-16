@@ -48,6 +48,7 @@ public:
 public slots:
 	virtual void triggerAction(WebAction action, bool checked = false);
 	virtual void setDefaultTextEncoding(const QString &encoding);
+	virtual void setHistory(const HistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 	virtual void setPrivate(bool enabled);

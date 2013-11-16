@@ -37,9 +37,11 @@ public slots:
 	void open(const QUrl &url = QUrl(), bool privateWindow = false);
 	void close(int index = -1);
 	void closeOther(int index = -1);
+	void restore(int index = 0);
 	void print(int index = -1);
 	void printPreview(int index = -1);
 	void triggerAction(WebAction action, bool checked = false);
+	void clearClosedWindows();
 	void setDefaultTextEncoding(const QString &encoding);
 	void setZoom(int zoom);
 

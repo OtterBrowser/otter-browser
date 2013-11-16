@@ -48,6 +48,46 @@ void Window::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
+void Window::triggerAction(WebAction action, bool checked)
+{
+	m_webWidget->triggerAction(action, checked);
+}
+
+void Window::setDefaultTextEncoding(const QString &encoding)
+{
+	m_webWidget->setDefaultTextEncoding(encoding);
+}
+
+void Window::setHistory(const HistoryInformation &history)
+{
+	m_webWidget->setHistory(history);
+}
+
+void Window::setZoom(int zoom)
+{
+	m_webWidget->setZoom(zoom);
+}
+
+void Window::setUrl(const QUrl &url)
+{
+	m_webWidget->setUrl(url);
+}
+
+void Window::setPinned(bool pinned)
+{
+	if (pinned != m_isPinned)
+	{
+		m_isPinned = pinned;
+
+		emit isPinnedChanged(pinned);
+	}
+}
+
+void Window::setPrivate(bool enabled)
+{
+	m_webWidget->setPrivate(enabled);
+}
+
 Window* Window::clone(QWidget *parent)
 {
 	if (!isClonable())
@@ -79,31 +119,6 @@ void Window::changeEvent(QEvent *event)
 		default:
 			break;
 	}
-}
-
-void Window::setZoom(int zoom)
-{
-	m_webWidget->setZoom(zoom);
-}
-
-void Window::setUrl(const QUrl &url)
-{
-	m_webWidget->setUrl(url);
-}
-
-void Window::setPinned(bool pinned)
-{
-	if (pinned != m_isPinned)
-	{
-		m_isPinned = pinned;
-
-		emit isPinnedChanged(pinned);
-	}
-}
-
-void Window::setPrivate(bool enabled)
-{
-	m_webWidget->setPrivate(enabled);
 }
 
 void Window::loadUrl()
@@ -176,16 +191,6 @@ bool Window::isPinned() const
 bool Window::isPrivate() const
 {
 	return m_webWidget->isPrivate();
-}
-
-void Window::triggerAction(WebAction action, bool checked)
-{
-	m_webWidget->triggerAction(action, checked);
-}
-
-void Window::setDefaultTextEncoding(const QString &encoding)
-{
-	m_webWidget->setDefaultTextEncoding(encoding);
 }
 
 }

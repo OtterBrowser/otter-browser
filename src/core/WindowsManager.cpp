@@ -88,6 +88,34 @@ void WindowsManager::closeOther(int index)
 	}
 }
 
+void WindowsManager::restore(int index)
+{
+	if (index < 0 || index >= m_closedWindows.count())
+	{
+		return;
+	}
+
+	SessionEntry entry = m_closedWindows.at(index);
+	HistoryInformation history;
+	history.index = entry.index;
+	history.entries = entry.history;
+
+	Window *window = new Window(NULL, m_area);
+	window->setUrl(entry.url());
+	window->setHistory(history);
+	window->setPinned(entry.pinned);
+	window->setZoom(entry.zoom());
+
+	m_closedWindows.removeAt(index);
+
+	if (SessionsManager::getClosedWindows().isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
+	}
+
+	addWindow(window);
+}
+
 void WindowsManager::print(int index)
 {
 	Window *window = getWindow(index);
@@ -150,6 +178,16 @@ void WindowsManager::triggerAction(WebAction action, bool checked)
 	if (window)
 	{
 		window->triggerAction(action, checked);
+	}
+}
+
+void WindowsManager::clearClosedWindows()
+{
+	m_closedWindows.clear();
+
+	if (SessionsManager::getClosedWindows().isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
 	}
 }
 
@@ -228,7 +266,7 @@ void WindowsManager::closeWindow(int index)
 
 	Window *window = getWindow(index);
 
-	if (window)
+	if (window && !window->isPrivate())
 	{
 		m_closedWindows.prepend(getWindowInformation(index));
 

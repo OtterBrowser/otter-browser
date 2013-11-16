@@ -25,6 +25,8 @@ QString WebBackend::getDescription() const
 
 QIcon WebBackend::getIconForUrl(const QUrl &url)
 {
+	Q_UNUSED(url)
+
 	return QIcon();
 }
 

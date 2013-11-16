@@ -77,11 +77,11 @@ void WebWidgetWebKit::print(QPrinter *printer)
 WebWidget* WebWidgetWebKit::clone(QWidget *parent)
 {
 	WebWidget *widget = new WebWidgetWebKit(parent);
+	widget->setDefaultTextEncoding(getDefaultTextEncoding());
+	widget->setHistory(getHistory());
 	widget->setPrivate(isPrivate());
 	widget->setUrl(getUrl());
 	widget->setZoom(getZoom());
-
-///TODO clone history
 
 	return widget;
 }
@@ -363,6 +363,12 @@ void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
 {
 	m_webWidget->settings()->setDefaultTextEncoding(encoding);
 	m_webWidget->reload();
+}
+
+void WebWidgetWebKit::setHistory(const HistoryInformation &history)
+{
+	Q_UNUSED(history)
+///TODO
 }
 
 void WebWidgetWebKit::setZoom(int zoom)
