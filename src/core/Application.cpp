@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ActionsManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 #include "../ui/MainWindow.h"
@@ -90,6 +91,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	ActionsManager::createInstance(this);
 
 	WebBackendsManager::createInstance(this);
+
+	SessionsManager::createInstance(this);
 
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
