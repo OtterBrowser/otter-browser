@@ -1,6 +1,7 @@
 #ifndef OTTER_SESSIONSMANAGER_H
 #define OTTER_SESSIONSMANAGER_H
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QObject>
 #include <QtCore/QPoint>
 
@@ -14,24 +15,53 @@ struct HistoryEntry
 	QPoint position;
 };
 
+struct HistoryInformation
+{
+	QList<HistoryEntry> entries;
+	int index;
+
+	HistoryInformation() : index(-1) {}
+};
+
 struct SessionEntry
 {
+	QList<HistoryEntry> history;
 	int group;
 	int window;
 	int index;
 	bool pinned;
-	QList<HistoryEntry> history;
 
-	SessionEntry() : group(0), window(1), index(0), pinned(false) {}
+	SessionEntry() : group(0), window(1), index(-1), pinned(false) {}
+
+	QString url() const
+	{
+		if (index >= 0 && index < history.count())
+		{
+			return history.at(index).url;
+		}
+
+		return QString();
+	}
+
+	QString title() const
+	{
+		if (index >= 0 && index < history.count())
+		{
+			return history.at(index).title;
+		}
+
+		return QCoreApplication::translate("main", "(Untitled)");
+	}
 };
 
 struct SessionInformation
 {
 	QString path;
 	QString title;
-	int windows;
+	QList<SessionEntry> windows;
+	int index;
 
-	SessionInformation() : windows(0) {}
+	SessionInformation() : index(0) {}
 };
 
 class WindowsManager;
@@ -48,6 +78,7 @@ public:
 	static void restoreClosedWindow(int index = -1);
 	static void restoreSession(const QString &path = QString());
 	static void modifySession(const SessionInformation &information, const QString &path = QString());
+	static void newSession(const QString &path = QString());
 	static void cloneSession(const QString &path = QString());
 	static void clearSession(const QString &path = QString());
 	static void deleteSession(const QString &path = QString());
@@ -61,7 +92,7 @@ private:
 	static SessionsManager *m_instance;
 	static QString m_session;
 	static QList<WindowsManager*> m_windows;
-	static QList<QPair<QString, QList<SessionEntry> > > m_closedWindows;
+	static QList<SessionInformation > m_closedWindows;
 };
 
 }

@@ -673,6 +673,26 @@ QIcon WebWidgetWebKit::getIcon() const
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
 
+HistoryInformation WebWidgetWebKit::getHistory() const
+{
+	QWebHistory *history = m_webWidget->history();
+	HistoryInformation information;
+	information.index = history->currentItemIndex();
+
+	for (int i = 0; i < history->count(); ++i)
+	{
+		const QWebHistoryItem item = history->itemAt(i);
+		HistoryEntry entry;
+		entry.url = item.originalUrl().toString();
+		entry.title = item.title();
+		entry.position = item.userData().toHash().value("position").toPoint();
+
+		information.entries.append(entry);
+	}
+
+	return information;
+}
+
 QWebPage::WebAction WebWidgetWebKit::mapAction(WebAction action) const
 {
 	switch (action)

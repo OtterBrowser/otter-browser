@@ -2,21 +2,26 @@
 #include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
+#include "../backends/web/WebBackendsManager.h"
 
 #include "ui_MainWindow.h"
 
 #include <QtCore/QTextCodec>
 #include <QtGui/QCloseEvent>
+#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
 MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
+	m_closedWindowsAction(new QAction(QIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png"))), tr("Closed Tabs"), this)),
 	m_textEncodingGroup(NULL),
 	m_ui(new Ui::MainWindow)
 {
@@ -24,9 +29,21 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 
 	setStyleSheet("QMainWindow::separator {width:0;height:0;}");
 
-	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
+	m_closedWindowsAction->setMenu(new QMenu(this));
+	m_closedWindowsAction->setEnabled(false);
 
-	m_ui->tabsWidgetContents->layout()->addWidget(tabBar);
+	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
+	QToolButton *trashButton = new QToolButton(m_ui->tabsWidgetContents);
+	trashButton->setAutoRaise(true);
+	trashButton->setDefaultAction(m_closedWindowsAction);
+
+	QBoxLayout *tabsLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_ui->tabsWidgetContents);
+	tabsLayout->addWidget(tabBar);
+	tabsLayout->addWidget(trashButton);
+	tabsLayout->setContentsMargins(0, 0, 0, 0);
+	tabsLayout->setSpacing(0);
+
+	m_ui->tabsWidgetContents->setLayout(tabsLayout);
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
 	ActionsManager::setActiveWindow(this);
@@ -53,8 +70,6 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	ActionsManager::registerAction(this, "SaveLinkToDisk", tr("Save Link Target As..."));
 	ActionsManager::registerAction(this, "SaveLinkToDownloads", tr("Save to Downloads"));
 	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."));
-	ActionsManager::registerAction(this, "RewindBack", tr("Rewind Back"), QIcon::fromTheme("go-first", QIcon(":/icons/go-first.png")));
-	ActionsManager::registerAction(this, "RewindForward", tr("Rewind Forward"), QIcon::fromTheme("go-last", QIcon(":/icons/go-last.png")));
 	ActionsManager::registerAction(this, "ReloadTime", tr("Reload Each"));
 	ActionsManager::registerAction(this, "CopyAddress", tr("Copy Address"));
 	ActionsManager::registerAction(this, "Validate", tr("Validate"));
@@ -104,6 +119,12 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->actionGoBack->setData(GoBackAction);
 	m_ui->actionGoForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
 	m_ui->actionGoForward->setData(GoForwardAction);
+	m_ui->actionRewindBack->setIcon(QIcon::fromTheme("go-first", QIcon(":/icons/go-first.png")));
+	m_ui->actionRewindBack->setData(RewindBackAction);
+	m_ui->actionRewindForward->setIcon(QIcon::fromTheme("go-last", QIcon(":/icons/go-last.png")));
+	m_ui->actionRewindForward->setData(RewindForwardAction);
+	m_ui->menuClosedWindows->setIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png")));
+	m_ui->menuClosedWindows->setEnabled(false);
 	m_ui->actionViewHistory->setIcon(QIcon::fromTheme("view-history", QIcon(":/icons/view-history.png")));
 	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
@@ -115,6 +136,10 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	setWindowTitle(m_windowsManager->getTitle());
 
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
+	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
+	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
+	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindosAboutToShow()));
+	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindosAboutToShow()));
 	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
@@ -132,6 +157,8 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	connect(m_ui->actionStop, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionGoBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
@@ -165,6 +192,8 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+	SessionsManager::storeClosedWindow(m_windowsManager);
+
 	SettingsManager::setValue("Window/size", size());
 	SettingsManager::setValue("Window/position", pos());
 	SettingsManager::setValue("Window/state", saveState());
@@ -264,6 +293,42 @@ void MainWindow::menuTextEncodingAboutToShow()
 	{
 		m_ui->menuTextEncoding->actions().first()->setChecked(true);
 	}
+}
+
+void MainWindow::menuClosedWindosAboutToShow()
+{
+	m_ui->menuClosedWindows->clear();
+
+	m_closedWindowsAction->menu()->clear();
+
+	QAction *clearAction = m_ui->menuClosedWindows->addAction(QIcon::fromTheme("edit-clear", QIcon(":/icons/edit-clear.png")), tr("Clear"));
+	clearAction->setData(0);
+
+	m_ui->menuClosedWindows->addSeparator();
+
+	const QStringList windows = SessionsManager::getClosedWindows();
+
+	if (!windows.isEmpty())
+	{
+		for (int i = 0; i < windows.count(); ++i)
+		{
+			QAction *action = m_ui->menuClosedWindows->addAction(QString("Window - %1").arg(windows.at(i)));
+			action->setData(-(i + 1));
+		}
+
+		m_ui->menuClosedWindows->addSeparator();
+	}
+
+	WebBackend *backend = WebBackendsManager::getBackend();
+	const QList<SessionEntry> tabs = m_windowsManager->getClosedWindows();
+
+	for (int i = 0; i < tabs.count(); ++i)
+	{
+		QAction *action = m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title());
+		action->setData(i);
+	}
+
+	m_closedWindowsAction->menu()->addActions(m_ui->menuClosedWindows->actions());
 }
 
 void MainWindow::triggerWindowAction()

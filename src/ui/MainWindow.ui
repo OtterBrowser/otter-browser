@@ -68,25 +68,7 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QWidget" name="tabsWidgetContents">
-    <layout class="QVBoxLayout" name="tabsLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-    </layout>
-   </widget>
+   <widget class="QWidget" name="tabsWidgetContents"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -207,28 +189,19 @@
     <property name="title">
      <string>History</string>
     </property>
-    <widget class="QMenu" name="menuClosedTabs">
+    <widget class="QMenu" name="menuClosedWindows">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="title">
       <string>Closed Tabs</string>
      </property>
-     <addaction name="separator"/>
-    </widget>
-    <widget class="QMenu" name="menuClosedWindows">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="title">
-      <string>Closed Windows</string>
-     </property>
-     <addaction name="separator"/>
     </widget>
     <addaction name="actionGoBack"/>
     <addaction name="actionGoForward"/>
+    <addaction name="actionRewindBack"/>
+    <addaction name="actionRewindForward"/>
     <addaction name="separator"/>
-    <addaction name="menuClosedTabs"/>
     <addaction name="menuClosedWindows"/>
     <addaction name="separator"/>
     <addaction name="actionViewHistory"/>
@@ -476,6 +449,21 @@
    </property>
    <property name="text">
     <string>Full Screen</string>
+   </property>
+  </action>
+  <action name="actionClearClosedWindows">
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionRewindBack">
+   <property name="text">
+    <string>Rewind Back</string>
+   </property>
+  </action>
+  <action name="actionRewindForward">
+   <property name="text">
+    <string>Rewind Forward</string>
    </property>
   </action>
  </widget>

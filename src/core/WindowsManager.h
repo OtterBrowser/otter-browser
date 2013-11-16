@@ -1,6 +1,7 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
+#include "SessionsManager.h"
 #include "../backends/web/WebBackend.h"
 
 #include <QtCore/QUrl>
@@ -24,6 +25,9 @@ public:
 	Window* getWindow(int index = -1) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
+	SessionEntry getWindowInformation(int index) const;
+	QList<SessionEntry> getClosedWindows() const;
+	int getWindowCount() const;
 	int getCurrentWindow() const;
 	int getZoom() const;
 	bool canUndo() const;
@@ -55,6 +59,7 @@ private:
 	QMdiArea *m_area;
 	TabBarWidget *m_tabBar;
 	StatusBarWidget *m_statusBar;
+	QList<SessionEntry> m_closedWindows;
 	int m_currentWindow;
 	int m_printedWindow;
 	bool m_privateSession;
@@ -68,6 +73,7 @@ signals:
 	void redoTextChanged(QString redoText);
 	void canUndoChanged(bool canUndo);
 	void canRedoChanged(bool canRedo);
+	void closedWindowsAvailableChanged(bool available);
 };
 
 }

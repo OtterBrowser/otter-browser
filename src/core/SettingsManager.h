@@ -19,6 +19,7 @@ public:
 	static void remove(const QString &key);
 	static void setDefaultValue(const QString &key, const QVariant &value);
 	static void setValue(const QString &key, const QVariant &value);
+	static QString getPath();
 	static QVariant getDefaultValue(const QString &key);
 	static QVariant getValue(const QString &key, const QVariant &value = QVariant());
 	static QStringList getKeys(const QString &pattern = QString());

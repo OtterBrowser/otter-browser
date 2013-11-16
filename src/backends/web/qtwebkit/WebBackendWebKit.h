@@ -16,6 +16,7 @@ public:
 	WebWidget* createWidget(QWidget *parent = NULL);
 	QString getTitle() const;
 	QString getDescription() const;
+	QIcon getIconForUrl(const QUrl &url);
 };
 
 }

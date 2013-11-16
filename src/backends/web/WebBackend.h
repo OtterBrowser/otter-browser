@@ -2,6 +2,8 @@
 #define OTTER_WEBBACKEND_H
 
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
@@ -79,6 +81,7 @@ public:
 	virtual WebWidget* createWidget(QWidget *parent = NULL);
 	virtual QString getTitle() const;
 	virtual QString getDescription() const;
+	virtual QIcon getIconForUrl(const QUrl &url);
 };
 
 }

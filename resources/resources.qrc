@@ -52,5 +52,7 @@
         <file>icons/view-fullscreen.png</file>
         <file>icons/view-restore.png</file>
         <file>files/error.html</file>
+        <file>icons/user-trash.png</file>
+        <file>icons/edit-clear.png</file>
     </qresource>
 </RCC>

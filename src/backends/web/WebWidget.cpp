@@ -213,6 +213,11 @@ QIcon WebWidget::getIcon() const
 	return QIcon();
 }
 
+HistoryInformation WebWidget::getHistory() const
+{
+	return HistoryInformation();
+}
+
 int WebWidget::getZoom() const
 {
 	return 100;

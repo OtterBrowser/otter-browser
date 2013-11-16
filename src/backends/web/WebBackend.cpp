@@ -23,4 +23,9 @@ QString WebBackend::getDescription() const
 	return QString();
 }
 
+QIcon WebBackend::getIconForUrl(const QUrl &url)
+{
+	return QIcon();
+}
+
 }

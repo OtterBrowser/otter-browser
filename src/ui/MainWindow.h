@@ -36,10 +36,12 @@ protected slots:
 	void actionTextEncoding(QAction *action);
 	void actionAboutApplication();
 	void menuTextEncodingAboutToShow();
+	void menuClosedWindosAboutToShow();
 	void triggerWindowAction();
 
 private:
 	WindowsManager *m_windowsManager;
+	QAction *m_closedWindowsAction;
 	QActionGroup *m_textEncodingGroup;
 	Ui::MainWindow *m_ui;
 

@@ -2,6 +2,7 @@
 #define OTTER_WEBWIDGET_H
 
 #include "WebBackend.h"
+#include "../../core/SessionsManager.h"
 
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QUndoStack>
@@ -39,6 +40,7 @@ public:
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
+	virtual HistoryInformation getHistory() const;
 	virtual int getZoom() const;
 	virtual bool isLoading() const;
 	virtual bool isPrivate() const;

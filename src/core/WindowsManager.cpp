@@ -226,9 +226,18 @@ void WindowsManager::closeWindow(int index)
 		return;
 	}
 
+	Window *window = getWindow(index);
+
+	if (window)
+	{
+		m_closedWindows.prepend(getWindowInformation(index));
+
+		emit closedWindowsAvailableChanged(true);
+	}
+
 	if (m_tabBar->count() == 1)
 	{
-		Window *window = getWindow(0);
+		window = getWindow(0);
 
 		if (window)
 		{
@@ -377,6 +386,34 @@ QString WindowsManager::getTitle() const
 	Window *window = getWindow(getCurrentWindow());
 
 	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
+}
+
+SessionEntry WindowsManager::getWindowInformation(int index) const
+{
+	Window *window = getWindow(index);
+	SessionEntry information;
+
+	if (window)
+	{
+		const HistoryInformation history = window->getHistory();
+
+		information.history = history.entries;
+		information.group = 0;
+		information.index = history.index;
+		information.pinned = m_tabBar->getTabProperty(index, "pinned", false).toBool();
+	}
+
+	return information;
+}
+
+QList<SessionEntry> WindowsManager::getClosedWindows() const
+{
+	return m_closedWindows;
+}
+
+int WindowsManager::getWindowCount() const
+{
+	return m_tabBar->count();
 }
 
 int WindowsManager::getCurrentWindow() const

@@ -1,5 +1,6 @@
 #include "SettingsManager.h"
 
+#include <QtCore/QFileInfo>
 #include <QtCore/QSettings>
 
 namespace Otter
@@ -37,6 +38,11 @@ void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
 void SettingsManager::setValue(const QString &key, const QVariant &value)
 {
 	QSettings(m_path, QSettings::IniFormat).setValue(key, value);
+}
+
+QString SettingsManager::getPath()
+{
+	return QFileInfo(m_path).absolutePath();
 }
 
 QVariant SettingsManager::keyValue(const QString &key)

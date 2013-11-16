@@ -40,4 +40,9 @@ QString WebBackendWebKit::getDescription() const
 	return tr("Backend utilizing QtWebKit module");
 }
 
+QIcon WebBackendWebKit::getIconForUrl(const QUrl &url)
+{
+	return QWebSettings::iconForUrl(url);
+}
+
 }

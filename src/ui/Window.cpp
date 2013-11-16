@@ -141,6 +141,11 @@ QIcon Window::getIcon() const
 	return m_webWidget->getIcon();
 }
 
+HistoryInformation Window::getHistory() const
+{
+	return m_webWidget->getHistory();
+}
+
 int Window::getZoom() const
 {
 	return m_webWidget->getZoom();

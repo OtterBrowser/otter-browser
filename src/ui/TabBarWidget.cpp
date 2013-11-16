@@ -4,6 +4,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
+#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
@@ -264,6 +265,20 @@ void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
 		else
 		{
 			widget->setFeatures(widget->features() | QDockWidget::DockWidgetVerticalTitleBar);
+		}
+	}
+
+	QBoxLayout *layout = qobject_cast<QBoxLayout*>(parentWidget()->layout());
+
+	if (layout)
+	{
+		if (orientation == Qt::LeftDockWidgetArea || orientation == Qt::RightDockWidgetArea)
+		{
+			layout->setDirection(QBoxLayout::TopToBottom);
+		}
+		else
+		{
+			layout->setDirection(QBoxLayout::LeftToRight);
 		}
 	}
 }

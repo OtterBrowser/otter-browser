@@ -1,6 +1,7 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
+#include "../core/SessionsManager.h"
 #include "../backends/web/WebBackend.h"
 #include "../backends/web/WebWidget.h"
 
@@ -43,6 +44,7 @@ public:
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
+	virtual HistoryInformation getHistory() const;
 	virtual int getZoom() const;
 	virtual bool isClonable() const;
 	virtual bool isEmpty() const;
