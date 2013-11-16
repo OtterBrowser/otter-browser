@@ -74,14 +74,351 @@ void WebWidgetWebKit::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
+void WebWidgetWebKit::storePageData()
+{
+	QVariantHash data;
+	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
+	data["zoom"] = getZoom();
+
+	m_webWidget->history()->currentItem().setUserData(data);
+}
+
+void WebWidgetWebKit::loadStarted()
+{
+	m_isLoading = true;
+
+	if (m_customActions.contains(RewindBackAction))
+	{
+		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	}
+
+	if (m_customActions.contains(RewindForwardAction))
+	{
+		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	}
+
+	if (m_customActions.contains(ReloadOrStopAction))
+	{
+		QAction *action = getAction(ReloadOrStopAction);
+
+		ActionsManager::setupLocalAction(action, "Stop", false);
+
+		action->setShortcut(QKeySequence());
+	}
+
+	emit loadingChanged(true);
+}
+
+void WebWidgetWebKit::loadFinished(bool ok)
+{
+	Q_UNUSED(ok)
+
+	m_isLoading = false;
+
+	if (m_customActions.contains(ReloadOrStopAction))
+	{
+		QAction *action = getAction(ReloadOrStopAction);
+
+		ActionsManager::setupLocalAction(action, "Reload", false);
+
+		action->setShortcut(QKeySequence());
+	}
+
+	emit loadingChanged(false);
+}
+
+void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
+{
+	QString text;
+
+	if (!link.isEmpty())
+	{
+		text = (title.isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(title).arg(link));
+	}
+
+	m_isLinkHovered = !text.isEmpty();
+
+	QToolTip::showText(QCursor::pos(), text, m_webWidget);
+
+	emit statusMessageChanged(link, 0);
+}
+
+void WebWidgetWebKit::notifyTitleChanged()
+{
+	emit titleChanged(getTitle());
+}
+
+void WebWidgetWebKit::notifyUrlChanged(const QUrl &url)
+{
+	if (m_customActions.contains(RewindBackAction))
+	{
+		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	}
+
+	if (m_customActions.contains(RewindForwardAction))
+	{
+		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	}
+
+	emit urlChanged(url);
+}
+
+void WebWidgetWebKit::notifyIconChanged()
+{
+	emit iconChanged(getIcon());
+}
+
+void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
+{
+	const QWebPage::WebAction webAction = mapAction(action);
+
+	if (webAction != QWebPage::NoWebAction)
+	{
+		m_webWidget->triggerPageAction(webAction, checked);
+
+		return;
+	}
+
+	switch (action)
+	{
+		case RewindBackAction:
+			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(0));
+
+			break;
+		case RewindForwardAction:
+			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(m_webWidget->page()->history()->count() - 1));
+
+			break;
+		case CopyAddressAction:
+			QApplication::clipboard()->setText(getUrl().toString());
+
+			break;
+		case ZoomInAction:
+			setZoom(qMin((getZoom() + 10), 10000));
+
+			break;
+		case ZoomOutAction:
+			setZoom(qMax((getZoom() - 10), 10));
+
+			break;
+		case ZoomOriginalAction:
+			setZoom(100);
+
+			break;
+		case ReloadOrStopAction:
+			if (isLoading())
+			{
+				triggerAction(StopAction);
+			}
+			else
+			{
+				triggerAction(ReloadAction);
+			}
+
+			break;
+		default:
+			break;
+	}
+}
+
+void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
+{
+	m_webWidget->settings()->setDefaultTextEncoding(encoding);
+	m_webWidget->reload();
+}
+
+void WebWidgetWebKit::setHistory(const HistoryInformation &history)
+{
+	Q_UNUSED(history)
+///TODO
+}
+
+void WebWidgetWebKit::setZoom(int zoom)
+{
+	if (zoom != getZoom())
+	{
+		m_webWidget->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+
+		emit zoomChanged(zoom);
+	}
+}
+
+void WebWidgetWebKit::setUrl(const QUrl &url)
+{
+	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
+	{
+		QUrl httpUrl = url;
+		httpUrl.setScheme("http");
+
+		storePageData();
+
+		m_webWidget->setUrl(httpUrl);
+	}
+	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
+	{
+		QUrl localUrl = url;
+		localUrl.setScheme("file");
+
+		if (localUrl.isLocalFile() && QFileInfo(localUrl.toLocalFile()).isDir())
+		{
+			QFile file(":/files/listing.html");
+			file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+
+			QDir directory(localUrl.toLocalFile());
+			const QFileInfoList entries = directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst));
+			QStringList navigation;
+
+			do
+			{
+				navigation.prepend(QString("<a href=\"%1\">%2</a>%3").arg(directory.canonicalPath()).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
+			}
+			while (directory.cdUp());
+
+			QHash<QString, QString> variables;
+			variables["title"] = QFileInfo(localUrl.toLocalFile()).canonicalFilePath();
+			variables["description"] = tr("Directory Contents");
+			variables["dir"] = (QGuiApplication::isLeftToRight() ? "ltr" : "rtl");
+			variables["navigation"] = navigation.join(QString());
+			variables["header_name"] = tr("Name");
+			variables["header_type"] = tr("Type");
+			variables["header_size"] = tr("Size");
+			variables["header_date"] = tr("Date");
+			variables["body"] = QString();
+
+			QMimeDatabase database;
+
+			for (int i = 0; i < entries.count(); ++i)
+			{
+				const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
+				QString size;
+
+				if (!entries.at(i).isDir())
+				{
+					if (entries.at(i).size() > 1024)
+					{
+						if (entries.at(i).size() > 1048576)
+						{
+							if (entries.at(i).size() > 1073741824)
+							{
+								size = QString("%1 GB").arg((entries.at(i).size() / 1073741824.0), 0, 'f', 2);
+							}
+							else
+							{
+								size = QString("%1 MB").arg((entries.at(i).size() / 1048576.0), 0, 'f', 2);
+							}
+						}
+						else
+						{
+							size = QString("%1 KB").arg((entries.at(i).size() / 1024.0), 0, 'f', 2);
+						}
+					}
+					else
+					{
+						size = QString("%1 B").arg(entries.at(i).size());
+					}
+				}
+
+				QByteArray byteArray;
+				QBuffer buffer(&byteArray);
+				QIcon::fromTheme(mimeType.iconName(), QIcon(entries.at(i).isDir() ? ":icons/inode-directory.png" : ":/icons/unknown.png")).pixmap(16, 16).save(&buffer, "PNG");
+
+				variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
+			}
+
+			QString html = stream.readAll();
+			QHash<QString, QString>::iterator iterator;
+
+			for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+			{
+				html.replace(QString("{%1}").arg(iterator.key()), iterator.value());
+			}
+
+			m_webWidget->setHtml(html, localUrl);
+		}
+		else
+		{
+			storePageData();
+
+			m_webWidget->setUrl(localUrl);
+		}
+	}
+	else
+	{
+		storePageData();
+
+		m_webWidget->setUrl(url);
+	}
+
+	notifyTitleChanged();
+	notifyIconChanged();
+}
+
+void WebWidgetWebKit::setPrivate(bool enabled)
+{
+	if (enabled != m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
+	{
+		m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
+
+		notifyIconChanged();
+
+		emit isPrivateChanged(enabled);
+	}
+}
+
+void WebWidgetWebKit::showMenu(const QPoint &position)
+{
+	const QWebHitTestResult result = m_webWidget->page()->frameAt(position)->hitTestContent(position);
+	MenuFlags flags = NoMenu;
+
+	if (result.element().tagName().toLower() == "textarea" || (result.element().tagName().toLower() == "input" && (result.element().attribute("type").isEmpty() || result.element().attribute("type").toLower() == "text")))
+	{
+		flags |= FormMenu;
+	}
+
+	if (result.pixmap().isNull() && result.isContentSelected() && !m_webWidget->selectedText().isEmpty())
+	{
+		flags |= SelectionMenu;
+	}
+
+	if (result.linkUrl().isValid())
+	{
+		flags |= LinkMenu;
+	}
+
+	if (!result.pixmap().isNull())
+	{
+		flags |= ImageMenu;
+	}
+
+	if (result.isContentEditable())
+	{
+		flags |= EditMenu;
+	}
+
+	if (flags == NoMenu)
+	{
+		flags = StandardMenu;
+
+		if (result.frame() != m_webWidget->page()->mainFrame())
+		{
+			flags |= FrameMenu;
+		}
+	}
+
+	WebWidget::showMenu(position, flags);
+}
+
 WebWidget* WebWidgetWebKit::clone(QWidget *parent)
 {
 	WebWidget *widget = new WebWidgetWebKit(parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
-	widget->setHistory(getHistory());
 	widget->setPrivate(isPrivate());
 	widget->setUrl(getUrl());
 	widget->setZoom(getZoom());
+	widget->setHistory(getHistory());
 
 	return widget;
 }
@@ -306,328 +643,6 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 	return actionObject;
 }
 
-void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
-{
-	const QWebPage::WebAction webAction = mapAction(action);
-
-	if (webAction != QWebPage::NoWebAction)
-	{
-		m_webWidget->triggerPageAction(webAction, checked);
-
-		return;
-	}
-
-	switch (action)
-	{
-		case RewindBackAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(0));
-
-			break;
-		case RewindForwardAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(m_webWidget->page()->history()->count() - 1));
-
-			break;
-		case CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
-
-			break;
-		case ZoomInAction:
-			setZoom(qMin((getZoom() + 10), 10000));
-
-			break;
-		case ZoomOutAction:
-			setZoom(qMax((getZoom() - 10), 10));
-
-			break;
-		case ZoomOriginalAction:
-			setZoom(100);
-
-			break;
-		case ReloadOrStopAction:
-			if (isLoading())
-			{
-				triggerAction(StopAction);
-			}
-			else
-			{
-				triggerAction(ReloadAction);
-			}
-
-			break;
-		default:
-			break;
-	}
-}
-
-void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
-{
-	m_webWidget->settings()->setDefaultTextEncoding(encoding);
-	m_webWidget->reload();
-}
-
-void WebWidgetWebKit::setHistory(const HistoryInformation &history)
-{
-	Q_UNUSED(history)
-///TODO
-}
-
-void WebWidgetWebKit::setZoom(int zoom)
-{
-	if (zoom != getZoom())
-	{
-		m_webWidget->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
-
-		emit zoomChanged(zoom);
-	}
-}
-
-void WebWidgetWebKit::setUrl(const QUrl &url)
-{
-	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
-	{
-		QUrl httpUrl = url;
-		httpUrl.setScheme("http");
-
-		m_webWidget->setUrl(httpUrl);
-	}
-	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
-	{
-		QUrl localUrl = url;
-		localUrl.setScheme("file");
-
-		if (localUrl.isLocalFile() && QFileInfo(localUrl.toLocalFile()).isDir())
-		{
-			QFile file(":/files/listing.html");
-			file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-			QTextStream stream(&file);
-			stream.setCodec("UTF-8");
-
-			QDir directory(localUrl.toLocalFile());
-			const QFileInfoList entries = directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst));
-			QStringList navigation;
-
-			do
-			{
-				navigation.prepend(QString("<a href=\"%1\">%2</a>%3").arg(directory.canonicalPath()).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
-			}
-			while (directory.cdUp());
-
-			QHash<QString, QString> variables;
-			variables["title"] = QFileInfo(localUrl.toLocalFile()).canonicalFilePath();
-			variables["description"] = tr("Directory Contents");
-			variables["dir"] = (QGuiApplication::isLeftToRight() ? "ltr" : "rtl");
-			variables["navigation"] = navigation.join(QString());
-			variables["header_name"] = tr("Name");
-			variables["header_type"] = tr("Type");
-			variables["header_size"] = tr("Size");
-			variables["header_date"] = tr("Date");
-			variables["body"] = QString();
-
-			QMimeDatabase database;
-
-			for (int i = 0; i < entries.count(); ++i)
-			{
-				const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
-				QString size;
-
-				if (!entries.at(i).isDir())
-				{
-					if (entries.at(i).size() > 1024)
-					{
-						if (entries.at(i).size() > 1048576)
-						{
-							if (entries.at(i).size() > 1073741824)
-							{
-								size = QString("%1 GB").arg((entries.at(i).size() / 1073741824.0), 0, 'f', 2);
-							}
-							else
-							{
-								size = QString("%1 MB").arg((entries.at(i).size() / 1048576.0), 0, 'f', 2);
-							}
-						}
-						else
-						{
-							size = QString("%1 KB").arg((entries.at(i).size() / 1024.0), 0, 'f', 2);
-						}
-					}
-					else
-					{
-						size = QString("%1 B").arg(entries.at(i).size());
-					}
-				}
-
-				QByteArray byteArray;
-				QBuffer buffer(&byteArray);
-				QIcon::fromTheme(mimeType.iconName(), QIcon(entries.at(i).isDir() ? ":icons/inode-directory.png" : ":/icons/unknown.png")).pixmap(16, 16).save(&buffer, "PNG");
-
-				variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
-			}
-
-			QString html = stream.readAll();
-			QHash<QString, QString>::iterator iterator;
-
-			for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-			{
-				html.replace(QString("{%1}").arg(iterator.key()), iterator.value());
-			}
-
-			m_webWidget->setHtml(html, localUrl);
-		}
-		else
-		{
-			m_webWidget->setUrl(localUrl);
-		}
-	}
-	else
-	{
-		m_webWidget->setUrl(url);
-	}
-
-	notifyTitleChanged();
-	notifyIconChanged();
-}
-
-void WebWidgetWebKit::setPrivate(bool enabled)
-{
-	if (enabled != m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
-	{
-		m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
-
-		notifyIconChanged();
-
-		emit isPrivateChanged(enabled);
-	}
-}
-
-void WebWidgetWebKit::loadStarted()
-{
-	m_isLoading = true;
-
-	if (m_customActions.contains(RewindBackAction))
-	{
-		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	}
-
-	if (m_customActions.contains(RewindForwardAction))
-	{
-		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
-	}
-
-	if (m_customActions.contains(ReloadOrStopAction))
-	{
-		QAction *action = getAction(ReloadOrStopAction);
-
-		ActionsManager::setupLocalAction(action, "Stop", false);
-
-		action->setShortcut(QKeySequence());
-	}
-
-	emit loadingChanged(true);
-}
-
-void WebWidgetWebKit::loadFinished(bool ok)
-{
-	Q_UNUSED(ok)
-
-	m_isLoading = false;
-
-	if (m_customActions.contains(ReloadOrStopAction))
-	{
-		QAction *action = getAction(ReloadOrStopAction);
-
-		ActionsManager::setupLocalAction(action, "Reload", false);
-
-		action->setShortcut(QKeySequence());
-	}
-
-	emit loadingChanged(false);
-}
-
-void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
-{
-	QString text;
-
-	if (!link.isEmpty())
-	{
-		text = (title.isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(title).arg(link));
-	}
-
-	m_isLinkHovered = !text.isEmpty();
-
-	QToolTip::showText(QCursor::pos(), text, m_webWidget);
-
-	emit statusMessageChanged(link, 0);
-}
-
-void WebWidgetWebKit::notifyTitleChanged()
-{
-	emit titleChanged(getTitle());
-}
-
-void WebWidgetWebKit::notifyUrlChanged(const QUrl &url)
-{
-	if (m_customActions.contains(RewindBackAction))
-	{
-		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	}
-
-	if (m_customActions.contains(RewindForwardAction))
-	{
-		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
-	}
-
-	emit urlChanged(url);
-}
-
-void WebWidgetWebKit::notifyIconChanged()
-{
-	emit iconChanged(getIcon());
-}
-
-void WebWidgetWebKit::showMenu(const QPoint &position)
-{
-	const QWebHitTestResult result = m_webWidget->page()->frameAt(position)->hitTestContent(position);
-	MenuFlags flags = NoMenu;
-
-	if (result.element().tagName().toLower() == "textarea" || (result.element().tagName().toLower() == "input" && (result.element().attribute("type").isEmpty() || result.element().attribute("type").toLower() == "text")))
-	{
-		flags |= FormMenu;
-	}
-
-	if (result.pixmap().isNull() && result.isContentSelected() && !m_webWidget->selectedText().isEmpty())
-	{
-		flags |= SelectionMenu;
-	}
-
-	if (result.linkUrl().isValid())
-	{
-		flags |= LinkMenu;
-	}
-
-	if (!result.pixmap().isNull())
-	{
-		flags |= ImageMenu;
-	}
-
-	if (result.isContentEditable())
-	{
-		flags |= EditMenu;
-	}
-
-	if (flags == NoMenu)
-	{
-		flags = StandardMenu;
-
-		if (result.frame() != m_webWidget->page()->mainFrame())
-		{
-			flags |= FrameMenu;
-		}
-	}
-
-	WebWidget::showMenu(position, flags);
-}
-
 QUndoStack *WebWidgetWebKit::getUndoStack()
 {
 	return m_webWidget->page()->undoStack();
@@ -681,6 +696,8 @@ QIcon WebWidgetWebKit::getIcon() const
 
 HistoryInformation WebWidgetWebKit::getHistory() const
 {
+	storePageData();
+
 	QWebHistory *history = m_webWidget->history();
 	HistoryInformation information;
 	information.index = history->currentItemIndex();
@@ -692,6 +709,7 @@ HistoryInformation WebWidgetWebKit::getHistory() const
 		entry.url = item.url().toString();
 		entry.title = item.title();
 		entry.position = item.userData().toHash().value("position").toPoint();
+		entry.zoom = item.userData().toHash().value("zoom").toInt();
 
 		information.entries.append(entry);
 	}

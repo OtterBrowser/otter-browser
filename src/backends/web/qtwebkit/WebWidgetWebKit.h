@@ -39,6 +39,7 @@ public slots:
 	void setPrivate(bool enabled);
 
 protected:
+	void updateHistoryEntry();
 	QWebPage::WebAction mapAction(WebAction action) const;
 
 protected slots:
