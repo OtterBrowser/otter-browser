@@ -74,15 +74,6 @@ void WebWidgetWebKit::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
-void WebWidgetWebKit::storePageData()
-{
-	QVariantHash data;
-	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
-	data["zoom"] = getZoom();
-
-	m_webWidget->history()->currentItem().setUserData(data);
-}
-
 void WebWidgetWebKit::loadStarted()
 {
 	m_isLoading = true;
@@ -111,8 +102,6 @@ void WebWidgetWebKit::loadStarted()
 
 void WebWidgetWebKit::loadFinished(bool ok)
 {
-	Q_UNUSED(ok)
-
 	m_isLoading = false;
 
 	if (m_customActions.contains(ReloadOrStopAction))
@@ -122,6 +111,16 @@ void WebWidgetWebKit::loadFinished(bool ok)
 		ActionsManager::setupLocalAction(action, "Reload", false);
 
 		action->setShortcut(QKeySequence());
+	}
+
+	if (ok)
+	{
+		setZoom(m_webWidget->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
+
+		if (m_webWidget->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
+		{
+			m_webWidget->page()->mainFrame()->setScrollPosition(m_webWidget->history()->currentItem().userData().toHash().value("position").toPoint());
+		}
 	}
 
 	emit loadingChanged(false);
@@ -250,8 +249,6 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 		QUrl httpUrl = url;
 		httpUrl.setScheme("http");
 
-		storePageData();
-
 		m_webWidget->setUrl(httpUrl);
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
@@ -340,15 +337,11 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 		}
 		else
 		{
-			storePageData();
-
 			m_webWidget->setUrl(localUrl);
 		}
 	}
 	else
 	{
-		storePageData();
-
 		m_webWidget->setUrl(url);
 	}
 
@@ -694,9 +687,13 @@ QIcon WebWidgetWebKit::getIcon() const
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
 
-HistoryInformation WebWidgetWebKit::getHistory() const
+HistoryInformation WebWidgetWebKit::getHistory()
 {
-	storePageData();
+	QVariantHash data;
+	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
+	data["zoom"] = getZoom();
+
+	m_webWidget->history()->currentItem().setUserData(data);
 
 	QWebHistory *history = m_webWidget->history();
 	HistoryInformation information;
@@ -708,7 +705,7 @@ HistoryInformation WebWidgetWebKit::getHistory() const
 		HistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
-		entry.position = item.userData().toHash().value("position").toPoint();
+		entry.position = item.userData().toHash().value("position", QPoint(0, 0)).toPoint();
 		entry.zoom = item.userData().toHash().value("zoom").toInt();
 
 		information.entries.append(entry);

@@ -3,12 +3,28 @@
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtWidgets/QApplication>
+#include <QtWebKit/QWebHistory>
+#include <QtWebKitWidgets/QWebFrame>
 
 namespace Otter
 {
 
 WebPageWebKit::WebPageWebKit(QObject *parent) : QWebPage(parent)
 {
+}
+
+void WebPageWebKit::triggerAction(QWebPage::WebAction action, bool checked)
+{
+	if (action == QWebPage::Back || action == QWebPage::Forward || action == QWebPage::OpenLink)
+	{
+		QVariantHash data;
+		data["position"] = mainFrame()->scrollPosition();
+		data["zoom"] = (mainFrame()->zoomFactor() * 100);
+
+		history()->currentItem().setUserData(data);
+	}
+
+	QWebPage::triggerAction(action, checked);
 }
 
 bool WebPageWebKit::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)

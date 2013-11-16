@@ -13,6 +13,7 @@ class WebPageWebKit : public QWebPage
 public:
 	explicit WebPageWebKit(QObject *parent = 0);
 
+	void triggerAction(WebAction action, bool checked = false);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool supportsExtension(Extension extension) const;
 };
