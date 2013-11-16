@@ -90,14 +90,15 @@ public:
 	static void storeSession(const QString &path = QString());
 	static void restoreClosedWindow(int index = -1);
 	static void restoreSession(const QString &path = QString());
-	static void modifySession(const SessionInformation &information, const QString &path = QString());
-	static void newSession(const QString &path = QString());
-	static void cloneSession(const QString &path = QString());
-	static void clearSession(const QString &path = QString());
-	static void deleteSession(const QString &path = QString());
 	static QString getCurrentSession();
+	static QString getSessionPath(QString path);
 	static QStringList getClosedWindows();
 	static QList<SessionInformation> getSesions();
+	static bool modifySession(const SessionInformation &information, const QString &path = QString());
+	static bool newSession(const QString &path = QString());
+	static bool cloneSession(const QString &path = QString());
+	static bool clearSession(const QString &path = QString());
+	static bool deleteSession(const QString &path = QString());
 
 private:
 	explicit SessionsManager(QObject *parent = NULL);
