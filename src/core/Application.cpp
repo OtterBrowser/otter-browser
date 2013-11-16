@@ -6,7 +6,6 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
-#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QLocale>
@@ -14,7 +13,6 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QUrl>
 #include <QtNetwork/QLocalSocket>
-#include <QtWebKit/QWebSettings>
 
 namespace Otter
 {
@@ -58,10 +56,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-
-	QDir().mkpath(cachePath);
-
 	SettingsManager::createInstance(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/otter.conf", this);
 	SettingsManager::setDefaultValue("Browser/OpenLinksInNewWindow", false);
 	SettingsManager::setDefaultValue("Browser/EnablePlugins", true);
@@ -93,15 +87,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	WebBackendsManager::createInstance(this);
 
 	SessionsManager::createInstance(this);
-
-	QWebSettings *globalSettings = QWebSettings::globalSettings();
-	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("Browser/EnablePlugins").toBool());
-	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("Browser/EnableJava").toBool());
-	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("Browser/EnableJavaScript").toBool());
-	globalSettings->setIconDatabasePath(cachePath);
-	globalSettings->setOfflineStoragePath(cachePath);
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
