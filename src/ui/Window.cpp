@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../core/SettingsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 
 #include "ui_Window.h"
@@ -19,6 +20,8 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	{
 		m_webWidget = WebBackendsManager::getBackend()->createWidget(false, this);
 	}
+
+	m_webWidget->setZoom(SettingsManager::getValue("Browser/DefaultZoom", 100).toInt());
 
 	m_ui->setupUi(this);
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));

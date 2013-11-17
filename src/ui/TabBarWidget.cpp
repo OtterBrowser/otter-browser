@@ -201,12 +201,15 @@ void TabBarWidget::updateTabs(int index)
 
 		if (label)
 		{
-			if (isLoading && !label->movie())
+			if (isLoading)
 			{
-				QMovie *movie = new QMovie(":/icons/loading.gif", QByteArray(), label);
-				movie->start();
+				if (!label->movie())
+				{
+					QMovie *movie = new QMovie(":/icons/loading.gif", QByteArray(), label);
+					movie->start();
 
-				label->setMovie(movie);
+					label->setMovie(movie);
+				}
 			}
 			else
 			{
