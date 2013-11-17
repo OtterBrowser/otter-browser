@@ -13,6 +13,9 @@ class NetworkAccessManager : public QNetworkAccessManager
 public:
 	explicit NetworkAccessManager(QObject *parent = NULL);
 
+protected:
+	QNetworkReply *createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
+
 };
 
 }
