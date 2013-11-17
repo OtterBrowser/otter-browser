@@ -87,18 +87,15 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
-	static void storeSession(const QString &path = QString());
 	static void restoreClosedWindow(int index = -1);
 	static void restoreSession(const QString &path = QString());
 	static QString getCurrentSession();
 	static QString getSessionPath(QString path);
 	static QStringList getClosedWindows();
 	static QList<SessionInformation> getSesions();
-	static bool modifySession(const SessionInformation &information, const QString &path = QString());
-	static bool newSession(const QString &path = QString());
-	static bool cloneSession(const QString &path = QString());
-	static bool clearSession(const QString &path = QString());
+	static bool saveSession(const QString &path = QString());
 	static bool deleteSession(const QString &path = QString());
+	static bool moveSession(const QString &from, const QString &to);
 
 private:
 	explicit SessionsManager(QObject *parent = NULL);

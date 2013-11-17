@@ -52,12 +52,6 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 	}
 }
 
-void SessionsManager::storeSession(const QString &path)
-{
-	Q_UNUSED(path)
-//TODO
-}
-
 void SessionsManager::restoreClosedWindow(int index)
 {
 	Q_UNUSED(index)
@@ -153,46 +147,11 @@ QList<SessionInformation> SessionsManager::getSesions()
 	return sessions.values();
 }
 
-bool SessionsManager::modifySession(const SessionInformation &information, const QString &path)
-{
-	Q_UNUSED(information)
-	Q_UNUSED(path)
-//TODO
-	return false;
-}
-
-bool SessionsManager::newSession(const QString &path)
+bool SessionsManager::saveSession(const QString &path)
 {
 	Q_UNUSED(path)
 //TODO
 	return false;
-}
-
-bool SessionsManager::cloneSession(const QString &path)
-{
-	Q_UNUSED(path)
-//TODO
-	return false;
-}
-
-bool SessionsManager::clearSession(const QString &path)
-{
-	QSettings sessionData(getSessionPath(path), QSettings::IniFormat);
-
-	if (!sessionData.isWritable())
-	{
-		return false;
-	}
-
-	const QString title = sessionData.value("Session/title").toString();
-
-	sessionData.clear();
-	sessionData.setValue("Session/title", title);
-	sessionData.setValue("Session/windows", 0);
-	sessionData.setValue("Session/index", 0);
-	sessionData.sync();
-
-	return (sessionData.status() == QSettings::NoError);
 }
 
 bool SessionsManager::deleteSession(const QString &path)
@@ -204,6 +163,14 @@ bool SessionsManager::deleteSession(const QString &path)
 		return QFile::remove(cleanPath);
 	}
 
+	return false;
+}
+
+bool SessionsManager::moveSession(const QString &from, const QString &to)
+{
+	Q_UNUSED(from)
+	Q_UNUSED(to)
+//TODO
 	return false;
 }
 
