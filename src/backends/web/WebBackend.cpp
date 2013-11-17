@@ -8,9 +8,9 @@ WebBackend::WebBackend(QObject *parent) : QObject(parent)
 {
 }
 
-WebWidget *WebBackend::createWidget(QWidget *parent)
+WebWidget *WebBackend::createWidget(bool privateWindow, QWidget *parent)
 {
-	return new WebWidget(parent);
+	return new WebWidget(privateWindow, parent);
 }
 
 QString WebBackend::getTitle() const

@@ -7,8 +7,9 @@
 namespace Otter
 {
 
-WebWidget::WebWidget(QWidget *parent) : QWidget(parent)
+WebWidget::WebWidget(bool privateWindow = false, QWidget *parent) : QWidget(parent)
 {
+	Q_UNUSED(privateWindow)
 }
 
 void WebWidget::print(QPrinter *printer)

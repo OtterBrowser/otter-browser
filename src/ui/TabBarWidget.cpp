@@ -201,22 +201,22 @@ void TabBarWidget::updateTabs(int index)
 
 		if (label)
 		{
-			if (!isLoading && (label->movie() || !label->pixmap()))
-			{
-				if (label->movie())
-				{
-					label->movie()->deleteLater();
-				}
-
-				label->setMovie(NULL);
-				label->setPixmap(getTabProperty(i, "icon", QIcon(getTabProperty(i, "isPrivate", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
-			}
-			else if (isLoading && !label->movie())
+			if (isLoading && !label->movie())
 			{
 				QMovie *movie = new QMovie(":/icons/loading.gif", QByteArray(), label);
 				movie->start();
 
 				label->setMovie(movie);
+			}
+			else
+			{
+				if (label->movie())
+				{
+					label->movie()->deleteLater();
+					label->setMovie(NULL);
+				}
+
+				label->setPixmap(getTabProperty(i, "icon", QIcon(getTabProperty(i, "isPrivate", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
 			}
 		}
 

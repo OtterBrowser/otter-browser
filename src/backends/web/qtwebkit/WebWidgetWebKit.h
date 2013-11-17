@@ -14,7 +14,7 @@ class WebWidgetWebKit : public WebWidget
 	Q_OBJECT
 
 public:
-	explicit WebWidgetWebKit(QWidget *parent = NULL);
+	explicit WebWidgetWebKit(bool privateWindow = false, QWidget *parent = NULL);
 
 	void print(QPrinter *printer);
 	WebWidget* clone(QWidget *parent = NULL);
@@ -36,7 +36,6 @@ public slots:
 	void setHistory(const HistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
-	void setPrivate(bool enabled);
 
 protected:
 	QWebPage::WebAction mapAction(WebAction action) const;

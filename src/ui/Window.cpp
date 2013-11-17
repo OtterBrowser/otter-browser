@@ -17,7 +17,7 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	}
 	else
 	{
-		m_webWidget = WebBackendsManager::getBackend()->createWidget(this);
+		m_webWidget = WebBackendsManager::getBackend()->createWidget(false, this);
 	}
 
 	m_ui->setupUi(this);
@@ -35,7 +35,6 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-	connect(m_webWidget, SIGNAL(isPrivateChanged(bool)), this, SIGNAL(isPrivateChanged(bool)));
 }
 
 Window::~Window()
@@ -81,11 +80,6 @@ void Window::setPinned(bool pinned)
 
 		emit isPinnedChanged(pinned);
 	}
-}
-
-void Window::setPrivate(bool enabled)
-{
-	m_webWidget->setPrivate(enabled);
 }
 
 Window* Window::clone(QWidget *parent)

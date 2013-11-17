@@ -30,7 +30,7 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit WebWidget(QWidget *parent = NULL);
+	explicit WebWidget(bool privateWindow, QWidget *parent = NULL);
 
 	virtual void print(QPrinter *printer);
 	virtual WebWidget* clone(QWidget *parent = NULL);
@@ -61,7 +61,6 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void loadingChanged(bool loading);
 	void zoomChanged(int zoom);
-	void isPrivateChanged(bool pinned);
 };
 
 }

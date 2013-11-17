@@ -30,7 +30,7 @@ class Window : public QWidget
 	Q_PROPERTY(bool isEmpty READ isEmpty)
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
 	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
-	Q_PROPERTY(bool isPrivate READ isPrivate WRITE setPrivate NOTIFY isPrivateChanged)
+	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
 	explicit Window(WebWidget *widget, QWidget *parent = NULL);
@@ -59,7 +59,6 @@ public slots:
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url);
 	virtual void setPinned(bool pinned);
-	virtual void setPrivate(bool enabled);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -81,7 +80,6 @@ signals:
 	void loadingChanged(bool loading);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
-	void isPrivateChanged(bool pinned);
 };
 
 }

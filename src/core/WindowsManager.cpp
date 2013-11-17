@@ -3,6 +3,7 @@
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 #include "../ui/Window.h"
+#include "../backends/web/WebBackendsManager.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
@@ -35,21 +36,29 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 {
 	Window *window = NULL;
 
+	privateWindow = (m_privateSession || privateWindow);
+
 	if (!url.isEmpty())
 	{
 		window = getWindow(getCurrentWindow());
 
 		if (window && window->isEmpty())
 		{
-			window->setUrl(url);
-			window->setPrivate(m_privateSession || privateWindow);
+			if (window->isPrivate() == privateWindow)
+			{
+				window->setHistory(HistoryInformation());
+				window->setUrl(url);
 
-			return;
+				return;
+			}
+			else
+			{
+				closeWindow(getCurrentWindow());
+			}
 		}
 	}
 
-	window = new Window(NULL, m_area);
-	window->setPrivate(m_privateSession || privateWindow);
+	window = new Window(WebBackendsManager::getBackend()->createWidget(privateWindow), m_area);
 	window->setUrl(url);
 
 	addWindow(window);

@@ -78,7 +78,7 @@ class WebBackend : public QObject
 public:
 	explicit WebBackend(QObject *parent = NULL);
 
-	virtual WebWidget* createWidget(QWidget *parent = NULL);
+	virtual WebWidget* createWidget(bool privateWindow = false, QWidget *parent = NULL);
 	virtual QString getTitle() const;
 	virtual QString getDescription() const;
 	virtual QIcon getIconForUrl(const QUrl &url);

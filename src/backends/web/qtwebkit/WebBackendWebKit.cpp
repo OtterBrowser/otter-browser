@@ -25,9 +25,9 @@ WebBackendWebKit::WebBackendWebKit(QObject *parent) : WebBackend(parent)
 	globalSettings->setOfflineStoragePath(cachePath);
 }
 
-WebWidget *WebBackendWebKit::createWidget(QWidget *parent)
+WebWidget *WebBackendWebKit::createWidget(bool privateWindow, QWidget *parent)
 {
-	return new WebWidgetWebKit(parent);
+	return new WebWidgetWebKit(privateWindow, parent);
 }
 
 QString WebBackendWebKit::getTitle() const

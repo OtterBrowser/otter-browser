@@ -4,7 +4,9 @@
 #include "../../../core/NetworkAccessManager.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
 #include <QtGui/QClipboard>
+#include <QtNetwork/QNetworkDiskCache>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
@@ -17,7 +19,7 @@
 namespace Otter
 {
 
-WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
+WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidget(parent),
 	m_webWidget(new QWebView(this)),
 	m_isLinkHovered(false),
 	m_isLoading(false)
@@ -28,11 +30,22 @@ WebWidgetWebKit::WebWidgetWebKit(QWidget *parent) : WebWidget(parent),
 
 	setLayout(layout);
 
+	QNetworkAccessManager *networkAccessManager = new NetworkAccessManager(this);
+
+	if (!privateWindow)
+	{
+		QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
+		diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+
+		networkAccessManager->setCache(diskCache);
+	}
+
 	m_webWidget->installEventFilter(this);
 	m_webWidget->setPage(new WebPageWebKit(m_webWidget));
 	m_webWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-	m_webWidget->page()->setNetworkAccessManager(new NetworkAccessManager(this));
+	m_webWidget->page()->setNetworkAccessManager(networkAccessManager);
+	m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), "Cut");
 	ActionsManager::setupLocalAction(getAction(CopyAction), "Copy");
@@ -262,18 +275,6 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 
 	notifyTitleChanged();
 	notifyIconChanged();
-}
-
-void WebWidgetWebKit::setPrivate(bool enabled)
-{
-	if (enabled != m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled))
-	{
-		m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, enabled);
-
-		notifyIconChanged();
-
-		emit isPrivateChanged(enabled);
-	}
 }
 
 void WebWidgetWebKit::showMenu(const QPoint &position)
