@@ -20,7 +20,7 @@ namespace Otter
 {
 
 WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidget(parent),
-	m_webWidget(new QWebView(this)),
+	m_webWidget(new WebViewWebKit(this)),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {
@@ -72,6 +72,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
+	connect(m_webWidget, SIGNAL(requestedZoomChange(int)), this, SLOT(setZoom(int)));
 	connect(m_webWidget->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_webWidget->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
 	connect(m_webWidget->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));

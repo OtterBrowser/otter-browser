@@ -1,10 +1,10 @@
 #ifndef OTTER_WEBWIDGETWEBKIT_H
 #define OTTER_WEBWIDGETWEBKIT_H
 
+#include "WebViewWebKit.h"
 #include "../WebWidget.h"
 
 #include <QtWebKitWidgets/QWebPage>
-#include <QtWebKitWidgets/QWebView>
 
 namespace Otter
 {
@@ -51,7 +51,7 @@ protected slots:
 	void showMenu(const QPoint &position);
 
 private:
-	QWebView *m_webWidget;
+	WebViewWebKit *m_webWidget;
 	QHash<WebAction, QAction*> m_customActions;
 	bool m_isLinkHovered;
 	bool m_isLoading;

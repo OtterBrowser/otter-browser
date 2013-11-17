@@ -28,7 +28,8 @@ SOURCES += src/main.cpp\
     src/backends/web/WebBackendsManager.cpp \
     src/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/core/SessionsManager.cpp \
-    src/core/LocalListingNetworkReply.cpp
+    src/core/LocalListingNetworkReply.cpp \
+    src/backends/web/qtwebkit/WebViewWebKit.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -48,7 +49,8 @@ HEADERS += src/ui/MainWindow.h \
     src/backends/web/WebBackendsManager.h \
     src/backends/web/qtwebkit/WebPageWebKit.h \
     src/core/SessionsManager.h \
-    src/core/LocalListingNetworkReply.h
+    src/core/LocalListingNetworkReply.h \
+    src/backends/web/qtwebkit/WebViewWebKit.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
