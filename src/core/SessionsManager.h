@@ -94,6 +94,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
+	static SessionsManager* getInstance();
 	static QString getCurrentSession();
 	static QString getSessionPath(QString path);
 	static QStringList getClosedWindows();
@@ -112,6 +113,9 @@ private:
 	static QString m_session;
 	static QList<WindowsManager*> m_windows;
 	static QList<SessionEntry> m_closedWindows;
+
+signals:
+	void closedWindowsChanged();
 };
 
 }

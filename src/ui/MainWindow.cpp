@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/Application.h"
 #include "../core/SettingsManager.h"
 #include "../core/WindowsManager.h"
 #include "../backends/web/WebBackendsManager.h"
@@ -136,6 +137,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	setWindowTitle(m_windowsManager->getTitle());
 
+	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
@@ -359,6 +361,11 @@ void MainWindow::triggerWindowAction()
 	{
 		m_windowsManager->triggerAction(static_cast<WebAction>(action->data().toInt()));
 	}
+}
+
+void MainWindow::updateClosedWindows()
+{
+	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() || (SessionsManager::getClosedWindows().count() > 0));
 }
 
 bool MainWindow::event(QEvent *event)

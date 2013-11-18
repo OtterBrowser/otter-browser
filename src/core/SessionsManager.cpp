@@ -43,7 +43,14 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 	if (!session.windows.isEmpty())
 	{
 		m_closedWindows.prepend(session);
+
+		emit m_instance->closedWindowsChanged();
 	}
+}
+
+SessionsManager *SessionsManager::getInstance()
+{
+	return m_instance;
 }
 
 QString SessionsManager::getCurrentSession()
@@ -167,6 +174,8 @@ bool SessionsManager::restoreClosedWindow(int index)
 	application->createWindow(false, m_closedWindows.value(index, SessionEntry()));
 
 	m_closedWindows.removeAt(index);
+
+	emit m_instance->closedWindowsChanged();
 
 	return true;
 }

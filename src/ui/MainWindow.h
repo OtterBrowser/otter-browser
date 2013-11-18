@@ -41,6 +41,7 @@ protected slots:
 	void menuTextEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
 	void triggerWindowAction();
+	void updateClosedWindows();
 
 private:
 	WindowsManager *m_windowsManager;
