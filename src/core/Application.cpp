@@ -1,6 +1,5 @@
 #include "Application.h"
 #include "ActionsManager.h"
-#include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 #include "../ui/MainWindow.h"
@@ -184,9 +183,9 @@ void Application::newWindowPrivate()
 	createWindow(true);
 }
 
-MainWindow* Application::createWindow(bool privateSession)
+MainWindow* Application::createWindow(bool privateSession, const SessionEntry &windows)
 {
-	MainWindow *window = new MainWindow(privateSession);
+	MainWindow *window = new MainWindow(privateSession, windows);
 
 	m_windows.prepend(window);
 
@@ -216,6 +215,7 @@ QCommandLineParser* Application::getParser() const
 	parser->addHelpOption();
 	parser->addVersionOption();
 	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
+	parser->addOption(QCommandLineOption("session", QCoreApplication::translate("main", "Restores session <session> if it exists."), "session", QString()));
 	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Starts private session.")));
 
 	return parser;

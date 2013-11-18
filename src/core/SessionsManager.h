@@ -26,15 +26,14 @@ struct HistoryInformation
 	HistoryInformation() : index(-1) {}
 };
 
-struct SessionEntry
+struct SessionWindow
 {
 	QList<HistoryEntry> history;
 	int group;
-	int window;
 	int index;
 	bool pinned;
 
-	SessionEntry() : group(0), window(1), index(-1), pinned(false) {}
+	SessionWindow() : group(0), index(-1), pinned(false) {}
 
 	QString url() const
 	{
@@ -67,6 +66,14 @@ struct SessionEntry
 	}
 };
 
+struct SessionEntry
+{
+	QList<SessionWindow> windows;
+	int index;
+
+	SessionEntry() : index(-1) {}
+};
+
 struct SessionInformation
 {
 	QString path;
@@ -74,7 +81,7 @@ struct SessionInformation
 	QList<SessionEntry> windows;
 	int index;
 
-	SessionInformation() : index(0) {}
+	SessionInformation() : index(-1) {}
 };
 
 class WindowsManager;
@@ -87,12 +94,13 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
-	static void restoreClosedWindow(int index = -1);
-	static void restoreSession(const QString &path = QString());
 	static QString getCurrentSession();
 	static QString getSessionPath(QString path);
 	static QStringList getClosedWindows();
-	static QList<SessionInformation> getSesions();
+	static SessionInformation getSession(const QString &path);
+	static QStringList getSessions();
+	static bool restoreClosedWindow(int index = -1);
+	static bool restoreSession(const QString &path = QString());
 	static bool saveSession(const QString &path = QString());
 	static bool deleteSession(const QString &path = QString());
 	static bool moveSession(const QString &from, const QString &to);
@@ -103,7 +111,7 @@ private:
 	static SessionsManager *m_instance;
 	static QString m_session;
 	static QList<WindowsManager*> m_windows;
-	static QList<SessionInformation > m_closedWindows;
+	static QList<SessionEntry> m_closedWindows;
 };
 
 }

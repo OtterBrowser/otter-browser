@@ -1,6 +1,8 @@
 #ifndef OTTER_APPLICATION_H
 #define OTTER_APPLICATION_H
 
+#include "SessionsManager.h"
+
 #include <QtCore/QCommandLineParser>
 #include <QtCore/QPointer>
 #include <QtWidgets/QApplication>
@@ -19,18 +21,20 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	MainWindow* createWindow(bool privateSession = false);
+	MainWindow* createWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry());
 	MainWindow* getWindow();
 	QCommandLineParser* getParser() const;
 	bool isRunning() const;
+
+public slots:
+	void newWindow();
+	void newWindowPrivate();
 
 protected:
 	void cleanup();
 
 protected slots:
 	void newConnection();
-	void newWindow();
-	void newWindowPrivate();
 
 private:
 	QLocalServer *m_localServer;

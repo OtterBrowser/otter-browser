@@ -25,8 +25,8 @@ public:
 	Window* getWindow(int index = -1) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
-	SessionEntry getWindowInformation(int index) const;
-	QList<SessionEntry> getClosedWindows() const;
+	SessionWindow getWindowInformation(int index) const;
+	QList<SessionWindow> getClosedWindows() const;
 	int getWindowCount() const;
 	int getCurrentWindow() const;
 	int getZoom() const;
@@ -38,11 +38,12 @@ public slots:
 	void close(int index = -1);
 	void closeOther(int index = -1);
 	void restore(int index = 0);
-	void restore(const QList<SessionEntry> &windows);
+	void restore(const QList<SessionWindow> &windows);
 	void print(int index = -1);
 	void printPreview(int index = -1);
 	void triggerAction(WebAction action, bool checked = false);
 	void clearClosedWindows();
+	void setCurrentWindow(int index);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setZoom(int zoom);
 
@@ -55,14 +56,13 @@ protected slots:
 	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
-	void setCurrentWindow(int index);
 	void setTitle(const QString &title);
 
 private:
 	QMdiArea *m_area;
 	TabBarWidget *m_tabBar;
 	StatusBarWidget *m_statusBar;
-	QList<SessionEntry> m_closedWindows;
+	QList<SessionWindow> m_closedWindows;
 	int m_currentWindow;
 	int m_printedWindow;
 	bool m_privateSession;

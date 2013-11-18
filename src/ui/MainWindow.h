@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(bool privateSession = false, const QList<SessionEntry> &windows = QList<SessionEntry>(), QWidget *parent = NULL);
+	explicit MainWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry(), QWidget *parent = NULL);
 	~MainWindow();
 
 public slots:

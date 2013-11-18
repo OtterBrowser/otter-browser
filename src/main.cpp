@@ -1,4 +1,5 @@
 #include "core/Application.h"
+#include "core/SessionsManager.h"
 #include "ui/MainWindow.h"
 
 #include <QtCore/QUrl>
@@ -15,15 +16,20 @@ int main(int argc, char *argv[])
 	QCommandLineParser *parser = application.getParser();
 	parser->process(application);
 
-	Otter::MainWindow *window = application.createWindow(parser->isSet("privatesession"));
+	const QString session = ((Otter::SessionsManager::getCurrentSession().isEmpty() || !parser->value("session").isEmpty()) ? (parser->value("session").isEmpty() ? "default" : parser->value("session")) : QString());
 
-	if (window && !parser->positionalArguments().isEmpty())
+	if (session.isEmpty() || !Otter::SessionsManager::restoreSession(session))
 	{
-		QStringList urls = parser->positionalArguments();
+		Otter::MainWindow *window = application.createWindow(parser->isSet("privatesession"));
 
-		for (int i = 0; i < urls.count(); ++i)
+		if (window && !parser->positionalArguments().isEmpty())
 		{
-			window->openUrl(QUrl(urls.at(i)));
+			QStringList urls = parser->positionalArguments();
+
+			for (int i = 0; i < urls.count(); ++i)
+			{
+				window->openUrl(QUrl(urls.at(i)));
+			}
 		}
 	}
 

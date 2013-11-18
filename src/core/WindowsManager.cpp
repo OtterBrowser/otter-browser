@@ -94,7 +94,7 @@ void WindowsManager::closeOther(int index)
 	}
 }
 
-void WindowsManager::restore(const QList<SessionEntry> &windows)
+void WindowsManager::restore(const QList<SessionWindow> &windows)
 {
 	if (windows.isEmpty())
 	{
@@ -118,7 +118,7 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
-	SessionEntry entry = m_closedWindows.at(index);
+	SessionWindow entry = m_closedWindows.at(index);
 	HistoryInformation history;
 	history.index = entry.index;
 	history.entries = entry.history;
@@ -345,6 +345,13 @@ void WindowsManager::setCurrentWindow(int index)
 		index = 0;
 	}
 
+	if (index != m_tabBar->currentIndex())
+	{
+		m_tabBar->setCurrentIndex(index);
+
+		return;
+	}
+
 	Window *window = getWindow(m_currentWindow);
 
 	if (window)
@@ -449,10 +456,10 @@ QString WindowsManager::getTitle() const
 	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
 }
 
-SessionEntry WindowsManager::getWindowInformation(int index) const
+SessionWindow WindowsManager::getWindowInformation(int index) const
 {
 	Window *window = getWindow(index);
-	SessionEntry information;
+	SessionWindow information;
 
 	if (window)
 	{
@@ -467,7 +474,7 @@ SessionEntry WindowsManager::getWindowInformation(int index) const
 	return information;
 }
 
-QList<SessionEntry> WindowsManager::getClosedWindows() const
+QList<SessionWindow> WindowsManager::getClosedWindows() const
 {
 	return m_closedWindows;
 }

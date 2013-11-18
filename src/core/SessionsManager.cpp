@@ -1,4 +1,5 @@
 #include "SessionsManager.h"
+#include "Application.h"
 #include "SettingsManager.h"
 #include "WindowsManager.h"
 
@@ -11,7 +12,7 @@ namespace Otter
 SessionsManager* SessionsManager::m_instance = NULL;
 QString SessionsManager::m_session;
 QList<WindowsManager*> SessionsManager::m_windows;
-QList<SessionInformation> SessionsManager::m_closedWindows;
+QList<SessionEntry> SessionsManager::m_closedWindows;
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent)
 {
@@ -37,7 +38,8 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 		return;
 	}
 
-	SessionInformation session;
+	SessionEntry session;
+	session.index = manager->getCurrentWindow();
 
 	for (int i = 0; i < manager->getWindowCount(); ++i)
 	{
@@ -46,22 +48,8 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 
 	if (!session.windows.isEmpty())
 	{
-		session.title = session.windows.value(manager->getCurrentWindow()).title();
-
 		m_closedWindows.prepend(session);
 	}
-}
-
-void SessionsManager::restoreClosedWindow(int index)
-{
-	Q_UNUSED(index)
-//TODO
-}
-
-void SessionsManager::restoreSession(const QString &path)
-{
-	Q_UNUSED(path)
-//TODO
 }
 
 QString SessionsManager::getCurrentSession()
@@ -80,71 +68,135 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
-		closedWindows.append(m_closedWindows.at(i).title);
+		const SessionEntry window = m_closedWindows.at(i);
+		const QString title = window.windows.value(window.index, SessionWindow()).title();
+
+		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
 	}
 
 	return closedWindows;
 }
 
-QList<SessionInformation> SessionsManager::getSesions()
+SessionInformation SessionsManager::getSession(const QString &path)
+{
+	QString sessionPath = path;
+
+	if (!sessionPath.endsWith(".ini"))
+	{
+		sessionPath += ".ini";
+	}
+
+	if (!QFileInfo(sessionPath).isAbsolute())
+	{
+		sessionPath = SettingsManager::getPath() + "/sessions/" + sessionPath;
+	}
+
+	const QSettings sessionData(sessionPath, QSettings::IniFormat);
+	const int windows = sessionData.value("Session/windows", 0).toInt();
+	SessionInformation session;
+	session.path = sessionPath;
+	session.title = sessionData.value("Session/title", ((path == "default") ? tr("Default") : tr("(Untitled)"))).toString();
+	session.index = (sessionData.value("Session/index", 1).toInt() - 1);
+
+	for (int i = 1; i <= windows; ++i)
+	{
+		const int tabs = sessionData.value(QString("%1/Properties/windows").arg(i), 0).toInt();
+		SessionEntry sessionEntry;
+		sessionEntry.index = (sessionData.value(QString("%1/Properties/index").arg(i), 1).toInt() - 1);
+
+		for (int j = 1; j <= tabs; ++j)
+		{
+			const int history = sessionData.value(QString("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
+			SessionWindow sessionWindow;
+			sessionWindow.group = sessionData.value(QString("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
+			sessionWindow.index = (sessionData.value(QString("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
+			sessionWindow.pinned = sessionData.value(QString("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
+
+			for (int k = 1; k <= history; ++k)
+			{
+				HistoryEntry historyEntry;
+				historyEntry.url = sessionData.value(QString("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
+				historyEntry.title = sessionData.value(QString("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
+				historyEntry.position = sessionData.value(QString("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toPoint();
+
+				sessionWindow.history.append(historyEntry);
+			}
+
+			sessionEntry.windows.append(sessionWindow);
+		}
+
+		session.windows.append(sessionEntry);
+	}
+
+	return session;
+}
+
+QStringList SessionsManager::getSessions()
 {
 	const QString sessionsPath = SettingsManager::getPath() + "/sessions/";
 	QStringList entries = QDir().entryList(QDir::Files);
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		entries[i] = QFileInfo(entries.at(i)).completeBaseName();
+	}
 
 	if (!m_session.isEmpty() && !entries.contains(m_session))
 	{
 		entries.append(m_session);
 	}
 
-	if (!entries.contains("default.ini"))
+	if (!entries.contains("default"))
 	{
-		entries.append("default.ini");
+		entries.append("default");
 	}
 
-	QMultiMap<QString, SessionInformation> sessions;
+	entries.sort();
 
-	for (int i = 0; i < entries.count(); ++i)
+	return entries;
+}
+
+bool SessionsManager::restoreClosedWindow(int index)
+{
+	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+
+	if (!application)
 	{
-		QString path = entries.at(i);
-
-		if (!QFileInfo(path).isAbsolute())
-		{
-			path = sessionsPath + path;
-		}
-
-		const QSettings sessionData(path, QSettings::IniFormat);
-		const int windows = sessionData.value("Session/windows", 0).toInt();
-		SessionInformation information;
-		information.path = path;
-		information.title = sessionData.value("Session/title", ((entries.at(i) == "default") ? tr("Default") : tr("(Untitled)"))).toString();
-		information.index = sessionData.value("Session/index", 0).toInt();
-
-		for (int j = 0; j < windows; ++j)
-		{
-			const int history = sessionData.value(QString("%1/Properties/history").arg(j), 0).toInt();
-			SessionEntry sessionEntry;
-			sessionEntry.group = sessionData.value(QString("%1/Properties/group").arg(j), 0).toInt();
-			sessionEntry.window = sessionData.value(QString("%1/Properties/window").arg(j), 1).toInt();
-			sessionEntry.index = sessionData.value(QString("%1/Properties/index").arg(j), 1).toInt();
-			sessionEntry.pinned = sessionData.value(QString("%1/Properties/pinned").arg(j), false).toBool();
-
-			for (int k = 0; k < history; ++k)
-			{
-				HistoryEntry historyEntry;
-				historyEntry.url = sessionData.value(QString("%1/History/%2/url").arg(j).arg(k), 0).toString();
-				historyEntry.title = sessionData.value(QString("%1/History/%2/title").arg(j).arg(k), 1).toString();
-				historyEntry.position = sessionData.value(QString("%1/History/%2/position").arg(j).arg(k), 1).toPoint();
-
-				sessionEntry.history.append(historyEntry);
-			}
-
-			information.windows.append(sessionEntry);
-		}
-
-		sessions.insert(information.title, information);
+		return false;
 	}
 
-	return sessions.values();
+	if (index < 0)
+	{
+		index = 0;
+	}
+
+	application->createWindow(false, m_closedWindows.value(index, SessionEntry()));
+
+	m_closedWindows.removeAt(index);
+
+	return true;
+}
+
+bool SessionsManager::restoreSession(const QString &path)
+{
+	const SessionInformation session = getSession(path);
+
+	if (session.windows.isEmpty())
+	{
+		return false;
+	}
+
+	m_session = path;
+	m_closedWindows = session.windows;
+
+	const int windows = m_closedWindows.count();
+
+	for (int i = 0; i < windows; ++i)
+	{
+		restoreClosedWindow();
+	}
+
+	return true;
 }
 
 bool SessionsManager::saveSession(const QString &path)

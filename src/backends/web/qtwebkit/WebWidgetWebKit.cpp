@@ -582,7 +582,7 @@ QString WebWidgetWebKit::getTitle() const
 			return QFileInfo(url.toLocalFile()).canonicalFilePath();
 		}
 
-		return tr("Empty");
+		return tr("(Untitled)");
 	}
 
 	return title;
