@@ -291,7 +291,14 @@ void WindowsManager::closeWindow(int index)
 
 	if (window && !window->isPrivate())
 	{
-		m_closedWindows.prepend(getWindowInformation(index));
+		const HistoryInformation history = window->getHistory();
+		SessionWindow information;
+		information.history = history.entries;
+		information.group = 0;
+		information.index = history.index;
+		information.pinned = window->isPinned();
+
+		m_closedWindows.prepend(information);
 
 		emit closedWindowsAvailableChanged(true);
 	}
@@ -456,22 +463,33 @@ QString WindowsManager::getTitle() const
 	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
 }
 
-SessionWindow WindowsManager::getWindowInformation(int index) const
+SessionEntry WindowsManager::getSession() const
 {
-	Window *window = getWindow(index);
-	SessionWindow information;
+	SessionEntry session;
+	session.index = getCurrentWindow();
 
-	if (window)
+	for (int i = 0; i < m_tabBar->count(); ++i)
 	{
-		const HistoryInformation history = window->getHistory();
+		Window *window = getWindow(i);
 
-		information.history = history.entries;
-		information.group = 0;
-		information.index = history.index;
-		information.pinned = m_tabBar->getTabProperty(index, "pinned", false).toBool();
+		if (window && !window->isPrivate())
+		{
+			const HistoryInformation history = window->getHistory();
+			SessionWindow information;
+			information.history = history.entries;
+			information.group = 0;
+			information.index = history.index;
+			information.pinned = window->isPinned();
+
+			session.windows.append(information);
+		}
+		else if (i < session.index)
+		{
+			--session.index;
+		}
 	}
 
-	return information;
+	return session;
 }
 
 QList<SessionWindow> WindowsManager::getClosedWindows() const

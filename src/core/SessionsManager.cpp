@@ -38,13 +38,7 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 		return;
 	}
 
-	SessionEntry session;
-	session.index = manager->getCurrentWindow();
-
-	for (int i = 0; i < manager->getWindowCount(); ++i)
-	{
-		session.windows.append(manager->getWindowInformation(i));
-	}
+	SessionEntry session = manager->getSession();
 
 	if (!session.windows.isEmpty())
 	{
