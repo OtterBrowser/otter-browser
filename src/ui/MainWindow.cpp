@@ -251,7 +251,7 @@ void MainWindow::actionClosedWindows(QAction *action)
 	}
 	else
 	{
-		SessionsManager::restoreClosedWindow(-(index - 1));
+		SessionsManager::restoreClosedWindow(-index - 1);
 	}
 }
 
