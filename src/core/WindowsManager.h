@@ -38,6 +38,7 @@ public slots:
 	void close(int index = -1);
 	void closeOther(int index = -1);
 	void restore(int index = 0);
+	void restore(const QList<SessionEntry> &windows);
 	void print(int index = -1);
 	void printPreview(int index = -1);
 	void triggerAction(WebAction action, bool checked = false);

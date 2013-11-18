@@ -5,7 +5,6 @@
 #include "../ui/Window.h"
 #include "../backends/web/WebBackendsManager.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
@@ -23,8 +22,6 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 	m_printedWindow(-1),
 	m_privateSession(privateSession)
 {
-	QTimer::singleShot(250, this, SLOT(open()));
-
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
@@ -94,6 +91,23 @@ void WindowsManager::closeOther(int index)
 	for (int i = 0; i < index; ++i)
 	{
 		closeWindow(0);
+	}
+}
+
+void WindowsManager::restore(const QList<SessionEntry> &windows)
+{
+	if (windows.isEmpty())
+	{
+		open();
+
+		return;
+	}
+
+	m_closedWindows = windows;
+
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		restore(0);
 	}
 }
 

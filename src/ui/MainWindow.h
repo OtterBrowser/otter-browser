@@ -1,6 +1,8 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
+#include "../core/SessionsManager.h"
+
 #include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMainWindow>
 
@@ -19,7 +21,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(bool privateSession = false, QWidget *parent = NULL);
+	explicit MainWindow(bool privateSession = false, const QList<SessionEntry> &windows = QList<SessionEntry>(), QWidget *parent = NULL);
 	~MainWindow();
 
 public slots:

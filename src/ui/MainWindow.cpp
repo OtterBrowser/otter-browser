@@ -2,7 +2,6 @@
 #include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 
@@ -19,7 +18,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(bool privateSession, const QList<SessionEntry> &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_closedWindowsAction(new QAction(QIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png"))), tr("Closed Tabs"), this)),
 	m_textEncodingGroup(NULL),
@@ -132,6 +131,7 @@ MainWindow::MainWindow(bool privateSession, QWidget *parent) : QMainWindow(paren
 	m_ui->statusBar->setup();
 
 	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
+	m_windowsManager->restore(windows);
 
 	setWindowTitle(m_windowsManager->getTitle());
 
