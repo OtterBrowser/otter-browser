@@ -96,7 +96,7 @@ public:
 	static void storeClosedWindow(WindowsManager *manager);
 	static SessionsManager* getInstance();
 	static QString getCurrentSession();
-	static QString getSessionPath(QString path);
+	static QString getSessionPath(const QString &path, bool bound = false);
 	static QStringList getClosedWindows();
 	static SessionInformation getSession(const QString &path);
 	static QStringList getSessions();

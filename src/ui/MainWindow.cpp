@@ -3,7 +3,6 @@
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/SettingsManager.h"
-#include "../core/WindowsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 
 #include "ui_MainWindow.h"
@@ -177,6 +176,11 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 MainWindow::~MainWindow()
 {
 	delete m_ui;
+}
+
+WindowsManager *MainWindow::getWindowsManager()
+{
+	return m_windowsManager;
 }
 
 void MainWindow::changeEvent(QEvent *event)

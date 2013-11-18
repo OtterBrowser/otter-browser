@@ -23,6 +23,7 @@ public:
 
 	MainWindow* createWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry());
 	MainWindow* getWindow();
+	QList<MainWindow*> getWindows();
 	QCommandLineParser* getParser() const;
 	bool isRunning() const;
 

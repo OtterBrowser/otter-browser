@@ -209,6 +209,20 @@ MainWindow* Application::getWindow()
 	return m_windows[0];
 }
 
+QList<MainWindow*> Application::getWindows()
+{
+	cleanup();
+
+	QList<MainWindow*> windows;
+
+	for (int i = 0; i < m_windows.count(); ++i)
+	{
+		windows.append(m_windows.at(i));
+	}
+
+	return windows;
+}
+
 QCommandLineParser* Application::getParser() const
 {
 	QCommandLineParser *parser = new QCommandLineParser();

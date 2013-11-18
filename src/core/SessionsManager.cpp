@@ -58,9 +58,32 @@ QString SessionsManager::getCurrentSession()
 	return m_session;
 }
 
-QString SessionsManager::getSessionPath(QString path)
+QString SessionsManager::getSessionPath(const QString &path, bool bound)
 {
-	return SettingsManager::getPath() + "/sessions/" + (path.isEmpty() ? "default.ini" : path.replace('/', QString()).replace('\\', QString()));
+	QString cleanPath = path;
+
+	if (cleanPath.isEmpty())
+	{
+		cleanPath = "default.ini";
+	}
+	else
+	{
+		if (!cleanPath.endsWith(".ini"))
+		{
+			cleanPath += ".ini";
+		}
+
+		if (bound)
+		{
+			cleanPath = cleanPath.replace('/', QString()).replace('\\', QString());
+		}
+		else if (QFileInfo(cleanPath).isAbsolute())
+		{
+			return cleanPath;
+		}
+	}
+
+	return SettingsManager::getPath() + "/sessions/" + cleanPath;
 }
 
 QStringList SessionsManager::getClosedWindows()
@@ -80,18 +103,7 @@ QStringList SessionsManager::getClosedWindows()
 
 SessionInformation SessionsManager::getSession(const QString &path)
 {
-	QString sessionPath = path;
-
-	if (!sessionPath.endsWith(".ini"))
-	{
-		sessionPath += ".ini";
-	}
-
-	if (!QFileInfo(sessionPath).isAbsolute())
-	{
-		sessionPath = SettingsManager::getPath() + "/sessions/" + sessionPath;
-	}
-
+	const QString sessionPath = getSessionPath(path);
 	const QSettings sessionData(sessionPath, QSettings::IniFormat);
 	const int windows = sessionData.value("Session/windows", 0).toInt();
 	SessionInformation session;
@@ -211,7 +223,7 @@ bool SessionsManager::saveSession(const QString &path)
 
 bool SessionsManager::deleteSession(const QString &path)
 {
-	const QString cleanPath = getSessionPath(path);
+	const QString cleanPath = getSessionPath(path, true);
 
 	if (QFile::exists(cleanPath))
 	{
@@ -223,10 +235,7 @@ bool SessionsManager::deleteSession(const QString &path)
 
 bool SessionsManager::moveSession(const QString &from, const QString &to)
 {
-	Q_UNUSED(from)
-	Q_UNUSED(to)
-//TODO
-	return false;
+	return QFile::rename(getSessionPath(from), getSessionPath(to));
 }
 
 }

@@ -2,6 +2,7 @@
 #define OTTER_MAINWINDOW_H
 
 #include "../core/SessionsManager.h"
+#include "../core/WindowsManager.h"
 
 #include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMainWindow>
@@ -23,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry(), QWidget *parent = NULL);
 	~MainWindow();
+
+	WindowsManager* getWindowsManager();
 
 public slots:
 	void openUrl(const QUrl &url);
