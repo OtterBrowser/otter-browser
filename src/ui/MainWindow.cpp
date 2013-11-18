@@ -200,11 +200,28 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	SessionsManager::storeClosedWindow(m_windowsManager);
+	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+
+	if (application && application->getWindows().count() == 1)
+	{
+		if (SessionsManager::getCurrentSession() == "default")
+		{
+			SessionsManager::saveSession();
+		}
+	}
+	else
+	{
+		SessionsManager::storeClosedWindow(m_windowsManager);
+	}
 
 	SettingsManager::setValue("Window/size", size());
 	SettingsManager::setValue("Window/position", pos());
 	SettingsManager::setValue("Window/state", saveState());
+
+	if (application)
+	{
+		application->removeWindow(this);
+	}
 
 	event->accept();
 }

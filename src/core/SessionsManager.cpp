@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "SettingsManager.h"
 #include "WindowsManager.h"
+#include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
@@ -214,11 +215,69 @@ bool SessionsManager::restoreSession(const QString &path)
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path)
+bool SessionsManager::saveSession(const QString &path, const QString &title)
 {
-	Q_UNUSED(path)
-//TODO
-	return false;
+	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+
+	if (!application)
+	{
+		return false;
+	}
+
+	const QList<MainWindow*> windows = application->getWindows();
+	const QString sessionPath = getSessionPath(path);
+
+	QFile file(sessionPath);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return false;
+	}
+
+	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
+
+	if (!title.isEmpty())
+	{
+		sessionTitle = title;
+	}
+
+	QTextStream stream(&file);
+	stream << "[Session]\n";
+	stream << "title=" << sessionTitle.replace('\n', "\\n") << '\n';
+	stream << "windows=" << windows.count() << '\n';
+	stream << "index=1\n\n";
+
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		const SessionEntry sessionEntry = windows.at(i)->getWindowsManager()->getSession();
+
+		stream << QString("[%1/Properties]\n").arg(i + 1);
+		stream << "groups=0\n";
+		stream << "windows=" << sessionEntry.windows.count() << '\n';
+		stream << "index=" << (sessionEntry.index + 1) << "\n\n";
+
+		for (int j = 0; j < sessionEntry.windows.count(); ++j)
+		{
+			stream << QString("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
+			stream << "pinned=" << sessionEntry.windows.at(j).pinned << '\n';
+			stream << "group=0\n";
+			stream << "history=" << sessionEntry.windows.at(j).history.count() << '\n';
+			stream << "index=" << (sessionEntry.windows.at(j).index +  1) << "\n\n";
+
+			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
+			{
+				stream << QString("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
+				stream << "url=" << sessionEntry.windows.at(j).history.at(k).url << '\n';
+				stream << "title=" << QString(sessionEntry.windows.at(j).history.at(k).title).replace('\n', "\\n") << '\n';
+				stream << "position=" << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << '\n';
+				stream << "zoom=" << sessionEntry.windows.at(j).history.at(k).zoom << "\n\n";
+			}
+		}
+	}
+
+	file.close();
+
+	return true;
 }
 
 bool SessionsManager::deleteSession(const QString &path)

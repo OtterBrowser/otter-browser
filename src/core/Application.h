@@ -4,7 +4,6 @@
 #include "SessionsManager.h"
 
 #include <QtCore/QCommandLineParser>
-#include <QtCore/QPointer>
 #include <QtWidgets/QApplication>
 #include <QtNetwork/QLocalServer>
 
@@ -21,6 +20,7 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
+	void removeWindow(MainWindow* window);
 	MainWindow* createWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry());
 	MainWindow* getWindow();
 	QList<MainWindow*> getWindows();
@@ -31,15 +31,12 @@ public slots:
 	void newWindow();
 	void newWindowPrivate();
 
-protected:
-	void cleanup();
-
 protected slots:
 	void newConnection();
 
 private:
 	QLocalServer *m_localServer;
-	QList<QPointer<MainWindow> > m_windows;
+	QList<MainWindow*> m_windows;
 };
 
 }

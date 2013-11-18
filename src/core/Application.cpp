@@ -102,21 +102,15 @@ Application::~Application()
 {
 	for (int i = 0; i < m_windows.size(); ++i)
 	{
-		MainWindow *window = m_windows.at(i);
-
-		delete window;
+		m_windows.at(i)->deleteLater();
 	}
 }
 
-void Application::cleanup()
+void Application::removeWindow(MainWindow *window)
 {
-	for (int i = m_windows.count() - 1; i >= 0; --i)
-	{
-		if (m_windows.at(i).isNull())
-		{
-			m_windows.removeAt(i);
-		}
-	}
+	m_windows.removeAll(window);
+
+	window->deleteLater();
 }
 
 void Application::newConnection()
@@ -199,8 +193,6 @@ MainWindow* Application::createWindow(bool privateSession, const SessionEntry &w
 
 MainWindow* Application::getWindow()
 {
-	cleanup();
-
 	if (m_windows.isEmpty())
 	{
 		return createWindow();
@@ -211,16 +203,7 @@ MainWindow* Application::getWindow()
 
 QList<MainWindow*> Application::getWindows()
 {
-	cleanup();
-
-	QList<MainWindow*> windows;
-
-	for (int i = 0; i < m_windows.count(); ++i)
-	{
-		windows.append(m_windows.at(i));
-	}
-
-	return windows;
+	return m_windows;
 }
 
 QCommandLineParser* Application::getParser() const
