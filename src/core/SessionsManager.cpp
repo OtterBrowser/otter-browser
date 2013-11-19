@@ -240,19 +240,18 @@ bool SessionsManager::saveSession(const QString &path, const QString &title)
 
 	const QList<MainWindow*> windows = application->getWindows();
 	const QString sessionPath = getSessionPath(path);
+	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
+
+	if (!title.isEmpty())
+	{
+		sessionTitle = title;
+	}
 
 	QFile file(sessionPath);
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
 		return false;
-	}
-
-	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
-
-	if (!title.isEmpty())
-	{
-		sessionTitle = title;
 	}
 
 	QTextStream stream(&file);
