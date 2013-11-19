@@ -24,7 +24,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	HistoryInformation getHistory();
+	HistoryInformation getHistory() const;
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;

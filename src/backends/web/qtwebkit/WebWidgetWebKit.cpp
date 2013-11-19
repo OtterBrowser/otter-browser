@@ -324,9 +324,8 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 
 WebWidget* WebWidgetWebKit::clone(QWidget *parent)
 {
-	WebWidget *widget = new WebWidgetWebKit(parent);
+	WebWidget *widget = new WebWidgetWebKit(isPrivate(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
-	widget->setPrivate(isPrivate());
 	widget->setUrl(getUrl());
 	widget->setZoom(getZoom());
 	widget->setHistory(getHistory());
@@ -605,7 +604,7 @@ QIcon WebWidgetWebKit::getIcon() const
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
 
-HistoryInformation WebWidgetWebKit::getHistory()
+HistoryInformation WebWidgetWebKit::getHistory() const
 {
 	QVariantHash data;
 	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();

@@ -12,42 +12,6 @@ WebWidget::WebWidget(bool privateWindow = false, QWidget *parent) : QWidget(pare
 	Q_UNUSED(privateWindow)
 }
 
-void WebWidget::print(QPrinter *printer)
-{
-	Q_UNUSED(printer)
-}
-
-void WebWidget::triggerAction(WebAction action, bool checked)
-{
-	Q_UNUSED(action)
-	Q_UNUSED(checked)
-}
-
-void WebWidget::setDefaultTextEncoding(const QString &encoding)
-{
-	Q_UNUSED(encoding)
-}
-
-void WebWidget::setHistory(const HistoryInformation &history)
-{
-	Q_UNUSED(history)
-}
-
-void WebWidget::setZoom(int zoom)
-{
-	Q_UNUSED(zoom)
-}
-
-void WebWidget::setUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-}
-
-void WebWidget::setPrivate(bool enabled)
-{
-	Q_UNUSED(enabled)
-}
-
 void WebWidget::showMenu(const QPoint &position, MenuFlags flags)
 {
 	QMenu menu;
@@ -179,65 +143,5 @@ void WebWidget::showMenu(const QPoint &position, MenuFlags flags)
 
 	menu.exec(mapToGlobal(position));
 }
-
-WebWidget* WebWidget::clone(QWidget *parent)
-{
-	Q_UNUSED(parent)
-
-	return NULL;
-}
-
-QAction* WebWidget::getAction(WebAction action)
-{
-	Q_UNUSED(action)
-
-	return NULL;
-}
-
-QUndoStack* WebWidget::getUndoStack()
-{
-	return NULL;
-}
-
-QString WebWidget::getDefaultTextEncoding() const
-{
-	return QString();
-}
-
-QString WebWidget::getTitle() const
-{
-	return QString();
-}
-
-QUrl WebWidget::getUrl() const
-{
-	return QUrl();
-}
-
-QIcon WebWidget::getIcon() const
-{
-	return QIcon();
-}
-
-HistoryInformation WebWidget::getHistory() const
-{
-	return HistoryInformation();
-}
-
-int WebWidget::getZoom() const
-{
-	return 100;
-}
-
-bool WebWidget::isLoading() const
-{
-	return false;
-}
-
-bool WebWidget::isPrivate() const
-{
-	return false;
-}
-
 
 }

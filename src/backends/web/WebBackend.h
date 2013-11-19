@@ -78,10 +78,10 @@ class WebBackend : public QObject
 public:
 	explicit WebBackend(QObject *parent = NULL);
 
-	virtual WebWidget* createWidget(bool privateWindow = false, QWidget *parent = NULL);
-	virtual QString getTitle() const;
-	virtual QString getDescription() const;
-	virtual QIcon getIconForUrl(const QUrl &url);
+	virtual WebWidget* createWidget(bool privateWindow = false, QWidget *parent = NULL) = 0;
+	virtual QString getTitle() const = 0;
+	virtual QString getDescription() const = 0;
+	virtual QIcon getIconForUrl(const QUrl &url) = 0;
 };
 
 }

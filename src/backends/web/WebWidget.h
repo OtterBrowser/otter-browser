@@ -32,26 +32,25 @@ class WebWidget : public QWidget
 public:
 	explicit WebWidget(bool privateWindow, QWidget *parent = NULL);
 
-	virtual void print(QPrinter *printer);
-	virtual WebWidget* clone(QWidget *parent = NULL);
-	virtual QAction* getAction(WebAction action);
-	virtual QUndoStack* getUndoStack();
-	virtual QString getDefaultTextEncoding() const;
-	virtual QString getTitle() const;
-	virtual QUrl getUrl() const;
-	virtual QIcon getIcon() const;
-	virtual HistoryInformation getHistory() const;
-	virtual int getZoom() const;
-	virtual bool isLoading() const;
-	virtual bool isPrivate() const;
+	virtual void print(QPrinter *printer) = 0;
+	virtual WebWidget* clone(QWidget *parent = NULL) = 0;
+	virtual QAction* getAction(WebAction action) = 0;
+	virtual QUndoStack* getUndoStack() = 0;
+	virtual QString getDefaultTextEncoding() const = 0;
+	virtual QString getTitle() const = 0;
+	virtual QUrl getUrl() const = 0;
+	virtual QIcon getIcon() const = 0;
+	virtual HistoryInformation getHistory() const = 0;
+	virtual int getZoom() const = 0;
+	virtual bool isLoading() const = 0;
+	virtual bool isPrivate() const = 0;
 
 public slots:
-	virtual void triggerAction(WebAction action, bool checked = false);
-	virtual void setDefaultTextEncoding(const QString &encoding);
-	virtual void setHistory(const HistoryInformation &history);
-	virtual void setZoom(int zoom);
-	virtual void setUrl(const QUrl &url);
-	virtual void setPrivate(bool enabled);
+	virtual void triggerAction(WebAction action, bool checked = false) = 0;
+	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
+	virtual void setHistory(const HistoryInformation &history) = 0;
+	virtual void setZoom(int zoom) = 0;
+	virtual void setUrl(const QUrl &url) = 0;
 	void showMenu(const QPoint &position, MenuFlags flags);
 
 signals:
