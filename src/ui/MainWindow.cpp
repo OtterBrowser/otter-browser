@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "TabBarWidget.h"
+#include "SessionsManagerDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/SettingsManager.h"
