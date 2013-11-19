@@ -22,6 +22,7 @@ namespace Otter
 MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_closedWindowsAction(new QAction(QIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png"))), tr("Closed Tabs"), this)),
+	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
 	m_ui(new Ui::MainWindow)
 {
@@ -292,7 +293,58 @@ void MainWindow::actionAboutApplication()
 
 void MainWindow::menuSessionsAboutToShow()
 {
+	if (m_sessionsGroup)
+	{
+		m_sessionsGroup->deleteLater();
 
+		QAction *saveSessionAction = m_ui->menuSessions->actions().at(0);
+		saveSessionAction->setParent(this);
+
+		QAction *manageSessionsAction = m_ui->menuSessions->actions().at(1);
+		manageSessionsAction->setParent(this);
+
+		m_ui->menuSessions->clear();
+		m_ui->menuSessions->addAction(saveSessionAction);
+		m_ui->menuSessions->addAction(manageSessionsAction);
+		m_ui->menuSessions->addSeparator();
+	}
+
+	m_sessionsGroup = new QActionGroup(this);
+	m_sessionsGroup->setExclusive(true);
+
+	const QStringList sessions = SessionsManager::getSessions();
+	QMultiHash<QString, SessionInformation> information;
+
+	for (int i = 0; i < sessions.count(); ++i)
+	{
+		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
+
+		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
+	}
+
+	const QList<SessionInformation> sorted = information.values();
+	const QString currentSession = SessionsManager::getCurrentSession();
+
+	for (int i = 0; i < sorted.count(); ++i)
+	{
+		int windows = 0;
+
+		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
+		{
+			windows += sorted.at(i).windows.at(j).windows.count();
+		}
+
+		QAction *action = m_ui->menuSessions->addAction(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title);
+		action->setData(sorted.at(i).path);
+		action->setCheckable(true);
+
+		if (sorted.at(i).path == currentSession)
+		{
+			action->setChecked(true);
+		}
+
+		m_sessionsGroup->addAction(action);
+	}
 }
 
 void MainWindow::menuTextEncodingAboutToShow()

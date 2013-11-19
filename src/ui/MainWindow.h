@@ -51,6 +51,7 @@ protected slots:
 private:
 	WindowsManager *m_windowsManager;
 	QAction *m_closedWindowsAction;
+	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_textEncodingGroup;
 	Ui::MainWindow *m_ui;
 
