@@ -144,7 +144,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClosedWindows(QAction*)));
-	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
@@ -168,7 +167,9 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
+	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
+	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
@@ -180,11 +181,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 MainWindow::~MainWindow()
 {
 	delete m_ui;
-}
-
-WindowsManager *MainWindow::getWindowsManager()
-{
-	return m_windowsManager;
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -249,6 +245,14 @@ void MainWindow::actionManageSessions()
 {
 	SessionsManagerDialog dialog(this);
 	dialog.exec();
+}
+
+void MainWindow::actionSession(QAction *action)
+{
+	if (!action->data().isNull())
+	{
+		SessionsManager::restoreSession(action->data().toString());
+	}
 }
 
 void MainWindow::actionTextEncoding(QAction *action)
@@ -468,6 +472,11 @@ bool MainWindow::event(QEvent *event)
 void MainWindow::actionNewTabPrivate()
 {
 	m_windowsManager->open(QUrl(), true);
+}
+
+WindowsManager *MainWindow::getWindowsManager()
+{
+	return m_windowsManager;
 }
 
 }
