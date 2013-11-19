@@ -203,7 +203,11 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 
 	const QList<SessionEntry> closedWindows = m_closedWindows;
 
-	m_session = path;
+	if (m_session.isEmpty())
+	{
+		m_session = path;
+	}
+
 	m_closedWindows = session.windows;
 
 	if (window && m_closedWindows.count() > 0)
