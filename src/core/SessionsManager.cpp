@@ -192,7 +192,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 	return true;
 }
 
-bool SessionsManager::restoreSession(const QString &path)
+bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 {
 	const SessionInformation session = getSession(path);
 
@@ -201,8 +201,17 @@ bool SessionsManager::restoreSession(const QString &path)
 		return false;
 	}
 
+	const QList<SessionEntry> closedWindows = m_closedWindows;
+
 	m_session = path;
 	m_closedWindows = session.windows;
+
+	if (window && m_closedWindows.count() > 0)
+	{
+		window->getWindowsManager()->restore(m_closedWindows.first().windows);
+
+		m_closedWindows.removeAt(0);
+	}
 
 	const int windows = m_closedWindows.count();
 
@@ -210,6 +219,8 @@ bool SessionsManager::restoreSession(const QString &path)
 	{
 		restoreClosedWindow();
 	}
+
+	m_closedWindows = closedWindows;
 
 	return true;
 }

@@ -22,6 +22,11 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void openSession();
+	void deleteSession();
+	void currentChanged(int index);
+
 private:
 	Ui::SessionsManagerDialog *m_ui;
 };

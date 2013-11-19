@@ -1,8 +1,10 @@
 #include "SessionsManagerDialog.h"
+#include "MainWindow.h"
 #include "../core/SessionsManager.h"
 
 #include "ui_SessionsManagerDialog.h"
 
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QTableWidgetItem>
 
 namespace Otter
@@ -48,6 +50,10 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : QDialog(parent),
 		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QString("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
 	}
 
+	connect(m_ui->openButton, SIGNAL(clicked()), this, SLOT(openSession()));
+	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteSession()));
+	connect(m_ui->sessionsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentChanged(int)));
+
 	m_ui->sessionsWidget->setCurrentCell(index, 0);
 }
 
@@ -69,6 +75,33 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void SessionsManagerDialog::openSession()
+{
+	SessionsManager::restoreSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString(), (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
+
+	close();
+}
+
+void SessionsManagerDialog::deleteSession()
+{
+	if (!m_ui->deleteButton->isEnabled())
+	{
+		return;
+	}
+
+	const int index = m_ui->sessionsWidget->currentRow();
+
+	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsWidget->item(index, 0)->data(Qt::DisplayRole).toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+	{
+		SessionsManager::deleteSession(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString());
+	}
+}
+
+void SessionsManagerDialog::currentChanged(int index)
+{
+	m_ui->deleteButton->setEnabled(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString() != "default");
 }
 
 }
