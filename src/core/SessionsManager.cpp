@@ -108,7 +108,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	const QSettings sessionData(sessionPath, QSettings::IniFormat);
 	const int windows = sessionData.value("Session/windows", 0).toInt();
 	SessionInformation session;
-	session.path = sessionPath;
+	session.path = path;
 	session.title = sessionData.value("Session/title", ((path == "default") ? tr("Default") : tr("(Untitled)"))).toString();
 	session.index = (sessionData.value("Session/index", 1).toInt() - 1);
 
@@ -147,8 +147,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 QStringList SessionsManager::getSessions()
 {
-	const QString sessionsPath = SettingsManager::getPath() + "/sessions/";
-	QStringList entries = QDir().entryList(QDir::Files);
+	QStringList entries = QDir(SettingsManager::getPath() + "/sessions/").entryList(QStringList("*.ini"), QDir::Files);
 
 	for (int i = 0; i < entries.count(); ++i)
 	{

@@ -84,12 +84,12 @@
      <string>File</string>
     </property>
     <widget class="QMenu" name="menuSessions">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="title">
       <string>Sessions</string>
      </property>
+     <addaction name="actionSaveSession"/>
+     <addaction name="actionManageSessions"/>
+     <addaction name="separator"/>
     </widget>
     <widget class="QMenu" name="menuImportExport">
      <property name="enabled">
@@ -464,6 +464,19 @@
   <action name="actionRewindForward">
    <property name="text">
     <string>Rewind Forward</string>
+   </property>
+  </action>
+  <action name="actionSaveSession">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save Current Session...</string>
+   </property>
+  </action>
+  <action name="actionManageSessions">
+   <property name="text">
+    <string>Manage Sessions...</string>
    </property>
   </action>
  </widget>

@@ -151,6 +151,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SIGNAL(requestedNewWindowPrivate()));
 	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
+	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -165,6 +166,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
@@ -242,6 +244,12 @@ void MainWindow::actionOpen()
 	}
 }
 
+void MainWindow::actionManageSessions()
+{
+	SessionsManagerDialog dialog(this);
+	dialog.exec();
+}
+
 void MainWindow::actionTextEncoding(QAction *action)
 {
 	QString encoding;
@@ -280,6 +288,11 @@ void MainWindow::actionClosedWindows(QAction *action)
 void MainWindow::actionAboutApplication()
 {
 	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
+}
+
+void MainWindow::menuSessionsAboutToShow()
+{
+
 }
 
 void MainWindow::menuTextEncodingAboutToShow()
