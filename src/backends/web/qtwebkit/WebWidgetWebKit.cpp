@@ -119,6 +119,7 @@ void WebWidgetWebKit::loadStarted()
 	}
 
 	emit loadingChanged(true);
+	emit statusMessageChanged(QString());
 }
 
 void WebWidgetWebKit::loadFinished(bool ok)
