@@ -105,7 +105,7 @@ void WebWidgetWebKit::loadStarted()
 	{
 		QAction *action = getAction(ReloadOrStopAction);
 
-		ActionsManager::setupLocalAction(action, "Stop", false);
+		ActionsManager::setupLocalAction(action, "Stop");
 
 		action->setShortcut(QKeySequence());
 	}
@@ -126,7 +126,7 @@ void WebWidgetWebKit::loadFinished(bool ok)
 	{
 		QAction *action = getAction(ReloadOrStopAction);
 
-		ActionsManager::setupLocalAction(action, "Reload", false);
+		ActionsManager::setupLocalAction(action, "Reload");
 
 		action->setShortcut(QKeySequence());
 	}
@@ -371,49 +371,49 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 	switch (action)
 	{
 		case OpenLinkInNewTabAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTab");
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTab", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case OpenLinkInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTabBackground");
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTabBackground", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case OpenLinkInNewWindowBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewWindowBackground");
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewWindowBackground", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case OpenFrameInThisTabAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenFrameInThisTab");
+			ActionsManager::setupLocalAction(actionObject, "OpenFrameInThisTab", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case OpenFrameInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenFrameInNewTabBackground");
+			ActionsManager::setupLocalAction(actionObject, "OpenFrameInNewTabBackground", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case CopyFrameLinkToClipboardAction:
-			ActionsManager::setupLocalAction(actionObject, "CopyFrameLinkToClipboard");
+			ActionsManager::setupLocalAction(actionObject, "CopyFrameLinkToClipboard", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ViewSourceFrameAction:
-			ActionsManager::setupLocalAction(actionObject, "ViewSourceFrame");
+			ActionsManager::setupLocalAction(actionObject, "ViewSourceFrame", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ReloadFrameAction:
-			ActionsManager::setupLocalAction(actionObject, "ReloadFrame");
+			ActionsManager::setupLocalAction(actionObject, "ReloadFrame", true);
 
 			actionObject->setEnabled(false);
 
@@ -425,71 +425,71 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 
 			break;
 		case RewindBackAction:
-			ActionsManager::setupLocalAction(actionObject, "RewindBack");
+			ActionsManager::setupLocalAction(actionObject, "RewindBack", true);
 
 			actionObject->setEnabled(getAction(GoBackAction)->isEnabled());
 
 			break;
 		case RewindForwardAction:
-			ActionsManager::setupLocalAction(actionObject, "RewindForward");
+			ActionsManager::setupLocalAction(actionObject, "RewindForward", true);
 
 			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 			break;
 		case ReloadTimeAction:
-			ActionsManager::setupLocalAction(actionObject, "ReloadTime");
+			ActionsManager::setupLocalAction(actionObject, "ReloadTime", true);
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
 
 			break;
 		case PrintAction:
-			ActionsManager::setupLocalAction(actionObject, "Print");
+			ActionsManager::setupLocalAction(actionObject, "Print", true);
 
 			break;
 		case BookmarkAction:
-			ActionsManager::setupLocalAction(actionObject, "AddBookmark");
+			ActionsManager::setupLocalAction(actionObject, "AddBookmark", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case BookmarkLinkAction:
-			ActionsManager::setupLocalAction(actionObject, "BookmarkLink");
+			ActionsManager::setupLocalAction(actionObject, "BookmarkLink", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case CopyAddressAction:
-			ActionsManager::setupLocalAction(actionObject, "CopyAddress");
+			ActionsManager::setupLocalAction(actionObject, "CopyAddress", true);
 
 			break;
 		case ViewSourceAction:
-			ActionsManager::setupLocalAction(actionObject, "ViewSource");
+			ActionsManager::setupLocalAction(actionObject, "ViewSource", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ValidateAction:
-			ActionsManager::setupLocalAction(actionObject, "Validate");
+			ActionsManager::setupLocalAction(actionObject, "Validate", true);
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
 
 			break;
 		case ContentBlockingAction:
-			ActionsManager::setupLocalAction(actionObject, "ContentBlocking");
+			ActionsManager::setupLocalAction(actionObject, "ContentBlocking", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case WebsitePreferencesAction:
-			ActionsManager::setupLocalAction(actionObject, "WebsitePreferences");
+			ActionsManager::setupLocalAction(actionObject, "WebsitePreferences", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case FullScreenAction:
-			ActionsManager::setupLocalAction(actionObject, "FullScreen");
+			ActionsManager::setupLocalAction(actionObject, "FullScreen", true);
 
 			actionObject->setEnabled(false);
 
@@ -499,58 +499,58 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 
 			break;
 		case ZoomOutAction:
-			ActionsManager::setupLocalAction(actionObject, "ZoomOut");
+			ActionsManager::setupLocalAction(actionObject, "ZoomOut", true);
 
 			break;
 		case ZoomOriginalAction:
-			ActionsManager::setupLocalAction(actionObject, "ZoomOriginal");
+			ActionsManager::setupLocalAction(actionObject, "ZoomOriginal", true);
 
 			break;
 		case SearchAction:
-			ActionsManager::setupLocalAction(actionObject, "Search");
+			ActionsManager::setupLocalAction(actionObject, "Search", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case SearchMenuAction:
-			ActionsManager::setupLocalAction(actionObject, "SearchMenu");
+			ActionsManager::setupLocalAction(actionObject, "SearchMenu", true);
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
 
 			break;
 		case OpenSelectionAsLinkAction:
-			ActionsManager::setupLocalAction(actionObject, "OpenSelectionAsLink");
+			ActionsManager::setupLocalAction(actionObject, "OpenSelectionAsLink", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ClearAllAction:
-			ActionsManager::setupLocalAction(actionObject, "ClearAll");
+			ActionsManager::setupLocalAction(actionObject, "ClearAll", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case SpellCheckAction:
-			ActionsManager::setupLocalAction(actionObject, "SpellCheck");
+			ActionsManager::setupLocalAction(actionObject, "SpellCheck", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ImagePropertiesAction:
-			ActionsManager::setupLocalAction(actionObject, "ImageProperties");
+			ActionsManager::setupLocalAction(actionObject, "ImageProperties", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case CreateSearchAction:
-			ActionsManager::setupLocalAction(actionObject, "CreateSearch");
+			ActionsManager::setupLocalAction(actionObject, "CreateSearch", true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ReloadOrStopAction:
-			ActionsManager::setupLocalAction(actionObject, "Reload", false);
+			ActionsManager::setupLocalAction(actionObject, "Reload");
 
 			actionObject->setShortcut(QKeySequence());
 

@@ -58,7 +58,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			QAction *closeAction = menu.addAction(QString());
 
-			ActionsManager::setupLocalAction(closeAction, "CloseTab");
+			ActionsManager::setupLocalAction(closeAction, "CloseTab", true);
 
 			closeAction->setEnabled(false);
 		}

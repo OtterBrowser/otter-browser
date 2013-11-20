@@ -18,7 +18,7 @@ public:
 	static void registerAction(QWidget *window, QAction *action, QString name = QString());
 	static void registerActions(QWidget *window, QList<QAction*> getIdentifiers);
 	static void triggerAction(const QString &action);
-	static void setupLocalAction(QAction *localAction, const QString &globalAction, bool connectTrigger = true);
+	static void setupLocalAction(QAction *localAction, const QString &globalAction, bool connectTrigger = false);
 	static void restoreDefaultShortcut(QAction *action);
 	static void restoreDefaultShortcut(const QString &action);
 	static void setShortcut(QAction *action, const QKeySequence &shortcut);
