@@ -283,6 +283,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = application->getWindows();
 	}
 
+	QDir().mkpath(SettingsManager::getPath() + "/sessions/");
+
 	const QString sessionPath = getSessionPath(path);
 	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
 
