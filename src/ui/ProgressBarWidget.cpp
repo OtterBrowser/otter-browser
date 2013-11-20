@@ -1,12 +1,13 @@
 #include "ProgressBarWidget.h"
 #include "../backends/web/WebWidget.h"
 
+#include <QtGui/QPalette>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter
 {
 
-ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QWidget(parent),
+ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QFrame(parent),
 	m_webWidget(webWidget),
 	m_progressBar(new QProgressBar(this)),
 	m_elementsLabel(new QLabel(this)),
@@ -25,12 +26,25 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QW
 	layout->addWidget(m_messageLabel);
 	layout->setContentsMargins(0, 0, 0, 0);
 
+	QPalette palette = m_elementsLabel->palette();
+	palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+
+	setPalette(palette);
+	setFrameStyle(QFrame::StyledPanel);
+	setLineWidth(1);
+
+	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
+
 	m_progressBar->setFixedWidth(120);
 	m_progressBar->setFormat(tr("Loading: %p%"));
 	m_elementsLabel->setFixedWidth(120);
 	m_totalLabel->setFixedWidth(120);
+	m_totalLabel->setAutoFillBackground(true);
+	m_totalLabel->setPalette(palette);
 	m_speedLabel->setFixedWidth(120);
 	m_elapsedLabel->setFixedWidth(120);
+	m_elapsedLabel->setAutoFillBackground(true);
+	m_elapsedLabel->setPalette(palette);
 
 	setAutoFillBackground(true);
 	setLoading(webWidget->isLoading());

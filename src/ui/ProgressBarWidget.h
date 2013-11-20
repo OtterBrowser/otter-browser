@@ -2,6 +2,7 @@
 #define OTTER_PROGRESSBARWIDGET_H
 
 #include <QtCore/QTime>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
 
@@ -10,7 +11,7 @@ namespace Otter
 
 class WebWidget;
 
-class ProgressBarWidget : public QWidget
+class ProgressBarWidget : public QFrame
 {
 	Q_OBJECT
 

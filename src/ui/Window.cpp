@@ -124,7 +124,7 @@ void Window::changeEvent(QEvent *event)
 
 void Window::resizeEvent(QResizeEvent *event)
 {
-	updateProgressWidget();
+	updateProgressBarWidget();
 
 	QWidget::resizeEvent(event);
 }
@@ -139,7 +139,7 @@ void Window::updateUrl(const QUrl &url)
 	m_ui->lineEdit->setText(url.toString());
 }
 
-void Window::updateProgressWidget()
+void Window::updateProgressBarWidget()
 {
 	if (!m_progressBarWidget)
 	{
@@ -159,7 +159,7 @@ void Window::setLoading(bool loading)
 		m_progressBarWidget->raise();
 	}
 
-	updateProgressWidget();
+	updateProgressBarWidget();
 }
 
 QUndoStack *Window::getUndoStack()
