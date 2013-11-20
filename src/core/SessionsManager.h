@@ -95,6 +95,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
+	static void markSessionModified();
 	static SessionsManager* getInstance();
 	static QString getCurrentSession();
 	static QString getSessionPath(const QString &path, bool bound = false);
@@ -107,13 +108,20 @@ public:
 	static bool deleteSession(const QString &path = QString());
 	static bool moveSession(const QString &from, const QString &to);
 
+protected:
+	void timerEvent(QTimerEvent *event);
+	void scheduleAutoSave();
+
 private:
 	explicit SessionsManager(QObject *parent = NULL);
+
+	int m_autoSaveTimer;
 
 	static SessionsManager *m_instance;
 	static QString m_session;
 	static QList<WindowsManager*> m_windows;
 	static QList<SessionEntry> m_closedWindows;
+	static bool m_dirty;
 
 signals:
 	void closedWindowsChanged();

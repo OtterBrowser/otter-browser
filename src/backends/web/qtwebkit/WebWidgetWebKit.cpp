@@ -2,6 +2,7 @@
 #include "WebPageWebKit.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkAccessManager.h"
+#include "../../../core/SessionsManager.h"
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
@@ -109,6 +110,11 @@ void WebWidgetWebKit::loadStarted()
 		action->setShortcut(QKeySequence());
 	}
 
+	if (!isPrivate())
+	{
+		SessionsManager::markSessionModified();
+	}
+
 	emit loadingChanged(true);
 }
 
@@ -132,6 +138,11 @@ void WebWidgetWebKit::loadFinished(bool ok)
 		if (m_webWidget->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
 			m_webWidget->page()->mainFrame()->setScrollPosition(m_webWidget->history()->currentItem().userData().toHash().value("position").toPoint());
+		}
+
+		if (!isPrivate())
+		{
+			SessionsManager::markSessionModified();
 		}
 	}
 

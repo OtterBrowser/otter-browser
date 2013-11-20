@@ -14,9 +14,33 @@ SessionsManager* SessionsManager::m_instance = NULL;
 QString SessionsManager::m_session;
 QList<WindowsManager*> SessionsManager::m_windows;
 QList<SessionEntry> SessionsManager::m_closedWindows;
+bool SessionsManager::m_dirty = false;
 
-SessionsManager::SessionsManager(QObject *parent) : QObject(parent)
+SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
+	m_autoSaveTimer(0)
 {
+}
+
+void SessionsManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_autoSaveTimer)
+	{
+		m_dirty = false;
+
+		killTimer(m_autoSaveTimer);
+
+		m_autoSaveTimer = 0;
+
+		saveSession();
+	}
+}
+
+void SessionsManager::scheduleAutoSave()
+{
+	if (m_autoSaveTimer == 0)
+	{
+		m_autoSaveTimer = startTimer(1000);
+	}
 }
 
 void SessionsManager::createInstance(QObject *parent)
@@ -46,6 +70,16 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 		m_closedWindows.prepend(session);
 
 		emit m_instance->closedWindowsChanged();
+	}
+}
+
+void SessionsManager::markSessionModified()
+{
+	if (m_session == "default" && !m_dirty)
+	{
+		m_dirty = true;
+
+		m_instance->scheduleAutoSave();
 	}
 }
 
