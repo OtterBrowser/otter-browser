@@ -152,6 +152,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
+	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClosedWindows(QAction*)));
 	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
@@ -189,6 +190,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 
+	updateActions();
 	updateClipboard();
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
@@ -248,6 +250,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::openUrl(const QUrl &url)
 {
 	m_windowsManager->open(url);
+}
+
+void MainWindow::actionNewTabPrivate()
+{
+	m_windowsManager->open(QUrl(), true);
 }
 
 void MainWindow::actionOpen()
@@ -489,9 +496,44 @@ void MainWindow::updateClipboard()
 	m_ui->actionPaste->setEnabled(!QApplication::clipboard()->text().isEmpty());
 }
 
-void MainWindow::actionNewTabPrivate()
+void MainWindow::updateActions()
 {
-	m_windowsManager->open(QUrl(), true);
+	QAction *undoAction = m_windowsManager->getAction(UndoAction);
+
+	if (undoAction)
+	{
+		m_ui->actionUndo->setEnabled(undoAction->isEnabled());
+		m_ui->actionUndo->setText(undoAction->text());
+	}
+
+	QAction *redoAction = m_windowsManager->getAction(RedoAction);
+
+	if (redoAction)
+	{
+		m_ui->actionRedo->setEnabled(redoAction->isEnabled());
+		m_ui->actionRedo->setText(redoAction->text());
+	}
+
+	QAction *copyAction = m_windowsManager->getAction(CopyAction);
+
+	if (copyAction)
+	{
+		m_ui->actionCopy->setEnabled(copyAction->isEnabled());
+	}
+
+	QAction *cutAction = m_windowsManager->getAction(CutAction);
+
+	if (cutAction)
+	{
+		m_ui->actionCut->setEnabled(cutAction->isEnabled());
+	}
+
+	QAction *deleteAction = m_windowsManager->getAction(DeleteAction);
+
+	if (deleteAction)
+	{
+		m_ui->actionDelete->setEnabled(deleteAction->isEnabled());
+	}
 }
 
 WindowsManager *MainWindow::getWindowsManager()

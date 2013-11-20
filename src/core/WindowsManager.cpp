@@ -365,10 +365,11 @@ void WindowsManager::setCurrentWindow(int index)
 	{
 		window->showMinimized();
 
-		disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(undoTextChanged(QString)));
-		disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(redoTextChanged(QString)));
-		disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(canUndoChanged(bool)));
-		disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(canRedoChanged(bool)));
+		disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+		disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+		disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+		disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		disconnect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
@@ -399,15 +400,12 @@ void WindowsManager::setCurrentWindow(int index)
 		m_statusBar->setZoom(window->getZoom());
 
 		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
-		emit undoTextChanged(window->getUndoStack()->undoText());
-		emit redoTextChanged(window->getUndoStack()->redoText());
-		emit canUndoChanged(window->getUndoStack()->canUndo());
-		emit canRedoChanged(window->getUndoStack()->canRedo());
 
-		connect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(undoTextChanged(QString)));
-		connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(redoTextChanged(QString)));
-		connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(canUndoChanged(bool)));
-		connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(canRedoChanged(bool)));
+		connect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+		connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+		connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+		connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
@@ -432,6 +430,18 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		emit windowTitleChanged(QString("%1 - Otter").arg(text));
 	}
+}
+
+QAction *WindowsManager::getAction(WebAction action)
+{
+	Window *window = getWindow();
+
+	if (window)
+	{
+		return window->getAction(action);
+	}
+
+	return NULL;
 }
 
 Window* WindowsManager::getWindow(int index) const

@@ -73,6 +73,7 @@ private:
 	Ui::Window *m_ui;
 
 signals:
+	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

@@ -50,6 +50,7 @@ protected slots:
 	void triggerWindowAction();
 	void updateClosedWindows();
 	void updateClipboard();
+	void updateActions();
 
 private:
 	WindowsManager *m_windowsManager;

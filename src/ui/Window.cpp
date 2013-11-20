@@ -31,6 +31,7 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	m_ui->lineEdit->setFocus();
 
 	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
+	connect(m_webWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString,int)), this, SIGNAL(statusMessageChanged(QString,int)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));

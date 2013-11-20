@@ -22,6 +22,7 @@ class WindowsManager : public QObject
 public:
 	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
 
+	QAction* getAction(WebAction action);
 	Window* getWindow(int index = -1) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -68,14 +69,11 @@ private:
 	bool m_privateSession;
 
 signals:
+	void actionsChanged();
 	void windowAdded(int index);
 	void windowRemoved(int index);
 	void currentWindowChanged(int index);
 	void windowTitleChanged(QString title);
-	void undoTextChanged(QString undoText);
-	void redoTextChanged(QString redoText);
-	void canUndoChanged(bool canUndo);
-	void canRedoChanged(bool canRedo);
 	void closedWindowsAvailableChanged(bool available);
 };
 

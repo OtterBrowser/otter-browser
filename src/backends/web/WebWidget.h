@@ -54,6 +54,7 @@ public slots:
 	void showMenu(const QPoint &position, MenuFlags flags);
 
 signals:
+	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
