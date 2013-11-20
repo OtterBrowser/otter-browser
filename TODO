@@ -1,17 +1,18 @@
 High priority / ASAP:
 - history browsing
-- preferences dialog
 - cookies manager
-- transfers manager
 - bookmarks
+- advanced configuration (about:config)
+- transfers manager
 
 Medium priority / soon:
 - custom searches
+- preferences dialog
 - proxy configuration
 - mail and feeds client (as module)
-- speed dial module
 - detailed load progress information
-- page preferences
+- page specific preferences
+- speed dial module
 - content blocking
 - spell checking
 - panels (page informations, notes, transfers, bookmarks etc.)
@@ -36,6 +37,7 @@ Low priority / later:
 
 Low priority / maybe:
 - support for Opera skins (through custom QStyle)
+- BitTorrent module
 - IM client module (libpurple based, including support for IRC)
 
 And lots of smaller things. ;-)
