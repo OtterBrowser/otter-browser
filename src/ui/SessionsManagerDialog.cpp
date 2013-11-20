@@ -95,7 +95,14 @@ void SessionsManagerDialog::deleteSession()
 
 	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsWidget->item(index, 0)->data(Qt::DisplayRole).toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		SessionsManager::deleteSession(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString());
+		if (SessionsManager::deleteSession(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString()))
+		{
+			m_ui->sessionsWidget->removeRow(index);
+		}
+		else
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Failed to delete session."), QMessageBox::Close);
+		}
 	}
 }
 
