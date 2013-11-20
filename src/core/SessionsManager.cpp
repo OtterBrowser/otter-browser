@@ -232,6 +232,11 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 
 	if (session.windows.isEmpty())
 	{
+		if (m_session.isEmpty() && path == "default")
+		{
+			m_session = "default";
+		}
+
 		return false;
 	}
 
