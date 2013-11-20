@@ -49,6 +49,7 @@ protected slots:
 	void menuClosedWindowsAboutToShow();
 	void triggerWindowAction();
 	void updateClosedWindows();
+	void updateClipboard();
 
 private:
 	WindowsManager *m_windowsManager;

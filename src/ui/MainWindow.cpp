@@ -10,6 +10,7 @@
 #include "ui_MainWindow.h"
 
 #include <QtCore/QTextCodec>
+#include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QFileDialog>
@@ -146,6 +147,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	setWindowTitle(m_windowsManager->getTitle());
 
+	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
@@ -187,6 +189,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 
+	updateClipboard();
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
@@ -481,14 +484,9 @@ void MainWindow::updateClosedWindows()
 	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() || (SessionsManager::getClosedWindows().count() > 0));
 }
 
-bool MainWindow::event(QEvent *event)
+void MainWindow::updateClipboard()
 {
-	if (event->type() == QEvent::WindowActivate)
-	{
-		ActionsManager::setActiveWindow(this);
-	}
-
-	return QMainWindow::event(event);
+	m_ui->actionPaste->setEnabled(!QApplication::clipboard()->text().isEmpty());
 }
 
 void MainWindow::actionNewTabPrivate()
@@ -499,6 +497,16 @@ void MainWindow::actionNewTabPrivate()
 WindowsManager *MainWindow::getWindowsManager()
 {
 	return m_windowsManager;
+}
+
+bool MainWindow::event(QEvent *event)
+{
+	if (event->type() == QEvent::WindowActivate)
+	{
+		ActionsManager::setActiveWindow(this);
+	}
+
+	return QMainWindow::event(event);
 }
 
 }
