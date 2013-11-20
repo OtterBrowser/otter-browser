@@ -61,6 +61,7 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void loadingChanged(bool loading);
 	void zoomChanged(int zoom);
+	void loadProgress(int progress);
 };
 
 }

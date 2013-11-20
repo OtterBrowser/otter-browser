@@ -31,7 +31,8 @@ SOURCES += src/main.cpp\
     src/core/LocalListingNetworkReply.cpp \
     src/backends/web/qtwebkit/WebViewWebKit.cpp \
     src/ui/SessionsManagerDialog.cpp \
-    src/ui/SaveSessionDialog.cpp
+    src/ui/SaveSessionDialog.cpp \
+    src/ui/ProgressBarWidget.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -54,7 +55,8 @@ HEADERS += src/ui/MainWindow.h \
     src/core/LocalListingNetworkReply.h \
     src/backends/web/qtwebkit/WebViewWebKit.h \
     src/ui/SessionsManagerDialog.h \
-    src/ui/SaveSessionDialog.h
+    src/ui/SaveSessionDialog.h \
+    src/ui/ProgressBarWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

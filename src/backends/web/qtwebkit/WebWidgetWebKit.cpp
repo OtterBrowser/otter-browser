@@ -75,6 +75,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
 	connect(m_webWidget, SIGNAL(requestedZoomChange(int)), this, SLOT(setZoom(int)));
 	connect(m_webWidget, SIGNAL(requestedTriggerAction(WebAction)), this, SLOT(triggerAction(WebAction)));
+	connect(m_webWidget, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_webWidget->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));

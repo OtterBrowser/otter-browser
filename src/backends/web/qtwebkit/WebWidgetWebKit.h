@@ -66,6 +66,7 @@ signals:
 	void loadingChanged(bool loading);
 	void zoomChanged(int zoom);
 	void isPrivateChanged(bool pinned);
+	void loadProgress(int progress);
 };
 
 }

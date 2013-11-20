@@ -19,6 +19,8 @@ namespace Ui
 	class Window;
 }
 
+class ProgressBarWidget;
+
 class Window : public QWidget
 {
 	Q_OBJECT
@@ -62,13 +64,17 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void loadUrl();
 	void updateUrl(const QUrl &url);
+	void updateProgressBarWidget();
+	void setLoading(bool loading);
 
 private:
 	WebWidget *m_webWidget;
+	ProgressBarWidget *m_progressBarWidget;
 	bool m_isPinned;
 	Ui::Window *m_ui;
 

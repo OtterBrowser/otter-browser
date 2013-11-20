@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "ProgressBarWidget.h"
 #include "../core/SettingsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 
@@ -9,6 +10,7 @@ namespace Otter
 
 Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	m_webWidget(widget),
+	m_progressBarWidget(NULL),
 	m_isPinned(false),
 	m_ui(new Ui::Window)
 {
@@ -38,6 +40,7 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(updateUrl(QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
+	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 }
 
@@ -119,6 +122,13 @@ void Window::changeEvent(QEvent *event)
 	}
 }
 
+void Window::resizeEvent(QResizeEvent *event)
+{
+	updateProgressWidget();
+
+	QWidget::resizeEvent(event);
+}
+
 void Window::loadUrl()
 {
 	setUrl(QUrl(m_ui->lineEdit->text()));
@@ -127,6 +137,29 @@ void Window::loadUrl()
 void Window::updateUrl(const QUrl &url)
 {
 	m_ui->lineEdit->setText(url.toString());
+}
+
+void Window::updateProgressWidget()
+{
+	if (!m_progressBarWidget)
+	{
+		return;
+	}
+
+	m_progressBarWidget->resize(QSize(width(), 30));
+	m_progressBarWidget->move(QPoint(0, (height() - 30)));
+}
+
+void Window::setLoading(bool loading)
+{
+	if (loading && !m_progressBarWidget)
+	{
+		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
+		m_progressBarWidget->show();
+		m_progressBarWidget->raise();
+	}
+
+	updateProgressWidget();
 }
 
 QUndoStack *Window::getUndoStack()
