@@ -45,6 +45,7 @@ protected slots:
 	void loadStarted();
 	void loadFinished(bool ok);
 	void linkHovered(const QString &link, const QString &title);
+	void restoreState(QWebFrame *frame);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();

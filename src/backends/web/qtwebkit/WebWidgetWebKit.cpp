@@ -80,6 +80,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
 	connect(m_webWidget->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
+	connect(m_webWidget->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 }
 
 void WebWidgetWebKit::print(QPrinter *printer)
@@ -131,19 +132,9 @@ void WebWidgetWebKit::loadFinished(bool ok)
 		action->setShortcut(QKeySequence());
 	}
 
-	if (ok)
+	if (ok && !isPrivate())
 	{
-		setZoom(m_webWidget->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
-
-		if (m_webWidget->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
-		{
-			m_webWidget->page()->mainFrame()->setScrollPosition(m_webWidget->history()->currentItem().userData().toHash().value("position").toPoint());
-		}
-
-		if (!isPrivate())
-		{
-			SessionsManager::markSessionModified();
-		}
+		SessionsManager::markSessionModified();
 	}
 
 	emit loadingChanged(false);
@@ -163,6 +154,19 @@ void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
 	QToolTip::showText(QCursor::pos(), text, m_webWidget);
 
 	emit statusMessageChanged(link, 0);
+}
+
+void WebWidgetWebKit::restoreState(QWebFrame *frame)
+{
+	if (frame == m_webWidget->page()->mainFrame())
+	{
+		setZoom(m_webWidget->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
+
+		if (m_webWidget->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
+		{
+			m_webWidget->page()->mainFrame()->setScrollPosition(m_webWidget->history()->currentItem().userData().toHash().value("position").toPoint());
+		}
+	}
 }
 
 void WebWidgetWebKit::notifyTitleChanged()
@@ -267,6 +271,12 @@ void WebWidgetWebKit::setZoom(int zoom)
 
 void WebWidgetWebKit::setUrl(const QUrl &url)
 {
+	QVariantHash data;
+	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
+	data["zoom"] = getZoom();
+
+	m_webWidget->page()->history()->currentItem().setUserData(data);
+
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
 		QUrl httpUrl = url;
