@@ -30,7 +30,8 @@ SOURCES += src/main.cpp\
     src/core/SessionsManager.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/backends/web/qtwebkit/WebViewWebKit.cpp \
-    src/ui/SessionsManagerDialog.cpp
+    src/ui/SessionsManagerDialog.cpp \
+    src/ui/SaveSessionDialog.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -52,13 +53,15 @@ HEADERS += src/ui/MainWindow.h \
     src/core/SessionsManager.h \
     src/core/LocalListingNetworkReply.h \
     src/backends/web/qtwebkit/WebViewWebKit.h \
-    src/ui/SessionsManagerDialog.h
+    src/ui/SessionsManagerDialog.h \
+    src/ui/SaveSessionDialog.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/Window.ui \
-    src/ui/SessionsManagerDialog.ui
+    src/ui/SessionsManagerDialog.ui \
+    src/ui/SaveSessionDialog.ui
 
 RESOURCES += \
     resources/resources.qrc

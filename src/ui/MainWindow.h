@@ -38,6 +38,7 @@ protected:
 protected slots:
 	void actionNewTabPrivate();
 	void actionOpen();
+	void actionSaveSession();
 	void actionManageSessions();
 	void actionSession(QAction *action);
 	void actionTextEncoding(QAction *action);

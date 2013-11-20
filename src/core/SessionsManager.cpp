@@ -229,16 +229,26 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path, const QString &title)
+bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window)
 {
-	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+	QList<MainWindow*> windows;
 
-	if (!application)
+	if (window)
 	{
-		return false;
+		windows.append(window);
+	}
+	else
+	{
+		Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+
+		if (!application)
+		{
+			return false;
+		}
+
+		windows = application->getWindows();
 	}
 
-	const QList<MainWindow*> windows = application->getWindows();
 	const QString sessionPath = getSessionPath(path);
 	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
 

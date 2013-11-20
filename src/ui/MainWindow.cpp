@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "TabBarWidget.h"
+#include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
@@ -151,6 +152,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SIGNAL(requestedNewWindowPrivate()));
 	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
+	connect(m_ui->actionSaveSession, SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
@@ -239,6 +241,12 @@ void MainWindow::actionOpen()
 	{
 		m_windowsManager->open(url);
 	}
+}
+
+void MainWindow::actionSaveSession()
+{
+	SaveSessionDialog dialog(this);
+	dialog.exec();
 }
 
 void MainWindow::actionManageSessions()
