@@ -24,6 +24,7 @@ public:
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
+	QVariant evaluateJavaScript(const QString &script);
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	HistoryInformation getHistory() const;

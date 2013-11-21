@@ -279,6 +279,13 @@ void WebWidgetWebKit::setZoom(int zoom)
 
 void WebWidgetWebKit::setUrl(const QUrl &url)
 {
+	if (url.scheme() == "javascript")
+	{
+		evaluateJavaScript(url.path());
+
+		return;
+	}
+
 	QVariantHash data;
 	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
 	data["zoom"] = getZoom();
@@ -614,6 +621,11 @@ QString WebWidgetWebKit::getTitle() const
 	}
 
 	return title;
+}
+
+QVariant WebWidgetWebKit::evaluateJavaScript(const QString &script)
+{
+	return m_webWidget->page()->mainFrame()->evaluateJavaScript(script);
 }
 
 QUrl WebWidgetWebKit::getUrl() const

@@ -38,6 +38,7 @@ public:
 	virtual QUndoStack* getUndoStack() = 0;
 	virtual QString getDefaultTextEncoding() const = 0;
 	virtual QString getTitle() const = 0;
+	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual HistoryInformation getHistory() const = 0;
