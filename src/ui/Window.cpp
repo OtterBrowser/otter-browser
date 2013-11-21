@@ -186,7 +186,22 @@ void Window::updateFind(bool backwards)
 		flags |= CaseSensitiveFind;
 	}
 
-	m_webWidget->find(m_ui->findLineEdit->text(), flags);
+	QPalette palette = parentWidget()->palette();
+	const bool found = m_webWidget->find(m_ui->findLineEdit->text(), flags);
+
+	if (!m_ui->findLineEdit->text().isEmpty())
+	{
+		if (found)
+		{
+			palette.setColor(QPalette::Base, QColor("#CEF6DF"));
+		}
+		else
+		{
+			palette.setColor(QPalette::Base, QColor("#F1E7E4"));
+		}
+	}
+
+	m_ui->findLineEdit->setPalette(palette);
 
 	if (sender() && sender()->objectName() == "caseSensitiveButton")
 	{
@@ -205,7 +220,12 @@ void Window::updateFindHighlight()
 		flags |= CaseSensitiveFind;
 	}
 
-	m_webWidget->find(((m_ui->highlightButton->isChecked() && m_ui->findWidget->isVisible()) ? m_ui->findLineEdit->text() : QString()), flags);
+	m_webWidget->find(QString(), flags);
+
+	if (m_ui->highlightButton->isChecked() && m_ui->findWidget->isVisible())
+	{
+		m_webWidget->find(m_ui->findLineEdit->text(), flags);
+	}
 }
 
 void Window::updateProgressBarWidget()
