@@ -22,6 +22,7 @@ namespace Otter
 
 WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidget(parent),
 	m_webWidget(new WebViewWebKit(this)),
+	m_networkAccessManager(NULL),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {
@@ -31,21 +32,21 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 
 	setLayout(layout);
 
-	QNetworkAccessManager *networkAccessManager = new NetworkAccessManager(this);
+	m_networkAccessManager = new NetworkAccessManager(this);
 
 	if (!privateWindow)
 	{
 		QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
 		diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
 
-		networkAccessManager->setCache(diskCache);
+		m_networkAccessManager->setCache(diskCache);
 	}
 
 	m_webWidget->installEventFilter(this);
 	m_webWidget->setPage(new WebPageWebKit(m_webWidget));
 	m_webWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-	m_webWidget->page()->setNetworkAccessManager(networkAccessManager);
+	m_webWidget->page()->setNetworkAccessManager(m_networkAccessManager);
 	m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), "Cut");
@@ -84,6 +85,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 	connect(m_webWidget->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
+	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 }
 
 void WebWidgetWebKit::print(QPrinter *printer)
@@ -126,6 +128,8 @@ void WebWidgetWebKit::loadStarted()
 void WebWidgetWebKit::loadFinished(bool ok)
 {
 	m_isLoading = false;
+
+	m_networkAccessManager->resetStatistics();
 
 	if (m_customActions.contains(ReloadOrStopAction))
 	{

@@ -9,6 +9,8 @@
 namespace Otter
 {
 
+class NetworkAccessManager;
+
 class WebWidgetWebKit : public WebWidget
 {
 	Q_OBJECT
@@ -53,6 +55,7 @@ protected slots:
 
 private:
 	WebViewWebKit *m_webWidget;
+	NetworkAccessManager *m_networkAccessManager;
 	QHash<WebAction, QAction*> m_customActions;
 	bool m_isLinkHovered;
 	bool m_isLoading;
@@ -67,6 +70,7 @@ signals:
 	void zoomChanged(int zoom);
 	void isPrivateChanged(bool pinned);
 	void loadProgress(int progress);
+	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 
 }

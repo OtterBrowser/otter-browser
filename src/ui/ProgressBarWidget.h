@@ -20,8 +20,10 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	QString formatUnit(qint64 value) const;
 
 protected slots:
+	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 	void setLoading(bool loading);
 
 private:

@@ -62,6 +62,7 @@ signals:
 	void loadingChanged(bool loading);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
+	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 
 }

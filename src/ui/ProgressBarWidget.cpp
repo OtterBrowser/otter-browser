@@ -35,14 +35,14 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
 
-	m_progressBar->setFixedWidth(120);
+	m_progressBar->setFixedWidth(150);
 	m_progressBar->setFormat(tr("Loading: %p%"));
-	m_elementsLabel->setFixedWidth(120);
-	m_totalLabel->setFixedWidth(120);
+	m_elementsLabel->setFixedWidth(150);
+	m_totalLabel->setFixedWidth(150);
 	m_totalLabel->setAutoFillBackground(true);
 	m_totalLabel->setPalette(palette);
-	m_speedLabel->setFixedWidth(120);
-	m_elapsedLabel->setFixedWidth(120);
+	m_speedLabel->setFixedWidth(150);
+	m_elapsedLabel->setFixedWidth(150);
 	m_elapsedLabel->setAutoFillBackground(true);
 	m_elapsedLabel->setPalette(palette);
 
@@ -50,6 +50,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	setLoading(webWidget->isLoading());
 
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
+	connect(webWidget, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,qint64,qint64,qint64)));
 	connect(webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 }
 
@@ -77,10 +78,22 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
+void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
+{
+	Q_UNUSED(bytesTotal)
+
+	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
+	m_totalLabel->setText(tr("Total: %1").arg(formatUnit(bytesReceived)));
+	m_speedLabel->setText(tr("Speed: %1/s").arg(formatUnit(speed)));
+}
+
 void ProgressBarWidget::setLoading(bool loading)
 {
 	if (loading)
 	{
+		m_elapsedLabel->setText(tr("Time: %1").arg("0:00"));
+
+		updateLoadStatus(0, 0, 0, 0, 0);
 		show();
 
 		m_time = new QTime();
@@ -99,6 +112,26 @@ void ProgressBarWidget::setLoading(bool loading)
 
 		hide();
 	}
+}
+
+QString ProgressBarWidget::formatUnit(qint64 value) const
+{
+	if (value > 1024)
+	{
+		if (value > 1048576)
+		{
+			if (value > 1073741824)
+			{
+				return QString("%1 GB").arg((value / 1073741824.0), 0, 'f', 1);
+			}
+
+			return QString("%1 MB").arg((value / 1048576.0), 0, 'f', 1);
+		}
+
+		return QString("%1 KB").arg((value / 1024.0), 0, 'f', 1);
+	}
+
+	return QString("%1 B").arg(value);
 }
 
 }
