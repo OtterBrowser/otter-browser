@@ -227,6 +227,7 @@ void WindowsManager::addWindow(Window *window)
 	const int index = m_tabBar->count();
 
 	m_tabBar->insertTab(index, window->getTitle());
+	m_tabBar->setTabToolTip(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 	m_tabBar->setCurrentIndex(index);
 
