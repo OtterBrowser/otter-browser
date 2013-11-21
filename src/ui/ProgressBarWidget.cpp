@@ -36,7 +36,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
 
 	m_progressBar->setFixedWidth(150);
-	m_progressBar->setFormat(tr("Loading: %p%"));
+	m_progressBar->setFormat(tr("Document: %p%"));
 	m_elementsLabel->setFixedWidth(150);
 	m_totalLabel->setFixedWidth(150);
 	m_totalLabel->setAutoFillBackground(true);
@@ -58,7 +58,6 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 {
 	if (m_time)
 	{
-		QString string;
 		int seconds = (m_time->elapsed() / 1000);
 		int minutes = (seconds / 60);
 
@@ -70,7 +69,6 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 	{
 		m_elapsedLabel->setText(QString());
 	}
-
 
 	if (!m_webWidget->isLoading())
 	{
@@ -91,6 +89,7 @@ void ProgressBarWidget::setLoading(bool loading)
 {
 	if (loading)
 	{
+		m_progressBar->setValue(0);
 		m_elapsedLabel->setText(tr("Time: %1").arg("0:00"));
 
 		updateLoadStatus(0, 0, 0, 0, 0);

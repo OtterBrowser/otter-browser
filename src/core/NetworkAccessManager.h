@@ -25,6 +25,7 @@ protected slots:
 	void requestFinished(QNetworkReply *reply);
 
 private:
+	QNetworkReply* m_mainReply;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
@@ -36,6 +37,7 @@ private:
 
 signals:
 	void messageChanged(const QString &message = QString());
+	void documentLoadProgressChanged(int progress);
 	void statusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 

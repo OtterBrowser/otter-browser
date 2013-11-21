@@ -7,6 +7,7 @@ namespace Otter
 {
 
 NetworkAccessManager::NetworkAccessManager(QObject *parent) : QNetworkAccessManager(parent),
+	m_mainReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -26,6 +27,7 @@ void NetworkAccessManager::resetStatistics()
 
 	m_updateTimer = 0;
 	m_replies.clear();
+	m_mainReply = NULL;
 	m_speed = 0;
 	m_bytesReceivedDifference = 0;
 	m_bytesReceived = 0;
@@ -60,6 +62,11 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, request, outgoingData);
 
+	if (!m_mainReply)
+	{
+		m_mainReply = reply;
+	}
+
 	m_replies[reply] = qMakePair(0, false);
 
 	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
@@ -75,6 +82,18 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+	if (reply && reply == m_mainReply)
+	{
+		if (bytesTotal > 0)
+		{
+			emit documentLoadProgressChanged(((bytesReceived * 1.0) / bytesTotal) * 100);
+		}
+		else
+		{
+			emit documentLoadProgressChanged(-1);
+		}
+	}
 
 	if (!reply || !m_replies.contains(reply))
 	{

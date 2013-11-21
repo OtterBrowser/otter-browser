@@ -76,7 +76,6 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
 	connect(m_webWidget, SIGNAL(requestedZoomChange(int)), this, SLOT(setZoom(int)));
 	connect(m_webWidget, SIGNAL(requestedTriggerAction(WebAction)), this, SLOT(triggerAction(WebAction)));
-	connect(m_webWidget, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_webWidget->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
@@ -86,6 +85,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 	connect(m_webWidget->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
+	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
 
 void WebWidgetWebKit::print(QPrinter *printer)
