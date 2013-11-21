@@ -66,7 +66,10 @@ enum WebAction
 	SearchAction,
 	SearchMenuAction,
 	OpenSelectionAsLinkAction,
-	CreateSearchAction
+	CreateSearchAction,
+	FindAction,
+	FindNextAction,
+	FindPreviousAction
 };
 
 class WebWidget;

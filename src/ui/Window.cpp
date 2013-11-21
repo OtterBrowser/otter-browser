@@ -29,10 +29,17 @@ Window::Window(WebWidget *widget, QWidget *parent) : QWidget(parent),
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(getAction(ReloadOrStopAction));
-	m_ui->verticalLayout->addWidget(m_webWidget);
-	m_ui->lineEdit->setFocus();
+	m_ui->verticalLayout->insertWidget(2, m_webWidget);
+	m_ui->addressLineEdit->setFocus();
+	m_ui->findWidget->hide();
 
-	connect(m_ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
+	connect(m_ui->addressLineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
+	connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
+	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(updateFind()));
+	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
+	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
+	connect(m_ui->findPreviousButton, SIGNAL(clicked()), this, SLOT(updateFind()));
+	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
 	connect(m_webWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString,int)), this, SIGNAL(statusMessageChanged(QString,int)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
@@ -56,7 +63,28 @@ void Window::print(QPrinter *printer)
 
 void Window::triggerAction(WebAction action, bool checked)
 {
-	m_webWidget->triggerAction(action, checked);
+	if (action == FindAction)
+	{
+		m_ui->findWidget->setVisible(!m_ui->findWidget->isVisible());
+
+		if (m_ui->findWidget->isVisible())
+		{
+			m_ui->findLineEdit->clear();
+			m_ui->findLineEdit->setFocus();
+		}
+		else
+		{
+			updateFindHighlight();
+		}
+	}
+	else if (action == FindNextAction || action == FindPreviousAction)
+	{
+		updateFind(action == FindPreviousAction);
+	}
+	else
+	{
+		m_webWidget->triggerAction(action, checked);
+	}
 }
 
 void Window::setDefaultTextEncoding(const QString &encoding)
@@ -131,12 +159,53 @@ void Window::resizeEvent(QResizeEvent *event)
 
 void Window::loadUrl()
 {
-	setUrl(QUrl(m_ui->lineEdit->text()));
+	setUrl(QUrl(m_ui->addressLineEdit->text()));
 }
 
 void Window::updateUrl(const QUrl &url)
 {
-	m_ui->lineEdit->setText(url.toString());
+	m_ui->addressLineEdit->setText(url.toString());
+}
+
+void Window::updateFind(bool backwards)
+{
+	if (sender() && sender()->objectName() == "findPreviousButton")
+	{
+		backwards = true;
+	}
+
+	FindFlags flags;
+
+	if (backwards)
+	{
+		flags |= BackwardFind;
+	}
+
+	if (m_ui->caseSensitiveButton->isChecked())
+	{
+		flags |= CaseSensitiveFind;
+	}
+
+	m_webWidget->find(m_ui->findLineEdit->text(), flags);
+
+	if (sender() && sender()->objectName() == "caseSensitiveButton")
+	{
+		m_webWidget->find(m_ui->findLineEdit->text(), (flags | BackwardFind));
+	}
+
+	updateFindHighlight();
+}
+
+void Window::updateFindHighlight()
+{
+	FindFlags flags = HighlightAllFind;
+
+	if (m_ui->caseSensitiveButton->isChecked())
+	{
+		flags |= CaseSensitiveFind;
+	}
+
+	m_webWidget->find(((m_ui->highlightButton->isChecked() && m_ui->findWidget->isVisible()) ? m_ui->findLineEdit->text() : QString()), flags);
 }
 
 void Window::updateProgressBarWidget()

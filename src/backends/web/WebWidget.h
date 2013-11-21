@@ -25,6 +25,15 @@ enum MenuFlag
 
 Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
 
+enum FindFlag
+{
+	BackwardFind = 1,
+	CaseSensitiveFind = 2,
+	HighlightAllFind = 4
+};
+
+Q_DECLARE_FLAGS(FindFlags, FindFlag)
+
 class WebWidget : public QWidget
 {
 	Q_OBJECT
@@ -45,6 +54,7 @@ public:
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
+	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
 
 public slots:
 	virtual void triggerAction(WebAction action, bool checked = false) = 0;

@@ -31,6 +31,7 @@ public:
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
+	bool find(const QString &text, FindFlags flags = HighlightAllFind);
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:

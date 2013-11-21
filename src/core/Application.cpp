@@ -72,6 +72,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("Actions/Paste", QVariant(QKeySequence(QKeySequence::Paste).toString()));
 	SettingsManager::setDefaultValue("Actions/Delete", QVariant(QKeySequence(QKeySequence::Delete).toString()));
 	SettingsManager::setDefaultValue("Actions/SelectAll", QVariant(QKeySequence(QKeySequence::SelectAll).toString()));
+	SettingsManager::setDefaultValue("Actions/Find", QVariant(QKeySequence(QKeySequence::Find).toString()));
+	SettingsManager::setDefaultValue("Actions/FindNext", QVariant(QKeySequence(QKeySequence::FindNext).toString()));
+	SettingsManager::setDefaultValue("Actions/FindPrevious", QVariant(QKeySequence(QKeySequence::FindPrevious).toString()));
 	SettingsManager::setDefaultValue("Actions/Reload", QVariant(QKeySequence(QKeySequence::Refresh).toString()));
 	SettingsManager::setDefaultValue("Actions/ZoomIn", QVariant(QKeySequence(QKeySequence::ZoomIn).toString()));
 	SettingsManager::setDefaultValue("Actions/ZoomOut", QVariant(QKeySequence(QKeySequence::ZoomOut).toString()));

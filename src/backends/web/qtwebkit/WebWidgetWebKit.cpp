@@ -290,7 +290,7 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 		return;
 	}
 
-	if (url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
+	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
 		m_webWidget->page()->mainFrame()->scrollToAnchor(url.fragment());
 
@@ -763,6 +763,28 @@ bool WebWidgetWebKit::isLoading() const
 bool WebWidgetWebKit::isPrivate() const
 {
 	return m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+}
+
+bool WebWidgetWebKit::find(const QString &text, FindFlags flags)
+{
+	QWebPage::FindFlags nativeFlags = (QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
+
+	if (flags & BackwardFind)
+	{
+		nativeFlags |= QWebPage::FindBackward;
+	}
+
+	if (flags & CaseSensitiveFind)
+	{
+		nativeFlags |= QWebPage::FindCaseSensitively;
+	}
+
+	if (flags & HighlightAllFind)
+	{
+		nativeFlags |= QWebPage::HighlightAllOccurrences;
+	}
+
+	return m_webWidget->findText(text, nativeFlags);
 }
 
 bool WebWidgetWebKit::eventFilter(QObject *object, QEvent *event)

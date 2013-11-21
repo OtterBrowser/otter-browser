@@ -35,7 +35,7 @@ public:
 	bool canRedo() const;
 
 public slots:
-	void open(const QUrl &url = QUrl(), bool privateWindow = false);
+	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false);
 	void close(int index = -1);
 	void closeOther(int index = -1);
 	void restore(int index = 0);
@@ -53,7 +53,7 @@ protected:
 
 protected slots:
 	void printPreview(QPrinter *printer);
-	void addWindow(Window *window);
+	void addWindow(Window *window, bool background = false);
 	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);

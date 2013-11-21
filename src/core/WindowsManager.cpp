@@ -29,7 +29,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
 
-void WindowsManager::open(const QUrl &url, bool privateWindow)
+void WindowsManager::open(const QUrl &url, bool privateWindow, bool background)
 {
 	Window *window = NULL;
 
@@ -58,7 +58,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow)
 	window = new Window(WebBackendsManager::getBackend()->createWidget(privateWindow), m_area);
 	window->setUrl(url);
 
-	addWindow(window);
+	addWindow(window, background);
 }
 
 void WindowsManager::close(int index)
@@ -214,7 +214,7 @@ void WindowsManager::clearClosedWindows()
 	}
 }
 
-void WindowsManager::addWindow(Window *window)
+void WindowsManager::addWindow(Window *window, bool background)
 {
 	if (!window)
 	{
@@ -229,9 +229,13 @@ void WindowsManager::addWindow(Window *window)
 	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabToolTip(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
-	m_tabBar->setCurrentIndex(index);
 
-	setCurrentWindow(index);
+	if (!background)
+	{
+		m_tabBar->setCurrentIndex(index);
+
+		setCurrentWindow(index);
+	}
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));

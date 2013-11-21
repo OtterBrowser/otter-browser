@@ -69,6 +69,8 @@ protected:
 protected slots:
 	void loadUrl();
 	void updateUrl(const QUrl &url);
+	void updateFind(bool backwards = false);
+	void updateFindHighlight();
 	void updateProgressBarWidget();
 	void setLoading(bool loading);
 
