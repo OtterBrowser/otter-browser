@@ -1,7 +1,9 @@
 #include "Window.h"
 #include "ProgressBarWidget.h"
 #include "../core/SettingsManager.h"
+#include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
+#include "../backends/web/WebWidget.h"
 
 #include "ui_Window.h"
 
@@ -61,7 +63,7 @@ void Window::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
-void Window::triggerAction(WebAction action, bool checked)
+void Window::triggerAction(WindowAction action, bool checked)
 {
 	if (action == FindAction)
 	{
@@ -130,7 +132,7 @@ Window* Window::clone(QWidget *parent)
 	return window;
 }
 
-QAction *Window::getAction(WebAction action)
+QAction *Window::getAction(WindowAction action)
 {
 	return m_webWidget->getAction(action);
 }

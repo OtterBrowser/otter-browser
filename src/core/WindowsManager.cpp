@@ -2,7 +2,7 @@
 #include "SettingsManager.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
-#include "../ui/Window.h"
+#include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
 
 #include <QtGui/QPainter>
@@ -194,7 +194,7 @@ void WindowsManager::printPreview(QPrinter *printer)
 	}
 }
 
-void WindowsManager::triggerAction(WebAction action, bool checked)
+void WindowsManager::triggerAction(WindowAction action, bool checked)
 {
 	Window *window = getWindow(getCurrentWindow());
 
@@ -437,7 +437,7 @@ void WindowsManager::setTitle(const QString &title)
 	}
 }
 
-QAction *WindowsManager::getAction(WebAction action)
+QAction *WindowsManager::getAction(WindowAction action)
 {
 	Window *window = getWindow();
 

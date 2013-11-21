@@ -1,7 +1,7 @@
 #ifndef OTTER_WEBVIEWWEBKIT_H
 #define OTTER_WEBVIEWWEBKIT_H
 
-#include "../WebBackend.h"
+#include "../../../ui/Window.h"
 
 #include <QtWebKitWidgets/QWebView>
 
@@ -21,7 +21,7 @@ protected:
 
 signals:
 	void requestedZoomChange(int zoom);
-	void requestedTriggerAction(WebAction action);
+	void requestedTriggerAction(WindowAction action);
 };
 
 }

@@ -5,6 +5,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/SettingsManager.h"
+#include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
 
 #include "ui_MainWindow.h"
@@ -491,7 +492,7 @@ void MainWindow::triggerWindowAction()
 
 	if (action)
 	{
-		m_windowsManager->triggerAction(static_cast<WebAction>(action->data().toInt()));
+		m_windowsManager->triggerAction(static_cast<WindowAction>(action->data().toInt()));
 	}
 }
 

@@ -1,8 +1,8 @@
 #ifndef OTTER_WEBWIDGET_H
 #define OTTER_WEBWIDGET_H
 
-#include "WebBackend.h"
 #include "../../core/SessionsManager.h"
+#include "../../ui/Window.h"
 
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QUndoStack>
@@ -43,7 +43,7 @@ public:
 
 	virtual void print(QPrinter *printer) = 0;
 	virtual WebWidget* clone(QWidget *parent = NULL) = 0;
-	virtual QAction* getAction(WebAction action) = 0;
+	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	virtual QString getDefaultTextEncoding() const = 0;
 	virtual QString getTitle() const = 0;
@@ -57,7 +57,7 @@ public:
 	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
 
 public slots:
-	virtual void triggerAction(WebAction action, bool checked = false) = 0;
+	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
 	virtual void setHistory(const HistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;

@@ -13,7 +13,7 @@ WebPageWebKit::WebPageWebKit(QObject *parent) : QWebPage(parent)
 {
 }
 
-void WebPageWebKit::triggerAction(QWebPage::WebAction action, bool checked)
+void WebPageWebKit::triggerAction(WebAction action, bool checked)
 {
 	if (action == QWebPage::Back || action == QWebPage::Forward || action == QWebPage::OpenLink)
 	{

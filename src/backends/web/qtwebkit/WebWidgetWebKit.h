@@ -20,7 +20,7 @@ public:
 
 	void print(QPrinter *printer);
 	WebWidget* clone(QWidget *parent = NULL);
-	QAction* getAction(WebAction action);
+	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -35,14 +35,14 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void triggerAction(WebAction action, bool checked = false);
+	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const HistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 
 protected:
-	QWebPage::WebAction mapAction(WebAction action) const;
+	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
 	void triggerAction();
@@ -58,7 +58,7 @@ protected slots:
 private:
 	WebViewWebKit *m_webWidget;
 	NetworkAccessManager *m_networkAccessManager;
-	QHash<WebAction, QAction*> m_customActions;
+	QHash<WindowAction, QAction*> m_customActions;
 	bool m_isLinkHovered;
 	bool m_isLoading;
 

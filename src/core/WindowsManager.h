@@ -2,7 +2,7 @@
 #define OTTER_WINDOWSMANAGER_H
 
 #include "SessionsManager.h"
-#include "../backends/web/WebBackend.h"
+#include "../ui/Window.h"
 
 #include <QtCore/QUrl>
 #include <QtPrintSupport/QPrinter>
@@ -22,7 +22,7 @@ class WindowsManager : public QObject
 public:
 	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
 
-	QAction* getAction(WebAction action);
+	QAction* getAction(WindowAction action);
 	Window* getWindow(int index = -1) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -42,7 +42,7 @@ public slots:
 	void restore(const QList<SessionWindow> &windows);
 	void print(int index = -1);
 	void printPreview(int index = -1);
-	void triggerAction(WebAction action, bool checked = false);
+	void triggerAction(WindowAction action, bool checked = false);
 	void clearClosedWindows();
 	void setCurrentWindow(int index);
 	void setDefaultTextEncoding(const QString &encoding);

@@ -75,7 +75,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	connect(m_webWidget, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
 	connect(m_webWidget, SIGNAL(requestedZoomChange(int)), this, SLOT(setZoom(int)));
-	connect(m_webWidget, SIGNAL(requestedTriggerAction(WebAction)), this, SLOT(triggerAction(WebAction)));
+	connect(m_webWidget, SIGNAL(requestedTriggerAction(WindowAction)), this, SLOT(triggerAction(WindowAction)));
 	connect(m_webWidget->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
@@ -202,7 +202,7 @@ void WebWidgetWebKit::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
-void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
+void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -380,7 +380,7 @@ WebWidget* WebWidgetWebKit::clone(QWidget *parent)
 	return widget;
 }
 
-QAction *WebWidgetWebKit::getAction(WebAction action)
+QAction *WebWidgetWebKit::getAction(WindowAction action)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -681,7 +681,7 @@ HistoryInformation WebWidgetWebKit::getHistory() const
 	return information;
 }
 
-QWebPage::WebAction WebWidgetWebKit::mapAction(WebAction action) const
+QWebPage::WebAction WebWidgetWebKit::mapAction(WindowAction action) const
 {
 	switch (action)
 	{
@@ -746,7 +746,7 @@ void WebWidgetWebKit::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WebAction>(action->data().toInt()));
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
 	}
 }
 

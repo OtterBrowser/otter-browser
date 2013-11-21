@@ -2,8 +2,6 @@
 #define OTTER_WINDOW_H
 
 #include "../core/SessionsManager.h"
-#include "../backends/web/WebBackend.h"
-#include "../backends/web/WebWidget.h"
 
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
@@ -19,7 +17,72 @@ namespace Ui
 	class Window;
 }
 
+enum WindowAction
+{
+	NoAction = 0,
+	OpenLinkAction,
+	OpenLinkInThisTabAction,
+	OpenLinkInNewTabAction,
+	OpenLinkInNewTabBackgroundAction,
+	OpenLinkInNewWindowAction,
+	OpenLinkInNewWindowBackgroundAction,
+	CopyLinkToClipboardAction,
+	SaveLinkToDiskAction,
+	SaveLinkToDownloadsAction,
+	OpenFrameInThisTabAction,
+	OpenFrameInNewTabAction,
+	OpenFrameInNewTabBackgroundAction,
+	CopyFrameLinkToClipboardAction,
+	OpenImageInNewTabAction,
+	SaveImageToDiskAction,
+	CopyImageToClipboardAction,
+	CopyImageUrlToClipboardAction,
+	ImagePropertiesAction,
+	GoBackAction,
+	GoForwardAction,
+	RewindBackAction,
+	RewindForwardAction,
+	StopAction,
+	StopScheduledPageRefreshAction,
+	ReloadAction,
+	ReloadOrStopAction,
+	ReloadFrameAction,
+	ReloadAndBypassCacheAction,
+	ReloadTimeAction,
+	CutAction,
+	CopyAction,
+	PasteAction,
+	DeleteAction,
+	SelectAllAction,
+	ClearAllAction,
+	SpellCheckAction,
+	UndoAction,
+	RedoAction,
+	InspectElementAction,
+	PrintAction,
+	BookmarkAction,
+	BookmarkLinkAction,
+	CopyAddressAction,
+	ViewSourceAction,
+	ViewSourceFrameAction,
+	ValidateAction,
+	ContentBlockingAction,
+	WebsitePreferencesAction,
+	FullScreenAction,
+	ZoomInAction,
+	ZoomOutAction,
+	ZoomOriginalAction,
+	SearchAction,
+	SearchMenuAction,
+	OpenSelectionAsLinkAction,
+	CreateSearchAction,
+	FindAction,
+	FindNextAction,
+	FindPreviousAction
+};
+
 class ProgressBarWidget;
+class WebWidget;
 
 class Window : public QWidget
 {
@@ -40,7 +103,7 @@ public:
 
 	virtual void print(QPrinter *printer);
 	virtual Window* clone(QWidget *parent = NULL);
-	virtual QAction* getAction(WebAction action);
+	virtual QAction* getAction(WindowAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getDefaultTextEncoding() const;
 	virtual QString getTitle() const;
@@ -55,7 +118,7 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
-	virtual void triggerAction(WebAction action, bool checked = false);
+	virtual void triggerAction(WindowAction action, bool checked = false);
 	virtual void setDefaultTextEncoding(const QString &encoding);
 	virtual void setHistory(const HistoryInformation &history);
 	virtual void setZoom(int zoom);
