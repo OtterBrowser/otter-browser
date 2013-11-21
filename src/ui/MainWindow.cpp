@@ -81,7 +81,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, "ImageProperties", tr("Image Properties..."));
 	ActionsManager::registerAction(this, "OpenImageInNewTab", tr("Open Image"));
 	ActionsManager::registerAction(this, "SaveImageToDisk", tr("Save Image..."));
-	ActionsManager::registerAction(this, "CopyImageToClipboard", tr("Copy Image to Clipboard."));
+	ActionsManager::registerAction(this, "CopyImageToClipboard", tr("Copy Image to Clipboard"));
 	ActionsManager::registerAction(this, "CopyImageUrlToClipboard", tr("Copy Image Link to Clipboard"));
 	ActionsManager::registerAction(this, "Search", tr("Search"));
 	ActionsManager::registerAction(this, "SearchMenu", tr("Search Using"));

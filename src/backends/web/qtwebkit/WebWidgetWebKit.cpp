@@ -250,6 +250,10 @@ void WebWidgetWebKit::triggerAction(WebAction action, bool checked)
 			}
 
 			break;
+		case OpenSelectionAsLinkAction:
+			setUrl(m_webWidget->selectedText());
+
+			break;
 		default:
 			break;
 	}
@@ -553,8 +557,6 @@ QAction *WebWidgetWebKit::getAction(WebAction action)
 			break;
 		case OpenSelectionAsLinkAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenSelectionAsLink", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case ClearAllAction:
