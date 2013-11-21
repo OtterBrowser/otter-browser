@@ -286,6 +286,13 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 		return;
 	}
 
+	if (url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
+	{
+		m_webWidget->page()->mainFrame()->scrollToAnchor(url.fragment());
+
+		return;
+	}
+
 	QVariantHash data;
 	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
 	data["zoom"] = getZoom();
