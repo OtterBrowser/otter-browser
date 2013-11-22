@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ActionsManager.h"
+#include "BookmarksManager.h"
 #include "SettingsManager.h"
 #include "../backends/web/WebBackendsManager.h"
 #include "../ui/MainWindow.h"
@@ -85,6 +86,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue("Actions/Fullscreen", QVariant(QKeySequence("F11").toString()));
 
 	ActionsManager::createInstance(this);
+
+	BookmarksManager::createInstance(this);
 
 	WebBackendsManager::createInstance(this);
 
