@@ -12,6 +12,7 @@ namespace Otter
 BookmarksManager* BookmarksManager::m_instance = NULL;
 QList<Bookmark> BookmarksManager::m_bookmarks;
 QSet<QString> BookmarksManager::m_urls;
+int BookmarksManager::m_identifier;
 
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent)
 {
@@ -20,6 +21,9 @@ BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent)
 
 void BookmarksManager::load()
 {
+	m_bookmarks.clear();
+	m_identifier = 0;
+
 	QFile file(SettingsManager::getPath() + "/bookmarks.xbel");
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -65,6 +69,7 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 	if (reader->name() == "folder")
 	{
 		bookmark.type = FolderBookmark;
+		bookmark.identifier = ++m_identifier;
 
 		while (reader->readNext())
 		{

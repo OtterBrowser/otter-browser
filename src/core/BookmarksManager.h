@@ -46,6 +46,7 @@ private:
 	static BookmarksManager *m_instance;
 	static QList<Bookmark> m_bookmarks;
 	static QSet<QString> m_urls;
+	static int m_identifier;
 
 private slots:
 	void load();
