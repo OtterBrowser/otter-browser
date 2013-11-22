@@ -54,5 +54,6 @@
         <file>files/error.html</file>
         <file>icons/user-trash.png</file>
         <file>icons/edit-clear.png</file>
+        <file>icons/bookmark-new.png</file>
     </qresource>
 </RCC>

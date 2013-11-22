@@ -2,6 +2,8 @@
 #define OTTER_BOOKMARKSMANAGER_H
 
 #include <QtCore/QObject>
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 
 namespace Otter
 {
@@ -20,8 +22,9 @@ struct Bookmark
 	QString description;
 	QList<Bookmark> children;
 	BookmarkType type;
+	int identifier;
 
-	Bookmark() : type(FolderBookmark) {}
+	Bookmark() : type(FolderBookmark), identifier(-1) {}
 };
 
 class BookmarksManager : public QObject
@@ -37,11 +40,15 @@ public:
 private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
-	void load();
+	void writeBookmark(QXmlStreamWriter *writer, const Bookmark &bookmark);
+	Bookmark readBookmark(QXmlStreamReader *reader) const;
 
 	static BookmarksManager *m_instance;
 	static QList<Bookmark> m_bookmarks;
 	static QSet<QString> m_urls;
+
+private slots:
+	void load();
 };
 
 }
