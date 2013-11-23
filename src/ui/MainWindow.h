@@ -47,6 +47,7 @@ protected slots:
 	void menuSessionsAboutToShow();
 	void menuTextEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
+	void menuBookmarksAboutToShow();
 	void triggerWindowAction();
 	void updateClosedWindows();
 	void updateClipboard();

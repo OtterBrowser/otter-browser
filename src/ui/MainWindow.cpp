@@ -4,6 +4,7 @@
 #include "SessionsManagerDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
+#include "../core/BookmarksManager.h"
 #include "../core/SettingsManager.h"
 #include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
@@ -199,6 +200,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 
 	updateActions();
 	updateClipboard();
@@ -484,6 +486,54 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	}
 
 	m_closedWindowsAction->menu()->addActions(m_ui->menuClosedWindows->actions());
+}
+
+void MainWindow::menuBookmarksAboutToShow()
+{
+	QMenu *menu = qobject_cast<QMenu*>(sender());
+
+	if (!menu && !menu->menuAction())
+	{
+		qDebug() << "fail";
+		return;
+	}
+
+	const int folder = menu->menuAction()->data().toInt();
+
+	if ((folder == 0 && menu->actions().count() == 3) || (folder != 0 && menu->actions().isEmpty()))
+	{
+		WebBackend *backend = WebBackendsManager::getBackend();
+		const QList<Bookmark*> bookmarks = BookmarksManager::getFolder(folder);
+
+		for (int i = 0; i < bookmarks.count(); ++i)
+		{
+			if (bookmarks.at(i)->type == FolderBookmark || bookmarks.at(i)->type == UrlBookmark)
+			{
+				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title));
+				action->setToolTip(bookmarks.at(i)->description);
+
+				if (bookmarks.at(i)->type == FolderBookmark)
+				{
+					action->setData(bookmarks.at(i)->identifier);
+
+					if (!bookmarks.at(i)->children.isEmpty())
+					{
+						action->setMenu(new QMenu());
+
+						connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+					}
+				}
+				else
+				{
+					action->setData(bookmarks.at(i)->url);
+				}
+			}
+			else
+			{
+				menu->addSeparator();
+			}
+		}
+	}
 }
 
 void MainWindow::triggerWindowAction()

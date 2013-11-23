@@ -20,7 +20,7 @@ struct Bookmark
 	QString url;
 	QString title;
 	QString description;
-	QList<Bookmark> children;
+	QList<Bookmark*> children;
 	BookmarkType type;
 	int identifier;
 
@@ -33,18 +33,20 @@ class BookmarksManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static QList<Bookmark> getBookmarks();
+	static QList<Bookmark*> getBookmarks();
+	static QList<Bookmark*> getFolder(int folder = 0);
 	static bool hasBookmark(const QString &url);
-	static bool setBookmarks(const QList<Bookmark> &bookmarks);
+	static bool setBookmarks(const QList<Bookmark*> &bookmarks);
 
 private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
-	void writeBookmark(QXmlStreamWriter *writer, const Bookmark &bookmark);
-	Bookmark readBookmark(QXmlStreamReader *reader) const;
+	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark);
+	Bookmark* readBookmark(QXmlStreamReader *reader);
 
 	static BookmarksManager *m_instance;
-	static QList<Bookmark> m_bookmarks;
+	static QHash<int, Bookmark*> m_pointers;
+	static QList<Bookmark*> m_bookmarks;
 	static QSet<QString> m_urls;
 	static int m_identifier;
 

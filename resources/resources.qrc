@@ -55,5 +55,6 @@
         <file>icons/user-trash.png</file>
         <file>icons/edit-clear.png</file>
         <file>icons/bookmark-new.png</file>
+        <file>icons/bookmarks-organize.png</file>
     </qresource>
 </RCC>

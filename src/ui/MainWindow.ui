@@ -160,9 +160,6 @@
     <addaction name="menuTextEncoding"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
     <property name="title">
      <string>Bookmarks</string>
     </property>
@@ -347,11 +344,25 @@
    </property>
   </action>
   <action name="actionAddBookmark">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/bookmark-new.png</normaloff>:/icons/bookmark-new.png</iconset>
+   </property>
    <property name="text">
     <string>Add Bookmark...</string>
    </property>
   </action>
   <action name="actionManageBookmarks">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../resources/resources.qrc">
+     <normaloff>:/icons/bookmarks-organize.png</normaloff>:/icons/bookmarks-organize.png</iconset>
+   </property>
    <property name="text">
     <string>Manage Bookmarks...</string>
    </property>
@@ -485,6 +496,8 @@
    <header>src/ui/StatusBarWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

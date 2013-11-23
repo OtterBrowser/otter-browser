@@ -10,7 +10,8 @@ namespace Otter
 {
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
-QList<Bookmark> BookmarksManager::m_bookmarks;
+QList<Bookmark*> BookmarksManager::m_bookmarks;
+QHash<int, Bookmark*> BookmarksManager::m_pointers;
 QSet<QString> BookmarksManager::m_urls;
 int BookmarksManager::m_identifier;
 
@@ -49,7 +50,7 @@ void BookmarksManager::load()
 	}
 }
 
-void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, const Bookmark &bookmark)
+void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 {
 	Q_UNUSED(writer)
 	Q_UNUSED(bookmark)
@@ -62,14 +63,14 @@ void BookmarksManager::createInstance(QObject *parent)
 	m_instance = new BookmarksManager(parent);
 }
 
-Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
+Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader)
 {
-	Bookmark bookmark;
+	Bookmark *bookmark = new Bookmark();
 
 	if (reader->name() == "folder")
 	{
-		bookmark.type = FolderBookmark;
-		bookmark.identifier = ++m_identifier;
+		bookmark->type = FolderBookmark;
+		bookmark->identifier = ++m_identifier;
 
 		while (reader->readNext())
 		{
@@ -77,15 +78,15 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 			{
 				if (reader->name() == "title")
 				{
-					bookmark.title = reader->readElementText().trimmed();
+					bookmark->title = reader->readElementText().trimmed();
 				}
 				else if (reader->name() == "desc")
 				{
-					bookmark.description = reader->readElementText().trimmed();
+					bookmark->description = reader->readElementText().trimmed();
 				}
 				else if (reader->name() == "folder" || reader->name() == "bookmark" || reader->name() == "separator")
 				{
-					bookmark.children.append(readBookmark(reader));
+					bookmark->children.append(readBookmark(reader));
 				}
 				else
 				{
@@ -97,13 +98,15 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 				break;
 			}
 		}
+
+		m_pointers[bookmark->identifier] = bookmark;
 	}
 	else if (reader->name() == "bookmark")
 	{
-		bookmark.type = UrlBookmark;
-		bookmark.url = reader->attributes().value("href").toString();
+		bookmark->type = UrlBookmark;
+		bookmark->url = reader->attributes().value("href").toString();
 
-		const QUrl url(bookmark.url);
+		const QUrl url(bookmark->url);
 
 		if (url.isValid())
 		{
@@ -116,11 +119,11 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 			{
 				if (reader->name() == "title")
 				{
-					bookmark.title = reader->readElementText().trimmed();
+					bookmark->title = reader->readElementText().trimmed();
 				}
 				else if (reader->name() == "desc")
 				{
-					bookmark.description = reader->readElementText().trimmed();
+					bookmark->description = reader->readElementText().trimmed();
 				}
 				else
 				{
@@ -135,7 +138,7 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 	}
 	else if (reader->name() == "separator")
 	{
-		bookmark.type = SeparatorBookmark;
+		bookmark->type = SeparatorBookmark;
 
 		reader->readNext();
 	}
@@ -143,9 +146,24 @@ Bookmark BookmarksManager::readBookmark(QXmlStreamReader *reader) const
 	return bookmark;
 }
 
-QList<Bookmark> BookmarksManager::getBookmarks()
+QList<Bookmark*> BookmarksManager::getBookmarks()
 {
 	return m_bookmarks;
+}
+
+QList<Bookmark*> BookmarksManager::getFolder(int folder)
+{
+	if (folder == 0)
+	{
+		return m_bookmarks;
+	}
+
+	if (m_pointers.contains(folder))
+	{
+		return m_pointers[folder]->children;
+	}
+
+	return QList<Bookmark*>();
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)
@@ -165,7 +183,7 @@ bool BookmarksManager::hasBookmark(const QString &url)
 	return m_urls.contains(bookmark.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
 }
 
-bool BookmarksManager::setBookmarks(const QList<Bookmark> &bookmarks)
+bool BookmarksManager::setBookmarks(const QList<Bookmark *> &bookmarks)
 {
 	m_bookmarks = bookmarks;
 
