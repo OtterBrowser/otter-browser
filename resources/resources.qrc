@@ -56,5 +56,6 @@
         <file>icons/edit-clear.png</file>
         <file>icons/bookmark-new.png</file>
         <file>icons/bookmarks-organize.png</file>
+        <file>icons/text-html.png</file>
     </qresource>
 </RCC>

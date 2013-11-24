@@ -42,7 +42,9 @@ QString WebBackendWebKit::getDescription() const
 
 QIcon WebBackendWebKit::getIconForUrl(const QUrl &url)
 {
-	return QWebSettings::iconForUrl(url);
+	const QIcon icon = QWebSettings::iconForUrl(url);
+
+	return (icon.isNull() ? QIcon::fromTheme("text-html", QIcon(":/icons/text-html.png")) : icon);
 }
 
 }
