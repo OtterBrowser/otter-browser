@@ -494,7 +494,6 @@ void MainWindow::menuBookmarksAboutToShow()
 
 	if (!menu && !menu->menuAction())
 	{
-		qDebug() << "fail";
 		return;
 	}
 
@@ -504,6 +503,15 @@ void MainWindow::menuBookmarksAboutToShow()
 	{
 		WebBackend *backend = WebBackendsManager::getBackend();
 		const QList<Bookmark*> bookmarks = BookmarksManager::getFolder(folder);
+
+		if (folder != 0 && bookmarks.count() > 1)
+		{
+			QAction *openAllAction = menu->addAction(tr("Open All"));
+			openAllAction->setData(folder);
+			openAllAction->setEnabled(false);
+
+			menu->addSeparator();
+		}
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
