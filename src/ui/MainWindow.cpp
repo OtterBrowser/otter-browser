@@ -334,6 +334,16 @@ void MainWindow::actionClosedWindows(QAction *action)
 	}
 }
 
+void MainWindow::actionOpenBookmark()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action && !action->data().toString().isEmpty())
+	{
+		m_windowsManager->open(QUrl(action->data().toString()));
+	}
+}
+
 void MainWindow::actionAboutApplication()
 {
 	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
@@ -534,6 +544,8 @@ void MainWindow::menuBookmarksAboutToShow()
 				else
 				{
 					action->setData(bookmarks.at(i)->url);
+
+					connect(action, SIGNAL(triggered()), this, SLOT(actionOpenBookmark()));
 				}
 			}
 			else
