@@ -1,7 +1,8 @@
 #include "MainWindow.h"
-#include "TabBarWidget.h"
+#include "BookmarkDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
@@ -194,6 +195,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
@@ -332,6 +334,12 @@ void MainWindow::actionClosedWindows(QAction *action)
 	{
 		SessionsManager::restoreClosedWindow(-index - 1);
 	}
+}
+
+void MainWindow::actionAddBookmark()
+{
+	BookmarkDialog dialog(this);
+	dialog.exec();
 }
 
 void MainWindow::actionOpenBookmark()

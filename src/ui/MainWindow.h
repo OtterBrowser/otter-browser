@@ -43,6 +43,7 @@ protected slots:
 	void actionSession(QAction *action);
 	void actionTextEncoding(QAction *action);
 	void actionClosedWindows(QAction *action);
+	void actionAddBookmark();
 	void actionOpenBookmark();
 	void actionAboutApplication();
 	void menuSessionsAboutToShow();

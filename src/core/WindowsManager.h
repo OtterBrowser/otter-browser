@@ -26,6 +26,7 @@ public:
 	Window* getWindow(int index = -1) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
+	QUrl getUrl() const;
 	SessionEntry getSession() const;
 	QList<SessionWindow> getClosedWindows() const;
 	int getWindowCount() const;

@@ -344,9 +344,6 @@
    </property>
   </action>
   <action name="actionAddBookmark">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="icon">
     <iconset resource="../../resources/resources.qrc">
      <normaloff>:/icons/bookmark-new.png</normaloff>:/icons/bookmark-new.png</iconset>
