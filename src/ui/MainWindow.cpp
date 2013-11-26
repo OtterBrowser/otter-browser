@@ -155,7 +155,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_windowsManager->restore(windows.windows);
 	m_windowsManager->setCurrentWindow(windows.index);
 
-	setWindowTitle(m_windowsManager->getTitle());
+	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
@@ -338,8 +338,16 @@ void MainWindow::actionClosedWindows(QAction *action)
 
 void MainWindow::actionAddBookmark()
 {
-	BookmarkDialog dialog(this);
-	dialog.exec();
+	Bookmark *bookmark = new Bookmark();
+	bookmark->url = m_windowsManager->getUrl().toString(QUrl::RemovePassword);
+	bookmark->title = m_windowsManager->getTitle();
+
+	BookmarkDialog dialog(bookmark, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		delete bookmark;
+	}
 }
 
 void MainWindow::actionOpenBookmark()

@@ -63,7 +63,7 @@ void BookmarksManager::createInstance(QObject *parent)
 	m_instance = new BookmarksManager(parent);
 }
 
-Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader)
+Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
 	Bookmark *bookmark = new Bookmark();
 
@@ -71,6 +71,7 @@ Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader)
 	{
 		bookmark->type = FolderBookmark;
 		bookmark->identifier = ++m_identifier;
+		bookmark->parent = parent;
 
 		while (reader->readNext())
 		{
@@ -86,7 +87,7 @@ Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader)
 				}
 				else if (reader->name() == "folder" || reader->name() == "bookmark" || reader->name() == "separator")
 				{
-					bookmark->children.append(readBookmark(reader));
+					bookmark->children.append(readBookmark(reader, bookmark->parent));
 				}
 				else
 				{

@@ -23,8 +23,9 @@ struct Bookmark
 	QList<Bookmark*> children;
 	BookmarkType type;
 	int identifier;
+	int parent;
 
-	Bookmark() : type(FolderBookmark), identifier(-1) {}
+	Bookmark() : type(FolderBookmark), identifier(-1), parent(-1) {}
 };
 
 class BookmarksManager : public QObject
@@ -42,7 +43,7 @@ private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark);
-	Bookmark* readBookmark(QXmlStreamReader *reader);
+	Bookmark* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
 	static BookmarksManager *m_instance;
 	static QHash<int, Bookmark*> m_pointers;

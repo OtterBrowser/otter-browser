@@ -5,10 +5,16 @@
 namespace Otter
 {
 
-BookmarkDialog::BookmarkDialog(QWidget *parent) : QDialog(parent),
+BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(parent),
+	m_bookmark(bookmark),
 	m_ui(new Ui::BookmarkDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->titleLineEdit->setText(m_bookmark->title);
+	m_ui->addressLineEdit->setText(m_bookmark->url);
+	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
+
+	connect(m_ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createFolder()));
 }
 
 BookmarkDialog::~BookmarkDialog()
@@ -29,6 +35,11 @@ void BookmarkDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void BookmarkDialog::createFolder()
+{
+//TODO
 }
 
 }

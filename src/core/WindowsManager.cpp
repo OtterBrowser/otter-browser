@@ -475,7 +475,7 @@ QString WindowsManager::getTitle() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return QString("%1 - Otter").arg(window ? window->getTitle() : tr("Empty"));
+	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
