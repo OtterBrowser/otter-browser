@@ -3,6 +3,7 @@
 
 #include "../core/BookmarksManager.h"
 
+#include <QtGui/QStandardItem>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -23,6 +24,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent);
 
 protected slots:
 	void createFolder();
