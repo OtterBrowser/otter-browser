@@ -3,6 +3,7 @@
 #include "ui_BookmarkDialog.h"
 
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QTreeView>
 
 namespace Otter
@@ -41,7 +42,10 @@ BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(pa
 	reloadFolders();
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
+	connect(view->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(folderChanged(QModelIndex)));
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createFolder()));
+	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
+	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
 BookmarkDialog::~BookmarkDialog()
@@ -87,6 +91,11 @@ void BookmarkDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardI
 	}
 }
 
+void BookmarkDialog::folderChanged(const QModelIndex &index)
+{
+	m_folder = index.data(Qt::UserRole).toInt();
+}
+
 void BookmarkDialog::reloadFolders()
 {
 	m_model->clear();
@@ -113,6 +122,33 @@ void BookmarkDialog::reloadFolders()
 		m_ui->folderComboBox->setCurrentIndex(m_index.row());
 		m_ui->folderComboBox->setRootModelIndex(QModelIndex());
 	}
+}
+
+void BookmarkDialog::saveBookmark()
+{
+	m_bookmark->url = m_ui->addressLineEdit->text();
+	m_bookmark->title = m_ui->titleLineEdit->text();
+	m_bookmark->description = m_ui->descriptionTextEdit->toPlainText();
+
+	if (m_bookmark->parent >= 0)
+	{
+///TODO
+	}
+	else
+	{
+		disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
+
+		if (!BookmarksManager::addBookmark(m_bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt()))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Failed to save bookmark."), QMessageBox::Close);
+
+			connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
+
+			return;
+		}
+	}
+
+	accept();
 }
 
 void BookmarkDialog::createFolder()

@@ -28,8 +28,10 @@ protected:
 	void populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent);
 
 protected slots:
+	void folderChanged(const QModelIndex &index);
 	void createFolder();
 	void reloadFolders();
+	void saveBookmark();
 
 private:
 	Bookmark *m_bookmark;

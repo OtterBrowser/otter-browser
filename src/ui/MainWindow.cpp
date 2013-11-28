@@ -342,6 +342,7 @@ void MainWindow::actionAddBookmark()
 	Bookmark *bookmark = new Bookmark();
 	bookmark->url = m_windowsManager->getUrl().toString(QUrl::RemovePassword);
 	bookmark->title = m_windowsManager->getTitle();
+	bookmark->type = UrlBookmark;
 
 	BookmarkDialog dialog(bookmark, this);
 

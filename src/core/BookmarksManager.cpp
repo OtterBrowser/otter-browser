@@ -179,6 +179,13 @@ bool BookmarksManager::addBookmark(Bookmark *bookmark, int folder, int index)
 		return false;
 	}
 
+	const QUrl url(bookmark->url);
+
+	if (url.isValid())
+	{
+		m_urls.insert(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
+	}
+
 	if (bookmark->type == FolderBookmark)
 	{
 		bookmark->identifier = ++m_identifier;
