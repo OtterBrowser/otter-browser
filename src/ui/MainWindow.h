@@ -33,6 +33,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
+	void gatherBookmarks(int folder);
 	bool event(QEvent *event);
 
 protected slots:
@@ -45,6 +46,7 @@ protected slots:
 	void actionClosedWindows(QAction *action);
 	void actionAddBookmark();
 	void actionOpenBookmark();
+	void actionOpenBookmarkFolder();
 	void actionAboutApplication();
 	void menuSessionsAboutToShow();
 	void menuTextEncodingAboutToShow();
@@ -61,6 +63,7 @@ private:
 	QAction *m_closedWindowsAction;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_textEncodingGroup;
+	QList<QString> m_bookmarksToOpen;
 	Ui::MainWindow *m_ui;
 
 signals:

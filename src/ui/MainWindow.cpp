@@ -16,6 +16,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMessageBox>
@@ -262,6 +263,23 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
+void MainWindow::gatherBookmarks(int folder)
+{
+	const QList<Bookmark*> bookmarks = BookmarksManager::getFolder(folder);
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		if (bookmarks.at(i)->type == FolderBookmark)
+		{
+			gatherBookmarks(bookmarks.at(i)->identifier);
+		}
+		else if (bookmarks.at(i)->type == UrlBookmark)
+		{
+			m_bookmarksToOpen.append(bookmarks.at(i)->url);
+		}
+	}
+}
+
 void MainWindow::openUrl(const QUrl &url)
 {
 	m_windowsManager->open(url);
@@ -360,6 +378,49 @@ void MainWindow::actionOpenBookmark()
 	{
 		m_windowsManager->open(QUrl(action->data().toString()));
 	}
+}
+
+void MainWindow::actionOpenBookmarkFolder()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (!action)
+	{
+		return;
+	}
+
+	gatherBookmarks(action->data().toInt());
+
+	if (m_bookmarksToOpen.isEmpty())
+	{
+		return;
+	}
+
+	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue("Choices/WarnOpenBookmarkFolder", true).toBool())
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
+		messageBox.setInformativeText("Do you want to continue?");
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Ok);
+		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+		if (messageBox.exec() == QMessageBox::Cancel)
+		{
+			m_bookmarksToOpen.clear();
+		}
+
+		SettingsManager::setValue("Choices/WarnOpenBookmarkFolder", !messageBox.checkBox()->isChecked());
+	}
+
+	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
+	{
+		m_windowsManager->open(QUrl(m_bookmarksToOpen.at(i)));
+	}
+
+	m_bookmarksToOpen.clear();
 }
 
 void MainWindow::actionAboutApplication()
@@ -534,9 +595,10 @@ void MainWindow::menuBookmarksAboutToShow()
 
 		if (folder != 0 && bookmarks.count() > 1)
 		{
-			QAction *openAllAction = menu->addAction(tr("Open All"));
+			QAction *openAllAction = menu->addAction(QIcon::fromTheme("document-open-folder", QIcon(":/icons/document-open-folder.png")), tr("Open All"));
 			openAllAction->setData(folder);
-			openAllAction->setEnabled(false);
+
+			connect(openAllAction, SIGNAL(triggered()), this, SLOT(actionOpenBookmarkFolder()));
 
 			menu->addSeparator();
 		}

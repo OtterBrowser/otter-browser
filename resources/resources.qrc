@@ -57,5 +57,6 @@
         <file>icons/bookmark-new.png</file>
         <file>icons/bookmarks-organize.png</file>
         <file>icons/text-html.png</file>
+        <file>icons/document-open-folder.png</file>
     </qresource>
 </RCC>
