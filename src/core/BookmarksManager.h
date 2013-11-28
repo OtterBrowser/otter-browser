@@ -39,12 +39,12 @@ public:
 	static QList<Bookmark*> getFolder(int folder = 0);
 	static bool addBookmark(Bookmark *bookmark, int folder = 0, int index = -1);
 	static bool hasBookmark(const QString &url);
-	static bool setBookmarks(const QList<Bookmark*> &bookmarks);
+	static bool save(const QString &path = QString());
 
 private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
-	void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark);
+	static void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark);
 	Bookmark* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
 	static BookmarksManager *m_instance;

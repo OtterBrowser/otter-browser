@@ -52,10 +52,43 @@ void BookmarksManager::load()
 
 void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
 {
-	Q_UNUSED(writer)
-	Q_UNUSED(bookmark)
+	switch (bookmark->type)
+	{
+		case FolderBookmark:
+			writer->writeStartElement("folder");
+			writer->writeTextElement("title", bookmark->title);
 
-//TODO
+			for (int i = 0; i < bookmark->children.count(); ++i)
+			{
+				writeBookmark(writer, bookmark->children.at(i));
+			}
+
+			writer->writeEndElement();
+
+			break;
+		case UrlBookmark:
+			writer->writeStartElement("bookmark");
+
+			if (!bookmark->url.isEmpty())
+			{
+				writer->writeAttribute("href", bookmark->url);
+			}
+
+			writer->writeTextElement("title", bookmark->title);
+
+			if (!bookmark->description.isEmpty())
+			{
+				writer->writeAttribute("desc", bookmark->description);
+			}
+
+			writer->writeEndElement();
+
+			break;
+		default:
+			writer->writeEmptyElement("separator");
+
+			break;
+	}
 }
 
 void BookmarksManager::createInstance(QObject *parent)
@@ -206,7 +239,7 @@ bool BookmarksManager::addBookmark(Bookmark *bookmark, int folder, int index)
 
 	emit m_instance->folderModified(folder);
 
-	return true;
+	return save();
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)
@@ -226,13 +259,31 @@ bool BookmarksManager::hasBookmark(const QString &url)
 	return m_urls.contains(bookmark.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
 }
 
-bool BookmarksManager::setBookmarks(const QList<Bookmark *> &bookmarks)
+bool BookmarksManager::save(const QString &path)
 {
-	m_bookmarks = bookmarks;
+	QFile file(path.isEmpty() ? SettingsManager::getPath() + "/bookmarks.xbel" : path);
 
-//TODO
+	if (!file.open(QFile::WriteOnly))
+	{
+		return false;
+	}
 
-	return false;
+	QXmlStreamWriter writer(&file);
+	writer.setAutoFormatting(true);
+	writer.setAutoFormattingIndent(-1);
+	writer.writeStartDocument();
+	writer.writeDTD(QLatin1String("<!DOCTYPE xbel>"));
+	writer.writeStartElement(QLatin1String("xbel"));
+	writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
+
+	for (int i = 0; i < m_bookmarks.count(); ++i)
+	{
+		writeBookmark(&writer, m_bookmarks.at(i));
+	}
+
+	writer.writeEndDocument();
+
+	return true;
 }
 
 }
