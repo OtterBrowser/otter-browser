@@ -34,8 +34,10 @@ class BookmarksManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
+	static BookmarksManager* getInstance();
 	static QList<Bookmark*> getBookmarks();
 	static QList<Bookmark*> getFolder(int folder = 0);
+	static bool addBookmark(Bookmark *bookmark, int folder = 0, int index = -1);
 	static bool hasBookmark(const QString &url);
 	static bool setBookmarks(const QList<Bookmark*> &bookmarks);
 
@@ -53,6 +55,9 @@ private:
 
 private slots:
 	void load();
+
+signals:
+	void folderModified(int folder);
 };
 
 }

@@ -2,7 +2,7 @@
 
 #include "ui_BookmarkDialog.h"
 
-#include <QtGui/QStandardItemModel>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QTreeView>
 
 namespace Otter
@@ -10,6 +10,8 @@ namespace Otter
 
 BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
+	m_model(new QStandardItemModel(this)),
+	m_folder(bookmark->parent),
 	m_ui(new Ui::BookmarkDialog)
 {
 	m_ui->setupUi(this);
@@ -26,26 +28,19 @@ BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(pa
 		setWindowTitle(tr("Edit Bookmark"));
 	}
 
-	QStandardItem *item = new QStandardItem(QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")), tr("Bookmarks"));
-	item->setData(0);
-	item->setToolTip(tr("Bookmarks"));
-
-	QStandardItemModel *model = new QStandardItemModel(this);
-	model->invisibleRootItem()->appendRow(item);
-
-	populateFolder(BookmarksManager::getFolder(0), item);
-
 	QTreeView *view = new QTreeView(m_ui->folderComboBox);
 
 	m_ui->folderComboBox->setView(view);
-	m_ui->folderComboBox->setModel(model);
+	m_ui->folderComboBox->setModel(m_model);
 
 	view->setHeaderHidden(true);
 	view->setItemsExpandable(false);
 	view->setRootIsDecorated(false);
 	view->setStyleSheet("QTreeView::branch {border-image: url(invalid.png);}");
-	view->expandAll();
 
+	reloadFolders();
+
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createFolder()));
 }
 
@@ -77,19 +72,75 @@ void BookmarkDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardI
 		{
 			const QString title = (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title);
 			QStandardItem *item = new QStandardItem(QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")), title);
-			item->setData(bookmarks.at(i)->identifier);
+			item->setData(bookmarks.at(i)->identifier, Qt::UserRole);
 			item->setToolTip(title);
 
 			parent->appendRow(item);
 
 			populateFolder(BookmarksManager::getFolder(bookmarks.at(i)->identifier), item);
+
+			if (bookmarks.at(i)->identifier == m_folder)
+			{
+				m_index = item->index();
+			}
 		}
+	}
+}
+
+void BookmarkDialog::reloadFolders()
+{
+	m_model->clear();
+
+	QStandardItem *item = new QStandardItem(QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")), tr("Bookmarks"));
+	item->setData(0, Qt::UserRole);
+	item->setToolTip(tr("Bookmarks"));
+
+	m_model->invisibleRootItem()->appendRow(item);
+
+	m_index = item->index();
+
+	populateFolder(BookmarksManager::getFolder(0), item);
+
+	QTreeView *view = qobject_cast<QTreeView*>(m_ui->folderComboBox->view());
+
+	if (view)
+	{
+		view->setCurrentIndex(m_index);
+		view->expandAll();
+
+		m_ui->folderComboBox->setRootModelIndex(m_index.parent());
+		m_ui->folderComboBox->setModelColumn(0);
+		m_ui->folderComboBox->setCurrentIndex(m_index.row());
+		m_ui->folderComboBox->setRootModelIndex(QModelIndex());
 	}
 }
 
 void BookmarkDialog::createFolder()
 {
-//TODO
+	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
+
+	if (title.isEmpty())
+	{
+		return;
+	}
+
+	Bookmark *bookmark = new Bookmark();
+	bookmark->title = title;
+
+	disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
+
+	if (BookmarksManager::addBookmark(bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt()))
+	{
+		m_folder = bookmark->identifier;
+
+		reloadFolders();
+	}
+	else
+	{
+		delete bookmark;
+	}
+
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
 }
 
 }

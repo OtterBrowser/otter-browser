@@ -158,6 +158,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
@@ -590,6 +591,33 @@ void MainWindow::updateClosedWindows()
 void MainWindow::updateClipboard()
 {
 	m_ui->actionPaste->setEnabled(!QApplication::clipboard()->text().isEmpty());
+}
+
+void MainWindow::updateBookmarks(int folder)
+{
+	if (m_ui->menuBookmarks->actions().count() == 3)
+	{
+		return;
+	}
+
+	for (int i = (m_ui->menuBookmarks->actions().count() - 1); i > 2; --i)
+	{
+		QAction *action = m_ui->menuBookmarks->actions().at(i);
+
+		if (folder == 0)
+		{
+			action->deleteLater();
+
+			m_ui->menuBookmarks->removeAction(action);
+		}
+		else if (m_ui->menuBookmarks->actions().at(i)->menu())
+		{
+			action->menu()->deleteLater();
+			action->setMenu(new QMenu());
+
+			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+		}
+	}
 }
 
 void MainWindow::updateActions()

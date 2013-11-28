@@ -63,6 +63,11 @@ void BookmarksManager::createInstance(QObject *parent)
 	m_instance = new BookmarksManager(parent);
 }
 
+BookmarksManager *BookmarksManager::getInstance()
+{
+	return m_instance;
+}
+
 Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
 	Bookmark *bookmark = new Bookmark();
@@ -165,6 +170,36 @@ QList<Bookmark*> BookmarksManager::getFolder(int folder)
 	}
 
 	return QList<Bookmark*>();
+}
+
+bool BookmarksManager::addBookmark(Bookmark *bookmark, int folder, int index)
+{
+	if (!bookmark || (folder != 0 && !m_pointers.contains(folder)))
+	{
+		return false;
+	}
+
+	if (bookmark->type == FolderBookmark)
+	{
+		bookmark->identifier = ++m_identifier;
+
+		m_pointers[bookmark->identifier] = bookmark;
+	}
+
+	bookmark->parent = folder;
+
+	if (folder == 0)
+	{
+		m_bookmarks.insert(((index < 0) ? m_bookmarks.count() : index), bookmark);
+	}
+	else
+	{
+		m_pointers[folder]->children.insert(((index < 0) ? m_pointers[folder]->children.count() : index), bookmark);
+	}
+
+	emit m_instance->folderModified(folder);
+
+	return true;
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)

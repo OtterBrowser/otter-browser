@@ -4,6 +4,7 @@
 #include "../core/BookmarksManager.h"
 
 #include <QtGui/QStandardItem>
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -28,9 +29,13 @@ protected:
 
 protected slots:
 	void createFolder();
+	void reloadFolders();
 
 private:
 	Bookmark *m_bookmark;
+	QStandardItemModel *m_model;
+	QModelIndex m_index;
+	int m_folder;
 	Ui::BookmarkDialog *m_ui;
 };
 

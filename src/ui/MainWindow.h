@@ -53,6 +53,7 @@ protected slots:
 	void triggerWindowAction();
 	void updateClosedWindows();
 	void updateClipboard();
+	void updateBookmarks(int folder);
 	void updateActions();
 
 private:
