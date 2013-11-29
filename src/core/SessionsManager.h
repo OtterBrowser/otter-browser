@@ -93,6 +93,7 @@ class SessionsManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
+	static void clearClosedWindows();
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
 	static void markSessionModified();

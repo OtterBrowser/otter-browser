@@ -352,6 +352,8 @@ void MainWindow::actionClosedWindows(QAction *action)
 	if (index == 0)
 	{
 		m_windowsManager->clearClosedWindows();
+
+		SessionsManager::clearClosedWindows();
 	}
 	else if (index > 0)
 	{

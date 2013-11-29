@@ -48,6 +48,13 @@ void SessionsManager::createInstance(QObject *parent)
 	m_instance = new SessionsManager(parent);
 }
 
+void SessionsManager::clearClosedWindows()
+{
+	m_closedWindows.clear();
+
+	emit m_instance->closedWindowsChanged();
+}
+
 void SessionsManager::registerWindow(WindowsManager *manager)
 {
 	if (manager)
