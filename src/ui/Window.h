@@ -147,6 +147,7 @@ private:
 signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow, bool background, bool newWindow);
 	void requestedAddBookmark(QUrl url);
+	void requestedNewWindow(WebWidget *widget);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);

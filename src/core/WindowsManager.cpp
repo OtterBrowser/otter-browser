@@ -250,12 +250,18 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	connect(window, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
+	connect(window, SIGNAL(requestedNewWindow(WebWidget*)), this, SLOT(addWindow(WebWidget*)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
 	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
 	emit windowAdded(index);
+}
+
+void WindowsManager::addWindow(WebWidget *widget)
+{
+	addWindow(new Window(widget, m_area));
 }
 
 void WindowsManager::cloneWindow(int index)

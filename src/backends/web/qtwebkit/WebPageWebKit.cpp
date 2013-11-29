@@ -1,7 +1,9 @@
 #include "WebPageWebKit.h"
+#include "WebWidgetWebKit.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
+#include <QtNetwork/QNetworkReply>
 #include <QtWidgets/QApplication>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
@@ -13,18 +15,30 @@ WebPageWebKit::WebPageWebKit(QObject *parent) : QWebPage(parent)
 {
 }
 
-void WebPageWebKit::triggerAction(WebAction action, bool checked)
+QWebPage *WebPageWebKit::createWindow(QWebPage::WebWindowType type)
 {
-	if (action == QWebPage::Back || action == QWebPage::Forward || action == QWebPage::OpenLink)
+	if (type == QWebPage::WebBrowserWindow)
 	{
-		QVariantHash data;
-		data["position"] = mainFrame()->scrollPosition();
-		data["zoom"] = (mainFrame()->zoomFactor() * 100);
+		WebPageWebKit *page = new WebPageWebKit(this);
 
-		history()->currentItem().setUserData(data);
+		emit requestedNewWindow(new WebWidgetWebKit(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page));
+
+		return page;
 	}
 
-	QWebPage::triggerAction(action, checked);
+	return QWebPage::createWindow(type);
+}
+
+bool WebPageWebKit::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
+{
+	if (request.url().scheme() == "javascript" && frame)
+	{
+		frame->evaluateJavaScript(request.url().path());
+
+		return true;
+	}
+
+	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 
 bool WebPageWebKit::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)

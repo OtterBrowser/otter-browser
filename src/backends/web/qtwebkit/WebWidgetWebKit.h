@@ -11,13 +11,14 @@ namespace Otter
 {
 
 class NetworkAccessManager;
+class WebPageWebKit;
 
 class WebWidgetWebKit : public WebWidget
 {
 	Q_OBJECT
 
 public:
-	explicit WebWidgetWebKit(bool privateWindow = false, QWidget *parent = NULL);
+	explicit WebWidgetWebKit(bool privateWindow = false, QWidget *parent = NULL, WebPageWebKit *page = NULL);
 
 	void print(QPrinter *printer);
 	WebWidget* clone(QWidget *parent = NULL);
@@ -50,6 +51,7 @@ protected slots:
 	void loadStarted();
 	void loadFinished(bool ok);
 	void linkHovered(const QString &link, const QString &title);
+	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
@@ -67,6 +69,7 @@ private:
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
 	void requestedAddBookmark(QUrl url);
+	void requestedNewWindow(WebWidget *widget);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);

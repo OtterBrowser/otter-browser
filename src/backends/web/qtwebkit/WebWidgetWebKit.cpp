@@ -21,7 +21,7 @@
 namespace Otter
 {
 
-WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidget(parent),
+WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWebKit *page) : WebWidget(parent),
 	m_webView(new QWebView(this)),
 	m_networkAccessManager(NULL),
 	m_isLinkHovered(false),
@@ -43,11 +43,20 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 		m_networkAccessManager->setCache(diskCache);
 	}
 
+	if (page)
+	{
+		page->setParent(m_webView);
+	}
+	else
+	{
+		page = new WebPageWebKit(m_webView);
+	}
+
+	page->setNetworkAccessManager(m_networkAccessManager);
+
 	m_webView->installEventFilter(this);
-	m_webView->setPage(new WebPageWebKit(m_webView));
+	m_webView->setPage(page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
-	m_webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-	m_webView->page()->setNetworkAccessManager(m_networkAccessManager);
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), "Cut");
@@ -73,18 +82,19 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 
 	getAction(OpenLinkInThisTabAction)->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
 
+	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
+	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
+	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
+	connect(page, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(page, SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
+	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
+	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
+	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
-	connect(m_webView->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_webView->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
-	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
-	connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
-	connect(m_webView->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
-	connect(m_webView->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
@@ -163,6 +173,18 @@ void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
 	QToolTip::showText(QCursor::pos(), text, m_webView);
 
 	emit statusMessageChanged(link, 0);
+}
+
+void WebWidgetWebKit::saveState(QWebFrame *frame, QWebHistoryItem *item)
+{
+	if (frame == m_webView->page()->mainFrame())
+	{
+		QVariantHash data;
+		data["position"] = m_webView->page()->mainFrame()->scrollPosition();
+		data["zoom"] = getZoom();
+
+		item->setUserData(data);
+	}
 }
 
 void WebWidgetWebKit::restoreState(QWebFrame *frame)
@@ -332,12 +354,6 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 
 		return;
 	}
-
-	QVariantHash data;
-	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
-	data["zoom"] = getZoom();
-
-	m_webView->page()->history()->currentItem().setUserData(data);
 
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
