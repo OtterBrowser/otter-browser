@@ -5,6 +5,7 @@
 #include "../WebWidget.h"
 
 #include <QtWebKitWidgets/QWebPage>
+#include <QtWebKitWidgets/QWebHitTestResult>
 
 namespace Otter
 {
@@ -58,11 +59,14 @@ protected slots:
 private:
 	WebViewWebKit *m_webWidget;
 	NetworkAccessManager *m_networkAccessManager;
+	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_customActions;
 	bool m_isLinkHovered;
 	bool m_isLoading;
 
 signals:
+	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
+	void requestedBookmark(QUrl url);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);

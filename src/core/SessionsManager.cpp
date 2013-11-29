@@ -217,7 +217,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 		index = 0;
 	}
 
-	application->createWindow(false, m_closedWindows.value(index, SessionEntry()));
+	application->createWindow(false, false, m_closedWindows.value(index, SessionEntry()));
 
 	m_closedWindows.removeAt(index);
 

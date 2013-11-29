@@ -38,6 +38,7 @@ protected:
 
 protected slots:
 	void actionNewTabPrivate();
+	void actionNewWindowPrivate();
 	void actionOpen();
 	void actionSaveSession();
 	void actionManageSessions();
@@ -67,8 +68,7 @@ private:
 	Ui::MainWindow *m_ui;
 
 signals:
-	void requestedNewWindow();
-	void requestedNewWindowPrivate();
+	void requestedNewWindow(bool privateSession = false, bool background = false, QUrl url = QUrl());
 };
 
 }

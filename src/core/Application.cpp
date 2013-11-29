@@ -11,7 +11,6 @@
 #include <QtCore/QLocale>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
-#include <QtCore/QUrl>
 #include <QtNetwork/QLocalSocket>
 
 namespace Otter
@@ -173,26 +172,36 @@ void Application::newConnection()
 	delete parser;
 }
 
-void Application::newWindow()
+void Application::newWindow(bool privateSession, bool background, const QUrl &url)
 {
-	createWindow(false);
+	MainWindow *window = createWindow(privateSession, background);
+
+	if (url.isValid() && window)
+	{
+		window->openUrl(url);
+	}
 }
 
-void Application::newWindowPrivate()
-{
-	createWindow(true);
-}
-
-MainWindow* Application::createWindow(bool privateSession, const SessionEntry &windows)
+MainWindow* Application::createWindow(bool privateSession, bool background, const SessionEntry &windows)
 {
 	MainWindow *window = new MainWindow(privateSession, windows);
 
 	m_windows.prepend(window);
 
+	if (background)
+	{
+		window->setAttribute(Qt::WA_ShowWithoutActivating, true);
+	}
+
 	window->show();
 
-	connect(window, SIGNAL(requestedNewWindow()), this, SLOT(newWindow()));
-	connect(window, SIGNAL(requestedNewWindowPrivate()), this, SLOT(newWindowPrivate()));
+	if (background)
+	{
+		window->lower();
+		window->setAttribute(Qt::WA_ShowWithoutActivating, false);
+	}
+
+	connect(window, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SLOT(newWindow(bool,bool,QUrl)));
 
 	return window;
 }

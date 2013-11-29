@@ -36,7 +36,7 @@ public:
 	bool canRedo() const;
 
 public slots:
-	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false);
+	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);
 	void close(int index = -1);
 	void closeOther(int index = -1);
 	void restore(int index = 0);
@@ -70,6 +70,7 @@ private:
 	bool m_privateSession;
 
 signals:
+	void requestedNewWindow(bool privateSession, bool background, QUrl url);
 	void actionsChanged();
 	void windowAdded(int index);
 	void windowRemoved(int index);

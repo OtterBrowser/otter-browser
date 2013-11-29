@@ -70,6 +70,8 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), "CopyImageToClipboard");
 	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), "CopyImageUrlToClipboard");
 
+	getAction(OpenLinkInThisTabAction)->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
+
 	connect(m_webWidget, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webWidget, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
@@ -250,6 +252,41 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 			}
 
 			break;
+		case OpenLinkInNewTabAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedOpenUrl(m_hitResult.linkUrl(), false, false);
+			}
+
+			break;
+		case OpenLinkInNewTabBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedOpenUrl(m_hitResult.linkUrl(), true, false);
+			}
+
+			break;
+		case OpenLinkInNewWindowAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedOpenUrl(m_hitResult.linkUrl(), false, true);
+			}
+
+			break;
+		case OpenLinkInNewWindowBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedOpenUrl(m_hitResult.linkUrl(), true, true);
+			}
+
+			break;
+		case BookmarkLinkAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedBookmark(m_hitResult.linkUrl());
+			}
+
+			break;
 		case OpenSelectionAsLinkAction:
 			setUrl(m_webWidget->selectedText());
 
@@ -328,30 +365,30 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 
 void WebWidgetWebKit::showMenu(const QPoint &position)
 {
-	const QWebHitTestResult result = m_webWidget->page()->frameAt(position)->hitTestContent(position);
+	m_hitResult = m_webWidget->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
 
-	if (result.element().tagName().toLower() == "textarea" || (result.element().tagName().toLower() == "input" && (result.element().attribute("type").isEmpty() || result.element().attribute("type").toLower() == "text")))
+	if (m_hitResult.element().tagName().toLower() == "textarea" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
 	{
 		flags |= FormMenu;
 	}
 
-	if (result.pixmap().isNull() && result.isContentSelected() && !m_webWidget->selectedText().isEmpty())
+	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webWidget->selectedText().isEmpty())
 	{
 		flags |= SelectionMenu;
 	}
 
-	if (result.linkUrl().isValid())
+	if (m_hitResult.linkUrl().isValid())
 	{
 		flags |= LinkMenu;
 	}
 
-	if (!result.pixmap().isNull())
+	if (!m_hitResult.pixmap().isNull())
 	{
 		flags |= ImageMenu;
 	}
 
-	if (result.isContentEditable())
+	if (m_hitResult.isContentEditable())
 	{
 		flags |= EditMenu;
 	}
@@ -360,7 +397,7 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 	{
 		flags = StandardMenu;
 
-		if (result.frame() != m_webWidget->page()->mainFrame())
+		if (m_hitResult.frame() != m_webWidget->page()->mainFrame())
 		{
 			flags |= FrameMenu;
 		}
@@ -409,19 +446,17 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 		case OpenLinkInNewTabAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTab", true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case OpenLinkInNewTabBackgroundAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewTabBackground", true);
 
-			actionObject->setEnabled(false);
+			break;
+		case OpenLinkInNewWindowAction:
+			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewWindow", true);
 
 			break;
 		case OpenLinkInNewWindowBackgroundAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenLinkInNewWindowBackground", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case OpenFrameInThisTabAction:
@@ -486,13 +521,9 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 		case BookmarkAction:
 			ActionsManager::setupLocalAction(actionObject, "AddBookmark", true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case BookmarkLinkAction:
 			ActionsManager::setupLocalAction(actionObject, "BookmarkLink", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case CopyAddressAction:
@@ -687,8 +718,6 @@ QWebPage::WebAction WebWidgetWebKit::mapAction(WindowAction action) const
 	{
 		case OpenLinkAction:
 			return QWebPage::OpenLink;
-		case OpenLinkInNewWindowAction:
-			return QWebPage::OpenLinkInNewWindow;
 		case OpenLinkInThisTabAction:
 			return QWebPage::OpenLinkInThisWindow;
 		case OpenFrameInNewTabAction:

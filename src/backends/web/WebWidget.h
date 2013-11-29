@@ -65,6 +65,8 @@ public slots:
 	void showMenu(const QPoint &position, MenuFlags flags);
 
 signals:
+	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
+	void requestedBookmark(QUrl url);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);

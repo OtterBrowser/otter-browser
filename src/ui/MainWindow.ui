@@ -344,10 +344,6 @@
    </property>
   </action>
   <action name="actionAddBookmark">
-   <property name="icon">
-    <iconset resource="../../resources/resources.qrc">
-     <normaloff>:/icons/bookmark-new.png</normaloff>:/icons/bookmark-new.png</iconset>
-   </property>
    <property name="text">
     <string>Add Bookmark...</string>
    </property>
@@ -355,10 +351,6 @@
   <action name="actionManageBookmarks">
    <property name="enabled">
     <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../../resources/resources.qrc">
-     <normaloff>:/icons/bookmarks-organize.png</normaloff>:/icons/bookmarks-organize.png</iconset>
    </property>
    <property name="text">
     <string>Manage Bookmarks...</string>
@@ -493,8 +485,6 @@
    <header>src/ui/StatusBarWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

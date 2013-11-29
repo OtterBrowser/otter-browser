@@ -76,7 +76,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, "ViewSourceFrame", tr("View Source"));
 	ActionsManager::registerAction(this, "SaveLinkToDisk", tr("Save Link Target As..."));
 	ActionsManager::registerAction(this, "SaveLinkToDownloads", tr("Save to Downloads"));
-	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."));
+	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."), QIcon::fromTheme("bookmark-new", QIcon(":/icons/bookmark-new.png")));
 	ActionsManager::registerAction(this, "ReloadTime", tr("Reload Each"));
 	ActionsManager::registerAction(this, "CopyAddress", tr("Copy Address"));
 	ActionsManager::registerAction(this, "Validate", tr("Validate"));
@@ -143,6 +143,8 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->menuClosedWindows->setEnabled(false);
 	m_ui->actionViewHistory->setIcon(QIcon::fromTheme("view-history", QIcon(":/icons/view-history.png")));
 	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
+	m_ui->actionAddBookmark->setIcon(QIcon::fromTheme("bookmark-new", QIcon(":/icons/bookmark-new.png")));
+	m_ui->actionManageBookmarks->setIcon(QIcon::fromTheme("bookmarks-organize", QIcon(":/icons/bookmarks-organize.png")));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 	m_ui->statusBar->setup();
@@ -161,6 +163,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
+	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
@@ -171,7 +174,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
-	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SIGNAL(requestedNewWindowPrivate()));
+	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SLOT(actionNewWindowPrivate()));
 	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionSaveSession, SIGNAL(triggered()), this, SLOT(actionSaveSession()));
@@ -288,6 +291,11 @@ void MainWindow::openUrl(const QUrl &url)
 void MainWindow::actionNewTabPrivate()
 {
 	m_windowsManager->open(QUrl(), true);
+}
+
+void MainWindow::actionNewWindowPrivate()
+{
+	emit requestedNewWindow(true);
 }
 
 void MainWindow::actionOpen()

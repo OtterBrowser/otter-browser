@@ -131,6 +131,7 @@ protected:
 
 protected slots:
 	void loadUrl();
+	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 	void updateUrl(const QUrl &url);
 	void updateFind(bool backwards = false);
 	void updateFindHighlight();
@@ -144,6 +145,8 @@ private:
 	Ui::Window *m_ui;
 
 signals:
+	void requestedOpenUrl(QUrl url, bool privateWindow, bool background, bool newWindow);
+	void requestedBookmark(QUrl url);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);

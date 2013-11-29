@@ -29,8 +29,15 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
 
-void WindowsManager::open(const QUrl &url, bool privateWindow, bool background)
+void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, bool newWindow)
 {
+	if (newWindow)
+	{
+		requestedNewWindow(privateWindow, background, url);
+
+		return;
+	}
+
 	Window *window = NULL;
 
 	privateWindow = (m_privateSession || privateWindow);
@@ -150,7 +157,7 @@ void WindowsManager::print(int index)
 
 	QPrinter printer;
 	QPrintDialog printDialog(&printer, m_area);
-	printDialog.setWindowTitle(tr("Print Project"));
+	printDialog.setWindowTitle(tr("Print Page"));
 
 	if (printDialog.exec() != QDialog::Accepted)
 	{
@@ -230,13 +237,18 @@ void WindowsManager::addWindow(Window *window, bool background)
 	m_tabBar->setTabToolTip(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
-	if (!background)
+	if (background)
+	{
+		setCurrentWindow(m_tabBar->currentIndex());
+	}
+	else
 	{
 		m_tabBar->setCurrentIndex(index);
 
 		setCurrentWindow(index);
 	}
 
+	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
