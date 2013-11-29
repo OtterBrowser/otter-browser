@@ -29,7 +29,6 @@ SOURCES += src/main.cpp\
     src/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/core/SessionsManager.cpp \
     src/core/LocalListingNetworkReply.cpp \
-    src/backends/web/qtwebkit/WebViewWebKit.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/ProgressBarWidget.cpp \
@@ -55,7 +54,6 @@ HEADERS += src/ui/MainWindow.h \
     src/backends/web/qtwebkit/WebPageWebKit.h \
     src/core/SessionsManager.h \
     src/core/LocalListingNetworkReply.h \
-    src/backends/web/qtwebkit/WebViewWebKit.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SaveSessionDialog.h \
     src/ui/ProgressBarWidget.h \

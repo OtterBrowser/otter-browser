@@ -7,6 +7,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
 #include <QtGui/QClipboard>
+#include <QtGui/QMouseEvent>
 #include <QtNetwork/QNetworkDiskCache>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
@@ -21,13 +22,13 @@ namespace Otter
 {
 
 WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidget(parent),
-	m_webWidget(new WebViewWebKit(this)),
+	m_webView(new QWebView(this)),
 	m_networkAccessManager(NULL),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->addWidget(m_webWidget);
+	layout->addWidget(m_webView);
 	layout->setContentsMargins(0, 0, 0, 0);
 
 	setLayout(layout);
@@ -42,12 +43,12 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 		m_networkAccessManager->setCache(diskCache);
 	}
 
-	m_webWidget->installEventFilter(this);
-	m_webWidget->setPage(new WebPageWebKit(m_webWidget));
-	m_webWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	m_webWidget->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-	m_webWidget->page()->setNetworkAccessManager(m_networkAccessManager);
-	m_webWidget->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
+	m_webView->installEventFilter(this);
+	m_webView->setPage(new WebPageWebKit(m_webView));
+	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+	m_webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+	m_webView->page()->setNetworkAccessManager(m_networkAccessManager);
+	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), "Cut");
 	ActionsManager::setupLocalAction(getAction(CopyAction), "Copy");
@@ -72,27 +73,25 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent) : WebWidge
 
 	getAction(OpenLinkInThisTabAction)->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
 
-	connect(m_webWidget, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
-	connect(m_webWidget, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
-	connect(m_webWidget, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
-	connect(m_webWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
-	connect(m_webWidget, SIGNAL(requestedZoomChange(int)), this, SLOT(setZoom(int)));
-	connect(m_webWidget, SIGNAL(requestedTriggerAction(WindowAction)), this, SLOT(triggerAction(WindowAction)));
-	connect(m_webWidget->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_webWidget->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_webWidget->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
-	connect(m_webWidget->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-	connect(m_webWidget->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
-	connect(m_webWidget->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
-	connect(m_webWidget->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
-	connect(m_webWidget->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
+	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
+	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
+	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
+	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
+	connect(m_webView->page(), SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
+	connect(m_webView->page(), SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
+	connect(m_webView->page(), SIGNAL(linkClicked(QUrl)), this, SLOT(setUrl(QUrl)));
+	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
+	connect(m_webView->page(), SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
+	connect(m_webView->page(), SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
 
 void WebWidgetWebKit::print(QPrinter *printer)
 {
-	m_webWidget->print(printer);
+	m_webView->print(printer);
 }
 
 void WebWidgetWebKit::loadStarted()
@@ -161,20 +160,20 @@ void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
 
 	m_isLinkHovered = !text.isEmpty();
 
-	QToolTip::showText(QCursor::pos(), text, m_webWidget);
+	QToolTip::showText(QCursor::pos(), text, m_webView);
 
 	emit statusMessageChanged(link, 0);
 }
 
 void WebWidgetWebKit::restoreState(QWebFrame *frame)
 {
-	if (frame == m_webWidget->page()->mainFrame())
+	if (frame == m_webView->page()->mainFrame())
 	{
-		setZoom(m_webWidget->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
+		setZoom(m_webView->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
 
-		if (m_webWidget->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
+		if (m_webView->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_webWidget->page()->mainFrame()->setScrollPosition(m_webWidget->history()->currentItem().userData().toHash().value("position").toPoint());
+			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toHash().value("position").toPoint());
 		}
 	}
 }
@@ -210,7 +209,7 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 
 	if (webAction != QWebPage::NoWebAction)
 	{
-		m_webWidget->triggerPageAction(webAction, checked);
+		m_webView->triggerPageAction(webAction, checked);
 
 		return;
 	}
@@ -218,11 +217,11 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 	switch (action)
 	{
 		case RewindBackAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(0));
+			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
 
 			break;
 		case RewindForwardAction:
-			m_webWidget->page()->history()->goToItem(m_webWidget->page()->history()->itemAt(m_webWidget->page()->history()->count() - 1));
+			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
 
 			break;
 		case CopyAddressAction:
@@ -288,7 +287,7 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 
 			break;
 		case OpenSelectionAsLinkAction:
-			setUrl(m_webWidget->selectedText());
+			setUrl(m_webView->selectedText());
 
 			break;
 		default:
@@ -298,8 +297,8 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 
 void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
 {
-	m_webWidget->settings()->setDefaultTextEncoding(encoding);
-	m_webWidget->reload();
+	m_webView->settings()->setDefaultTextEncoding(encoding);
+	m_webView->reload();
 }
 
 void WebWidgetWebKit::setHistory(const HistoryInformation &history)
@@ -312,7 +311,7 @@ void WebWidgetWebKit::setZoom(int zoom)
 {
 	if (zoom != getZoom())
 	{
-		m_webWidget->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+		m_webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
 
 		emit zoomChanged(zoom);
 	}
@@ -329,34 +328,34 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 
 	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
-		m_webWidget->page()->mainFrame()->scrollToAnchor(url.fragment());
+		m_webView->page()->mainFrame()->scrollToAnchor(url.fragment());
 
 		return;
 	}
 
 	QVariantHash data;
-	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
+	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
 	data["zoom"] = getZoom();
 
-	m_webWidget->page()->history()->currentItem().setUserData(data);
+	m_webView->page()->history()->currentItem().setUserData(data);
 
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
 		QUrl httpUrl = url;
 		httpUrl.setScheme("http");
 
-		m_webWidget->setUrl(httpUrl);
+		m_webView->setUrl(httpUrl);
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
 	{
 		QUrl localUrl = url;
 		localUrl.setScheme("file");
 
-		m_webWidget->setUrl(localUrl);
+		m_webView->setUrl(localUrl);
 	}
 	else
 	{
-		m_webWidget->setUrl(url);
+		m_webView->setUrl(url);
 	}
 
 	notifyTitleChanged();
@@ -365,7 +364,7 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 
 void WebWidgetWebKit::showMenu(const QPoint &position)
 {
-	m_hitResult = m_webWidget->page()->frameAt(position)->hitTestContent(position);
+	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
 
 	if (m_hitResult.element().tagName().toLower() == "textarea" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
@@ -373,7 +372,7 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 		flags |= FormMenu;
 	}
 
-	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webWidget->selectedText().isEmpty())
+	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
 	{
 		flags |= SelectionMenu;
 	}
@@ -397,7 +396,7 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 	{
 		flags = StandardMenu;
 
-		if (m_hitResult.frame() != m_webWidget->page()->mainFrame())
+		if (m_hitResult.frame() != m_webView->page()->mainFrame())
 		{
 			flags |= FrameMenu;
 		}
@@ -423,7 +422,7 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 
 	if (webAction != QWebPage::NoWebAction)
 	{
-		return m_webWidget->page()->action(webAction);
+		return m_webView->page()->action(webAction);
 	}
 
 	if (action == NoAction)
@@ -631,17 +630,17 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 
 QUndoStack *WebWidgetWebKit::getUndoStack()
 {
-	return m_webWidget->page()->undoStack();
+	return m_webView->page()->undoStack();
 }
 
 QString WebWidgetWebKit::getDefaultTextEncoding() const
 {
-	return m_webWidget->settings()->defaultTextEncoding();
+	return m_webView->settings()->defaultTextEncoding();
 }
 
 QString WebWidgetWebKit::getTitle() const
 {
-	const QString title = m_webWidget->title();
+	const QString title = m_webView->title();
 
 	if (title.isEmpty())
 	{
@@ -665,12 +664,12 @@ QString WebWidgetWebKit::getTitle() const
 
 QVariant WebWidgetWebKit::evaluateJavaScript(const QString &script)
 {
-	return m_webWidget->page()->mainFrame()->evaluateJavaScript(script);
+	return m_webView->page()->mainFrame()->evaluateJavaScript(script);
 }
 
 QUrl WebWidgetWebKit::getUrl() const
 {
-	return m_webWidget->url();
+	return m_webView->url();
 }
 
 QIcon WebWidgetWebKit::getIcon() const
@@ -680,7 +679,7 @@ QIcon WebWidgetWebKit::getIcon() const
 		return QIcon(":/icons/tab-private.png");
 	}
 
-	const QIcon icon = m_webWidget->icon();
+	const QIcon icon = m_webView->icon();
 
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
@@ -688,12 +687,12 @@ QIcon WebWidgetWebKit::getIcon() const
 HistoryInformation WebWidgetWebKit::getHistory() const
 {
 	QVariantHash data;
-	data["position"] = m_webWidget->page()->mainFrame()->scrollPosition();
+	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
 	data["zoom"] = getZoom();
 
-	m_webWidget->history()->currentItem().setUserData(data);
+	m_webView->history()->currentItem().setUserData(data);
 
-	QWebHistory *history = m_webWidget->history();
+	QWebHistory *history = m_webView->history();
 	HistoryInformation information;
 	information.index = history->currentItemIndex();
 
@@ -781,7 +780,7 @@ void WebWidgetWebKit::triggerAction()
 
 int WebWidgetWebKit::getZoom() const
 {
-	return (m_webWidget->zoomFactor() * 100);
+	return (m_webView->zoomFactor() * 100);
 }
 
 bool WebWidgetWebKit::isLoading() const
@@ -791,7 +790,7 @@ bool WebWidgetWebKit::isLoading() const
 
 bool WebWidgetWebKit::isPrivate() const
 {
-	return m_webWidget->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
 bool WebWidgetWebKit::find(const QString &text, FindFlags flags)
@@ -813,14 +812,69 @@ bool WebWidgetWebKit::find(const QString &text, FindFlags flags)
 		nativeFlags |= QWebPage::HighlightAllOccurrences;
 	}
 
-	return m_webWidget->findText(text, nativeFlags);
+	return m_webView->findText(text, nativeFlags);
 }
 
 bool WebWidgetWebKit::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_webWidget && event->type() == QEvent::ToolTip && m_isLinkHovered)
+	if (object == m_webView)
 	{
-		return true;
+		if (event->type() == QEvent::ToolTip && m_isLinkHovered)
+		{
+			event->accept();
+
+			return true;
+		}
+		else if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent->button() == Qt::MiddleButton)
+			{
+				QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (result.linkUrl().isValid())
+				{
+					emit requestedOpenUrl(result.linkUrl(), true, false);
+
+					event->accept();
+
+					return true;
+				}
+			}
+
+			if (mouseEvent->button() == Qt::BackButton)
+			{
+				triggerAction(GoBackAction);
+
+				event->accept();
+
+				return true;
+			}
+
+			if (mouseEvent->button() == Qt::ForwardButton)
+			{
+				triggerAction(GoForwardAction);
+
+				event->accept();
+
+				return true;
+			}
+		}
+		else if (event->type() == QEvent::Wheel)
+		{
+			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+			if (wheelEvent->modifiers() & Qt::CTRL || wheelEvent->buttons() & Qt::LeftButton)
+			{
+				setZoom(getZoom() + (wheelEvent->delta() / 16));
+
+				event->accept();
+
+				return true;
+			}
+
+		}
 	}
 
 	return QObject::eventFilter(object, event);
