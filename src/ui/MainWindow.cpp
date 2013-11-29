@@ -53,7 +53,8 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->tabsWidgetContents->setLayout(tabsLayout);
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
-	ActionsManager::setActiveWindow(this);
+	SessionsManager::setActiveWindow(this);
+
 	ActionsManager::registerWindow(this);
 	ActionsManager::registerActions(this, m_ui->menuFile->actions());
 	ActionsManager::registerActions(this, m_ui->menuEdit->actions());
@@ -743,7 +744,7 @@ bool MainWindow::event(QEvent *event)
 {
 	if (event->type() == QEvent::WindowActivate)
 	{
-		ActionsManager::setActiveWindow(this);
+		SessionsManager::setActiveWindow(this);
 	}
 
 	return QMainWindow::event(event);

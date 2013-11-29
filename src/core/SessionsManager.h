@@ -2,8 +2,8 @@
 #define OTTER_SESSIONSMANAGER_H
 
 #include <QtCore/QCoreApplication>
-#include <QtCore/QObject>
 #include <QtCore/QPoint>
+#include <QtCore/QPointer>
 
 namespace Otter
 {
@@ -97,7 +97,9 @@ public:
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
 	static void markSessionModified();
+	static void setActiveWindow(QWidget *window);
 	static SessionsManager* getInstance();
+	static QWidget* getActiveWindow();
 	static QString getCurrentSession();
 	static QString getSessionPath(const QString &path, bool bound = false);
 	static QStringList getClosedWindows();
@@ -119,6 +121,7 @@ private:
 	int m_autoSaveTimer;
 
 	static SessionsManager *m_instance;
+	static QPointer<QWidget> m_activeWindow;
 	static QString m_session;
 	static QList<WindowsManager*> m_windows;
 	static QList<SessionEntry> m_closedWindows;

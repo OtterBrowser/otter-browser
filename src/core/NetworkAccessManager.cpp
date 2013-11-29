@@ -1,5 +1,7 @@
 #include "NetworkAccessManager.h"
 #include "LocalListingNetworkReply.h"
+#include "SessionsManager.h"
+#include "../ui/AuthenticationDialog.h"
 
 #include <QtCore/QFileInfo>
 
@@ -17,6 +19,7 @@ NetworkAccessManager::NetworkAccessManager(QObject *parent) : QNetworkAccessMana
 	m_updateTimer(0)
 {
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
+	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
 }
 
 void NetworkAccessManager::resetStatistics()
@@ -134,6 +137,12 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 	}
 
 	++m_finishedRequests;
+}
+
+void NetworkAccessManager::authenticate(QNetworkReply *reply, QAuthenticator *authenticator)
+{
+	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
+	dialog.exec();
 }
 
 }

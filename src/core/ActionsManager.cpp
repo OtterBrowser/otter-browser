@@ -1,11 +1,11 @@
 #include "ActionsManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 
 namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QWidget* ActionsManager::m_activeWindow = NULL;
 QHash<QWidget*, QHash<QString, QAction*> > ActionsManager::m_actions;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent)
@@ -129,12 +129,12 @@ void ActionsManager::setupLocalAction(QAction *localAction, const QString &globa
 
 void ActionsManager::restoreDefaultShortcut(QAction *action)
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return;
 	}
 
-	const QString key = m_actions[m_activeWindow].key(action);
+	const QString key = m_actions[SessionsManager::getActiveWindow()].key(action);
 
 	if (!key.isEmpty())
 	{
@@ -157,12 +157,12 @@ void ActionsManager::restoreDefaultShortcut(const QString &action)
 
 void ActionsManager::setShortcut(QAction *action, const QKeySequence &shortcut)
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return;
 	}
 
-	const QString key = m_actions[m_activeWindow].key(action);
+	const QString key = m_actions[SessionsManager::getActiveWindow()].key(action);
 
 	if (!key.isEmpty())
 	{
@@ -185,29 +185,24 @@ void ActionsManager::setShortcut(const QString &action, const QKeySequence &shor
 	SettingsManager::setValue(("Actions/" + action), shortcut.toString());
 }
 
-void ActionsManager::setActiveWindow(QWidget *window)
-{
-	m_activeWindow = window;
-}
-
 QAction* ActionsManager::getAction(const QString &action)
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return NULL;
 	}
 
-	return m_actions[m_activeWindow].value(action, NULL);
+	return m_actions[SessionsManager::getActiveWindow()].value(action, NULL);
 }
 
 QKeySequence ActionsManager::getShortcut(QAction *action)
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return QKeySequence();
 	}
 
-	const QString key = m_actions[m_activeWindow].key(action);
+	const QString key = m_actions[SessionsManager::getActiveWindow()].key(action);
 
 	if (key.isEmpty())
 	{
@@ -215,7 +210,7 @@ QKeySequence ActionsManager::getShortcut(QAction *action)
 	}
 	else
 	{
-		return m_actions[m_activeWindow][key]->shortcut();
+		return m_actions[SessionsManager::getActiveWindow()][key]->shortcut();
 	}
 }
 
@@ -226,12 +221,12 @@ QKeySequence ActionsManager::getShortcut(const QString &action)
 
 QKeySequence ActionsManager::getDefaultShortcut(QAction *action)
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return QKeySequence();
 	}
 
-	const QString key = m_actions[m_activeWindow].key(action);
+	const QString key = m_actions[SessionsManager::getActiveWindow()].key(action);
 
 	if (key.isEmpty())
 	{
@@ -250,22 +245,22 @@ QKeySequence ActionsManager::getDefaultShortcut(const QString &action)
 
 QStringList ActionsManager::getIdentifiers()
 {
-	if (!m_actions.contains(m_activeWindow))
+	if (!m_actions.contains(SessionsManager::getActiveWindow()))
 	{
 		return QStringList();
 	}
 
-	return m_actions[m_activeWindow].keys();
+	return m_actions[SessionsManager::getActiveWindow()].keys();
 }
 
 bool ActionsManager::hasShortcut(const QKeySequence &shortcut, const QString &excludeAction)
 {
-	if (!m_actions.contains(m_activeWindow) || shortcut.isEmpty())
+	if (!m_actions.contains(SessionsManager::getActiveWindow()) || shortcut.isEmpty())
 	{
 		return false;
 	}
 
-	const QList<QAction*> actions = m_actions[m_activeWindow].values();
+	const QList<QAction*> actions = m_actions[SessionsManager::getActiveWindow()].values();
 
 	for (int i = 0; i < actions.count(); ++i)
 	{

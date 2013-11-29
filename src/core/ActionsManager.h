@@ -23,7 +23,6 @@ public:
 	static void restoreDefaultShortcut(const QString &action);
 	static void setShortcut(QAction *action, const QKeySequence &shortcut);
 	static void setShortcut(const QString &action, const QKeySequence &shortcut);
-	static void setActiveWindow(QWidget *window);
 	static QAction* getAction(const QString &action);
 	static QKeySequence getShortcut(QAction *action);
 	static QKeySequence getShortcut(const QString &action);
@@ -39,7 +38,6 @@ private:
 	void addAction(QWidget *window, QAction *action, QString name = QString());
 
 	static ActionsManager *m_instance;
-	static QWidget *m_activeWindow;
 	static QHash<QWidget*, QHash<QString, QAction*> > m_actions;
 
 private slots:

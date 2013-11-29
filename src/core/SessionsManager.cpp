@@ -11,6 +11,7 @@ namespace Otter
 {
 
 SessionsManager* SessionsManager::m_instance = NULL;
+QPointer<QWidget> SessionsManager::m_activeWindow = NULL;
 QString SessionsManager::m_session;
 QList<WindowsManager*> SessionsManager::m_windows;
 QList<SessionEntry> SessionsManager::m_closedWindows;
@@ -90,9 +91,19 @@ void SessionsManager::markSessionModified()
 	}
 }
 
+void SessionsManager::setActiveWindow(QWidget *window)
+{
+	m_activeWindow = window;
+}
+
 SessionsManager *SessionsManager::getInstance()
 {
 	return m_instance;
+}
+
+QWidget *SessionsManager::getActiveWindow()
+{
+	return m_activeWindow;
 }
 
 QString SessionsManager::getCurrentSession()

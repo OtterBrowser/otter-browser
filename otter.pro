@@ -33,7 +33,8 @@ SOURCES += src/main.cpp\
     src/ui/SaveSessionDialog.cpp \
     src/ui/ProgressBarWidget.cpp \
     src/core/BookmarksManager.cpp \
-    src/ui/BookmarkDialog.cpp
+    src/ui/BookmarkDialog.cpp \
+    src/ui/AuthenticationDialog.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -58,7 +59,8 @@ HEADERS += src/ui/MainWindow.h \
     src/ui/SaveSessionDialog.h \
     src/ui/ProgressBarWidget.h \
     src/core/BookmarksManager.h \
-    src/ui/BookmarkDialog.h
+    src/ui/BookmarkDialog.h \
+    src/ui/AuthenticationDialog.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
@@ -66,7 +68,8 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/Window.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SaveSessionDialog.ui \
-    src/ui/BookmarkDialog.ui
+    src/ui/BookmarkDialog.ui \
+    src/ui/AuthenticationDialog.ui
 
 RESOURCES += \
     resources/resources.qrc
