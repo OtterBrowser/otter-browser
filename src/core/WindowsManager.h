@@ -70,6 +70,7 @@ private:
 	bool m_privateSession;
 
 signals:
+	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(bool privateSession, bool background, QUrl url);
 	void actionsChanged();
 	void windowAdded(int index);

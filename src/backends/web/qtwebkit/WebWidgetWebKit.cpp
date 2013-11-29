@@ -282,7 +282,7 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 		case BookmarkLinkAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				emit requestedBookmark(m_hitResult.linkUrl());
+				emit requestedAddBookmark(m_hitResult.linkUrl());
 			}
 
 			break;

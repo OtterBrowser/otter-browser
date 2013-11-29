@@ -66,7 +66,7 @@ private:
 
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
-	void requestedBookmark(QUrl url);
+	void requestedAddBookmark(QUrl url);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);

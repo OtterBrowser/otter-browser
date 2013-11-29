@@ -163,6 +163,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
+	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl)), this, SLOT(actionAddBookmark(QUrl)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
@@ -365,10 +366,10 @@ void MainWindow::actionClosedWindows(QAction *action)
 	}
 }
 
-void MainWindow::actionAddBookmark()
+void MainWindow::actionAddBookmark(const QUrl &url)
 {
 	Bookmark *bookmark = new Bookmark();
-	bookmark->url = m_windowsManager->getUrl().toString(QUrl::RemovePassword);
+	bookmark->url = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 	bookmark->title = m_windowsManager->getTitle();
 	bookmark->type = UrlBookmark;
 
