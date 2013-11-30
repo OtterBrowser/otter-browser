@@ -150,11 +150,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 	m_ui->statusBar->setup();
 
-	QList<QKeySequence> findShortcuts = m_ui->actionFind->shortcuts();
-	findShortcuts.append(QKeySequence(QString('/')));
-
-	m_ui->actionFind->setShortcuts(findShortcuts);
-
 	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
 	m_windowsManager->restore(windows.windows);
 	m_windowsManager->setCurrentWindow(windows.index);
