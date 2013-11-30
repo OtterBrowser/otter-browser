@@ -2,6 +2,7 @@
 #define OTTER_TABBARWIDGET_H
 
 #include <QtWidgets/QTabBar>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -29,6 +30,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void tabInserted(int index);
 	void tabRemoved(int index);
+	void tabLayoutChange();
 	QSize tabSizeHint(int index) const;
 	QSize getTabSize(bool isHorizontal) const;
 
@@ -38,6 +40,7 @@ protected slots:
 	void pinTab();
 
 private:
+	QToolButton *m_newTabButton;
 	QSize m_tabSize;
 	int m_clickedTab;
 
@@ -46,6 +49,7 @@ signals:
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);
+	void showNewTabButton(bool visible);
 };
 
 }

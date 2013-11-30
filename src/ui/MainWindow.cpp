@@ -34,25 +34,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 {
 	m_ui->setupUi(this);
 
-	setStyleSheet("QMainWindow::separator {width:0;height:0;}");
-
-	m_closedWindowsAction->setMenu(new QMenu(this));
-	m_closedWindowsAction->setEnabled(false);
-
-	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
-	QToolButton *trashButton = new QToolButton(m_ui->tabsWidgetContents);
-	trashButton->setAutoRaise(true);
-	trashButton->setDefaultAction(m_closedWindowsAction);
-
-	QBoxLayout *tabsLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_ui->tabsWidgetContents);
-	tabsLayout->addWidget(tabBar);
-	tabsLayout->addWidget(trashButton);
-	tabsLayout->setContentsMargins(0, 0, 0, 0);
-	tabsLayout->setSpacing(0);
-
-	m_ui->tabsWidgetContents->setLayout(tabsLayout);
-	m_ui->tabsWidget->setTitleBarWidget(NULL);
-
 	SessionsManager::setActiveWindow(this);
 
 	ActionsManager::registerWindow(this);
@@ -150,15 +131,36 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 	m_ui->statusBar->setup();
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
-	m_windowsManager->restore(windows.windows);
-	m_windowsManager->setCurrentWindow(windows.index);
+	setStyleSheet("QMainWindow::separator {width:0;height:0;}");
 
-	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
+	m_closedWindowsAction->setMenu(new QMenu(this));
+	m_closedWindowsAction->setEnabled(false);
+
+	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
+	QToolButton *trashButton = new QToolButton(m_ui->tabsWidgetContents);
+	trashButton->setAutoRaise(true);
+	trashButton->setDefaultAction(m_closedWindowsAction);
+
+	QToolButton *newTabButton = new QToolButton(m_ui->tabsWidgetContents);
+	newTabButton->setAutoRaise(true);
+	newTabButton->setDefaultAction(m_ui->actionNewTab);
+
+	QBoxLayout *tabsLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_ui->tabsWidgetContents);
+	tabsLayout->addWidget(tabBar);
+	tabsLayout->addWidget(newTabButton);
+	tabsLayout->addWidget(trashButton);
+	tabsLayout->setContentsMargins(0, 0, 0, 0);
+	tabsLayout->setSpacing(0);
+
+	m_ui->tabsWidgetContents->setLayout(tabsLayout);
+	m_ui->tabsWidget->setTitleBarWidget(NULL);
+
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
 
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
+	connect(tabBar, SIGNAL(showNewTabButton(bool)), newTabButton, SLOT(setVisible(bool)));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl)), this, SLOT(actionAddBookmark(QUrl)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
@@ -206,11 +208,15 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 
+	m_windowsManager->restore(windows.windows);
+	m_windowsManager->setCurrentWindow(windows.index);
+
 	updateActions();
 	updateClipboard();
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
+	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	m_ui->panelWidget->hide();
 }

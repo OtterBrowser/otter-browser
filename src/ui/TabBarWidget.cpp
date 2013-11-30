@@ -13,6 +13,7 @@ namespace Otter
 {
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
+	m_newTabButton(new QToolButton(this)),
 	m_clickedTab(-1)
 {
 	setDrawBase(false);
@@ -22,6 +23,10 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
 	updateTabs();
+
+	m_newTabButton->setAutoRaise(true);
+	m_newTabButton->setDefaultAction(ActionsManager::getAction("NewTab"));
+	m_newTabButton->raise();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateTabs()));
@@ -133,6 +138,58 @@ void TabBarWidget::tabRemoved(int index)
 	QTabBar::tabRemoved(index);
 
 	updateTabs();
+}
+
+void TabBarWidget::tabLayoutChange()
+{
+	setUpdatesEnabled(false);
+
+	int offset = 0;
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+
+	for (int i = 0; i < count(); ++i)
+	{
+		if (isHorizontal)
+		{
+			offset += tabSizeHint(i).width();
+		}
+		else
+		{
+			offset += tabSizeHint(i).height();
+		}
+	}
+
+	if ((offset + (isHorizontal ? m_newTabButton->width() : m_newTabButton->height())) >= (isHorizontal ? width() : height()))
+	{
+		if (m_newTabButton->isVisible())
+		{
+			emit showNewTabButton(true);
+
+			m_newTabButton->hide();
+		}
+	}
+	else
+	{
+		if (isHorizontal)
+		{
+			m_newTabButton->move(offset, ((height() - m_newTabButton->height()) / 2));
+		}
+		else
+		{
+			m_newTabButton->move(((width() - m_newTabButton->width()) / 2), offset);
+		}
+
+		if (!m_newTabButton->isVisible())
+		{
+			emit showNewTabButton(false);
+
+			m_newTabButton->show();
+		}
+	}
+
+	setUpdatesEnabled(true);
+
+	QTabBar::tabLayoutChange();
 }
 
 void TabBarWidget::closeOther()
