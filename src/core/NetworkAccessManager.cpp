@@ -1,4 +1,5 @@
 #include "NetworkAccessManager.h"
+#include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "SessionsManager.h"
 #include "../ui/AuthenticationDialog.h"
@@ -8,7 +9,10 @@
 namespace Otter
 {
 
-NetworkAccessManager::NetworkAccessManager(QObject *parent) : QNetworkAccessManager(parent),
+CookieJar* NetworkAccessManager::m_cookieJar = NULL;
+QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
+
+NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) : QNetworkAccessManager(parent),
 	m_mainReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -18,6 +22,25 @@ NetworkAccessManager::NetworkAccessManager(QObject *parent) : QNetworkAccessMana
 	m_startedRequests(0),
 	m_updateTimer(0)
 {
+	if (!m_cookieJar && !privateWindow)
+	{
+		m_cookieJar = new CookieJar(QCoreApplication::instance());
+	}
+
+	if (!m_privateCookieJar && privateWindow)
+	{
+		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
+	}
+
+	if (privateWindow)
+	{
+		setCookieJar(m_privateCookieJar);
+	}
+	else
+	{
+		setCookieJar(m_cookieJar);
+	}
+
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
 }

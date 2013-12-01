@@ -33,7 +33,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 
 	setLayout(layout);
 
-	m_networkAccessManager = new NetworkAccessManager(this);
+	m_networkAccessManager = new NetworkAccessManager(privateWindow, this);
 
 	if (!privateWindow)
 	{

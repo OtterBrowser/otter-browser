@@ -6,12 +6,14 @@
 namespace Otter
 {
 
+class CookieJar;
+
 class NetworkAccessManager : public QNetworkAccessManager
 {
 	Q_OBJECT
 
 public:
-	explicit NetworkAccessManager(QObject *parent = NULL);
+	explicit NetworkAccessManager(bool privateWindow = false, QObject *parent = NULL);
 
 	void resetStatistics();
 
@@ -35,6 +37,9 @@ private:
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
+
+	static CookieJar *m_cookieJar;
+	static QNetworkCookieJar *m_privateCookieJar;
 
 signals:
 	void messageChanged(const QString &message = QString());

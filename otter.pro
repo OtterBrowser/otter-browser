@@ -34,7 +34,8 @@ SOURCES += src/main.cpp\
     src/ui/ProgressBarWidget.cpp \
     src/core/BookmarksManager.cpp \
     src/ui/BookmarkDialog.cpp \
-    src/ui/AuthenticationDialog.cpp
+    src/ui/AuthenticationDialog.cpp \
+    src/core/CookieJar.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -60,7 +61,8 @@ HEADERS += src/ui/MainWindow.h \
     src/ui/ProgressBarWidget.h \
     src/core/BookmarksManager.h \
     src/ui/BookmarkDialog.h \
-    src/ui/AuthenticationDialog.h
+    src/ui/AuthenticationDialog.h \
+    src/core/CookieJar.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
