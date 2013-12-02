@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core network gui printsupport widgets webkitwidgets
+QT += core gui network printsupport webkitwidgets widgets
 
 TARGET = otter
 TEMPLATE = app
