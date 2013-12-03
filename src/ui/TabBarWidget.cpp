@@ -5,7 +5,9 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
@@ -275,6 +277,18 @@ void TabBarWidget::showPreview(int index)
 				position = QPoint(qMax(0, ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), rectangle.bottom());
 
 				break;
+		}
+
+		const QRect screen = QApplication::desktop()->screenGeometry(this);
+
+		if ((position.x() + m_previewWidget->width()) > screen.width())
+		{
+			position.setX(screen.width() - m_previewWidget->width());
+		}
+
+		if ((position.y() + m_previewWidget->height()) > screen.height())
+		{
+			position.setY(screen.height() - m_previewWidget->height());
 		}
 
 		m_previewWidget->move(position);
