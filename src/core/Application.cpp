@@ -6,7 +6,10 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
+#include <QtCore/QCryptographicHash>
+#include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QLocale>
 #include <QtCore/QStandardPaths>
@@ -22,8 +25,32 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	setApplicationName("Otter");
 	setApplicationVersion("0.0.01");
 
+	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter";
+	QCommandLineParser *parser = getParser();
+	parser->process(arguments());
+
+	if (!parser->value("path").isEmpty())
+	{
+		path = parser->value("path");
+
+		if (QFileInfo(path).isRelative())
+		{
+			path = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/profiles/").absoluteFilePath(path);
+		}
+	}
+
+	path = QFileInfo(path).canonicalFilePath();
+
+	QCryptographicHash hash(QCryptographicHash::Md5);
+	hash.addData(path.toUtf8());
+
+	const QString identifier = hash.result().toBase64();
+
+	delete parser;
+
+	const QString server = applicationName() + (identifier.isEmpty() ? QString() : QString("-%1").arg(identifier));
 	QLocalSocket socket;
-	socket.connectToServer(applicationName());
+	socket.connectToServer(server);
 
 	if (socket.waitForConnected(500))
 	{
@@ -45,17 +72,17 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
 
-	if (!m_localServer->listen(applicationName()))
+	if (!m_localServer->listen(server))
 	{
 		if (m_localServer->serverError() == QAbstractSocket::AddressInUseError && QFile::exists(m_localServer->serverName()))
 		{
 			QFile::remove(m_localServer->serverName());
 
-			m_localServer->listen(applicationName());
+			m_localServer->listen(server);
 		}
 	}
 
-	SettingsManager::createInstance(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/otter.conf", this);
+	SettingsManager::createInstance(path + "/otter.conf", this);
 	SettingsManager::setDefaultValue("Browser/OpenLinksInNewWindow", false);
 	SettingsManager::setDefaultValue("Browser/EnablePlugins", true);
 	SettingsManager::setDefaultValue("Browser/EnableJava", true);
@@ -152,13 +179,20 @@ void Application::newConnection()
 		window = getWindow();
 	}
 
-	if (window && !parser->positionalArguments().isEmpty())
+	if (window)
 	{
-		QStringList urls = parser->positionalArguments();
-
-		for (int i = 0; i < urls.count(); ++i)
+		if (parser->positionalArguments().isEmpty())
 		{
-			window->openUrl(QUrl(urls.at(i)));
+			window->openUrl();
+		}
+		else
+		{
+			QStringList urls = parser->positionalArguments();
+
+			for (int i = 0; i < urls.count(); ++i)
+			{
+				window->openUrl(QUrl(urls.at(i)));
+			}
 		}
 	}
 
@@ -228,6 +262,7 @@ QCommandLineParser* Application::getParser() const
 	parser->addHelpOption();
 	parser->addVersionOption();
 	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
+	parser->addOption(QCommandLineOption("path", QCoreApplication::translate("main", "Uses <path> as profile directory."), "path", QString()));
 	parser->addOption(QCommandLineOption("session", QCoreApplication::translate("main", "Restores session <session> if it exists."), "session", QString()));
 	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Starts private session.")));
 

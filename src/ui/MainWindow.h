@@ -28,7 +28,7 @@ public:
 	WindowsManager* getWindowsManager();
 
 public slots:
-	void openUrl(const QUrl &url);
+	void openUrl(const QUrl &url = QUrl());
 
 protected:
 	void changeEvent(QEvent *event);

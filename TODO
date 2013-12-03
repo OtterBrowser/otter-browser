@@ -16,7 +16,6 @@ Medium priority / soon:
 - spell checking
 - panels (page informations, notes, transfers, bookmarks etc.)
 - additional backends (at least Blink with upcoming QtWebEngine)
-- support for profiles / custom configuration directory
 - system tray icon
 
 Low priority / later:
