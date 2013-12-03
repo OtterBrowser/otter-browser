@@ -3,11 +3,13 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkAccessManager.h"
 #include "../../../core/SessionsManager.h"
+#include "../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QMovie>
 #include <QtNetwork/QNetworkDiskCache>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
@@ -314,6 +316,13 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 			break;
 		case OpenSelectionAsLinkAction:
 			emit requestedOpenUrl(m_webView->selectedText(), false, false);
+
+			break;
+		case ImagePropertiesAction:
+			{
+				ImagePropertiesDialog dialog(m_hitResult.imageUrl(), m_hitResult.element().attribute("alt"), m_hitResult.element().attribute("longdesc"), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
+				dialog.exec();
+			}
 
 			break;
 		default:
@@ -623,8 +632,6 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 			break;
 		case ImagePropertiesAction:
 			ActionsManager::setupLocalAction(actionObject, "ImageProperties", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case CreateSearchAction:

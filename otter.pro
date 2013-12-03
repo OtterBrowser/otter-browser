@@ -36,7 +36,8 @@ SOURCES += src/main.cpp\
     src/ui/BookmarkDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/core/CookieJar.cpp \
-    src/ui/PreviewWidget.cpp
+    src/ui/PreviewWidget.cpp \
+    src/ui/ImagePropertiesDialog.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -64,7 +65,8 @@ HEADERS += src/ui/MainWindow.h \
     src/ui/BookmarkDialog.h \
     src/ui/AuthenticationDialog.h \
     src/core/CookieJar.h \
-    src/ui/PreviewWidget.h
+    src/ui/PreviewWidget.h \
+    src/ui/ImagePropertiesDialog.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
@@ -73,7 +75,8 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/BookmarkDialog.ui \
-    src/ui/AuthenticationDialog.ui
+    src/ui/AuthenticationDialog.ui \
+    src/ui/ImagePropertiesDialog.ui
 
 RESOURCES += \
     resources/resources.qrc
