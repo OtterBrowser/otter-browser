@@ -50,6 +50,7 @@ public:
 	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
+	virtual QPixmap getThumbnail() = 0;
 	virtual HistoryInformation getHistory() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;

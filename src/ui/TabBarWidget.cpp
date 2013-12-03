@@ -1,4 +1,5 @@
 #include "TabBarWidget.h"
+#include "PreviewWidget.h"
 #include "../core/ActionsManager.h"
 
 #include <QtCore/QTimer>
@@ -13,8 +14,10 @@ namespace Otter
 {
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
+	m_previewWidget(NULL),
 	m_newTabButton(new QToolButton(this)),
-	m_clickedTab(-1)
+	m_clickedTab(-1),
+	m_previewTimer(0)
 {
 	setDrawBase(false);
 	setExpanding(false);
@@ -22,6 +25,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
+	setMouseTracking(true);
 	updateTabs();
 
 	m_newTabButton->setAutoRaise(true);
@@ -30,6 +34,34 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateTabs()));
+}
+
+void TabBarWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_previewTimer)
+	{
+		killTimer(m_previewTimer);
+
+		m_previewTimer = 0;
+
+		if (!m_previewWidget)
+		{
+			m_previewWidget = new PreviewWidget(this);
+		}
+
+		const int index = tabAt(mapFromGlobal(QCursor::pos()));
+
+		if (index >= 0)
+		{
+			m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>());
+			m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
+			m_previewWidget->show();
+		}
+		else
+		{
+			m_previewWidget->hide();
+		}
+	}
 }
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -109,9 +141,53 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 	QTabBar::mouseReleaseEvent(event);
 }
 
+void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (m_previewWidget && !m_previewWidget->isVisible() && m_previewTimer == 0)
+	{
+		m_previewWidget->show();
+	}
+
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		const int index = tabAt(event->pos());
+
+		if (index >= 0)
+		{
+			m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>());
+			m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
+		}
+		else
+		{
+			m_previewWidget->hide();
+		}
+	}
+
+	QTabBar::mouseMoveEvent(event);
+}
+
+void TabBarWidget::enterEvent(QEvent *event)
+{
+	QTabBar::enterEvent(event);
+
+	m_previewTimer = startTimer(250);
+}
+
 void TabBarWidget::leaveEvent(QEvent *event)
 {
 	QTabBar::leaveEvent(event);
+
+	if (m_previewTimer != 0)
+	{
+		killTimer(m_previewTimer);
+
+		m_previewTimer = 0;
+	}
+
+	if (m_previewWidget)
+	{
+		m_previewWidget->hide();
+	}
 
 	updateTabs();
 }
@@ -235,15 +311,6 @@ void TabBarWidget::updateTabs(int index)
 
 	if (canResize)
 	{
-		if (isNarrow)
-		{
-			setStyleSheet("QTabBar::tab {color:transparent;}");
-		}
-		else
-		{
-			setStyleSheet(QString());
-		}
-
 		m_tabSize = size;
 
 		updateGeometry();

@@ -286,6 +286,11 @@ QIcon Window::getIcon() const
 	return m_webWidget->getIcon();
 }
 
+QPixmap Window::getThumbnail() const
+{
+	return m_webWidget->getThumbnail();
+}
+
 HistoryInformation Window::getHistory() const
 {
 	return m_webWidget->getHistory();

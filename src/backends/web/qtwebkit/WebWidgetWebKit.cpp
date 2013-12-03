@@ -108,6 +108,8 @@ void WebWidgetWebKit::loadStarted()
 {
 	m_isLoading = true;
 
+	m_thumbnail = QPixmap();
+
 	if (m_customActions.contains(RewindBackAction))
 	{
 		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
@@ -139,6 +141,8 @@ void WebWidgetWebKit::loadStarted()
 void WebWidgetWebKit::loadFinished(bool ok)
 {
 	m_isLoading = false;
+
+	m_thumbnail = QPixmap();
 
 	m_networkAccessManager->resetStatistics();
 
@@ -698,6 +702,52 @@ QIcon WebWidgetWebKit::getIcon() const
 	const QIcon icon = m_webView->icon();
 
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
+}
+
+QPixmap WebWidgetWebKit::getThumbnail()
+{
+	if (!m_thumbnail.isNull() && !isLoading())
+	{
+		return m_thumbnail;
+	}
+
+	const QSize thumbnailSize = QSize(260, 170);
+	const QSize oldViewportSize = m_webView->page()->viewportSize();
+	const qreal zoom = m_webView->page()->mainFrame()->zoomFactor();
+	QSize contentsSize = m_webView->page()->mainFrame()->contentsSize();
+	QWidget *newView = new QWidget();
+	QWidget *oldView = m_webView->page()->view();
+
+	m_webView->page()->setView(newView);
+	m_webView->page()->setViewportSize(contentsSize);
+	m_webView->page()->mainFrame()->setZoomFactor(1);
+
+	if (contentsSize.width() > 2000)
+	{
+		contentsSize.setWidth(2000);
+	}
+
+	contentsSize.setHeight(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width()));
+
+	QPixmap pixmap(contentsSize);
+	pixmap.fill(Qt::white);
+
+	QPainter painter(&pixmap);
+
+	m_webView->page()->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+	m_webView->page()->mainFrame()->setZoomFactor(zoom);
+	m_webView->page()->setView(oldView);
+	m_webView->page()->setViewportSize(oldViewportSize);
+
+	painter.end();
+
+	pixmap = pixmap.scaled(thumbnailSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+	newView->deleteLater();
+
+	m_thumbnail = pixmap;
+
+	return pixmap;
 }
 
 HistoryInformation WebWidgetWebKit::getHistory() const

@@ -234,7 +234,6 @@ void WindowsManager::addWindow(Window *window, bool background)
 	const int index = m_tabBar->count();
 
 	m_tabBar->insertTab(index, window->getTitle());
-	m_tabBar->setTabToolTip(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
 	if (background)
@@ -291,7 +290,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 	if (!pin)
 	{
 		m_tabBar->setTabProperty(index, "isPinned", false);
-		m_tabBar->setTabText(index, m_tabBar->tabToolTip(index));
+		m_tabBar->setTabText(index, m_tabBar->getTabProperty(index, "title", tr("(Untitled)")).toString());
 		m_tabBar->moveTab(index, offset);
 		m_tabBar->updateTabs();
 
@@ -447,8 +446,6 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		m_tabBar->setTabText(index, text);
 	}
-
-	m_tabBar->setTabToolTip(index, text);
 
 	if (index == getCurrentWindow())
 	{

@@ -35,7 +35,8 @@ SOURCES += src/main.cpp\
     src/core/BookmarksManager.cpp \
     src/ui/BookmarkDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
-    src/core/CookieJar.cpp
+    src/core/CookieJar.cpp \
+    src/ui/PreviewWidget.cpp
 
 HEADERS += src/ui/MainWindow.h \
     src/ui/CookiesDialog.h \
@@ -62,7 +63,8 @@ HEADERS += src/ui/MainWindow.h \
     src/core/BookmarksManager.h \
     src/ui/BookmarkDialog.h \
     src/ui/AuthenticationDialog.h \
-    src/core/CookieJar.h
+    src/core/CookieJar.h \
+    src/ui/PreviewWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \

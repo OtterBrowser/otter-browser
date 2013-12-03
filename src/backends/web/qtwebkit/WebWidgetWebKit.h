@@ -29,6 +29,7 @@ public:
 	QVariant evaluateJavaScript(const QString &script);
 	QUrl getUrl() const;
 	QIcon getIcon() const;
+	QPixmap getThumbnail();
 	HistoryInformation getHistory() const;
 	int getZoom() const;
 	bool isLoading() const;
@@ -61,6 +62,7 @@ protected slots:
 private:
 	QWebView *m_webView;
 	NetworkAccessManager *m_networkAccessManager;
+	QPixmap m_thumbnail;
 	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_customActions;
 	bool m_isLinkHovered;

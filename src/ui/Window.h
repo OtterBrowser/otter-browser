@@ -90,6 +90,7 @@ class Window : public QWidget
 	Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
 	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
 	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
+	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
 	Q_PROPERTY(int zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
 	Q_PROPERTY(bool isClonable READ isClonable)
 	Q_PROPERTY(bool isEmpty READ isEmpty)
@@ -109,6 +110,7 @@ public:
 	virtual QString getTitle() const;
 	virtual QUrl getUrl() const;
 	virtual QIcon getIcon() const;
+	virtual QPixmap getThumbnail() const;
 	virtual HistoryInformation getHistory() const;
 	virtual int getZoom() const;
 	virtual bool isClonable() const;

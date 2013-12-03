@@ -7,6 +7,8 @@
 namespace Otter
 {
 
+class PreviewWidget;
+
 class TabBarWidget : public QTabBar
 {
 	Q_OBJECT
@@ -23,9 +25,12 @@ public slots:
 	void setTabProperty(int index, const QString &key, const QVariant &value);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void tabInserted(int index);
@@ -40,9 +45,11 @@ protected slots:
 	void pinTab();
 
 private:
+	PreviewWidget *m_previewWidget;
 	QToolButton *m_newTabButton;
 	QSize m_tabSize;
 	int m_clickedTab;
+	int m_previewTimer;
 
 signals:
 	void requestedClone(int index);
