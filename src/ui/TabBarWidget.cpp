@@ -251,8 +251,33 @@ void TabBarWidget::showPreview(int index)
 			m_previewWidget = new PreviewWidget(this);
 		}
 
+		QPoint position;
+		QRect rectangle = tabRect(index);
+		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
+
 		m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
-		m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
+
+		switch (shape())
+		{
+			case QTabBar::RoundedEast:
+				position = QPoint((rectangle.left() - m_previewWidget->width()), qMax(0, ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
+
+				break;
+			case QTabBar::RoundedWest:
+				position = QPoint(rectangle.right(), qMax(0, ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
+
+				break;
+			case QTabBar::RoundedSouth:
+				position = QPoint(qMax(0, ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), (rectangle.top() - m_previewWidget->height()));
+
+				break;
+			default:
+				position = QPoint(qMax(0, ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), rectangle.bottom());
+
+				break;
+		}
+
+		m_previewWidget->move(position);
 		m_previewWidget->show();
 	}
 	else if (m_previewWidget)
