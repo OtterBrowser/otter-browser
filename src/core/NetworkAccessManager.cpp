@@ -32,14 +32,11 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
 	}
 
-	if (privateWindow)
-	{
-		setCookieJar(m_privateCookieJar);
-	}
-	else
-	{
-		setCookieJar(m_cookieJar);
-	}
+	QNetworkCookieJar *cookieJar = (privateWindow ? m_privateCookieJar : m_cookieJar);
+
+	setCookieJar(cookieJar);
+
+	cookieJar->setParent(QCoreApplication::instance());
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
