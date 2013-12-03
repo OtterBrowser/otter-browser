@@ -291,8 +291,15 @@ void TabBarWidget::showPreview(int index)
 			position.setY(screen.height() - m_previewWidget->height());
 		}
 
-		m_previewWidget->move(position);
-		m_previewWidget->show();
+		if (m_previewWidget->isVisible())
+		{
+			m_previewWidget->setPosition(position);
+		}
+		else
+		{
+			m_previewWidget->move(position);
+			m_previewWidget->show();
+		}
 	}
 	else if (m_previewWidget)
 	{

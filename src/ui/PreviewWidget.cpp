@@ -8,7 +8,8 @@ namespace Otter
 
 PreviewWidget::PreviewWidget(QWidget *parent) : QWidget(parent),
 	m_textLabel(new QLabel(this)),
-	m_pixmapLabel(new QLabel(this))
+	m_pixmapLabel(new QLabel(this)),
+	m_moveAnimation(NULL)
 {
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(m_pixmapLabel);
@@ -29,6 +30,24 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QWidget(parent),
 
 	m_pixmapLabel->setFixedWidth(260);
 	m_pixmapLabel->setAlignment(Qt::AlignCenter);
+}
+
+void PreviewWidget::setPosition(const QPoint &position)
+{
+	if (!m_moveAnimation)
+	{
+		m_moveAnimation = new QPropertyAnimation(this, "pos");
+		m_moveAnimation->setDuration(250);
+	}
+
+	if (position != m_moveAnimation->endValue().toPoint())
+	{
+		m_moveAnimation->stop();
+	}
+
+	m_moveAnimation->setStartValue(pos());
+	m_moveAnimation->setEndValue(position);
+	m_moveAnimation->start();
 }
 
 void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap)
