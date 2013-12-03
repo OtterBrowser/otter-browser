@@ -44,6 +44,8 @@ void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap)
 	}
 
 	m_textLabel->setText(m_textLabel->fontMetrics().elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), m_textLabel->width()));
+
+	adjustSize();
 }
 
 }

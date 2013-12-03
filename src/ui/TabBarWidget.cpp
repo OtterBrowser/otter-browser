@@ -44,23 +44,7 @@ void TabBarWidget::timerEvent(QTimerEvent *event)
 
 		m_previewTimer = 0;
 
-		if (!m_previewWidget)
-		{
-			m_previewWidget = new PreviewWidget(this);
-		}
-
-		const int index = tabAt(mapFromGlobal(QCursor::pos()));
-
-		if (index >= 0)
-		{
-			m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>());
-			m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
-			m_previewWidget->show();
-		}
-		else
-		{
-			m_previewWidget->hide();
-		}
+		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
 	}
 }
 
@@ -150,17 +134,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (m_previewWidget && m_previewWidget->isVisible())
 	{
-		const int index = tabAt(event->pos());
-
-		if (index >= 0)
-		{
-			m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>());
-			m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
-		}
-		else
-		{
-			m_previewWidget->hide();
-		}
+		showPreview(tabAt(event->pos()));
 	}
 
 	QTabBar::mouseMoveEvent(event);
@@ -268,6 +242,26 @@ void TabBarWidget::tabLayoutChange()
 	QTabBar::tabLayoutChange();
 }
 
+void TabBarWidget::showPreview(int index)
+{
+	if (index >= 0)
+	{
+		if (!m_previewWidget)
+		{
+			m_previewWidget = new PreviewWidget(this);
+		}
+
+		m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
+		m_previewWidget->move(mapToGlobal(tabRect(index).bottomLeft()));
+		m_previewWidget->show();
+	}
+	else if (m_previewWidget)
+	{
+		m_previewWidget->hide();
+	}
+
+}
+
 void TabBarWidget::closeOther()
 {
 	if (m_clickedTab >= 0)
@@ -357,6 +351,8 @@ void TabBarWidget::updateTabs(int index)
 			}
 		}
 	}
+
+	showPreview(tabAt(mapFromGlobal(QCursor::pos())));
 }
 
 void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)

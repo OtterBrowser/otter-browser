@@ -36,6 +36,7 @@ protected:
 	void tabInserted(int index);
 	void tabRemoved(int index);
 	void tabLayoutChange();
+	void showPreview(int index);
 	QSize tabSizeHint(int index) const;
 	QSize getTabSize(bool isHorizontal) const;
 
