@@ -313,7 +313,7 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 
 			break;
 		case OpenSelectionAsLinkAction:
-			setUrl(m_webView->selectedText());
+			emit requestedOpenUrl(m_webView->selectedText(), false, false);
 
 			break;
 		default:
