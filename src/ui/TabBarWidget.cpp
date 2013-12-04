@@ -54,6 +54,18 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	m_clickedTab = tabAt(event->pos());
 
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		m_previewWidget->hide();
+	}
+
+	if (m_previewTimer > 0)
+	{
+		killTimer(m_previewTimer);
+
+		m_previewTimer = 0;
+	}
+
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction("NewTab"));
 	menu.addAction(ActionsManager::getAction("NewTabPrivate"));
@@ -96,6 +108,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 
 	m_clickedTab = -1;
+
+	if (underMouse())
+	{
+		m_previewTimer = startTimer(250);
+	}
 }
 
 void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -246,7 +263,7 @@ void TabBarWidget::tabLayoutChange()
 
 void TabBarWidget::showPreview(int index)
 {
-	if (index >= 0)
+	if (index >= 0 && m_clickedTab < 0)
 	{
 		if (!m_previewWidget)
 		{
@@ -305,7 +322,6 @@ void TabBarWidget::showPreview(int index)
 	{
 		m_previewWidget->hide();
 	}
-
 }
 
 void TabBarWidget::closeOther()
