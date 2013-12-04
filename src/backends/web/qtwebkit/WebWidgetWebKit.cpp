@@ -6,11 +6,10 @@
 #include "../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
-#include <QtCore/QStandardPaths>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
-#include <QtNetwork/QNetworkDiskCache>
+#include <QtNetwork/QAbstractNetworkCache>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
@@ -36,14 +35,6 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	setLayout(layout);
 
 	m_networkAccessManager = new NetworkAccessManager(privateWindow, this);
-
-	if (!privateWindow)
-	{
-		QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
-		diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-
-		m_networkAccessManager->setCache(diskCache);
-	}
 
 	if (page)
 	{

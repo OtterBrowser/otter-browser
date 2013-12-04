@@ -5,6 +5,8 @@
 #include "../ui/AuthenticationDialog.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
+#include <QtNetwork/QNetworkDiskCache>
 
 namespace Otter
 {
@@ -37,6 +39,14 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 	setCookieJar(cookieJar);
 
 	cookieJar->setParent(QCoreApplication::instance());
+
+	if (!privateWindow)
+	{
+		QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
+		diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+
+		setCache(diskCache);
+	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
