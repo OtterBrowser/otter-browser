@@ -174,7 +174,7 @@ void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWi
 
 void Window::updateUrl(const QUrl &url)
 {
-	m_ui->addressLineEdit->setText(url.toString());
+	m_ui->addressLineEdit->setText((url.scheme() == "about" && url.path() == "blank") ? QString() : url.toString());
 }
 
 void Window::updateFind(bool backwards)
