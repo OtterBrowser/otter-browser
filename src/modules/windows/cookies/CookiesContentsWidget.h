@@ -55,6 +55,8 @@ protected slots:
 	void filterCookies(const QString &filter);
 	void insertCookie(const QNetworkCookie &cookie);
 	void deleteCookie(const QNetworkCookie &cookie);
+	void cookieProperties();
+	void setCurrentIndex(const QModelIndex &index);
 
 private:
 	QStandardItemModel *m_model;

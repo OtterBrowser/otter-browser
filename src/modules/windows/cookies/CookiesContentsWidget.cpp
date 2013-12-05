@@ -1,4 +1,5 @@
 #include "CookiesContentsWidget.h"
+#include "CookiePropertiesDialog.h"
 #include "../../../core/NetworkAccessManager.h"
 #include "../../../core/CookieJar.h"
 #include "../../../backends/web/WebBackend.h"
@@ -20,6 +21,8 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
+	connect(m_ui->cookiesView, SIGNAL(clicked(QModelIndex)), this, SLOT(setCurrentIndex(QModelIndex)));
+	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 }
 
 CookiesContentsWidget::~CookiesContentsWidget()
@@ -128,6 +131,28 @@ void CookiesContentsWidget::deleteCookie(const QNetworkCookie &cookie)
 	}
 }
 
+void CookiesContentsWidget::cookieProperties()
+{
+	const QModelIndex index = m_ui->cookiesView->currentIndex();
+	QUrl url;
+	url.setScheme("http");
+	url.setHost(index.parent().data(Qt::DisplayRole).toString());
+	url.setPath(index.data(Qt::UserRole).toString());
+
+	QList<QNetworkCookie> cookies = NetworkAccessManager::getCookieJar()->cookiesForUrl(url);
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		if (cookies.at(i).name() == index.data(Qt::DisplayRole).toString())
+		{
+			CookiePropertiesDialog dialog(cookies.at(i), this);
+			dialog.exec();
+
+			break;
+		}
+	}
+}
+
 void CookiesContentsWidget::print(QPrinter *printer)
 {
 	render(printer);
@@ -152,6 +177,11 @@ void CookiesContentsWidget::setZoom(int zoom)
 void CookiesContentsWidget::setUrl(const QUrl &url)
 {
 	Q_UNUSED(url)
+}
+
+void CookiesContentsWidget::setCurrentIndex(const QModelIndex &index)
+{
+	m_ui->propertiesButton->setEnabled(!index.data(Qt::UserRole).toString().isEmpty());
 }
 
 QStandardItem *CookiesContentsWidget::findDomain(const QString &domain)

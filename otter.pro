@@ -20,7 +20,6 @@ SOURCES += src/main.cpp\
     src/core/BookmarksManager.cpp \
     src/core/CookieJar.cpp \
     src/ui/MainWindow.cpp \
-    src/ui/CookiesDialog.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/Window.cpp \
@@ -40,7 +39,8 @@ SOURCES += src/main.cpp\
     src/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
-    src/modules/windows/cookies/CookiesContentsWidget.cpp
+    src/modules/windows/cookies/CookiesContentsWidget.cpp \
+    src/modules/windows/cookies/CookiePropertiesDialog.cpp
 
 HEADERS += src/core/SettingsManager.h \
     src/core/Application.h \
@@ -52,7 +52,6 @@ HEADERS += src/core/SettingsManager.h \
     src/core/BookmarksManager.h \
     src/core/CookieJar.h \
     src/ui/MainWindow.h \
-    src/ui/CookiesDialog.h \
     src/ui/PreferencesDialog.h \
     src/ui/TabBarWidget.h \
     src/ui/Window.h \
@@ -72,10 +71,10 @@ HEADERS += src/core/SettingsManager.h \
     src/backends/web/qtwebkit/WebPageWebKit.h \
     src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
-    src/modules/windows/cookies/CookiesContentsWidget.h
+    src/modules/windows/cookies/CookiesContentsWidget.h \
+    src/modules/windows/cookies/CookiePropertiesDialog.h
 
 FORMS += src/ui/MainWindow.ui \
-    src/ui/CookiesDialog.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/Window.ui \
     src/ui/SessionsManagerDialog.ui \
@@ -84,7 +83,8 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/AuthenticationDialog.ui \
     src/ui/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui \
-    src/modules/windows/cookies/CookiesContentsWidget.ui
+    src/modules/windows/cookies/CookiesContentsWidget.ui \
+    src/modules/windows/cookies/CookiePropertiesDialog.ui
 
 RESOURCES += \
     resources/resources.qrc
