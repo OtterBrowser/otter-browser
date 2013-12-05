@@ -6,6 +6,8 @@
 
 #include "ui_CookiesContentsWidget.h"
 
+#include <QtCore/QTimer>
+
 namespace Otter
 {
 
@@ -15,36 +17,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 {
 	m_ui->setupUi(this);
 
-	CookieJar *cookieJar = qobject_cast<CookieJar*>(NetworkAccessManager::getCookieJar());
-
-	connect(cookieJar, SIGNAL(cookieInserted(QNetworkCookie)), this, SLOT(insertCookie(QNetworkCookie)));
-	connect(cookieJar, SIGNAL(cookieDeleted(QNetworkCookie)), this, SLOT(deleteCookie(QNetworkCookie)));
-
-	WebBackend *backend = WebBackendsManager::getBackend();
-	const QList<QNetworkCookie> cookies = cookieJar->getCookies();
-
-	for (int i = 0; i < cookies.count(); ++i)
-	{
-		const QString domain = (cookies.at(i).domain().startsWith('.') ? cookies.at(i).domain().mid(1) : cookies.at(i).domain());
-		QStandardItem *domainItem = findDomain(domain);
-
-		if (!domainItem)
-		{
-			domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QString("http://%1/").arg(domain))), domain);
-			domainItem->setToolTip(domain);
-
-			m_model->appendRow(domainItem);
-		}
-
-		QStandardItem *cookieItem = new QStandardItem(QString(cookies.at(i).name()));
-		cookieItem->setToolTip(cookies.at(i).name());
-
-		domainItem->appendRow(cookieItem);
-	}
-
-	m_model->sort(0);
-
-	m_ui->cookiesView->setModel(m_model);
+	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
 }
@@ -69,14 +42,90 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+void CookiesContentsWidget::populateCookies()
+{
+	CookieJar *cookieJar = qobject_cast<CookieJar*>(NetworkAccessManager::getCookieJar());
+
+	connect(cookieJar, SIGNAL(cookieInserted(QNetworkCookie)), this, SLOT(insertCookie(QNetworkCookie)));
+	connect(cookieJar, SIGNAL(cookieDeleted(QNetworkCookie)), this, SLOT(deleteCookie(QNetworkCookie)));
+
+	const QList<QNetworkCookie> cookies = cookieJar->getCookies();
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		insertCookie(cookies.at(i));
+	}
+
+	m_model->sort(0);
+
+	m_ui->cookiesView->setModel(m_model);
+}
+
 void CookiesContentsWidget::insertCookie(const QNetworkCookie &cookie)
 {
-//TODO
+	const QString domain = (cookie.domain().startsWith('.') ? cookie.domain().mid(1) : cookie.domain());
+	QStandardItem *domainItem = findDomain(domain);
+
+	if (domainItem)
+	{
+		for (int i = 0; i < domainItem->rowCount(); ++i)
+		{
+			if (domainItem->child(i, 0)->text() == cookie.name() && domainItem->child(i, 0)->data(Qt::UserRole).toString() == cookie.path())
+			{
+				return;
+			}
+		}
+	}
+	else
+	{
+		WebBackend *backend = WebBackendsManager::getBackend();
+
+		domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QString("http://%1/").arg(domain))), domain);
+		domainItem->setToolTip(domain);
+
+		m_model->appendRow(domainItem);
+
+		if (sender())
+		{
+			m_model->sort(0);
+		}
+	}
+
+	QStandardItem *cookieItem = new QStandardItem(QString(cookie.name()));
+	cookieItem->setData(cookie.path(), Qt::UserRole);
+	cookieItem->setToolTip(cookie.name());
+
+	domainItem->appendRow(cookieItem);
 }
 
 void CookiesContentsWidget::deleteCookie(const QNetworkCookie &cookie)
 {
-//TODO
+	const QString domain = (cookie.domain().startsWith('.') ? cookie.domain().mid(1) : cookie.domain());
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *domainItem = m_model->item(i, 0);
+
+		if (domainItem->text() == domain)
+		{
+			for (int j = 0; j < domainItem->rowCount(); ++j)
+			{
+				if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
+				{
+					domainItem->removeRow(j);
+
+					break;
+				}
+			}
+
+			if (domainItem->rowCount() == 0)
+			{
+				m_model->invisibleRootItem()->removeRow(domainItem->row());
+			}
+
+			break;
+		}
+	}
 }
 
 void CookiesContentsWidget::print(QPrinter *printer)
@@ -109,7 +158,7 @@ QStandardItem *CookiesContentsWidget::findDomain(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->item(i, 0)->data(Qt::DisplayRole).toString() == domain)
+		if (m_model->item(i, 0)->text() == domain)
 		{
 			return m_model->item(i, 0);
 		}

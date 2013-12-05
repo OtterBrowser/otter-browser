@@ -51,6 +51,7 @@ protected:
 	QStandardItem* findDomain(const QString &domain);
 
 protected slots:
+	void populateCookies();
 	void filterCookies(const QString &filter);
 	void insertCookie(const QNetworkCookie &cookie);
 	void deleteCookie(const QNetworkCookie &cookie);

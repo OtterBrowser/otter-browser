@@ -59,36 +59,48 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 {
-	if (m_autoSaveTimer == 0)
+	const bool result = QNetworkCookieJar::insertCookie(cookie);
+
+	if (result)
 	{
-		m_autoSaveTimer = startTimer(1000);
+		if (m_autoSaveTimer == 0)
+		{
+			m_autoSaveTimer = startTimer(1000);
+		}
+
+		emit cookieInserted(cookie);
 	}
 
-	emit cookieInserted(cookie);
-
-	return QNetworkCookieJar::insertCookie(cookie);
+	return result;
 }
 
 bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
-	if (m_autoSaveTimer == 0)
+	const bool result = QNetworkCookieJar::deleteCookie(cookie);
+
+	if (result)
 	{
-		m_autoSaveTimer = startTimer(1000);
+		if (m_autoSaveTimer == 0)
+		{
+			m_autoSaveTimer = startTimer(1000);
+		}
+
+		emit cookieDeleted(cookie);
 	}
 
-	emit cookieDeleted(cookie);
-
-	return QNetworkCookieJar::deleteCookie(cookie);
+	return result;
 }
 
 bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 {
-	if (m_autoSaveTimer == 0)
+	const bool result = QNetworkCookieJar::updateCookie(cookie);
+
+	if (result && m_autoSaveTimer == 0)
 	{
 		m_autoSaveTimer = startTimer(1000);
 	}
 
-	return QNetworkCookieJar::updateCookie(cookie);
+	return result;
 }
 
 void CookieJar::save()
