@@ -756,6 +756,12 @@ void MainWindow::updateActions()
 	{
 		m_ui->actionDelete->setEnabled(false);
 	}
+
+	const bool canZoom = m_windowsManager->canZoom();
+
+	m_ui->actionZoomOut->setEnabled(canZoom);
+	m_ui->actionZoomIn->setEnabled(canZoom);
+	m_ui->actionZoomOriginal->setEnabled(canZoom);
 }
 
 WindowsManager *MainWindow::getWindowsManager()

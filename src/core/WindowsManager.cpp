@@ -445,6 +445,7 @@ void WindowsManager::setCurrentWindow(int index)
 		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
 
+	emit actionsChanged();
 	emit currentWindowChanged(index);
 }
 
@@ -561,6 +562,13 @@ int WindowsManager::getZoom() const
 	Window *window = getWindow(getCurrentWindow());
 
 	return (window ? window->getZoom() : 100);
+}
+
+bool WindowsManager::canZoom() const
+{
+	Window *window = getWindow(getCurrentWindow());
+
+	return (window ? window->canZoom() : false);
 }
 
 int WindowsManager::getWindowIndex(Window *window) const
