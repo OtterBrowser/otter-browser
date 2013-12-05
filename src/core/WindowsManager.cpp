@@ -573,18 +573,4 @@ int WindowsManager::getWindowIndex(Window *window) const
 	return -1;
 }
 
-bool WindowsManager::canUndo() const
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	return (window && window->getUndoStack()->canUndo());
-}
-
-bool WindowsManager::canRedo() const
-{
-	Window *window = getWindow(getCurrentWindow());
-
-	return (window && window->getUndoStack()->canRedo());
-}
-
 }

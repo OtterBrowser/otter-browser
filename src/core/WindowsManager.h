@@ -32,8 +32,6 @@ public:
 	int getWindowCount() const;
 	int getCurrentWindow() const;
 	int getZoom() const;
-	bool canUndo() const;
-	bool canRedo() const;
 
 public slots:
 	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);

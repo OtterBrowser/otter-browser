@@ -32,6 +32,9 @@
     <layout class="QVBoxLayout" name="buttonsLayout" stretch="0,0,1">
      <item>
       <widget class="QPushButton" name="deleteButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Delete</string>
        </property>
