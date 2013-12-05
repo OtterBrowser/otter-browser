@@ -103,6 +103,13 @@ void Window::setUrl(const QUrl &url)
 
 	if (url.scheme() == "about")
 	{
+		if (!url.path().isEmpty() && url.path() != "blank" && SessionsManager::hasUrl(url, true))
+		{
+			updateUrl(m_contentsWidget->getUrl());
+
+			return;
+		}
+
 		if (url.path() == "cookies")
 		{
 			newWidget = new CookiesContentsWidget(this);

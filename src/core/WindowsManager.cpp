@@ -571,6 +571,26 @@ bool WindowsManager::canZoom() const
 	return (window ? window->canZoom() : false);
 }
 
+bool WindowsManager::hasUrl(const QUrl &url, bool activate)
+{
+	for (int i = 0; i < m_tabBar->count(); ++i)
+	{
+		Window *window = getWindow(i);
+
+		if (window && window->getUrl() == url)
+		{
+			if (activate)
+			{
+				setCurrentWindow(i);
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int WindowsManager::getWindowIndex(Window *window) const
 {
 	for (int i = 0; i < m_tabBar->count(); ++i)

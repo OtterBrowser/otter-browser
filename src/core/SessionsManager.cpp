@@ -379,4 +379,25 @@ bool SessionsManager::moveSession(const QString &from, const QString &to)
 	return QFile::rename(getSessionPath(from), getSessionPath(to));
 }
 
+bool SessionsManager::hasUrl(const QUrl &url, bool activate)
+{
+	for (int i = 0; i < m_windows.count(); ++i)
+	{
+		if (m_windows.at(i)->hasUrl(url, activate))
+		{
+			QWidget *window = qobject_cast<QWidget*>(m_windows.at(i)->parent());
+
+			if (window)
+			{
+				window->raise();
+				window->activateWindow();
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 }

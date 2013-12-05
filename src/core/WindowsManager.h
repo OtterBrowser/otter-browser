@@ -33,6 +33,7 @@ public:
 	int getCurrentWindow() const;
 	int getZoom() const;
 	bool canZoom() const;
+	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:
 	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);

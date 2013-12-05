@@ -157,6 +157,8 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
 
+	SessionsManager::registerWindow(m_windowsManager);
+
 	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
