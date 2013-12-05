@@ -21,10 +21,17 @@
        <property name="placeholderText">
         <string>Search...</string>
        </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QTreeView" name="cookiesView"/>
+      <widget class="QTreeView" name="cookiesView">
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </item>

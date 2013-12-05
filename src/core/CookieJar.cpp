@@ -57,16 +57,6 @@ void CookieJar::timerEvent(QTimerEvent *event)
 	}
 }
 
-bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
-{
-	if (m_autoSaveTimer == 0)
-	{
-		m_autoSaveTimer = startTimer(1000);
-	}
-
-	return QNetworkCookieJar::deleteCookie(cookie);
-}
-
 bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 {
 	if (m_autoSaveTimer == 0)
@@ -74,7 +64,21 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 		m_autoSaveTimer = startTimer(1000);
 	}
 
+	emit cookieInserted(cookie);
+
 	return QNetworkCookieJar::insertCookie(cookie);
+}
+
+bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
+{
+	if (m_autoSaveTimer == 0)
+	{
+		m_autoSaveTimer = startTimer(1000);
+	}
+
+	emit cookieDeleted(cookie);
+
+	return QNetworkCookieJar::deleteCookie(cookie);
 }
 
 bool CookieJar::updateCookie(const QNetworkCookie &cookie)
@@ -104,6 +108,11 @@ void CookieJar::save()
 	{
 		stream << cookies.at(i).toRawForm();
 	}
+}
+
+QList<QNetworkCookie> CookieJar::getCookies() const
+{
+	return allCookies();
 }
 
 }

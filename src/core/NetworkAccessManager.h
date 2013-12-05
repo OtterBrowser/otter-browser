@@ -17,6 +17,8 @@ public:
 
 	void resetStatistics();
 
+	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
+
 protected:
 	void timerEvent(QTimerEvent *event);
 	void updateStatus();

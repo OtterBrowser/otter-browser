@@ -24,17 +24,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 	m_startedRequests(0),
 	m_updateTimer(0)
 {
-	if (!m_cookieJar && !privateWindow)
-	{
-		m_cookieJar = new CookieJar(QCoreApplication::instance());
-	}
-
-	if (!m_privateCookieJar && privateWindow)
-	{
-		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
-	}
-
-	QNetworkCookieJar *cookieJar = (privateWindow ? m_privateCookieJar : m_cookieJar);
+	QNetworkCookieJar *cookieJar = getCookieJar(privateWindow);
 
 	setCookieJar(cookieJar);
 
@@ -82,34 +72,6 @@ void NetworkAccessManager::updateStatus()
 	m_bytesReceivedDifference = 0;
 
 	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
-}
-
-QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
-{
-	++m_startedRequests;
-
-	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
-	{
-		return new LocalListingNetworkReply(this, request);
-	}
-
-	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, request, outgoingData);
-
-	if (!m_mainReply)
-	{
-		m_mainReply = reply;
-	}
-
-	m_replies[reply] = qMakePair(0, false);
-
-	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-
-	if (m_updateTimer == 0)
-	{
-		m_updateTimer = startTimer(500);
-	}
-
-	return reply;
 }
 
 void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -173,6 +135,49 @@ void NetworkAccessManager::authenticate(QNetworkReply *reply, QAuthenticator *au
 {
 	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
 	dialog.exec();
+}
+
+QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
+{
+	++m_startedRequests;
+
+	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
+	{
+		return new LocalListingNetworkReply(this, request);
+	}
+
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, request, outgoingData);
+
+	if (!m_mainReply)
+	{
+		m_mainReply = reply;
+	}
+
+	m_replies[reply] = qMakePair(0, false);
+
+	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+
+	if (m_updateTimer == 0)
+	{
+		m_updateTimer = startTimer(500);
+	}
+
+	return reply;
+}
+
+QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
+{
+	if (!m_cookieJar && !privateCookieJar)
+	{
+		m_cookieJar = new CookieJar(QCoreApplication::instance());
+	}
+
+	if (!m_privateCookieJar && privateCookieJar)
+	{
+		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
+	}
+
+	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
 }
 
 }

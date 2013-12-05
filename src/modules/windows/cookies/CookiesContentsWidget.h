@@ -3,6 +3,9 @@
 
 #include "../../../ui/ContentsWidget.h"
 
+#include <QtGui/QStandardItemModel>
+#include <QtNetwork/QNetworkCookie>
+
 namespace Otter
 {
 
@@ -45,8 +48,15 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	QStandardItem* findDomain(const QString &domain);
+
+protected slots:
+	void filterCookies(const QString &filter);
+	void insertCookie(const QNetworkCookie &cookie);
+	void deleteCookie(const QNetworkCookie &cookie);
 
 private:
+	QStandardItemModel *m_model;
 	Ui::CookiesContentsWidget *m_ui;
 
 signals:

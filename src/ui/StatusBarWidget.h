@@ -3,7 +3,6 @@
 
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -22,8 +21,6 @@ public slots:
 	void setZoomEnabled(bool enabled);
 
 private:
-	QToolButton *m_zoomOutButton;
-	QToolButton *m_zoomInButton;
 	QSlider *m_zoomSlider;
 
 signals:
