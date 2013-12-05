@@ -6,24 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>59</height>
+    <width>266</width>
+    <height>29</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>3</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -57,118 +48,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QWidget" name="findWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0,0">
-      <property name="spacing">
-       <number>3</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLineEdit" name="findLineEdit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Find...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="findNextButton">
-        <property name="toolTip">
-         <string>Find Next Occurence</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../resources/resources.qrc">
-          <normaloff>:/icons/go-down.png</normaloff>:/icons/go-down.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="findPreviousButton">
-        <property name="toolTip">
-         <string>Find Previous Occurence</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../resources/resources.qrc">
-          <normaloff>:/icons/go-up.png</normaloff>:/icons/go-up.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="highlightButton">
-        <property name="text">
-         <string>Highlight</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="caseSensitiveButton">
-        <property name="text">
-         <string>Case Sensitive</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="closeButton">
-        <property name="toolTip">
-         <string>Close</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../resources/resources.qrc">
-          <normaloff>:/icons/window-close.png</normaloff>:/icons/window-close.png</iconset>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
    </item>
   </layout>
  </widget>

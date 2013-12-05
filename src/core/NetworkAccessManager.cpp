@@ -49,7 +49,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
-	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
+	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
 }
 
 void NetworkAccessManager::resetStatistics()

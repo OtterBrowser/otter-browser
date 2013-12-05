@@ -10,63 +10,67 @@ TARGET = otter
 TEMPLATE = app
 
 SOURCES += src/main.cpp\
-    src/ui/MainWindow.cpp \
-    src/ui/CookiesDialog.cpp \
-    src/ui/PreferencesDialog.cpp \
     src/core/SettingsManager.cpp \
     src/core/Application.cpp \
-    src/ui/TabBarWidget.cpp \
-    src/ui/Window.cpp \
     src/core/WindowsManager.cpp \
     src/core/ActionsManager.cpp \
     src/core/NetworkAccessManager.cpp \
-    src/ui/StatusBarWidget.cpp \
-    src/backends/web/WebBackend.cpp \
-    src/backends/web/qtwebkit/WebBackendWebKit.cpp \
-    src/backends/web/WebWidget.cpp \
-    src/backends/web/qtwebkit/WebWidgetWebKit.cpp \
-    src/backends/web/WebBackendsManager.cpp \
-    src/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/core/SessionsManager.cpp \
     src/core/LocalListingNetworkReply.cpp \
+    src/core/BookmarksManager.cpp \
+    src/core/CookieJar.cpp \
+    src/ui/MainWindow.cpp \
+    src/ui/CookiesDialog.cpp \
+    src/ui/PreferencesDialog.cpp \
+    src/ui/TabBarWidget.cpp \
+    src/ui/Window.cpp \
+    src/ui/StatusBarWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
-    src/ui/ProgressBarWidget.cpp \
-    src/core/BookmarksManager.cpp \
     src/ui/BookmarkDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
-    src/core/CookieJar.cpp \
     src/ui/PreviewWidget.cpp \
-    src/ui/ImagePropertiesDialog.cpp
+    src/ui/ImagePropertiesDialog.cpp \
+    src/ui/ContentsWidget.cpp \
+    src/backends/web/WebBackend.cpp \
+    src/backends/web/WebWidget.cpp \
+    src/backends/web/WebBackendsManager.cpp \
+    src/backends/web/qtwebkit/WebBackendWebKit.cpp \
+    src/backends/web/qtwebkit/WebWidgetWebKit.cpp \
+    src/backends/web/qtwebkit/WebPageWebKit.cpp \
+    src/modules/windows/web/WebContentsWidget.cpp \
+    src/modules/windows/web/ProgressBarWidget.cpp
 
-HEADERS += src/ui/MainWindow.h \
-    src/ui/CookiesDialog.h \
-    src/ui/PreferencesDialog.h \
-    src/core/SettingsManager.h \
+HEADERS += src/core/SettingsManager.h \
     src/core/Application.h \
-    src/ui/TabBarWidget.h \
-    src/ui/Window.h \
     src/core/WindowsManager.h \
     src/core/ActionsManager.h \
     src/core/NetworkAccessManager.h \
-    src/ui/StatusBarWidget.h \
-    src/backends/web/WebBackend.h \
-    src/backends/web/qtwebkit/WebBackendWebKit.h \
-    src/backends/web/WebWidget.h \
-    src/backends/web/qtwebkit/WebWidgetWebKit.h \
-    src/backends/web/WebBackendsManager.h \
-    src/backends/web/qtwebkit/WebPageWebKit.h \
     src/core/SessionsManager.h \
     src/core/LocalListingNetworkReply.h \
+    src/core/BookmarksManager.h \
+    src/core/CookieJar.h \
+    src/ui/MainWindow.h \
+    src/ui/CookiesDialog.h \
+    src/ui/PreferencesDialog.h \
+    src/ui/TabBarWidget.h \
+    src/ui/Window.h \
+    src/ui/StatusBarWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SaveSessionDialog.h \
-    src/ui/ProgressBarWidget.h \
-    src/core/BookmarksManager.h \
     src/ui/BookmarkDialog.h \
     src/ui/AuthenticationDialog.h \
-    src/core/CookieJar.h \
     src/ui/PreviewWidget.h \
-    src/ui/ImagePropertiesDialog.h
+    src/ui/ImagePropertiesDialog.h \
+    src/ui/ContentsWidget.h \
+    src/backends/web/WebBackend.h \
+    src/backends/web/WebWidget.h \
+    src/backends/web/WebBackendsManager.h \
+    src/backends/web/qtwebkit/WebBackendWebKit.h \
+    src/backends/web/qtwebkit/WebWidgetWebKit.h \
+    src/backends/web/qtwebkit/WebPageWebKit.h \
+    src/modules/windows/web/WebContentsWidget.h \
+    src/modules/windows/web/ProgressBarWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
@@ -76,7 +80,8 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/BookmarkDialog.ui \
     src/ui/AuthenticationDialog.ui \
-    src/ui/ImagePropertiesDialog.ui
+    src/ui/ImagePropertiesDialog.ui \
+    src/modules/windows/web/WebContentsWidget.ui
 
 RESOURCES += \
     resources/resources.qrc

@@ -81,8 +81,7 @@ enum WindowAction
 	FindPreviousAction
 };
 
-class ProgressBarWidget;
-class WebWidget;
+class ContentsWidget;
 
 class Window : public QWidget
 {
@@ -93,63 +92,56 @@ class Window : public QWidget
 	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
 	Q_PROPERTY(int zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
 	Q_PROPERTY(bool isClonable READ isClonable)
-	Q_PROPERTY(bool isEmpty READ isEmpty)
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
 	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
 	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
-	explicit Window(WebWidget *widget, QWidget *parent = NULL);
+	explicit Window(bool privateWindow, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
-	virtual void print(QPrinter *printer);
-	virtual Window* clone(QWidget *parent = NULL);
-	virtual QAction* getAction(WindowAction action);
-	virtual QUndoStack* getUndoStack();
-	virtual QString getDefaultTextEncoding() const;
-	virtual QString getTitle() const;
-	virtual QUrl getUrl() const;
-	virtual QIcon getIcon() const;
-	virtual QPixmap getThumbnail() const;
-	virtual HistoryInformation getHistory() const;
-	virtual int getZoom() const;
-	virtual bool isClonable() const;
-	virtual bool isEmpty() const;
-	virtual bool isLoading() const;
-	virtual bool isPinned() const;
-	virtual bool isPrivate() const;
+	void print(QPrinter *printer);
+	Window* clone(QWidget *parent = NULL);
+	QAction* getAction(WindowAction action);
+	QUndoStack* getUndoStack();
+	QString getDefaultTextEncoding() const;
+	QString getTitle() const;
+	QString getType() const;
+	QUrl getUrl() const;
+	QIcon getIcon() const;
+	QPixmap getThumbnail() const;
+	HistoryInformation getHistory() const;
+	int getZoom() const;
+	bool isClonable() const;
+	bool isLoading() const;
+	bool isPinned() const;
+	bool isPrivate() const;
 
 public slots:
-	virtual void triggerAction(WindowAction action, bool checked = false);
-	virtual void setDefaultTextEncoding(const QString &encoding);
-	virtual void setHistory(const HistoryInformation &history);
-	virtual void setZoom(int zoom);
-	virtual void setUrl(const QUrl &url);
-	virtual void setPinned(bool pinned);
+	void triggerAction(WindowAction action, bool checked = false);
+	void setDefaultTextEncoding(const QString &encoding);
+	void setHistory(const HistoryInformation &history);
+	void setZoom(int zoom);
+	void setUrl(const QUrl &url);
+	void setPinned(bool pinned);
 
 protected:
 	void changeEvent(QEvent *event);
-	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void loadUrl();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 	void updateUrl(const QUrl &url);
-	void updateFind(bool backwards = false);
-	void updateFindHighlight();
-	void updateProgressBarWidget();
-	void setLoading(bool loading);
 
 private:
-	WebWidget *m_webWidget;
-	ProgressBarWidget *m_progressBarWidget;
+	ContentsWidget *m_contentsWidget;
 	bool m_isPinned;
 	Ui::Window *m_ui;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow, bool background, bool newWindow);
 	void requestedAddBookmark(QUrl url);
-	void requestedNewWindow(WebWidget *widget);
+	void requestedNewWindow(ContentsWidget *widget);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);

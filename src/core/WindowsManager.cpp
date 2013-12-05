@@ -1,9 +1,8 @@
 #include "WindowsManager.h"
 #include "SettingsManager.h"
+#include "../ui/ContentsWidget.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
-#include "../backends/web/WebBackend.h"
-#include "../backends/web/WebBackendsManager.h"
 
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrintDialog>
@@ -46,7 +45,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	{
 		window = getWindow(getCurrentWindow());
 
-		if (window && window->isEmpty())
+		if (window && window->getType() == "web" && window->getUrl().scheme() == "about" && (window->getUrl().path() == "blank" || window->getUrl().path().isEmpty()))
 		{
 			if (window->isPrivate() == privateWindow)
 			{
@@ -55,14 +54,12 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 				return;
 			}
-			else
-			{
-				closeWindow(getCurrentWindow());
-			}
+
+			closeWindow(getCurrentWindow());
 		}
 	}
 
-	window = new Window(WebBackendsManager::getBackend()->createWidget(privateWindow), m_area);
+	window = new Window(privateWindow, NULL, m_area);
 	window->setUrl(url);
 
 	addWindow(window, background);
@@ -130,7 +127,7 @@ void WindowsManager::restore(int index)
 	history.index = entry.index;
 	history.entries = entry.history;
 
-	Window *window = new Window(NULL, m_area);
+	Window *window = new Window(m_privateSession, NULL, m_area);
 	window->setUrl(entry.url());
 	window->setHistory(history);
 	window->setPinned(entry.pinned);
@@ -249,7 +246,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	connect(window, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
-	connect(window, SIGNAL(requestedNewWindow(WebWidget*)), this, SLOT(addWindow(WebWidget*)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SLOT(addWindow(ContentsWidget*)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
@@ -258,9 +255,12 @@ void WindowsManager::addWindow(Window *window, bool background)
 	emit windowAdded(index);
 }
 
-void WindowsManager::addWindow(WebWidget *widget)
+void WindowsManager::addWindow(ContentsWidget *widget)
 {
-	addWindow(new Window(widget, m_area));
+	if (widget)
+	{
+		addWindow(new Window(widget->isPrivate(), widget, m_area));
+	}
 }
 
 void WindowsManager::cloneWindow(int index)
