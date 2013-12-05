@@ -56,7 +56,6 @@ void Window::print(QPrinter *printer)
 
 void Window::triggerAction(WindowAction action, bool checked)
 {
-
 	m_contentsWidget->triggerAction(action, checked);
 }
 
@@ -153,15 +152,17 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	updateUrl(m_contentsWidget->getUrl());
 
+	emit actionsChanged();
+	emit canZoomChanged(m_contentsWidget->canZoom());
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
-	emit actionsChanged();
 
 	connect(m_ui->addressLineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SIGNAL(requestedNewWindow(ContentsWidget*)));
 	connect(m_contentsWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
+	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString,int)), this, SIGNAL(statusMessageChanged(QString,int)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
@@ -243,6 +244,11 @@ HistoryInformation Window::getHistory() const
 int Window::getZoom() const
 {
 	return m_contentsWidget->getZoom();
+}
+
+bool Window::canZoom() const
+{
+	return m_contentsWidget->canZoom();
 }
 
 bool Window::isClonable() const

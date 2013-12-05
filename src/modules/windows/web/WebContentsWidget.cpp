@@ -279,6 +279,11 @@ int WebContentsWidget::getZoom() const
 	return m_webWidget->getZoom();
 }
 
+bool WebContentsWidget::canZoom() const
+{
+	return true;
+}
+
 bool WebContentsWidget::isClonable() const
 {
 	return true;

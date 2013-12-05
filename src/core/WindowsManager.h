@@ -72,6 +72,7 @@ signals:
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(bool privateSession, bool background, QUrl url);
 	void actionsChanged();
+	void canZoomChanged(bool can);
 	void windowAdded(int index);
 	void windowRemoved(int index);
 	void currentWindowChanged(int index);

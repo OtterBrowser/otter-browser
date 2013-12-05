@@ -399,6 +399,7 @@ void WindowsManager::setCurrentWindow(int index)
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		disconnect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
+		disconnect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
 		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
 
@@ -425,6 +426,7 @@ void WindowsManager::setCurrentWindow(int index)
 		}
 
 		m_statusBar->setZoom(window->getZoom());
+		m_statusBar->setZoomEnabled(window->canZoom());
 
 		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
 
@@ -439,6 +441,7 @@ void WindowsManager::setCurrentWindow(int index)
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
+		connect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
 		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
 	}
 

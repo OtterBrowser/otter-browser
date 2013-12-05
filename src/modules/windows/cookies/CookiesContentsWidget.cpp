@@ -121,6 +121,11 @@ int CookiesContentsWidget::getZoom() const
 	return 100;
 }
 
+bool CookiesContentsWidget::canZoom() const
+{
+	return false;
+}
+
 bool CookiesContentsWidget::isClonable() const
 {
 	return false;

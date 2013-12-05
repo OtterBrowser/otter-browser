@@ -34,6 +34,7 @@ public:
 	QPixmap getThumbnail() const;
 	HistoryInformation getHistory() const;
 	int getZoom() const;
+	bool canZoom() const;
 	bool isClonable() const;
 	bool isLoading() const;
 	bool isPrivate() const;
@@ -67,6 +68,7 @@ signals:
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(ContentsWidget *widget);
 	void actionsChanged();
+	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message, int timeout);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
