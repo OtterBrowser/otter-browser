@@ -13,7 +13,8 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 	m_ui(new Ui::ImagePropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->addressValueLabel->setText(url.toString());
+	m_ui->addressValueLineEdit->setText(url.toString());
+	m_ui->addressValueLineEdit->setCursorPosition(0);
 	m_ui->alternativeTextValueLabel->setText(alternativeText.toHtmlEscaped());
 	m_ui->longDescriptionValueLabel->setText(longDescription.toHtmlEscaped());
 
