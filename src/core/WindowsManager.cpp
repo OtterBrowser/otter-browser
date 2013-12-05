@@ -388,10 +388,14 @@ void WindowsManager::setCurrentWindow(int index)
 	{
 		window->showMinimized();
 
-		disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-		disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-		disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-		disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		if (window->getUndoStack())
+		{
+			disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		}
+
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		disconnect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
@@ -424,10 +428,14 @@ void WindowsManager::setCurrentWindow(int index)
 
 		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
 
-		connect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-		connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-		connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-		connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		if (window->getUndoStack())
+		{
+			connect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+			connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+		}
+
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));

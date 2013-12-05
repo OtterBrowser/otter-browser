@@ -705,6 +705,11 @@ void MainWindow::updateActions()
 		m_ui->actionUndo->setEnabled(undoAction->isEnabled());
 		m_ui->actionUndo->setText(undoAction->text());
 	}
+	else
+	{
+		m_ui->actionUndo->setEnabled(false);
+		m_ui->actionUndo->setText(tr("Undo"));
+	}
 
 	QAction *redoAction = m_windowsManager->getAction(RedoAction);
 
@@ -713,12 +718,21 @@ void MainWindow::updateActions()
 		m_ui->actionRedo->setEnabled(redoAction->isEnabled());
 		m_ui->actionRedo->setText(redoAction->text());
 	}
+	else
+	{
+		m_ui->actionRedo->setEnabled(false);
+		m_ui->actionRedo->setText(tr("Redo"));
+	}
 
 	QAction *copyAction = m_windowsManager->getAction(CopyAction);
 
 	if (copyAction)
 	{
 		m_ui->actionCopy->setEnabled(copyAction->isEnabled());
+	}
+	else
+	{
+		m_ui->actionCopy->setEnabled(false);
 	}
 
 	QAction *cutAction = m_windowsManager->getAction(CutAction);
@@ -727,12 +741,20 @@ void MainWindow::updateActions()
 	{
 		m_ui->actionCut->setEnabled(cutAction->isEnabled());
 	}
+	else
+	{
+		m_ui->actionCut->setEnabled(false);
+	}
 
 	QAction *deleteAction = m_windowsManager->getAction(DeleteAction);
 
 	if (deleteAction)
 	{
 		m_ui->actionDelete->setEnabled(deleteAction->isEnabled());
+	}
+	else
+	{
+		m_ui->actionDelete->setEnabled(false);
 	}
 }
 

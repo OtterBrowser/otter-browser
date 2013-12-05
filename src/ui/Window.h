@@ -127,6 +127,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
 	void loadUrl();

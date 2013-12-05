@@ -39,7 +39,8 @@ SOURCES += src/main.cpp\
     src/backends/web/qtwebkit/WebWidgetWebKit.cpp \
     src/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
-    src/modules/windows/web/ProgressBarWidget.cpp
+    src/modules/windows/web/ProgressBarWidget.cpp \
+    src/modules/windows/cookies/CookiesContentsWidget.cpp
 
 HEADERS += src/core/SettingsManager.h \
     src/core/Application.h \
@@ -70,7 +71,8 @@ HEADERS += src/core/SettingsManager.h \
     src/backends/web/qtwebkit/WebWidgetWebKit.h \
     src/backends/web/qtwebkit/WebPageWebKit.h \
     src/modules/windows/web/WebContentsWidget.h \
-    src/modules/windows/web/ProgressBarWidget.h
+    src/modules/windows/web/ProgressBarWidget.h \
+    src/modules/windows/cookies/CookiesContentsWidget.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/CookiesDialog.ui \
@@ -81,7 +83,8 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/BookmarkDialog.ui \
     src/ui/AuthenticationDialog.ui \
     src/ui/ImagePropertiesDialog.ui \
-    src/modules/windows/web/WebContentsWidget.ui
+    src/modules/windows/web/WebContentsWidget.ui \
+    src/modules/windows/cookies/CookiesContentsWidget.ui
 
 RESOURCES += \
     resources/resources.qrc
