@@ -2,6 +2,7 @@
 #include "ActionsManager.h"
 #include "BookmarksManager.h"
 #include "SettingsManager.h"
+#include "TransfersManager.h"
 #include "../backends/web/WebBackendsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -119,6 +120,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	WebBackendsManager::createInstance(this);
 
 	SessionsManager::createInstance(this);
+
+	TransfersManager::createInstance(this);
 
 	QTranslator qtTranslator;
 	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

@@ -1,5 +1,5 @@
 #include "ProgressBarWidget.h"
-#include "../backends/web/WebWidget.h"
+#include "../../../backends/web/WebWidget.h"
 
 #include <QtGui/QPalette>
 #include <QtWidgets/QHBoxLayout>

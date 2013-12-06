@@ -19,6 +19,7 @@ SOURCES += src/main.cpp\
     src/core/LocalListingNetworkReply.cpp \
     src/core/BookmarksManager.cpp \
     src/core/CookieJar.cpp \
+    src/core/TransfersManager.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/MainWindow.cpp \
     src/ui/PreferencesDialog.cpp \
@@ -52,6 +53,7 @@ HEADERS += src/core/SettingsManager.h \
     src/core/LocalListingNetworkReply.h \
     src/core/BookmarksManager.h \
     src/core/CookieJar.h \
+    src/core/TransfersManager.h \
     src/ui/AddressWidget.h \
     src/ui/MainWindow.h \
     src/ui/PreferencesDialog.h \
