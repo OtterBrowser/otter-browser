@@ -14,7 +14,16 @@
    <property name="spacing">
     <number>3</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -41,7 +50,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="addressLineEdit">
+      <widget class="Otter::AddressWidget" name="addressWidget">
        <property name="placeholderText">
         <string>Enter Address...</string>
        </property>
@@ -51,14 +60,19 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::AddressWidget</class>
+   <extends>QLineEdit</extends>
+   <header>src/ui/AddressWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>addressLineEdit</tabstop>
+  <tabstop>addressWidget</tabstop>
   <tabstop>forwardButton</tabstop>
   <tabstop>reloadOrStopButton</tabstop>
   <tabstop>backButton</tabstop>
  </tabstops>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

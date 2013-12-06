@@ -132,9 +132,7 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
-	void loadUrl();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
-	void updateUrl(const QUrl &url);
 
 private:
 	ContentsWidget *m_contentsWidget;

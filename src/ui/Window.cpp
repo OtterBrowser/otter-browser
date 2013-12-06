@@ -27,6 +27,8 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	widget->setZoom(SettingsManager::getValue("Browser/DefaultZoom", 100).toInt());
 
 	setContentsWidget(widget);
+
+	m_ui->addressWidget->setWindow(this);
 }
 
 Window::~Window()
@@ -59,19 +61,9 @@ void Window::triggerAction(WindowAction action, bool checked)
 	m_contentsWidget->triggerAction(action, checked);
 }
 
-void Window::loadUrl()
-{
-	setUrl(QUrl(m_ui->addressLineEdit->text()));
-}
-
 void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)
 {
 	emit requestedOpenUrl(url, isPrivate(), background, newWindow);
-}
-
-void Window::updateUrl(const QUrl &url)
-{
-	m_ui->addressLineEdit->setText((url.scheme() == "about" && url.path() == "blank") ? QString() : url.toString());
 }
 
 void Window::setDefaultTextEncoding(const QString &encoding)
@@ -105,7 +97,7 @@ void Window::setUrl(const QUrl &url)
 	{
 		if (!url.path().isEmpty() && url.path() != "blank" && SessionsManager::hasUrl(url, true))
 		{
-			updateUrl(m_contentsWidget->getUrl());
+			m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
 
 			return;
 		}
@@ -155,16 +147,15 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(getAction(ReloadOrStopAction));
-	m_ui->addressLineEdit->setFocus();
-
-	updateUrl(m_contentsWidget->getUrl());
+	m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
+	m_ui->addressWidget->setFocus();
 
 	emit actionsChanged();
 	emit canZoomChanged(m_contentsWidget->canZoom());
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
 
-	connect(m_ui->addressLineEdit, SIGNAL(returnPressed()), this, SLOT(loadUrl()));
+	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SIGNAL(requestedNewWindow(ContentsWidget*)));
@@ -173,7 +164,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString,int)), this, SIGNAL(statusMessageChanged(QString,int)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
-	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(updateUrl(QUrl)));
+	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_ui->addressWidget, SLOT(setUrl(QUrl)));
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
