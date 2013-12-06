@@ -169,12 +169,13 @@
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuTools">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionCookies"/>
+    <addaction name="actionTransfers"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -283,6 +284,9 @@
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
   </action>
   <action name="actionCloseTab">
    <property name="text">
@@ -371,10 +375,16 @@
    <property name="text">
     <string>About Application...</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
+   </property>
   </action>
   <action name="actionAboutQt">
    <property name="text">
     <string>About Qt...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
   <action name="actionZoomIn">
@@ -480,6 +490,30 @@
    </property>
    <property name="text">
     <string>Inspect Page</string>
+   </property>
+  </action>
+  <action name="actionCookies">
+   <property name="text">
+    <string>Cookies</string>
+   </property>
+  </action>
+  <action name="actionTransfers">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Transfers</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
  </widget>

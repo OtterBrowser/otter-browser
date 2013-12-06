@@ -49,6 +49,7 @@ protected slots:
 	void actionAddBookmark(const QUrl &url = QUrl());
 	void actionOpenBookmark();
 	void actionOpenBookmarkFolder();
+	void actionCookies();
 	void actionAboutApplication();
 	void menuSessionsAboutToShow();
 	void menuTextEncodingAboutToShow();
