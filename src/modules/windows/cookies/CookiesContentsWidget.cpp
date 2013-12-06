@@ -135,27 +135,48 @@ void CookiesContentsWidget::deleteCookie(const QNetworkCookie &cookie)
 
 void CookiesContentsWidget::deleteCookies()
 {
-	const QModelIndex index = m_ui->cookiesView->currentIndex();
+	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
 
-	if (!index.isValid())
+	if (indexes.isEmpty())
 	{
 		return;
 	}
 
 	QNetworkCookieJar *cookieJar = NetworkAccessManager::getCookieJar();
 
-	if (index.data(Qt::UserRole).toString().isEmpty())
+	for (int i = 0; i < indexes.count(); ++i)
 	{
-		QStandardItem *domainItem = m_model->itemFromIndex(index);
-
-		if (!domainItem)
+		if (!indexes.at(i).isValid())
 		{
-			return;
+			continue;
 		}
 
-		for (int i = 0; i < domainItem->rowCount(); ++i)
+		if (indexes.at(i).data(Qt::UserRole).toString().isEmpty())
 		{
-			QStandardItem *cookieItem = domainItem->child(i, 0);
+			QStandardItem *domainItem = m_model->itemFromIndex(indexes.at(i));
+
+			if (!domainItem)
+			{
+				continue;
+			}
+
+			for (int j = 0; j < domainItem->rowCount(); ++j)
+			{
+				QStandardItem *cookieItem = domainItem->child(j, 0);
+
+				if (cookieItem)
+				{
+					QNetworkCookie cookie(cookieItem->text().toUtf8());
+					cookie.setDomain(cookieItem->data(Qt::UserRole + 1).toString());
+					cookie.setPath(cookieItem->data(Qt::UserRole).toString());
+
+					cookieJar->deleteCookie(cookie);
+				}
+			}
+		}
+		else
+		{
+			QStandardItem *cookieItem = m_model->itemFromIndex(indexes.at(i));
 
 			if (cookieItem)
 			{
@@ -165,19 +186,6 @@ void CookiesContentsWidget::deleteCookies()
 
 				cookieJar->deleteCookie(cookie);
 			}
-		}
-	}
-	else
-	{
-		QStandardItem *cookieItem = m_model->itemFromIndex(index);
-
-		if (cookieItem)
-		{
-			QNetworkCookie cookie(cookieItem->text().toUtf8());
-			cookie.setDomain(cookieItem->data(Qt::UserRole + 1).toString());
-			cookie.setPath(cookieItem->data(Qt::UserRole).toString());
-
-			cookieJar->deleteCookie(cookie);
 		}
 	}
 }
