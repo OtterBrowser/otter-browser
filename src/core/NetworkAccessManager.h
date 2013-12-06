@@ -2,6 +2,7 @@
 #define OTTER_NETWORKACCESSMANAGER_H
 
 #include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkDiskCache>
 
 namespace Otter
 {
@@ -18,6 +19,7 @@ public:
 	void resetStatistics();
 
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
+	static QNetworkDiskCache* getCache();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -42,6 +44,7 @@ private:
 
 	static CookieJar *m_cookieJar;
 	static QNetworkCookieJar *m_privateCookieJar;
+	static QNetworkDiskCache *m_cache;
 
 signals:
 	void messageChanged(const QString &message = QString());

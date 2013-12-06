@@ -6,13 +6,13 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
-#include <QtNetwork/QNetworkDiskCache>
 
 namespace Otter
 {
 
 CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
+QNetworkDiskCache* NetworkAccessManager::m_cache = NULL;
 
 NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) : QNetworkAccessManager(parent),
 	m_mainReply(NULL),
@@ -32,10 +32,11 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 
 	if (!privateWindow)
 	{
-		QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
-		diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+		QNetworkDiskCache *cache = getCache();
 
-		setCache(diskCache);
+		setCache(cache);
+
+		cache->setParent(QCoreApplication::instance());
 	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
@@ -178,6 +179,17 @@ QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
 	}
 
 	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
+}
+
+QNetworkDiskCache *NetworkAccessManager::getCache()
+{
+	if (!m_cache)
+	{
+		m_cache = new QNetworkDiskCache(QCoreApplication::instance());
+		m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+	}
+
+	return m_cache;
 }
 
 }
