@@ -59,5 +59,6 @@
         <file>icons/text-html.png</file>
         <file>icons/document-open-folder.png</file>
         <file>icons/cookies.png</file>
+        <file>icons/bookmarks.png</file>
     </qresource>
 </RCC>

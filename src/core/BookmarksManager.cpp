@@ -249,14 +249,17 @@ bool BookmarksManager::hasBookmark(const QString &url)
 		return false;
 	}
 
-	const QUrl bookmark(url);
+	return hasBookmark(QUrl(url));
+}
 
-	if (!bookmark.isValid())
+bool BookmarksManager::hasBookmark(const QUrl &url)
+{
+	if (!url.isValid())
 	{
 		return false;
 	}
 
-	return m_urls.contains(bookmark.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
+	return m_urls.contains(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
 }
 
 bool BookmarksManager::save(const QString &path)

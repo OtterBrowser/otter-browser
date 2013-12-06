@@ -39,6 +39,7 @@ public:
 	static QList<Bookmark*> getFolder(int folder = 0);
 	static bool addBookmark(Bookmark *bookmark, int folder = 0, int index = -1);
 	static bool hasBookmark(const QString &url);
+	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());
 
 private:
