@@ -159,7 +159,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	SessionsManager::registerWindow(m_windowsManager);
 
-	connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateClipboard()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(tabBar, SIGNAL(showNewTabButton(bool)), newTabButton, SLOT(setVisible(bool)));
@@ -214,7 +213,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_windowsManager->setCurrentWindow(windows.index);
 
 	updateActions();
-	updateClipboard();
 	resize(SettingsManager::getValue("Window/size", size()).toSize());
 	move(SettingsManager::getValue("Window/position", pos()).toPoint());
 	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
@@ -666,11 +664,6 @@ void MainWindow::updateClosedWindows()
 	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() || (SessionsManager::getClosedWindows().count() > 0));
 }
 
-void MainWindow::updateClipboard()
-{
-	m_ui->actionPaste->setEnabled(!QApplication::clipboard()->text().isEmpty());
-}
-
 void MainWindow::updateBookmarks(int folder)
 {
 	if (m_ui->menuBookmarks->actions().count() == 3)
@@ -695,6 +688,18 @@ void MainWindow::updateBookmarks(int folder)
 
 			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 		}
+	}
+}
+
+void MainWindow::updateAction(QAction *source, QAction *target)
+{
+	if (source)
+	{
+		target->setEnabled(source->isEnabled());
+	}
+	else
+	{
+		target->setEnabled(false);
 	}
 }
 
@@ -726,38 +731,19 @@ void MainWindow::updateActions()
 		m_ui->actionRedo->setText(tr("Redo"));
 	}
 
-	QAction *copyAction = m_windowsManager->getAction(CopyAction);
-
-	if (copyAction)
-	{
-		m_ui->actionCopy->setEnabled(copyAction->isEnabled());
-	}
-	else
-	{
-		m_ui->actionCopy->setEnabled(false);
-	}
-
-	QAction *cutAction = m_windowsManager->getAction(CutAction);
-
-	if (cutAction)
-	{
-		m_ui->actionCut->setEnabled(cutAction->isEnabled());
-	}
-	else
-	{
-		m_ui->actionCut->setEnabled(false);
-	}
-
-	QAction *deleteAction = m_windowsManager->getAction(DeleteAction);
-
-	if (deleteAction)
-	{
-		m_ui->actionDelete->setEnabled(deleteAction->isEnabled());
-	}
-	else
-	{
-		m_ui->actionDelete->setEnabled(false);
-	}
+	updateAction(m_windowsManager->getAction(CutAction), m_ui->actionCut);
+	updateAction(m_windowsManager->getAction(CopyAction), m_ui->actionCopy);
+	updateAction(m_windowsManager->getAction(PasteAction), m_ui->actionPaste);
+	updateAction(m_windowsManager->getAction(DeleteAction), m_ui->actionDelete);
+	updateAction(m_windowsManager->getAction(SelectAllAction), m_ui->actionSelectAll);
+	updateAction(m_windowsManager->getAction(GoBackAction), m_ui->actionGoBack);
+	updateAction(m_windowsManager->getAction(RewindBackAction), m_ui->actionRewindBack);
+	updateAction(m_windowsManager->getAction(GoForwardAction), m_ui->actionGoForward);
+	updateAction(m_windowsManager->getAction(RewindForwardAction), m_ui->actionRewindForward);
+	updateAction(m_windowsManager->getAction(ReloadAction), m_ui->actionReload);
+	updateAction(m_windowsManager->getAction(StopAction), m_ui->actionStop);
+	updateAction(m_windowsManager->getAction(FindAction), m_ui->actionFind);
+	updateAction(m_windowsManager->getAction(FindNextAction), m_ui->actionFindNext);
 
 	const bool canZoom = m_windowsManager->canZoom();
 

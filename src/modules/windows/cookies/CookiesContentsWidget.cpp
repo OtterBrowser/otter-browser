@@ -155,7 +155,7 @@ void CookiesContentsWidget::cookieProperties()
 
 void CookiesContentsWidget::print(QPrinter *printer)
 {
-	render(printer);
+	m_ui->cookiesView->render(printer);
 }
 
 void CookiesContentsWidget::triggerAction(WindowAction action, bool checked)

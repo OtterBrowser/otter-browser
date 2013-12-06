@@ -34,6 +34,7 @@ protected:
 	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void gatherBookmarks(int folder);
+	void updateAction(QAction *source, QAction *target);
 	bool event(QEvent *event);
 
 protected slots:
@@ -55,7 +56,6 @@ protected slots:
 	void menuBookmarksAboutToShow();
 	void triggerWindowAction();
 	void updateClosedWindows();
-	void updateClipboard();
 	void updateBookmarks(int folder);
 	void updateActions();
 
