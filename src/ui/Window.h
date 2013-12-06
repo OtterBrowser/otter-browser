@@ -58,6 +58,7 @@ enum WindowAction
 	SpellCheckAction,
 	UndoAction,
 	RedoAction,
+	InspectPageAction,
 	InspectElementAction,
 	PrintAction,
 	BookmarkAction,

@@ -3,6 +3,7 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
+#include <QtWidgets/QAction>
 #include <QtNetwork/QNetworkReply>
 #include <QtWidgets/QApplication>
 #include <QtWebKit/QWebHistory>
@@ -11,15 +12,33 @@
 namespace Otter
 {
 
-WebPageWebKit::WebPageWebKit(QObject *parent) : QWebPage(parent)
+WebPageWebKit::WebPageWebKit(WebWidget *parent) : QWebPage(parent),
+	m_webWidget(parent)
 {
+}
+
+void WebPageWebKit::triggerAction(QWebPage::WebAction action, bool checked)
+{
+	if (action == InspectElement && m_webWidget)
+	{
+		m_webWidget->triggerAction(InspectPageAction, true);
+	}
+
+	QWebPage::triggerAction(action, checked);
+}
+
+void WebPageWebKit::setParent(WebWidget *parent)
+{
+	m_webWidget = parent;
+
+	QWebPage::setParent(parent);
 }
 
 QWebPage *WebPageWebKit::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
 	{
-		WebPageWebKit *page = new WebPageWebKit(this);
+		WebPageWebKit *page = new WebPageWebKit(NULL);
 
 		emit requestedNewWindow(new WebWidgetWebKit(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page));
 

@@ -13,7 +13,6 @@
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
-#include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
@@ -24,12 +23,18 @@ namespace Otter
 
 WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWebKit *page) : WebWidget(parent),
 	m_webView(new QWebView(this)),
+	m_inspector(NULL),
 	m_networkAccessManager(NULL),
+	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {
+	m_splitter->addWidget(m_webView);
+	m_splitter->setChildrenCollapsible(false);
+	m_splitter->setContentsMargins(0, 0, 0, 0);
+
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->addWidget(m_webView);
+	layout->addWidget(m_splitter);
 	layout->setContentsMargins(0, 0, 0, 0);
 
 	setLayout(layout);
@@ -38,11 +43,11 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 
 	if (page)
 	{
-		page->setParent(m_webView);
+		page->setParent(this);
 	}
 	else
 	{
-		page = new WebPageWebKit(m_webView);
+		page = new WebPageWebKit(this);
 	}
 
 	page->setNetworkAccessManager(m_networkAccessManager);
@@ -315,6 +320,24 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 				ImagePropertiesDialog dialog(m_hitResult.imageUrl(), m_hitResult.element().attribute("alt"), m_hitResult.element().attribute("longdesc"), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
 				dialog.exec();
 			}
+
+			break;
+		case InspectPageAction:
+			if (!m_inspector)
+			{
+				m_inspector = new QWebInspector(this);
+				m_inspector->setPage(m_webView->page());
+				m_inspector->setContextMenuPolicy(Qt::NoContextMenu);
+				m_inspector->setMinimumHeight(200);
+
+				m_splitter->addWidget(m_inspector);
+			}
+
+			m_inspector->setVisible(checked);
+
+			getAction(InspectPageAction)->setChecked(checked);
+
+			emit actionsChanged();
 
 			break;
 		default:
@@ -635,6 +658,13 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 		case ReloadOrStopAction:
 			ActionsManager::setupLocalAction(actionObject, "Reload");
 
+			actionObject->setShortcut(QKeySequence());
+
+			break;
+		case InspectPageAction:
+			ActionsManager::setupLocalAction(actionObject, "InspectPage");
+
+			actionObject->setEnabled(true);
 			actionObject->setShortcut(QKeySequence());
 
 			break;

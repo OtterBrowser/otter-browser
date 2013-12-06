@@ -114,6 +114,8 @@ void ActionsManager::setupLocalAction(QAction *localAction, const QString &globa
 
 	if (action)
 	{
+		localAction->setCheckable(action->isCheckable());
+		localAction->setChecked(action->isChecked());
 		localAction->setEnabled(action->isEnabled());
 		localAction->setIcon(action->icon());
 		localAction->setText(action->text());

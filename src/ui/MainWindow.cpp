@@ -113,6 +113,8 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->actionZoomOut->setData(ZoomOutAction);
 	m_ui->actionZoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/zoom-original.png")));
 	m_ui->actionZoomOriginal->setData(ZoomOriginalAction);
+	m_ui->actionViewSource->setData(ViewSourceAction);
+	m_ui->actionInspectPage->setData(InspectPageAction);
 	m_ui->actionGoBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
 	m_ui->actionGoBack->setData(GoBackAction);
 	m_ui->actionGoForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
@@ -194,6 +196,8 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionViewSource, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionInspectPage, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionReload, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionStop, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionGoBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -655,7 +659,7 @@ void MainWindow::triggerWindowAction()
 
 	if (action)
 	{
-		m_windowsManager->triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		m_windowsManager->triggerAction(static_cast<WindowAction>(action->data().toInt()), action->isChecked());
 	}
 }
 
@@ -696,6 +700,11 @@ void MainWindow::updateAction(QAction *source, QAction *target)
 	if (source)
 	{
 		target->setEnabled(source->isEnabled());
+
+		if (target->isCheckable())
+		{
+			target->setChecked(source->isChecked());
+		}
 	}
 	else
 	{
@@ -736,14 +745,16 @@ void MainWindow::updateActions()
 	updateAction(m_windowsManager->getAction(PasteAction), m_ui->actionPaste);
 	updateAction(m_windowsManager->getAction(DeleteAction), m_ui->actionDelete);
 	updateAction(m_windowsManager->getAction(SelectAllAction), m_ui->actionSelectAll);
+	updateAction(m_windowsManager->getAction(FindAction), m_ui->actionFind);
+	updateAction(m_windowsManager->getAction(FindNextAction), m_ui->actionFindNext);
+	updateAction(m_windowsManager->getAction(ReloadAction), m_ui->actionReload);
+	updateAction(m_windowsManager->getAction(StopAction), m_ui->actionStop);
+	updateAction(m_windowsManager->getAction(ViewSourceAction), m_ui->actionViewSource);
+	updateAction(m_windowsManager->getAction(InspectPageAction), m_ui->actionInspectPage);
 	updateAction(m_windowsManager->getAction(GoBackAction), m_ui->actionGoBack);
 	updateAction(m_windowsManager->getAction(RewindBackAction), m_ui->actionRewindBack);
 	updateAction(m_windowsManager->getAction(GoForwardAction), m_ui->actionGoForward);
 	updateAction(m_windowsManager->getAction(RewindForwardAction), m_ui->actionRewindForward);
-	updateAction(m_windowsManager->getAction(ReloadAction), m_ui->actionReload);
-	updateAction(m_windowsManager->getAction(StopAction), m_ui->actionStop);
-	updateAction(m_windowsManager->getAction(FindAction), m_ui->actionFind);
-	updateAction(m_windowsManager->getAction(FindNextAction), m_ui->actionFindNext);
 
 	const bool canZoom = m_windowsManager->canZoom();
 

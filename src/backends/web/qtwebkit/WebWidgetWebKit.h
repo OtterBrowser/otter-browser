@@ -4,8 +4,10 @@
 #include "../WebWidget.h"
 
 #include <QtWebKitWidgets/QWebHitTestResult>
+#include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebView>
+#include <QtWidgets/QSplitter>
 
 namespace Otter
 {
@@ -61,7 +63,9 @@ protected slots:
 
 private:
 	QWebView *m_webView;
+	QWebInspector *m_inspector;
 	NetworkAccessManager *m_networkAccessManager;
+	QSplitter *m_splitter;
 	QPixmap m_thumbnail;
 	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_customActions;
