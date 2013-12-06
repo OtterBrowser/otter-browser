@@ -22,6 +22,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
 	connect(m_ui->cookiesView, SIGNAL(clicked(QModelIndex)), this, SLOT(setCurrentIndex(QModelIndex)));
+	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteCookies()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 }
 
@@ -96,6 +97,7 @@ void CookiesContentsWidget::insertCookie(const QNetworkCookie &cookie)
 
 	QStandardItem *cookieItem = new QStandardItem(QString(cookie.name()));
 	cookieItem->setData(cookie.path(), Qt::UserRole);
+	cookieItem->setData(cookie.domain(), (Qt::UserRole + 1));
 	cookieItem->setToolTip(cookie.name());
 
 	domainItem->appendRow(cookieItem);
@@ -127,6 +129,55 @@ void CookiesContentsWidget::deleteCookie(const QNetworkCookie &cookie)
 			}
 
 			break;
+		}
+	}
+}
+
+void CookiesContentsWidget::deleteCookies()
+{
+	const QModelIndex index = m_ui->cookiesView->currentIndex();
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	QNetworkCookieJar *cookieJar = NetworkAccessManager::getCookieJar();
+
+	if (index.data(Qt::UserRole).toString().isEmpty())
+	{
+		QStandardItem *domainItem = m_model->itemFromIndex(index);
+
+		if (!domainItem)
+		{
+			return;
+		}
+
+		for (int i = 0; i < domainItem->rowCount(); ++i)
+		{
+			QStandardItem *cookieItem = domainItem->child(i, 0);
+
+			if (cookieItem)
+			{
+				QNetworkCookie cookie(cookieItem->text().toUtf8());
+				cookie.setDomain(cookieItem->data(Qt::UserRole + 1).toString());
+				cookie.setPath(cookieItem->data(Qt::UserRole).toString());
+
+				cookieJar->deleteCookie(cookie);
+			}
+		}
+	}
+	else
+	{
+		QStandardItem *cookieItem = m_model->itemFromIndex(index);
+
+		if (cookieItem)
+		{
+			QNetworkCookie cookie(cookieItem->text().toUtf8());
+			cookie.setDomain(cookieItem->data(Qt::UserRole + 1).toString());
+			cookie.setPath(cookieItem->data(Qt::UserRole).toString());
+
+			cookieJar->deleteCookie(cookie);
 		}
 	}
 }
@@ -181,6 +232,7 @@ void CookiesContentsWidget::setUrl(const QUrl &url)
 
 void CookiesContentsWidget::setCurrentIndex(const QModelIndex &index)
 {
+	m_ui->deleteButton->setEnabled(index.isValid());
 	m_ui->propertiesButton->setEnabled(!index.data(Qt::UserRole).toString().isEmpty());
 }
 
