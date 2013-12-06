@@ -1,7 +1,8 @@
 #include "CookiesContentsWidget.h"
 #include "CookiePropertiesDialog.h"
-#include "../../../core/NetworkAccessManager.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/CookieJar.h"
+#include "../../../core/NetworkAccessManager.h"
 #include "../../../backends/web/WebBackend.h"
 #include "../../../backends/web/WebBackendsManager.h"
 
@@ -21,7 +22,6 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
-	connect(m_ui->cookiesView, SIGNAL(clicked(QModelIndex)), this, SLOT(setCurrentIndex(QModelIndex)));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteCookies()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 }
@@ -63,6 +63,8 @@ void CookiesContentsWidget::populateCookies()
 	m_model->sort(0);
 
 	m_ui->cookiesView->setModel(m_model);
+
+	connect(m_ui->cookiesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 
 void CookiesContentsWidget::insertCookie(const QNetworkCookie &cookie)
@@ -144,7 +146,7 @@ void CookiesContentsWidget::deleteCookies()
 
 	QNetworkCookieJar *cookieJar = NetworkAccessManager::getCookieJar();
 
-	for (int i = 0; i < indexes.count(); ++i)
+	for (int i = (indexes.count() - 1); i >= 0; --i)
 	{
 		if (!indexes.at(i).isValid())
 		{
@@ -219,8 +221,31 @@ void CookiesContentsWidget::print(QPrinter *printer)
 
 void CookiesContentsWidget::triggerAction(WindowAction action, bool checked)
 {
-	Q_UNUSED(action)
 	Q_UNUSED(checked)
+
+	switch (action)
+	{
+		case SelectAllAction:
+			m_ui->cookiesView->selectAll();
+
+			break;
+		case DeleteAction:
+			deleteCookies();
+
+			break;
+		default:
+			break;
+	}
+}
+
+void CookiesContentsWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
 }
 
 void CookiesContentsWidget::setHistory(const HistoryInformation &history)
@@ -238,10 +263,19 @@ void CookiesContentsWidget::setUrl(const QUrl &url)
 	Q_UNUSED(url)
 }
 
-void CookiesContentsWidget::setCurrentIndex(const QModelIndex &index)
+void CookiesContentsWidget::updateActions()
 {
-	m_ui->deleteButton->setEnabled(index.isValid());
-	m_ui->propertiesButton->setEnabled(!index.data(Qt::UserRole).toString().isEmpty());
+	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
+
+	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
+	m_ui->propertiesButton->setEnabled(indexes.count() == 1 && !indexes.first().data(Qt::UserRole).toString().isEmpty());
+
+	if (m_ui->deleteButton->isEnabled() != getAction(DeleteAction)->isEnabled())
+	{
+		getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+
+		emit actionsChanged();
+	}
 }
 
 QStandardItem *CookiesContentsWidget::findDomain(const QString &domain)
@@ -274,9 +308,39 @@ ContentsWidget *CookiesContentsWidget::clone(Window *window)
 
 QAction *CookiesContentsWidget::getAction(WindowAction action)
 {
-	Q_UNUSED(action)
+	if (m_actions.contains(action))
+	{
+		return m_actions[action];
+	}
 
-	return NULL;
+	QAction *actionObject = new QAction(this);
+	actionObject->setData(action);
+
+	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	switch (action)
+	{
+		case SelectAllAction:
+			ActionsManager::setupLocalAction(actionObject, "SelectAll");
+
+			break;
+		case DeleteAction:
+			ActionsManager::setupLocalAction(actionObject, "Delete");
+
+			break;
+		default:
+			actionObject->deleteLater();
+			actionObject = NULL;
+
+			break;
+	}
+
+	if (actionObject)
+	{
+		m_actions[action] = actionObject;
+	}
+
+	return actionObject;
 }
 
 QUndoStack *CookiesContentsWidget::getUndoStack()

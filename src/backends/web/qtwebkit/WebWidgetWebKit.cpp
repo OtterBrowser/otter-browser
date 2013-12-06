@@ -109,17 +109,17 @@ void WebWidgetWebKit::loadStarted()
 
 	m_thumbnail = QPixmap();
 
-	if (m_customActions.contains(RewindBackAction))
+	if (m_actions.contains(RewindBackAction))
 	{
 		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
 	}
 
-	if (m_customActions.contains(RewindForwardAction))
+	if (m_actions.contains(RewindForwardAction))
 	{
 		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 	}
 
-	if (m_customActions.contains(ReloadOrStopAction))
+	if (m_actions.contains(ReloadOrStopAction))
 	{
 		QAction *action = getAction(ReloadOrStopAction);
 
@@ -145,7 +145,7 @@ void WebWidgetWebKit::loadFinished(bool ok)
 
 	m_networkAccessManager->resetStatistics();
 
-	if (m_customActions.contains(ReloadOrStopAction))
+	if (m_actions.contains(ReloadOrStopAction))
 	{
 		QAction *action = getAction(ReloadOrStopAction);
 
@@ -210,12 +210,12 @@ void WebWidgetWebKit::notifyTitleChanged()
 
 void WebWidgetWebKit::notifyUrlChanged(const QUrl &url)
 {
-	if (m_customActions.contains(RewindBackAction))
+	if (m_actions.contains(RewindBackAction))
 	{
 		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
 	}
 
-	if (m_customActions.contains(RewindForwardAction))
+	if (m_actions.contains(RewindForwardAction))
 	{
 		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 	}
@@ -474,9 +474,9 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 		return NULL;
 	}
 
-	if (m_customActions.contains(action))
+	if (m_actions.contains(action))
 	{
-		return m_customActions[action];
+		return m_actions[action];
 	}
 
 	QAction *actionObject = new QAction(this);
@@ -669,10 +669,16 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 
 			break;
 		default:
+			actionObject->deleteLater();
+			actionObject = NULL;
+
 			break;
 	}
 
-	m_customActions[action] = actionObject;
+	if (actionObject)
+	{
+		m_actions[action] = actionObject;
+	}
 
 	return actionObject;
 }

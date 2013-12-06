@@ -51,16 +51,18 @@ protected:
 	QStandardItem* findDomain(const QString &domain);
 
 protected slots:
+	void triggerAction();
 	void populateCookies();
 	void filterCookies(const QString &filter);
 	void insertCookie(const QNetworkCookie &cookie);
 	void deleteCookie(const QNetworkCookie &cookie);
 	void deleteCookies();
 	void cookieProperties();
-	void setCurrentIndex(const QModelIndex &index);
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;
+	QHash<WindowAction, QAction*> m_actions;
 	Ui::CookiesContentsWidget *m_ui;
 
 signals:

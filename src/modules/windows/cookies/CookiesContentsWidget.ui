@@ -41,7 +41,7 @@
      <item>
       <widget class="QTreeView" name="cookiesView">
        <property name="selectionMode">
-        <enum>QAbstractItemView::MultiSelection</enum>
+        <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
        <attribute name="headerVisible">
         <bool>false</bool>

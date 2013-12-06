@@ -68,7 +68,7 @@ private:
 	QSplitter *m_splitter;
 	QPixmap m_thumbnail;
 	QWebHitTestResult m_hitResult;
-	QHash<WindowAction, QAction*> m_customActions;
+	QHash<WindowAction, QAction*> m_actions;
 	bool m_isLinkHovered;
 	bool m_isLoading;
 
