@@ -96,7 +96,7 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 		return;
 	}
 
-	const qreal difference = (bytesReceived - m_replies[reply].first);
+	const qint64 difference = (bytesReceived - m_replies[reply].first);
 
 	m_replies[reply].first = bytesReceived;
 
@@ -127,6 +127,11 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 		m_updateTimer = 0;
 
 		updateStatus();
+	}
+
+	if (reply)
+	{
+		reply->deleteLater();
 	}
 
 	++m_finishedRequests;

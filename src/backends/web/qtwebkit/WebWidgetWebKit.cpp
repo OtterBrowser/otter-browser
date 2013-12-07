@@ -3,6 +3,7 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/NetworkAccessManager.h"
 #include "../../../core/SessionsManager.h"
+#include "../../../core/TransfersManager.h"
 #include "../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
@@ -51,6 +52,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	}
 
 	page->setNetworkAccessManager(m_networkAccessManager);
+	page->setForwardUnsupportedContent(true);
 
 	m_webView->installEventFilter(this);
 	m_webView->setPage(page);
@@ -90,6 +92,8 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
+	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
+	connect(page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
@@ -160,6 +164,16 @@ void WebWidgetWebKit::loadFinished(bool ok)
 	}
 
 	emit loadingChanged(false);
+}
+
+void WebWidgetWebKit::downloadFile(const QNetworkRequest &request)
+{
+	TransfersManager::startTransfer(request);
+}
+
+void WebWidgetWebKit::downloadFile(QNetworkReply *reply)
+{
+	TransfersManager::startTransfer(reply);
 }
 
 void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)

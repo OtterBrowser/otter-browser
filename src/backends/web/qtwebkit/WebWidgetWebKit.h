@@ -53,6 +53,8 @@ protected slots:
 	void triggerAction();
 	void loadStarted();
 	void loadFinished(bool ok);
+	void downloadFile(const QNetworkRequest &request);
+	void downloadFile(QNetworkReply *reply);
 	void linkHovered(const QString &link, const QString &title);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
