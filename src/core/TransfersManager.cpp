@@ -2,6 +2,7 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
@@ -117,12 +118,12 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	}
 }
 
-TransfersManager *TransfersManager::getInstance()
+TransfersManager* TransfersManager::getInstance()
 {
 	return m_instance;
 }
 
-TransferInformation *TransfersManager::startTransfer(const QString &source, const QString &target)
+TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target)
 {
 	QNetworkRequest request;
 	request.setUrl(QUrl(source));
@@ -130,7 +131,7 @@ TransferInformation *TransfersManager::startTransfer(const QString &source, cons
 	return startTransfer(request, target);
 }
 
-TransferInformation *TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target)
+TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target)
 {
 	if (!m_networkAccessManager)
 	{
@@ -179,7 +180,38 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	if (target.isEmpty())
 	{
-		const QString path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + QFileInfo(transfer->source).fileName());
+		QFileInfo fileInfo;
+		QString fileName;
+
+		if (reply->rawHeaderList().contains("Content-Disposition"))
+		{
+			QRegExp expression(" filename=\"?([^\"]+)\"?");
+			expression.indexIn(QString(reply->rawHeader("Content-Disposition")));
+
+			fileInfo = QFileInfo(expression.cap(1));
+
+			fileName = fileInfo.fileName();
+		}
+
+		if (fileName.isEmpty())
+		{
+			fileInfo = QFileInfo(transfer->source);
+
+			fileName = fileInfo.fileName();
+		}
+
+		if (fileName.isEmpty())
+		{
+			fileName = tr("file");
+		}
+
+		if (fileInfo.suffix().isEmpty())
+		{
+			fileName.append('.');
+			fileName.append(QMimeDatabase().mimeTypeForName(reply->header(QNetworkRequest::ContentTypeHeader).toString()).preferredSuffix());
+		}
+
+		const QString path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);
 
 		if (path.isEmpty())
 		{
