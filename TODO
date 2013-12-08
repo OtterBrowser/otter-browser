@@ -1,23 +1,22 @@
 High priority / ASAP:
 - history browsing
 - advanced configuration (about:config)
-- transfers manager
 - bookmarks manager
+- start page
+- custom searches
 
 Medium priority / soon:
-- custom searches
 - preferences dialog
 - proxy configuration
 - mail and feeds client (as module)
 - page specific preferences
-- speed dial module
 - content blocking
 - spell checking
 - panels (page informations, notes, transfers, bookmarks etc.)
-- additional backends (at least Blink with upcoming QtWebEngine)
 - system tray icon
 
 Low priority / later:
+- Blink backend (with upcoming QtWebEngine, when API will be useful)
 - import of existing settings etc.
 - delayed loading of Flash objects
 - tabs grouping

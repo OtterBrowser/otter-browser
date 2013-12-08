@@ -498,9 +498,6 @@
    </property>
   </action>
   <action name="actionTransfers">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Transfers</string>
    </property>

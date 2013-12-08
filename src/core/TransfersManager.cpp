@@ -153,6 +153,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
 	transfer->device = new QTemporaryFile("otter-download-XXXXXX.dat", m_instance);
+	transfer->started = QDateTime::currentDateTime();
 
 	if (!transfer->device->open(QIODevice::ReadWrite))
 	{

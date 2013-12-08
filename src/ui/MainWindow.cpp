@@ -206,6 +206,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
+	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
@@ -444,6 +445,16 @@ void MainWindow::actionOpenBookmarkFolder()
 void MainWindow::actionCookies()
 {
 	const QUrl url("about:cookies");
+
+	if (!SessionsManager::hasUrl(url, true))
+	{
+		m_windowsManager->open(url);
+	}
+}
+
+void MainWindow::actionTransfers()
+{
+	const QUrl url("about:transfers");
 
 	if (!SessionsManager::hasUrl(url, true))
 	{

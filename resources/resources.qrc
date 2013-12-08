@@ -60,5 +60,6 @@
         <file>icons/document-open-folder.png</file>
         <file>icons/cookies.png</file>
         <file>icons/bookmarks.png</file>
+        <file>icons/transfers.png</file>
     </qresource>
 </RCC>

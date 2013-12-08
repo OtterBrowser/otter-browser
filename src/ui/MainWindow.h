@@ -50,6 +50,7 @@ protected slots:
 	void actionOpenBookmark();
 	void actionOpenBookmarkFolder();
 	void actionCookies();
+	void actionTransfers();
 	void actionAboutApplication();
 	void menuSessionsAboutToShow();
 	void menuTextEncodingAboutToShow();

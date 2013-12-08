@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "../core/SettingsManager.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
+#include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
 
 #include "ui_Window.h"
@@ -105,6 +106,10 @@ void Window::setUrl(const QUrl &url)
 		if (url.path() == "cookies")
 		{
 			newWidget = new CookiesContentsWidget(this);
+		}
+		else if (url.path() == "transfers")
+		{
+			newWidget = new TransfersContentsWidget(this);
 		}
 	}
 
