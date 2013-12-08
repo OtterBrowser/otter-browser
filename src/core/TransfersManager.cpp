@@ -134,7 +134,7 @@ TransferInformation *TransfersManager::startTransfer(const QNetworkRequest &requ
 {
 	if (!m_networkAccessManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, m_instance);
+		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
 	}
 
 	return startTransfer(m_networkAccessManager->get(request), target);

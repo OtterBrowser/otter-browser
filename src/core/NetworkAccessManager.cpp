@@ -14,7 +14,7 @@ CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
 QNetworkDiskCache* NetworkAccessManager::m_cache = NULL;
 
-NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) : QNetworkAccessManager(parent),
+NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEnabled, QObject *parent) : QNetworkAccessManager(parent),
 	m_mainReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -22,7 +22,8 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, QObject *parent) 
 	m_bytesTotal(0),
 	m_finishedRequests(0),
 	m_startedRequests(0),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_statisticsEnabled(statisticsEnabled)
 {
 	QNetworkCookieJar *cookieJar = getCookieJar(privateWindow);
 
@@ -118,15 +119,20 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 
 void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 {
-	m_replies.remove(reply);
-
-	if (m_replies.isEmpty())
+	if (m_statisticsEnabled)
 	{
-		killTimer(m_updateTimer);
+		m_replies.remove(reply);
 
-		m_updateTimer = 0;
+		if (m_replies.isEmpty())
+		{
+			killTimer(m_updateTimer);
 
-		updateStatus();
+			m_updateTimer = 0;
+
+			updateStatus();
+		}
+
+		++m_finishedRequests;
 	}
 
 	if (reply)
@@ -138,8 +144,6 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 			reply->deleteLater();
 		}
 	}
-
-	++m_finishedRequests;
 }
 
 void NetworkAccessManager::authenticate(QNetworkReply *reply, QAuthenticator *authenticator)
@@ -150,7 +154,10 @@ void NetworkAccessManager::authenticate(QNetworkReply *reply, QAuthenticator *au
 
 QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-	++m_startedRequests;
+	if (m_statisticsEnabled)
+	{
+		++m_startedRequests;
+	}
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
@@ -164,13 +171,16 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 		m_mainReply = reply;
 	}
 
-	m_replies[reply] = qMakePair(0, false);
-
-	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-
-	if (m_updateTimer == 0)
+	if (m_statisticsEnabled)
 	{
-		m_updateTimer = startTimer(500);
+		m_replies[reply] = qMakePair(0, false);
+
+		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+
+		if (m_updateTimer == 0)
+		{
+			m_updateTimer = startTimer(500);
+		}
 	}
 
 	return reply;

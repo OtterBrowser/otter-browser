@@ -14,7 +14,7 @@ class NetworkAccessManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
-	explicit NetworkAccessManager(bool privateWindow = false, QObject *parent = NULL);
+	explicit NetworkAccessManager(bool privateWindow = false, bool statisticsEnabled = true, QObject *parent = NULL);
 
 	void resetStatistics();
 
@@ -41,6 +41,7 @@ private:
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
+	bool m_statisticsEnabled;
 
 	static CookieJar *m_cookieJar;
 	static QNetworkCookieJar *m_privateCookieJar;
