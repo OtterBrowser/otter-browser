@@ -2,8 +2,9 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
-#include <QtCore/QBuffer>
 #include <QtCore/QStandardPaths>
+#include <QtCore/QTemporaryFile>
+#include <QtCore/QTimer>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 
@@ -27,6 +28,8 @@ void TransfersManager::createInstance(QObject *parent)
 
 void TransfersManager::timerEvent(QTimerEvent *event)
 {
+	Q_UNUSED(event)
+
 	QHash<QNetworkReply*, TransferInformation*>::iterator iterator;
 
 	for (iterator = m_replies.begin(); iterator != m_replies.end(); ++iterator)
@@ -62,10 +65,24 @@ void TransfersManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 		return;
 	}
 
-	m_replies[reply]->device->write(reply->readAll());
 	m_replies[reply]->bytesReceivedDifference += (bytesReceived - m_replies[reply]->bytesReceived);
 	m_replies[reply]->bytesReceived = bytesReceived;
 	m_replies[reply]->bytesTotal = bytesTotal;
+}
+
+void TransfersManager::downloadData(QNetworkReply *reply)
+{
+	if (!reply)
+	{
+		reply = qobject_cast<QNetworkReply*>(sender());
+	}
+
+	if (!reply || !m_replies.contains(reply))
+	{
+		return;
+	}
+
+	m_replies[reply]->device->write(reply->readAll());
 }
 
 void TransfersManager::downloadFinished(QNetworkReply *reply)
@@ -75,18 +92,29 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 		reply = qobject_cast<QNetworkReply*>(sender());
 	}
 
-	if (!reply)
+	if (!reply || !m_replies.contains(reply))
 	{
 		return;
 	}
 
 	m_replies[reply]->device->write(reply->readAll());
 
+	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
+	disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	disconnect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
+
+	m_replies[reply]->running = false;
+
 	emit m_instance->transferFinished(m_replies[reply]);
 
-	m_replies.remove(reply);
+	if (!m_replies[reply]->target.isEmpty())
+	{
+		m_replies[reply]->device->close();
 
-	reply->deleteLater();
+		m_replies.remove(reply);
+
+		QTimer::singleShot(250, reply, SLOT(deleteLater()));
+	}
 }
 
 TransfersManager *TransfersManager::getInstance()
@@ -119,19 +147,33 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		return NULL;
 	}
 
+	reply->setObjectName("transfer");
+
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
-	transfer->device = new QBuffer(m_instance);
-	transfer->device->open(QIODevice::ReadWrite);
-	transfer->device->write(reply->readAll());
+	transfer->device = new QTemporaryFile("otter-download-XXXXXX.dat", m_instance);
+
+	if (!transfer->device->open(QIODevice::ReadWrite))
+	{
+		transfer->device->deleteLater();
+
+		delete transfer;
+
+		return NULL;
+	}
+
+	transfer->running = !reply->isFinished();
+
+	m_instance->downloadData(reply);
 
 	m_transfers.append(transfer);
 
-	if (!reply->isFinished())
+	if (transfer->running)
 	{
 		m_replies[reply] = transfer;
 
 		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
+		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 		connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 	}
 
@@ -145,6 +187,8 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 			return NULL;
 		}
+
+		SettingsManager::setValue("Paths/SaveFile", QFileInfo(path).dir().canonicalPath());
 
 		transfer->target = path;
 	}
@@ -169,6 +213,11 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		return NULL;
 	}
 
+	if (m_replies.contains(reply))
+	{
+		disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	}
+
 	QIODevice *device = transfer->device;
 	device->reset();
 
@@ -176,6 +225,21 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	transfer->device = file;
 
+	if (m_replies.contains(reply))
+	{
+		if (reply->isFinished())
+		{
+			m_instance->downloadFinished(reply);
+		}
+		else
+		{
+			m_instance->downloadData(reply);
+		}
+
+		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	}
+
+	device->close();
 	device->deleteLater();
 
 	emit m_instance->transferStarted(transfer);
@@ -218,7 +282,7 @@ bool TransfersManager::removeTransfer(TransferInformation *transfer, bool keepFi
 
 	stopTransfer(transfer);
 
-	if (!keepFile)
+	if (!keepFile && !transfer->target.isEmpty() && QFile::exists(transfer->target))
 	{
 		QFile::remove(transfer->target);
 	}
@@ -239,7 +303,8 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 	if (reply)
 	{
 		reply->abort();
-		reply->deleteLater();
+
+		QTimer::singleShot(250, reply, SLOT(deleteLater()));
 
 		m_replies.remove(reply);
 	}
@@ -247,8 +312,10 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 	transfer->device->close();
 	transfer->device->deleteLater();
 	transfer->device = NULL;
+	transfer->running = false;
 
 	emit m_instance->transferStopped(transfer);
+	emit m_instance->transferUpdated(transfer);
 
 	return true;
 }

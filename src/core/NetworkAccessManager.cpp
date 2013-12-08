@@ -131,7 +131,12 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 
 	if (reply)
 	{
-		reply->deleteLater();
+		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+
+		if (reply->objectName() != "transfer")
+		{
+			reply->deleteLater();
+		}
 	}
 
 	++m_finishedRequests;

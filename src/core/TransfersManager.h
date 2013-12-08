@@ -22,8 +22,9 @@ struct TransferInformation
 	qint64 bytesReceivedDifference;
 	qint64 bytesReceived;
 	qint64 bytesTotal;
+	bool running;
 
-	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1) {}
+	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), running(false) {}
 };
 
 class TransfersManager : public QObject
@@ -47,6 +48,7 @@ protected:
 
 protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void downloadData(QNetworkReply *reply = NULL);
 	void downloadFinished(QNetworkReply *reply = NULL);
 
 private:
