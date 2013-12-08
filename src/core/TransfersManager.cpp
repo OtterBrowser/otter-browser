@@ -207,8 +207,31 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (fileInfo.suffix().isEmpty())
 		{
-			fileName.append('.');
-			fileName.append(QMimeDatabase().mimeTypeForName(reply->header(QNetworkRequest::ContentTypeHeader).toString()).preferredSuffix());
+			QString suffix;
+
+			if (reply->header(QNetworkRequest::ContentTypeHeader).isValid())
+			{
+				suffix = QMimeDatabase().mimeTypeForName(reply->header(QNetworkRequest::ContentTypeHeader).toString()).preferredSuffix();
+			}
+
+			if (suffix.isEmpty())
+			{
+				disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+
+				transfer->device->reset();
+
+				suffix = QMimeDatabase().mimeTypeForData(transfer->device).preferredSuffix();
+
+				transfer->device->seek(transfer->device->size());
+
+				connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+			}
+
+			if (!suffix.isEmpty())
+			{
+				fileName.append('.');
+				fileName.append(suffix);
+			}
 		}
 
 		const QString path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);
