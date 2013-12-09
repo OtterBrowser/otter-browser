@@ -50,6 +50,7 @@ public:
 	static bool resumeTransfer(TransferInformation *transfer);
 	static bool removeTransfer(TransferInformation *transfer, bool keepFile = true);
 	static bool stopTransfer(TransferInformation *transfer);
+	static bool isDownloading(const QString &source, const QString &target = QString());
 
 protected:
 	void timerEvent(QTimerEvent *event);
