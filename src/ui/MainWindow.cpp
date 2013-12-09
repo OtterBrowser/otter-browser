@@ -164,6 +164,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
 	connect(tabBar, SIGNAL(showNewTabButton(bool)), newTabButton, SLOT(setVisible(bool)));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl)), this, SLOT(actionAddBookmark(QUrl)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
@@ -497,7 +498,7 @@ void MainWindow::actionTransfers()
 {
 	const QUrl url("about:transfers");
 
-	if (!SessionsManager::hasUrl(url, true))
+	if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
 	{
 		m_windowsManager->open(url);
 	}
