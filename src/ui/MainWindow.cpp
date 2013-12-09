@@ -7,6 +7,7 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/TransfersManager.h"
 #include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
 
@@ -249,6 +250,46 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+	if (SessionsManager::isLastWindow())
+	{
+		const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+		int runningTransfers = 0;
+
+		for (int i = 0; i < transfers.count(); ++i)
+		{
+			if (transfers.at(i)->state == RunningTransfer)
+			{
+				++runningTransfers;
+			}
+		}
+
+		if (runningTransfers > 0 && SettingsManager::getValue("Choices/WarnQuitTransfers", true).toBool())
+		{
+			QMessageBox messageBox;
+			messageBox.setWindowTitle(tr("Question"));
+			messageBox.setText(tr("You are about to quit while %n files are still being downloaded.", "", runningTransfers));
+			messageBox.setInformativeText("Do you want to continue?");
+			messageBox.setIcon(QMessageBox::Question);
+			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+			messageBox.setDefaultButton(QMessageBox::Cancel);
+			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+			if (messageBox.exec() == QMessageBox::Yes)
+			{
+				runningTransfers = 0;
+			}
+
+			SettingsManager::setValue("Choices/WarnQuitTransfers", !messageBox.checkBox()->isChecked());
+
+			if (runningTransfers > 0)
+			{
+				event->ignore();
+
+				return;
+			}
+		}
+	}
+
 	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
 
 	if (application && application->getWindows().count() == 1)
@@ -422,8 +463,8 @@ void MainWindow::actionOpenBookmarkFolder()
 		messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
 		messageBox.setInformativeText("Do you want to continue?");
 		messageBox.setIcon(QMessageBox::Question);
-		messageBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-		messageBox.setDefaultButton(QMessageBox::Ok);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
 		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
 		if (messageBox.exec() == QMessageBox::Cancel)

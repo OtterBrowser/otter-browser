@@ -110,6 +110,7 @@ public:
 	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL);
 	static bool deleteSession(const QString &path = QString());
 	static bool moveSession(const QString &from, const QString &to);
+	static bool isLastWindow();
 	static bool hasUrl(const QUrl &url, bool activate = false);
 
 protected:

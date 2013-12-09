@@ -105,6 +105,7 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	disconnect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 
 	m_replies[reply]->state = FinishedTransfer;
+	m_replies[reply]->finished = QDateTime::currentDateTime();
 
 	emit m_instance->transferFinished(m_replies[reply]);
 
@@ -341,7 +342,10 @@ QList<TransferInformation*> TransfersManager::getTransfers()
 
 bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 {
-	Q_UNUSED(transfer)
+	if (!m_transfers.contains(transfer) || m_replies.key(transfer))
+	{
+		return false;
+	}
 
 //TODO
 
@@ -388,6 +392,7 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 	transfer->device->deleteLater();
 	transfer->device = NULL;
 	transfer->state = ErrorTransfer;
+	transfer->finished = QDateTime::currentDateTime();
 
 	emit m_instance->transferStopped(transfer);
 	emit m_instance->transferUpdated(transfer);

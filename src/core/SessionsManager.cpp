@@ -379,6 +379,11 @@ bool SessionsManager::moveSession(const QString &from, const QString &to)
 	return QFile::rename(getSessionPath(from), getSessionPath(to));
 }
 
+bool SessionsManager::isLastWindow()
+{
+	return (m_windows.count() == 1);
+}
+
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
 	for (int i = 0; i < m_windows.count(); ++i)
