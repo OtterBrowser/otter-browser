@@ -299,14 +299,14 @@ void CookiesContentsWidget::filterCookies(const QString &filter)
 	}
 }
 
-ContentsWidget *CookiesContentsWidget::clone(Window *window)
+ContentsWidget* CookiesContentsWidget::clone(Window *window)
 {
 	Q_UNUSED(window)
 
 	return NULL;
 }
 
-QAction *CookiesContentsWidget::getAction(WindowAction action)
+QAction* CookiesContentsWidget::getAction(WindowAction action)
 {
 	if (m_actions.contains(action))
 	{
@@ -343,7 +343,7 @@ QAction *CookiesContentsWidget::getAction(WindowAction action)
 	return actionObject;
 }
 
-QUndoStack *CookiesContentsWidget::getUndoStack()
+QUndoStack* CookiesContentsWidget::getUndoStack()
 {
 	return NULL;
 }

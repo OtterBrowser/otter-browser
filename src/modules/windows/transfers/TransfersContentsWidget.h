@@ -48,12 +48,15 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	TransferInformation* getTransfer(const QModelIndex &index);
 	int findTransfer(TransferInformation *transfer) const;
 
 protected slots:
 	void addTransfer(TransferInformation *transfer);
 	void removeTransfer(TransferInformation *transfer);
 	void updateTransfer(TransferInformation *transfer);
+	void stopResumeTransfer();
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;

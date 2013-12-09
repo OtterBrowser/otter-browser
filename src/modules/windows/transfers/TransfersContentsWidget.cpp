@@ -29,6 +29,8 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 		addTransfer(transfers.at(i));
 	}
 
+	connect(m_ui->transfersView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(addTransfer(TransferInformation*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this, SLOT(removeTransfer(TransferInformation*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this, SLOT(updateTransfer(TransferInformation*)));
@@ -96,6 +98,33 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	}
 }
 
+void TransfersContentsWidget::stopResumeTransfer()
+{
+	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+
+	if (transfer)
+	{
+		if (transfer->state == RunningTransfer)
+		{
+			TransfersManager::stopTransfer(transfer);
+		}
+		else if (transfer->state == ErrorTransfer)
+		{
+			TransfersManager::resumeTransfer(transfer);
+		}
+
+		updateActions();
+	}
+}
+
+void TransfersContentsWidget::updateActions()
+{
+	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+
+	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
+	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
+}
+
 void TransfersContentsWidget::print(QPrinter *printer)
 {
 	m_ui->transfersView->render(printer);
@@ -122,21 +151,31 @@ void TransfersContentsWidget::setUrl(const QUrl &url)
 	Q_UNUSED(url)
 }
 
-ContentsWidget *TransfersContentsWidget::clone(Window *window)
+TransferInformation* TransfersContentsWidget::getTransfer(const QModelIndex &index)
+{
+	if (index.isValid() && m_model->item(index.row(), 0))
+	{
+		return static_cast<TransferInformation*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
+	}
+
+	return NULL;
+}
+
+ContentsWidget* TransfersContentsWidget::clone(Window *window)
 {
 	Q_UNUSED(window)
 
 	return NULL;
 }
 
-QAction *TransfersContentsWidget::getAction(WindowAction action)
+QAction* TransfersContentsWidget::getAction(WindowAction action)
 {
 	Q_UNUSED(action)
 
 	return NULL;
 }
 
-QUndoStack *TransfersContentsWidget::getUndoStack()
+QUndoStack* TransfersContentsWidget::getUndoStack()
 {
 	return NULL;
 }

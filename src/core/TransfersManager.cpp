@@ -98,7 +98,10 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 		return;
 	}
 
-	m_replies[reply]->device->write(reply->readAll());
+	if (reply->size() > 0)
+	{
+		m_replies[reply]->device->write(reply->readAll());
+	}
 
 	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
 	disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
@@ -389,9 +392,13 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 		m_replies.remove(reply);
 	}
 
-	transfer->device->close();
-	transfer->device->deleteLater();
-	transfer->device = NULL;
+	if (transfer->device)
+	{
+		transfer->device->close();
+		transfer->device->deleteLater();
+		transfer->device = NULL;
+	}
+
 	transfer->state = ErrorTransfer;
 	transfer->finished = QDateTime::currentDateTime();
 
