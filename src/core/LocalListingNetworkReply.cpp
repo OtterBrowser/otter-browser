@@ -1,4 +1,5 @@
 #include "LocalListingNetworkReply.h"
+#include "Utils.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
@@ -50,39 +51,11 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
-		QString size;
-
-		if (!entries.at(i).isDir())
-		{
-			if (entries.at(i).size() > 1024)
-			{
-				if (entries.at(i).size() > 1048576)
-				{
-					if (entries.at(i).size() > 1073741824)
-					{
-						size = QString("%1 GB").arg((entries.at(i).size() / 1073741824.0), 0, 'f', 2);
-					}
-					else
-					{
-						size = QString("%1 MB").arg((entries.at(i).size() / 1048576.0), 0, 'f', 2);
-					}
-				}
-				else
-				{
-					size = QString("%1 KB").arg((entries.at(i).size() / 1024.0), 0, 'f', 2);
-				}
-			}
-			else
-			{
-				size = QString("%1 B").arg(entries.at(i).size());
-			}
-		}
-
 		QByteArray byteArray;
 		QBuffer buffer(&byteArray);
 		QIcon::fromTheme(mimeType.iconName(), QIcon(entries.at(i).isDir() ? ":icons/inode-directory.png" : ":/icons/unknown.png")).pixmap(16, 16).save(&buffer, "PNG");
 
-		variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(size).arg(entries.at(i).lastModified().toString()));
+		variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(entries.at(i).lastModified().toString()));
 	}
 
 	QString html = stream.readAll();

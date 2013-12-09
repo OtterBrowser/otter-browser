@@ -1,4 +1,5 @@
 #include "ProgressBarWidget.h"
+#include "../../../core/Utils.h"
 #include "../../../backends/web/WebWidget.h"
 
 #include <QtGui/QPalette>
@@ -81,8 +82,8 @@ void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuest
 	Q_UNUSED(bytesTotal)
 
 	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
-	m_totalLabel->setText(tr("Total: %1").arg(formatUnit(bytesReceived)));
-	m_speedLabel->setText(tr("Speed: %1/s").arg(formatUnit(speed)));
+	m_totalLabel->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
+	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
 }
 
 void ProgressBarWidget::setLoading(bool loading)
@@ -111,26 +112,6 @@ void ProgressBarWidget::setLoading(bool loading)
 
 		hide();
 	}
-}
-
-QString ProgressBarWidget::formatUnit(qint64 value) const
-{
-	if (value > 1024)
-	{
-		if (value > 1048576)
-		{
-			if (value > 1073741824)
-			{
-				return QString("%1 GB").arg((value / 1073741824.0), 0, 'f', 1);
-			}
-
-			return QString("%1 MB").arg((value / 1048576.0), 0, 'f', 1);
-		}
-
-		return QString("%1 KB").arg((value / 1024.0), 0, 'f', 1);
-	}
-
-	return QString("%1 B").arg(value);
 }
 
 }

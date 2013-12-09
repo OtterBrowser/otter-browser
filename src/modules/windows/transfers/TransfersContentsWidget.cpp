@@ -1,4 +1,5 @@
 #include "TransfersContentsWidget.h"
+#include "../../../core/Utils.h"
 
 #include "ui_TransfersContentsWidget.h"
 
@@ -88,9 +89,9 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 	if (row >= 0)
 	{
-		m_model->item(row, 1)->setText(QString::number(transfer->bytesTotal));
+		m_model->item(row, 1)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
 		m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number(((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : QString());
-		m_model->item(row, 4)->setText(QString::number(transfer->speed));
+		m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
 		m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
 	}
 }
