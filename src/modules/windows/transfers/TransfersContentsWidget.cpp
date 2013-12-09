@@ -31,6 +31,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 
 	connect(m_ui->transfersView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
+	connect(m_ui->downloadLineEdit, SIGNAL(returnPressed()), this, SLOT(startQuickTransfer()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(addTransfer(TransferInformation*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this, SLOT(removeTransfer(TransferInformation*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this, SLOT(updateTransfer(TransferInformation*)));
@@ -120,6 +121,13 @@ void TransfersContentsWidget::stopResumeTransfer()
 
 		updateActions();
 	}
+}
+
+void TransfersContentsWidget::startQuickTransfer()
+{
+	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), false, true);
+
+	m_ui->downloadLineEdit->clear();
 }
 
 void TransfersContentsWidget::updateActions()

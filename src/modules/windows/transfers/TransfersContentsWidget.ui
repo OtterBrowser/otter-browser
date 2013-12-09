@@ -40,9 +40,6 @@
      </item>
      <item>
       <widget class="QLineEdit" name="downloadLineEdit">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="placeholderText">
         <string>Quick Download...</string>
        </property>

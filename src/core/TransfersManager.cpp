@@ -278,7 +278,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		{
 			path = SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)).toString() + '/' + fileName;
 
-			if (QFile::exists(path) && !isDownloading(QString(), path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
 				path = QString();
 			}
@@ -286,8 +286,6 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		do
 		{
-			path = QString();
-
 			if (path.isEmpty())
 			{
 				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);

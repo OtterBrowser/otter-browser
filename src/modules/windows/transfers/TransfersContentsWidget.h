@@ -56,6 +56,7 @@ protected slots:
 	void removeTransfer(TransferInformation *transfer);
 	void updateTransfer(TransferInformation *transfer);
 	void stopResumeTransfer();
+	void startQuickTransfer();
 	void updateActions();
 
 private:
