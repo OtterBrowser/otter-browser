@@ -104,7 +104,7 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	disconnect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 
-	m_replies[reply]->running = false;
+	m_replies[reply]->state = FinishedTransfer;
 
 	emit m_instance->transferFinished(m_replies[reply]);
 
@@ -116,6 +116,24 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 
 		QTimer::singleShot(250, reply, SLOT(deleteLater()));
 	}
+}
+
+void TransfersManager::downloadError(QNetworkReply::NetworkError error)
+{
+	Q_UNUSED(error)
+
+	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+	if (!reply || !m_replies.contains(reply))
+	{
+		return;
+	}
+
+	TransferInformation *transfer = m_replies[reply];
+
+	stopTransfer(transfer);
+
+	transfer->state = ErrorTransfer;
 }
 
 TransfersManager* TransfersManager::getInstance()
@@ -164,19 +182,20 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		return NULL;
 	}
 
-	transfer->running = !reply->isFinished();
+	transfer->state = (reply->isFinished() ? FinishedTransfer : RunningTransfer);
 
 	m_instance->downloadData(reply);
 
 	m_transfers.append(transfer);
 
-	if (transfer->running)
+	if (transfer->state == RunningTransfer)
 	{
 		m_replies[reply] = transfer;
 
 		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
 		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 		connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
+		connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), m_instance, SLOT(downloadError(QNetworkReply::NetworkError)));
 	}
 
 	if (target.isEmpty())
@@ -368,7 +387,7 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 	transfer->device->close();
 	transfer->device->deleteLater();
 	transfer->device = NULL;
-	transfer->running = false;
+	transfer->state = ErrorTransfer;
 
 	emit m_instance->transferStopped(transfer);
 	emit m_instance->transferUpdated(transfer);

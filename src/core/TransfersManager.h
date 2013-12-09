@@ -11,6 +11,14 @@
 namespace Otter
 {
 
+enum TransferState
+{
+	UnknownTransfer = 0,
+	RunningTransfer = 1,
+	FinishedTransfer = 2,
+	ErrorTransfer = 3
+};
+
 struct TransferInformation
 {
 	QIODevice *device;
@@ -22,9 +30,9 @@ struct TransferInformation
 	qint64 bytesReceivedDifference;
 	qint64 bytesReceived;
 	qint64 bytesTotal;
-	bool running;
+	TransferState state;
 
-	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), running(false) {}
+	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer) {}
 };
 
 class TransfersManager : public QObject
@@ -50,6 +58,7 @@ protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void downloadData(QNetworkReply *reply = NULL);
 	void downloadFinished(QNetworkReply *reply = NULL);
+	void downloadError(QNetworkReply::NetworkError error);
 
 private:
 	explicit TransfersManager(QObject *parent = NULL);
