@@ -160,6 +160,7 @@ TransfersManager* TransfersManager::getInstance()
 TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer)
 {
 	QNetworkRequest request;
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(source));
 
 	return startTransfer(request, target, privateTransfer);
@@ -183,7 +184,6 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	}
 
 	reply->setObjectName("transfer");
-	reply->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
@@ -374,6 +374,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	transfer->device = file;
 
 	QNetworkRequest request;
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(transfer->source));
 	request.setRawHeader("Range", "bytes=" + QByteArray::number(file->size()) + '-');
 
@@ -384,7 +385,6 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	QNetworkReply *reply = m_networkAccessManager->get(request);
 	reply->setObjectName("transfer");
-	reply->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 
 	m_replies[reply] = transfer;
 
