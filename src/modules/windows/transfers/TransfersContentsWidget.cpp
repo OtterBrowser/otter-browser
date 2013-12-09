@@ -95,6 +95,11 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number(((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : QString());
 		m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
 		m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
+
+		if (m_ui->transfersView->selectionModel()->hasSelection())
+		{
+			updateActions();
+		}
 	}
 }
 

@@ -83,6 +83,16 @@ void TransfersManager::downloadData(QNetworkReply *reply)
 		return;
 	}
 
+	if (m_replies[reply]->state == ErrorTransfer)
+	{
+		m_replies[reply]->state = RunningTransfer;
+
+		if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).isValid() && reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 206)
+		{
+			m_replies[reply]->device->reset();
+		}
+	}
+
 	m_replies[reply]->device->write(reply->readAll());
 }
 
@@ -109,8 +119,10 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 
 	m_replies[reply]->state = FinishedTransfer;
 	m_replies[reply]->finished = QDateTime::currentDateTime();
+	m_replies[reply]->bytesReceived = m_replies[reply]->device->size();
 
 	emit m_instance->transferFinished(m_replies[reply]);
+	emit m_instance->transferUpdated(m_replies[reply]);
 
 	if (!m_replies[reply]->target.isEmpty())
 	{
@@ -171,6 +183,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	}
 
 	reply->setObjectName("transfer");
+	reply->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
@@ -346,14 +359,45 @@ QList<TransferInformation*> TransfersManager::getTransfers()
 
 bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 {
-	if (!m_transfers.contains(transfer) || m_replies.key(transfer))
+	if (!m_transfers.contains(transfer) || m_replies.key(transfer) || transfer->state != ErrorTransfer || !QFile::exists(transfer->target))
 	{
 		return false;
 	}
 
-//TODO
+	QFile *file = new QFile(transfer->target);
 
-	return false;
+	if (!file->open(QIODevice::WriteOnly | QIODevice::Append))
+	{
+		return false;
+	}
+
+	transfer->device = file;
+
+	QNetworkRequest request;
+	request.setUrl(QUrl(transfer->source));
+	request.setRawHeader("Range", "bytes=" + QByteArray::number(file->size()) + '-');
+
+	if (!m_networkAccessManager)
+	{
+		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
+	}
+
+	QNetworkReply *reply = m_networkAccessManager->get(request);
+	reply->setObjectName("transfer");
+	reply->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+	m_replies[reply] = transfer;
+
+	m_instance->downloadData(reply);
+
+	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
+	connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
+	connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), m_instance, SLOT(downloadError(QNetworkReply::NetworkError)));
+
+	m_instance->startUpdates();
+
+	return true;
 }
 
 bool TransfersManager::removeTransfer(TransferInformation *transfer, bool keepFile)
