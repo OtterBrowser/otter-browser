@@ -142,25 +142,25 @@ TransfersManager* TransfersManager::getInstance()
 	return m_instance;
 }
 
-TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target)
+TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer)
 {
 	QNetworkRequest request;
 	request.setUrl(QUrl(source));
 
-	return startTransfer(request, target);
+	return startTransfer(request, target, privateTransfer);
 }
 
-TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target)
+TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer)
 {
 	if (!m_networkAccessManager)
 	{
 		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
 	}
 
-	return startTransfer(m_networkAccessManager->get(request), target);
+	return startTransfer(m_networkAccessManager->get(request), target, privateTransfer);
 }
 
-TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target)
+TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer)
 {
 	if (!reply)
 	{
@@ -173,6 +173,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
 	transfer->device = new QTemporaryFile("otter-download-XXXXXX.dat", m_instance);
 	transfer->started = QDateTime::currentDateTime();
+	transfer->isPrivate = privateTransfer;
 
 	if (!transfer->device->open(QIODevice::ReadWrite))
 	{

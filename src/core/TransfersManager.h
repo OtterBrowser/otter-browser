@@ -31,8 +31,9 @@ struct TransferInformation
 	qint64 bytesReceived;
 	qint64 bytesTotal;
 	TransferState state;
+	bool isPrivate;
 
-	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer) {}
+	TransferInformation() : device(NULL), speed(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false) {}
 };
 
 class TransfersManager : public QObject
@@ -42,9 +43,9 @@ class TransfersManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static TransfersManager* getInstance();
-	static TransferInformation* startTransfer(const QString &source, const QString &target = QString());
-	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString());
-	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString());
+	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false);
+	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false);
+	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false);
 	static QList<TransferInformation*> getTransfers();
 	static bool resumeTransfer(TransferInformation *transfer);
 	static bool removeTransfer(TransferInformation *transfer, bool keepFile = true);

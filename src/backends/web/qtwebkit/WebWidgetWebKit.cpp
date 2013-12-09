@@ -168,12 +168,12 @@ void WebWidgetWebKit::loadFinished(bool ok)
 
 void WebWidgetWebKit::downloadFile(const QNetworkRequest &request)
 {
-	TransfersManager::startTransfer(request);
+	TransfersManager::startTransfer(request, QString(), isPrivate());
 }
 
 void WebWidgetWebKit::downloadFile(QNetworkReply *reply)
 {
-	TransfersManager::startTransfer(reply);
+	TransfersManager::startTransfer(reply, QString(), isPrivate());
 }
 
 void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
