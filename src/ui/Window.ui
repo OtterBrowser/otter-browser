@@ -6,14 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>266</width>
-    <height>29</height>
+    <width>248</width>
+    <height>27</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>3</number>
-   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,36 +24,53 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QToolButton" name="backButton">
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="forwardButton">
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="reloadOrStopButton">
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Otter::AddressWidget" name="addressWidget">
-       <property name="placeholderText">
-        <string>Enter Address...</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="navigationWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="backButton">
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="forwardButton">
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="reloadOrStopButton">
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Otter::AddressWidget" name="addressWidget">
+        <property name="placeholderText">
+         <string>Enter Address...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -67,12 +81,6 @@
    <header>src/ui/AddressWidget.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>addressWidget</tabstop>
-  <tabstop>forwardButton</tabstop>
-  <tabstop>reloadOrStopButton</tabstop>
-  <tabstop>backButton</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

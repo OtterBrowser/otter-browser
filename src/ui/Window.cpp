@@ -124,6 +124,8 @@ void Window::setUrl(const QUrl &url)
 	}
 
 	m_contentsWidget->setUrl(url);
+
+	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == "web");
 }
 
 void Window::setPinned(bool pinned)
