@@ -157,26 +157,26 @@ TransfersManager* TransfersManager::getInstance()
 	return m_instance;
 }
 
-TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer)
+TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer, bool quickTransfer)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(source));
 
-	return startTransfer(request, target, privateTransfer);
+	return startTransfer(request, target, privateTransfer, quickTransfer);
 }
 
-TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer)
+TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer, bool quickTransfer)
 {
 	if (!m_networkAccessManager)
 	{
 		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
 	}
 
-	return startTransfer(m_networkAccessManager->get(request), target, privateTransfer);
+	return startTransfer(m_networkAccessManager->get(request), target, privateTransfer, quickTransfer);
 }
 
-TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer)
+TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer, bool quickTransfer)
 {
 	if (!reply)
 	{
@@ -272,7 +272,22 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			}
 		}
 
-		const QString path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);
+		QString path;
+
+		if (quickTransfer)
+		{
+			path = SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)).toString() + '/' + fileName;
+
+			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			{
+				path = QString();
+			}
+		}
+
+		if (path.isEmpty())
+		{
+			path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);
+		}
 
 		if (path.isEmpty())
 		{

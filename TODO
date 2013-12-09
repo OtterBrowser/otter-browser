@@ -32,7 +32,7 @@ Low priority / later:
 
 Low priority / maybe:
 - support for Opera skins (through custom QStyle)
-- BitTorrent module
 - IM client module (libpurple based, including support for IRC)
+- BitTorrent module
 
 And lots of smaller things. ;-)

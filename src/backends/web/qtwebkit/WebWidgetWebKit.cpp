@@ -354,6 +354,10 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 			emit actionsChanged();
 
 			break;
+		case SaveLinkToDownloadsAction:
+			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
+
+			break;
 		default:
 			break;
 	}
@@ -548,8 +552,6 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 			break;
 		case SaveLinkToDownloadsAction:
 			ActionsManager::setupLocalAction(actionObject, "SaveLinkToDownloads");
-
-			actionObject->setEnabled(false);
 
 			break;
 		case RewindBackAction:

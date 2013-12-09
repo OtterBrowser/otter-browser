@@ -43,9 +43,9 @@ class TransfersManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static TransfersManager* getInstance();
-	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false);
-	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false);
-	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false);
+	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
+	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
+	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
 	static QList<TransferInformation*> getTransfers();
 	static bool resumeTransfer(TransferInformation *transfer);
 	static bool removeTransfer(TransferInformation *transfer, bool keepFile = true);
