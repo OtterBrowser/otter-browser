@@ -127,6 +127,8 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	if (!m_replies[reply]->target.isEmpty())
 	{
 		m_replies[reply]->device->close();
+		m_replies[reply]->device->deleteLater();
+		m_replies[reply]->device = NULL;
 
 		m_replies.remove(reply);
 

@@ -54,10 +54,15 @@ protected:
 protected slots:
 	void addTransfer(TransferInformation *transfer);
 	void removeTransfer(TransferInformation *transfer);
+	void removeTransfer();
 	void updateTransfer(TransferInformation *transfer);
-	void openTransfer(const QModelIndex &index);
+	void openTransfer(const QModelIndex &index = QModelIndex());
+	void openTransferFolder(const QModelIndex &index = QModelIndex());
+	void copyTransferInformation();
 	void stopResumeTransfer();
 	void startQuickTransfer();
+	void clearFinishedTransfers();
+	void showContextMenu(const QPoint &point);
 	void updateActions();
 
 private:
