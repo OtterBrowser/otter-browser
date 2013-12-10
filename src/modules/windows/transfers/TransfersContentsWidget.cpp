@@ -1,5 +1,6 @@
 #include "TransfersContentsWidget.h"
 #include "ProgressBarDelegate.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/Utils.h"
 
 #include "ui_TransfersContentsWidget.h"
@@ -162,7 +163,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 	if (item)
 	{
-		QApplication::clipboard()->setText(item->toolTip());
+		QApplication::clipboard()->setText(item->toolTip().remove(QRegExp("<[^>]*>")));
 	}
 }
 
@@ -249,6 +250,9 @@ void TransfersContentsWidget::updateActions()
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
 	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
 
+	getAction(CopyAction)->setEnabled(transfer);
+	getAction(DeleteAction)->setEnabled(transfer);
+
 	if (transfer)
 	{
 		m_ui->sourceValueLabel->setText(transfer->source.toHtmlEscaped());
@@ -265,6 +269,8 @@ void TransfersContentsWidget::updateActions()
 		m_ui->downloadedValueLabel->clear();
 		m_ui->progressValueLabel->clear();
 	}
+
+	emit actionsChanged();
 }
 
 void TransfersContentsWidget::print(QPrinter *printer)
@@ -274,8 +280,21 @@ void TransfersContentsWidget::print(QPrinter *printer)
 
 void TransfersContentsWidget::triggerAction(WindowAction action, bool checked)
 {
-	Q_UNUSED(action)
 	Q_UNUSED(checked)
+
+	switch (action)
+	{
+		case CopyAction:
+			copyTransferInformation();
+
+			break;
+		case DeleteAction:
+			removeTransfer();
+
+			break;
+		default:
+			break;
+	}
 }
 
 void TransfersContentsWidget::setHistory(const HistoryInformation &history)
@@ -312,9 +331,39 @@ ContentsWidget* TransfersContentsWidget::clone(Window *window)
 
 QAction* TransfersContentsWidget::getAction(WindowAction action)
 {
-	Q_UNUSED(action)
+	if (m_actions.contains(action))
+	{
+		return m_actions[action];
+	}
 
-	return NULL;
+	QAction *actionObject = new QAction(this);
+	actionObject->setData(action);
+
+	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	switch (action)
+	{
+		case CopyAction:
+			ActionsManager::setupLocalAction(actionObject, "Copy");
+
+			break;
+		case DeleteAction:
+			ActionsManager::setupLocalAction(actionObject, "Delete");
+
+			break;
+		default:
+			actionObject->deleteLater();
+			actionObject = NULL;
+
+			break;
+	}
+
+	if (actionObject)
+	{
+		m_actions[action] = actionObject;
+	}
+
+	return actionObject;
 }
 
 QUndoStack* TransfersContentsWidget::getUndoStack()
@@ -383,6 +432,16 @@ int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 	}
 
 	return -1;
+}
+
+void TransfersContentsWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
 }
 
 bool TransfersContentsWidget::canZoom() const
