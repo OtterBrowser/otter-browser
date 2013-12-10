@@ -5,6 +5,7 @@
 #include "ui_TransfersContentsWidget.h"
 
 #include <QtCore/QFileInfo>
+#include <QtGui/QDesktopServices>
 
 namespace Otter
 {
@@ -32,6 +33,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	}
 
 	connect(m_ui->transfersView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->transfersView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openTransfer(QModelIndex)));
 	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
 	connect(m_ui->downloadLineEdit, SIGNAL(returnPressed()), this, SLOT(startQuickTransfer()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(addTransfer(TransferInformation*)));
@@ -104,6 +106,16 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		{
 			updateActions();
 		}
+	}
+}
+
+void TransfersContentsWidget::openTransfer(const QModelIndex &index)
+{
+	TransferInformation *transfer = getTransfer(index);
+
+	if (transfer)
+	{
+		QDesktopServices::openUrl(QUrl(transfer->target, QUrl::TolerantMode));
 	}
 }
 

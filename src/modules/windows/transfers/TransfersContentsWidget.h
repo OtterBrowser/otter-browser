@@ -55,6 +55,7 @@ protected slots:
 	void addTransfer(TransferInformation *transfer);
 	void removeTransfer(TransferInformation *transfer);
 	void updateTransfer(TransferInformation *transfer);
+	void openTransfer(const QModelIndex &index);
 	void stopResumeTransfer();
 	void startQuickTransfer();
 	void updateActions();
