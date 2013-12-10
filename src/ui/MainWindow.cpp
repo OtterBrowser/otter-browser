@@ -8,6 +8,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
+#include "../core/Utils.h"
 #include "../backends/web/WebBackend.h"
 #include "../backends/web/WebBackendsManager.h"
 
@@ -28,7 +29,7 @@ namespace Otter
 
 MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
-	m_closedWindowsAction(new QAction(QIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png"))), tr("Closed Tabs"), this)),
+	m_closedWindowsAction(new QAction(Utils::getIcon("user-trash"), tr("Closed Tabs"), this)),
 	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
 	m_ui(new Ui::MainWindow)
@@ -59,7 +60,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, "ViewSourceFrame", tr("View Source"));
 	ActionsManager::registerAction(this, "SaveLinkToDisk", tr("Save Link Target As..."));
 	ActionsManager::registerAction(this, "SaveLinkToDownloads", tr("Save to Downloads"));
-	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."), QIcon::fromTheme("bookmark-new", QIcon(":/icons/bookmark-new.png")));
+	ActionsManager::registerAction(this, "BookmarkLink", tr("Bookmark Link..."), Utils::getIcon("bookmark-new"));
 	ActionsManager::registerAction(this, "ReloadTime", tr("Reload Each"));
 	ActionsManager::registerAction(this, "CopyAddress", tr("Copy Address"));
 	ActionsManager::registerAction(this, "Validate", tr("Validate"));
@@ -77,59 +78,59 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, "SpellCheck", tr("Check Spelling"));
 	ActionsManager::registerAction(this, "CreateSearch", tr("Create Search..."));
 
-	m_ui->actionNewTab->setIcon(QIcon::fromTheme("tab-new", QIcon(":/icons/tab-new.png")));
-	m_ui->actionNewTabPrivate->setIcon(QIcon::fromTheme("tab-new-private", QIcon(":/icons/tab-new-private.png")));
-	m_ui->actionNewWindow->setIcon(QIcon::fromTheme("window-new", QIcon(":/icons/window-new.png")));
-	m_ui->actionNewWindowPrivate->setIcon(QIcon::fromTheme("window-new-private", QIcon(":/icons/window-new-private.png")));
-	m_ui->actionOpen->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
-	m_ui->actionCloseTab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/icons/tab-close.png")));
-	m_ui->actionSave->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/document-save.png")));
-	m_ui->actionPrint->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/document-print.png")));
-	m_ui->actionPrintPreview->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/icons/document-print-preview.png")));
-	m_ui->actionExit->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/application-exit.png")));
-	m_ui->actionUndo->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/edit-undo.png")));
+	m_ui->actionNewTab->setIcon(Utils::getIcon("tab-new"));
+	m_ui->actionNewTabPrivate->setIcon(Utils::getIcon("tab-new-private"));
+	m_ui->actionNewWindow->setIcon(Utils::getIcon("window-new"));
+	m_ui->actionNewWindowPrivate->setIcon(Utils::getIcon("window-new-private"));
+	m_ui->actionOpen->setIcon(Utils::getIcon("document-open"));
+	m_ui->actionCloseTab->setIcon(Utils::getIcon("tab-close"));
+	m_ui->actionSave->setIcon(Utils::getIcon("document-save"));
+	m_ui->actionPrint->setIcon(Utils::getIcon("document-print"));
+	m_ui->actionPrintPreview->setIcon(Utils::getIcon("document-print-preview"));
+	m_ui->actionExit->setIcon(Utils::getIcon("application-exit"));
+	m_ui->actionUndo->setIcon(Utils::getIcon("edit-undo"));
 	m_ui->actionUndo->setData(UndoAction);
-	m_ui->actionRedo->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/edit-redo.png")));
+	m_ui->actionRedo->setIcon(Utils::getIcon("edit-redo"));
 	m_ui->actionRedo->setData(RedoAction);
-	m_ui->actionCut->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/edit-cut.png")));
+	m_ui->actionCut->setIcon(Utils::getIcon("edit-cut"));
 	m_ui->actionCut->setData(CutAction);
-	m_ui->actionCopy->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/edit-copy.png")));
+	m_ui->actionCopy->setIcon(Utils::getIcon("edit-copy"));
 	m_ui->actionCopy->setData(CopyAction);
-	m_ui->actionPaste->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/edit-paste.png")));
+	m_ui->actionPaste->setIcon(Utils::getIcon("edit-paste"));
 	m_ui->actionPaste->setData(PasteAction);
-	m_ui->actionDelete->setIcon(QIcon::fromTheme("edit-delete", QIcon(":/icons/edit-delete.png")));
+	m_ui->actionDelete->setIcon(Utils::getIcon("edit-delete"));
 	m_ui->actionDelete->setData(DeleteAction);
-	m_ui->actionSelectAll->setIcon(QIcon::fromTheme("edit-select-all", QIcon(":/icons/edit-select-all.png")));
+	m_ui->actionSelectAll->setIcon(Utils::getIcon("edit-select-all"));
 	m_ui->actionSelectAll->setData(SelectAllAction);
-	m_ui->actionFind->setIcon(QIcon::fromTheme("edit-find", QIcon(":/icons/edit-find.png")));
+	m_ui->actionFind->setIcon(Utils::getIcon("edit-find"));
 	m_ui->actionFind->setData(FindAction);
 	m_ui->actionFindNext->setData(FindNextAction);
-	m_ui->actionReload->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/view-refresh.png")));
+	m_ui->actionReload->setIcon(Utils::getIcon("view-refresh"));
 	m_ui->actionReload->setData(ReloadAction);
-	m_ui->actionStop->setIcon(QIcon::fromTheme("process-stop", QIcon(":/icons/process-stop.png")));
+	m_ui->actionStop->setIcon(Utils::getIcon("process-stop"));
 	m_ui->actionStop->setData(StopAction);
-	m_ui->actionZoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom-in.png")));
+	m_ui->actionZoomIn->setIcon(Utils::getIcon("zoom-in"));
 	m_ui->actionZoomIn->setData(ZoomInAction);
-	m_ui->actionZoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom-out.png")));
+	m_ui->actionZoomOut->setIcon(Utils::getIcon("zoom-out"));
 	m_ui->actionZoomOut->setData(ZoomOutAction);
-	m_ui->actionZoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/zoom-original.png")));
+	m_ui->actionZoomOriginal->setIcon(Utils::getIcon("zoom-original"));
 	m_ui->actionZoomOriginal->setData(ZoomOriginalAction);
 	m_ui->actionViewSource->setData(ViewSourceAction);
 	m_ui->actionInspectPage->setData(InspectPageAction);
-	m_ui->actionGoBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/icons/go-previous.png")));
+	m_ui->actionGoBack->setIcon(Utils::getIcon("go-previous"));
 	m_ui->actionGoBack->setData(GoBackAction);
-	m_ui->actionGoForward->setIcon(QIcon::fromTheme("go-next", QIcon(":/icons/go-next.png")));
+	m_ui->actionGoForward->setIcon(Utils::getIcon("go-next"));
 	m_ui->actionGoForward->setData(GoForwardAction);
-	m_ui->actionRewindBack->setIcon(QIcon::fromTheme("go-first", QIcon(":/icons/go-first.png")));
+	m_ui->actionRewindBack->setIcon(Utils::getIcon("go-first"));
 	m_ui->actionRewindBack->setData(RewindBackAction);
-	m_ui->actionRewindForward->setIcon(QIcon::fromTheme("go-last", QIcon(":/icons/go-last.png")));
+	m_ui->actionRewindForward->setIcon(Utils::getIcon("go-last"));
 	m_ui->actionRewindForward->setData(RewindForwardAction);
-	m_ui->menuClosedWindows->setIcon(QIcon::fromTheme("user-trash", QIcon(":/icons/user-trash.png")));
+	m_ui->menuClosedWindows->setIcon(Utils::getIcon("user-trash"));
 	m_ui->menuClosedWindows->setEnabled(false);
-	m_ui->actionViewHistory->setIcon(QIcon::fromTheme("view-history", QIcon(":/icons/view-history.png")));
-	m_ui->actionClearHistory->setIcon(QIcon::fromTheme("edit-clear-history", QIcon(":/icons/edit-clear-history.png")));
-	m_ui->actionAddBookmark->setIcon(QIcon::fromTheme("bookmark-new", QIcon(":/icons/bookmark-new.png")));
-	m_ui->actionManageBookmarks->setIcon(QIcon::fromTheme("bookmarks-organize", QIcon(":/icons/bookmarks-organize.png")));
+	m_ui->actionViewHistory->setIcon(Utils::getIcon("view-history"));
+	m_ui->actionClearHistory->setIcon(Utils::getIcon("edit-clear-history"));
+	m_ui->actionAddBookmark->setIcon(Utils::getIcon("bookmark-new"));
+	m_ui->actionManageBookmarks->setIcon(Utils::getIcon("bookmarks-organize"));
 	m_ui->actionAboutApplication->setIcon(QIcon(":/icons/otter.png"));
 	m_ui->actionAboutQt->setIcon(QIcon(":/icons/qt.png"));
 	m_ui->statusBar->setup();
@@ -628,7 +629,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	m_closedWindowsAction->menu()->clear();
 
-	QAction *clearAction = m_ui->menuClosedWindows->addAction(QIcon::fromTheme("edit-clear", QIcon(":/icons/edit-clear.png")), tr("Clear"));
+	QAction *clearAction = m_ui->menuClosedWindows->addAction(Utils::getIcon("edit-clear"), tr("Clear"));
 	clearAction->setData(0);
 
 	m_ui->menuClosedWindows->addSeparator();
@@ -676,7 +677,7 @@ void MainWindow::menuBookmarksAboutToShow()
 
 		if (folder != 0 && bookmarks.count() > 1)
 		{
-			QAction *openAllAction = menu->addAction(QIcon::fromTheme("document-open-folder", QIcon(":/icons/document-open-folder.png")), tr("Open All"));
+			QAction *openAllAction = menu->addAction(Utils::getIcon("document-open-folder"), tr("Open All"));
 			openAllAction->setData(folder);
 
 			connect(openAllAction, SIGNAL(triggered()), this, SLOT(actionOpenBookmarkFolder()));
@@ -688,7 +689,7 @@ void MainWindow::menuBookmarksAboutToShow()
 		{
 			if (bookmarks.at(i)->type == FolderBookmark || bookmarks.at(i)->type == UrlBookmark)
 			{
-				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title));
+				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon("inode-directory") : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title));
 				action->setToolTip(bookmarks.at(i)->description);
 
 				if (bookmarks.at(i)->type == FolderBookmark)

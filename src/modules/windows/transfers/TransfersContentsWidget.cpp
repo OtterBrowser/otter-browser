@@ -174,15 +174,15 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	switch (transfer->state)
 	{
 		case RunningTransfer:
-			icon = QIcon::fromTheme("task-ongoing", QIcon(":/icons/task-ongoing.png"));
+			icon = Utils::getIcon("task-ongoing");
 
 			break;
 		case FinishedTransfer:
-			icon = QIcon::fromTheme("task-complete", QIcon(":/icons/task-complete.png"));
+			icon = Utils::getIcon("task-complete");
 
 			break;
 		case ErrorTransfer:
-			icon = QIcon::fromTheme("task-reject", QIcon(":/icons/task-reject.png"));
+			icon = Utils::getIcon("task-reject");
 
 			break;
 		default:

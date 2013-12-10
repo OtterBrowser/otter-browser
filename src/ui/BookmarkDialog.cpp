@@ -1,4 +1,5 @@
 #include "BookmarkDialog.h"
+#include "../core/Utils.h"
 
 #include "ui_BookmarkDialog.h"
 
@@ -75,7 +76,7 @@ void BookmarkDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardI
 		if (bookmarks.at(i)->type == FolderBookmark)
 		{
 			const QString title = (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title);
-			QStandardItem *item = new QStandardItem(QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")), title);
+			QStandardItem *item = new QStandardItem(Utils::getIcon("inode-directory"), title);
 			item->setData(bookmarks.at(i)->identifier, Qt::UserRole);
 			item->setToolTip(title);
 
@@ -100,7 +101,7 @@ void BookmarkDialog::reloadFolders()
 {
 	m_model->clear();
 
-	QStandardItem *item = new QStandardItem(QIcon::fromTheme("inode-directory", QIcon(":/icons/inode-directory.png")), tr("Bookmarks"));
+	QStandardItem *item = new QStandardItem(Utils::getIcon("inode-directory"), tr("Bookmarks"));
 	item->setData(0, Qt::UserRole);
 	item->setToolTip(tr("Bookmarks"));
 

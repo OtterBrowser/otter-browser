@@ -1,6 +1,7 @@
 #include "WebBackendWebKit.h"
 #include "WebWidgetWebKit.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QStandardPaths>
@@ -44,7 +45,7 @@ QIcon WebBackendWebKit::getIconForUrl(const QUrl &url)
 {
 	const QIcon icon = QWebSettings::iconForUrl(url);
 
-	return (icon.isNull() ? QIcon::fromTheme("text-html", QIcon(":/icons/text-html.png")) : icon);
+	return (icon.isNull() ? Utils::getIcon("text-html") : icon);
 }
 
 }

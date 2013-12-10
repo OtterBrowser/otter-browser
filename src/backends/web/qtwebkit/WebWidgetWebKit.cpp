@@ -4,6 +4,7 @@
 #include "../../../core/NetworkAccessManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
@@ -81,7 +82,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), "CopyImageUrlToClipboard");
 
 	getAction(ReloadAction)->setEnabled(true);
-	getAction(OpenLinkInThisTabAction)->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open.png")));
+	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
 
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));

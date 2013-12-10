@@ -55,6 +55,13 @@ QString formatUnit(qint64 value, bool isSpeed, int precision)
 	return QCoreApplication::translate("utils", (isSpeed ? "%1 B/s" : "%1 B")).arg(value);
 }
 
+QIcon getIcon(const QString &name, bool fromTheme)
+{
+	const QIcon icon(QString(":/icons/%1.png").arg(name));
+
+	return (fromTheme ? QIcon::fromTheme(name, icon) : icon);
+}
+
 }
 
 }
