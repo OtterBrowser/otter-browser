@@ -3,6 +3,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QMimeDatabase>
+#include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
@@ -20,6 +21,32 @@ QList<TransferInformation*> TransfersManager::m_transfers;
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 	m_updateTimer(0)
 {
+	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
+	const QStringList entries = history.childGroups();
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		TransferInformation *transfer = new TransferInformation();
+		transfer->source = history.value(QString("%1/source").arg(entries.at(i))).toString();
+		transfer->target = history.value(QString("%1/target").arg(entries.at(i))).toString();
+		transfer->started = history.value(QString("%1/started").arg(entries.at(i))).toDateTime();
+		transfer->finished = history.value(QString("%1/finished").arg(entries.at(i))).toDateTime();
+		transfer->bytesTotal = history.value(QString("%1/bytesTotal").arg(entries.at(i))).toLongLong();
+		transfer->bytesReceived = history.value(QString("%1/bytesReceived").arg(entries.at(i))).toLongLong();
+		transfer->state = ((transfer->bytesTotal == transfer->bytesReceived) ? FinishedTransfer : ErrorTransfer);
+
+		m_transfers.append(transfer);
+	}
+
+	connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), this, SLOT(save()));
+}
+
+TransfersManager::~TransfersManager()
+{
+	for (int i = (m_transfers.count() - 1); i >= 0; --i)
+	{
+		delete m_transfers.takeAt(i);
+	}
 }
 
 void TransfersManager::createInstance(QObject *parent)
@@ -121,6 +148,11 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	m_replies[reply]->finished = QDateTime::currentDateTime();
 	m_replies[reply]->bytesReceived = m_replies[reply]->device->size();
 
+	if (m_replies[reply]->bytesTotal <= 0)
+	{
+		m_replies[reply]->bytesTotal = m_replies[reply]->bytesReceived;
+	}
+
 	emit m_instance->transferFinished(m_replies[reply]);
 	emit m_instance->transferUpdated(m_replies[reply]);
 
@@ -152,6 +184,33 @@ void TransfersManager::downloadError(QNetworkReply::NetworkError error)
 	stopTransfer(transfer);
 
 	transfer->state = ErrorTransfer;
+}
+
+void TransfersManager::save()
+{
+	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
+	history.clear();
+
+	int entry = 1;
+
+	for (int i = 0; i < m_transfers.count(); ++i)
+	{
+		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue("Transfers/KeepHistoryDays", 7).toInt()))
+		{
+			continue;
+		}
+
+		history.setValue(QString("%1/source").arg(entry), m_transfers.at(i)->source);
+		history.setValue(QString("%1/target").arg(entry), m_transfers.at(i)->target);
+		history.setValue(QString("%1/started").arg(entry), m_transfers.at(i)->started);
+		history.setValue(QString("%1/finished").arg(entry), ((m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->state != RunningTransfer) ? m_transfers.at(i)->finished : QDateTime::currentDateTime()));
+		history.setValue(QString("%1/bytesTotal").arg(entry), m_transfers.at(i)->bytesTotal);
+		history.setValue(QString("%1/bytesReceived").arg(entry), m_transfers.at(i)->bytesReceived);
+
+		++entry;
+	}
+
+	history.sync();
 }
 
 TransfersManager* TransfersManager::getInstance()

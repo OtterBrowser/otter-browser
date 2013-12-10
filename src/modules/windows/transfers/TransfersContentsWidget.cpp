@@ -193,7 +193,7 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
 	m_model->item(row, 3)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
 	m_model->item(row, 4)->setText(remainingTime);
-	m_model->item(row, 5)->setText(Utils::formatUnit(transfer->speed, true, 1));
+	m_model->item(row, 5)->setText((transfer->state == RunningTransfer) ? Utils::formatUnit(transfer->speed, true, 1) : QString());
 	m_model->item(row, 6)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
 	m_model->item(row, 7)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
 

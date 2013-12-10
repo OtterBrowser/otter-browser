@@ -41,6 +41,8 @@ class TransfersManager : public QObject
 	Q_OBJECT
 
 public:
+	~TransfersManager();
+
 	static void createInstance(QObject *parent = NULL);
 	static TransfersManager* getInstance();
 	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
@@ -61,6 +63,7 @@ protected slots:
 	void downloadData(QNetworkReply *reply = NULL);
 	void downloadFinished(QNetworkReply *reply = NULL);
 	void downloadError(QNetworkReply::NetworkError error);
+	void save();
 
 private:
 	explicit TransfersManager(QObject *parent = NULL);
