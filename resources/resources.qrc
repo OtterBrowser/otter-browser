@@ -61,5 +61,8 @@
         <file>icons/cookies.png</file>
         <file>icons/bookmarks.png</file>
         <file>icons/transfers.png</file>
+        <file>icons/task-complete.png</file>
+        <file>icons/task-ongoing.png</file>
+        <file>icons/task-reject.png</file>
     </qresource>
 </RCC>

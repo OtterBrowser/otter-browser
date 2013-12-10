@@ -24,13 +24,16 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->setupUi(this);
 
 	QStringList labels;
-	labels << tr("Filename") << tr("Size") << tr("Progress") << tr("Time") << tr("Speed") << tr("Started") << tr("Finished");
+	labels << tr("Status") << tr("Filename") << tr("Size") << tr("Progress") << tr("Time") << tr("Speed") << tr("Started") << tr("Finished");
 
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->transfersView->setModel(m_model);
-	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->transfersView->setItemDelegateForColumn(2, new ProgressBarDelegate(this));
+	m_ui->transfersView->horizontalHeader()->setTextElideMode(Qt::ElideRight);
+	m_ui->transfersView->horizontalHeader()->resizeSection(0, 30);
+	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 
@@ -72,12 +75,16 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 {
 	QList<QStandardItem*> items;
-	QStandardItem *item = new QStandardItem(QFileInfo(transfer->target).fileName());
+	QStandardItem *item = new QStandardItem();
 	item->setData(qVariantFromValue((void*) transfer), Qt::UserRole);
 
 	items.append(item);
 
-	for (int i = 1; i < m_model->columnCount(); ++i)
+	item = new QStandardItem(QFileInfo(transfer->target).fileName());
+
+	items.append(item);
+
+	for (int i = 2; i < m_model->columnCount(); ++i)
 	{
 		items.append(new QStandardItem());
 	}
@@ -162,12 +169,33 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		}
 	}
 
-	m_model->item(row, 1)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
-	m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
-	m_model->item(row, 3)->setText(remainingTime);
-	m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
-	m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
-	m_model->item(row, 6)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
+	QIcon icon;
+
+	switch (transfer->state)
+	{
+		case RunningTransfer:
+			icon = QIcon::fromTheme("task-ongoing", QIcon(":/icons/task-ongoing.png"));
+
+			break;
+		case FinishedTransfer:
+			icon = QIcon::fromTheme("task-complete", QIcon(":/icons/task-complete.png"));
+
+			break;
+		case ErrorTransfer:
+			icon = QIcon::fromTheme("task-reject", QIcon(":/icons/task-reject.png"));
+
+			break;
+		default:
+			break;
+	}
+
+	m_model->item(row, 0)->setIcon(icon);
+	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
+	m_model->item(row, 3)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
+	m_model->item(row, 4)->setText(remainingTime);
+	m_model->item(row, 5)->setText(Utils::formatUnit(transfer->speed, true, 1));
+	m_model->item(row, 6)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
+	m_model->item(row, 7)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
 
 	const QString tooltip = tr("<pre style='font-family:auto;'>Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</pre>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QString("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
 
