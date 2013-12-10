@@ -1,11 +1,14 @@
 #include "WebPageWebKit.h"
 #include "WebWidgetWebKit.h"
+#include "../../../core/SettingsManager.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
-#include <QtWidgets/QAction>
 #include <QtNetwork/QNetworkReply>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QMessageBox>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 
@@ -55,6 +58,27 @@ bool WebPageWebKit::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequ
 		frame->evaluateJavaScript(request.url().path());
 
 		return true;
+	}
+
+	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue("Choices/WarnFormResend", true).toBool())
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("Are you sure that you want to send form data again?"));
+		messageBox.setInformativeText("Do you want to resend data?");
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Cancel);
+		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+		const bool cancel = (messageBox.exec() == QMessageBox::Cancel);
+
+		SettingsManager::setValue("Choices/WarnFormResend", !messageBox.checkBox()->isChecked());
+
+		if (cancel)
+		{
+			return false;
+		}
 	}
 
 	return QWebPage::acceptNavigationRequest(frame, request, type);
