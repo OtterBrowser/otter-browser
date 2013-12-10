@@ -68,6 +68,8 @@ void TransfersManager::timerEvent(QTimerEvent *event)
 		emit m_instance->transferUpdated(iterator.value());
 	}
 
+	save();
+
 	if (m_replies.isEmpty())
 	{
 		killTimer(m_updateTimer);
@@ -93,9 +95,9 @@ void TransfersManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 		return;
 	}
 
-	m_replies[reply]->bytesReceivedDifference += (bytesReceived - m_replies[reply]->bytesReceived);
-	m_replies[reply]->bytesReceived = bytesReceived;
-	m_replies[reply]->bytesTotal = bytesTotal;
+	m_replies[reply]->bytesReceivedDifference += (bytesReceived - (m_replies[reply]->bytesReceived - m_replies[reply]->bytesStart));
+	m_replies[reply]->bytesReceived = (m_replies[reply]->bytesStart + bytesReceived);
+	m_replies[reply]->bytesTotal = (m_replies[reply]->bytesStart + bytesTotal);
 }
 
 void TransfersManager::downloadData(QNetworkReply *reply)
@@ -471,6 +473,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	transfer->device = file;
 	transfer->started = QDateTime::currentDateTime();
+	transfer->bytesStart = file->size();
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);

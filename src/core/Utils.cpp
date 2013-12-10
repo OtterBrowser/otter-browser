@@ -1,8 +1,8 @@
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
-#include <QtCore/qmath.h>
 #include <QtCore/QTime>
+#include <QtCore/QtMath>
 
 namespace Otter
 {
