@@ -1,4 +1,5 @@
 #include "TransfersContentsWidget.h"
+#include "ProgressBarDelegate.h"
 #include "../../../core/Utils.h"
 
 #include "ui_TransfersContentsWidget.h"
@@ -21,6 +22,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 
 	m_ui->transfersView->setModel(m_model);
 	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->transfersView->setItemDelegateForColumn(2, new ProgressBarDelegate(this));
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 
@@ -93,9 +95,10 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	if (row >= 0)
 	{
 		m_model->item(row, 1)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
-		m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number(((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : QString());
+		m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
 		m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
 		m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
+		m_model->item(row, 6)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
 
 		if (m_ui->transfersView->selectionModel()->hasSelection())
 		{

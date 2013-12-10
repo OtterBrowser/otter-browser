@@ -215,6 +215,10 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 		connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), m_instance, SLOT(downloadError(QNetworkReply::NetworkError)));
 	}
+	else
+	{
+		transfer->finished = QDateTime::currentDateTime();
+	}
 
 	if (target.isEmpty())
 	{
@@ -405,6 +409,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	}
 
 	transfer->device = file;
+	transfer->started = QDateTime::currentDateTime();
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);

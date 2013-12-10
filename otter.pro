@@ -44,7 +44,8 @@ SOURCES += src/main.cpp\
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
     src/modules/windows/cookies/CookiePropertiesDialog.cpp \
-    src/modules/windows/transfers/TransfersContentsWidget.cpp
+    src/modules/windows/transfers/TransfersContentsWidget.cpp \
+    src/modules/windows/transfers/ProgressBarDelegate.cpp
 
 HEADERS += src/core/SettingsManager.h \
     src/core/Application.h \
@@ -80,7 +81,8 @@ HEADERS += src/core/SettingsManager.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \
     src/modules/windows/cookies/CookiePropertiesDialog.h \
-    src/modules/windows/transfers/TransfersContentsWidget.h
+    src/modules/windows/transfers/TransfersContentsWidget.h \
+    src/modules/windows/transfers/ProgressBarDelegate.h
 
 FORMS += src/ui/MainWindow.ui \
     src/ui/PreferencesDialog.ui \
