@@ -69,6 +69,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	QHash<WindowAction, QAction*> m_actions;
+	QHash<TransferInformation*, QQueue<qint64> > m_speeds;
 	Ui::TransfersContentsWidget *m_ui;
 
 signals:

@@ -53,7 +53,7 @@ void TransfersManager::startUpdates()
 {
 	if (m_updateTimer == 0)
 	{
-		m_updateTimer = startTimer(250);
+		m_updateTimer = startTimer(500);
 	}
 }
 

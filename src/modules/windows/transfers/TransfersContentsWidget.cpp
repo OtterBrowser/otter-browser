@@ -7,6 +7,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QQueue>
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QApplication>
@@ -83,6 +84,11 @@ void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 
 	m_model->appendRow(items);
 
+	if (transfer->state == RunningTransfer)
+	{
+		m_speeds[transfer] = QQueue<qint64>();
+	}
+
 	updateTransfer(transfer);
 }
 
@@ -94,6 +100,8 @@ void TransfersContentsWidget::removeTransfer(TransferInformation *transfer)
 	{
 		m_model->removeRow(row);
 	}
+
+	m_speeds.remove(transfer);
 }
 
 void TransfersContentsWidget::removeTransfer()
@@ -115,25 +123,62 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 {
 	const int row = findTransfer(transfer);
 
-	if (row >= 0)
+	if (row < 0)
 	{
-		m_model->item(row, 1)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
-		m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
-		m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
-		m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
-		m_model->item(row, 6)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
+		return;
+	}
 
-		const QString tooltip = tr("<pre style='font-family:auto;'>Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</pre>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QString("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+	QString remainingTime;
 
-		for (int i = 0; i < m_model->columnCount(); ++i)
+	if (m_speeds.contains(transfer))
+	{
+		if (transfer->state == RunningTransfer)
 		{
-			m_model->item(row, i)->setToolTip(tooltip);
-		}
+			m_speeds[transfer].enqueue(transfer->speed);
 
-		if (m_ui->transfersView->selectionModel()->hasSelection())
-		{
-			updateActions();
+			if (m_speeds[transfer].count() > 10)
+			{
+				m_speeds[transfer].dequeue();
+			}
+
+			if (transfer->bytesTotal > 0)
+			{
+				qint64 speedSum = 0;
+				const QList<qint64> speeds = m_speeds[transfer];
+
+				for (int i = 0; i < speeds.count(); ++i)
+				{
+					speedSum += speeds.at(i);
+				}
+
+				speedSum /= (speeds.count());
+
+				remainingTime = Utils::formatTime(qreal(transfer->bytesTotal - transfer->bytesReceived) / speedSum);
+			}
 		}
+		else
+		{
+			m_speeds.remove(transfer);
+		}
+	}
+
+	m_model->item(row, 1)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
+	m_model->item(row, 2)->setText((transfer->bytesTotal > 0) ? QString::number((((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
+	m_model->item(row, 3)->setText(remainingTime);
+	m_model->item(row, 4)->setText(Utils::formatUnit(transfer->speed, true, 1));
+	m_model->item(row, 5)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
+	m_model->item(row, 6)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
+
+	const QString tooltip = tr("<pre style='font-family:auto;'>Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</pre>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QString("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+
+	for (int i = 0; i < m_model->columnCount(); ++i)
+	{
+		m_model->item(row, i)->setToolTip(tooltip);
+	}
+
+	if (m_ui->transfersView->selectionModel()->hasSelection())
+	{
+		updateActions();
 	}
 }
 

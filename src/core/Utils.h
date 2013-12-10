@@ -9,6 +9,7 @@ namespace Otter
 namespace Utils
 {
 
+QString formatTime(int value);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
 
 }

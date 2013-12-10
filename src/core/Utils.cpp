@@ -1,12 +1,34 @@
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/qmath.h>
+#include <QtCore/QTime>
 
 namespace Otter
 {
 
 namespace Utils
 {
+
+QString formatTime(int value)
+{
+	QTime time(0, 0);
+	time = time.addSecs(value);
+
+	if (value > 3600)
+	{
+		QString string = time.toString("hh:mm:ss");
+
+		if (value > 86400)
+		{
+			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor((qreal) value / 86400))).arg(string);
+		}
+
+		return string;
+	}
+
+	return time.toString("mm:ss");
+}
 
 QString formatUnit(qint64 value, bool isSpeed, int precision)
 {
