@@ -65,6 +65,7 @@ void CookiesContentsWidget::populateCookies()
 	m_ui->cookiesView->setModel(m_model);
 
 	connect(m_ui->cookiesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->cookiesView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(cookieProperties()));
 }
 
 void CookiesContentsWidget::insertCookie(const QNetworkCookie &cookie)
