@@ -136,6 +136,23 @@ void TransfersContentsWidget::updateActions()
 
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
 	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
+
+	if (transfer)
+	{
+		m_ui->sourceValueLabel->setText(transfer->source.toHtmlEscaped());
+		m_ui->targetValueLabel->setText(transfer->target.toHtmlEscaped());
+		m_ui->sizeValueLabel->setText((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?'));
+		m_ui->downloadedValueLabel->setText(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived)));
+		m_ui->progressValueLabel->setText(QString("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+	}
+	else
+	{
+		m_ui->sourceValueLabel->clear();
+		m_ui->targetValueLabel->clear();
+		m_ui->sizeValueLabel->clear();
+		m_ui->downloadedValueLabel->clear();
+		m_ui->progressValueLabel->clear();
+	}
 }
 
 void TransfersContentsWidget::print(QPrinter *printer)

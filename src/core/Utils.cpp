@@ -10,6 +10,11 @@ namespace Utils
 
 QString formatUnit(qint64 value, bool isSpeed, int precision)
 {
+	if (value < 0)
+	{
+		return QString('?');
+	}
+
 	if (value > 1024)
 	{
 		if (value > 1048576)
