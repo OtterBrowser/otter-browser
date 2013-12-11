@@ -48,6 +48,8 @@ void BookmarksManager::load()
 			}
 		}
 	}
+
+	emit folderModified(0);
 }
 
 void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark)

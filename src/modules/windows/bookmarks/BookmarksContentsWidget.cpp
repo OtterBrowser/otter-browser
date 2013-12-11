@@ -25,6 +25,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 
 	m_ui->bookmarksView->setModel(m_model);
 
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
 }
 
@@ -106,6 +107,25 @@ void BookmarksContentsWidget::addBookmark()
 	}
 }
 
+void BookmarksContentsWidget::updateFolder(int folder)
+{
+	QStandardItem *item = findFolder(folder);
+
+	if (!item)
+	{
+		return;
+	}
+
+	item->removeRows(0, item->rowCount());
+
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		addBookmark(bookmarks.at(i), item);
+	}
+}
+
 void BookmarksContentsWidget::print(QPrinter *printer)
 {
 	m_ui->bookmarksView->render(printer);
@@ -134,6 +154,11 @@ void BookmarksContentsWidget::setUrl(const QUrl &url)
 
 QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *item)
 {
+	if (folder == 0)
+	{
+		return m_model->invisibleRootItem();
+	}
+
 	if (!item)
 	{
 		item = m_model->invisibleRootItem();
