@@ -1,7 +1,7 @@
 #ifndef OTTER_WEBBACKENDWEBKIT_H
 #define OTTER_WEBBACKENDWEBKIT_H
 
-#include "../WebBackend.h"
+#include "../../../../core/WebBackend.h"
 
 namespace Otter
 {

@@ -1,11 +1,11 @@
 #include "WebWidgetWebKit.h"
 #include "WebPageWebKit.h"
-#include "../../../core/ActionsManager.h"
-#include "../../../core/NetworkAccessManager.h"
-#include "../../../core/SessionsManager.h"
-#include "../../../core/TransfersManager.h"
-#include "../../../core/Utils.h"
-#include "../../../ui/ImagePropertiesDialog.h"
+#include "../../../../core/ActionsManager.h"
+#include "../../../../core/NetworkAccessManager.h"
+#include "../../../../core/SessionsManager.h"
+#include "../../../../core/TransfersManager.h"
+#include "../../../../core/Utils.h"
+#include "../../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
@@ -98,7 +98,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
-	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showMenu(QPoint)));
+	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
@@ -425,7 +425,7 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 	notifyIconChanged();
 }
 
-void WebWidgetWebKit::showMenu(const QPoint &position)
+void WebWidgetWebKit::showContextMenu(const QPoint &position)
 {
 	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
@@ -465,7 +465,7 @@ void WebWidgetWebKit::showMenu(const QPoint &position)
 		}
 	}
 
-	WebWidget::showMenu(position, flags);
+	WebWidget::showContextMenu(position, flags);
 }
 
 WebWidget* WebWidgetWebKit::clone(QWidget *parent)

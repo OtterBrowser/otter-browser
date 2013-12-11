@@ -1,5 +1,4 @@
 #include "WebBackend.h"
-#include "WebWidget.h"
 
 namespace Otter
 {

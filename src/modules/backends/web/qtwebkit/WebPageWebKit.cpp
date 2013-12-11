@@ -1,6 +1,6 @@
 #include "WebPageWebKit.h"
 #include "WebWidgetWebKit.h"
-#include "../../../core/SettingsManager.h"
+#include "../../../../core/SettingsManager.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>

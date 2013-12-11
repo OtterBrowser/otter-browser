@@ -12,7 +12,7 @@ WebWidget::WebWidget(bool privateWindow = false, QWidget *parent) : QWidget(pare
 	Q_UNUSED(privateWindow)
 }
 
-void WebWidget::showMenu(const QPoint &position, MenuFlags flags)
+void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
 	QMenu menu;
 

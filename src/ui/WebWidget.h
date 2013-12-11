@@ -1,8 +1,8 @@
 #ifndef OTTER_WEBWIDGET_H
 #define OTTER_WEBWIDGET_H
 
-#include "../../core/SessionsManager.h"
-#include "../../ui/Window.h"
+#include "../core/SessionsManager.h"
+#include "Window.h"
 
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QUndoStack>
@@ -63,7 +63,7 @@ public slots:
 	virtual void setHistory(const HistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url) = 0;
-	void showMenu(const QPoint &position, MenuFlags flags);
+	void showContextMenu(const QPoint &position, MenuFlags flags);
 
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);

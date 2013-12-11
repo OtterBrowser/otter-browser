@@ -21,6 +21,8 @@ SOURCES += src/main.cpp\
     src/core/CookieJar.cpp \
     src/core/TransfersManager.cpp \
     src/core/Utils.cpp \
+    src/core/WebBackend.cpp \
+    src/core/WebBackendsManager.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/MainWindow.cpp \
     src/ui/PreferencesDialog.cpp \
@@ -34,12 +36,10 @@ SOURCES += src/main.cpp\
     src/ui/PreviewWidget.cpp \
     src/ui/ImagePropertiesDialog.cpp \
     src/ui/ContentsWidget.cpp \
-    src/backends/web/WebBackend.cpp \
-    src/backends/web/WebWidget.cpp \
-    src/backends/web/WebBackendsManager.cpp \
-    src/backends/web/qtwebkit/WebBackendWebKit.cpp \
-    src/backends/web/qtwebkit/WebWidgetWebKit.cpp \
-    src/backends/web/qtwebkit/WebPageWebKit.cpp \
+    src/ui/WebWidget.cpp \
+    src/modules/backends/web/qtwebkit/WebBackendWebKit.cpp \
+    src/modules/backends/web/qtwebkit/WebWidgetWebKit.cpp \
+    src/modules/backends/web/qtwebkit/WebPageWebKit.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
@@ -58,6 +58,8 @@ HEADERS += src/core/SettingsManager.h \
     src/core/CookieJar.h \
     src/core/TransfersManager.h \
     src/core/Utils.h \
+    src/core/WebBackend.h \
+    src/core/WebBackendsManager.h \
     src/ui/AddressWidget.h \
     src/ui/MainWindow.h \
     src/ui/PreferencesDialog.h \
@@ -71,12 +73,10 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/PreviewWidget.h \
     src/ui/ImagePropertiesDialog.h \
     src/ui/ContentsWidget.h \
-    src/backends/web/WebBackend.h \
-    src/backends/web/WebWidget.h \
-    src/backends/web/WebBackendsManager.h \
-    src/backends/web/qtwebkit/WebBackendWebKit.h \
-    src/backends/web/qtwebkit/WebWidgetWebKit.h \
-    src/backends/web/qtwebkit/WebPageWebKit.h \
+    src/ui/WebWidget.h \
+    src/modules/backends/web/qtwebkit/WebBackendWebKit.h \
+    src/modules/backends/web/qtwebkit/WebWidgetWebKit.h \
+    src/modules/backends/web/qtwebkit/WebPageWebKit.h \
     src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \

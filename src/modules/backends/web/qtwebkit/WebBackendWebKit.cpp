@@ -1,7 +1,7 @@
 #include "WebBackendWebKit.h"
 #include "WebWidgetWebKit.h"
-#include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
+#include "../../../../core/SettingsManager.h"
+#include "../../../../core/Utils.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QStandardPaths>

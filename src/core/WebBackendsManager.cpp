@@ -1,6 +1,6 @@
 #include "WebBackendsManager.h"
 #include "WebBackend.h"
-#include "qtwebkit/WebBackendWebKit.h"
+#include "../modules/backends/web/qtwebkit/WebBackendWebKit.h"
 
 namespace Otter
 {

@@ -3,8 +3,8 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/CookieJar.h"
 #include "../../../core/NetworkAccessManager.h"
-#include "../../../backends/web/WebBackend.h"
-#include "../../../backends/web/WebBackendsManager.h"
+#include "../../../core/WebBackend.h"
+#include "../../../core/WebBackendsManager.h"
 
 #include "ui_CookiesContentsWidget.h"
 

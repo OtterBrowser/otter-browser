@@ -3,7 +3,7 @@
 #include "BookmarksManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
-#include "../backends/web/WebBackendsManager.h"
+#include "WebBackendsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>

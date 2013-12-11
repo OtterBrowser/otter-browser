@@ -1,7 +1,7 @@
 #ifndef OTTER_WEBWIDGETWEBKIT_H
 #define OTTER_WEBWIDGETWEBKIT_H
 
-#include "../WebWidget.h"
+#include "../../../../ui/WebWidget.h"
 
 #include <QtWebKitWidgets/QWebHitTestResult>
 #include <QtWebKitWidgets/QWebInspector>
@@ -61,7 +61,7 @@ protected slots:
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
-	void showMenu(const QPoint &position);
+	void showContextMenu(const QPoint &position);
 
 private:
 	QWebView *m_webView;

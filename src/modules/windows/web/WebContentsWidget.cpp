@@ -1,9 +1,9 @@
 #include "WebContentsWidget.h"
 #include "ProgressBarWidget.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../backends/web/WebBackend.h"
-#include "../../../backends/web/WebBackendsManager.h"
-#include "../../../backends/web/WebWidget.h"
+#include "../../../core/WebBackend.h"
+#include "../../../core/WebBackendsManager.h"
+#include "../../../ui/WebWidget.h"
 
 #include "ui_WebContentsWidget.h"
 

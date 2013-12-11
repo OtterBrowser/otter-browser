@@ -9,8 +9,8 @@
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
-#include "../backends/web/WebBackend.h"
-#include "../backends/web/WebBackendsManager.h"
+#include "../core/WebBackend.h"
+#include "../core/WebBackendsManager.h"
 
 #include "ui_MainWindow.h"
 
