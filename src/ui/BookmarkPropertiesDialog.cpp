@@ -1,7 +1,7 @@
-#include "BookmarkDialog.h"
+#include "BookmarkPropertiesDialog.h"
 #include "../core/Utils.h"
 
-#include "ui_BookmarkDialog.h"
+#include "ui_BookmarkPropertiesDialog.h"
 
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMessageBox>
@@ -10,11 +10,11 @@
 namespace Otter
 {
 
-BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(Bookmark *bookmark, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
 	m_folder(bookmark->parent),
-	m_ui(new Ui::BookmarkDialog)
+	m_ui(new Ui::BookmarkPropertiesDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(m_bookmark->title);
@@ -49,12 +49,12 @@ BookmarkDialog::BookmarkDialog(Bookmark *bookmark, QWidget *parent) : QDialog(pa
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-BookmarkDialog::~BookmarkDialog()
+BookmarkPropertiesDialog::~BookmarkPropertiesDialog()
 {
 	delete m_ui;
 }
 
-void BookmarkDialog::changeEvent(QEvent *event)
+void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
@@ -69,7 +69,7 @@ void BookmarkDialog::changeEvent(QEvent *event)
 	}
 }
 
-void BookmarkDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent)
+void BookmarkPropertiesDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent)
 {
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
@@ -92,12 +92,12 @@ void BookmarkDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardI
 	}
 }
 
-void BookmarkDialog::folderChanged(const QModelIndex &index)
+void BookmarkPropertiesDialog::folderChanged(const QModelIndex &index)
 {
 	m_folder = index.data(Qt::UserRole).toInt();
 }
 
-void BookmarkDialog::reloadFolders()
+void BookmarkPropertiesDialog::reloadFolders()
 {
 	m_model->clear();
 
@@ -125,7 +125,7 @@ void BookmarkDialog::reloadFolders()
 	}
 }
 
-void BookmarkDialog::saveBookmark()
+void BookmarkPropertiesDialog::saveBookmark()
 {
 	m_bookmark->url = m_ui->addressLineEdit->text();
 	m_bookmark->title = m_ui->titleLineEdit->text();
@@ -152,7 +152,7 @@ void BookmarkDialog::saveBookmark()
 	accept();
 }
 
-void BookmarkDialog::createFolder()
+void BookmarkPropertiesDialog::createFolder()
 {
 	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
 

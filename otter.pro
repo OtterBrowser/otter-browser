@@ -24,6 +24,7 @@ SOURCES += src/main.cpp\
     src/core/WebBackend.cpp \
     src/core/WebBackendsManager.cpp \
     src/ui/AddressWidget.cpp \
+    src/ui/BookmarkPropertiesDialog.cpp \
     src/ui/MainWindow.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/TabBarWidget.cpp \
@@ -31,7 +32,6 @@ SOURCES += src/main.cpp\
     src/ui/StatusBarWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
-    src/ui/BookmarkDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/PreviewWidget.cpp \
     src/ui/ImagePropertiesDialog.cpp \
@@ -62,6 +62,7 @@ HEADERS += src/core/SettingsManager.h \
     src/core/WebBackend.h \
     src/core/WebBackendsManager.h \
     src/ui/AddressWidget.h \
+    src/ui/BookmarkPropertiesDialog.h \
     src/ui/MainWindow.h \
     src/ui/PreferencesDialog.h \
     src/ui/TabBarWidget.h \
@@ -69,7 +70,6 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/StatusBarWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SaveSessionDialog.h \
-    src/ui/BookmarkDialog.h \
     src/ui/AuthenticationDialog.h \
     src/ui/PreviewWidget.h \
     src/ui/ImagePropertiesDialog.h \
@@ -86,12 +86,12 @@ HEADERS += src/core/SettingsManager.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
     src/modules/windows/transfers/ProgressBarDelegate.h
 
-FORMS += src/ui/MainWindow.ui \
+FORMS += src/ui/BookmarkPropertiesDialog.ui \
+    src/ui/MainWindow.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/Window.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SaveSessionDialog.ui \
-    src/ui/BookmarkDialog.ui \
     src/ui/AuthenticationDialog.ui \
     src/ui/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui \

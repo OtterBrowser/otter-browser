@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "BookmarkDialog.h"
+#include "BookmarkPropertiesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "TabBarWidget.h"
@@ -432,7 +432,7 @@ void MainWindow::actionAddBookmark(const QUrl &url)
 	bookmark->title = m_windowsManager->getTitle();
 	bookmark->type = UrlBookmark;
 
-	BookmarkDialog dialog(bookmark, this);
+	BookmarkPropertiesDialog dialog(bookmark, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{

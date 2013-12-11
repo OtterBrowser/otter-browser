@@ -1,5 +1,5 @@
-#ifndef OTTER_BOOKMARKDIALOG_H
-#define OTTER_BOOKMARKDIALOG_H
+#ifndef OTTER_BOOKMARKPROPERTIESDIALOG_H
+#define OTTER_BOOKMARKPROPERTIESDIALOG_H
 
 #include "../core/BookmarksManager.h"
 
@@ -12,16 +12,16 @@ namespace Otter
 
 namespace Ui
 {
-	class BookmarkDialog;
+	class BookmarkPropertiesDialog;
 }
 
-class BookmarkDialog : public QDialog
+class BookmarkPropertiesDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarkDialog(Bookmark *bookmark, QWidget *parent = NULL);
-	~BookmarkDialog();
+	explicit BookmarkPropertiesDialog(Bookmark *bookmark, QWidget *parent = NULL);
+	~BookmarkPropertiesDialog();
 
 protected:
 	void changeEvent(QEvent *event);
@@ -38,7 +38,7 @@ private:
 	QStandardItemModel *m_model;
 	QModelIndex m_index;
 	int m_folder;
-	Ui::BookmarkDialog *m_ui;
+	Ui::BookmarkPropertiesDialog *m_ui;
 };
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Otter::BookmarkDialog</class>
- <widget class="QDialog" name="Otter::BookmarkDialog">
+ <class>Otter::BookmarkPropertiesDialog</class>
+ <widget class="QDialog" name="Otter::BookmarkPropertiesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
