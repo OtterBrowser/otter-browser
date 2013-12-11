@@ -448,6 +448,11 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	if (!m_hitResult.pixmap().isNull())
 	{
 		flags |= ImageMenu;
+
+		const bool isImageOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+
+		getAction(OpenImageInNewTabAction)->setEnabled(!isImageOpened);
+		getAction(InspectElementAction)->setEnabled(!isImageOpened);
 	}
 
 	if (m_hitResult.isContentEditable())
