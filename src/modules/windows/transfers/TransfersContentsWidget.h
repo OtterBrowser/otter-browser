@@ -71,19 +71,6 @@ private:
 	QHash<WindowAction, QAction*> m_actions;
 	QHash<TransferInformation*, QQueue<qint64> > m_speeds;
 	Ui::TransfersContentsWidget *m_ui;
-
-signals:
-	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
-	void requestedAddBookmark(QUrl url);
-	void requestedNewWindow(ContentsWidget *widget);
-	void actionsChanged();
-	void canZoomChanged(bool can);
-	void statusMessageChanged(const QString &message, int timeout);
-	void titleChanged(const QString &title);
-	void urlChanged(const QUrl &url);
-	void iconChanged(const QIcon &icon);
-	void loadingChanged(bool loading);
-	void zoomChanged(int zoom);
 };
 
 }

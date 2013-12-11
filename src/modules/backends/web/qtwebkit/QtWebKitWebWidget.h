@@ -73,21 +73,6 @@ private:
 	QHash<WindowAction, QAction*> m_actions;
 	bool m_isLinkHovered;
 	bool m_isLoading;
-
-signals:
-	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
-	void requestedAddBookmark(QUrl url);
-	void requestedNewWindow(WebWidget *widget);
-	void actionsChanged();
-	void statusMessageChanged(const QString &message, int timeout = 5);
-	void titleChanged(const QString &title);
-	void urlChanged(const QUrl &url);
-	void iconChanged(const QIcon &icon);
-	void loadingChanged(bool loading);
-	void zoomChanged(int zoom);
-	void isPrivateChanged(bool pinned);
-	void loadProgress(int progress);
-	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 
 }
