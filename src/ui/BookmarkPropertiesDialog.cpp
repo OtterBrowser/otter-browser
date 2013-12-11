@@ -134,7 +134,7 @@ void BookmarkPropertiesDialog::saveBookmark()
 
 	if (m_bookmark->parent >= 0)
 	{
-///TODO
+		BookmarksManager::updateBookmark(m_bookmark);
 	}
 	else
 	{

@@ -40,6 +40,7 @@ public:
 	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
+	static bool updateBookmark(BookmarkInformation *bookmark);
 	static bool deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);

@@ -252,6 +252,18 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	return save();
 }
 
+bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
+{
+	if (bookmark)
+	{
+		emit m_instance->folderModified(bookmark->parent);
+
+		return true;
+	}
+
+	return false;
+}
+
 bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)
 {
 	if (!bookmark)
