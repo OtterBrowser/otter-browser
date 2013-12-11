@@ -13,12 +13,13 @@ namespace Otter
 BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark, int folder, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
-	m_folder(folder),
+	m_folder((folder < 0) ? bookmark->parent : folder),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(m_bookmark->title);
 	m_ui->addressLineEdit->setText(m_bookmark->url);
+	m_ui->addressLineEdit->setEnabled(m_bookmark->type == UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
 
 	if (bookmark->parent < 0)

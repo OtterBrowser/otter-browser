@@ -54,6 +54,7 @@ protected slots:
 	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
 	void addBookmark();
 	void deleteBookmark();
+	void bookmarkProperties();
 	void updateFolder(int folder);
 	void updateActions();
 

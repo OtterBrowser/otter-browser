@@ -29,6 +29,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
 	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
 }
@@ -133,6 +134,17 @@ void BookmarksContentsWidget::deleteBookmark()
 	}
 }
 
+void BookmarksContentsWidget::bookmarkProperties()
+{
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+
+	if (bookmark)
+	{
+		BookmarkPropertiesDialog dialog(bookmark, -1, this);
+		dialog.exec();
+	}
+}
+
 void BookmarksContentsWidget::updateFolder(int folder)
 {
 	QStandardItem *item = findFolder(folder);
@@ -154,7 +166,11 @@ void BookmarksContentsWidget::updateFolder(int folder)
 
 void BookmarksContentsWidget::updateActions()
 {
-	m_ui->deleteButton->setEnabled(!m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty());
+	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+
+	m_ui->propertiesButton->setEnabled((hasSelecion && bookmark && bookmark->type != SeparatorBookmark));
+	m_ui->deleteButton->setEnabled(hasSelecion);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
