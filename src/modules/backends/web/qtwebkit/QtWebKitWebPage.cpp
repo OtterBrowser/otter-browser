@@ -1,5 +1,5 @@
-#include "WebPageWebKit.h"
-#include "WebWidgetWebKit.h"
+#include "QtWebKitWebPage.h"
+#include "QtWebKitWebWidget.h"
 #include "../../../../core/SettingsManager.h"
 
 #include <QtCore/QFile>
@@ -15,12 +15,12 @@
 namespace Otter
 {
 
-WebPageWebKit::WebPageWebKit(WebWidget *parent) : QWebPage(parent),
+QtWebKitWebPage::QtWebKitWebPage(WebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent)
 {
 }
 
-void WebPageWebKit::triggerAction(QWebPage::WebAction action, bool checked)
+void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
 	if (action == InspectElement && m_webWidget)
 	{
@@ -30,20 +30,20 @@ void WebPageWebKit::triggerAction(QWebPage::WebAction action, bool checked)
 	QWebPage::triggerAction(action, checked);
 }
 
-void WebPageWebKit::setParent(WebWidget *parent)
+void QtWebKitWebPage::setParent(WebWidget *parent)
 {
 	m_webWidget = parent;
 
 	QWebPage::setParent(parent);
 }
 
-QWebPage *WebPageWebKit::createWindow(QWebPage::WebWindowType type)
+QWebPage *QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
 	{
-		WebPageWebKit *page = new WebPageWebKit(NULL);
+		QtWebKitWebPage *page = new QtWebKitWebPage(NULL);
 
-		emit requestedNewWindow(new WebWidgetWebKit(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page));
+		emit requestedNewWindow(new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page));
 
 		return page;
 	}
@@ -51,7 +51,7 @@ QWebPage *WebPageWebKit::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
-bool WebPageWebKit::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
+bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
 {
 	if (request.url().scheme() == "javascript" && frame)
 	{
@@ -84,7 +84,7 @@ bool WebPageWebKit::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequ
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 
-bool WebPageWebKit::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
+bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
 	if (extension == QWebPage::ErrorPageExtension)
 	{
@@ -123,7 +123,7 @@ bool WebPageWebKit::extension(QWebPage::Extension extension, const QWebPage::Ext
 	return false;
 }
 
-bool WebPageWebKit::supportsExtension(QWebPage::Extension extension) const
+bool QtWebKitWebPage::supportsExtension(QWebPage::Extension extension) const
 {
 	return (extension == QWebPage::ErrorPageExtension);
 }

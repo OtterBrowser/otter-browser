@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network printsupport webkitwidgets widgets
+QT += core gui network printsupport sensors webkitwidgets widgets
 
 TARGET = otter
 TEMPLATE = app
@@ -37,9 +37,9 @@ SOURCES += src/main.cpp\
     src/ui/ImagePropertiesDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/WebWidget.cpp \
-    src/modules/backends/web/qtwebkit/WebBackendWebKit.cpp \
-    src/modules/backends/web/qtwebkit/WebWidgetWebKit.cpp \
-    src/modules/backends/web/qtwebkit/WebPageWebKit.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
@@ -74,9 +74,9 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/ImagePropertiesDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/WebWidget.h \
-    src/modules/backends/web/qtwebkit/WebBackendWebKit.h \
-    src/modules/backends/web/qtwebkit/WebWidgetWebKit.h \
-    src/modules/backends/web/qtwebkit/WebPageWebKit.h \
+    src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
+    src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
+    src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \

@@ -1,5 +1,5 @@
-#include "WebWidgetWebKit.h"
-#include "WebPageWebKit.h"
+#include "QtWebKitWebWidget.h"
+#include "QtWebKitWebPage.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SessionsManager.h"
@@ -23,7 +23,7 @@
 namespace Otter
 {
 
-WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWebKit *page) : WebWidget(parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, QWidget *parent, QtWebKitWebPage *page) : WebWidget(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
@@ -49,7 +49,7 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	}
 	else
 	{
-		page = new WebPageWebKit(this);
+		page = new QtWebKitWebPage(this);
 	}
 
 	page->setNetworkAccessManager(m_networkAccessManager);
@@ -103,12 +103,12 @@ WebWidgetWebKit::WebWidgetWebKit(bool privateWindow, QWidget *parent, WebPageWeb
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
 
-void WebWidgetWebKit::print(QPrinter *printer)
+void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_webView->print(printer);
 }
 
-void WebWidgetWebKit::loadStarted()
+void QtWebKitWebWidget::loadStarted()
 {
 	m_isLoading = true;
 
@@ -142,7 +142,7 @@ void WebWidgetWebKit::loadStarted()
 	emit statusMessageChanged(QString());
 }
 
-void WebWidgetWebKit::loadFinished(bool ok)
+void QtWebKitWebWidget::loadFinished(bool ok)
 {
 	m_isLoading = false;
 
@@ -167,17 +167,17 @@ void WebWidgetWebKit::loadFinished(bool ok)
 	emit loadingChanged(false);
 }
 
-void WebWidgetWebKit::downloadFile(const QNetworkRequest &request)
+void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 {
 	TransfersManager::startTransfer(request, QString(), isPrivate());
 }
 
-void WebWidgetWebKit::downloadFile(QNetworkReply *reply)
+void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
 	TransfersManager::startTransfer(reply, QString(), isPrivate());
 }
 
-void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
+void QtWebKitWebWidget::linkHovered(const QString &link, const QString &title)
 {
 	QString text;
 
@@ -193,7 +193,7 @@ void WebWidgetWebKit::linkHovered(const QString &link, const QString &title)
 	emit statusMessageChanged(link, 0);
 }
 
-void WebWidgetWebKit::saveState(QWebFrame *frame, QWebHistoryItem *item)
+void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
 	if (frame == m_webView->page()->mainFrame())
 	{
@@ -205,7 +205,7 @@ void WebWidgetWebKit::saveState(QWebFrame *frame, QWebHistoryItem *item)
 	}
 }
 
-void WebWidgetWebKit::restoreState(QWebFrame *frame)
+void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
 	if (frame == m_webView->page()->mainFrame())
 	{
@@ -218,12 +218,12 @@ void WebWidgetWebKit::restoreState(QWebFrame *frame)
 	}
 }
 
-void WebWidgetWebKit::notifyTitleChanged()
+void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
 }
 
-void WebWidgetWebKit::notifyUrlChanged(const QUrl &url)
+void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	if (m_actions.contains(RewindBackAction))
 	{
@@ -238,12 +238,12 @@ void WebWidgetWebKit::notifyUrlChanged(const QUrl &url)
 	emit urlChanged(url);
 }
 
-void WebWidgetWebKit::notifyIconChanged()
+void QtWebKitWebWidget::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
 }
 
-void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
+void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -364,19 +364,19 @@ void WebWidgetWebKit::triggerAction(WindowAction action, bool checked)
 	}
 }
 
-void WebWidgetWebKit::setDefaultTextEncoding(const QString &encoding)
+void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 {
 	m_webView->settings()->setDefaultTextEncoding(encoding);
 	m_webView->reload();
 }
 
-void WebWidgetWebKit::setHistory(const HistoryInformation &history)
+void QtWebKitWebWidget::setHistory(const HistoryInformation &history)
 {
 	Q_UNUSED(history)
 ///TODO
 }
 
-void WebWidgetWebKit::setZoom(int zoom)
+void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
 	{
@@ -386,7 +386,7 @@ void WebWidgetWebKit::setZoom(int zoom)
 	}
 }
 
-void WebWidgetWebKit::setUrl(const QUrl &url)
+void QtWebKitWebWidget::setUrl(const QUrl &url)
 {
 	if (url.scheme() == "javascript")
 	{
@@ -425,7 +425,7 @@ void WebWidgetWebKit::setUrl(const QUrl &url)
 	notifyIconChanged();
 }
 
-void WebWidgetWebKit::showContextMenu(const QPoint &position)
+void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
 	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
@@ -468,9 +468,9 @@ void WebWidgetWebKit::showContextMenu(const QPoint &position)
 	WebWidget::showContextMenu(position, flags);
 }
 
-WebWidget* WebWidgetWebKit::clone(QWidget *parent)
+WebWidget* QtWebKitWebWidget::clone(QWidget *parent)
 {
-	WebWidget *widget = new WebWidgetWebKit(isPrivate(), parent);
+	WebWidget *widget = new QtWebKitWebWidget(isPrivate(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
 	widget->setUrl(getUrl());
 	widget->setZoom(getZoom());
@@ -479,7 +479,7 @@ WebWidget* WebWidgetWebKit::clone(QWidget *parent)
 	return widget;
 }
 
-QAction *WebWidgetWebKit::getAction(WindowAction action)
+QAction *QtWebKitWebWidget::getAction(WindowAction action)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -700,17 +700,17 @@ QAction *WebWidgetWebKit::getAction(WindowAction action)
 	return actionObject;
 }
 
-QUndoStack *WebWidgetWebKit::getUndoStack()
+QUndoStack *QtWebKitWebWidget::getUndoStack()
 {
 	return m_webView->page()->undoStack();
 }
 
-QString WebWidgetWebKit::getDefaultTextEncoding() const
+QString QtWebKitWebWidget::getDefaultTextEncoding() const
 {
 	return m_webView->settings()->defaultTextEncoding();
 }
 
-QString WebWidgetWebKit::getTitle() const
+QString QtWebKitWebWidget::getTitle() const
 {
 	const QString title = m_webView->title();
 
@@ -734,17 +734,17 @@ QString WebWidgetWebKit::getTitle() const
 	return title;
 }
 
-QVariant WebWidgetWebKit::evaluateJavaScript(const QString &script)
+QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)
 {
 	return m_webView->page()->mainFrame()->evaluateJavaScript(script);
 }
 
-QUrl WebWidgetWebKit::getUrl() const
+QUrl QtWebKitWebWidget::getUrl() const
 {
 	return m_webView->url();
 }
 
-QIcon WebWidgetWebKit::getIcon() const
+QIcon QtWebKitWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
@@ -756,7 +756,7 @@ QIcon WebWidgetWebKit::getIcon() const
 	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
 }
 
-QPixmap WebWidgetWebKit::getThumbnail()
+QPixmap QtWebKitWebWidget::getThumbnail()
 {
 	if (!m_thumbnail.isNull() && !isLoading())
 	{
@@ -802,7 +802,7 @@ QPixmap WebWidgetWebKit::getThumbnail()
 	return pixmap;
 }
 
-HistoryInformation WebWidgetWebKit::getHistory() const
+HistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantHash data;
 	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
@@ -829,7 +829,7 @@ HistoryInformation WebWidgetWebKit::getHistory() const
 	return information;
 }
 
-QWebPage::WebAction WebWidgetWebKit::mapAction(WindowAction action) const
+QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 {
 	switch (action)
 	{
@@ -886,7 +886,7 @@ QWebPage::WebAction WebWidgetWebKit::mapAction(WindowAction action) const
 	return QWebPage::NoWebAction;
 }
 
-void WebWidgetWebKit::triggerAction()
+void QtWebKitWebWidget::triggerAction()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
 
@@ -896,22 +896,22 @@ void WebWidgetWebKit::triggerAction()
 	}
 }
 
-int WebWidgetWebKit::getZoom() const
+int QtWebKitWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
 }
 
-bool WebWidgetWebKit::isLoading() const
+bool QtWebKitWebWidget::isLoading() const
 {
 	return m_isLoading;
 }
 
-bool WebWidgetWebKit::isPrivate() const
+bool QtWebKitWebWidget::isPrivate() const
 {
 	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
-bool WebWidgetWebKit::find(const QString &text, FindFlags flags)
+bool QtWebKitWebWidget::find(const QString &text, FindFlags flags)
 {
 	QWebPage::FindFlags nativeFlags = (QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
 
@@ -933,7 +933,7 @@ bool WebWidgetWebKit::find(const QString &text, FindFlags flags)
 	return m_webView->findText(text, nativeFlags);
 }
 
-bool WebWidgetWebKit::eventFilter(QObject *object, QEvent *event)
+bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{

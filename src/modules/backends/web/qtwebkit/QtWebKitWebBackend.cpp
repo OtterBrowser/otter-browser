@@ -1,5 +1,5 @@
-#include "WebBackendWebKit.h"
-#include "WebWidgetWebKit.h"
+#include "QtWebKitWebBackend.h"
+#include "QtWebKitWebWidget.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 
@@ -10,7 +10,7 @@
 namespace Otter
 {
 
-WebBackendWebKit::WebBackendWebKit(QObject *parent) : WebBackend(parent)
+QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 {
 	const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 
@@ -26,22 +26,22 @@ WebBackendWebKit::WebBackendWebKit(QObject *parent) : WebBackend(parent)
 	globalSettings->setOfflineStoragePath(cachePath);
 }
 
-WebWidget *WebBackendWebKit::createWidget(bool privateWindow, QWidget *parent)
+WebWidget *QtWebKitWebBackend::createWidget(bool privateWindow, QWidget *parent)
 {
-	return new WebWidgetWebKit(privateWindow, parent);
+	return new QtWebKitWebWidget(privateWindow, parent);
 }
 
-QString WebBackendWebKit::getTitle() const
+QString QtWebKitWebBackend::getTitle() const
 {
 	return tr("WebKit Backend");
 }
 
-QString WebBackendWebKit::getDescription() const
+QString QtWebKitWebBackend::getDescription() const
 {
 	return tr("Backend utilizing QtWebKit module");
 }
 
-QIcon WebBackendWebKit::getIconForUrl(const QUrl &url)
+QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)
 {
 	const QIcon icon = QWebSettings::iconForUrl(url);
 

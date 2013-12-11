@@ -1,6 +1,6 @@
 #include "WebBackendsManager.h"
 #include "WebBackend.h"
-#include "../modules/backends/web/qtwebkit/WebBackendWebKit.h"
+#include "../modules/backends/web/qtwebkit/QtWebKitWebBackend.h"
 
 namespace Otter
 {
@@ -10,7 +10,7 @@ QHash<QString, WebBackend*> WebBackendsManager::m_backends;
 
 WebBackendsManager::WebBackendsManager(QObject *parent) : QObject(parent)
 {
-	registerBackend(new WebBackendWebKit(this), "qtwebkit");
+	registerBackend(new QtWebKitWebBackend(this), "qtwebkit");
 }
 
 void WebBackendsManager::createInstance(QObject *parent)

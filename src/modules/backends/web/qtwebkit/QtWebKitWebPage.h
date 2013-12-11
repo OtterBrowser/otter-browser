@@ -1,5 +1,5 @@
-#ifndef OTTER_WEBPAGEWEBKIT_H
-#define OTTER_WEBPAGEWEBKIT_H
+#ifndef OTTER_QTWEBKITWEBPAGE_H
+#define OTTER_QTWEBKITWEBPAGE_H
 
 #include <QtWebKitWidgets/QWebPage>
 
@@ -8,12 +8,12 @@ namespace Otter
 
 class WebWidget;
 
-class WebPageWebKit : public QWebPage
+class QtWebKitWebPage : public QWebPage
 {
 	Q_OBJECT
 
 public:
-	explicit WebPageWebKit(WebWidget *parent);
+	explicit QtWebKitWebPage(WebWidget *parent);
 
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(WebWidget *parent);

@@ -1,5 +1,5 @@
-#ifndef OTTER_WEBWIDGETWEBKIT_H
-#define OTTER_WEBWIDGETWEBKIT_H
+#ifndef OTTER_QTWEBKITWEBWIDGET_H
+#define OTTER_QTWEBKITWEBWIDGET_H
 
 #include "../../../../ui/WebWidget.h"
 
@@ -13,14 +13,14 @@ namespace Otter
 {
 
 class NetworkAccessManager;
-class WebPageWebKit;
+class QtWebKitWebPage;
 
-class WebWidgetWebKit : public WebWidget
+class QtWebKitWebWidget : public WebWidget
 {
 	Q_OBJECT
 
 public:
-	explicit WebWidgetWebKit(bool privateWindow = false, QWidget *parent = NULL, WebPageWebKit *page = NULL);
+	explicit QtWebKitWebWidget(bool privateWindow = false, QWidget *parent = NULL, QtWebKitWebPage *page = NULL);
 
 	void print(QPrinter *printer);
 	WebWidget* clone(QWidget *parent = NULL);

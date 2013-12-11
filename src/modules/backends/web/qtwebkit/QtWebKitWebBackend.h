@@ -1,17 +1,17 @@
-#ifndef OTTER_WEBBACKENDWEBKIT_H
-#define OTTER_WEBBACKENDWEBKIT_H
+#ifndef OTTER_QTWEBKITWEBBACKEND_H
+#define OTTER_QTWEBKITWEBBACKEND_H
 
 #include "../../../../core/WebBackend.h"
 
 namespace Otter
 {
 
-class WebBackendWebKit : public WebBackend
+class QtWebKitWebBackend : public WebBackend
 {
 	Q_OBJECT
 
 public:
-	explicit WebBackendWebKit(QObject *parent = NULL);
+	explicit QtWebKitWebBackend(QObject *parent = NULL);
 
 	WebWidget* createWidget(bool privateWindow = false, QWidget *parent = NULL);
 	QString getTitle() const;
