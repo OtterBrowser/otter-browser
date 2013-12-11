@@ -351,9 +351,6 @@
    </property>
   </action>
   <action name="actionManageBookmarks">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Manage Bookmarks...</string>
    </property>

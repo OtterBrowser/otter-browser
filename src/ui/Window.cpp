@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "../core/SettingsManager.h"
+#include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
@@ -103,7 +104,11 @@ void Window::setUrl(const QUrl &url)
 			return;
 		}
 
-		if (url.path() == "cookies")
+		if (url.path() == "bookmarks")
+		{
+			newWidget = new BookmarksContentsWidget(this);
+		}
+		else if (url.path() == "cookies")
 		{
 			newWidget = new CookiesContentsWidget(this);
 		}

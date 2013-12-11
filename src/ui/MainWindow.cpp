@@ -209,6 +209,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
+	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
@@ -436,6 +437,16 @@ void MainWindow::actionAddBookmark(const QUrl &url)
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		delete bookmark;
+	}
+}
+
+void MainWindow::actionManageBookmarks()
+{
+	const QUrl url("about:bookmarks");
+
+	if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
+	{
+		m_windowsManager->open(url);
 	}
 }
 

@@ -42,6 +42,7 @@ SOURCES += src/main.cpp\
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
+    src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
     src/modules/windows/cookies/CookiePropertiesDialog.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
@@ -79,6 +80,7 @@ HEADERS += src/core/SettingsManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
+    src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \
     src/modules/windows/cookies/CookiePropertiesDialog.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
@@ -93,6 +95,7 @@ FORMS += src/ui/MainWindow.ui \
     src/ui/AuthenticationDialog.ui \
     src/ui/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui \
+    src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/cookies/CookiesContentsWidget.ui \
     src/modules/windows/cookies/CookiePropertiesDialog.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui

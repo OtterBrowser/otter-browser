@@ -48,6 +48,7 @@ protected slots:
 	void actionTextEncoding(QAction *action);
 	void actionClosedWindows(QAction *action);
 	void actionAddBookmark(const QUrl &url = QUrl());
+	void actionManageBookmarks();
 	void actionOpenBookmark();
 	void actionOpenBookmarkFolder();
 	void actionCookies();
