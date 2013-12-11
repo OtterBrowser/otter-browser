@@ -432,7 +432,7 @@ void MainWindow::actionAddBookmark(const QUrl &url)
 	bookmark->title = m_windowsManager->getTitle();
 	bookmark->type = UrlBookmark;
 
-	BookmarkPropertiesDialog dialog(bookmark, this);
+	BookmarkPropertiesDialog dialog(bookmark, 0, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{

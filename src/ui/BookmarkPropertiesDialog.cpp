@@ -10,10 +10,10 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark, int folder, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
-	m_folder(bookmark->parent),
+	m_folder(folder),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
 	m_ui->setupUi(this);

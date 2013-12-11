@@ -20,7 +20,7 @@ class BookmarkPropertiesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(BookmarkInformation *bookmark, QWidget *parent = NULL);
+	explicit BookmarkPropertiesDialog(BookmarkInformation *bookmark, int folder, QWidget *parent = NULL);
 	~BookmarkPropertiesDialog();
 
 protected:

@@ -72,7 +72,6 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 	{
 		case FolderBookmark:
 			item = new QStandardItem(Utils::getIcon("inode-directory"), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
-			item->setData(bookmark->identifier, Qt::UserRole);
 
 			for (int i = 0; i < bookmark->children.count(); ++i)
 			{
@@ -90,6 +89,8 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 			break;
 	}
 
+	item->setData(bookmark->identifier, Qt::UserRole);
+
 	parent->appendRow(item);
 }
 
@@ -97,9 +98,8 @@ void BookmarksContentsWidget::addBookmark()
 {
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->type = UrlBookmark;
-	bookmark->parent = m_ui->bookmarksView->currentIndex().data(Qt::UserRole).toInt();
 
-	BookmarkPropertiesDialog dialog(bookmark, this);
+	BookmarkPropertiesDialog dialog(bookmark, m_ui->bookmarksView->currentIndex().data(Qt::UserRole).toInt(), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -166,17 +166,19 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 
 	for (int i = 0; i < item->rowCount(); ++i)
 	{
-		if (!item->child(i, 0)->data(Qt::UserRole).isValid())
+		QStandardItem *child = item->child(i, 0);
+
+		if (!child || !child->data(Qt::UserRole).isValid())
 		{
 			continue;
 		}
 
-		if (item->child(i, 0)->data(Qt::UserRole).toInt() == folder)
+		if (child->data(Qt::UserRole).toInt() == folder)
 		{
-			return m_model->item(i, 0);
+			return child;
 		}
 
-		QStandardItem *result = findFolder(folder, m_model->item(i, 0));
+		QStandardItem *result = findFolder(folder, child);
 
 		if (result)
 		{
