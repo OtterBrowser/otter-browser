@@ -42,8 +42,20 @@ void AddressWidget::notifyRequestedLoadUrl()
 
 void AddressWidget::updateBookmark()
 {
-	const bool hasBookmark = BookmarksManager::hasBookmark(getUrl());
+	const QUrl url = getUrl();
 
+	if (url.scheme() == "about")
+	{
+		m_bookmarkLabel->setEnabled(false);
+		m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+		m_bookmarkLabel->setToolTip(QString());
+
+		return;
+	}
+
+	const bool hasBookmark = BookmarksManager::hasBookmark(url);
+
+	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
@@ -95,7 +107,7 @@ QUrl AddressWidget::getUrl() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_bookmarkLabel && event->type() == QEvent::MouseButtonPress)
+	if (object == m_bookmarkLabel && event->type() == QEvent::MouseButtonPress && m_bookmarkLabel->isEnabled())
 	{
 		if (BookmarksManager::hasBookmark(getUrl()))
 		{
