@@ -3,6 +3,7 @@
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
+#include "../../../ui/BookmarkPropertiesDialog.h"
 
 #include "ui_BookmarksContentsWidget.h"
 
@@ -23,6 +24,8 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	}
 
 	m_ui->bookmarksView->setModel(m_model);
+
+	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
 }
 
 BookmarksContentsWidget::~BookmarksContentsWidget()
@@ -87,6 +90,20 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 	}
 
 	parent->appendRow(item);
+}
+
+void BookmarksContentsWidget::addBookmark()
+{
+	BookmarkInformation *bookmark = new BookmarkInformation();
+	bookmark->type = UrlBookmark;
+	bookmark->parent = m_ui->bookmarksView->currentIndex().data(Qt::UserRole).toInt();
+
+	BookmarkPropertiesDialog dialog(bookmark, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		delete bookmark;
+	}
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)

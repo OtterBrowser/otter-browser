@@ -52,6 +52,7 @@ protected:
 
 protected slots:
 	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
+	void addBookmark();
 
 private:
 	QStandardItemModel *m_model;
