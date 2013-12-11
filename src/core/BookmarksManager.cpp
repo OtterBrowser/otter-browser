@@ -323,9 +323,20 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 
 bool BookmarksManager::deleteBookmark(const QUrl &url)
 {
-	Q_UNUSED(url)
+	if (!hasBookmark(url))
+	{
+		return false;
+	}
 
-//TODO
+	const QString bookmarkUrl = url.toString(QUrl::RemovePassword);
+
+	for (int i = 0; i < m_allBookmarks.count(); ++i)
+	{
+		if (m_allBookmarks.at(i) && m_allBookmarks.at(i)->type == UrlBookmark && m_allBookmarks.at(i)->url == bookmarkUrl)
+		{
+			deleteBookmark(m_allBookmarks.at(i));
+		}
+	}
 
 	return true;
 }
