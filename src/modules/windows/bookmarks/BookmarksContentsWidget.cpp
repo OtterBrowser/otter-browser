@@ -52,12 +52,23 @@ void BookmarksContentsWidget::addBookmark(Bookmark *bookmark, QStandardItem *par
 		return;
 	}
 
+	if (!parent)
+	{
+		parent = findFolder(bookmark->parent);
+	}
+
+	if (!parent)
+	{
+		return;
+	}
+
 	QStandardItem *item = NULL;
 
 	switch (bookmark->type)
 	{
 		case FolderBookmark:
 			item = new QStandardItem(Utils::getIcon("inode-directory"), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
+			item->setData(bookmark->identifier, Qt::UserRole);
 
 			for (int i = 0; i < bookmark->children.count(); ++i)
 			{
@@ -102,6 +113,36 @@ void BookmarksContentsWidget::setZoom(int zoom)
 void BookmarksContentsWidget::setUrl(const QUrl &url)
 {
 	Q_UNUSED(url)
+}
+
+QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *item)
+{
+	if (!item)
+	{
+		item = m_model->invisibleRootItem();
+	}
+
+	for (int i = 0; i < item->rowCount(); ++i)
+	{
+		if (!item->child(i, 0)->data(Qt::UserRole).isValid())
+		{
+			continue;
+		}
+
+		if (item->child(i, 0)->data(Qt::UserRole).toInt() == folder)
+		{
+			return m_model->item(i, 0);
+		}
+
+		QStandardItem *result = findFolder(folder, m_model->item(i, 0));
+
+		if (result)
+		{
+			return result;
+		}
+	}
+
+	return NULL;
 }
 
 ContentsWidget* BookmarksContentsWidget::clone(Window *window)

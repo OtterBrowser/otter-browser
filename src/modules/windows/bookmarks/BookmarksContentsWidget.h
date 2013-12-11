@@ -48,6 +48,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
 
 protected slots:
 	void addBookmark(Bookmark *bookmark, QStandardItem *parent = NULL);

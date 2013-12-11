@@ -279,7 +279,15 @@ void CookiesContentsWidget::updateActions()
 	}
 }
 
-QStandardItem *CookiesContentsWidget::findDomain(const QString &domain)
+void CookiesContentsWidget::filterCookies(const QString &filter)
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		m_ui->cookiesView->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
+	}
+}
+
+QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -290,14 +298,6 @@ QStandardItem *CookiesContentsWidget::findDomain(const QString &domain)
 	}
 
 	return NULL;
-}
-
-void CookiesContentsWidget::filterCookies(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		m_ui->cookiesView->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
-	}
 }
 
 ContentsWidget* CookiesContentsWidget::clone(Window *window)
