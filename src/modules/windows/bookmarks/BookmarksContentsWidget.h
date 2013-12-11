@@ -60,6 +60,7 @@ protected slots:
 	void bookmarkProperties();
 	void updateFolder(int folder);
 	void updateActions();
+	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
 
 private:
 	QStandardItemModel *m_model;

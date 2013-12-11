@@ -36,6 +36,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->addButton->setMenu(addMenu);
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
 	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteBookmark()));
@@ -189,6 +190,48 @@ void BookmarksContentsWidget::updateActions()
 
 	m_ui->propertiesButton->setEnabled((hasSelecion && bookmark && bookmark->type != SeparatorBookmark));
 	m_ui->deleteButton->setEnabled(hasSelecion);
+}
+
+bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
+{
+	if (!branch)
+	{
+		if (sender())
+		{
+			branch = m_model->invisibleRootItem();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool found = filter.isEmpty();
+
+	for (int i = 0; i < branch->rowCount(); ++i)
+	{
+		QStandardItem *item = branch->child(i, 0);
+
+		if (item && filterBookmarks(filter, item))
+		{
+			found = true;
+		}
+	}
+
+	if (!found)
+	{
+		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(branch->data(Qt::UserRole).value<void*>());
+
+		if (bookmark && bookmark->type != SeparatorBookmark && (bookmark->url.contains(filter, Qt::CaseInsensitive) || bookmark->title.contains(filter, Qt::CaseInsensitive) || bookmark->description.contains(filter, Qt::CaseInsensitive)))
+		{
+			found = true;
+		}
+	}
+
+	m_ui->bookmarksView->setRowHidden(branch->row(), branch->index().parent(), !found);
+	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
+
+	return found;
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
