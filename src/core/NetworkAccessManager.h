@@ -29,7 +29,8 @@ protected:
 protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void requestFinished(QNetworkReply *reply);
-	void authenticate(QNetworkReply *reply, QAuthenticator *authenticator);
+	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
+	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 
 private:
 	QNetworkReply* m_mainReply;

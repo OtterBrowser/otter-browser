@@ -7,6 +7,7 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -42,7 +43,8 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEn
 	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
-	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
+	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
+	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
 void NetworkAccessManager::resetStatistics()
@@ -147,10 +149,28 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 	}
 }
 
-void NetworkAccessManager::authenticate(QNetworkReply *reply, QAuthenticator *authenticator)
+void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
 	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
 	dialog.exec();
+}
+
+void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
+{
+	QStringList messages;
+
+	for (int i = 0; i < errors.count(); ++i)
+	{
+		if (errors.at(i).error() != QSslError::NoError)
+		{
+			messages.append(errors.at(i).errorString());
+		}
+	}
+
+	if (messages.isEmpty() || QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	{
+		reply->ignoreSslErrors(errors);
+	}
 }
 
 QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
