@@ -297,6 +297,13 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 	return true;
 }
 
+bool BookmarksManager::deleteBookmark(const QUrl &url)
+{
+	Q_UNUSED(url)
+
+//TODO
+}
+
 bool BookmarksManager::hasBookmark(const QString &url)
 {
 	if (url.isEmpty())

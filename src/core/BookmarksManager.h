@@ -42,6 +42,7 @@ public:
 	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
 	static bool updateBookmark(BookmarkInformation *bookmark);
 	static bool deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
+	static bool deleteBookmark(const QUrl &url);
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());

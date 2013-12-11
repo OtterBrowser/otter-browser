@@ -1,4 +1,5 @@
 #include "AddressWidget.h"
+#include "BookmarkPropertiesDialog.h"
 #include "Window.h"
 #include "../core/BookmarksManager.h"
 #include "../core/SettingsManager.h"
@@ -16,6 +17,8 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_bookmarkLabel->setFixedSize(16, 16);
 	m_bookmarkLabel->move((width() - 22), 4);
 	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+	m_bookmarkLabel->setCursor(Qt::ArrowCursor);
+	m_bookmarkLabel->installEventFilter(this);
 
 	if (SettingsManager::getValue("AddressField/ShowUrlIcon", false).toBool())
 	{
@@ -29,11 +32,20 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	}
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
 }
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
 	emit requestedLoadUrl(getUrl());
+}
+
+void AddressWidget::updateBookmark()
+{
+	const bool hasBookmark = BookmarksManager::hasBookmark(getUrl());
+
+	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
+	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
 
 void AddressWidget::setIcon(const QIcon &icon)
@@ -48,7 +60,7 @@ void AddressWidget::setUrl(const QUrl &url)
 {
 	setText((url.scheme() == "about" && url.path() == "blank") ? QString() : url.toString());
 
-	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(),( BookmarksManager::hasBookmark(url) ? QIcon::Active : QIcon::Disabled)));
+	updateBookmark();
 }
 
 void AddressWidget::resizeEvent(QResizeEvent *event)
@@ -70,6 +82,7 @@ void AddressWidget::setWindow(Window *window)
 	if (window && m_urlIconLabel)
 	{
 		setIcon(window->getIcon());
+		setUrl(window->getUrl());
 
 		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 	}
@@ -78,6 +91,35 @@ void AddressWidget::setWindow(Window *window)
 QUrl AddressWidget::getUrl() const
 {
 	return QUrl(text().isEmpty() ? "about:blank" : text());
+}
+
+bool AddressWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_bookmarkLabel && event->type() == QEvent::MouseButtonPress)
+	{
+		if (BookmarksManager::hasBookmark(getUrl()))
+		{
+			BookmarksManager::deleteBookmark(getUrl());
+		}
+		else
+		{
+			BookmarkInformation *bookmark = new BookmarkInformation();
+			bookmark->url = getUrl().toString(QUrl::RemovePassword);
+			bookmark->title = m_window->getTitle();
+			bookmark->type = UrlBookmark;
+
+			BookmarkPropertiesDialog dialog(bookmark, -1, this);
+
+			if (dialog.exec() == QDialog::Rejected)
+			{
+				delete bookmark;
+			}
+		}
+
+		updateBookmark();
+	}
+
+	return QLineEdit::eventFilter(object, event);
 }
 
 }

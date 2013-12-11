@@ -19,6 +19,7 @@ public:
 
 	void setWindow(Window *window);
 	QUrl getUrl() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setUrl(const QUrl &url);
@@ -28,6 +29,7 @@ protected:
 
 protected slots:
 	void notifyRequestedLoadUrl();
+	void updateBookmark();
 	void setIcon(const QIcon &icon);
 
 private:
