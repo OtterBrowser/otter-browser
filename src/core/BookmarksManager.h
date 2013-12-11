@@ -15,17 +15,17 @@ enum BookmarkType
 	SeparatorBookmark = 2
 };
 
-struct Bookmark
+struct BookmarkInformation
 {
 	QString url;
 	QString title;
 	QString description;
-	QList<Bookmark*> children;
+	QList<BookmarkInformation*> children;
 	BookmarkType type;
 	int identifier;
 	int parent;
 
-	Bookmark() : type(FolderBookmark), identifier(-1), parent(-1) {}
+	BookmarkInformation() : type(FolderBookmark), identifier(-1), parent(-1) {}
 };
 
 class BookmarksManager : public QObject
@@ -35,9 +35,9 @@ class BookmarksManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static BookmarksManager* getInstance();
-	static QList<Bookmark*> getBookmarks();
-	static QList<Bookmark*> getFolder(int folder = 0);
-	static bool addBookmark(Bookmark *bookmark, int folder = 0, int index = -1);
+	static QList<BookmarkInformation*> getBookmarks();
+	static QList<BookmarkInformation*> getFolder(int folder = 0);
+	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());
@@ -45,12 +45,12 @@ public:
 private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
-	static void writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark);
-	Bookmark* readBookmark(QXmlStreamReader *reader, int parent = -1);
+	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
+	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
 	static BookmarksManager *m_instance;
-	static QHash<int, Bookmark*> m_pointers;
-	static QList<Bookmark*> m_bookmarks;
+	static QHash<int, BookmarkInformation*> m_pointers;
+	static QList<BookmarkInformation*> m_bookmarks;
 	static QSet<QString> m_urls;
 	static int m_identifier;
 

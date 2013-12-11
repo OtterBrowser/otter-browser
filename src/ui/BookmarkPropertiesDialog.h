@@ -20,12 +20,12 @@ class BookmarkPropertiesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(Bookmark *bookmark, QWidget *parent = NULL);
+	explicit BookmarkPropertiesDialog(BookmarkInformation *bookmark, QWidget *parent = NULL);
 	~BookmarkPropertiesDialog();
 
 protected:
 	void changeEvent(QEvent *event);
-	void populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent);
+	void populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent);
 
 protected slots:
 	void folderChanged(const QModelIndex &index);
@@ -34,7 +34,7 @@ protected slots:
 	void saveBookmark();
 
 private:
-	Bookmark *m_bookmark;
+	BookmarkInformation *m_bookmark;
 	QStandardItemModel *m_model;
 	QModelIndex m_index;
 	int m_folder;

@@ -10,8 +10,8 @@ namespace Otter
 {
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
-QList<Bookmark*> BookmarksManager::m_bookmarks;
-QHash<int, Bookmark*> BookmarksManager::m_pointers;
+QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
+QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
 QSet<QString> BookmarksManager::m_urls;
 int BookmarksManager::m_identifier;
 
@@ -50,7 +50,7 @@ void BookmarksManager::load()
 	}
 }
 
-void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, Bookmark *bookmark)
+void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark)
 {
 	switch (bookmark->type)
 	{
@@ -101,9 +101,9 @@ BookmarksManager *BookmarksManager::getInstance()
 	return m_instance;
 }
 
-Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
+BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
-	Bookmark *bookmark = new Bookmark();
+	BookmarkInformation *bookmark = new BookmarkInformation();
 
 	if (reader->name() == "folder")
 	{
@@ -185,12 +185,12 @@ Bookmark *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 	return bookmark;
 }
 
-QList<Bookmark*> BookmarksManager::getBookmarks()
+QList<BookmarkInformation*> BookmarksManager::getBookmarks()
 {
 	return m_bookmarks;
 }
 
-QList<Bookmark*> BookmarksManager::getFolder(int folder)
+QList<BookmarkInformation*> BookmarksManager::getFolder(int folder)
 {
 	if (folder == 0)
 	{
@@ -202,10 +202,10 @@ QList<Bookmark*> BookmarksManager::getFolder(int folder)
 		return m_pointers[folder]->children;
 	}
 
-	return QList<Bookmark*>();
+	return QList<BookmarkInformation*>();
 }
 
-bool BookmarksManager::addBookmark(Bookmark *bookmark, int folder, int index)
+bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, int index)
 {
 	if (!bookmark || (folder != 0 && !m_pointers.contains(folder)))
 	{

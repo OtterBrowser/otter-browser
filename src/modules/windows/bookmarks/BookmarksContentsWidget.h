@@ -51,7 +51,7 @@ protected:
 	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
 
 protected slots:
-	void addBookmark(Bookmark *bookmark, QStandardItem *parent = NULL);
+	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
 
 private:
 	QStandardItemModel *m_model;

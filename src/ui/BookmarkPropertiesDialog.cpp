@@ -10,7 +10,7 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(Bookmark *bookmark, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
 	m_folder(bookmark->parent),
@@ -69,7 +69,7 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void BookmarkPropertiesDialog::populateFolder(const QList<Bookmark*> bookmarks, QStandardItem *parent)
+void BookmarkPropertiesDialog::populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent)
 {
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
@@ -161,7 +161,7 @@ void BookmarkPropertiesDialog::createFolder()
 		return;
 	}
 
-	Bookmark *bookmark = new Bookmark();
+	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->title = title;
 
 	disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));

@@ -323,7 +323,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::gatherBookmarks(int folder)
 {
-	const QList<Bookmark*> bookmarks = BookmarksManager::getFolder(folder);
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
 
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
@@ -427,7 +427,7 @@ void MainWindow::actionClosedWindows(QAction *action)
 
 void MainWindow::actionAddBookmark(const QUrl &url)
 {
-	Bookmark *bookmark = new Bookmark();
+	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->url = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 	bookmark->title = m_windowsManager->getTitle();
 	bookmark->type = UrlBookmark;
@@ -696,7 +696,7 @@ void MainWindow::menuBookmarksAboutToShow()
 	if ((folder == 0 && menu->actions().count() == 3) || (folder != 0 && menu->actions().isEmpty()))
 	{
 		WebBackend *backend = WebBackendsManager::getBackend();
-		const QList<Bookmark*> bookmarks = BookmarksManager::getFolder(folder);
+		const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
 
 		if (folder != 0 && bookmarks.count() > 1)
 		{

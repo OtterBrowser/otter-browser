@@ -15,7 +15,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 {
 	m_ui->setupUi(this);
 
-	const QList<Bookmark*> bookmarks = BookmarksManager::getFolder();
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder();
 
 	for (int i = 0; i < bookmarks.count(); ++i)
 	{
@@ -45,7 +45,7 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void BookmarksContentsWidget::addBookmark(Bookmark *bookmark, QStandardItem *parent)
+void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStandardItem *parent)
 {
 	if (!bookmark)
 	{
