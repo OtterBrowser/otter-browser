@@ -49,10 +49,13 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
+	int findFolder(const QModelIndex &index);
 
 protected slots:
 	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
 	void addBookmark();
+	void addFolder();
+	void addSeparator();
 	void deleteBookmark();
 	void bookmarkProperties();
 	void updateFolder(int folder);

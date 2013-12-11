@@ -7,6 +7,7 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -26,6 +27,13 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	}
 
 	m_ui->bookmarksView->setModel(m_model);
+
+	QMenu *addMenu = new QMenu(m_ui->addButton);
+	addMenu->addAction(Utils::getIcon("inode-directory"), tr("Add Folder"), this, SLOT(addFolder()));
+	addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+
+	m_ui->addButton->setMenu(addMenu);
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
 	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
@@ -104,24 +112,34 @@ void BookmarksContentsWidget::addBookmark()
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->type = UrlBookmark;
 
-	int folder = 0;
-
-	if (m_ui->bookmarksView->currentIndex().isValid())
-	{
-		BookmarkInformation *selectedBookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
-
-		if (selectedBookmark)
-		{
-			folder = ((selectedBookmark->type == FolderBookmark) ? selectedBookmark->identifier : selectedBookmark->parent);
-		}
-	}
-
-	BookmarkPropertiesDialog dialog(bookmark, folder, this);
+	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		delete bookmark;
 	}
+}
+
+void BookmarksContentsWidget::addFolder()
+{
+	BookmarkInformation *bookmark = new BookmarkInformation();
+	bookmark->type = FolderBookmark;
+
+	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		delete bookmark;
+	}
+}
+
+void BookmarksContentsWidget::addSeparator()
+{
+	BookmarkInformation *bookmark = new BookmarkInformation();
+	bookmark->type = SeparatorBookmark;
+	bookmark->parent = findFolder(m_ui->bookmarksView->currentIndex());
+
+	BookmarksManager::addBookmark(bookmark, bookmark->parent);
 }
 
 void BookmarksContentsWidget::deleteBookmark()
@@ -295,6 +313,21 @@ HistoryInformation BookmarksContentsWidget::getHistory() const
 	information.entries.append(entry);
 
 	return information;
+}
+
+int BookmarksContentsWidget::findFolder(const QModelIndex &index)
+{
+	if (index.isValid())
+	{
+		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(index.data(Qt::UserRole).value<void*>());
+
+		if (bookmark)
+		{
+			return ((bookmark->type == FolderBookmark) ? bookmark->identifier : bookmark->parent);
+		}
+	}
+
+	return 0;
 }
 
 int BookmarksContentsWidget::getZoom() const
