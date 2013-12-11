@@ -64,7 +64,7 @@ private:
 	Ui::WebContentsWidget *m_ui;
 
 signals:
-	void requestedOpenUrl(QUrl url, bool privateWindow, bool background, bool newWindow);
+	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(ContentsWidget *widget);
 	void actionsChanged();

@@ -36,7 +36,7 @@ public slots:
 	virtual void setUrl(const QUrl &url) = 0;
 
 signals:
-	void requestedOpenUrl(QUrl url, bool privateWindow, bool background, bool newWindow);
+	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(ContentsWidget *widget);
 	void actionsChanged();

@@ -1,5 +1,6 @@
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
@@ -7,6 +8,7 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -37,6 +39,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
+	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
 	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteBookmark()));
@@ -153,6 +156,56 @@ void BookmarksContentsWidget::deleteBookmark()
 	}
 }
 
+void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
+{
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(index.data(Qt::UserRole).value<void*>());
+
+	if (!bookmark || bookmark->type == SeparatorBookmark)
+	{
+		return;
+	}
+
+	if (bookmark->type == UrlBookmark)
+	{
+		emit requestedOpenUrl(QUrl(bookmark->url));
+
+		return;
+	}
+
+	gatherBookmarks(bookmark->identifier);
+
+	if (m_bookmarksToOpen.isEmpty())
+	{
+		return;
+	}
+
+	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue("Choices/WarnOpenBookmarkFolder", true).toBool())
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
+		messageBox.setInformativeText("Do you want to continue?");
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Yes);
+		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+		if (messageBox.exec() == QMessageBox::Cancel)
+		{
+			m_bookmarksToOpen.clear();
+		}
+
+		SettingsManager::setValue("Choices/WarnOpenBookmarkFolder", !messageBox.checkBox()->isChecked());
+	}
+
+	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
+	{
+		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)));
+	}
+
+	m_bookmarksToOpen.clear();
+}
+
 void BookmarksContentsWidget::bookmarkProperties()
 {
 	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
@@ -161,6 +214,23 @@ void BookmarksContentsWidget::bookmarkProperties()
 	{
 		BookmarkPropertiesDialog dialog(bookmark, -1, this);
 		dialog.exec();
+	}
+}
+
+void BookmarksContentsWidget::gatherBookmarks(int folder)
+{
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		if (bookmarks.at(i)->type == FolderBookmark)
+		{
+			gatherBookmarks(bookmarks.at(i)->identifier);
+		}
+		else if (bookmarks.at(i)->type == UrlBookmark)
+		{
+			m_bookmarksToOpen.append(bookmarks.at(i)->url);
+		}
 	}
 }
 
