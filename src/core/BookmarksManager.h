@@ -51,11 +51,13 @@ private:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
+	static void updateUrls();
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
 	static BookmarksManager *m_instance;
 	static QHash<int, BookmarkInformation*> m_pointers;
 	static QList<BookmarkInformation*> m_bookmarks;
+	static QList<BookmarkInformation*> m_allBookmarks;
 	static QSet<QString> m_urls;
 	static int m_identifier;
 

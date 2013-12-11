@@ -11,6 +11,7 @@ namespace Otter
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
 QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
+QList<BookmarkInformation*> BookmarksManager::m_allBookmarks;
 QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
 QSet<QString> BookmarksManager::m_urls;
 int BookmarksManager::m_identifier;
@@ -57,6 +58,8 @@ void BookmarksManager::load()
 		}
 	}
 
+	updateUrls();
+
 	emit folderModified(0);
 }
 
@@ -99,6 +102,26 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 
 			break;
 	}
+}
+
+void BookmarksManager::updateUrls()
+{
+	QStringList urls;
+
+	for (int i = 0; i < m_allBookmarks.count(); ++i)
+	{
+		if (m_allBookmarks.at(i) && m_allBookmarks.at(i)->type == UrlBookmark)
+		{
+			const QUrl url(m_allBookmarks.at(i)->url);
+
+			if (url.isValid())
+			{
+				urls.append(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
+			}
+		}
+	}
+
+	m_urls = urls.toSet();
 }
 
 void BookmarksManager::createInstance(QObject *parent)
@@ -155,13 +178,6 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 		bookmark->type = UrlBookmark;
 		bookmark->url = reader->attributes().value("href").toString();
 
-		const QUrl url(bookmark->url);
-
-		if (url.isValid())
-		{
-			m_urls.insert(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
-		}
-
 		while (reader->readNext())
 		{
 			if (reader->isStartElement())
@@ -191,6 +207,8 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 
 		reader->readNext();
 	}
+
+	m_allBookmarks.append(bookmark);
 
 	return bookmark;
 }
@@ -247,6 +265,8 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 		m_pointers[folder]->children.insert(((index < 0) ? m_pointers[folder]->children.count() : index), bookmark);
 	}
 
+	m_allBookmarks.append(bookmark);
+
 	emit m_instance->folderModified(folder);
 
 	return save();
@@ -254,8 +274,10 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 
 bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 {
-	if (bookmark)
+	if (bookmark && m_allBookmarks.contains(bookmark))
 	{
+		updateUrls();
+
 		emit m_instance->folderModified(bookmark->parent);
 
 		return true;
@@ -266,7 +288,7 @@ bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 
 bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)
 {
-	if (!bookmark)
+	if (!bookmark || !m_allBookmarks.contains(bookmark))
 	{
 		return false;
 	}
@@ -279,6 +301,7 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 	}
 
 	m_bookmarks.removeAll(bookmark);
+	m_allBookmarks.removeAll(bookmark);
 
 	if (bookmark->type == FolderBookmark)
 	{
@@ -290,6 +313,7 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 	if (notify)
 	{
 		save();
+		updateUrls();
 
 		emit m_instance->folderModified(folder);
 	}
@@ -302,6 +326,8 @@ bool BookmarksManager::deleteBookmark(const QUrl &url)
 	Q_UNUSED(url)
 
 //TODO
+
+	return true;
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)
