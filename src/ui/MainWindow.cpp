@@ -427,8 +427,15 @@ void MainWindow::actionClosedWindows(QAction *action)
 
 void MainWindow::actionAddBookmark(const QUrl &url)
 {
+	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
+
+	if (bookmarkUrl.isEmpty() || (BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
+	{
+		return;
+	}
+
 	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->url = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
+	bookmark->url = bookmarkUrl;
 	bookmark->title = m_windowsManager->getTitle();
 	bookmark->type = UrlBookmark;
 
