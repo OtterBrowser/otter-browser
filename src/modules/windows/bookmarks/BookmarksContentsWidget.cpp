@@ -89,7 +89,7 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 			break;
 	}
 
-	item->setData(bookmark->identifier, Qt::UserRole);
+	item->setData(qVariantFromValue((void*) bookmark), Qt::UserRole);
 
 	parent->appendRow(item);
 }
@@ -99,7 +99,19 @@ void BookmarksContentsWidget::addBookmark()
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->type = UrlBookmark;
 
-	BookmarkPropertiesDialog dialog(bookmark, m_ui->bookmarksView->currentIndex().data(Qt::UserRole).toInt(), this);
+	int folder = 0;
+
+	if (m_ui->bookmarksView->currentIndex().isValid())
+	{
+		BookmarkInformation *selectedBookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+
+		if (selectedBookmark)
+		{
+			folder = ((selectedBookmark->type == FolderBookmark) ? selectedBookmark->identifier : selectedBookmark->parent);
+		}
+	}
+
+	BookmarkPropertiesDialog dialog(bookmark, folder, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -168,12 +180,14 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 	{
 		QStandardItem *child = item->child(i, 0);
 
-		if (!child || !child->data(Qt::UserRole).isValid())
+		if (!child)
 		{
 			continue;
 		}
 
-		if (child->data(Qt::UserRole).toInt() == folder)
+		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(child->data(Qt::UserRole).value<void*>());
+
+		if (bookmark && bookmark->type == FolderBookmark && bookmark->identifier == folder)
 		{
 			return child;
 		}

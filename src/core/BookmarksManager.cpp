@@ -40,7 +40,7 @@ void BookmarksManager::load()
 		{
 			if (reader.name() == "folder" || reader.name() == "bookmark" || reader.name() == "separator")
 			{
-				m_bookmarks.append(readBookmark(&reader));
+				m_bookmarks.append(readBookmark(&reader, 0));
 			}
 			else
 			{
@@ -106,12 +106,12 @@ BookmarksManager *BookmarksManager::getInstance()
 BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
 	BookmarkInformation *bookmark = new BookmarkInformation();
+	bookmark->parent = parent;
 
 	if (reader->name() == "folder")
 	{
 		bookmark->type = FolderBookmark;
 		bookmark->identifier = ++m_identifier;
-		bookmark->parent = parent;
 
 		while (reader->readNext())
 		{
@@ -127,7 +127,7 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 				}
 				else if (reader->name() == "folder" || reader->name() == "bookmark" || reader->name() == "separator")
 				{
-					bookmark->children.append(readBookmark(reader, bookmark->parent));
+					bookmark->children.append(readBookmark(reader, bookmark->identifier));
 				}
 				else
 				{
