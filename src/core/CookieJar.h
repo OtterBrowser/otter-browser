@@ -7,6 +7,13 @@
 namespace Otter
 {
 
+enum CookiesAcceptPolicy
+{
+	AlwaysAcceptCookies,
+	NeverAcceptCookies,
+	NavigatedSitesOnlyAcceptCookies
+};
+
 class CookieJar : public QNetworkCookieJar
 {
 	Q_OBJECT
