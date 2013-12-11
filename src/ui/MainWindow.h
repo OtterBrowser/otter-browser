@@ -44,6 +44,7 @@ protected slots:
 	void actionSaveSession();
 	void actionManageSessions();
 	void actionSession(QAction *action);
+	void actionWorkOffline(bool enabled);
 	void actionTextEncoding(QAction *action);
 	void actionClosedWindows(QAction *action);
 	void actionAddBookmark(const QUrl &url = QUrl());
@@ -52,6 +53,7 @@ protected slots:
 	void actionCookies();
 	void actionTransfers();
 	void actionAboutApplication();
+	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();
 	void menuTextEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();

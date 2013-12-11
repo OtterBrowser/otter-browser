@@ -2,6 +2,7 @@
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "SessionsManager.h"
+#include "SettingsManager.h"
 #include "../ui/AuthenticationDialog.h"
 
 #include <QtCore/QFileInfo>
@@ -164,7 +165,14 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 		return new LocalListingNetworkReply(this, request);
 	}
 
-	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, request, outgoingData);
+	QNetworkRequest mutableRequest(request);
+
+	if (SettingsManager::getValue("Network/WorkOffline", false).toBool())
+	{
+		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
+	}
+
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
 	if (!m_mainReply)
 	{

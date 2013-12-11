@@ -186,6 +186,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
+	connect(m_ui->actionWorkOffline, SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
 	connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(m_ui->actionUndo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRedo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -212,6 +213,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+	connect(m_ui->menuFile, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
 	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
@@ -380,6 +382,11 @@ void MainWindow::actionSession(QAction *action)
 	}
 }
 
+void MainWindow::actionWorkOffline(bool enabled)
+{
+	SettingsManager::setValue("Network/WorkOffline", enabled);
+}
+
 void MainWindow::actionTextEncoding(QAction *action)
 {
 	QString encoding;
@@ -508,6 +515,11 @@ void MainWindow::actionTransfers()
 void MainWindow::actionAboutApplication()
 {
 	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
+}
+
+void MainWindow::menuFileAboutToShow()
+{
+	m_ui->actionWorkOffline->setChecked(SettingsManager::getValue("Network/WorkOffline", false).toBool());
 }
 
 void MainWindow::menuSessionsAboutToShow()
