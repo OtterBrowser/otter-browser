@@ -41,8 +41,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, QWidget *parent, QtWebK
 
 	setLayout(layout);
 
-	m_networkAccessManager = new NetworkAccessManager(privateWindow, true, this);
-
 	if (page)
 	{
 		page->setParent(this);
@@ -51,6 +49,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, QWidget *parent, QtWebK
 	{
 		page = new QtWebKitWebPage(this);
 	}
+
+	m_networkAccessManager = new NetworkAccessManager(privateWindow, true, this);
+	m_networkAccessManager->setParent(page);
 
 	page->setNetworkAccessManager(m_networkAccessManager);
 	page->setForwardUnsupportedContent(true);
