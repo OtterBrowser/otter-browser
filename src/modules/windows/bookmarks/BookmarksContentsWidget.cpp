@@ -1,5 +1,6 @@
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
 
@@ -13,6 +14,15 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
+
+	const QList<Bookmark*> bookmarks = BookmarksManager::getFolder();
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		addBookmark(bookmarks.at(i), m_model->invisibleRootItem());
+	}
+
+	m_ui->bookmarksView->setModel(m_model);
 }
 
 BookmarksContentsWidget::~BookmarksContentsWidget()
@@ -33,6 +43,39 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void BookmarksContentsWidget::addBookmark(Bookmark *bookmark, QStandardItem *parent)
+{
+	if (!bookmark)
+	{
+		return;
+	}
+
+	QStandardItem *item = NULL;
+
+	switch (bookmark->type)
+	{
+		case FolderBookmark:
+			item = new QStandardItem(Utils::getIcon("inode-directory"), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
+
+			for (int i = 0; i < bookmark->children.count(); ++i)
+			{
+				addBookmark(bookmark->children.at(i), item);
+			}
+
+			break;
+		case UrlBookmark:
+			item = new QStandardItem(WebBackendsManager::getBackend()->getIconForUrl(QUrl(bookmark->url)), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
+
+			break;
+		default:
+			item = new QStandardItem("------------------------");
+
+			break;
+	}
+
+	parent->appendRow(item);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)

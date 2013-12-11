@@ -1,6 +1,7 @@
 #ifndef OTTER_BOOKMARKSCONTENTSWIDGET_H
 #define OTTER_BOOKMARKSCONTENTSWIDGET_H
 
+#include "../../../core/BookmarksManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
@@ -47,6 +48,9 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+
+protected slots:
+	void addBookmark(Bookmark *bookmark, QStandardItem *parent = NULL);
 
 private:
 	QStandardItemModel *m_model;
