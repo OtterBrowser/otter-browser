@@ -7,6 +7,8 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
+#include <QtWidgets/QMessageBox>
+
 namespace Otter
 {
 
@@ -26,6 +28,8 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->setModel(m_model);
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
+	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
 }
 
@@ -119,6 +123,16 @@ void BookmarksContentsWidget::addBookmark()
 	}
 }
 
+void BookmarksContentsWidget::deleteBookmark()
+{
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+
+	if (bookmark && (bookmark->type == SeparatorBookmark || QMessageBox::question(this, tr("Question"), ((bookmark->type == FolderBookmark) ? tr("Do you really want to delete this folder and all its children?") : tr("Do you really want to delete this bookmark?")), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes))
+	{
+		BookmarksManager::deleteBookmark(bookmark);
+	}
+}
+
 void BookmarksContentsWidget::updateFolder(int folder)
 {
 	QStandardItem *item = findFolder(folder);
@@ -136,6 +150,11 @@ void BookmarksContentsWidget::updateFolder(int folder)
 	{
 		addBookmark(bookmarks.at(i), item);
 	}
+}
+
+void BookmarksContentsWidget::updateActions()
+{
+	m_ui->deleteButton->setEnabled(!m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty());
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)

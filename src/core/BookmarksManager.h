@@ -33,11 +33,14 @@ class BookmarksManager : public QObject
 	Q_OBJECT
 
 public:
+	~BookmarksManager();
+
 	static void createInstance(QObject *parent = NULL);
 	static BookmarksManager* getInstance();
 	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
+	static bool deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());

@@ -20,6 +20,14 @@ BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent)
 	QTimer::singleShot(250, this, SLOT(load()));
 }
 
+BookmarksManager::~BookmarksManager()
+{
+	for (int i = 0; i < m_bookmarks.count(); ++i)
+	{
+		deleteBookmark(m_bookmarks.at(i), false);
+	}
+}
+
 void BookmarksManager::load()
 {
 	m_bookmarks.clear();
@@ -242,6 +250,39 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	emit m_instance->folderModified(folder);
 
 	return save();
+}
+
+bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)
+{
+	if (!bookmark)
+	{
+		return false;
+	}
+
+	const int folder = bookmark->parent;
+
+	for (int i = 0; i < bookmark->children.count(); ++i)
+	{
+		deleteBookmark(bookmark->children.at(i), false);
+	}
+
+	m_bookmarks.removeAll(bookmark);
+
+	if (bookmark->type == FolderBookmark)
+	{
+		m_pointers.remove(bookmark->identifier);
+	}
+
+	delete bookmark;
+
+	if (notify)
+	{
+		save();
+
+		emit m_instance->folderModified(folder);
+	}
+
+	return true;
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)
