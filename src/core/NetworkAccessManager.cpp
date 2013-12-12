@@ -4,7 +4,9 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "../ui/AuthenticationDialog.h"
+#include "../ui/ContentsWidget.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
 #include <QtWidgets/QMessageBox>
@@ -16,7 +18,8 @@ CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
 QNetworkDiskCache* NetworkAccessManager::m_cache = NULL;
 
-NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEnabled, QObject *parent) : QNetworkAccessManager(parent),
+NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEnabled, ContentsWidget *widget) : QNetworkAccessManager(widget),
+	m_widget(widget),
 	m_mainReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -151,8 +154,25 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 
 void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
-	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
-	dialog.exec();
+	if (m_widget)
+	{
+		AuthenticationDialog dialog(reply->url(), authenticator, m_widget);
+		QEventLoop eventLoop;
+
+		m_widget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_widget->hideDialog(&dialog);
+	}
+	else
+	{
+		AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
+		dialog.exec();
+	}
 }
 
 void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)

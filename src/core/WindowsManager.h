@@ -38,6 +38,7 @@ public:
 public slots:
 	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);
 	void close(int index = -1);
+	void closeAll();
 	void closeOther(int index = -1);
 	void restore(int index = 0);
 	void restore(const QList<SessionWindow> &windows);
@@ -59,6 +60,7 @@ protected slots:
 	void cloneWindow(int index);
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
+	void closeWindow(Window *window);
 	void setTitle(const QString &title);
 
 private:

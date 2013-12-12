@@ -20,10 +20,10 @@ class QtWebKitWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebWidget(bool privateWindow = false, QWidget *parent = NULL, QtWebKitWebPage *page = NULL);
+	explicit QtWebKitWebWidget(bool privateWindow = false, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
 
 	void print(QPrinter *printer);
-	WebWidget* clone(QWidget *parent = NULL);
+	WebWidget* clone(ContentsWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;

@@ -7,6 +7,7 @@
 namespace Otter
 {
 
+class ContentsWidget;
 class CookieJar;
 
 class NetworkAccessManager : public QNetworkAccessManager
@@ -14,7 +15,7 @@ class NetworkAccessManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
-	explicit NetworkAccessManager(bool privateWindow = false, bool statisticsEnabled = true, QObject *parent = NULL);
+	explicit NetworkAccessManager(bool privateWindow = false, bool statisticsEnabled = true, ContentsWidget *widget = NULL);
 
 	void resetStatistics();
 
@@ -33,7 +34,8 @@ protected slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 
 private:
-	QNetworkReply* m_mainReply;
+	ContentsWidget *m_widget;
+	QNetworkReply *m_mainReply;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;

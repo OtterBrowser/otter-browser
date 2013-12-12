@@ -233,7 +233,8 @@ TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &requ
 {
 	if (!m_networkAccessManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
+		m_networkAccessManager = new NetworkAccessManager(true, false, NULL);
+		m_networkAccessManager->setParent(m_instance);
 	}
 
 	return startTransfer(m_networkAccessManager->get(request), target, privateTransfer, quickTransfer);
@@ -482,7 +483,8 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	if (!m_networkAccessManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, false, m_instance);
+		m_networkAccessManager = new NetworkAccessManager(true, false, NULL);
+		m_networkAccessManager->setParent(m_instance);
 	}
 
 	QNetworkReply *reply = m_networkAccessManager->get(request);

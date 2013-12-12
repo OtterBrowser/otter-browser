@@ -75,6 +75,19 @@ void WindowsManager::close(int index)
 	closeWindow(index);
 }
 
+void WindowsManager::closeAll()
+{
+	for (int i = (m_tabBar->count() - 1); i >= 0; --i)
+	{
+		Window *window = getWindow(i);
+
+		if (window)
+		{
+			window->close();
+		}
+	}
+}
+
 void WindowsManager::closeOther(int index)
 {
 	if (index < 0)
@@ -244,6 +257,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 		setCurrentWindow(index);
 	}
 
+	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
 	connect(window, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SLOT(addWindow(ContentsWidget*)));
@@ -311,6 +325,21 @@ void WindowsManager::closeWindow(int index)
 	}
 
 	Window *window = getWindow(index);
+
+	if (window)
+	{
+		window->close();
+	}
+}
+
+void WindowsManager::closeWindow(Window *window)
+{
+	const int index = getWindowIndex(window);
+
+	if (index < 0)
+	{
+		return;
+	}
 
 	if (window && !window->isPrivate())
 	{
@@ -387,6 +416,7 @@ void WindowsManager::setCurrentWindow(int index)
 	if (window)
 	{
 		window->showMinimized();
+		window->hide();
 
 		if (window->getUndoStack())
 		{

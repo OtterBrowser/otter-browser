@@ -39,10 +39,10 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit WebWidget(bool privateWindow, QWidget *parent = NULL);
+	explicit WebWidget(bool privateWindow, ContentsWidget *parent = NULL);
 
 	virtual void print(QPrinter *printer) = 0;
-	virtual WebWidget* clone(QWidget *parent = NULL) = 0;
+	virtual WebWidget* clone(ContentsWidget *parent = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	virtual QString getDefaultTextEncoding() const = 0;

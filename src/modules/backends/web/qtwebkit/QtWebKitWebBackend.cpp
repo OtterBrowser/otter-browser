@@ -26,7 +26,7 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 	globalSettings->setOfflineStoragePath(cachePath);
 }
 
-WebWidget *QtWebKitWebBackend::createWidget(bool privateWindow, QWidget *parent)
+WebWidget *QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *parent)
 {
 	return new QtWebKitWebWidget(privateWindow, parent);
 }

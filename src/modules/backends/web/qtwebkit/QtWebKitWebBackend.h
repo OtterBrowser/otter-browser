@@ -13,7 +13,7 @@ class QtWebKitWebBackend : public WebBackend
 public:
 	explicit QtWebKitWebBackend(QObject *parent = NULL);
 
-	WebWidget* createWidget(bool privateWindow = false, QWidget *parent = NULL);
+	WebWidget* createWidget(bool privateWindow = false, ContentsWidget *parent = NULL);
 	QString getTitle() const;
 	QString getDescription() const;
 	QIcon getIconForUrl(const QUrl &url);

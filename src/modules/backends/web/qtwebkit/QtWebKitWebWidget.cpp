@@ -23,7 +23,7 @@
 namespace Otter
 {
 
-QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, QWidget *parent, QtWebKitWebPage *page) : WebWidget(parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent, QtWebKitWebPage *page) : WebWidget(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
@@ -50,7 +50,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, QWidget *parent, QtWebK
 		page = new QtWebKitWebPage(this);
 	}
 
-	m_networkAccessManager = new NetworkAccessManager(privateWindow, true, this);
+	m_networkAccessManager = new NetworkAccessManager(privateWindow, true, parent);
 	m_networkAccessManager->setParent(page);
 
 	page->setNetworkAccessManager(m_networkAccessManager);
@@ -474,7 +474,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	WebWidget::showContextMenu(position, flags);
 }
 
-WebWidget* QtWebKitWebWidget::clone(QWidget *parent)
+WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 {
 	WebWidget *widget = new QtWebKitWebWidget(isPrivate(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());

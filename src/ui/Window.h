@@ -101,6 +101,7 @@ public:
 	explicit Window(bool privateWindow, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
+	void close();
 	void print(QPrinter *printer);
 	Window* clone(QWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
@@ -132,6 +133,7 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
+	void notifyRequestedCloseWindow();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 
 private:
@@ -140,6 +142,8 @@ private:
 	Ui::Window *m_ui;
 
 signals:
+	void aboutToClose();
+	void requestedCloseWindow(Window *window);
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(ContentsWidget *widget);

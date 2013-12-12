@@ -7,6 +7,8 @@
 
 #include "ui_Window.h"
 
+#include <QtCore/QTimer>
+
 namespace Otter
 {
 
@@ -31,6 +33,8 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	setContentsWidget(widget);
 
 	m_ui->addressWidget->setWindow(this);
+
+	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 }
 
 Window::~Window()
@@ -53,6 +57,13 @@ void Window::changeEvent(QEvent *event)
 	}
 }
 
+void Window::close()
+{
+	emit aboutToClose();
+
+	QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
+}
+
 void Window::print(QPrinter *printer)
 {
 	m_contentsWidget->print(printer);
@@ -61,6 +72,11 @@ void Window::print(QPrinter *printer)
 void Window::triggerAction(WindowAction action, bool checked)
 {
 	m_contentsWidget->triggerAction(action, checked);
+}
+
+void Window::notifyRequestedCloseWindow()
+{
+	emit requestedCloseWindow(this);
 }
 
 void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)

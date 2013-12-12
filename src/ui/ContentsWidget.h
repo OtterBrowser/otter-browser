@@ -3,6 +3,8 @@
 
 #include "Window.h"
 
+#include <QtCore/QPointer>
+
 namespace Otter
 {
 
@@ -30,10 +32,22 @@ public:
 	virtual bool isPrivate() const = 0;
 
 public slots:
+	void showDialog(QWidget *dialog);
+	void hideDialog(QWidget *dialog);
 	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
 	virtual void setHistory(const HistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url) = 0;
+
+protected:
+	void showEvent(QShowEvent *event);
+	void hideEvent(QHideEvent *event);
+
+protected slots:
+	void close();
+
+private:
+	QList<QPointer<QWidget> > m_dialogs;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);

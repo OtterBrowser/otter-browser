@@ -309,6 +309,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		SessionsManager::storeClosedWindow(m_windowsManager);
 	}
 
+	m_windowsManager->closeAll();
+
 	SettingsManager::setValue("Window/size", size());
 	SettingsManager::setValue("Window/position", pos());
 	SettingsManager::setValue("Window/state", saveState());

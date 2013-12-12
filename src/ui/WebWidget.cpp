@@ -1,4 +1,5 @@
 #include "WebWidget.h"
+#include "ContentsWidget.h"
 
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
@@ -7,7 +8,7 @@
 namespace Otter
 {
 
-WebWidget::WebWidget(bool privateWindow = false, QWidget *parent) : QWidget(parent)
+WebWidget::WebWidget(bool privateWindow = false, ContentsWidget *parent) : QWidget(parent)
 {
 	Q_UNUSED(privateWindow)
 }
