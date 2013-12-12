@@ -187,7 +187,39 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 		}
 	}
 
-	if (messages.isEmpty() || QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (messages.isEmpty())
+	{
+		reply->ignoreSslErrors(errors);
+
+		return;
+	}
+
+	if (m_widget)
+	{
+		QMessageBox dialog;
+		dialog.setModal(false);
+		dialog.setWindowTitle(tr("Warning"));
+		dialog.setText(tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')));
+		dialog.setIcon(QMessageBox::Warning);
+		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+		QEventLoop eventLoop;
+
+		m_widget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_widget->hideDialog(&dialog);
+
+		if (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::YesRole)
+		{
+			reply->ignoreSslErrors(errors);
+		}
+	}
+	else if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}
