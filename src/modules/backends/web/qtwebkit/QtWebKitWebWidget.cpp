@@ -8,6 +8,7 @@
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
@@ -346,7 +347,16 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case ImagePropertiesAction:
 			{
 				ImagePropertiesDialog dialog(m_hitResult.imageUrl(), m_hitResult.element().attribute("alt"), m_hitResult.element().attribute("longdesc"), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
-				dialog.exec();
+				QEventLoop eventLoop;
+
+				m_parent->showDialog(&dialog);
+
+				connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+				eventLoop.exec();
+
+				m_parent->hideDialog(&dialog);
 			}
 
 			break;
