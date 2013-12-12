@@ -9,6 +9,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QInputDialog>
+#include <QtWidgets/QLayout>
 #include <QtWidgets/QMessageBox>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
@@ -166,6 +168,44 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 	}
 
 	return QWebPage::javaScriptConfirm(frame, message);
+}
+
+bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result)
+{
+	if (m_ignoreJavaScriptPopups)
+	{
+		return false;
+	}
+
+	if (m_webWidget)
+	{
+		QInputDialog dialog;
+		dialog.setModal(false);
+		dialog.setWindowTitle(tr("JavaScript"));
+		dialog.setLabelText(message.toHtmlEscaped());
+		dialog.setInputMode(QInputDialog::TextInput);
+		dialog.setTextValue(defaultValue);
+
+		QEventLoop eventLoop;
+
+		m_webWidget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_webWidget->hideDialog(&dialog);
+
+		if (dialog.result() == QDialog::Accepted)
+		{
+			*result = dialog.textValue();
+		}
+
+		return (dialog.result() == QDialog::Accepted);
+	}
+
+	return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
 }
 
 bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)

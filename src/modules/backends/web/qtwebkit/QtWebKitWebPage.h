@@ -26,7 +26,8 @@ protected:
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	QWebPage* createWindow(WebWindowType type);
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
-	bool javaScriptConfirm(QWebFrame *frame, const QString & message);
+	bool javaScriptConfirm(QWebFrame *frame, const QString &message);
+	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
 
 protected slots:
 	void clearIgnoreJavaScriptPopups();
