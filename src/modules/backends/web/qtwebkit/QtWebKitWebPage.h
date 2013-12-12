@@ -23,9 +23,10 @@ public:
 	bool supportsExtension(Extension extension) const;
 
 protected:
+	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	QWebPage* createWindow(WebWindowType type);
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
-	void javaScriptAlert(QWebFrame *frame, const QString &message);
+	bool javaScriptConfirm(QWebFrame *frame, const QString & message);
 
 protected slots:
 	void clearIgnoreJavaScriptPopups();

@@ -130,6 +130,44 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 
+bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
+{
+	if (m_ignoreJavaScriptPopups)
+	{
+		return false;
+	}
+
+	if (m_webWidget)
+	{
+		QMessageBox dialog;
+		dialog.setModal(false);
+		dialog.setWindowTitle(tr("JavaScript"));
+		dialog.setText(message.toHtmlEscaped());
+		dialog.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		dialog.setCheckBox(new QCheckBox(tr("Disable JavaScript popups")));
+
+		QEventLoop eventLoop;
+
+		m_webWidget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_webWidget->hideDialog(&dialog);
+
+		if (dialog.checkBox()->isChecked())
+		{
+			m_ignoreJavaScriptPopups = true;
+		}
+
+		return (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::AcceptRole);
+	}
+
+	return QWebPage::javaScriptConfirm(frame, message);
+}
+
 bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
 	if (extension == QWebPage::ErrorPageExtension)
