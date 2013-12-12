@@ -110,18 +110,40 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 
 	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue("Choices/WarnFormResend", true).toBool())
 	{
-		QMessageBox messageBox;
-		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("Are you sure that you want to send form data again?"));
-		messageBox.setInformativeText("Do you want to resend data?");
-		messageBox.setIcon(QMessageBox::Question);
-		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-		messageBox.setDefaultButton(QMessageBox::Cancel);
-		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+		QMessageBox dialog;
+		dialog.setWindowTitle(tr("Question"));
+		dialog.setText(tr("Are you sure that you want to send form data again?"));
+		dialog.setInformativeText("Do you want to resend data?");
+		dialog.setIcon(QMessageBox::Question);
+		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		dialog.setDefaultButton(QMessageBox::Cancel);
+		dialog.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-		const bool cancel = (messageBox.exec() == QMessageBox::Cancel);
+		bool cancel = false;
 
-		SettingsManager::setValue("Choices/WarnFormResend", !messageBox.checkBox()->isChecked());
+		if (m_webWidget)
+		{
+			dialog.setModal(false);
+
+			QEventLoop eventLoop;
+
+			m_webWidget->showDialog(&dialog);
+
+			connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+			connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+			eventLoop.exec();
+
+			m_webWidget->hideDialog(&dialog);
+
+			cancel = (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::RejectRole);
+		}
+		else
+		{
+			cancel = (dialog.exec() == QMessageBox::Cancel);
+		}
+
+		SettingsManager::setValue("Choices/WarnFormResend", !dialog.checkBox()->isChecked());
 
 		if (cancel)
 		{
