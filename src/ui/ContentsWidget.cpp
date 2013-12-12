@@ -17,6 +17,14 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 	if (m_layer)
 	{
 		m_layer->resize(size());
+
+		for (int i = 0; i < m_dialogs.count(); ++i)
+		{
+			if (m_dialogs.at(i))
+			{
+				m_dialogs.at(i)->parentWidget()->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->parentWidget()->size()).center());
+			}
+		}
 	}
 }
 
@@ -53,7 +61,9 @@ void ContentsWidget::showDialog(QWidget *dialog)
 
 	ContentsDialog *contentsDialog = new ContentsDialog(dialog, this);
 	contentsDialog->show();
+	contentsDialog->adjustSize();
 	contentsDialog->raise();
+	contentsDialog->move(geometry().center() - QRect(QPoint(0, 0), contentsDialog->size()).center());
 
 	dialog->setFocus();
 

@@ -29,7 +29,7 @@ ContentsDialog::ContentsDialog(QWidget *payload, QWidget *parent) : QWidget(pare
 	setLayout(layout);
 
 	payload->setWindowFlags(Qt::Widget);
-	payload->setEnabled(true);
+	payload->setFocusPolicy(Qt::StrongFocus);
 
 	adjustSize();
 	setAutoFillBackground(true);
