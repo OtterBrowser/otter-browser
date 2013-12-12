@@ -382,6 +382,37 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
 
 			break;
+		case OpenFrameInThisTabAction:
+			if (m_hitResult.frame())
+			{
+				setUrl(m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+			}
+
+			break;
+		case OpenFrameInNewTabBackgroundAction:
+			if (m_hitResult.frame())
+			{
+				emit requestedOpenUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), true, false);
+			}
+
+			break;
+		case CopyFrameLinkToClipboardAction:
+			if (m_hitResult.frame())
+			{
+				QGuiApplication::clipboard()->setText((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()).toString());
+			}
+
+			break;
+		case ReloadFrameAction:
+			if (m_hitResult.frame())
+			{
+				const QUrl url = (m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+
+				m_hitResult.frame()->setUrl(QUrl());
+				m_hitResult.frame()->setUrl(url);
+			}
+
+			break;
 		default:
 			break;
 	}
@@ -552,19 +583,13 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 		case OpenFrameInThisTabAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenFrameInThisTab", true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case OpenFrameInNewTabBackgroundAction:
 			ActionsManager::setupLocalAction(actionObject, "OpenFrameInNewTabBackground", true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case CopyFrameLinkToClipboardAction:
 			ActionsManager::setupLocalAction(actionObject, "CopyFrameLinkToClipboard", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case ViewSourceFrameAction:
@@ -575,8 +600,6 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 			break;
 		case ReloadFrameAction:
 			ActionsManager::setupLocalAction(actionObject, "ReloadFrame", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case SaveLinkToDownloadsAction:
