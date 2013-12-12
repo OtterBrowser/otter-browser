@@ -5,6 +5,7 @@
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QFileInfo>
@@ -24,6 +25,7 @@ namespace Otter
 {
 
 QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent, QtWebKitWebPage *page) : WebWidget(parent),
+	m_parent(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
@@ -242,6 +244,16 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 void QtWebKitWebWidget::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
+}
+
+void QtWebKitWebWidget::showDialog(QWidget *dialog)
+{
+	m_parent->showDialog(dialog);
+}
+
+void QtWebKitWebWidget::hideDialog(QWidget *dialog)
+{
+	m_parent->hideDialog(dialog);
 }
 
 void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)

@@ -6,6 +6,7 @@
 namespace Otter
 {
 
+class QtWebKitWebWidget;
 class WebWidget;
 
 class QtWebKitWebPage : public QWebPage
@@ -13,11 +14,12 @@ class QtWebKitWebPage : public QWebPage
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebPage(WebWidget *parent);
+	explicit QtWebKitWebPage(QtWebKitWebWidget *parent);
 
 	void triggerAction(WebAction action, bool checked = false);
-	void setParent(WebWidget *parent);
+	void setParent(QtWebKitWebWidget *parent);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
+	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
 
 protected:
@@ -25,7 +27,7 @@ protected:
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
 
 private:
-	WebWidget *m_webWidget;
+	QtWebKitWebWidget *m_webWidget;
 
 signals:
 	void requestedNewWindow(WebWidget *widget);

@@ -40,6 +40,8 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void showDialog(QWidget *dialog);
+	void hideDialog(QWidget *dialog);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const HistoryInformation &history);
@@ -64,6 +66,7 @@ protected slots:
 	void showContextMenu(const QPoint &position);
 
 private:
+	ContentsWidget *m_parent;
 	QWebView *m_webView;
 	QWebInspector *m_inspector;
 	NetworkAccessManager *m_networkAccessManager;

@@ -7,7 +7,10 @@ namespace Otter
 ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
 	m_layer(NULL)
 {
-	connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+	if (window)
+	{
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+	}
 }
 
 void ContentsWidget::resizeEvent(QResizeEvent *event)
@@ -80,6 +83,16 @@ void ContentsWidget::hideDialog(QWidget *dialog)
 		m_layer->deleteLater();
 		m_layer = NULL;
 	}
+}
+
+void ContentsWidget::setParent(Window *window)
+{
+	if (window)
+	{
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+	}
+
+	QWidget::setParent(window);
 }
 
 }

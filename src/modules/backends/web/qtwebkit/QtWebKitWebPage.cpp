@@ -2,6 +2,7 @@
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/SettingsManager.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtNetwork/QNetworkReply>
@@ -15,7 +16,7 @@
 namespace Otter
 {
 
-QtWebKitWebPage::QtWebKitWebPage(WebWidget *parent) : QWebPage(parent),
+QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent)
 {
 }
@@ -30,14 +31,14 @@ void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 	QWebPage::triggerAction(action, checked);
 }
 
-void QtWebKitWebPage::setParent(WebWidget *parent)
+void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 {
 	m_webWidget = parent;
 
 	QWebPage::setParent(parent);
 }
 
-QWebPage *QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
+QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
 	{
@@ -121,6 +122,35 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 	}
 
 	return false;
+}
+
+bool QtWebKitWebPage::shouldInterruptJavaScript()
+{
+	if (m_webWidget)
+	{
+		QMessageBox dialog;
+		dialog.setModal(false);
+		dialog.setWindowTitle(tr("Question"));
+		dialog.setText(tr("The script on this page appears to have a problem."));
+		dialog.setInformativeText(tr("Do you want to stop the script?"));
+		dialog.setIcon(QMessageBox::Question);
+		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+		QEventLoop eventLoop;
+
+		m_webWidget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_webWidget->hideDialog(&dialog);
+
+		return (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::YesRole);
+	}
+
+	return QWebPage::shouldInterruptJavaScript();
 }
 
 bool QtWebKitWebPage::supportsExtension(QWebPage::Extension extension) const

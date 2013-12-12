@@ -16,6 +16,7 @@ public:
 	explicit ContentsWidget(Window *window);
 
 	virtual void print(QPrinter *printer) = 0;
+	void setParent(Window *window);
 	virtual ContentsWidget* clone(Window *window = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
