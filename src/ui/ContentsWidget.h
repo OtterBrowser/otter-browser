@@ -16,6 +16,7 @@ public:
 	explicit ContentsWidget(Window *window);
 
 	virtual void print(QPrinter *printer) = 0;
+	void setEnabled(bool enabled);
 	virtual ContentsWidget* clone(Window *window = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
@@ -48,6 +49,7 @@ protected slots:
 
 private:
 	QList<QPointer<QWidget> > m_dialogs;
+	QWidget *m_layer;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);

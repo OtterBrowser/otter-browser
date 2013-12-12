@@ -3,9 +3,34 @@
 namespace Otter
 {
 
-ContentsWidget::ContentsWidget(Window *window) : QWidget(window)
+ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
+	m_layer(NULL)
 {
 	connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+}
+
+void ContentsWidget::setEnabled(bool enabled)
+{
+	if (enabled && m_layer)
+	{
+		m_layer->hide();
+		m_layer->deleteLater();
+		m_layer = NULL;
+	}
+	else if (!enabled && !m_layer)
+	{
+		QPalette palette = this->palette();
+		palette.setColor(QPalette::Window, QColor(0, 0, 0, 70));
+
+		m_layer = new QWidget(this);
+		m_layer->setAutoFillBackground(true);
+		m_layer->setPalette(palette);
+		m_layer->resize(size());
+		m_layer->show();
+		m_layer->raise();
+	}
+
+	QWidget::setEnabled(enabled);
 }
 
 void ContentsWidget::showEvent(QShowEvent *event)
@@ -55,7 +80,7 @@ void ContentsWidget::showDialog(QWidget *dialog)
 	{
 		return;
 	}
-//TODO semi transparent layer or paint event? (gray out)
+
 	setEnabled(false);
 
 	if (isVisible())
