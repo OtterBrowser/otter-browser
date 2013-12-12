@@ -71,7 +71,7 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	updateProgressBarWidget();
 
-	QWidget::resizeEvent(event);
+	ContentsWidget::resizeEvent(event);
 }
 
 void WebContentsWidget::print(QPrinter *printer)

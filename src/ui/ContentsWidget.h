@@ -16,7 +16,6 @@ public:
 	explicit ContentsWidget(Window *window);
 
 	virtual void print(QPrinter *printer) = 0;
-	void setEnabled(bool enabled);
 	virtual ContentsWidget* clone(Window *window = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
@@ -41,8 +40,7 @@ public slots:
 	virtual void setUrl(const QUrl &url) = 0;
 
 protected:
-	void showEvent(QShowEvent *event);
-	void hideEvent(QHideEvent *event);
+	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void close();
