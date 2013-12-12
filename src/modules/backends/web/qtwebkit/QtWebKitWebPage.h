@@ -25,9 +25,14 @@ public:
 protected:
 	QWebPage* createWindow(WebWindowType type);
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
+	void javaScriptAlert(QWebFrame *frame, const QString &message);
+
+protected slots:
+	void clearIgnoreJavaScriptPopups();
 
 private:
 	QtWebKitWebWidget *m_webWidget;
+	bool m_ignoreJavaScriptPopups;
 
 signals:
 	void requestedNewWindow(WebWidget *widget);

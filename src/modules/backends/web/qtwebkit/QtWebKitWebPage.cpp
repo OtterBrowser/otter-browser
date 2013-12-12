@@ -17,8 +17,53 @@ namespace Otter
 {
 
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
-	m_webWidget(parent)
+	m_webWidget(parent),
+	m_ignoreJavaScriptPopups(false)
 {
+	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(clearIgnoreJavaScriptPopups()));
+}
+
+void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
+{
+	m_ignoreJavaScriptPopups = false;
+}
+
+void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
+{
+	if (m_ignoreJavaScriptPopups)
+	{
+		return;
+	}
+
+	if (m_webWidget)
+	{
+		QMessageBox dialog;
+		dialog.setModal(false);
+		dialog.setWindowTitle(tr("JavaScript"));
+		dialog.setText(message.toHtmlEscaped());
+		dialog.setStandardButtons(QMessageBox::Ok);
+		dialog.setCheckBox(new QCheckBox(tr("Disable JavaScript popups")));
+
+		QEventLoop eventLoop;
+
+		m_webWidget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_webWidget->hideDialog(&dialog);
+
+		if (dialog.checkBox()->isChecked())
+		{
+			m_ignoreJavaScriptPopups = true;
+		}
+
+		return;
+	}
+
+	QWebPage::javaScriptAlert(frame, message);
 }
 
 void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
