@@ -1,5 +1,4 @@
 #include "BookmarksContentsWidget.h"
-#include "../../../core/ActionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"

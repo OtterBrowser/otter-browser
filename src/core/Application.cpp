@@ -13,6 +13,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QLocale>
+#include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
 #include <QtNetwork/QLocalSocket>
@@ -84,10 +85,24 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	}
 
 	SettingsManager::createInstance(path + "/otter.conf", this);
-	SettingsManager::setDefaultValue("Browser/OpenLinksInNewWindow", false);
-	SettingsManager::setDefaultValue("Browser/EnablePlugins", true);
-	SettingsManager::setDefaultValue("Browser/EnableJava", true);
-	SettingsManager::setDefaultValue("Browser/EnableJavaScript", true);
+
+	QSettings defaults(":/files/options.ini", QSettings::IniFormat, this);
+	const QStringList groups = defaults.childGroups();
+
+	for (int i = 0; i < groups.count(); ++i)
+	{
+		defaults.beginGroup(groups.at(i));
+
+		const QStringList keys = defaults.childGroups();
+
+		for (int j = 0; j < keys.count(); ++j)
+		{
+			SettingsManager::setDefaultValue(QString("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QString("%1/value").arg(keys.at(j))));
+		}
+
+		defaults.endGroup();
+	}
+
 	SettingsManager::setDefaultValue("Actions/NewTab", "Ctrl+T");
 	SettingsManager::setDefaultValue("Actions/NewWindow", QKeySequence(QKeySequence::New).toString());
 	SettingsManager::setDefaultValue("Actions/Open", QKeySequence(QKeySequence::Open).toString());

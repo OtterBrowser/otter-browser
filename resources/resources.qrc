@@ -64,5 +64,7 @@
         <file>icons/task-complete.png</file>
         <file>icons/task-ongoing.png</file>
         <file>icons/task-reject.png</file>
+        <file>icons/configuration.png</file>
+        <file>files/options.ini</file>
     </qresource>
 </RCC>
