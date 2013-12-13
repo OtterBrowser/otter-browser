@@ -359,7 +359,7 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		window = getWindow(0);
 
-		if (window)
+		if (window && window->getType() == "web")
 		{
 			window->setUrl(QUrl("about:blank"));
 
@@ -415,8 +415,11 @@ void WindowsManager::setCurrentWindow(int index)
 
 	if (window)
 	{
-		window->showMinimized();
-		window->hide();
+		if (window->parentWidget())
+		{
+			window->parentWidget()->showMinimized();
+			window->parentWidget()->hide();
+		}
 
 		if (window->getUndoStack())
 		{
@@ -441,18 +444,11 @@ void WindowsManager::setCurrentWindow(int index)
 
 	if (window)
 	{
-		QList<QMdiSubWindow*> windows = m_area->subWindowList();
-
-		for (int i = 0; i < windows.count(); ++i)
+		if (window->parentWidget())
 		{
-			if (window == windows.at(i)->widget())
-			{
-				m_area->setActiveSubWindow(windows.at(i));
+			window->parentWidget()->showMaximized();
 
-				window->showMaximized();
-
-				break;
-			}
+			m_area->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
 		}
 
 		m_statusBar->setZoom(window->getZoom());
