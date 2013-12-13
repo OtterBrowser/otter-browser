@@ -20,19 +20,11 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_bookmarkLabel->setCursor(Qt::ArrowCursor);
 	m_bookmarkLabel->installEventFilter(this);
 
-	if (SettingsManager::getValue("AddressField/ShowUrlIcon", false).toBool())
-	{
-		m_urlIconLabel = new QLabel(this);
-		m_urlIconLabel->setAutoFillBackground(false);
-		m_urlIconLabel->setFixedSize(16, 16);
-		m_urlIconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
-		m_urlIconLabel->move(6, 4);
-
-		setStyleSheet("QLineEdit {padding-left:22px;}");
-	}
+	optionChanged("AddressField/ShowUrlIcon", SettingsManager::getValue("AddressField/ShowUrlIcon"));
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void AddressWidget::notifyRequestedLoadUrl()
@@ -84,6 +76,28 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 	if (m_urlIconLabel)
 	{
 		m_urlIconLabel->move(6, ((height() - m_urlIconLabel->height()) / 2));
+	}
+}
+
+void AddressWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "AddressField/ShowUrlIcon")
+	{
+		if (value.toBool() && !m_urlIconLabel)
+		{
+			m_urlIconLabel = new QLabel(this);
+			m_urlIconLabel->setAutoFillBackground(false);
+			m_urlIconLabel->setFixedSize(16, 16);
+			m_urlIconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+			m_urlIconLabel->move(6, 4);
+
+			setStyleSheet("QLineEdit {padding-left:22px;}");
+		}
+		else if (!value.toBool() && m_urlIconLabel)
+		{
+			m_urlIconLabel->deleteLater();
+			m_urlIconLabel = NULL;
+		}
 	}
 }
 

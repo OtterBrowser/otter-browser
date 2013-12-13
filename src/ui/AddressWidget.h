@@ -28,6 +28,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void notifyRequestedLoadUrl();
 	void updateBookmark();
 	void setIcon(const QIcon &icon);

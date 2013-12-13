@@ -37,7 +37,17 @@ void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
 
 void SettingsManager::setValue(const QString &key, const QVariant &value)
 {
-	QSettings(m_path, QSettings::IniFormat).setValue(key, value);
+	if (getValue(key) != value)
+	{
+		QSettings(m_path, QSettings::IniFormat).setValue(key, value);
+
+		emit m_instance->valueChanged(key, value);
+	}
+}
+
+SettingsManager* SettingsManager::getInstance()
+{
+	return m_instance;
 }
 
 QString SettingsManager::getPath()
