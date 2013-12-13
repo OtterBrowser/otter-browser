@@ -112,17 +112,19 @@ void TransfersManager::downloadData(QNetworkReply *reply)
 		return;
 	}
 
-	if (m_replies[reply]->state == ErrorTransfer)
+	TransferInformation *transfer = m_replies[reply];
+
+	if (transfer->state == ErrorTransfer)
 	{
-		m_replies[reply]->state = RunningTransfer;
+		transfer->state = RunningTransfer;
 
 		if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).isValid() && reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 206)
 		{
-			m_replies[reply]->device->reset();
+			transfer->device->reset();
 		}
 	}
 
-	m_replies[reply]->device->write(reply->readAll());
+	transfer->device->write(reply->readAll());
 }
 
 void TransfersManager::downloadFinished(QNetworkReply *reply)
@@ -137,32 +139,34 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 		return;
 	}
 
+	TransferInformation *transfer = m_replies[reply];
+
 	if (reply->size() > 0)
 	{
-		m_replies[reply]->device->write(reply->readAll());
+		transfer->device->write(reply->readAll());
 	}
 
 	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
 	disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	disconnect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 
-	m_replies[reply]->state = FinishedTransfer;
-	m_replies[reply]->finished = QDateTime::currentDateTime();
-	m_replies[reply]->bytesReceived = m_replies[reply]->device->size();
+	transfer->state = FinishedTransfer;
+	transfer->finished = QDateTime::currentDateTime();
+	transfer->bytesReceived = transfer->device->size();
 
-	if (m_replies[reply]->bytesTotal <= 0)
+	if (transfer->bytesTotal <= 0)
 	{
-		m_replies[reply]->bytesTotal = m_replies[reply]->bytesReceived;
+		transfer->bytesTotal = transfer->bytesReceived;
 	}
 
-	emit m_instance->transferFinished(m_replies[reply]);
-	emit m_instance->transferUpdated(m_replies[reply]);
+	emit m_instance->transferFinished(transfer);
+	emit m_instance->transferUpdated(transfer);
 
-	if (!m_replies[reply]->target.isEmpty())
+	if (transfer->device && !transfer->device->inherits("QTemporaryFile"))
 	{
-		m_replies[reply]->device->close();
-		m_replies[reply]->device->deleteLater();
-		m_replies[reply]->device = NULL;
+		transfer->device->close();
+		transfer->device->deleteLater();
+		transfer->device = NULL;
 
 		m_replies.remove(reply);
 
@@ -249,16 +253,15 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	reply->setObjectName("transfer");
 
+	QTemporaryFile temporaryFile("otter-download-XXXXXX.dat", m_instance);
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword);
-	transfer->device = new QTemporaryFile("otter-download-XXXXXX.dat", m_instance);
+	transfer->device = &temporaryFile;
 	transfer->started = QDateTime::currentDateTime();
 	transfer->isPrivate = privateTransfer;
 
 	if (!transfer->device->open(QIODevice::ReadWrite))
 	{
-		transfer->device->deleteLater();
-
 		delete transfer;
 
 		return NULL;
@@ -377,6 +380,8 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (path.isEmpty())
 		{
+			transfer->device = NULL;
+
 			removeTransfer(transfer, false);
 
 			return NULL;
@@ -412,10 +417,9 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	}
 
-	QIODevice *device = transfer->device;
-	device->reset();
+	temporaryFile.reset();
 
-	file->write(device->readAll());
+	file->write(temporaryFile.readAll());
 
 	transfer->device = file;
 
@@ -433,8 +437,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	}
 
-	device->close();
-	device->deleteLater();
+	temporaryFile.close();
 
 	emit m_instance->transferStarted(transfer);
 
