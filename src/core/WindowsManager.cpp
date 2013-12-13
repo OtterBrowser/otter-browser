@@ -238,7 +238,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 		return;
 	}
 
-	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, Qt::CustomizeWindowHint);
+	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
 	mdiWindow->showMaximized();
 
 	const int index = m_tabBar->count();

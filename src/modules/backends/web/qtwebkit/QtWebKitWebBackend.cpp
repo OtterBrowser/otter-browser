@@ -22,6 +22,9 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue("Browser/EnablePlugins").toBool());
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue("Browser/EnableJava").toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue("Browser/EnableJavaScript").toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue("Browser/JavaSriptCanAccessClipboard").toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, SettingsManager::getValue("Browser/JavaSriptCanCloseWindows").toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue("Browser/JavaScriptCanOpenWindows").toBool());
 	globalSettings->setIconDatabasePath(cachePath);
 	globalSettings->setOfflineStoragePath(cachePath);
 }
