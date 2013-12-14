@@ -61,7 +61,7 @@ void SearchWidget::sendRequest()
 {
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(itemData(currentIndex(), (Qt::UserRole + 1)).toString(), m_query);
+		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
 	}
 
 	lineEdit()->clear();

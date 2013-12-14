@@ -65,6 +65,18 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	addWindow(window, background);
 }
 
+void WindowsManager::search(const QString &query, const QString &engine)
+{
+	open();
+
+	Window *window = getWindow();
+
+	if (window)
+	{
+		window->search(query, engine);
+	}
+}
+
 void WindowsManager::close(int index)
 {
 	if (index < 0)
@@ -261,6 +273,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 	connect(window, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SLOT(addWindow(ContentsWidget*)));
+	connect(window, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));

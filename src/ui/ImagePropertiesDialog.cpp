@@ -26,7 +26,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 	{
 		const QString data = url.path();
 
-		array = QByteArray::fromBase64(data.mid(data.indexOf("base64," + 7)).toUtf8());
+		array = QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8());
 
 		device = new QBuffer(&array, this);
 	}

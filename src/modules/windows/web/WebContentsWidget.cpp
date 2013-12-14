@@ -74,6 +74,11 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 	ContentsWidget::resizeEvent(event);
 }
 
+void WebContentsWidget::search(const QString &search, const QString &query)
+{
+	m_webWidget->search(search, query);
+}
+
 void WebContentsWidget::print(QPrinter *printer)
 {
 	m_webWidget->print(printer);

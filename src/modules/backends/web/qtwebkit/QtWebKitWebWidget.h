@@ -22,6 +22,7 @@ class QtWebKitWebWidget : public WebWidget
 public:
 	explicit QtWebKitWebWidget(bool privateWindow = false, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
 
+	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	WebWidget* clone(ContentsWidget *parent = NULL);
 	QAction* getAction(WindowAction action);

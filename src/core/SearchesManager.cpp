@@ -4,6 +4,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
+#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
@@ -51,6 +52,41 @@ QStringList SearchesManager::getSearches()
 	}
 
 	return m_searches.keys();
+}
+
+bool SearchesManager::setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+{
+	Q_UNUSED(body)
+
+	if (!m_searches.contains(engine))
+	{
+		return false;
+	}
+
+	const SearchUrl search = getSearch(engine)->searchUrl;
+	QString url = search.url;
+	QHash<QString, QString> parameters;
+	parameters["searchTerms"] = query;
+	parameters["count"] = QString();
+	parameters["startIndex"] = QString();
+	parameters["startPage"] = QString();
+	parameters["language"] = QLocale::system().name();
+	parameters["inputEncoding"] = "UTF-8";
+	parameters["outputEncoding"] = "UTF-8";
+
+	QHash<QString, QString>::iterator parametersIterator;
+
+	for (parametersIterator = parameters.begin(); parametersIterator != parameters.end(); ++parametersIterator)
+	{
+		url = url.replace(QString("{%1}").arg(parametersIterator.key()), parametersIterator.value());
+	}
+
+	request->setUrl(QUrl(url));
+	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+	*method = ((search.method == "post") ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
+
+	return true;
 }
 
 bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)

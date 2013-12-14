@@ -41,6 +41,7 @@ class WebWidget : public QWidget
 public:
 	explicit WebWidget(bool privateWindow, ContentsWidget *parent = NULL);
 
+	virtual void search(const QString &query, const QString &engine) = 0;
 	virtual void print(QPrinter *printer) = 0;
 	virtual WebWidget* clone(ContentsWidget *parent = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;

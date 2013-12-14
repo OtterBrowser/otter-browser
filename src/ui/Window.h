@@ -102,6 +102,7 @@ public:
 	~Window();
 
 	void close();
+	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	Window* clone(QWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
@@ -147,6 +148,7 @@ signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(ContentsWidget *widget);
+	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message, int timeout);

@@ -2,6 +2,7 @@
 #include "QtWebKitWebPage.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/NetworkAccessManager.h"
+#include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -105,6 +106,18 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
+}
+
+void QtWebKitWebWidget::search(const QString &query, const QString &engine)
+{
+	QNetworkRequest request;
+	QNetworkAccessManager::Operation method;
+	QByteArray body;
+
+	if (SearchesManager::setupQuery(query, engine, &request, &method, &body))
+	{
+		m_webView->page()->mainFrame()->load(request, method, body);
+	}
 }
 
 void QtWebKitWebWidget::print(QPrinter *printer)

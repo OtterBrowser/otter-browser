@@ -3,6 +3,7 @@
 
 #include <QtCore/QFile>
 #include <QtGui/QIcon>
+#include <QtNetwork/QNetworkAccessManager>
 
 namespace Otter
 {
@@ -36,6 +37,7 @@ public:
 	static SearchesManager* getInstance();
 	static SearchInformation* getSearch(const QString &identifier);
 	static QStringList getSearches();
+	static bool setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
 	static bool addSearch(QIODevice *device, const QString &identifier);

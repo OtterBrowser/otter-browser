@@ -36,6 +36,7 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	m_ui->addressWidget->setWindow(this);
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
+	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 }
 
 Window::~Window()
@@ -63,6 +64,14 @@ void Window::close()
 	emit aboutToClose();
 
 	QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
+}
+
+void Window::search(const QString &query, const QString &engine)
+{
+	WebContentsWidget *widget = new WebContentsWidget(isPrivate(), NULL, this);
+	widget->search(query, engine);
+
+	setContentsWidget(widget);
 }
 
 void Window::print(QPrinter *printer)

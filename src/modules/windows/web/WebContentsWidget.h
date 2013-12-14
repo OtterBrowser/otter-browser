@@ -22,6 +22,7 @@ public:
 	explicit WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window);
 	~WebContentsWidget();
 
+	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
 	WebContentsWidget* clone(Window *parent = NULL);
 	QAction* getAction(WindowAction action);

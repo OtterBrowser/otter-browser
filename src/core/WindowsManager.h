@@ -37,6 +37,7 @@ public:
 
 public slots:
 	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);
+	void search(const QString &query, const QString &engine);
 	void close(int index = -1);
 	void closeAll();
 	void closeOther(int index = -1);

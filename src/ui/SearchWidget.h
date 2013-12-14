@@ -22,7 +22,7 @@ private:
 	QString m_query;
 
 signals:
-	void requestedSearch(QString search, QString query);
+	void requestedSearch(QString query, QString engine);
 };
 
 }
