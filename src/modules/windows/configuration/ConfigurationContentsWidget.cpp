@@ -1,4 +1,5 @@
 #include "ConfigurationContentsWidget.h"
+#include "OptionDelegate.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 
@@ -36,7 +37,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			optionItems.append(new QStandardItem(keys.at(j)));
 			optionItems.append(new QStandardItem(defaults.value(QString("%1/type").arg(keys.at(j))).toString()));
 			optionItems.append(new QStandardItem(value.toString()));
-			optionItems[2]->setData(value, Qt::UserRole);
+			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
 
 			if (value != defaultValue)
 			{
@@ -60,9 +61,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->configurationView->setModel(m_model);
+	m_ui->configurationView->setItemDelegateForColumn(2, new OptionDelegate(this));
 	m_ui->configurationView->header()->setTextElideMode(Qt::ElideRight);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(m_ui->configurationView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterConfiguration(QString)));
 }
 
@@ -149,6 +152,16 @@ void ConfigurationContentsWidget::filterConfiguration(const QString &filter)
 	}
 }
 
+void ConfigurationContentsWidget::currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+{
+	m_ui->configurationView->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
+
+	if (currentIndex.parent().isValid())
+	{
+		m_ui->configurationView->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
+	}
+}
+
 void ConfigurationContentsWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -172,7 +185,6 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 				optionItem->setFont(font);
 
 				groupItem->child(j, 2)->setText(value.toString());
-				groupItem->child(j, 2)->setData(value, Qt::UserRole);
 
 				break;
 			}
