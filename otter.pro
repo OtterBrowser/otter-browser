@@ -37,15 +37,15 @@ SOURCES += src/main.cpp\
     src/ui/SaveSessionDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/PreviewWidget.cpp \
-    src/ui/ImagePropertiesDialog.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/WebWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
-    src/modules/windows/web/WebContentsWidget.cpp \
+    src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
+    src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
     src/modules/windows/configuration/OptionDelegate.cpp \
@@ -82,15 +82,15 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/SaveSessionDialog.h \
     src/ui/AuthenticationDialog.h \
     src/ui/PreviewWidget.h \
-    src/ui/ImagePropertiesDialog.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/WebWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
-    src/modules/windows/web/WebContentsWidget.h \
+    src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
+    src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \
     src/modules/windows/configuration/OptionDelegate.h \
@@ -107,7 +107,7 @@ FORMS += src/ui/BookmarkPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/AuthenticationDialog.ui \
-    src/ui/ImagePropertiesDialog.ui \
+    src/modules/windows/web/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/configuration/ConfigurationContentsWidget.ui \

@@ -1,5 +1,6 @@
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitWebPage.h"
+#include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SearchesManager.h"
@@ -7,7 +8,6 @@
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsWidget.h"
-#include "../../../../ui/ImagePropertiesDialog.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
