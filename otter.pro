@@ -15,6 +15,7 @@ SOURCES += src/main.cpp\
     src/core/WindowsManager.cpp \
     src/core/ActionsManager.cpp \
     src/core/NetworkAccessManager.cpp \
+    src/core/SearchesManager.cpp \
     src/core/SessionsManager.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/BookmarksManager.cpp \
@@ -57,6 +58,7 @@ HEADERS += src/core/SettingsManager.h \
     src/core/WindowsManager.h \
     src/core/ActionsManager.h \
     src/core/NetworkAccessManager.h \
+    src/core/SearchesManager.h \
     src/core/SessionsManager.h \
     src/core/LocalListingNetworkReply.h \
     src/core/BookmarksManager.h \

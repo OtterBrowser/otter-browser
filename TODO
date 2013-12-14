@@ -1,36 +1,35 @@
 High priority / ASAP:
 - history browsing
 - start page
-- custom searches
-
-Medium priority / soon:
 - preferences dialog
 - proxy configuration
+
+Medium priority / soon:
 - mail and feeds client (as module)
 - page specific preferences
+- passwords manager
+- delayed loading of Flash objects
 - content blocking
 - spell checking
 - panels (page informations, notes, transfers, bookmarks etc.)
 - system tray icon
 
 Low priority / later:
-- Blink backend (with upcoming QtWebEngine, when API will be useful)
-- import of existing settings etc.
-- delayed loading of Flash objects
-- tabs grouping
 - form auto completion
-- passwords manager
-- support for tab thumbnails embedded in tab bar
 - exposing MDI features
 - mouse gestures
+- tabs grouping
+- import of existing settings etc.
 - allow to overwrite list of available context menu actions
 - extensions
 - Opera Link like solution
 - improved integration with different platforms (Windows taskbar integration etc.)
+- Blink backend (with upcoming QtWebEngine, when API will be useful)
 
 Low priority / maybe:
 - support for Opera skins (through custom QStyle)
 - IM client module (libpurple based, including support for IRC)
 - BitTorrent module
+- support for tab thumbnails embedded in tab bar
 
 And lots of smaller things. ;-)
