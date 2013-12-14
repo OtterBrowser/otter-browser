@@ -66,5 +66,6 @@
         <file>icons/task-reject.png</file>
         <file>icons/configuration.png</file>
         <file>files/options.ini</file>
+        <file>searches/google.xml</file>
     </qresource>
 </RCC>

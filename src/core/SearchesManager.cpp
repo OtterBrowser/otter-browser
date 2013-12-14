@@ -33,10 +33,25 @@ SearchInformation *SearchesManager::getSearch(const QString &identifier)
 
 QStringList SearchesManager::getSearches()
 {
+	const QString path = SettingsManager::getPath() + "/searches/";
+
+	QDir().mkpath(path);
+
+	const QDir directory(path);
+
+	if (directory.entryList(QDir::Files).isEmpty())
+	{
+		const QStringList definitions = QDir(":/searches/").entryList(QDir::Files);
+
+		for (int i = 0; i < definitions.count(); ++i)
+		{
+			QFile::copy(":/searches/" + definitions.at(i), directory.filePath(definitions.at(i)));
+		}
+	}
+
 	if (m_searches.isEmpty())
 	{
-		const QDir directory(SettingsManager::getPath() + "/searches/");
-		const QStringList entries = directory.entryList();
+		const QStringList entries = directory.entryList(QDir::Files);
 
 		for (int i = 0; i < entries.count(); ++i)
 		{
