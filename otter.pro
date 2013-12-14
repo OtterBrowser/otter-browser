@@ -31,6 +31,8 @@ SOURCES += src/main.cpp\
     src/ui/TabBarWidget.cpp \
     src/ui/Window.cpp \
     src/ui/StatusBarWidget.cpp \
+    src/ui/SearchDelegate.cpp \
+    src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/AuthenticationDialog.cpp \
@@ -74,6 +76,8 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/TabBarWidget.h \
     src/ui/Window.h \
     src/ui/StatusBarWidget.h \
+    src/ui/SearchDelegate.h \
+    src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SaveSessionDialog.h \
     src/ui/AuthenticationDialog.h \

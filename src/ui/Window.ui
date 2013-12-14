@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>248</width>
+    <width>348</width>
     <height>27</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
    </property>
    <item>
     <widget class="QWidget" name="navigationWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,3,1">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -69,6 +69,9 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="Otter::SearchWidget" name="searchWidget"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -79,6 +82,11 @@
    <class>Otter::AddressWidget</class>
    <extends>QLineEdit</extends>
    <header>src/ui/AddressWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::SearchWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/SearchWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

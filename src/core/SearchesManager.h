@@ -34,6 +34,7 @@ class SearchesManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static SearchesManager* getInstance();
+	static SearchInformation* getSearch(const QString &identifier);
 	static QStringList getSearches();
 
 protected:
@@ -43,7 +44,7 @@ private:
 	explicit SearchesManager(QObject *parent = NULL);
 
 	static SearchesManager *m_instance;
-	static QList<SearchInformation*> m_searches;
+	static QHash<QString, SearchInformation*> m_searches;
 
 signals:
 	void searchAdded(SearchInformation *search);

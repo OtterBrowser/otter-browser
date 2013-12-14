@@ -9,7 +9,7 @@ namespace Otter
 {
 
 SearchesManager* SearchesManager::m_instance = NULL;
-QList<SearchInformation*> SearchesManager::m_searches;
+QHash<QString, SearchInformation*> SearchesManager::m_searches;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
@@ -23,6 +23,11 @@ void SearchesManager::createInstance(QObject *parent)
 SearchesManager *SearchesManager::getInstance()
 {
 	return m_instance;
+}
+
+SearchInformation *SearchesManager::getSearch(const QString &identifier)
+{
+	return m_searches.value(identifier, NULL);
 }
 
 QStringList SearchesManager::getSearches()
@@ -45,14 +50,7 @@ QStringList SearchesManager::getSearches()
 		}
 	}
 
-	QStringList searches;
-
-	for (int i = 0; i < m_searches.count(); ++i)
-	{
-		searches.append(m_searches.at(i)->identifier);
-	}
-
-	return searches;
+	return m_searches.keys();
 }
 
 bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
@@ -109,7 +107,7 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 				{
 					const QString data = reader.readElementText();
 
-					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf("base64," + 7)).toUtf8()))));
+					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8()), "png")));
 				}
 				else
 				{
@@ -125,7 +123,7 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 		return false;
 	}
 
-	m_searches.append(search);
+	m_searches[identifier] = search;
 
 	return true;
 }
