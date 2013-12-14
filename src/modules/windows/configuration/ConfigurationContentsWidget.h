@@ -51,6 +51,7 @@ protected:
 
 protected slots:
 	void filterConfiguration(const QString &filter);
+	void optionChanged(const QString &option, const QVariant &value);
 
 private:
 	QStandardItemModel *m_model;
