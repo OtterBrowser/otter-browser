@@ -53,6 +53,7 @@ protected:
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
+	void search(QAction *action);
 	void triggerAction();
 	void loadStarted();
 	void loadFinished(bool ok);
@@ -61,9 +62,11 @@ protected slots:
 	void linkHovered(const QString &link, const QString &title);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
+	void searchMenuAboutToShow();
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
+	void updateSearchActions(const QString &engine);
 	void showContextMenu(const QPoint &position);
 
 private:
@@ -72,6 +75,7 @@ private:
 	QWebInspector *m_inspector;
 	NetworkAccessManager *m_networkAccessManager;
 	QSplitter *m_splitter;
+	QString m_searchEngine;
 	QPixmap m_thumbnail;
 	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_actions;

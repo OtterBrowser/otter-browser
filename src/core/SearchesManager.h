@@ -51,6 +51,8 @@ private:
 
 signals:
 	void searchAdded(SearchInformation *search);
+	void searchModified(SearchInformation *search);
+	void searchRemoved(SearchInformation *search);
 };
 
 }

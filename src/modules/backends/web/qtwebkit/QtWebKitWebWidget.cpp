@@ -5,6 +5,7 @@
 #include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
+#include "../../../../core/SettingsManager.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsWidget.h"
@@ -32,6 +33,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
+	m_searchEngine(SettingsManager::getValue("Browser/DefaultSearch").toString()),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {
@@ -106,6 +108,18 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
+}
+
+void QtWebKitWebWidget::search(QAction *action)
+{
+	const QString engine = ((!action || action->data().toString().isEmpty()) ? m_searchEngine : action->data().toString());
+
+	if (SearchesManager::getSearches().contains(engine))
+	{
+		updateSearchActions(engine);
+
+		emit requestedSearch(m_webView->selectedText(), m_searchEngine);
+	}
 }
 
 void QtWebKitWebWidget::search(const QString &query, const QString &engine)
@@ -235,6 +249,28 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 	}
 }
 
+void QtWebKitWebWidget::searchMenuAboutToShow()
+{
+	QAction *searchMenuAction = getAction(SearchMenuAction);
+
+	if (searchMenuAction->isEnabled() && searchMenuAction->menu()->actions().isEmpty())
+	{
+		const QStringList engines = SearchesManager::getSearches();
+
+		for (int i = 0; i < engines.count(); ++i)
+		{
+			SearchInformation *search = SearchesManager::getSearch(engines.at(i));
+
+			if (search)
+			{
+				QAction *searchAction = searchMenuAction->menu()->addAction(search->icon, search->title);
+				searchAction->setData(search->identifier);
+				searchAction->setToolTip(search->description);
+			}
+		}
+	}
+}
+
 void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -258,6 +294,36 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 void QtWebKitWebWidget::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
+}
+
+void QtWebKitWebWidget::updateSearchActions(const QString &engine)
+{
+	QAction *defaultSearchAction = getAction(SearchAction);
+	SearchInformation *search = SearchesManager::getSearch(engine);
+
+	if (!search)
+	{
+		search = SearchesManager::getSearch(SearchesManager::getSearches().first());
+	}
+
+	if (search)
+	{
+		defaultSearchAction->setEnabled(true);
+		defaultSearchAction->setIcon(search->icon.isNull() ? Utils::getIcon("edit-find") : search->icon);
+		defaultSearchAction->setText(search->title);
+		defaultSearchAction->setToolTip(search->description);
+
+		m_searchEngine = engine;
+	}
+	else
+	{
+		defaultSearchAction->setEnabled(false);
+		defaultSearchAction->setIcon(QIcon());
+		defaultSearchAction->setText(tr("Search"));
+		defaultSearchAction->setToolTip(tr("No search engines defined"));
+	}
+
+	getAction(SearchMenuAction)->setEnabled(SearchesManager::getSearches().count() > 1);
 }
 
 void QtWebKitWebWidget::showDialog(QWidget *dialog)
@@ -426,6 +492,10 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			}
 
 			break;
+		case SearchAction:
+			search(getAction(SearchAction));
+
+			break;
 		default:
 			break;
 	}
@@ -504,6 +574,8 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
 	{
+		updateSearchActions(m_searchEngine);
+
 		flags |= SelectionMenu;
 	}
 
@@ -708,6 +780,9 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
+
+			connect(actionObject->menu(), SIGNAL(aboutToShow()), this, SLOT(searchMenuAboutToShow()));
+			connect(actionObject->menu(), SIGNAL(triggered(QAction*)), this, SLOT(search(QAction*)));
 
 			break;
 		case OpenSelectionAsLinkAction:

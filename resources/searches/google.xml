@@ -3,7 +3,7 @@
 	<ShortName>Google</ShortName>
 	<Description>Google Search</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAZhJREFUOI2lk01LW0EUhp+5MzdIUqsuRFy0pdQPulCsH9SPuKigoKJId13UXRfdhKL9Ce3GnyAotOJOKGoQ3BWyaVNMQF0oVF0oUbxiLTEmdpI73UiM5IIGz27gfZ857zkzoqqhfzA4Pr2SEtWUUgHjEOp1ECOf9kyp5kKI8jJbAsbabSwB3Q2SpkeSpTXNj985fu3m8rqUqMbyIr/r8yEtWIhqPs5n2Eq4VAbEDXP+Mi/AYLPi9NwA4BoIxzVd9cozhifANdD8WObPR38NR2fu3QFfIpqBJsXLZ5LyMsGr54qp8OXdAYtrmg9zaWqrLL5N+NnYz7GVKKEDgO1Dl3BMk0wbRlsVFX7hqRN9n6+mVVCddZKWJ5KTc4PfB6OtNqlLw+R8hpPkTXlRB2+6bF532Mx8/8fCT83XiOb9bBrXwHiv7/YIQy2K6E4OXbByJ2lYjmXxeWyyCLBz7DL8QlFTcZ1ZSWh7KgnHs7fP4EGZ4G2PTbBRcXZhSPxxyWhYXc+yeVD8Eu/3mXCwQkGHAE7J5occE+px+A9kHJPug2B79QAAAABJRU5ErkJggg==</Image>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAUtJREFUOI2lkzlLA0EUx/ezicTKq1H8CFoErERr16MQMYRYCF4IGi0Uo6BZzzSGeEK8QIhGDRZqPNhrsjv7d2aLrDpbTLR4MNf/9968Q9H2c2jsv0WdqtdkXMO1yl/E3yFK2EX9gI54miChEZwVXVAPWD6soGfeEt6GApLZCsa3SBV28Uixe+mERhEK+DQ9qCt2dT+csmE7kAe8Gx5SJ4HH7jkLd89UHjC2QUCYx94FC80jBlaPHXRNmfIAbp2TJmKbBCx/P74jDeAWGdTxwfKRv3fROmrIA/qSFhZZJRKsEtMZgrLu4eGVoi0mQgTAxA7BUcFFw1Bw1s6ExReKtVOxlAKgVKZ+A/0+542VzksAMteO760jHoQbYdEc3LiIzkp0YhMr2xL7/9Obh6sSxfa5g3UWenRGFPuAfw2TyoZJ28v5i1rFLWoBXPsFDN3lDIwWpVkAAAAASUVORK5CYII=</Image>
+	<Url type="text/html" method="GET" template="https://www.google.com/search?q={searchTerms}&amp;ie=utf-8&amp;oe=utf-8" />
 	<Url type="application/x-suggestions+json" rel="suggestions" method="GET" template="https://www.google.com/complete/search?client=firefox&amp;q={searchTerms}" />
-	<Url type="text/html" method="GET" template="https://www.google.com/search?q={searchTerms}&amp;sourceid=otter&amp;ie=utf-8&amp;oe=utf-8" />
 </OpenSearchDescription>

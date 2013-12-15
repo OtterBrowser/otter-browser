@@ -70,6 +70,7 @@ signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
 	void requestedAddBookmark(QUrl url);
 	void requestedNewWindow(WebWidget *widget);
+	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);
