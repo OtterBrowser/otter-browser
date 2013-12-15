@@ -10,7 +10,8 @@ namespace Otter
 {
 
 SearchesManager* SearchesManager::m_instance = NULL;
-QHash<QString, SearchInformation*> SearchesManager::m_searches;
+QStringList SearchesManager::m_order;
+QHash<QString, SearchInformation*> SearchesManager::m_engines;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
@@ -28,7 +29,7 @@ SearchesManager *SearchesManager::getInstance()
 
 SearchInformation *SearchesManager::getSearch(const QString &identifier)
 {
-	return m_searches.value(identifier, NULL);
+	return m_engines.value(identifier, NULL);
 }
 
 QStringList SearchesManager::getSearches()
@@ -46,10 +47,11 @@ QStringList SearchesManager::getSearches()
 		for (int i = 0; i < definitions.count(); ++i)
 		{
 			QFile::copy(":/searches/" + definitions.at(i), directory.filePath(definitions.at(i)));
+			QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
 		}
 	}
 
-	if (m_searches.isEmpty())
+	if (m_engines.isEmpty())
 	{
 		const QStringList entries = directory.entryList(QDir::Files);
 
@@ -64,16 +66,27 @@ QStringList SearchesManager::getSearches()
 				file.close();
 			}
 		}
+
+		m_order = SettingsManager::getValue("Browser/SearchEnginesOrder").toStringList();
+		m_order.removeAll(QString());
+
+		if (m_order.isEmpty())
+		{
+			QStringList engines = m_engines.keys();
+			engines.sort();
+
+			m_order = engines;
+		}
 	}
 
-	return m_searches.keys();
+	return m_order;
 }
 
 bool SearchesManager::setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
 	Q_UNUSED(body)
 
-	if (!m_searches.contains(engine))
+	if (!m_engines.contains(engine))
 	{
 		return false;
 	}
@@ -178,7 +191,7 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 		return false;
 	}
 
-	m_searches[identifier] = search;
+	m_engines[identifier] = search;
 
 	return true;
 }

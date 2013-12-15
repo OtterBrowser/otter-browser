@@ -47,7 +47,8 @@ private:
 	explicit SearchesManager(QObject *parent = NULL);
 
 	static SearchesManager *m_instance;
-	static QHash<QString, SearchInformation*> m_searches;
+	static QStringList m_order;
+	static QHash<QString, SearchInformation*> m_engines;
 
 signals:
 	void searchAdded(SearchInformation *search);
