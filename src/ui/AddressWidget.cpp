@@ -6,6 +6,9 @@
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
+#include <QtGui/QContextMenuEvent>
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
@@ -102,6 +105,16 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void AddressWidget::removeIcon()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action && SettingsManager::contains(QString("AddressField/Show%1Icon").arg(action->data().toString())))
+	{
+		SettingsManager::setValue(QString("AddressField/Show%1Icon").arg(action->data().toString()), false);
+	}
+}
+
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == "AddressField/ShowBookmarkIcon")
@@ -109,6 +122,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 		if (value.toBool() && !m_bookmarkLabel)
 		{
 			m_bookmarkLabel = new QLabel(this);
+			m_bookmarkLabel->setObjectName("Bookmark");
 			m_bookmarkLabel->setAutoFillBackground(false);
 			m_bookmarkLabel->setFixedSize(16, 16);
 			m_bookmarkLabel->move((width() - 22), 4);
@@ -127,9 +141,9 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 		if (value.toBool() && !m_urlIconLabel)
 		{
 			m_urlIconLabel = new QLabel(this);
+			m_urlIconLabel->setObjectName("Url");
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
-			m_urlIconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 			m_urlIconLabel->move(6, 4);
 			m_urlIconLabel->installEventFilter(this);
 
@@ -139,6 +153,8 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 		{
 			m_urlIconLabel->deleteLater();
 			m_urlIconLabel = NULL;
+
+			setStyleSheet(QString());
 		}
 	}
 }
@@ -163,28 +179,56 @@ QUrl AddressWidget::getUrl() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_bookmarkLabel && event->type() == QEvent::MouseButtonPress && m_bookmarkLabel->isEnabled())
+	if (object == m_bookmarkLabel && m_bookmarkLabel && event->type() == QEvent::MouseButtonPress)
 	{
-		if (BookmarksManager::hasBookmark(getUrl()))
-		{
-			BookmarksManager::deleteBookmark(getUrl());
-		}
-		else
-		{
-			BookmarkInformation *bookmark = new BookmarkInformation();
-			bookmark->url = getUrl().toString(QUrl::RemovePassword);
-			bookmark->title = m_window->getTitle();
-			bookmark->type = UrlBookmark;
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			BookmarkPropertiesDialog dialog(bookmark, -1, this);
-
-			if (dialog.exec() == QDialog::Rejected)
+		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+		{
+			if (m_bookmarkLabel->isEnabled())
 			{
-				delete bookmark;
-			}
-		}
+				if (BookmarksManager::hasBookmark(getUrl()))
+				{
+					BookmarksManager::deleteBookmark(getUrl());
+				}
+				else
+				{
+					BookmarkInformation *bookmark = new BookmarkInformation();
+					bookmark->url = getUrl().toString(QUrl::RemovePassword);
+					bookmark->title = m_window->getTitle();
+					bookmark->type = UrlBookmark;
 
-		updateBookmark();
+					BookmarkPropertiesDialog dialog(bookmark, -1, this);
+
+					if (dialog.exec() == QDialog::Rejected)
+					{
+						delete bookmark;
+					}
+				}
+
+				updateBookmark();
+			}
+
+			return true;
+		}
+	}
+
+	if (object && event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+		if (contextMenuEvent)
+		{
+			QMenu menu(this);
+			QAction *action = menu.addAction(tr("Remove This Icon"), this, SLOT(removeIcon()));
+			action->setData(object->objectName());
+
+			menu.exec(contextMenuEvent->globalPos());
+
+			contextMenuEvent->accept();
+
+			return true;
+		}
 	}
 
 	return QLineEdit::eventFilter(object, event);
