@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ActionsManager.h"
 #include "BookmarksManager.h"
+#include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
@@ -133,6 +134,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	BookmarksManager::createInstance(this);
 
 	WebBackendsManager::createInstance(this);
+
+	SearchesManager::createInstance(this);
 
 	SessionsManager::createInstance(this);
 
