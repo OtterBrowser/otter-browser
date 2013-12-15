@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>Yahoo</ShortName>
+	<Description>Yahoo Search</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAm9JREFUOBEFwTuIXGUYANDz/XceecyuiSFEsRJFQQwoEVMYIV0SsJDYiBACgpWIaGWjzYKFQqoUFiGCgmAhEW1MpUWELTQqwhJ8RYsIPmKRndmdO/fe//OcOOaVDMVDJ9adOf+Yk6eOm63NAGQmiAiL+cJXVzd9duk7v21uS1U86Y2cOmRsr9EkrLrWECuQBhAa0OREyTFCZ0frP6PG1F6H7YuDLm497b4HDnp2/ImUMqoQZCiluLI86+bWba89+rUdt/UWCo2x/abNXd7b2AKfds/ZX47YH/fYF0fMmiOutGcJ3r9ww7QcMLGGRiGJpDb++Ghi6/vfwVMvHTKKsVGMHXvhAPjwnetufjARioweqUzWBk00alkZdN4+fgu8fPERKYn0+uWj4OqbSzU6tayMYmyyNih71lLrjkGrjx19LF3euAFObxz2xLl1mVzeuKGPpT529ZZa2/aspXjmobey++V+e5p1TUyVCKUpPl6cBpDJ87Mv1KGqmfpcaodt4wdvKpB6vdZgabDU544LL/4I4N1zP+hz12DXYGnQSj0YLeedaqnkiBgUFI1vrv2Mo7Kmb6/9ZNCrBhVDdnq76rwzWt5JxUpjV82xIkSl/3MJEot/52pNmalmSp1ep95Jo3Y+mESrr0UpgxqpZBj6AKWErt8hU0UmtXaGbK3mg1Gqaq6sgpJF1NBEmDX3gqxpGgfM6y1DkpmqVHMlVaNUDVrqoJYg6Rumd/8DROgO/a39ayEroDLopCqOeTWLMQJEpAwCAJCIJDMAqeqMqKrWwyfWnTn/uJOnjputzWQSQSYQwWK+8OXVTZ9fuu7XzW3wPzecStK9NNykAAAAAElFTkSuQmCC</Image>
+	<Url type="text/html" method="GET" template="http://search.yahoo.com/search?p={searchTerms}&amp;ei=UTF-8" />
+</OpenSearchDescription>

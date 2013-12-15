@@ -67,5 +67,9 @@
         <file>icons/configuration.png</file>
         <file>files/options.ini</file>
         <file>searches/google.xml</file>
+        <file>searches/bing.xml</file>
+        <file>searches/duckduckgo.xml</file>
+        <file>searches/wikipedia.xml</file>
+        <file>searches/yahoo.xml</file>
     </qresource>
 </RCC>
