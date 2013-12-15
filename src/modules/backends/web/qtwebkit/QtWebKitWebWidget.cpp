@@ -33,7 +33,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
-	m_searchEngine(SettingsManager::getValue("Browser/DefaultSearch").toString()),
+	m_searchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
 	m_isLinkHovered(false),
 	m_isLoading(false)
 {

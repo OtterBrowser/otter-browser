@@ -1,6 +1,7 @@
 #include "SearchWidget.h"
 #include "SearchDelegate.h"
 #include "../core/SearchesManager.h"
+#include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
 #include <QtGui/QStandardItemModel>
@@ -12,11 +13,11 @@ namespace Otter
 SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 {
 	QStandardItemModel *model = new QStandardItemModel(this);
-	const QStringList searches = SearchesManager::getSearches();
+	const QStringList engines = SearchesManager::getSearches();
 
-	for (int i = 0; i < searches.count(); ++i)
+	for (int i = 0; i < engines.count(); ++i)
 	{
-		SearchInformation *search = SearchesManager::getSearch(searches.at(i));
+		SearchInformation *search = SearchesManager::getSearch(engines.at(i));
 
 		if (search)
 		{
@@ -29,15 +30,17 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 		}
 	}
 
+	const int index = qMax(0, engines.indexOf(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()));
+
 	setEditable(true);
 	setModel(model);
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
-	setCurrentIndex(0);
+	setCurrentIndex(index);
 
 	m_query = QString();
 
-	currentSearchChanged(0);
+	currentSearchChanged(index);
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
