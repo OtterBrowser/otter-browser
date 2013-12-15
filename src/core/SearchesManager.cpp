@@ -198,59 +198,60 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 
 	if (reader.readNextStartElement() && reader.name() == "OpenSearchDescription")
 	{
-		while (reader.readNextStartElement())
+		while (!reader.atEnd())
 		{
-			if (reader.name() == "Url")
-			{
-				if (reader.attributes().value("rel") == "self")
-				{
-					search->selfUrl = reader.attributes().value("template").toString();
-				}
-				else if (reader.attributes().value("rel") == "suggestions" || reader.attributes().value("type") == "application/x-suggestions+json")
-				{
-					currentUrl = &search->suggestionsUrl;
-				}
-				else if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
-				{
-					currentUrl = &search->searchUrl;
-				}
-				else
-				{
-					currentUrl = NULL;
-				}
+			reader.readNext();
 
-				if (currentUrl)
+			if (reader.isStartElement())
+			{
+				if (reader.name() == "Url")
 				{
-					currentUrl->url = reader.attributes().value("template").toString();
-					currentUrl->enctype = reader.attributes().value("enctype").toString().toLower();
-					currentUrl->method = reader.attributes().value("method").toString().toLower();
-				}
-			}
-			else if (reader.name() == "Param" && currentUrl)
-			{
-				currentUrl->parameters[reader.attributes().value("name").toString()] = reader.attributes().value("value").toString();
-			}
-			else if (reader.name() == "ShortName")
-			{
-				search->title = reader.readElementText();
-			}
-			else if (reader.name() == "Description")
-			{
-				search->description = reader.readElementText();
-			}
-			else if (reader.name() == "InputEncoding")
-			{
-				search->encoding = reader.readElementText();
-			}
-			else if (reader.name() == "Image")
-			{
-				const QString data = reader.readElementText();
+					if (reader.attributes().value("rel") == "self")
+					{
+						search->selfUrl = reader.attributes().value("template").toString();
+					}
+					else if (reader.attributes().value("rel") == "suggestions" || reader.attributes().value("type") == "application/x-suggestions+json")
+					{
+						currentUrl = &search->suggestionsUrl;
+					}
+					else if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
+					{
+						currentUrl = &search->searchUrl;
+					}
+					else
+					{
+						currentUrl = NULL;
+					}
 
-				search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8()), "png")));
-			}
-			else
-			{
-				reader.skipCurrentElement();
+					if (currentUrl)
+					{
+						currentUrl->url = reader.attributes().value("template").toString();
+						currentUrl->enctype = reader.attributes().value("enctype").toString().toLower();
+						currentUrl->method = reader.attributes().value("method").toString().toLower();
+					}
+				}
+				else if ((reader.name() == "Param" || reader.name() == "Parameter") && currentUrl)
+				{
+					currentUrl->parameters[reader.attributes().value("name").toString()] = reader.attributes().value("value").toString();
+				}
+				else if (reader.name() == "ShortName")
+				{
+					search->title = reader.readElementText();
+				}
+				else if (reader.name() == "Description")
+				{
+					search->description = reader.readElementText();
+				}
+				else if (reader.name() == "InputEncoding")
+				{
+					search->encoding = reader.readElementText();
+				}
+				else if (reader.name() == "Image")
+				{
+					const QString data = reader.readElementText();
+
+					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8()), "png")));
+				}
 			}
 		}
 	}
