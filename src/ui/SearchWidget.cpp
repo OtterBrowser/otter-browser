@@ -24,6 +24,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon("edit-find") : search->icon), QString());
 			item->setData(search->title, Qt::UserRole);
 			item->setData(search->identifier, (Qt::UserRole + 1));
+			item->setData(search->shortcut, (Qt::UserRole + 2));
 			item->setData(QSize(-1, 22), Qt::SizeHintRole);
 
 			model->appendRow(item);
@@ -49,10 +50,21 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 
 void SearchWidget::currentSearchChanged(int index)
 {
-	lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
-	lineEdit()->setText(m_query);
+	if (count() == 0)
+	{
+		setEnabled(false);
 
-	sendRequest();
+		lineEdit()->setPlaceholderText(QString());
+	}
+	else
+	{
+		setEnabled(true);
+
+		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
+		lineEdit()->setText(m_query);
+
+		sendRequest();
+	}
 }
 
 void SearchWidget::queryChanged(const QString &query)
