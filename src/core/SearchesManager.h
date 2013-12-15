@@ -23,6 +23,7 @@ struct SearchInformation
 	QString description;
 	QString shortcut;
 	QString encoding;
+	QString selfUrl;
 	SearchUrl searchUrl;
 	SearchUrl suggestionsUrl;
 	QIcon icon;

@@ -118,20 +118,24 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 		{
 			if (reader.name() == "Url")
 			{
-				if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
+				if (reader.attributes().value("rel") == "self")
 				{
-					currentUrl = &search->searchUrl;
+					search->selfUrl = reader.attributes().value("template").toString();
 				}
-				else if (reader.attributes().value("rel") == "suggestions")
+				else if (reader.attributes().value("rel") == "suggestions" || reader.attributes().value("type") == "application/x-suggestions+json")
 				{
 					currentUrl = &search->suggestionsUrl;
+				}
+				else if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
+				{
+					currentUrl = &search->searchUrl;
 				}
 
 				if (currentUrl)
 				{
 					currentUrl->url = reader.attributes().value("template").toString();
-					currentUrl->enctype = reader.attributes().value("enctype").toString();
-					currentUrl->method = reader.attributes().value("method").toString();
+					currentUrl->enctype = reader.attributes().value("enctype").toString().toLower();
+					currentUrl->method = reader.attributes().value("method").toString().toLower();
 				}
 			}
 			else if (reader.name() == "Param" && currentUrl)
