@@ -11,16 +11,10 @@ namespace Otter
 
 AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
-	m_urlIconLabel(NULL),
-	m_bookmarkLabel(new QLabel(this))
+	m_bookmarkLabel(NULL),
+	m_urlIconLabel(NULL)
 {
-	m_bookmarkLabel->setAutoFillBackground(false);
-	m_bookmarkLabel->setFixedSize(16, 16);
-	m_bookmarkLabel->move((width() - 22), 4);
-	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
-	m_bookmarkLabel->setCursor(Qt::ArrowCursor);
-	m_bookmarkLabel->installEventFilter(this);
-
+	optionChanged("AddressField/ShowBookmarkIcon", SettingsManager::getValue("AddressField/ShowBookmarkIcon"));
 	optionChanged("AddressField/ShowUrlIcon", SettingsManager::getValue("AddressField/ShowUrlIcon"));
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
@@ -55,6 +49,11 @@ void AddressWidget::notifyRequestedLoadUrl()
 
 void AddressWidget::updateBookmark()
 {
+	if (!m_bookmarkLabel)
+	{
+		return;
+	}
+
 	const QUrl url = getUrl();
 
 	if (url.scheme() == "about")
@@ -92,7 +91,10 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	QLineEdit::resizeEvent(event);
 
-	m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
+	if (m_bookmarkLabel)
+	{
+		m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
+	}
 
 	if (m_urlIconLabel)
 	{
@@ -102,7 +104,25 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "AddressField/ShowUrlIcon")
+	if (option == "AddressField/ShowBookmarkIcon")
+	{
+		if (value.toBool() && !m_bookmarkLabel)
+		{
+			m_bookmarkLabel = new QLabel(this);
+			m_bookmarkLabel->setAutoFillBackground(false);
+			m_bookmarkLabel->setFixedSize(16, 16);
+			m_bookmarkLabel->move((width() - 22), 4);
+			m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+			m_bookmarkLabel->setCursor(Qt::ArrowCursor);
+			m_bookmarkLabel->installEventFilter(this);
+		}
+		else if (!value.toBool() && m_bookmarkLabel)
+		{
+			m_bookmarkLabel->deleteLater();
+			m_bookmarkLabel = NULL;
+		}
+	}
+	else if (option == "AddressField/ShowUrlIcon")
 	{
 		if (value.toBool() && !m_urlIconLabel)
 		{
@@ -111,6 +131,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setFixedSize(16, 16);
 			m_urlIconLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 			m_urlIconLabel->move(6, 4);
+			m_urlIconLabel->installEventFilter(this);
 
 			setStyleSheet("QLineEdit {padding-left:22px;}");
 		}

@@ -35,8 +35,8 @@ protected slots:
 
 private:
 	Window *m_window;
-	QLabel *m_urlIconLabel;
 	QLabel *m_bookmarkLabel;
+	QLabel *m_urlIconLabel;
 
 signals:
 	void requestedLoadUrl(QUrl url);
