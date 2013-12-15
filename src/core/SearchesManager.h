@@ -36,8 +36,9 @@ class SearchesManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static SearchesManager* getInstance();
-	static SearchInformation* getSearch(const QString &identifier);
-	static QStringList getSearches();
+	static SearchInformation* getEngine(const QString &identifier);
+	static QStringList getEngines();
+	static QStringList getShortcuts();
 	static bool setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
@@ -48,6 +49,7 @@ private:
 
 	static SearchesManager *m_instance;
 	static QStringList m_order;
+	static QStringList m_shortcuts;
 	static QHash<QString, SearchInformation*> m_engines;
 
 signals:

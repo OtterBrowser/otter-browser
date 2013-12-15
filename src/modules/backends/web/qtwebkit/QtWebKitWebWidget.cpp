@@ -117,7 +117,7 @@ void QtWebKitWebWidget::search(QAction *action)
 {
 	const QString engine = ((!action || action->data().toString().isEmpty()) ? m_searchEngine : action->data().toString());
 
-	if (SearchesManager::getSearches().contains(engine))
+	if (SearchesManager::getEngines().contains(engine))
 	{
 		updateSearchActions(engine);
 
@@ -258,11 +258,11 @@ void QtWebKitWebWidget::searchMenuAboutToShow()
 
 	if (searchMenuAction->isEnabled() && searchMenuAction->menu()->actions().isEmpty())
 	{
-		const QStringList engines = SearchesManager::getSearches();
+		const QStringList engines = SearchesManager::getEngines();
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
-			SearchInformation *search = SearchesManager::getSearch(engines.at(i));
+			SearchInformation *search = SearchesManager::getEngine(engines.at(i));
 
 			if (search)
 			{
@@ -307,11 +307,11 @@ void QtWebKitWebWidget::updateSearchActions(const QString &engine)
 	}
 
 	QAction *defaultSearchAction = getAction(SearchAction);
-	SearchInformation *search = SearchesManager::getSearch(engine.isEmpty() ? m_searchEngine : engine);
+	SearchInformation *search = SearchesManager::getEngine(engine.isEmpty() ? m_searchEngine : engine);
 
 	if (!search)
 	{
-		search = SearchesManager::getSearch(SearchesManager::getSearches().first());
+		search = SearchesManager::getEngine(SearchesManager::getEngines().first());
 	}
 
 	if (search)
@@ -331,7 +331,7 @@ void QtWebKitWebWidget::updateSearchActions(const QString &engine)
 		defaultSearchAction->setToolTip(tr("No search engines defined"));
 	}
 
-	getAction(SearchMenuAction)->setEnabled(SearchesManager::getSearches().count() > 1);
+	getAction(SearchMenuAction)->setEnabled(SearchesManager::getEngines().count() > 1);
 }
 
 void QtWebKitWebWidget::showDialog(QWidget *dialog)

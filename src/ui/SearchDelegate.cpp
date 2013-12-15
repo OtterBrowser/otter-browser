@@ -28,7 +28,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	if (shortcutWidth > 0)
 	{
 		QRect shortcutReactangle = option.rect;
-		shortcutReactangle.setLeft(option.rect.right() - 40);
+		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
 
 		drawDisplay(painter, option, shortcutReactangle, index.data(Qt::UserRole + 2).toString());
 	}

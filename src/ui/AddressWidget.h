@@ -40,6 +40,7 @@ private:
 
 signals:
 	void requestedLoadUrl(QUrl url);
+	void requestedSearch(QString query, QString engine);
 };
 
 }

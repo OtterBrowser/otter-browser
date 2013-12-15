@@ -2,6 +2,7 @@
 #include "BookmarkPropertiesDialog.h"
 #include "Window.h"
 #include "../core/BookmarksManager.h"
+#include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
@@ -29,6 +30,26 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
+	if (QRegExp(QString("^(%1) .+$").arg(SearchesManager::getShortcuts().join('|'))).exactMatch(text()))
+	{
+		const QStringList engines = SearchesManager::getEngines();
+		const QString shortcut = text().section(' ', 0, 0);
+
+		for (int i = 0; i < engines.count(); ++i)
+		{
+			SearchInformation *search = SearchesManager::getEngine(engines.at(i));
+
+			if (search && shortcut == search->shortcut)
+			{
+				emit requestedSearch(text().section(' ', 1), search->identifier);
+
+				return;
+			}
+		}
+
+		return;
+	}
+
 	emit requestedLoadUrl(getUrl());
 }
 

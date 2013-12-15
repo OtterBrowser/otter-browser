@@ -12,6 +12,7 @@ namespace Otter
 
 SearchesManager* SearchesManager::m_instance = NULL;
 QStringList SearchesManager::m_order;
+QStringList SearchesManager::m_shortcuts;
 QHash<QString, SearchInformation*> SearchesManager::m_engines;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
@@ -28,12 +29,12 @@ SearchesManager *SearchesManager::getInstance()
 	return m_instance;
 }
 
-SearchInformation *SearchesManager::getSearch(const QString &identifier)
+SearchInformation *SearchesManager::getEngine(const QString &identifier)
 {
 	return m_engines.value(identifier, NULL);
 }
 
-QStringList SearchesManager::getSearches()
+QStringList SearchesManager::getEngines()
 {
 	const QString path = SettingsManager::getPath() + "/searches/";
 
@@ -83,6 +84,11 @@ QStringList SearchesManager::getSearches()
 	return m_order;
 }
 
+QStringList SearchesManager::getShortcuts()
+{
+	return m_shortcuts;
+}
+
 bool SearchesManager::setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
 	if (!m_engines.contains(engine))
@@ -90,7 +96,7 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 		return false;
 	}
 
-	const SearchUrl search = getSearch(engine)->searchUrl;
+	const SearchUrl search = getEngine(engine)->searchUrl;
 	QString urlString = search.url;
 	QHash<QString, QString> parameters;
 	parameters["searchTerms"] = query;
@@ -233,6 +239,17 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 				else if ((reader.name() == "Param" || reader.name() == "Parameter") && currentUrl)
 				{
 					currentUrl->parameters[reader.attributes().value("name").toString()] = reader.attributes().value("value").toString();
+				}
+				else if (reader.name() == "Shortcut")
+				{
+					const QString shortcut = reader.readElementText();
+
+					if (!shortcut.isEmpty() && !m_shortcuts.contains(shortcut))
+					{
+						search->shortcut = shortcut;
+
+						m_shortcuts.append(shortcut);
+					}
 				}
 				else if (reader.name() == "ShortName")
 				{

@@ -13,11 +13,11 @@ namespace Otter
 SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 {
 	QStandardItemModel *model = new QStandardItemModel(this);
-	const QStringList engines = SearchesManager::getSearches();
+	const QStringList engines = SearchesManager::getEngines();
 
 	for (int i = 0; i < engines.count(); ++i)
 	{
-		SearchInformation *search = SearchesManager::getSearch(engines.at(i));
+		SearchInformation *search = SearchesManager::getEngine(engines.at(i));
 
 		if (search)
 		{
