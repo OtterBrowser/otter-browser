@@ -17,6 +17,9 @@ public:
 	QString getTitle() const;
 	QString getDescription() const;
 	QIcon getIconForUrl(const QUrl &url);
+
+protected slots:
+	void optionChanged(const QString &option);
 };
 
 }

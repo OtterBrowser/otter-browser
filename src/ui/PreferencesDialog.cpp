@@ -33,6 +33,9 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue("Browser/DefaultZoom").toInt());
 	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue("Browser/ZoomTextOnly").toBool());
+	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue("Browser/DefaultFontSize").toInt());
+	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue("Browser/DefaultFixedFontSize").toInt());
+	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue("Browser/MinimumFontSize").toInt());
 
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue("Browser/PrivateMode").toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
@@ -70,6 +73,9 @@ void PreferencesDialog::save()
 
 	SettingsManager::setValue("Browser/DefaultZoom", m_ui->defaultZoomSpinBox->value());
 	SettingsManager::setValue("Browser/ZoomTextOnly", m_ui->zoomTextOnlyCheckBox->isChecked());
+	SettingsManager::setValue("Browser/DefaultFontSize", m_ui->proportionalFontSizeSpinBox->value());
+	SettingsManager::setValue("Browser/DefaultFixedFontSize", m_ui->fixedFontSizeSpinBox->value());
+	SettingsManager::setValue("Browser/MinimumFontSize", m_ui->minimumFontSizeSpinBox->value());
 
 	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue("Browser/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());

@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -445,9 +445,6 @@
          </item>
          <item row="0" column="1">
           <widget class="QSpinBox" name="proportionalFontSizeSpinBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="suffix">
             <string> px</string>
            </property>
@@ -478,9 +475,6 @@
          </item>
          <item row="1" column="1">
           <widget class="QSpinBox" name="fixedFontSizeSpinBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="suffix">
             <string> px</string>
            </property>
@@ -497,14 +491,14 @@
          </item>
          <item row="2" column="1">
           <widget class="QSpinBox" name="minimumFontSizeSpinBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="specialValueText">
             <string>None</string>
            </property>
            <property name="suffix">
             <string> px</string>
+           </property>
+           <property name="minimum">
+            <number>-1</number>
            </property>
            <property name="maximum">
             <number>72</number>
