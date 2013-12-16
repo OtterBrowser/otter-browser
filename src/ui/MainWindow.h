@@ -53,6 +53,7 @@ protected slots:
 	void actionOpenBookmarkFolder();
 	void actionCookies();
 	void actionTransfers();
+	void actionPreferences();
 	void actionAboutApplication();
 	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();

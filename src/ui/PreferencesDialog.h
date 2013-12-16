@@ -1,7 +1,7 @@
 #ifndef OTTER_PREFERENCESDIALOG_H
 #define OTTER_PREFERENCESDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 namespace Otter
 {
@@ -16,11 +16,14 @@ class PreferencesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(QWidget *parent = NULL);
+	explicit PreferencesDialog(const QString &section, QWidget *parent = NULL);
 	~PreferencesDialog();
 
 protected:
 	void changeEvent(QEvent *event);
+
+protected slots:
+	void save();
 
 private:
 	Ui::PreferencesDialog *m_ui;

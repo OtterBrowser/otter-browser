@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
+#include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "TabBarWidget.h"
@@ -212,6 +213,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
+	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuFile, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
@@ -530,6 +532,12 @@ void MainWindow::actionTransfers()
 	{
 		m_windowsManager->open(url);
 	}
+}
+
+void MainWindow::actionPreferences()
+{
+	PreferencesDialog dialog(QString(), this);
+	dialog.exec();
 }
 
 void MainWindow::actionAboutApplication()

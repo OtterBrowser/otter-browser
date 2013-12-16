@@ -191,7 +191,7 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (SettingsManager::getValue("Browser/OpenLinksInNewWindow").toBool() && !parser->isSet("privatesession"))
+	if (!SettingsManager::getValue("Browser/OpenLinksInNewTab").toBool() && !parser->isSet("privatesession"))
 	{
 		window = createWindow(parser->isSet("privatesession"));
 	}
