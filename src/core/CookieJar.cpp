@@ -42,7 +42,10 @@ CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
 		}
 	}
 
+	optionChanged("Browser/EnableCookies", SettingsManager::getValue("Browser/EnableCookies"));
 	setAllCookies(allCookies);
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void CookieJar::timerEvent(QTimerEvent *event)
@@ -57,50 +60,16 @@ void CookieJar::timerEvent(QTimerEvent *event)
 	}
 }
 
-bool CookieJar::insertCookie(const QNetworkCookie &cookie)
+void CookieJar::optionChanged(const QString &option, const QVariant &value)
 {
-	const bool result = QNetworkCookieJar::insertCookie(cookie);
-
-	if (result)
+	if (option == "Browser/PrivateMode")
 	{
-		if (m_autoSaveTimer == 0)
-		{
-			m_autoSaveTimer = startTimer(1000);
-		}
-
-		emit cookieInserted(cookie);
+		m_enableCookies = !value.toBool();
 	}
-
-	return result;
-}
-
-bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
-{
-	const bool result = QNetworkCookieJar::deleteCookie(cookie);
-
-	if (result)
+	else if (option == "Browser/EnableCookies")
 	{
-		if (m_autoSaveTimer == 0)
-		{
-			m_autoSaveTimer = startTimer(1000);
-		}
-
-		emit cookieDeleted(cookie);
+		m_enableCookies = (value.toBool() && !SettingsManager::getValue("Browser/PrivateMode").toBool());
 	}
-
-	return result;
-}
-
-bool CookieJar::updateCookie(const QNetworkCookie &cookie)
-{
-	const bool result = QNetworkCookieJar::updateCookie(cookie);
-
-	if (result && m_autoSaveTimer == 0)
-	{
-		m_autoSaveTimer = startTimer(1000);
-	}
-
-	return result;
 }
 
 void CookieJar::save()
@@ -122,9 +91,80 @@ void CookieJar::save()
 	}
 }
 
+QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
+{
+	if (!m_enableCookies)
+	{
+		return QList<QNetworkCookie>();
+	}
+
+	return QNetworkCookieJar::cookiesForUrl(url);
+}
+
 QList<QNetworkCookie> CookieJar::getCookies() const
 {
 	return allCookies();
+}
+
+bool CookieJar::insertCookie(const QNetworkCookie &cookie)
+{
+	if (!m_enableCookies)
+	{
+		return false;
+	}
+
+	const bool result = QNetworkCookieJar::insertCookie(cookie);
+
+	if (result)
+	{
+		if (m_autoSaveTimer == 0)
+		{
+			m_autoSaveTimer = startTimer(1000);
+		}
+
+		emit cookieInserted(cookie);
+	}
+
+	return result;
+}
+
+bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
+{
+	if (!m_enableCookies)
+	{
+		return false;
+	}
+
+	const bool result = QNetworkCookieJar::deleteCookie(cookie);
+
+	if (result)
+	{
+		if (m_autoSaveTimer == 0)
+		{
+			m_autoSaveTimer = startTimer(1000);
+		}
+
+		emit cookieDeleted(cookie);
+	}
+
+	return result;
+}
+
+bool CookieJar::updateCookie(const QNetworkCookie &cookie)
+{
+	if (!m_enableCookies)
+	{
+		return false;
+	}
+
+	const bool result = QNetworkCookieJar::updateCookie(cookie);
+
+	if (result && m_autoSaveTimer == 0)
+	{
+		m_autoSaveTimer = startTimer(1000);
+	}
+
+	return result;
 }
 
 }

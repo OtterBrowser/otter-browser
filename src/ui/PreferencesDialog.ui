@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -708,9 +708,6 @@
              <layout class="QHBoxLayout" name="acceptCokiesLayout">
               <item>
                <widget class="QCheckBox" name="acceptCookiesCheckBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="text">
                  <string>Accept cookies</string>
                 </property>

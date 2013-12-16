@@ -7,20 +7,29 @@
 namespace Otter
 {
 
-enum CookiesAcceptPolicy
-{
-	AlwaysAcceptCookies,
-	NeverAcceptCookies,
-	NavigatedSitesOnlyAcceptCookies
-};
-
 class CookieJar : public QNetworkCookieJar
 {
 	Q_OBJECT
+	Q_ENUMS(KeepCookiesPolicy ThirdPartyCookiesAcceptPolicy)
 
 public:
 	explicit CookieJar(QObject *parent = NULL);
 
+	enum KeepCookiesPolicy
+	{
+		UntilExpireKeepCookies = 0,
+		UntilExitKeepCookies = 1,
+		AskIfKeepCookies = 2
+	};
+
+	enum ThirdPartyCookiesAcceptPolicy
+	{
+		NeverAcceptCookies = 0,
+		AlwaysAcceptCookies = 1,
+		AcceptExistingCookies = 2
+	};
+
+	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies() const;
 
 protected:
@@ -30,10 +39,12 @@ protected:
 	bool updateCookie(const QNetworkCookie &cookie);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void save();
 
 private:
 	int m_autoSaveTimer;
+	bool m_enableCookies;
 
 signals:
 	void cookieInserted(QNetworkCookie cookie);
