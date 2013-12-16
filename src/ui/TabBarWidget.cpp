@@ -1,6 +1,7 @@
 #include "TabBarWidget.h"
 #include "PreviewWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/SettingsManager.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
@@ -123,7 +124,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	{
 		ActionsManager::triggerAction("NewTab");
 	}
-	else
+	else if (SettingsManager::getValue("Tabs/CloseOnDoubleClick").toBool())
 	{
 		emit requestedClose(tab);
 	}
@@ -131,7 +132,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::MidButton)
+	if (event->button() == Qt::MidButton && SettingsManager::getValue("Tabs/CloseOnMiddleClick").toBool())
 	{
 		const int tab = tabAt(event->pos());
 
