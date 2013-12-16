@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -599,9 +599,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="privateModeCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Private mode</string>
          </property>
@@ -630,9 +627,6 @@
          </item>
          <item>
           <widget class="QWidget" name="historyWidget" native="true">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="leftMargin">
              <number>0</number>
@@ -665,6 +659,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="rememberSearchHistoryCheckBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Remember search history</string>
               </property>
@@ -674,6 +671,9 @@
              <layout class="QHBoxLayout" name="rememberFormsHistorylLayout">
               <item>
                <widget class="QCheckBox" name="rememberFormsHistoryCheckBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Remember form history</string>
                 </property>
@@ -694,6 +694,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="rememberFormsHistoryButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Template...</string>
                 </property>
@@ -705,6 +708,9 @@
              <layout class="QHBoxLayout" name="acceptCokiesLayout">
               <item>
                <widget class="QCheckBox" name="acceptCookiesCheckBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Accept cookies</string>
                 </property>
@@ -725,6 +731,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="cookiesExceptionsButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Exceptions...</string>
                 </property>
@@ -767,6 +776,9 @@
                  </property>
                  <item row="0" column="0">
                   <widget class="QLabel" name="thirdPartyCookiesLabel">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="text">
                     <string>Accept third-party cookies:</string>
                    </property>
@@ -774,16 +786,27 @@
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="keepCookiesUntilLabel">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="text">
                     <string>Keep until:</string>
                    </property>
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QComboBox" name="thirdPartyCookiesComboBox"/>
+                  <widget class="QComboBox" name="thirdPartyCookiesComboBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QComboBox" name="keepCookiesUntilComboBox"/>
+                  <widget class="QComboBox" name="keepCookiesUntilComboBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -794,6 +817,9 @@
              <layout class="QHBoxLayout" name="clearHistoryLayout">
               <item>
                <widget class="QCheckBox" name="clearHistoryCheckBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Clear history when application closes</string>
                 </property>
@@ -814,6 +840,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="clearHistoryButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Settings...</string>
                 </property>

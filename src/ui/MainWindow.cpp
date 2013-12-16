@@ -160,7 +160,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->tabsWidgetContents->setLayout(tabsLayout);
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, privateSession);
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, (privateSession || SettingsManager::getValue("Browser/PrivateMode").toBool()));
 
 	SessionsManager::registerWindow(m_windowsManager);
 
