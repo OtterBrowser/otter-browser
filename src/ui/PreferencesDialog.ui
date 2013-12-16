@@ -123,7 +123,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="downloadsheader">
+        <widget class="QLabel" name="downloadsHeader">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -150,17 +150,10 @@
          <item row="0" column="1">
           <layout class="QHBoxLayout" name="browseDownloadsLayout">
            <item>
-            <widget class="QComboBox" name="downloadsComboBox">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-            </widget>
+            <widget class="QLineEdit" name="downloadsLineEdit"/>
            </item>
            <item>
-            <widget class="QToolButton" name="browseDownloadsButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <widget class="QToolButton" name="downloadsBrowseButton">
              <property name="text">
               <string>Browse...</string>
              </property>
@@ -172,9 +165,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="alwaysAskCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Always ask me where to save files</string>
          </property>

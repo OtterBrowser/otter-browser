@@ -23,6 +23,7 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
+	void browseDownloadsPath();
 	void save();
 
 private:

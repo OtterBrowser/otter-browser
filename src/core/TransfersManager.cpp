@@ -4,7 +4,6 @@
 
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
 #include <QtWidgets/QFileDialog>
@@ -350,9 +349,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		QString path;
 
+		if (!quickTransfer && !SettingsManager::getValue("Browser/AlwaysAskWhereToSaveDownload").toBool())
+		{
+			quickTransfer = true;
+		}
+
 		if (quickTransfer)
 		{
-			path = SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)).toString() + '/' + fileName;
+			path = SettingsManager::getValue("Paths/Downloads").toString() + '/' + fileName;
 
 			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
@@ -364,7 +368,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		{
 			if (path.isEmpty())
 			{
-				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))).toString() + '/' + fileName);
+				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads")).toString() + '/' + fileName);
 			}
 
 			if (isDownloading(QString(), path))

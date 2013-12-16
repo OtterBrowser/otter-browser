@@ -104,6 +104,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		defaults.endGroup();
 	}
 
+	SettingsManager::setDefaultValue("Paths/Downloads", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+	SettingsManager::setDefaultValue("Paths/SaveFile", QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	SettingsManager::setDefaultValue("Actions/NewTab", "Ctrl+T");
 	SettingsManager::setDefaultValue("Actions/NewWindow", QKeySequence(QKeySequence::New).toString());
 	SettingsManager::setDefaultValue("Actions/Open", QKeySequence(QKeySequence::Open).toString());

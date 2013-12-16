@@ -12,6 +12,7 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
     src/core/SettingsManager.cpp \
     src/core/Application.cpp \
+    src/core/FileSystemCompleterModel.cpp \
     src/core/WindowsManager.cpp \
     src/core/ActionsManager.cpp \
     src/core/NetworkAccessManager.cpp \
@@ -57,6 +58,7 @@ SOURCES += src/main.cpp\
 
 HEADERS += src/core/SettingsManager.h \
     src/core/Application.h \
+    src/core/FileSystemCompleterModel.h \
     src/core/WindowsManager.h \
     src/core/ActionsManager.h \
     src/core/NetworkAccessManager.h \

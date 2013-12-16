@@ -1,8 +1,12 @@
 #include "PreferencesDialog.h"
+#include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
 
 #include "ui_PreferencesDialog.h"
+
+#include <QtWidgets/QCompleter>
+#include <QtWidgets/QFileDialog>
 
 namespace Otter
 {
@@ -33,6 +37,9 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 		m_ui->tabWidget->setCurrentIndex(0);
 	}
 
+	m_ui->downloadsLineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
+	m_ui->downloadsLineEdit->setText(SettingsManager::getValue("Paths/Downloads").toString());
+	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue("Browser/AlwaysAskWhereToSaveDownload").toBool());
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue("Browser/OpenLinksInNewTab").toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue("Tabs/OpenNextToActive").toBool());
 
@@ -49,6 +56,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->downloadsBrowseButton, SIGNAL(clicked()), this, SLOT(browseDownloadsPath()));
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 }
 
@@ -72,8 +80,20 @@ void PreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
+void PreferencesDialog::browseDownloadsPath()
+{
+	const QString path = QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_ui->downloadsLineEdit->text());
+
+	if (!path.isEmpty())
+	{
+		m_ui->downloadsLineEdit->setText(path);
+	}
+}
+
 void PreferencesDialog::save()
 {
+	SettingsManager::setValue("Paths/Downloads", m_ui->downloadsLineEdit->text());
+	SettingsManager::setValue("Browser/AlwaysAskWhereSaveFile", m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setValue("Browser/OpenLinksInNewTab", m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
 	SettingsManager::setValue("Tabs/OpenNextToActive", m_ui->openNextToActiveheckBox->isChecked());
 
