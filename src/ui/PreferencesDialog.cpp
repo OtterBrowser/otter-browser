@@ -31,6 +31,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue("Browser/OpenLinksInNewTab").toBool());
 	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue("Browser/DefaultZoom").toInt());
+	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue("Browser/ZoomTextOnly").toBool());
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -60,6 +61,7 @@ void PreferencesDialog::save()
 {
 	SettingsManager::setValue("Browser/OpenLinksInNewTab", m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
 	SettingsManager::setValue("Browser/DefaultZoom", m_ui->defaultZoomSpinBox->value());
+	SettingsManager::setValue("Browser/ZoomTextOnly", m_ui->zoomTextOnlyCheckBox->isChecked());
 
 	close();
 }

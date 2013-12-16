@@ -22,12 +22,23 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent),
 	m_ignoreJavaScriptPopups(false)
 {
+	optionChanged("Browser/ZoomTextOnly", SettingsManager::getValue("Browser/ZoomTextOnly"));
+
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(clearIgnoreJavaScriptPopups()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
 {
 	m_ignoreJavaScriptPopups = false;
+}
+
+void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "Browser/ZoomTextOnly")
+	{
+		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
+	}
 }
 
 void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)

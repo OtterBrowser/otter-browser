@@ -31,6 +31,7 @@ protected:
 
 protected slots:
 	void clearIgnoreJavaScriptPopups();
+	void optionChanged(const QString &option, const QVariant &value);
 
 private:
 	QtWebKitWebWidget *m_webWidget;

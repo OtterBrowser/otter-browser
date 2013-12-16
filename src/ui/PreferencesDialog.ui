@@ -409,9 +409,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="zoomTextOnlyCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Zoom text only</string>
          </property>
