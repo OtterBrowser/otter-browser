@@ -29,7 +29,7 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 		widget = new WebContentsWidget(privateWindow, NULL, this);
 	}
 
-	widget->setZoom(SettingsManager::getValue("Browser/DefaultZoom", 100).toInt());
+	widget->setZoom(SettingsManager::getValue("Content/DefaultZoom", 100).toInt());
 
 	setContentsWidget(widget);
 

@@ -7,25 +7,25 @@
 namespace Otter
 {
 
-OptionWidget::OptionWidget(const QString &option, const QString &type, const QStringList &choices, QWidget *parent) : QWidget(parent),
+OptionWidget::OptionWidget(bool simple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
 	m_option(option),
-	m_resetButton(new QPushButton(tr("Defaults"), this)),
-	m_saveButton(new QPushButton(tr("Save"), this)),
+	m_index(index),
+	m_resetButton(NULL),
+	m_saveButton(NULL),
 	m_colorButton(NULL),
 	m_comboBox(NULL),
 	m_fontComboBox(NULL),
 	m_lineEdit(NULL),
 	m_spinBox(NULL)
 {
-	const QVariant value = SettingsManager::getValue(option);
+	const QVariant currentValue = (value.isNull() ? SettingsManager::getValue(option) : value);
 	QWidget *widget = NULL;
-
 	if (type == "color")
 	{
 		widget = m_colorButton = new QPushButton(this);
 
 		QPalette palette = m_colorButton->palette();
-		palette.setColor(QPalette::Button, value.value<QColor>());
+		palette.setColor(QPalette::Button, currentValue.value<QColor>());
 
 		m_colorButton->setPalette(palette);
 
@@ -35,7 +35,7 @@ OptionWidget::OptionWidget(const QString &option, const QString &type, const QSt
 	{
 		widget = m_fontComboBox = new QFontComboBox(this);
 
-		m_fontComboBox->setCurrentFont(QFont(value.toString()));
+		m_fontComboBox->setCurrentFont(QFont(currentValue.toString()));
 
 		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(modified()));
 	}
@@ -45,7 +45,7 @@ OptionWidget::OptionWidget(const QString &option, const QString &type, const QSt
 
 		m_spinBox->setMinimum(-99999);
 		m_spinBox->setMaximum(99999);
-		m_spinBox->setValue(value.toInt());
+		m_spinBox->setValue(currentValue.toInt());
 
 		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(modified()));
 	}
@@ -53,7 +53,7 @@ OptionWidget::OptionWidget(const QString &option, const QString &type, const QSt
 	{
 		if (type != "bool" && choices.isEmpty())
 		{
-			widget = m_lineEdit = new QLineEdit(value.toString(), this);
+			widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
 
 			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(modified()));
 		}
@@ -74,7 +74,7 @@ OptionWidget::OptionWidget(const QString &option, const QString &type, const QSt
 				}
 			}
 
-			m_comboBox->setCurrentText(value.toString());
+			m_comboBox->setCurrentText(currentValue.toString());
 
 			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(modified()));
 		}
@@ -89,15 +89,22 @@ OptionWidget::OptionWidget(const QString &option, const QString &type, const QSt
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->setMargin(0);
 	layout->addWidget(widget);
-	layout->addWidget(m_resetButton);
-	layout->addWidget(m_saveButton);
+
+	if (!simple)
+	{
+		m_resetButton = new QPushButton(tr("Defaults"), this);
+		m_resetButton->setEnabled(currentValue != SettingsManager::getDefaultValue(option));
+
+		m_saveButton = new QPushButton(tr("Save"), this);
+
+		layout->addWidget(m_resetButton);
+		layout->addWidget(m_saveButton);
+
+		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
+		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
+	}
 
 	setLayout(layout);
-
-	m_resetButton->setEnabled(value != SettingsManager::getDefaultValue(option));
-
-	connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
-	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 }
 
 void OptionWidget::selectColor()
@@ -107,7 +114,10 @@ void OptionWidget::selectColor()
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		m_resetButton->setEnabled(QVariant(dialog.currentColor()) != SettingsManager::getDefaultValue(m_option));
+		if (m_resetButton)
+		{
+			m_resetButton->setEnabled(QVariant(dialog.currentColor()) != SettingsManager::getDefaultValue(m_option));
+		}
 
 		QPalette palette = m_colorButton->palette();
 		palette.setColor(QPalette::Button, dialog.currentColor());
@@ -118,26 +128,14 @@ void OptionWidget::selectColor()
 
 void OptionWidget::modified()
 {
-	QVariant value;
-
-	if (m_comboBox)
+	if (m_resetButton)
 	{
-		value = m_comboBox->currentText();
+		m_resetButton->setEnabled(getValue() != SettingsManager::getDefaultValue(m_option));
 	}
-	else if (m_fontComboBox)
+	else
 	{
-		value = m_fontComboBox->currentFont().family();
+		emit commitData(this);
 	}
-	else if (m_lineEdit)
-	{
-		value = m_lineEdit->text();
-	}
-	else if (m_spinBox)
-	{
-		value = m_spinBox->value();
-	}
-
-	m_resetButton->setEnabled(value != SettingsManager::getDefaultValue(m_option));
 }
 
 void OptionWidget::reset()
@@ -173,30 +171,38 @@ void OptionWidget::reset()
 
 void OptionWidget::save()
 {
-	QVariant value;
+	SettingsManager::setValue(m_option, getValue());
+}
 
+QVariant OptionWidget::getValue() const
+{
 	if (m_colorButton)
 	{
-		value = m_colorButton->palette().color(QPalette::Button);
+		return m_colorButton->palette().color(QPalette::Button);
 	}
 	else if (m_comboBox)
 	{
-		value = m_comboBox->currentText();
+		return m_comboBox->currentText();
 	}
 	else if (m_fontComboBox)
 	{
-		value = m_fontComboBox->currentFont().family();
+		return m_fontComboBox->currentFont().family();
 	}
 	else if (m_lineEdit)
 	{
-		value = m_lineEdit->text();
+		return m_lineEdit->text();
 	}
 	else if (m_spinBox)
 	{
-		value = m_spinBox->value();
+		return m_spinBox->value();
 	}
 
-	SettingsManager::setValue(m_option, value);
+	return QVariant();
+}
+
+QModelIndex OptionWidget::getIndex() const
+{
+	return m_index;
 }
 
 }

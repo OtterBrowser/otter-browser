@@ -15,7 +15,10 @@ class OptionWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit OptionWidget(const QString &option, const QString &type, const QStringList &choices, QWidget *parent = NULL);
+	explicit OptionWidget(bool simple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent = NULL);
+
+	QVariant getValue() const;
+	QModelIndex getIndex() const;
 
 protected slots:
 	void selectColor();
@@ -25,6 +28,7 @@ protected slots:
 
 private:
 	QString m_option;
+	QModelIndex m_index;
 	QPushButton *m_resetButton;
 	QPushButton *m_saveButton;
 	QPushButton *m_colorButton;
@@ -32,6 +36,9 @@ private:
 	QFontComboBox *m_fontComboBox;
 	QLineEdit *m_lineEdit;
 	QSpinBox *m_spinBox;
+
+signals:
+	void commitData(QWidget *editor);
 };
 
 }

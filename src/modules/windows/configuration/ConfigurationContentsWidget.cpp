@@ -31,13 +31,17 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			const QVariant defaultValue = defaults.value(QString("%1/value").arg(keys.at(j)));
-			const QVariant value = SettingsManager::getValue(QString("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaultValue);
+			const QString key = QString("%1/%2").arg(groups.at(i)).arg(keys.at(j));
+			const QString type = defaults.value(QString("%1/type").arg(keys.at(j))).toString();
+			const QVariant defaultValue = SettingsManager::getDefaultValue(key);
+			const QVariant value = SettingsManager::getValue(key, defaultValue);
 			QList<QStandardItem*> optionItems;
 			optionItems.append(new QStandardItem(keys.at(j)));
-			optionItems.append(new QStandardItem(defaults.value(QString("%1/type").arg(keys.at(j))).toString()));
+			optionItems.append(new QStandardItem(type));
 			optionItems.append(new QStandardItem(value.toString()));
 			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
+			optionItems[2]->setData(key, Qt::UserRole);
+			optionItems[2]->setData(type, (Qt::UserRole + 1));
 
 			if (value != defaultValue)
 			{
@@ -61,7 +65,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->configurationView->setModel(m_model);
-	m_ui->configurationView->setItemDelegateForColumn(2, new OptionDelegate(this));
+	m_ui->configurationView->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationView->header()->setTextElideMode(Qt::ElideRight);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
