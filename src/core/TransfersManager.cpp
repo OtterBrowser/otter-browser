@@ -161,7 +161,7 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	emit m_instance->transferFinished(transfer);
 	emit m_instance->transferUpdated(transfer);
 
-	if (transfer->device && !transfer->device->inherits("QTemporaryFile"))
+	if (transfer->canClose && transfer->device)
 	{
 		transfer->device->close();
 		transfer->device->deleteLater();
@@ -405,6 +405,8 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		transfer->target = QFileInfo(target).canonicalFilePath();
 	}
 
+	transfer->canClose = true;
+
 	if (!target.isEmpty() && QFile::exists(transfer->target) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(transfer->target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 	{
 		removeTransfer(transfer, false);
@@ -444,6 +446,11 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		}
 
 		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	}
+
+	if (reply->isFinished())
+	{
+		transfer->device = NULL;
 	}
 
 	temporaryFile.close();
