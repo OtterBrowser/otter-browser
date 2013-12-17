@@ -1,6 +1,7 @@
 #include "ConfigurationContentsWidget.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/ItemDelegate.h"
 #include "../../../ui/OptionDelegate.h"
 
 #include "ui_ConfigurationContentsWidget.h"
@@ -65,6 +66,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->configurationView->setModel(m_model);
+	m_ui->configurationView->setItemDelegate(new ItemDelegate(this));
 	m_ui->configurationView->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationView->header()->setTextElideMode(Qt::ElideRight);
 

@@ -4,6 +4,7 @@
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include "ui_BookmarksContentsWidget.h"
 
@@ -28,6 +29,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	}
 
 	m_ui->bookmarksView->setModel(m_model);
+	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 
 	QMenu *addMenu = new QMenu(m_ui->addButton);
 	addMenu->addAction(Utils::getIcon("inode-directory"), tr("Add Folder"), this, SLOT(addFolder()));
@@ -100,7 +102,7 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 
 			break;
 		default:
-			item = new QStandardItem("------------------------");
+			item = new QStandardItem();
 			item->setData("separator", Qt::AccessibleDescriptionRole);
 
 			break;

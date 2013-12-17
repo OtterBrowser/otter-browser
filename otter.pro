@@ -27,6 +27,7 @@ SOURCES += src/main.cpp\
     src/core/WebBackendsManager.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
+    src/ui/ItemDelegate.cpp \
     src/ui/MainWindow.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
@@ -73,6 +74,7 @@ HEADERS += src/core/SettingsManager.h \
     src/core/WebBackendsManager.h \
     src/ui/AddressWidget.h \
     src/ui/BookmarkPropertiesDialog.h \
+    src/ui/ItemDelegate.h \
     src/ui/MainWindow.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \

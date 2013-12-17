@@ -11,6 +11,8 @@ SearchDelegate::SearchDelegate(QObject *parent) : QItemDelegate(parent)
 
 void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	drawBackground(painter, option, index);
+
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == "separator")
 	{
 		QStyleOptionFrame frameOption;
@@ -25,19 +27,23 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	}
 
 	const int shortcutWidth = ((option.rect.width() > 150) ? 40 : 0);
-	QRect decorationRectangle = option.rect;
-	decorationRectangle.setRight(option.rect.height());
-
 	QRect titleReactangle = option.rect;
-	titleReactangle.setLeft(option.rect.height());
+
+	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+	{
+		QRect decorationRectangle = option.rect;
+		decorationRectangle.setRight(option.rect.left() + option.rect.height());
+
+		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
+
+		titleReactangle.setLeft(option.rect.left() + option.rect.height());
+	}
 
 	if (shortcutWidth > 0)
 	{
 		titleReactangle.setRight(titleReactangle.right() - (shortcutWidth + 5));
 	}
 
-	drawBackground(painter, option, index);
-	drawDecoration(painter, option, decorationRectangle, qvariant_cast<QIcon>(index.data(Qt::DecorationRole)).pixmap(option.rect.height(), option.rect.height()));
 	drawDisplay(painter, option, titleReactangle, index.data(Qt::UserRole).toString());
 
 	if (shortcutWidth > 0)

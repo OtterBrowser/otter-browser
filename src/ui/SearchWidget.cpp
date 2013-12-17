@@ -62,7 +62,7 @@ void SearchWidget::optionChanged(const QString &option)
 		separatorItem->setData("separator", Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-		QStandardItem *manageItem = new QStandardItem();
+		QStandardItem *manageItem = new QStandardItem(Utils::getIcon("configure"), QString());
 		manageItem->setData(tr("Manage Search Engines..."), Qt::UserRole);
 		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
 

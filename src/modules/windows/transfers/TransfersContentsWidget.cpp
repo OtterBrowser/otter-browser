@@ -2,6 +2,7 @@
 #include "ProgressBarDelegate.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include "ui_TransfersContentsWidget.h"
 
@@ -34,6 +35,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->horizontalHeader()->resizeSection(0, 30);
 	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
 	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+	m_ui->transfersView->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
