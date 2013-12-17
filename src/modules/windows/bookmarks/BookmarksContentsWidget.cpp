@@ -101,6 +101,7 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 			break;
 		default:
 			item = new QStandardItem("------------------------");
+			item->setData("separator", Qt::AccessibleDescriptionRole);
 
 			break;
 	}

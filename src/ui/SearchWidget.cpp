@@ -1,18 +1,41 @@
 #include "SearchWidget.h"
+#include "PreferencesDialog.h"
 #include "SearchDelegate.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
-#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
-SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
+SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
+	m_model(new QStandardItemModel(this)),
+	m_index(0)
 {
-	QStandardItemModel *model = new QStandardItemModel(this);
+	setEditable(true);
+	setInsertPolicy(QComboBox::NoInsert);
+	setItemDelegate(new SearchDelegate(this));
+	optionChanged("Browser/SearchEnginesOrder");
+
+	m_query = QString();
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
+}
+
+void SearchWidget::optionChanged(const QString &option)
+{
+	if (option != "Browser/SearchEnginesOrder")
+	{
+		return;
+	}
+
+	m_model->clear();
+
 	const QStringList engines = SearchesManager::getEngines();
 
 	for (int i = 0; i < engines.count(); ++i)
@@ -27,38 +50,51 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent)
 			item->setData(search->shortcut, (Qt::UserRole + 2));
 			item->setData(QSize(-1, 22), Qt::SizeHintRole);
 
-			model->appendRow(item);
+			m_model->appendRow(item);
 		}
 	}
 
-	const int index = qMax(0, engines.indexOf(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()));
+	if (engines.count() > 0)
+	{
+		setEnabled(true);
 
-	setEditable(true);
-	setModel(model);
-	setInsertPolicy(QComboBox::NoInsert);
-	setItemDelegate(new SearchDelegate(this));
-	setCurrentIndex(index);
+		QStandardItem *separatorItem = new QStandardItem(Utils::getIcon("configure"), QString());
+		separatorItem->setData("separator", Qt::AccessibleDescriptionRole);
+		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-	m_query = QString();
+		QStandardItem *manageItem = new QStandardItem();
+		manageItem->setData(tr("Manage Search Engines..."), Qt::UserRole);
+		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
 
-	currentSearchChanged(index);
-
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
-	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
-	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
-}
-
-void SearchWidget::currentSearchChanged(int index)
-{
-	if (count() == 0)
+		m_model->appendRow(separatorItem);
+		m_model->appendRow(manageItem);
+	}
+	else
 	{
 		setEnabled(false);
 
 		lineEdit()->setPlaceholderText(QString());
 	}
+
+	const int index = qMax(0, engines.indexOf(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()));
+
+	setModel(m_model);
+	currentSearchChanged(index);
+	setCurrentIndex(index);
+}
+
+void SearchWidget::currentSearchChanged(int index)
+{
+	if (itemData(index, (Qt::UserRole + 1)).toString().isEmpty())
+	{
+		setCurrentIndex(m_index);
+
+		PreferencesDialog dialog("search", this);
+		dialog.exec();
+	}
 	else
 	{
-		setEnabled(true);
+		m_index = index;
 
 		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
 		lineEdit()->setText(m_query);
