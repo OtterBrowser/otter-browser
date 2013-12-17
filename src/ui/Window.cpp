@@ -37,7 +37,7 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
-	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
+	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 }
 

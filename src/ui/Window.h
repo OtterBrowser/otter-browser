@@ -102,7 +102,6 @@ public:
 	~Window();
 
 	void close();
-	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	Window* clone(QWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
@@ -122,6 +121,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
+	void search(const QString &query, const QString &engine);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const HistoryInformation &history);
