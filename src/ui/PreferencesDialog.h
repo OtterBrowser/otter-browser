@@ -26,6 +26,8 @@ protected slots:
 	void browseDownloadsPath();
 	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void fontChanged(QWidget *editor);
+	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+	void colorChanged(QWidget *editor);
 	void filterSearch(const QString &filter);
 	void save();
 

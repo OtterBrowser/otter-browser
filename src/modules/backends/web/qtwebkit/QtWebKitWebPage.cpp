@@ -23,6 +23,7 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_ignoreJavaScriptPopups(false)
 {
 	optionChanged("Content/ZoomTextOnly", SettingsManager::getValue("Content/ZoomTextOnly"));
+	optionChanged("Content/BackgroundColor", QVariant());
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(clearIgnoreJavaScriptPopups()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -38,6 +39,10 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	if (option == "Content/ZoomTextOnly")
 	{
 		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
+	}
+	else if (option.startsWith("Content/") && option.contains("Color"))
+	{
+		settings()->setUserStyleSheetUrl(QUrl("data:text/css;charset=utf-8;base64," + QString(QString("html {background: %1; color: %2;} a {color: %3;} a:visited {color: %4;}").arg(SettingsManager::getValue("Content/BackgroundColor").toString()).arg(SettingsManager::getValue("Content/TextColor").toString()).arg(SettingsManager::getValue("Content/LinkColor").toString()).arg(SettingsManager::getValue("Content/VisitedLinkColor").toString()).toUtf8().toBase64())));
 	}
 }
 

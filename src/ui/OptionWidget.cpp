@@ -114,15 +114,12 @@ void OptionWidget::selectColor()
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		if (m_resetButton)
-		{
-			m_resetButton->setEnabled(QVariant(dialog.currentColor()) != SettingsManager::getDefaultValue(m_option));
-		}
-
 		QPalette palette = m_colorButton->palette();
 		palette.setColor(QPalette::Button, dialog.currentColor());
 
 		m_colorButton->setPalette(palette);
+
+		modified();
 	}
 }
 
