@@ -24,6 +24,7 @@ protected:
 
 protected slots:
 	void browseDownloadsPath();
+	void filterSearch(const QString &filter);
 	void save();
 
 private:

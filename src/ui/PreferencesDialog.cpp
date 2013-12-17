@@ -54,10 +54,32 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberDownloads").toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
 
+	const QStringList engines = SearchesManager::getEngines();
+
+	for (int i = 0; i < engines.count(); ++i)
+	{
+		SearchInformation *engine = SearchesManager::getEngine(engines.at(i));
+
+		if (engine)
+		{
+			QTableWidgetItem *engineItem = new QTableWidgetItem(engine->icon, engine->title);
+			engineItem->setToolTip(engine->description);
+
+			const int row = m_ui->searchWidget->rowCount();
+
+			m_ui->searchWidget->setRowCount(row + 1);
+			m_ui->searchWidget->setItem(row, 0, engineItem);
+			m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engine->shortcut));
+		}
+	}
+
+	m_ui->searchWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 	connect(m_ui->downloadsBrowseButton, SIGNAL(clicked()), this, SLOT(browseDownloadsPath()));
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
+	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterSearch(QString)));
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -87,6 +109,14 @@ void PreferencesDialog::browseDownloadsPath()
 	if (!path.isEmpty())
 	{
 		m_ui->downloadsLineEdit->setText(path);
+	}
+}
+
+void PreferencesDialog::filterSearch(const QString &filter)
+{
+	for (int i = 0; i < m_ui->searchWidget->rowCount(); ++i)
+	{
+		m_ui->searchWidget->setRowHidden(i, (!filter.isEmpty() && !m_ui->searchWidget->item(i, 0)->text().contains(filter, Qt::CaseInsensitive) && !m_ui->searchWidget->item(i, 1)->text().contains(filter, Qt::CaseInsensitive)));
 	}
 }
 
