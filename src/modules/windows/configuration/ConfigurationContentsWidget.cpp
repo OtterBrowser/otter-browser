@@ -1,7 +1,7 @@
 #include "ConfigurationContentsWidget.h"
-#include "OptionDelegate.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/OptionDelegate.h"
 
 #include "ui_ConfigurationContentsWidget.h"
 

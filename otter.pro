@@ -28,6 +28,8 @@ SOURCES += src/main.cpp\
     src/ui/AddressWidget.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
     src/ui/MainWindow.cpp \
+    src/ui/OptionDelegate.cpp \
+    src/ui/OptionWidget.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/Window.cpp \
@@ -49,8 +51,6 @@ SOURCES += src/main.cpp\
     src/modules/windows/web/WebContentsWidget.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
-    src/modules/windows/configuration/OptionDelegate.cpp \
-    src/modules/windows/configuration/OptionWidget.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
     src/modules/windows/cookies/CookiePropertiesDialog.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
@@ -74,6 +74,8 @@ HEADERS += src/core/SettingsManager.h \
     src/ui/AddressWidget.h \
     src/ui/BookmarkPropertiesDialog.h \
     src/ui/MainWindow.h \
+    src/ui/OptionDelegate.h \
+    src/ui/OptionWidget.h \
     src/ui/PreferencesDialog.h \
     src/ui/TabBarWidget.h \
     src/ui/Window.h \
@@ -95,8 +97,6 @@ HEADERS += src/core/SettingsManager.h \
     src/modules/windows/web/WebContentsWidget.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \
-    src/modules/windows/configuration/OptionDelegate.h \
-    src/modules/windows/configuration/OptionWidget.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \
     src/modules/windows/cookies/CookiePropertiesDialog.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
