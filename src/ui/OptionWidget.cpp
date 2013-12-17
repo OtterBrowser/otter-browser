@@ -1,7 +1,9 @@
 #include "OptionWidget.h"
+#include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 
 #include <QtWidgets/QColorDialog>
+#include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 
 namespace Otter
@@ -54,6 +56,11 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		if (type != "bool" && choices.isEmpty())
 		{
 			widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
+
+			if (type == "path")
+			{
+				m_lineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
+			}
 
 			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(modified()));
 		}
