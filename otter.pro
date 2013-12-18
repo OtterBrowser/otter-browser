@@ -6,7 +6,7 @@
 
 QT += core gui network printsupport sensors webkitwidgets widgets
 
-TARGET = otter
+TARGET = otter-browser
 TEMPLATE = app
 
 SOURCES += src/main.cpp\
