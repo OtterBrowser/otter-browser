@@ -33,6 +33,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	{
 		QRect decorationRectangle = option.rect;
 		decorationRectangle.setRight(option.rect.left() + option.rect.height());
+		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
 

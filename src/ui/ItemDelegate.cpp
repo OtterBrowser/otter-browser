@@ -32,6 +32,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		QRect decorationRectangle = option.rect;
 		decorationRectangle.setRight(option.rect.left() + option.rect.height());
+		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(1, 1, 1, 1));
 
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle);
 

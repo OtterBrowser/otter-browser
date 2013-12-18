@@ -78,10 +78,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	}
 
 	QStringList colors;
-	colors << "TextColor" << "BackgroundColor" << "LinkColor" << "VisitedLinkColor";
+	colors << "BackgroundColor" << "TextColor" << "LinkColor" << "VisitedLinkColor";
 
 	QStringList colorTypes;
-	colorTypes << tr("Text Color") << tr("Background Color") << tr("Link Color") << tr("Visited Link Color");
+	colorTypes << tr("Background Color") << tr("Text Color") << tr("Link Color") << tr("Visited Link Color");
 
 	OptionDelegate *colorsDelegate = new OptionDelegate(true, this);
 
