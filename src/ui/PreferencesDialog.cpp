@@ -136,6 +136,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(colorsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(colorChanged(QWidget*)));
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterSearch(QString)));
+	connect(m_ui->searchWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentSearchChanged(int)));
+	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearch()));
+	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), this, SLOT(moveDownSearch()));
+	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), this, SLOT(moveUpSearch()));
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -226,6 +230,42 @@ void PreferencesDialog::filterSearch(const QString &filter)
 	{
 		m_ui->searchWidget->setRowHidden(i, (!filter.isEmpty() && !m_ui->searchWidget->item(i, 0)->text().contains(filter, Qt::CaseInsensitive) && !m_ui->searchWidget->item(i, 1)->text().contains(filter, Qt::CaseInsensitive)));
 	}
+}
+
+void PreferencesDialog::currentSearchChanged(int currentRow)
+{
+	m_ui->removeSearchButton->setEnabled(currentRow >= 0 && currentRow < m_ui->searchWidget->rowCount());
+	m_ui->moveDownSearchButton->setEnabled(currentRow >= 0 && m_ui->searchWidget->rowCount() > 1 && currentRow < (m_ui->searchWidget->rowCount() - 1));
+	m_ui->moveUpSearchButton->setEnabled(currentRow > 0 && m_ui->searchWidget->rowCount() > 1 && currentRow);
+}
+
+void PreferencesDialog::removeSearch()
+{
+	m_ui->searchWidget->removeRow(m_ui->searchWidget->currentIndex().row());
+}
+
+void PreferencesDialog::moveSearch(bool up)
+{
+	const int sourceRow = m_ui->searchWidget->currentIndex().row();
+	const int destinationRow = (up ? (sourceRow - 1) : (sourceRow + 1));
+	QTableWidgetItem *engineItem = m_ui->searchWidget->takeItem(sourceRow, 0);
+	QTableWidgetItem *shortcutItem = m_ui->searchWidget->takeItem(sourceRow, 1);
+
+	m_ui->searchWidget->removeRow(sourceRow);
+	m_ui->searchWidget->insertRow(destinationRow);
+	m_ui->searchWidget->setItem(destinationRow, 0, engineItem);
+	m_ui->searchWidget->setItem(destinationRow, 1, shortcutItem);
+	m_ui->searchWidget->setCurrentCell(destinationRow, 0);
+}
+
+void PreferencesDialog::moveDownSearch()
+{
+	moveSearch(false);
+}
+
+void PreferencesDialog::moveUpSearch()
+{
+	moveSearch(true);
 }
 
 void PreferencesDialog::save()
