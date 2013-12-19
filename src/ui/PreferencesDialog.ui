@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -343,6 +343,21 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <item>
+            <property name="text">
+             <string>Block all pop-ups</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Open all pop-ups</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Open all pop-ups in background</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="1" column="0">
