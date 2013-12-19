@@ -231,6 +231,21 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <item>
+            <property name="text">
+             <string>Activate the last active tab</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Activate next tab</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Activate the first tab opened from current tab</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
