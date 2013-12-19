@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -688,6 +688,21 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <item>
+            <property name="text">
+             <string>Inform websites that user does not want to be tracked</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Inform websites that user allows to be tracked</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Do not inform websites about user preference</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
