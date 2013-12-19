@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Otter::SearchPropertiesDialog</class>
+ <widget class="QDialog" name="Otter::SearchPropertiesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="4" column="0">
+      <widget class="QLabel" name="shortcutLabel">
+       <property name="text">
+        <string>Shortcut:</string>
+       </property>
+       <property name="buddy">
+        <cstring>shortcutLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="shortcutLineEdit"/>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="titleLineEdit"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="iconButton">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../resources/resources.qrc">
+           <normaloff>:/icons/edit-find.png</normaloff>:/icons/edit-find.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="titleLabel">
+       <property name="text">
+        <string>Ttitle:</string>
+       </property>
+       <property name="buddy">
+        <cstring>titleLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="descriptionLabel">
+       <property name="text">
+        <string>Description:</string>
+       </property>
+       <property name="buddy">
+        <cstring>descriptionLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="descriptionLineEdit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="defaultSearchCheckBox">
+     <property name="text">
+      <string>Set as Default Search Engine</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="resultsTab">
+      <attribute name="title">
+       <string>Results Query</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="resultsLayout">
+       <item>
+        <layout class="QHBoxLayout" name="resultsAddressLayout">
+         <item>
+          <widget class="QLabel" name="resultsAddressLabel">
+           <property name="text">
+            <string>Address:</string>
+           </property>
+           <property name="buddy">
+            <cstring>resultsAddressLineEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="resultsAddressLineEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="resultsPostMethodCheckBox">
+         <property name="text">
+          <string>POST  Method</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="resultsPostWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="resultsPostLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="resultsEnctypeSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="resultsEnctypeLabel">
+            <property name="text">
+             <string>Enctype:</string>
+            </property>
+            <property name="buddy">
+             <cstring>resultsEnctypeComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="resultsEnctypeComboBox">
+            <item>
+             <property name="text">
+              <string>application/x-www-form-urlencoded</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>multipart/form-data</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="resultsParametersLayout">
+         <item>
+          <widget class="QTableWidget" name="resultsParametersWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Parameter</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Value</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="resultsButtonsLayout" stretch="0,0,1">
+           <item>
+            <widget class="QPushButton" name="resultssAddButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="resultsRemoveButton">
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="resultsButtonsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="suggestionsTab">
+      <attribute name="title">
+       <string>Suggestions Query</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="suggestionsLayout">
+       <item>
+        <layout class="QHBoxLayout" name="suggestionsAddressLayout">
+         <item>
+          <widget class="QLabel" name="suggestionsAddressLabel">
+           <property name="text">
+            <string>Address:</string>
+           </property>
+           <property name="buddy">
+            <cstring>suggestionsAddressLineEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="suggestionsAddressLineEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="suggestionsPostMethodCheckBox">
+         <property name="text">
+          <string>POST  Method</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="suggestionsPostWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="suggestionsPostLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="suggestionsEnctypeSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="suggestionsEnctypeLabel">
+            <property name="text">
+             <string>Enctype:</string>
+            </property>
+            <property name="buddy">
+             <cstring>suggestionsEnctypeComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="suggestionsEnctypeComboBox">
+            <item>
+             <property name="text">
+              <string>application/x-www-form-urlencoded</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>multipart/form-data</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="suggestionsParametersLayout">
+         <item>
+          <widget class="QTableWidget" name="suggestionsParametersWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Parameter</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Value</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="suggestionsButtonsLayout" stretch="0,0,1">
+           <item>
+            <widget class="QPushButton" name="suggestionssAddButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="suggestionsRemoveButton">
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="suggestionsButtonsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>titleLineEdit</tabstop>
+  <tabstop>iconButton</tabstop>
+  <tabstop>descriptionLineEdit</tabstop>
+  <tabstop>shortcutLineEdit</tabstop>
+  <tabstop>defaultSearchCheckBox</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>resultsAddressLineEdit</tabstop>
+  <tabstop>resultsPostMethodCheckBox</tabstop>
+  <tabstop>resultsEnctypeComboBox</tabstop>
+  <tabstop>resultsParametersWidget</tabstop>
+  <tabstop>resultssAddButton</tabstop>
+  <tabstop>resultsRemoveButton</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../resources/resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Otter::SearchPropertiesDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Otter::SearchPropertiesDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

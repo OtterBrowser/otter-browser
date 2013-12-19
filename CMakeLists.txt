@@ -77,6 +77,7 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
+	src/ui/preferences/SearchPropertiesDialog.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
@@ -103,6 +104,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SessionsManagerDialog.ui
 	src/ui/Window.ui
+	src/ui/preferences/SearchPropertiesDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
 	src/modules/windows/cookies/CookiePropertiesDialog.ui
