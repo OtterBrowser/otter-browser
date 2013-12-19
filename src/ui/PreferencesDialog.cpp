@@ -140,6 +140,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearch()));
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), this, SLOT(moveDownSearch()));
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), this, SLOT(moveUpSearch()));
+	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 }
 
 PreferencesDialog::~PreferencesDialog()

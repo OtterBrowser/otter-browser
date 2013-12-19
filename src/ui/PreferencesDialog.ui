@@ -1144,9 +1144,6 @@
       </layout>
      </widget>
      <widget class="QWidget" name="advancedTab">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
       <attribute name="title">
        <string>Advanced</string>
       </attribute>
@@ -1180,7 +1177,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QStackedWidget" name="advancedWidget">
+        <widget class="QStackedWidget" name="advancedStackedWidget">
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -1203,6 +1200,9 @@
             <layout class="QVBoxLayout" name="suggestionsLayout">
              <item>
               <widget class="QCheckBox" name="suggestBookmarksCheckBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>Suggest bookmarks</string>
                </property>
@@ -1210,6 +1210,9 @@
              </item>
              <item>
               <widget class="QCheckBox" name="suggestHistoryCheckBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>Suggest history</string>
                </property>
@@ -1217,6 +1220,9 @@
              </item>
              <item>
               <widget class="QCheckBox" name="suggestSearchCheckBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>Suggest search results</string>
                </property>
