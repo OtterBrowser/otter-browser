@@ -44,6 +44,7 @@ SOURCES += src/main.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
+    src/ui/preferences/BlockedContentDialog.cpp \
     src/ui/preferences/SearchPropertiesDialog.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
@@ -92,6 +93,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/TabBarWidget.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
+    src/ui/preferences/BlockedContentDialog.h \
     src/ui/preferences/SearchPropertiesDialog.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
@@ -113,6 +115,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/Window.ui \
+    src/ui/preferences/BlockedContentDialog.ui \
     src/ui/preferences/SearchPropertiesDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/configuration/ConfigurationContentsWidget.ui \
