@@ -57,6 +57,21 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <item>
+            <property name="text">
+             <string>Continue previous session</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Show Home Page</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Show startup dialog</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="1" column="0">
