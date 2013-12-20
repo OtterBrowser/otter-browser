@@ -38,6 +38,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		widget = m_fontComboBox = new QFontComboBox(this);
 
 		m_fontComboBox->setCurrentFont(QFont(currentValue.toString()));
+		m_fontComboBox->lineEdit()->selectAll();
 
 		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(modified()));
 	}
@@ -48,6 +49,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		m_spinBox->setMinimum(-99999);
 		m_spinBox->setMaximum(99999);
 		m_spinBox->setValue(currentValue.toInt());
+		m_spinBox->selectAll();
 
 		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(modified()));
 	}
@@ -61,6 +63,8 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 			{
 				m_lineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
 			}
+
+			m_lineEdit->selectAll();
 
 			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(modified()));
 		}
@@ -87,11 +91,8 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		}
 	}
 
-	widget->setAutoFillBackground(false);
-	widget->setFocus();
-	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
 	setAutoFillBackground(false);
+	setFocus();
 
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->setMargin(0);
@@ -112,6 +113,11 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	}
 
 	setLayout(layout);
+
+	widget->setAutoFillBackground(false);
+	widget->setFocusPolicy(Qt::StrongFocus);
+	widget->setFocus();
+	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
 void OptionWidget::selectColor()
