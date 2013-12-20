@@ -822,6 +822,7 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 		case ReloadOrStopAction:
 			ActionsManager::setupLocalAction(actionObject, "Reload");
 
+			actionObject->setEnabled(true);
 			actionObject->setShortcut(QKeySequence());
 
 			break;
@@ -830,6 +831,24 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 
 			actionObject->setEnabled(true);
 			actionObject->setShortcut(QKeySequence());
+
+			break;
+		case FindAction:
+			ActionsManager::setupLocalAction(actionObject, "Find", true);
+
+			actionObject->setEnabled(true);
+
+			break;
+		case FindNextAction:
+			ActionsManager::setupLocalAction(actionObject, "FindNext", true);
+
+			actionObject->setEnabled(true);
+
+			break;
+		case FindPreviousAction:
+			ActionsManager::setupLocalAction(actionObject, "FindPrevious", true);
+
+			actionObject->setEnabled(true);
 
 			break;
 		default:
