@@ -27,6 +27,7 @@ Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
 
 enum FindFlag
 {
+	NoFlagsFind = 0,
 	BackwardFind = 1,
 	CaseSensitiveFind = 2,
 	HighlightAllFind = 4

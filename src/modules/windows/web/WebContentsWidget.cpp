@@ -187,16 +187,21 @@ void WebContentsWidget::updateFind(bool backwards)
 
 void WebContentsWidget::updateFindHighlight()
 {
-	FindFlags flags = HighlightAllFind;
+	FindFlags flags = NoFlagsFind;
+
+	if (m_ui->highlightButton->isChecked())
+	{
+		flags |= HighlightAllFind;
+	}
 
 	if (m_ui->caseSensitiveButton->isChecked())
 	{
 		flags |= CaseSensitiveFind;
 	}
 
-	m_webWidget->find(QString(), flags);
+	m_webWidget->find(QString(), (flags | HighlightAllFind));
 
-	if (m_ui->highlightButton->isChecked() && m_ui->findWidget->isVisible())
+	if (m_ui->findWidget->isVisible())
 	{
 		m_webWidget->find(m_ui->findLineEdit->text(), flags);
 	}

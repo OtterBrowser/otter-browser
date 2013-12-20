@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>45</height>
+    <width>456</width>
+    <height>33</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -28,21 +28,21 @@
    </property>
    <item>
     <widget class="QWidget" name="findWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0,0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,1,0,0,0">
       <property name="spacing">
        <number>3</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <item>
        <widget class="QLineEdit" name="findLineEdit">
@@ -94,6 +94,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="highlightButton">
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Highlight</string>
         </property>
@@ -110,6 +113,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="caseSensitiveButton">
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Case Sensitive</string>
         </property>
