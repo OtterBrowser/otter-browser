@@ -1,6 +1,7 @@
 #include "PreferencesDialog.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
+#include "preferences/ShortcutDelegate.h"
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
@@ -126,6 +127,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	}
 
 	m_ui->searchWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->searchWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
+	m_ui->searchWidget->setItemDelegateForColumn(1, new ShortcutDelegate(this));
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));

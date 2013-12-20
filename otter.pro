@@ -46,6 +46,7 @@ SOURCES += src/main.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
     src/ui/preferences/SearchPropertiesDialog.cpp \
+    src/ui/preferences/ShortcutDelegate.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
@@ -95,6 +96,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
     src/ui/preferences/SearchPropertiesDialog.h \
+    src/ui/preferences/ShortcutDelegate.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \

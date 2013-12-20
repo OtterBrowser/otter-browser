@@ -79,6 +79,7 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
 	src/ui/preferences/SearchPropertiesDialog.cpp
+	src/ui/preferences/ShortcutDelegate.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
