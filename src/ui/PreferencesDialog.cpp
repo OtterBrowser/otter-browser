@@ -130,6 +130,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->searchWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchWidget->setItemDelegateForColumn(1, new ShortcutDelegate(this));
 
+	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue("AddressField/SuggestBookmarks").toBool());
+
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 	connect(m_ui->downloadsBrowseButton, SIGNAL(clicked()), this, SLOT(browseDownloadsPath()));
@@ -298,6 +300,8 @@ void PreferencesDialog::save()
 	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue("Browser/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
+
+	SettingsManager::getValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
 
 	close();
 }

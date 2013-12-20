@@ -37,6 +37,7 @@ public:
 
 	static void createInstance(QObject *parent = NULL);
 	static BookmarksManager* getInstance();
+	static QStringList getUrls();
 	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);

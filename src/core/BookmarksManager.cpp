@@ -134,6 +134,11 @@ BookmarksManager *BookmarksManager::getInstance()
 	return m_instance;
 }
 
+QStringList BookmarksManager::getUrls()
+{
+	return m_urls.toList();
+}
+
 BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
 	BookmarkInformation *bookmark = new BookmarkInformation();

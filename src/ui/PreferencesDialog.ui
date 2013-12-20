@@ -1290,9 +1290,6 @@
             <layout class="QVBoxLayout" name="suggestionsLayout">
              <item>
               <widget class="QCheckBox" name="suggestBookmarksCheckBox">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="text">
                 <string>Suggest bookmarks</string>
                </property>

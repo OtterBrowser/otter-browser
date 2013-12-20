@@ -453,6 +453,7 @@
   <tabstop>titleLineEdit</tabstop>
   <tabstop>iconButton</tabstop>
   <tabstop>descriptionLineEdit</tabstop>
+  <tabstop>shortcutLineEdit</tabstop>
   <tabstop>defaultSearchCheckBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>resultsAddressLineEdit</tabstop>
@@ -461,6 +462,12 @@
   <tabstop>resultsParametersWidget</tabstop>
   <tabstop>resultssAddButton</tabstop>
   <tabstop>resultsRemoveButton</tabstop>
+  <tabstop>suggestionsAddressLineEdit</tabstop>
+  <tabstop>suggestionsPostMethodCheckBox</tabstop>
+  <tabstop>suggestionsEnctypeComboBox</tabstop>
+  <tabstop>suggestionsParametersWidget</tabstop>
+  <tabstop>suggestionssAddButton</tabstop>
+  <tabstop>suggestionsRemoveButton</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
@@ -474,8 +481,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>450</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -490,8 +497,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>450</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

@@ -2,6 +2,7 @@
 #define OTTER_ADDRESSWIDGET_H
 
 #include <QtCore/QUrl>
+#include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 
@@ -32,10 +33,12 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void notifyRequestedLoadUrl();
 	void updateBookmark();
+	void updateCompletion();
 	void setIcon(const QIcon &icon);
 
 private:
 	Window *m_window;
+	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_urlIconLabel;
 
