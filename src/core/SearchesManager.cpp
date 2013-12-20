@@ -2,7 +2,6 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QUrlQuery>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
 #include <QtNetwork/QNetworkRequest>
@@ -96,22 +95,22 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 		return false;
 	}
 
-	const SearchUrl search = getEngine(engine)->searchUrl;
+	const SearchUrl search = getEngine(engine)->resultsUrl;
 	QString urlString = search.url;
-	QHash<QString, QString> parameters;
-	parameters["searchTerms"] = query;
-	parameters["count"] = QString();
-	parameters["startIndex"] = QString();
-	parameters["startPage"] = QString();
-	parameters["language"] = QLocale::system().name();
-	parameters["inputEncoding"] = "UTF-8";
-	parameters["outputEncoding"] = "UTF-8";
+	QHash<QString, QString> values;
+	values["searchTerms"] = query;
+	values["count"] = QString();
+	values["startIndex"] = QString();
+	values["startPage"] = QString();
+	values["language"] = QLocale::system().name();
+	values["inputEncoding"] = "UTF-8";
+	values["outputEncoding"] = "UTF-8";
 
-	QHash<QString, QString>::iterator parametersIterator;
+	QHash<QString, QString>::iterator valuesIterator;
 
-	for (parametersIterator = parameters.begin(); parametersIterator != parameters.end(); ++parametersIterator)
+	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 	{
-		urlString = urlString.replace(QString("{%1}").arg(parametersIterator.key()), parametersIterator.value());
+		urlString = urlString.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
 	}
 
 	*method = ((search.method == "post") ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
@@ -119,26 +118,26 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 	QUrl url(urlString);
 	QUrlQuery getQuery(url);
 	QUrlQuery postQuery;
-	QHash<QString, QString>::const_iterator urlIterator;
+	const QList<QPair<QString, QString> > parameters = search.parameters.queryItems();
 
-	for (urlIterator = search.parameters.constBegin(); urlIterator != search.parameters.constEnd(); ++urlIterator)
+	for (int i = 0; i < parameters.count(); ++i)
 	{
-		QString value = urlIterator.value();
+		QString value = parameters.at(i).second;
 
-		for (parametersIterator = parameters.begin(); parametersIterator != parameters.end(); ++parametersIterator)
+		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 		{
-			value = value.replace(QString("{%1}").arg(parametersIterator.key()), parametersIterator.value());
+			value = value.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
 		}
 
 		if (*method == QNetworkAccessManager::GetOperation)
 		{
-			getQuery.addQueryItem(urlIterator.key(), QUrl::toPercentEncoding(value));
+			getQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
 		}
 		else
 		{
 			if (search.enctype == "application/x-www-form-urlencoded")
 			{
-				postQuery.addQueryItem(urlIterator.key(), QUrl::toPercentEncoding(value));
+				postQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
 			}
 			else if (search.enctype == "multipart/form-data")
 			{
@@ -146,9 +145,9 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 				QByteArray plainValue = value.toUtf8();
 				const char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-				for (int i = 0; i < plainValue.length(); ++i)
+				for (int j = 0; j < plainValue.length(); ++j)
 				{
-					const char character = plainValue[i];
+					const char character = plainValue[j];
 
 					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
 					{
@@ -162,7 +161,7 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 					}
 				}
 
-				body->append("--AaB03x\r\ncontent-disposition: form-data; name=\"" + urlIterator.key() +  "\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n" + encodedValue + "\r\n--AaB03x\r\n");
+				body->append("--AaB03x\r\ncontent-disposition: form-data; name=\"" + parameters.at(i).first +  "\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n" + encodedValue + "\r\n--AaB03x\r\n");
 			}
 		}
 	}
@@ -222,7 +221,7 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 					}
 					else if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
 					{
-						currentUrl = &search->searchUrl;
+						currentUrl = &search->resultsUrl;
 					}
 					else
 					{
@@ -238,7 +237,7 @@ bool SearchesManager::addSearch(QIODevice *device, const QString &identifier)
 				}
 				else if ((reader.name() == "Param" || reader.name() == "Parameter") && currentUrl)
 				{
-					currentUrl->parameters[reader.attributes().value("name").toString()] = reader.attributes().value("value").toString();
+					currentUrl->parameters.addQueryItem(reader.attributes().value("name").toString(), reader.attributes().value("value").toString());
 				}
 				else if (reader.name() == "Shortcut")
 				{

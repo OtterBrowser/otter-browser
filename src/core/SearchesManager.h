@@ -2,6 +2,7 @@
 #define OTTER_SEARCHESMANAGER_H
 
 #include <QtCore/QFile>
+#include <QtCore/QUrlQuery>
 #include <QtGui/QIcon>
 #include <QtNetwork/QNetworkAccessManager>
 
@@ -13,7 +14,7 @@ struct SearchUrl
 	QString url;
 	QString enctype;
 	QString method;
-	QHash<QString, QString> parameters;
+	QUrlQuery parameters;
 };
 
 struct SearchInformation
@@ -24,7 +25,7 @@ struct SearchInformation
 	QString shortcut;
 	QString encoding;
 	QString selfUrl;
-	SearchUrl searchUrl;
+	SearchUrl resultsUrl;
 	SearchUrl suggestionsUrl;
 	QIcon icon;
 };
