@@ -31,12 +31,14 @@ protected slots:
 	void colorChanged(QWidget *editor);
 	void filterSearch(const QString &filter);
 	void currentSearchChanged(int currentRow);
+	void editSearch();
 	void removeSearch();
 	void moveDownSearch();
 	void moveUpSearch();
 	void save();
 
 private:
+	QString m_defaultSearch;
 	Ui::PreferencesDialog *m_ui;
 };
 

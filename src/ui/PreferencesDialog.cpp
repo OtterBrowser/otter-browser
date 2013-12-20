@@ -1,6 +1,7 @@
 #include "PreferencesDialog.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
+#include "preferences/SearchPropertiesDialog.h"
 #include "preferences/ShortcutDelegate.h"
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
@@ -15,6 +16,7 @@ namespace Otter
 {
 
 PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : QDialog(parent),
+	m_defaultSearch(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
 	m_ui(new Ui::PreferencesDialog)
 {
 	m_ui->setupUi(this);
@@ -113,17 +115,34 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	{
 		SearchInformation *engine = SearchesManager::getEngine(engines.at(i));
 
-		if (engine)
+		if (!engine)
 		{
-			QTableWidgetItem *engineItem = new QTableWidgetItem(engine->icon, engine->title);
-			engineItem->setToolTip(engine->description);
-
-			const int row = m_ui->searchWidget->rowCount();
-
-			m_ui->searchWidget->setRowCount(row + 1);
-			m_ui->searchWidget->setItem(row, 0, engineItem);
-			m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engine->shortcut));
+			continue;
 		}
+
+		QVariantHash engineData;
+		engineData["identifier"] = engine->identifier;
+		engineData["isDefault"] = (engine->identifier == SettingsManager::getValue("Browser/DefaultSearchEngine").toString());
+		engineData["encoding"] = engine->encoding;
+		engineData["selfUrl"] = engine->selfUrl;
+		engineData["resultsUrl"] = engine->resultsUrl.url;
+		engineData["resultsEnctype"] = engine->resultsUrl.enctype;
+		engineData["resultsMethod"] = engine->resultsUrl.method;
+		engineData["resultsParameters"] = engine->resultsUrl.parameters.toString();
+		engineData["suggestionsUrl"] = engine->suggestionsUrl.url;
+		engineData["suggestionsEnctype"] = engine->suggestionsUrl.enctype;
+		engineData["suggestionsMethod"] = engine->suggestionsUrl.method;
+		engineData["suggestionsParameters"] = engine->suggestionsUrl.parameters.toString();
+
+		QTableWidgetItem *engineItem = new QTableWidgetItem(engine->icon, engine->title);
+		engineItem->setToolTip(engine->description);
+		engineItem->setData(Qt::UserRole, engineData);
+
+		const int row = m_ui->searchWidget->rowCount();
+
+		m_ui->searchWidget->setRowCount(row + 1);
+		m_ui->searchWidget->setItem(row, 0, engineItem);
+		m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engine->shortcut));
 	}
 
 	m_ui->searchWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -142,6 +161,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterSearch(QString)));
 	connect(m_ui->searchWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentSearchChanged(int)));
+	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearch()));
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearch()));
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), this, SLOT(moveDownSearch()));
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), this, SLOT(moveUpSearch()));
@@ -240,9 +260,59 @@ void PreferencesDialog::filterSearch(const QString &filter)
 
 void PreferencesDialog::currentSearchChanged(int currentRow)
 {
-	m_ui->removeSearchButton->setEnabled(currentRow >= 0 && currentRow < m_ui->searchWidget->rowCount());
+	const bool isSelected = currentRow >= 0 && currentRow < m_ui->searchWidget->rowCount();
+
+	m_ui->editSearchButton->setEnabled(isSelected);
+	m_ui->removeSearchButton->setEnabled(isSelected);
 	m_ui->moveDownSearchButton->setEnabled(currentRow >= 0 && m_ui->searchWidget->rowCount() > 1 && currentRow < (m_ui->searchWidget->rowCount() - 1));
 	m_ui->moveUpSearchButton->setEnabled(currentRow > 0 && m_ui->searchWidget->rowCount() > 1 && currentRow);
+}
+
+void PreferencesDialog::editSearch()
+{
+	QTableWidgetItem *item = m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 0);
+
+	if (!item)
+	{
+		return;
+	}
+
+	QVariantHash engineData = item->data(Qt::UserRole).toHash();
+	engineData["shortcut"] = m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->text();
+	engineData["title"] = item->text();
+	engineData["description"] = item->toolTip();
+	engineData["icon"] = item->icon();
+
+	QStringList shortcuts;
+
+	for (int i = 0; i < m_ui->searchWidget->rowCount(); ++i)
+	{
+		const QString shortcut = m_ui->searchWidget->item(i, 1)->data(Qt::DisplayRole).toString();
+
+		if (m_ui->searchWidget->currentRow() != i && !shortcut.isEmpty())
+		{
+			shortcuts.append(shortcut);
+		}
+	}
+
+	SearchPropertiesDialog dialog(engineData, shortcuts, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		engineData = dialog.getEngineData();
+
+		m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->setText(engineData["shortcut"].toString());
+
+		item->setText(engineData["title"].toString());
+		item->setToolTip(engineData["description"].toString());
+		item->setIcon(engineData["icon"].value<QIcon>());
+		item->setData(Qt::UserRole, engineData);
+
+		if (engineData["isDefault"].toBool())
+		{
+			m_defaultSearch = engineData["identifier"].toString();
+		}
+	}
 }
 
 void PreferencesDialog::removeSearch()
@@ -301,7 +371,9 @@ void PreferencesDialog::save()
 	SettingsManager::setValue("Browser/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
 
-	SettingsManager::getValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
+	SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
+
+	SettingsManager::setValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
 
 	close();
 }
