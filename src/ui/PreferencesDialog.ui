@@ -50,6 +50,9 @@
            <property name="text">
             <string>Startup behaviour:</string>
            </property>
+           <property name="buddy">
+            <cstring>startupComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -78,6 +81,9 @@
           <widget class="QLabel" name="homePageLabel">
            <property name="text">
             <string>Home Page:</string>
+           </property>
+           <property name="buddy">
+            <cstring>homePageLineEdit</cstring>
            </property>
           </widget>
          </item>
@@ -160,6 +166,9 @@
            <property name="text">
             <string>Save files to:</string>
            </property>
+           <property name="buddy">
+            <cstring>downloadsLineEdit</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -239,6 +248,9 @@
            <property name="text">
             <string>When closing tab:</string>
            </property>
+           <property name="buddy">
+            <cstring>closingTabComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -284,6 +296,9 @@
           <widget class="QLabel" name="languageLabel">
            <property name="text">
             <string>Preferred language:</string>
+           </property>
+           <property name="buddy">
+            <cstring>languageLineEdit</cstring>
            </property>
           </widget>
          </item>
@@ -336,6 +351,9 @@
            <property name="text">
             <string>Pop-ups:</string>
            </property>
+           <property name="buddy">
+            <cstring>popupsComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -364,6 +382,9 @@
           <widget class="QLabel" name="blockedContentLabel">
            <property name="text">
             <string>Blocked content:</string>
+           </property>
+           <property name="buddy">
+            <cstring>blockedContentButton</cstring>
            </property>
           </widget>
          </item>
@@ -418,6 +439,9 @@
           <widget class="QLabel" name="defaultZoomLabel">
            <property name="text">
             <string>Default zoom:</string>
+           </property>
+           <property name="buddy">
+            <cstring>defaultZoomSpinBox</cstring>
            </property>
           </widget>
          </item>
@@ -518,6 +542,9 @@
            <property name="text">
             <string>Default proportional font size:</string>
            </property>
+           <property name="buddy">
+            <cstring>proportionalFontSizeSpinBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -541,12 +568,18 @@
            <property name="text">
             <string>Default fixed font size:</string>
            </property>
+           <property name="buddy">
+            <cstring>fixedFontSizeSpinBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="minimumFontSizeLabel">
            <property name="text">
             <string>Minimum font size:</string>
+           </property>
+           <property name="buddy">
+            <cstring>minimumFontSizeSpinBox</cstring>
            </property>
           </widget>
          </item>
@@ -680,6 +713,9 @@
           <widget class="QLabel" name="tracingkLabel">
            <property name="text">
             <string>Do Not Track:</string>
+           </property>
+           <property name="buddy">
+            <cstring>trackingComboBox</cstring>
            </property>
           </widget>
          </item>
@@ -902,6 +938,9 @@
                    <property name="text">
                     <string>Accept third-party cookies:</string>
                    </property>
+                   <property name="buddy">
+                    <cstring>thirdPartyCookiesComboBox</cstring>
+                   </property>
                   </widget>
                  </item>
                  <item row="1" column="0">
@@ -911,6 +950,9 @@
                    </property>
                    <property name="text">
                     <string>Keep until:</string>
+                   </property>
+                   <property name="buddy">
+                    <cstring>keepCookiesUntilComboBox</cstring>
                    </property>
                   </widget>
                  </item>
@@ -1349,6 +1391,61 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>startupComboBox</tabstop>
+  <tabstop>homePageLineEdit</tabstop>
+  <tabstop>currentAsHomePageButton</tabstop>
+  <tabstop>bookmarkAsHomePageButton</tabstop>
+  <tabstop>defaultHomePagehButton</tabstop>
+  <tabstop>downloadsLineEdit</tabstop>
+  <tabstop>downloadsBrowseButton</tabstop>
+  <tabstop>alwaysAskCheckBox</tabstop>
+  <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>
+  <tabstop>delayTabsLoadingCheckBox</tabstop>
+  <tabstop>reuseCurrentTabCheckBox</tabstop>
+  <tabstop>openNextToActiveheckBox</tabstop>
+  <tabstop>closingTabComboBox</tabstop>
+  <tabstop>languageLineEdit</tabstop>
+  <tabstop>popupsComboBox</tabstop>
+  <tabstop>blockedContentButton</tabstop>
+  <tabstop>defaultZoomSpinBox</tabstop>
+  <tabstop>zoomTextOnlyCheckBox</tabstop>
+  <tabstop>fontsWidget</tabstop>
+  <tabstop>proportionalFontSizeSpinBox</tabstop>
+  <tabstop>fixedFontSizeSpinBox</tabstop>
+  <tabstop>minimumFontSizeSpinBox</tabstop>
+  <tabstop>colorsWidget</tabstop>
+  <tabstop>trackingComboBox</tabstop>
+  <tabstop>privateModeCheckBox</tabstop>
+  <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
+  <tabstop>rememberDownloadsHistoryCheckBox</tabstop>
+  <tabstop>rememberSearchHistoryCheckBox</tabstop>
+  <tabstop>rememberFormsHistoryCheckBox</tabstop>
+  <tabstop>rememberFormsHistoryButton</tabstop>
+  <tabstop>acceptCookiesCheckBox</tabstop>
+  <tabstop>cookiesExceptionsButton</tabstop>
+  <tabstop>thirdPartyCookiesComboBox</tabstop>
+  <tabstop>keepCookiesUntilComboBox</tabstop>
+  <tabstop>clearHistoryCheckBox</tabstop>
+  <tabstop>clearHistoryButton</tabstop>
+  <tabstop>rememberPasswordsCheckBox</tabstop>
+  <tabstop>rememberPasswordsButton</tabstop>
+  <tabstop>masterPasswordCheckBox</tabstop>
+  <tabstop>masterPasswordButton</tabstop>
+  <tabstop>searchFilterLineEdit</tabstop>
+  <tabstop>searchWidget</tabstop>
+  <tabstop>addSearchButton</tabstop>
+  <tabstop>editSearchButton</tabstop>
+  <tabstop>removeSearchButton</tabstop>
+  <tabstop>moveUpSearchButton</tabstop>
+  <tabstop>moveDownSearchButton</tabstop>
+  <tabstop>advancedListWidget</tabstop>
+  <tabstop>suggestBookmarksCheckBox</tabstop>
+  <tabstop>suggestHistoryCheckBox</tabstop>
+  <tabstop>suggestSearchCheckBox</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
