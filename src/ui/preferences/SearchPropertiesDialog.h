@@ -24,6 +24,9 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void selectIcon();
+
 private:
 	QVariantHash m_engineData;
 	Ui::SearchPropertiesDialog *m_ui;

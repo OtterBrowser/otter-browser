@@ -23,9 +23,6 @@
        </item>
        <item>
         <widget class="QToolButton" name="iconButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="minimumSize">
           <size>
            <width>36</width>

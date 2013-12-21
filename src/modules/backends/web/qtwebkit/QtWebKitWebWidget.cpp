@@ -572,8 +572,9 @@ void QtWebKitWebWidget::setUrl(const QUrl &url)
 
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
-	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 	MenuFlags flags = NoMenu;
+
+	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 
 	if (m_hitResult.element().tagName().toLower() == "textarea" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
 	{

@@ -3,6 +3,7 @@
 #include "ui_SearchPropertiesDialog.h"
 
 #include <QtCore/QUrlQuery>
+#include <QtWidgets/QFileDialog>
 
 namespace Otter
 {
@@ -49,11 +50,38 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 		m_ui->suggestionsParametersWidget->setItem(i, 0, new QTableWidgetItem(suggestionsParameters.at(i).first));
 		m_ui->suggestionsParametersWidget->setItem(i, 1, new QTableWidgetItem(suggestionsParameters.at(i).second));
 	}
+
+	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
 
 SearchPropertiesDialog::~SearchPropertiesDialog()
 {
 	delete m_ui;
+}
+
+void SearchPropertiesDialog::changeEvent(QEvent *event)
+{
+	QDialog::changeEvent(event);
+
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+
+			break;
+		default:
+			break;
+	}
+}
+
+void SearchPropertiesDialog::selectIcon()
+{
+	const QString path = QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)"));
+
+	if (!path.isEmpty())
+	{
+		m_ui->iconButton->setIcon(QIcon(QPixmap(path)));
+	}
 }
 
 QVariantHash SearchPropertiesDialog::getEngineData() const
@@ -72,21 +100,6 @@ QVariantHash SearchPropertiesDialog::getEngineData() const
 	engineData["suggestionsEnctype"] = m_ui->suggestionsEnctypeComboBox->currentText();
 
 	return engineData;
-}
-
-void SearchPropertiesDialog::changeEvent(QEvent *event)
-{
-	QDialog::changeEvent(event);
-
-	switch (event->type())
-	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
-	}
 }
 
 }
