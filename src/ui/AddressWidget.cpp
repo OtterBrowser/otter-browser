@@ -6,6 +6,7 @@
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QRegularExpression>
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMenu>
 
@@ -124,7 +125,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
-	if (QRegExp(QString("^(%1) .+$").arg(SearchesManager::getShortcuts().join('|'))).exactMatch(text()))
+	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getShortcuts().join('|'))).match(text()).hasMatch())
 	{
 		const QStringList engines = SearchesManager::getEngines();
 		const QString shortcut = text().section(' ', 0, 0);

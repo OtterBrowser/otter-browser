@@ -2,6 +2,7 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QRegularExpression>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
 #include <QtCore/QTemporaryFile>
@@ -298,10 +299,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (reply->rawHeaderList().contains("Content-Disposition"))
 		{
-			QRegExp expression(" filename=\"?([^\"]+)\"?");
-			expression.indexIn(QString(reply->rawHeader("Content-Disposition")));
-
-			fileInfo = QFileInfo(expression.cap(1));
+			fileInfo = QFileInfo(QRegularExpression(" filename=\"?([^\"]+)\"?").match(QString(reply->rawHeader("Content-Disposition"))).captured(1));
 
 			fileName = fileInfo.fileName();
 		}

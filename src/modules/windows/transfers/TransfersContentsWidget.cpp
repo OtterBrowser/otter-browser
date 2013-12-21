@@ -239,7 +239,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 	if (item)
 	{
-		QApplication::clipboard()->setText(item->toolTip().remove(QRegExp("<[^>]*>")));
+		QApplication::clipboard()->setText(item->toolTip().remove(QRegularExpression("<[^>]*>")));
 	}
 }
 
