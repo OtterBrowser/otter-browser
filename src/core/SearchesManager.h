@@ -36,14 +36,14 @@ class SearchesManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
+	static SearchInformation* readSearch(QIODevice *device, const QString &identifier);
 	static SearchesManager* getInstance();
 	static SearchInformation* getEngine(const QString &identifier);
 	static QStringList getEngines();
 	static QStringList getShortcuts();
+	static bool writeSearch(QIODevice *device, SearchInformation *search);
 	static bool setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
-
-protected:
-	static bool addSearch(QIODevice *device, const QString &identifier);
+	static bool setEngines(QList<SearchInformation*> engines);
 
 private:
 	explicit SearchesManager(QObject *parent = NULL);
@@ -54,9 +54,7 @@ private:
 	static QHash<QString, SearchInformation*> m_engines;
 
 signals:
-	void searchAdded(SearchInformation *search);
-	void searchModified(SearchInformation *search);
-	void searchRemoved(SearchInformation *search);
+	void searchEnginesModified();
 };
 
 }

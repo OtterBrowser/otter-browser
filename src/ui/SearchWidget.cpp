@@ -14,6 +14,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_model(new QStandardItemModel(this)),
 	m_index(0)
 {
+	setModel(m_model);
 	setEditable(true);
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
@@ -21,6 +22,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 
 	m_query = QString();
 
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateList()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
@@ -29,10 +31,52 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 
 void SearchWidget::optionChanged(const QString &option)
 {
-	if (option != "Browser/SearchEnginesOrder")
+	if (option == "Browser/SearchEnginesOrder")
 	{
-		return;
+		updateList();
 	}
+}
+
+void SearchWidget::currentSearchChanged(int index)
+{
+	if (itemData(index, (Qt::UserRole + 1)).toString().isEmpty())
+	{
+		setCurrentIndex(m_index);
+
+		PreferencesDialog dialog("search", this);
+		dialog.exec();
+	}
+	else
+	{
+		m_index = index;
+
+		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
+		lineEdit()->setText(m_query);
+
+		sendRequest();
+	}
+}
+
+void SearchWidget::queryChanged(const QString &query)
+{
+	m_query = query;
+}
+
+void SearchWidget::sendRequest()
+{
+	if (!m_query.isEmpty())
+	{
+		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
+	}
+
+	lineEdit()->clear();
+
+	m_query = QString();
+}
+
+void SearchWidget::updateList()
+{
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 
 	m_model->clear();
 
@@ -78,46 +122,10 @@ void SearchWidget::optionChanged(const QString &option)
 
 	const int index = qMax(0, engines.indexOf(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()));
 
-	setModel(m_model);
 	currentSearchChanged(index);
 	setCurrentIndex(index);
-}
 
-void SearchWidget::currentSearchChanged(int index)
-{
-	if (itemData(index, (Qt::UserRole + 1)).toString().isEmpty())
-	{
-		setCurrentIndex(m_index);
-
-		PreferencesDialog dialog("search", this);
-		dialog.exec();
-	}
-	else
-	{
-		m_index = index;
-
-		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
-		lineEdit()->setText(m_query);
-
-		sendRequest();
-	}
-}
-
-void SearchWidget::queryChanged(const QString &query)
-{
-	m_query = query;
-}
-
-void SearchWidget::sendRequest()
-{
-	if (!m_query.isEmpty())
-	{
-		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
-	}
-
-	lineEdit()->clear();
-
-	m_query = QString();
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 }
 
 }

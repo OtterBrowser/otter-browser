@@ -91,9 +91,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchAdded(SearchInformation*)), this, SLOT(updateSearchActions()));
-	connect(SearchesManager::getInstance(), SIGNAL(searchModified(SearchInformation*)), this, SLOT(updateSearchActions()));
-	connect(SearchesManager::getInstance(), SIGNAL(searchRemoved(SearchInformation*)), this, SLOT(updateSearchActions()));
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchActions()));
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));

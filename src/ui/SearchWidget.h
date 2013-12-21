@@ -19,6 +19,7 @@ protected slots:
 	void currentSearchChanged(int index);
 	void queryChanged(const QString &query);
 	void sendRequest();
+	void updateList();
 
 private:
 	QStandardItemModel *m_model;

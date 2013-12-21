@@ -122,7 +122,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 		QVariantHash engineData;
 		engineData["identifier"] = engine->identifier;
-		engineData["isDefault"] = (engine->identifier == SettingsManager::getValue("Browser/DefaultSearchEngine").toString());
+		engineData["isDefault"] = (engine->identifier == m_defaultSearch);
 		engineData["encoding"] = engine->encoding;
 		engineData["selfUrl"] = engine->selfUrl;
 		engineData["resultsUrl"] = engine->resultsUrl.url;
@@ -376,7 +376,42 @@ void PreferencesDialog::save()
 	SettingsManager::setValue("Browser/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
 
-	SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
+	QList<SearchInformation*> engines;
+
+	for (int i = 0; i < m_ui->searchWidget->rowCount(); ++i)
+	{
+		QTableWidgetItem *item = m_ui->searchWidget->item(i, 0);
+
+		if (!item)
+		{
+			continue;
+		}
+
+		const QVariantHash engineData = item->data(Qt::UserRole).toHash();
+		SearchInformation *engine = new SearchInformation();
+		engine->identifier = engineData["identifier"].toString();
+		engine->title = item->text();
+		engine->description = item->toolTip();
+		engine->shortcut = m_ui->searchWidget->item(i, 1)->text();
+		engine->encoding = engineData["encoding"].toString();
+		engine->selfUrl = engineData["selfUrl"].toString();
+		engine->resultsUrl.url = engineData["resultsUrl"].toString();
+		engine->resultsUrl.enctype = engineData["resultsEnctype"].toString();
+		engine->resultsUrl.method = engineData["resultsMethod"].toString();
+		engine->resultsUrl.parameters = QUrlQuery(engineData["resultsParameters"].toString());
+		engine->suggestionsUrl.url = engineData["suggestionsUrl"].toString();
+		engine->suggestionsUrl.enctype = engineData["suggestionsEnctype"].toString();
+		engine->suggestionsUrl.method = engineData["suggestionsMethod"].toString();
+		engine->suggestionsUrl.parameters = QUrlQuery(engineData["suggestionsParameters"].toString());
+		engine->icon = item->icon();
+
+		engines.append(engine);
+	}
+
+	if (SearchesManager::setEngines(engines))
+	{
+		SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
+	}
 
 	SettingsManager::setValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
 
