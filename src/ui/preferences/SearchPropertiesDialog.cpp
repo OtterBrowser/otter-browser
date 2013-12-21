@@ -24,32 +24,14 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
 
 	m_ui->resultsAddressLineEdit->setText(engineData["resultsUrl"].toString());
+	m_ui->resultsQueryLineEdit->setText(engineData["resultsParameters"].toString());
 	m_ui->resultsPostMethodCheckBox->setChecked(engineData["resultsMethod"].toString() == "post");
 	m_ui->resultsEnctypeComboBox->setCurrentText(engineData["resultsEnctype"].toString());
 
-	const QList<QPair<QString, QString> > resultsParameters = QUrlQuery(engineData["resultsParameters"].toString()).queryItems();
-
-	m_ui->resultsParametersWidget->setRowCount(resultsParameters.count());
-
-	for (int i = 0; i < resultsParameters.count(); ++i)
-	{
-		m_ui->resultsParametersWidget->setItem(i, 0, new QTableWidgetItem(resultsParameters.at(i).first));
-		m_ui->resultsParametersWidget->setItem(i, 1, new QTableWidgetItem(resultsParameters.at(i).second));
-	}
-
 	m_ui->suggestionsAddressLineEdit->setText(engineData["suggestionsUrl"].toString());
+	m_ui->suggestionsQueryLineEdit->setText(engineData["suggestionsParameters"].toString());
 	m_ui->suggestionsPostMethodCheckBox->setChecked(engineData["suggestionsMethod"].toString() == "post");
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(engineData["suggestionsEnctype"].toString());
-
-	const QList<QPair<QString, QString> > suggestionsParameters = QUrlQuery(engineData["suggestionsParameters"].toString()).queryItems();
-
-	m_ui->suggestionsParametersWidget->setRowCount(suggestionsParameters.count());
-
-	for (int i = 0; i < suggestionsParameters.count(); ++i)
-	{
-		m_ui->suggestionsParametersWidget->setItem(i, 0, new QTableWidgetItem(suggestionsParameters.at(i).first));
-		m_ui->suggestionsParametersWidget->setItem(i, 1, new QTableWidgetItem(suggestionsParameters.at(i).second));
-	}
 
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
@@ -93,9 +75,11 @@ QVariantHash SearchPropertiesDialog::getEngineData() const
 	engineData["shortcut"] = m_ui->shortcutLineEdit->text();
 	engineData["isDefault"] = m_ui->defaultSearchCheckBox->isChecked();
 	engineData["resultsUrl"] = m_ui->resultsAddressLineEdit->text();
+	engineData["resultsParameters"] = m_ui->resultsQueryLineEdit->text();
 	engineData["resultsMethod"] = (m_ui->resultsPostMethodCheckBox->isChecked() ? "post" : "get");
 	engineData["resultsEnctype"] = m_ui->resultsEnctypeComboBox->currentText();
 	engineData["suggestionsUrl"] = m_ui->suggestionsAddressLineEdit->text();
+	engineData["suggestionsParameters"] = m_ui->suggestionsQueryLineEdit->text();
 	engineData["suggestionsMethod"] = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? "post" : "get");
 	engineData["suggestionsEnctype"] = m_ui->suggestionsEnctypeComboBox->currentText();
 
