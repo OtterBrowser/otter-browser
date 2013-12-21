@@ -3,12 +3,15 @@
 #include "ui_SearchPropertiesDialog.h"
 
 #include <QtCore/QUrlQuery>
+#include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
 SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, const QStringList &shortcuts, QWidget *parent) : QDialog(parent),
+	m_currentLineEdit(NULL),
 	m_engineData(engineData),
 	m_ui(new Ui::SearchPropertiesDialog)
 {
@@ -24,12 +27,16 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
 
 	m_ui->resultsAddressLineEdit->setText(engineData["resultsUrl"].toString());
+	m_ui->resultsAddressLineEdit->installEventFilter(this);
 	m_ui->resultsQueryLineEdit->setText(engineData["resultsParameters"].toString());
+	m_ui->resultsQueryLineEdit->installEventFilter(this);
 	m_ui->resultsPostMethodCheckBox->setChecked(engineData["resultsMethod"].toString() == "post");
 	m_ui->resultsEnctypeComboBox->setCurrentText(engineData["resultsEnctype"].toString());
 
 	m_ui->suggestionsAddressLineEdit->setText(engineData["suggestionsUrl"].toString());
+	m_ui->suggestionsAddressLineEdit->installEventFilter(this);
 	m_ui->suggestionsQueryLineEdit->setText(engineData["suggestionsParameters"].toString());
+	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
 	m_ui->suggestionsPostMethodCheckBox->setChecked(engineData["suggestionsMethod"].toString() == "post");
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(engineData["suggestionsEnctype"].toString());
 
@@ -53,6 +60,14 @@ void SearchPropertiesDialog::changeEvent(QEvent *event)
 			break;
 		default:
 			break;
+	}
+}
+
+void SearchPropertiesDialog::insertPlaceholder(QAction *action)
+{
+	if (m_currentLineEdit && !action->data().toString().isEmpty())
+	{
+		m_currentLineEdit->insert(QString("{%1}").arg(action->data().toString()));
 	}
 }
 
@@ -84,6 +99,37 @@ QVariantHash SearchPropertiesDialog::getEngineData() const
 	engineData["suggestionsEnctype"] = m_ui->suggestionsEnctypeComboBox->currentText();
 
 	return engineData;
+}
+
+bool SearchPropertiesDialog::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::ContextMenu)
+	{
+		QLineEdit *lineEdit = qobject_cast<QLineEdit*>(object);
+
+		if (lineEdit)
+		{
+			m_currentLineEdit = lineEdit;
+
+			QMenu *contextMenu = lineEdit->createStandardContextMenu();
+			contextMenu->addSeparator();
+
+			QMenu *placeholdersMenu = contextMenu->addMenu(tr("Placeholders"));
+			placeholdersMenu->addAction(tr("Search Terms"))->setData("searchTerms");
+			placeholdersMenu->addAction(tr("Language"))->setData("language");
+
+			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
+
+			contextMenu->exec(dynamic_cast<QContextMenuEvent*>(event)->globalPos());
+			contextMenu->deleteLater();
+
+			m_currentLineEdit = NULL;
+
+			return true;
+		}
+	}
+
+	return QDialog::eventFilter(object, event);
 }
 
 }
