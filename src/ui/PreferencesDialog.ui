@@ -1210,9 +1210,6 @@
         <layout class="QVBoxLayout" name="searchButtonsLayout" stretch="0,0,0,0,0,1">
          <item>
           <widget class="QPushButton" name="addSearchButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Add...</string>
            </property>

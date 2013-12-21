@@ -18,23 +18,14 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	setEditable(true);
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
-	optionChanged("Browser/SearchEnginesOrder");
+	updateList();
 
 	m_query = QString();
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateList()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
-}
-
-void SearchWidget::optionChanged(const QString &option)
-{
-	if (option == "Browser/SearchEnginesOrder")
-	{
-		updateList();
-	}
 }
 
 void SearchWidget::currentSearchChanged(int index)
@@ -43,8 +34,12 @@ void SearchWidget::currentSearchChanged(int index)
 	{
 		setCurrentIndex(m_index);
 
+		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+
 		PreferencesDialog dialog("search", this);
 		dialog.exec();
+
+		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	}
 	else
 	{

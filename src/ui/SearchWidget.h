@@ -15,7 +15,6 @@ public:
 	explicit SearchWidget(QWidget *parent = NULL);
 
 protected slots:
-	void optionChanged(const QString &option);
 	void currentSearchChanged(int index);
 	void queryChanged(const QString &query);
 	void sendRequest();

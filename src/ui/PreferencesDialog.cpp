@@ -6,11 +6,13 @@
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
+#include "../core/Utils.h"
 
 #include "ui_PreferencesDialog.h"
 
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
@@ -161,6 +163,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterSearch(QString)));
 	connect(m_ui->searchWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentSearchChanged(int)));
+	connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearch()));
 	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearch()));
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearch()));
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), this, SLOT(moveDownSearch()));
@@ -268,6 +271,90 @@ void PreferencesDialog::currentSearchChanged(int currentRow)
 	m_ui->moveUpSearchButton->setEnabled(currentRow > 0 && m_ui->searchWidget->rowCount() > 1 && currentRow);
 }
 
+void PreferencesDialog::addSearch()
+{
+	QString identifier;
+	QStringList identifiers;
+	QStringList shortcuts;
+
+	for (int i = 0; i < m_ui->searchWidget->rowCount(); ++i)
+	{
+		QTableWidgetItem *item = m_ui->searchWidget->item(i, 0);
+
+		if (!item)
+		{
+			continue;
+		}
+
+		identifiers.append(item->data(Qt::UserRole).toHash()["identifier"].toString());
+
+		const QString shortcut = m_ui->searchWidget->item(i, 1)->data(Qt::DisplayRole).toString();
+
+		if (!shortcut.isEmpty())
+		{
+			shortcuts.append(shortcut);
+		}
+	}
+
+	do
+	{
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Search Engine Identifier:"));
+
+		if (identifier.isEmpty())
+		{
+			return;
+		}
+	}
+	while (identifiers.contains(identifier));
+
+	QVariantHash engineData;
+	engineData["identifier"] = identifier;
+	engineData["isDefault"] = false;
+	engineData["encoding"] = "UTF-8";
+	engineData["selfUrl"] = QString();
+	engineData["resultsUrl"] = QString();
+	engineData["resultsEnctype"] = QString();
+	engineData["resultsMethod"] = "get";
+	engineData["resultsParameters"] = QString();
+	engineData["suggestionsUrl"] = QString();
+	engineData["suggestionsEnctype"] = QString();
+	engineData["suggestionsMethod"] = "get";
+	engineData["suggestionsParameters"] = QString();
+	engineData["shortcut"] = QString();
+	engineData["title"] = tr("New Search Engine");
+	engineData["description"] = QString();
+	engineData["icon"] = Utils::getIcon("edit-find");
+
+	SearchPropertiesDialog dialog(engineData, shortcuts, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	engineData = dialog.getEngineData();
+
+	if (shortcuts.contains(engineData["shortcut"].toString()))
+	{
+		engineData["shortcut"] = QString();
+	}
+
+	if (engineData["isDefault"].toBool())
+	{
+		m_defaultSearch = engineData["identifier"].toString();
+	}
+
+	QTableWidgetItem *engineItem = new QTableWidgetItem(engineData["icon"].value<QIcon>(), engineData["title"].toString());
+	engineItem->setToolTip(engineData["description"].toString());
+	engineItem->setData(Qt::UserRole, engineData);
+
+	const int row = (m_ui->searchWidget->currentRow() + 1);
+
+	m_ui->searchWidget->insertRow(row);
+	m_ui->searchWidget->setItem(row, 0, engineItem);
+	m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engineData["shortcut"].toString()));
+}
+
 void PreferencesDialog::editSearch()
 {
 	QTableWidgetItem *item = m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 0);
@@ -306,17 +393,17 @@ void PreferencesDialog::editSearch()
 			engineData["shortcut"] = QString();
 		}
 
+		if (engineData["isDefault"].toBool())
+		{
+			m_defaultSearch = engineData["identifier"].toString();
+		}
+
 		m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->setText(engineData["shortcut"].toString());
 
 		item->setText(engineData["title"].toString());
 		item->setToolTip(engineData["description"].toString());
 		item->setIcon(engineData["icon"].value<QIcon>());
 		item->setData(Qt::UserRole, engineData);
-
-		if (engineData["isDefault"].toBool())
-		{
-			m_defaultSearch = engineData["identifier"].toString();
-		}
 	}
 }
 

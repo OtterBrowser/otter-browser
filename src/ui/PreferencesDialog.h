@@ -31,6 +31,7 @@ protected slots:
 	void colorChanged(QWidget *editor);
 	void filterSearch(const QString &filter);
 	void currentSearchChanged(int currentRow);
+	void addSearch();
 	void editSearch();
 	void removeSearch();
 	void moveDownSearch();
