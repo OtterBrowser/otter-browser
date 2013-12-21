@@ -301,6 +301,11 @@ void PreferencesDialog::editSearch()
 	{
 		engineData = dialog.getEngineData();
 
+		if (shortcuts.contains(engineData["shortcut"].toString()))
+		{
+			engineData["shortcut"] = QString();
+		}
+
 		m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->setText(engineData["shortcut"].toString());
 
 		item->setText(engineData["title"].toString());
