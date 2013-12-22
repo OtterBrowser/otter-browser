@@ -352,7 +352,7 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 	{
 		writer.writeStartElement("Url");
 		writer.writeAttribute("rel", "suggestions");
-		writer.writeAttribute("type", "text/html");
+		writer.writeAttribute("type", "application/x-suggestions+json");
 		writer.writeAttribute("method", search->suggestionsUrl.method.toUpper());
 		writer.writeAttribute("enctype", search->suggestionsUrl.enctype.toLower());
 		writer.writeAttribute("template", search->suggestionsUrl.url);

@@ -73,6 +73,14 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 				model->appendRow(new QStandardItem(bookmarks.at(i)));
 			}
 
+			QStringList moduleUrls;
+			moduleUrls << "about:bookmarks" << "about:config" << "about:cookies" << "about:transfers";
+
+			for (int i = 0; i < moduleUrls.count(); ++i)
+			{
+				model->appendRow(new QStandardItem(moduleUrls.at(i)));
+			}
+
 			m_completer->setModel(model);
 		}
 		else if (!value.toBool() && m_completer->model() && m_completer->model()->rowCount() > 0)
@@ -176,6 +184,8 @@ void AddressWidget::updateCompletion()
 {
 	if (SettingsManager::getValue("AddressField/SuggestBookmarks").toBool())
 	{
+		m_completer->model()->removeRows(0, m_completer->model()->rowCount());
+
 		optionChanged("AddressField/SuggestBookmarks", true);
 	}
 }
