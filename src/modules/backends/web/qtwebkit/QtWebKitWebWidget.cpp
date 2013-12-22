@@ -675,8 +675,30 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 
 void QtWebKitWebWidget::setHistory(const HistoryInformation &history)
 {
-	Q_UNUSED(history)
-///TODO
+	qint64 documentSequence = 0;
+	qint64 itemSequence = 0;
+	QByteArray data;
+	QDataStream stream(&data, QIODevice::ReadWrite);
+	stream << int(2) << history.entries.count() << history.index;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		stream << history.entries.at(i).url << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal((qreal) history.entries.at(i).zoom / 100) << false << QString() << false;
+	}
+
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		QVariantHash data;
+		data["position"] = history.entries.at(i).position;
+		data["zoom"] = history.entries.at(i).zoom;
+
+		m_webView->page()->history()->itemAt(i).setUserData(data);
+	}
+
+	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
 void QtWebKitWebWidget::setZoom(int zoom)
