@@ -31,6 +31,13 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		menu.addAction(getAction(CopyAddressAction));
 		menu.addAction(getAction(PrintAction));
 		menu.addSeparator();
+
+		if (flags & FormMenu)
+		{
+			menu.addAction(getAction(CreateSearchAction));
+			menu.addSeparator();
+		}
+
 		menu.addAction(getAction(InspectElementAction));
 		menu.addAction(getAction(ViewSourceAction));
 		menu.addAction(getAction(ValidateAction));

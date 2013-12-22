@@ -824,9 +824,9 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		getAction(ClearAllAction)->setEnabled(getAction(SelectAllAction)->isEnabled());
 	}
 
-	if (flags == NoMenu)
+	if (flags == NoMenu || flags == FormMenu)
 	{
-		flags = StandardMenu;
+		flags |= StandardMenu;
 
 		if (m_hitResult.frame() != m_webView->page()->mainFrame())
 		{
