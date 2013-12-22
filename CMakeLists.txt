@@ -51,6 +51,7 @@ set(otter_src
 	src/core/LocalListingNetworkReply.cpp
 	src/core/NetworkAccessManager.cpp
 	src/core/SearchesManager.cpp
+	src/core/SearchSuggester.cpp
 	src/core/SessionsManager.cpp
 	src/core/SettingsManager.cpp
 	src/core/TransfersManager.cpp

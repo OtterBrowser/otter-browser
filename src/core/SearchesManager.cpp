@@ -25,6 +25,108 @@ void SearchesManager::createInstance(QObject *parent)
 	m_instance = new SearchesManager(parent);
 }
 
+void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+{
+	if (searchUrl.url.isEmpty())
+	{
+		return;
+	}
+
+	QString urlString = searchUrl.url;
+	QHash<QString, QString> values;
+	values["searchTerms"] = query;
+	values["count"] = QString();
+	values["startIndex"] = QString();
+	values["startPage"] = QString();
+	values["language"] = QLocale::system().name();
+	values["inputEncoding"] = "UTF-8";
+	values["outputEncoding"] = "UTF-8";
+
+	QHash<QString, QString>::iterator valuesIterator;
+
+	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
+	{
+		urlString = urlString.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+	}
+
+	*method = ((searchUrl.method == "post") ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
+
+	QUrl url(urlString);
+	QUrlQuery getQuery(url);
+	QUrlQuery postQuery;
+	const QList<QPair<QString, QString> > parameters = searchUrl.parameters.queryItems(QUrl::FullyDecoded);
+
+	for (int i = 0; i < parameters.count(); ++i)
+	{
+		QString value = parameters.at(i).second;
+
+		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
+		{
+			value = value.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+		}
+
+		if (*method == QNetworkAccessManager::GetOperation)
+		{
+			getQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
+		}
+		else
+		{
+			if (searchUrl.enctype == "application/x-www-form-urlencoded")
+			{
+				postQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
+			}
+			else if (searchUrl.enctype == "multipart/form-data")
+			{
+				QString encodedValue;
+				QByteArray plainValue = value.toUtf8();
+				const char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+				for (int j = 0; j < plainValue.length(); ++j)
+				{
+					const char character = plainValue[j];
+
+					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
+					{
+						encodedValue.append(character);
+					}
+					else
+					{
+						encodedValue.append('=');
+						encodedValue.append(hex[((character >> 4) & 0x0F)]);
+						encodedValue.append(hex[(character & 0x0F)]);
+					}
+				}
+
+				body->append("--AaB03x\r\ncontent-disposition: form-data; name=\"" + parameters.at(i).first +  "\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n" + encodedValue + "\r\n--AaB03x\r\n");
+			}
+		}
+	}
+
+	if (*method == QNetworkAccessManager::PostOperation)
+	{
+		if (searchUrl.enctype == "application/x-www-form-urlencoded")
+		{
+			QUrl postUrl;
+			postUrl.setQuery(postQuery);
+
+			*body = postUrl.toString().mid(1).toUtf8();
+		}
+		else if (searchUrl.enctype == "multipart/form-data")
+		{
+			request->setRawHeader("Content-Type", "multipart/form-data; boundary=AaB03x");
+			request->setRawHeader("Content-Length", QString::number(body->length()).toUtf8());
+		}
+	}
+
+	getQuery.removeAllQueryItems("sourceid");
+	getQuery.addQueryItem("sourceid", "otter");
+
+	url.setQuery(getQuery);
+
+	request->setUrl(url);
+	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+}
+
 SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString &identifier)
 {
 	SearchInformation *search = new SearchInformation();
@@ -281,100 +383,7 @@ bool SearchesManager::setupSearchQuery(const QString &query, const QString &engi
 		return false;
 	}
 
-	const SearchUrl search = getSearchEngine(engine)->resultsUrl;
-	QString urlString = search.url;
-	QHash<QString, QString> values;
-	values["searchTerms"] = query;
-	values["count"] = QString();
-	values["startIndex"] = QString();
-	values["startPage"] = QString();
-	values["language"] = QLocale::system().name();
-	values["inputEncoding"] = "UTF-8";
-	values["outputEncoding"] = "UTF-8";
-
-	QHash<QString, QString>::iterator valuesIterator;
-
-	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
-	{
-		urlString = urlString.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
-	}
-
-	*method = ((search.method == "post") ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
-
-	QUrl url(urlString);
-	QUrlQuery getQuery(url);
-	QUrlQuery postQuery;
-	const QList<QPair<QString, QString> > parameters = search.parameters.queryItems(QUrl::FullyDecoded);
-
-	for (int i = 0; i < parameters.count(); ++i)
-	{
-		QString value = parameters.at(i).second;
-
-		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
-		{
-			value = value.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
-		}
-
-		if (*method == QNetworkAccessManager::GetOperation)
-		{
-			getQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
-		}
-		else
-		{
-			if (search.enctype == "application/x-www-form-urlencoded")
-			{
-				postQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
-			}
-			else if (search.enctype == "multipart/form-data")
-			{
-				QString encodedValue;
-				QByteArray plainValue = value.toUtf8();
-				const char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
-				for (int j = 0; j < plainValue.length(); ++j)
-				{
-					const char character = plainValue[j];
-
-					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
-					{
-						encodedValue.append(character);
-					}
-					else
-					{
-						encodedValue.append('=');
-						encodedValue.append(hex[((character >> 4) & 0x0F)]);
-						encodedValue.append(hex[(character & 0x0F)]);
-					}
-				}
-
-				body->append("--AaB03x\r\ncontent-disposition: form-data; name=\"" + parameters.at(i).first +  "\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n" + encodedValue + "\r\n--AaB03x\r\n");
-			}
-		}
-	}
-
-	if (*method == QNetworkAccessManager::PostOperation)
-	{
-		if (search.enctype == "application/x-www-form-urlencoded")
-		{
-			QUrl postUrl;
-			postUrl.setQuery(postQuery);
-
-			*body = postUrl.toString().mid(1).toUtf8();
-		}
-		else if (search.enctype == "multipart/form-data")
-		{
-			request->setRawHeader("Content-Type", "multipart/form-data; boundary=AaB03x");
-			request->setRawHeader("Content-Length", QString::number(body->length()).toUtf8());
-		}
-	}
-
-	getQuery.removeAllQueryItems("sourceid");
-	getQuery.addQueryItem("sourceid", "otter");
-
-	url.setQuery(getQuery);
-
-	request->setUrl(url);
-	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	setupQuery(query, getSearchEngine(engine)->resultsUrl, request, method, body);
 
 	return true;
 }

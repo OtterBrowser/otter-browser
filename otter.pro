@@ -18,6 +18,7 @@ SOURCES += src/main.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/NetworkAccessManager.cpp \
     src/core/SearchesManager.cpp \
+    src/core/SearchSuggester.cpp \
     src/core/SessionsManager.cpp \
     src/core/SettingsManager.cpp \
     src/core/TransfersManager.cpp \
@@ -68,6 +69,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/LocalListingNetworkReply.h \
     src/core/NetworkAccessManager.h \
     src/core/SearchesManager.h \
+    src/core/SearchSuggester.h \
     src/core/SessionsManager.h \
     src/core/SettingsManager.h \
     src/core/TransfersManager.h \
@@ -126,6 +128,5 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
     src/modules/windows/web/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui
-
 
 RESOURCES += resources/resources.qrc

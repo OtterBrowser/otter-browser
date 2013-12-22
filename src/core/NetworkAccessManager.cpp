@@ -18,7 +18,7 @@ CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
 QNetworkDiskCache* NetworkAccessManager::m_cache = NULL;
 
-NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEnabled, ContentsWidget *widget) : QNetworkAccessManager(widget),
+NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
 	m_mainReply(NULL),
 	m_speed(0),
@@ -28,7 +28,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool statisticsEn
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
-	m_statisticsEnabled(statisticsEnabled)
+	m_simpleMode(simpleMode)
 {
 	QNetworkCookieJar *cookieJar = getCookieJar(privateWindow);
 
@@ -125,7 +125,7 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 
 void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 {
-	if (m_statisticsEnabled)
+	if (!m_simpleMode)
 	{
 		m_replies.remove(reply);
 
@@ -145,7 +145,7 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 	{
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 
-		if (reply->objectName() != "transfer")
+		if (!m_simpleMode)
 		{
 			reply->deleteLater();
 		}
@@ -227,7 +227,7 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 
 QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-	if (m_statisticsEnabled)
+	if (!m_simpleMode)
 	{
 		++m_startedRequests;
 	}
@@ -251,7 +251,7 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 		m_mainReply = reply;
 	}
 
-	if (m_statisticsEnabled)
+	if (!m_simpleMode)
 	{
 		m_replies[reply] = qMakePair(0, false);
 

@@ -36,6 +36,7 @@ class SearchesManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
+	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 	static SearchInformation* readSearch(QIODevice *device, const QString &identifier);
 	static SearchesManager* getInstance();
 	static SearchInformation* getSearchEngine(const QString &identifier);

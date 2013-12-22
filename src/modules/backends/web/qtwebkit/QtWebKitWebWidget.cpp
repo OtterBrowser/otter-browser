@@ -59,7 +59,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 		page = new QtWebKitWebPage(this);
 	}
 
-	m_networkAccessManager = new NetworkAccessManager(privateWindow, true, parent);
+	m_networkAccessManager = new NetworkAccessManager(privateWindow, false, parent);
 	m_networkAccessManager->setParent(page);
 
 	page->setNetworkAccessManager(m_networkAccessManager);

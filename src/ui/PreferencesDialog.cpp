@@ -150,6 +150,7 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->searchWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchWidget->setItemDelegateForColumn(1, new ShortcutDelegate(this));
+	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue("Browser/SearchEnginesSuggestions").toBool());
 
 	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue("AddressField/SuggestBookmarks").toBool());
 
@@ -499,6 +500,8 @@ void PreferencesDialog::save()
 	{
 		SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
 	}
+
+	SettingsManager::setValue("Browser/SearchEnginesSuggestions", m_ui->searchSuggestionsCheckBox->isChecked());
 
 	SettingsManager::setValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
 

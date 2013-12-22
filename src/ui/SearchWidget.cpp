@@ -2,6 +2,7 @@
 #include "PreferencesDialog.h"
 #include "SearchDelegate.h"
 #include "../core/SearchesManager.h"
+#include "../core/SearchSuggester.h"
 #include "../core/SessionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -13,20 +14,49 @@ namespace Otter
 
 SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_model(new QStandardItemModel(this)),
+	m_completer(new QCompleter(this)),
+	m_suggester(NULL),
 	m_index(0)
 {
+	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+	m_completer->setCompletionMode(QCompleter::PopupCompletion);
+	m_completer->setCompletionRole(Qt::DisplayRole);
+
 	setModel(m_model);
 	setEditable(true);
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
-	updateList();
+	updateSearchEngines();
+	optionChanged("Browser/SearchEnginesSuggestions", SettingsManager::getValue("Browser/SearchEnginesSuggestions"));
+	lineEdit()->setCompleter(m_completer);
 
-	m_query = QString();
-
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateList()));
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchEngines()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
+	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
+}
+
+void SearchWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "Browser/SearchEnginesSuggestions")
+	{
+		if (value.toBool() && !m_suggester)
+		{
+			m_suggester = new SearchSuggester(getCurrentSearchEngine(), this);
+
+			connect(lineEdit(), SIGNAL(textEdited(QString)), m_suggester, SLOT(setQuery(QString)));
+			connect(m_suggester, SIGNAL(suggestionsChanged(QList<SearchSuggestion>)), this, SLOT(updateSuggestions(QList<SearchSuggestion>)));
+		}
+		else if (!value.toBool() && m_suggester)
+		{
+			m_suggester->deleteLater();
+			m_suggester = NULL;
+
+			m_completer->model()->removeRows(0, m_completer->model()->rowCount());
+		}
+	}
 }
 
 void SearchWidget::currentSearchChanged(int index)
@@ -49,6 +79,12 @@ void SearchWidget::currentSearchChanged(int index)
 		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
 		lineEdit()->setText(m_query);
 
+		if (m_suggester)
+		{
+			m_suggester->setEngine(getCurrentSearchEngine());
+			m_suggester->setQuery(QString());
+		}
+
 		SessionsManager::markSessionModified();
 
 		sendRequest();
@@ -60,8 +96,13 @@ void SearchWidget::queryChanged(const QString &query)
 	m_query = query;
 }
 
-void SearchWidget::sendRequest()
+void SearchWidget::sendRequest(const QString &query)
 {
+	if (!query.isEmpty())
+	{
+		m_query = query;
+	}
+
 	if (!m_query.isEmpty())
 	{
 		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
@@ -72,7 +113,7 @@ void SearchWidget::sendRequest()
 	m_query = QString();
 }
 
-void SearchWidget::updateList()
+void SearchWidget::updateSearchEngines()
 {
 	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 
@@ -123,6 +164,35 @@ void SearchWidget::updateList()
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 }
 
+void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
+{
+	if (suggestions.isEmpty())
+	{
+		if (m_completer->model())
+		{
+			m_completer->model()->removeRows(0, m_completer->model()->rowCount());
+		}
+
+		return;
+	}
+
+	QStandardItemModel *model = qobject_cast<QStandardItemModel*>(m_completer->model());
+
+	if (!model)
+	{
+		model = new QStandardItemModel(m_completer);
+
+		m_completer->setModel(model);
+	}
+
+	model->clear();
+
+	for (int i = 0; i < suggestions.count(); ++i)
+	{
+		model->appendRow(new QStandardItem(suggestions.at(i).completion));
+	}
+}
+
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
 {
 	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
@@ -138,6 +208,11 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 
 	currentSearchChanged(index);
 	setCurrentIndex(index);
+
+	if (m_suggester)
+	{
+		m_suggester->setEngine(getCurrentSearchEngine());
+	}
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 }

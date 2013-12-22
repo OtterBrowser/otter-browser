@@ -242,7 +242,7 @@ TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &requ
 {
 	if (!m_networkAccessManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, false, NULL);
+		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
 		m_networkAccessManager->setParent(m_instance);
 	}
 
@@ -255,8 +255,6 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	{
 		return NULL;
 	}
-
-	reply->setObjectName("transfer");
 
 	QTemporaryFile temporaryFile("otter-download-XXXXXX.dat", m_instance);
 	TransferInformation *transfer = new TransferInformation();
@@ -500,12 +498,11 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	if (!m_networkAccessManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, false, NULL);
+		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
 		m_networkAccessManager->setParent(m_instance);
 	}
 
 	QNetworkReply *reply = m_networkAccessManager->get(request);
-	reply->setObjectName("transfer");
 
 	m_replies[reply] = transfer;
 

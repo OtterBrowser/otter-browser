@@ -71,7 +71,6 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			for (int i = 0; i < bookmarks.count(); ++i)
 			{
 				model->appendRow(new QStandardItem(bookmarks.at(i)));
-//				m_completer->model()->setData(m_completer->model()->index(i, 0), , Qt::EditRole);
 			}
 
 			m_completer->setModel(model);
