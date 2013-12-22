@@ -26,7 +26,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
 	setApplicationName("Otter");
-	setApplicationVersion("0.0.02");
+	setApplicationVersion("0.1.01");
 
 	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter";
 	QCommandLineParser *parser = getParser();
