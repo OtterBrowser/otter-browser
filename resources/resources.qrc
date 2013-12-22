@@ -71,5 +71,9 @@
         <file>searches/duckduckgo.xml</file>
         <file>searches/wikipedia.xml</file>
         <file>searches/yahoo.xml</file>
+        <file>icons/audio-volume-medium.png</file>
+        <file>icons/audio-volume-muted.png</file>
+        <file>icons/media-playback-pause.png</file>
+        <file>icons/media-playback-start.png</file>
     </qresource>
 </RCC>

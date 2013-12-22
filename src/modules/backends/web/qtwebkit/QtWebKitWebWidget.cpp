@@ -90,6 +90,12 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), "SaveImageToDisk");
 	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), "CopyImageToClipboard");
 	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), "CopyImageUrlToClipboard");
+	ActionsManager::setupLocalAction(getAction(SaveMediaToDiskAction), "SaveMediaToDisk");
+	ActionsManager::setupLocalAction(getAction(CopyMediaUrlToClipboardAction), "CopyMediaUrlToClipboard");
+	ActionsManager::setupLocalAction(getAction(ToggleMediaControlsAction), "ToggleMediaControls");
+	ActionsManager::setupLocalAction(getAction(ToggleMediaLoopAction), "ToggleMediaLoop");
+	ActionsManager::setupLocalAction(getAction(ToggleMediaPlayPauseAction), "ToggleMediaPlayPause");
+	ActionsManager::setupLocalAction(getAction(ToggleMediaMuteAction), "ToggleMediaMute");
 
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
@@ -793,6 +799,24 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		getAction(InspectElementAction)->setEnabled(!isImageOpened);
 	}
 
+	if (m_hitResult.mediaUrl().isValid())
+	{
+		flags |= MediaMenu;
+
+		const bool isVideo = (m_hitResult.element().tagName().toLower() == "video");
+		const bool isPaused = m_hitResult.element().evaluateJavaScript("this.paused").toBool();
+		const bool isMuted = m_hitResult.element().evaluateJavaScript("this.muted").toBool();
+
+		getAction(SaveMediaToDiskAction)->setText(isVideo ? "Save Video..." : "Save Audio...");
+		getAction(CopyMediaUrlToClipboardAction)->setText(isVideo ? "Copy Video Link to Clipboard" : "Copy Audio Link to Clipboard");
+		getAction(ToggleMediaControlsAction)->setText(tr("Show Controls"));
+		getAction(ToggleMediaLoopAction)->setText(tr("Looping"));
+		getAction(ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? "media-playback-start" : "media-playback-pause"));
+		getAction(ToggleMediaPlayPauseAction)->setText(isPaused ? tr("Play") : tr("Pause"));
+		getAction(ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? "audio-volume-medium" : "audio-volume-muted"));
+		getAction(ToggleMediaMuteAction)->setText(isMuted ? tr("Unmute") : tr("Mute"));
+	}
+
 	if (m_hitResult.isContentEditable())
 	{
 		flags |= EditMenu;
@@ -1232,6 +1256,18 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 			return QWebPage::Redo;
 		case InspectElementAction:
 			return QWebPage::InspectElement;
+		case SaveMediaToDiskAction:
+			return QWebPage::DownloadMediaToDisk;
+		case CopyMediaUrlToClipboardAction:
+			return QWebPage::CopyMediaUrlToClipboard;
+		case ToggleMediaControlsAction:
+			return QWebPage::ToggleMediaControls;
+		case ToggleMediaLoopAction:
+			return QWebPage::ToggleMediaLoop;
+		case ToggleMediaPlayPauseAction:
+			return QWebPage::ToggleMediaPlayPause;
+		case ToggleMediaMuteAction:
+			return QWebPage::ToggleMediaMute;
 		default:
 			return QWebPage::NoWebAction;
 	}

@@ -78,6 +78,12 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, "ClearAll", tr("Clear All"));
 	ActionsManager::registerAction(this, "SpellCheck", tr("Check Spelling"));
 	ActionsManager::registerAction(this, "CreateSearch", tr("Create Search..."));
+	ActionsManager::registerAction(this, "SaveMediaToDisk", tr("Save Media..."));
+	ActionsManager::registerAction(this, "CopyMediaUrlToClipboard", tr("Copy Media Link to Clipboard"));
+	ActionsManager::registerAction(this, "ToggleMediaControls", tr("Show Controls"));
+	ActionsManager::registerAction(this, "ToggleMediaLoop", tr("Looping"));
+	ActionsManager::registerAction(this, "ToggleMediaPlayPause", tr("Play"));
+	ActionsManager::registerAction(this, "ToggleMediaMute", tr("Mute"));
 
 	m_ui->actionNewTab->setIcon(Utils::getIcon("tab-new"));
 	m_ui->actionNewTabPrivate->setIcon(Utils::getIcon("tab-new-private"));

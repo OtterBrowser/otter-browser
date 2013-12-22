@@ -140,6 +140,20 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			menu.addAction(getAction(ImagePropertiesAction));
 			menu.addSeparator();
 		}
+
+		if (flags & MediaMenu)
+		{
+			menu.addAction(getAction(CopyMediaUrlToClipboardAction));
+			menu.addAction(getAction(SaveMediaToDiskAction));
+			menu.addSeparator();
+			menu.addAction(getAction(ToggleMediaPlayPauseAction));
+			menu.addAction(getAction(ToggleMediaMuteAction));
+			menu.addAction(getAction(ToggleMediaLoopAction));
+			menu.addAction(getAction(ToggleMediaControlsAction));
+			menu.addSeparator();
+			menu.addAction(getAction(InspectElementAction));
+			menu.addSeparator();
+		}
 	}
 
 	menu.exec(mapToGlobal(position));

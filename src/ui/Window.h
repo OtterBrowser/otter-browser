@@ -79,7 +79,13 @@ enum WindowAction
 	CreateSearchAction,
 	FindAction,
 	FindNextAction,
-	FindPreviousAction
+	FindPreviousAction,
+	SaveMediaToDiskAction,
+	CopyMediaUrlToClipboardAction,
+	ToggleMediaControlsAction,
+	ToggleMediaLoopAction,
+	ToggleMediaPlayPauseAction,
+	ToggleMediaMuteAction
 };
 
 class ContentsWidget;
