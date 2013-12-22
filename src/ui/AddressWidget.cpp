@@ -125,14 +125,14 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
-	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getShortcuts().join('|'))).match(text()).hasMatch())
+	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join('|'))).match(text()).hasMatch())
 	{
-		const QStringList engines = SearchesManager::getEngines();
+		const QStringList engines = SearchesManager::getSearchEngines();
 		const QString shortcut = text().section(' ', 0, 0);
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
-			SearchInformation *search = SearchesManager::getEngine(engines.at(i));
+			SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
 
 			if (search && shortcut == search->shortcut)
 			{

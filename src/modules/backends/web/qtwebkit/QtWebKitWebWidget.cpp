@@ -118,7 +118,7 @@ void QtWebKitWebWidget::search(QAction *action)
 {
 	const QString engine = ((!action || action->data().toString().isEmpty()) ? m_searchEngine : action->data().toString());
 
-	if (SearchesManager::getEngines().contains(engine))
+	if (SearchesManager::getSearchEngines().contains(engine))
 	{
 		updateSearchActions(engine);
 
@@ -132,7 +132,7 @@ void QtWebKitWebWidget::search(const QString &query, const QString &engine)
 	QNetworkAccessManager::Operation method;
 	QByteArray body;
 
-	if (SearchesManager::setupQuery(query, engine, &request, &method, &body))
+	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
 	{
 		m_webView->page()->mainFrame()->load(request, method, body);
 	}
@@ -269,11 +269,11 @@ void QtWebKitWebWidget::searchMenuAboutToShow()
 
 	if (searchMenuAction->isEnabled() && searchMenuAction->menu()->actions().isEmpty())
 	{
-		const QStringList engines = SearchesManager::getEngines();
+		const QStringList engines = SearchesManager::getSearchEngines();
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
-			SearchInformation *search = SearchesManager::getEngine(engines.at(i));
+			SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
 
 			if (search)
 			{
@@ -318,11 +318,11 @@ void QtWebKitWebWidget::updateSearchActions(const QString &engine)
 	}
 
 	QAction *defaultSearchAction = getAction(SearchAction);
-	SearchInformation *search = SearchesManager::getEngine(engine.isEmpty() ? m_searchEngine : engine);
+	SearchInformation *search = SearchesManager::getSearchEngine(engine.isEmpty() ? m_searchEngine : engine);
 
 	if (!search)
 	{
-		search = SearchesManager::getEngine(SearchesManager::getEngines().first());
+		search = SearchesManager::getSearchEngine(SearchesManager::getSearchEngines().value(0, QString()));
 	}
 
 	if (search)
@@ -342,7 +342,7 @@ void QtWebKitWebWidget::updateSearchActions(const QString &engine)
 		defaultSearchAction->setToolTip(tr("No search engines defined"));
 	}
 
-	getAction(SearchMenuAction)->setEnabled(SearchesManager::getEngines().count() > 1);
+	getAction(SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
 }
 
 void QtWebKitWebWidget::showDialog(QWidget *dialog)
@@ -565,13 +565,13 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 						parameters.addQueryItem(inputs.at(i).attribute("name"), ((inputs.at(i) == m_hitResult.element()) ? "{searchTerms}" : value));
 					}
 
-					const QStringList identifiers = SearchesManager::getEngines();
+					const QStringList identifiers = SearchesManager::getSearchEngines();
 					QStringList shortcuts;
 					QList<SearchInformation*> engines;
 
 					for (int i = 0; i < identifiers.count(); ++i)
 					{
-						SearchInformation *engine = SearchesManager::getEngine(identifiers.at(i));
+						SearchInformation *engine = SearchesManager::getSearchEngine(identifiers.at(i));
 
 						if (!engine)
 						{
@@ -649,7 +649,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 					engines.append(engine);
 
-					if (SearchesManager::setEngines(engines) && engineData["isDefault"].toBool())
+					if (SearchesManager::setSearchEngines(engines) && engineData["isDefault"].toBool())
 					{
 						SettingsManager::setValue("Browser/DefaultSearchEngine", engineData["identifier"].toString());
 					}

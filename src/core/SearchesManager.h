@@ -38,20 +38,20 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static SearchInformation* readSearch(QIODevice *device, const QString &identifier);
 	static SearchesManager* getInstance();
-	static SearchInformation* getEngine(const QString &identifier);
-	static QStringList getEngines();
-	static QStringList getShortcuts();
+	static SearchInformation* getSearchEngine(const QString &identifier);
+	static QStringList getSearchEngines();
+	static QStringList getSearchShortcuts();
 	static bool writeSearch(QIODevice *device, SearchInformation *search);
-	static bool setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
-	static bool setEngines(QList<SearchInformation*> engines);
+	static bool setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
+	static bool setSearchEngines(const QList<SearchInformation*> &engines);
 
 private:
 	explicit SearchesManager(QObject *parent = NULL);
 
 	static SearchesManager *m_instance;
-	static QStringList m_order;
-	static QStringList m_shortcuts;
-	static QHash<QString, SearchInformation*> m_engines;
+	static QStringList m_searchEnginesOrder;
+	static QStringList m_searchShortcuts;
+	static QHash<QString, SearchInformation*> m_searchEngines;
 
 signals:
 	void searchEnginesModified();

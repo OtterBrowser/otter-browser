@@ -111,11 +111,11 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberDownloads").toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
 
-	const QStringList engines = SearchesManager::getEngines();
+	const QStringList engines = SearchesManager::getSearchEngines();
 
 	for (int i = 0; i < engines.count(); ++i)
 	{
-		SearchInformation *engine = SearchesManager::getEngine(engines.at(i));
+		SearchInformation *engine = SearchesManager::getSearchEngine(engines.at(i));
 
 		if (!engine)
 		{
@@ -495,7 +495,7 @@ void PreferencesDialog::save()
 		engines.append(engine);
 	}
 
-	if (SearchesManager::setEngines(engines))
+	if (SearchesManager::setSearchEngines(engines))
 	{
 		SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
 	}

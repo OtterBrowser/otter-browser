@@ -12,9 +12,9 @@ namespace Otter
 {
 
 SearchesManager* SearchesManager::m_instance = NULL;
-QStringList SearchesManager::m_order;
-QStringList SearchesManager::m_shortcuts;
-QHash<QString, SearchInformation*> SearchesManager::m_engines;
+QStringList SearchesManager::m_searchEnginesOrder;
+QStringList SearchesManager::m_searchShortcuts;
+QHash<QString, SearchInformation*> SearchesManager::m_searchEngines;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
@@ -75,11 +75,11 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 				{
 					const QString shortcut = reader.readElementText();
 
-					if (!shortcut.isEmpty() && !m_shortcuts.contains(shortcut))
+					if (!shortcut.isEmpty() && !m_searchShortcuts.contains(shortcut))
 					{
 						search->shortcut = shortcut;
 
-						m_shortcuts.append(shortcut);
+						m_searchShortcuts.append(shortcut);
 					}
 				}
 				else if (reader.name() == "ShortName")
@@ -118,31 +118,33 @@ SearchesManager* SearchesManager::getInstance()
 	return m_instance;
 }
 
-SearchInformation* SearchesManager::getEngine(const QString &identifier)
+SearchInformation* SearchesManager::getSearchEngine(const QString &identifier)
 {
-	return m_engines.value(identifier, NULL);
+	return m_searchEngines.value(identifier, NULL);
 }
 
-QStringList SearchesManager::getEngines()
+QStringList SearchesManager::getSearchEngines()
 {
 	const QString path = SettingsManager::getPath() + "/searches/";
-
-	QDir().mkpath(path);
-
 	const QDir directory(path);
 
-	if (directory.entryList(QDir::Files).isEmpty())
+	if (!QFile::exists(path))
 	{
-		const QStringList definitions = QDir(":/searches/").entryList(QDir::Files);
+		QDir().mkpath(path);
 
-		for (int i = 0; i < definitions.count(); ++i)
+		if (directory.entryList(QDir::Files).isEmpty())
 		{
-			QFile::copy(":/searches/" + definitions.at(i), directory.filePath(definitions.at(i)));
-			QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
+			const QStringList definitions = QDir(":/searches/").entryList(QDir::Files);
+
+			for (int i = 0; i < definitions.count(); ++i)
+			{
+				QFile::copy(":/searches/" + definitions.at(i), directory.filePath(definitions.at(i)));
+				QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
+			}
 		}
 	}
 
-	if (m_engines.isEmpty())
+	if (m_searchEngines.isEmpty())
 	{
 		const QStringList entries = directory.entryList(QDir::Files);
 
@@ -157,31 +159,31 @@ QStringList SearchesManager::getEngines()
 
 				if (search)
 				{
-					m_engines[identifier] = search;
+					m_searchEngines[identifier] = search;
 				}
 
 				file.close();
 			}
 		}
 
-		m_order = SettingsManager::getValue("Browser/SearchEnginesOrder").toStringList();
-		m_order.removeAll(QString());
+		m_searchEnginesOrder = SettingsManager::getValue("Browser/SearchEnginesOrder").toStringList();
+		m_searchEnginesOrder.removeAll(QString());
 
-		if (m_order.isEmpty())
+		if (m_searchEnginesOrder.isEmpty())
 		{
-			QStringList engines = m_engines.keys();
+			QStringList engines = m_searchEngines.keys();
 			engines.sort();
 
-			m_order = engines;
+			m_searchEnginesOrder = engines;
 		}
 	}
 
-	return m_order;
+	return m_searchEnginesOrder;
 }
 
-QStringList SearchesManager::getShortcuts()
+QStringList SearchesManager::getSearchShortcuts()
 {
-	return m_shortcuts;
+	return m_searchShortcuts;
 }
 
 bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
@@ -199,7 +201,7 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 	if (!search->icon.isNull())
 	{
-		const QSize size = search->icon.availableSizes().first();
+		const QSize size = search->icon.availableSizes().value(0, QSize(16, 16));
 		QByteArray data;
 		QBuffer buffer(&data);
 		buffer.open(QIODevice::WriteOnly);
@@ -272,14 +274,14 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 	return true;
 }
 
-bool SearchesManager::setupQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+bool SearchesManager::setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	if (!m_engines.contains(engine))
+	if (!m_searchEngines.contains(engine))
 	{
 		return false;
 	}
 
-	const SearchUrl search = getEngine(engine)->resultsUrl;
+	const SearchUrl search = getSearchEngine(engine)->resultsUrl;
 	QString urlString = search.url;
 	QHash<QString, QString> values;
 	values["searchTerms"] = query;
@@ -377,9 +379,9 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 	return true;
 }
 
-bool SearchesManager::setEngines(QList<SearchInformation*> engines)
+bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 {
-	QList<SearchInformation*> existingEngines = m_engines.values();
+	const QList<SearchInformation*> existingEngines = m_searchEngines.values();
 
 	for (int i = 0; i < existingEngines.count(); ++i)
 	{
@@ -392,16 +394,14 @@ bool SearchesManager::setEngines(QList<SearchInformation*> engines)
 				return false;
 			}
 
-			m_engines.remove(existingEngines.at(i)->identifier);
-			m_order.removeAll(existingEngines.at(i)->identifier);
+			m_searchEngines.remove(existingEngines.at(i)->identifier);
+			m_searchEnginesOrder.removeAll(existingEngines.at(i)->identifier);
 
 			delete existingEngines.at(i);
-
-			existingEngines[i] = NULL;
 		}
 	}
 
-	m_order.clear();
+	m_searchEnginesOrder.clear();
 
 	for (int i = 0; i < engines.count(); ++i)
 	{
@@ -421,7 +421,7 @@ bool SearchesManager::setEngines(QList<SearchInformation*> engines)
 				delete engines.at(j);
 			}
 
-			SettingsManager::setValue("Browser/SearchEnginesOrder", m_order);
+			SettingsManager::setValue("Browser/SearchEnginesOrder", m_searchEnginesOrder);
 
 			emit m_instance->searchEnginesModified();
 
@@ -430,12 +430,12 @@ bool SearchesManager::setEngines(QList<SearchInformation*> engines)
 
 		file.close();
 
-		m_engines[engines.at(i)->identifier] = engines.at(i);
+		m_searchEngines[engines.at(i)->identifier] = engines.at(i);
 
-		m_order.append(engines.at(i)->identifier);
+		m_searchEnginesOrder.append(engines.at(i)->identifier);
 	}
 
-	SettingsManager::setValue("Browser/SearchEnginesOrder", m_order);
+	SettingsManager::setValue("Browser/SearchEnginesOrder", m_searchEnginesOrder);
 
 	emit m_instance->searchEnginesModified();
 

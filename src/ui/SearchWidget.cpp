@@ -78,11 +78,11 @@ void SearchWidget::updateList()
 
 	m_model->clear();
 
-	const QStringList engines = SearchesManager::getEngines();
+	const QStringList engines = SearchesManager::getSearchEngines();
 
 	for (int i = 0; i < engines.count(); ++i)
 	{
-		SearchInformation *search = SearchesManager::getEngine(engines.at(i));
+		SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
 
 		if (search)
 		{
@@ -127,7 +127,13 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 {
 	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 
-	const QStringList engines = SearchesManager::getEngines();
+	const QStringList engines = SearchesManager::getSearchEngines();
+
+	if (engines.isEmpty())
+	{
+		return;
+	}
+
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue("Browser/DefaultSearchEngine").toString() : engine));
 
 	currentSearchChanged(index);
