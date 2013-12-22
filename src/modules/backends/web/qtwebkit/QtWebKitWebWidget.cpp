@@ -657,6 +657,11 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			}
 
 			break;
+		case ClearAllAction:
+			triggerAction(SelectAllAction);
+			triggerAction(DeleteAction);
+
+			break;
 		default:
 			break;
 	}
@@ -769,6 +774,8 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	if (m_hitResult.isContentEditable())
 	{
 		flags |= EditMenu;
+
+		getAction(ClearAllAction)->setEnabled(getAction(SelectAllAction)->isEnabled());
 	}
 
 	if (flags == NoMenu)
@@ -796,7 +803,7 @@ WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 	return widget;
 }
 
-QAction *QtWebKitWebWidget::getAction(WindowAction action)
+QAction* QtWebKitWebWidget::getAction(WindowAction action)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -945,14 +952,11 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 		case SearchAction:
 			ActionsManager::setupLocalAction(actionObject, "Search", true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case SearchMenuAction:
 			ActionsManager::setupLocalAction(actionObject, "SearchMenu", true);
 
 			actionObject->setMenu(new QMenu(this));
-			actionObject->setEnabled(false);
 
 			connect(actionObject->menu(), SIGNAL(aboutToShow()), this, SLOT(searchMenuAboutToShow()));
 			connect(actionObject->menu(), SIGNAL(triggered(QAction*)), this, SLOT(search(QAction*)));
@@ -964,8 +968,6 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 			break;
 		case ClearAllAction:
 			ActionsManager::setupLocalAction(actionObject, "ClearAll", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case SpellCheckAction:
@@ -1029,7 +1031,7 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 	return actionObject;
 }
 
-QUndoStack *QtWebKitWebWidget::getUndoStack()
+QUndoStack* QtWebKitWebWidget::getUndoStack()
 {
 	return m_webView->page()->undoStack();
 }
