@@ -67,9 +67,21 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 void WindowsManager::search(const QString &query, const QString &engine)
 {
-	open();
-
 	Window *window = getWindow();
+
+	if (window && window->isClonable())
+	{
+		window = window->clone(m_area);
+		window->setHistory(HistoryInformation());
+
+		addWindow(window);
+	}
+	else
+	{
+		open();
+
+		window = getWindow();
+	}
 
 	if (window)
 	{

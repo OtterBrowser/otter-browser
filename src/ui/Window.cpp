@@ -29,8 +29,6 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 		widget = new WebContentsWidget(privateWindow, NULL, this);
 	}
 
-	widget->setZoom(SettingsManager::getValue("Content/DefaultZoom", 100).toInt());
-
 	setContentsWidget(widget);
 
 	m_ui->addressWidget->setWindow(this);
@@ -70,10 +68,19 @@ void Window::close()
 
 void Window::search(const QString &query, const QString &engine)
 {
-	WebContentsWidget *widget = new WebContentsWidget(isPrivate(), NULL, this);
-	widget->search(query, engine);
+	WebContentsWidget *widget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
-	setContentsWidget(widget);
+	if (widget)
+	{
+		widget->search(query, engine);
+	}
+	else
+	{
+		widget = new WebContentsWidget(isPrivate(), NULL, this);
+		widget->search(query, engine);
+
+		setContentsWidget(widget);
+	}
 }
 
 void Window::print(QPrinter *printer)

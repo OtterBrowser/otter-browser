@@ -100,6 +100,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
 
+	setZoom(SettingsManager::getValue("Content/DefaultZoom", 100).toInt());
+
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchActions()));
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
@@ -122,7 +124,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 
 void QtWebKitWebWidget::search(QAction *action)
 {
-	const QString engine = ((!action || action->data().toString().isEmpty()) ? m_searchEngine : action->data().toString());
+	const QString engine = ((!action || action->data().type() != QVariant::String) ? m_searchEngine : action->data().toString());
 
 	if (SearchesManager::getSearchEngines().contains(engine))
 	{
@@ -681,6 +683,13 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 
 void QtWebKitWebWidget::setHistory(const HistoryInformation &history)
 {
+	if (history.entries.count() == 0)
+	{
+		m_webView->page()->history()->clear();
+
+		return;
+	}
+
 	qint64 documentSequence = 0;
 	qint64 itemSequence = 0;
 	QByteArray data;
@@ -843,8 +852,8 @@ WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
 	widget->setQuickSearchEngine(m_searchEngine);
 	widget->setUrl(getUrl());
-	widget->setZoom(getZoom());
 	widget->setHistory(getHistory());
+	widget->setZoom(getZoom());
 
 	return widget;
 }
@@ -1109,6 +1118,11 @@ QString QtWebKitWebWidget::getTitle() const
 	}
 
 	return title;
+}
+
+QString QtWebKitWebWidget::getSearchEngine() const
+{
+	return m_searchEngine;
 }
 
 QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)

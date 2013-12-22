@@ -106,8 +106,16 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebPage *page = new QtWebKitWebPage(NULL);
+		QtWebKitWebWidget *widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page);
 
-		emit requestedNewWindow(new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page));
+		if (m_webWidget)
+		{
+			widget->setDefaultTextEncoding(m_webWidget->getDefaultTextEncoding());
+			widget->setQuickSearchEngine(m_webWidget->getSearchEngine());
+			widget->setZoom(m_webWidget->getZoom());
+		}
+
+		emit requestedNewWindow(widget);
 
 		return page;
 	}

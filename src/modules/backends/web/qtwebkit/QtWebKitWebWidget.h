@@ -30,6 +30,7 @@ public:
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
+	QString getSearchEngine() const;
 	QVariant evaluateJavaScript(const QString &script);
 	QUrl getUrl() const;
 	QIcon getIcon() const;
