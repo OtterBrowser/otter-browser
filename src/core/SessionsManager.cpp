@@ -174,6 +174,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		{
 			const int history = sessionData.value(QString("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
 			SessionWindow sessionWindow;
+			sessionWindow.searchEngine = sessionData.value(QString("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
 			sessionWindow.group = sessionData.value(QString("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
 			sessionWindow.index = (sessionData.value(QString("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
 			sessionWindow.pinned = sessionData.value(QString("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
@@ -323,6 +324,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		return false;
 	}
 
+	const QString defaultSearchEngine = SettingsManager::getValue("Browser/DefaultSearchEngine").toString();
 	QTextStream stream(&file);
 	stream << "[Session]\n";
 	stream << "title=" << sessionTitle.replace('\n', "\\n") << '\n';
@@ -341,6 +343,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
 			stream << QString("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
+			stream << "searchEngine=" << ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine) << '\n';
 			stream << "pinned=" << sessionEntry.windows.at(j).pinned << '\n';
 			stream << "group=0\n";
 			stream << "history=" << sessionEntry.windows.at(j).history.count() << '\n';

@@ -14,6 +14,11 @@ class SearchWidget : public QComboBox
 public:
 	explicit SearchWidget(QWidget *parent = NULL);
 
+	QString getCurrentSearchEngine() const;
+
+public slots:
+	void setCurrentSearchEngine(const QString &engine);
+
 protected slots:
 	void currentSearchChanged(int index);
 	void queryChanged(const QString &query);

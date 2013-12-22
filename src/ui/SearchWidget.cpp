@@ -2,6 +2,7 @@
 #include "PreferencesDialog.h"
 #include "SearchDelegate.h"
 #include "../core/SearchesManager.h"
+#include "../core/SessionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
@@ -47,6 +48,8 @@ void SearchWidget::currentSearchChanged(int index)
 
 		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
 		lineEdit()->setText(m_query);
+
+		SessionsManager::markSessionModified();
 
 		sendRequest();
 	}
@@ -115,12 +118,27 @@ void SearchWidget::updateList()
 		lineEdit()->setPlaceholderText(QString());
 	}
 
-	const int index = qMax(0, engines.indexOf(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()));
+	setCurrentSearchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString());
+
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+}
+
+void SearchWidget::setCurrentSearchEngine(const QString &engine)
+{
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+
+	const QStringList engines = SearchesManager::getEngines();
+	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue("Browser/DefaultSearchEngine").toString() : engine));
 
 	currentSearchChanged(index);
 	setCurrentIndex(index);
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+}
+
+QString SearchWidget::getCurrentSearchEngine() const
+{
+	return itemData(currentIndex(), (Qt::UserRole + 1)).toString();
 }
 
 }

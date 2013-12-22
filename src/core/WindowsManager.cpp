@@ -155,6 +155,7 @@ void WindowsManager::restore(int index)
 	Window *window = new Window(m_privateSession, NULL, m_area);
 	window->setUrl(entry.url());
 	window->setHistory(history);
+	window->setSearchEngine(entry.searchEngine);
 	window->setPinned(entry.pinned);
 	window->setZoom(entry.zoom());
 
@@ -358,6 +359,7 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		const HistoryInformation history = window->getHistory();
 		SessionWindow information;
+		information.searchEngine = window->getSearchEngine();
 		information.history = history.entries;
 		information.group = 0;
 		information.index = history.index;
@@ -565,6 +567,7 @@ SessionEntry WindowsManager::getSession() const
 		{
 			const HistoryInformation history = window->getHistory();
 			SessionWindow information;
+			information.searchEngine = window->getSearchEngine();
 			information.history = history.entries;
 			information.group = 0;
 			information.index = history.index;

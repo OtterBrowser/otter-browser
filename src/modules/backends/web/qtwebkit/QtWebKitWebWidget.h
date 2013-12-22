@@ -24,6 +24,7 @@ public:
 
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
+	void setQuickSearchEngine(const QString &searchEngine);
 	WebWidget* clone(ContentsWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();

@@ -28,6 +28,7 @@ struct HistoryInformation
 
 struct SessionWindow
 {
+	QString searchEngine;
 	QList<HistoryEntry> history;
 	int group;
 	int index;

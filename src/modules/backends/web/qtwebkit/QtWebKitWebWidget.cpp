@@ -143,6 +143,16 @@ void QtWebKitWebWidget::print(QPrinter *printer)
 	m_webView->print(printer);
 }
 
+void QtWebKitWebWidget::setQuickSearchEngine(const QString &searchEngine)
+{
+	if (searchEngine != m_searchEngine)
+	{
+		m_searchEngine = searchEngine;
+
+		updateSearchActions();
+	}
+}
+
 void QtWebKitWebWidget::loadStarted()
 {
 	m_isLoading = true;
@@ -776,8 +786,9 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 {
-	WebWidget *widget = new QtWebKitWebWidget(isPrivate(), parent);
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
+	widget->setQuickSearchEngine(m_searchEngine);
 	widget->setUrl(getUrl());
 	widget->setZoom(getZoom());
 	widget->setHistory(getHistory());

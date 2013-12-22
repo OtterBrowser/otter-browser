@@ -109,6 +109,14 @@ void Window::setDefaultTextEncoding(const QString &encoding)
 	}
 }
 
+void Window::setSearchEngine(const QString &engine)
+{
+	if (!engine.isEmpty())
+	{
+		m_ui->searchWidget->setCurrentSearchEngine(engine);
+	}
+}
+
 void Window::setHistory(const HistoryInformation &history)
 {
 	m_contentsWidget->setHistory(history);
@@ -223,6 +231,7 @@ Window* Window::clone(QWidget *parent)
 	}
 
 	Window *window = new Window(false, m_contentsWidget->clone(), parent);
+	window->setSearchEngine(getSearchEngine());
 	window->setPinned(isPinned());
 
 	return window;
@@ -251,6 +260,11 @@ QString Window::getDefaultTextEncoding() const
 	}
 
 	return QString();
+}
+
+QString Window::getSearchEngine() const
+{
+	return m_ui->searchWidget->getCurrentSearchEngine();
 }
 
 QString Window::getTitle() const

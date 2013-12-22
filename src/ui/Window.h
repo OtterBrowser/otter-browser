@@ -107,6 +107,7 @@ public:
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
+	QString getSearchEngine() const;
 	QString getTitle() const;
 	QString getType() const;
 	QUrl getUrl() const;
@@ -124,6 +125,7 @@ public slots:
 	void search(const QString &query, const QString &engine);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
+	void setSearchEngine(const QString &engine);
 	void setHistory(const HistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
