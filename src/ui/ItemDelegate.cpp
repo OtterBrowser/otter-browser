@@ -39,7 +39,10 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		titleReactangle.setLeft(option.rect.left() + option.rect.height());
 	}
 
-	drawDisplay(painter, option, titleReactangle, index.data(Qt::DisplayRole).toString());
+	QStyleOptionViewItem titleOption = option;
+	titleOption.font = index.data(Qt::FontRole).value<QFont>();
+
+	drawDisplay(painter, titleOption, titleReactangle, index.data(Qt::DisplayRole).toString());
 }
 
 }
