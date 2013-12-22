@@ -1,7 +1,7 @@
 #include "PreferencesDialog.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
-#include "preferences/SearchPropertiesDialog.h"
+#include "SearchPropertiesDialog.h"
 #include "preferences/ShortcutDelegate.h"
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
@@ -130,11 +130,11 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 		engineData["resultsUrl"] = engine->resultsUrl.url;
 		engineData["resultsEnctype"] = engine->resultsUrl.enctype;
 		engineData["resultsMethod"] = engine->resultsUrl.method;
-		engineData["resultsParameters"] = engine->resultsUrl.parameters.toString();
+		engineData["resultsParameters"] = engine->resultsUrl.parameters.toString(QUrl::FullyDecoded);
 		engineData["suggestionsUrl"] = engine->suggestionsUrl.url;
 		engineData["suggestionsEnctype"] = engine->suggestionsUrl.enctype;
 		engineData["suggestionsMethod"] = engine->suggestionsUrl.method;
-		engineData["suggestionsParameters"] = engine->suggestionsUrl.parameters.toString();
+		engineData["suggestionsParameters"] = engine->suggestionsUrl.parameters.toString(QUrl::FullyDecoded);
 
 		QTableWidgetItem *engineItem = new QTableWidgetItem(engine->icon, engine->title);
 		engineItem->setToolTip(engine->description);
@@ -298,7 +298,7 @@ void PreferencesDialog::addSearch()
 
 	do
 	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Search Engine Identifier:"));
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Search Engine Identifier:"));
 
 		if (identifier.isEmpty())
 		{

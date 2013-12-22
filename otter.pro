@@ -38,6 +38,7 @@ SOURCES += src/main.cpp \
     src/ui/PreviewWidget.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/SearchDelegate.cpp \
+    src/ui/SearchPropertiesDialog.cpp \
     src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/StatusBarWidget.cpp \
@@ -45,7 +46,6 @@ SOURCES += src/main.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
-    src/ui/preferences/SearchPropertiesDialog.cpp \
     src/ui/preferences/ShortcutDelegate.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
@@ -88,6 +88,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/PreviewWidget.h \
     src/ui/SaveSessionDialog.h \
     src/ui/SearchDelegate.h \
+    src/ui/SearchPropertiesDialog.h \
     src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/StatusBarWidget.h \
@@ -95,7 +96,6 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
-    src/ui/preferences/SearchPropertiesDialog.h \
     src/ui/preferences/ShortcutDelegate.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
@@ -115,10 +115,10 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/SaveSessionDialog.ui \
+    src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/Window.ui \
     src/ui/preferences/BlockedContentDialog.ui \
-    src/ui/preferences/SearchPropertiesDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/configuration/ConfigurationContentsWidget.ui \
     src/modules/windows/cookies/CookiePropertiesDialog.ui \

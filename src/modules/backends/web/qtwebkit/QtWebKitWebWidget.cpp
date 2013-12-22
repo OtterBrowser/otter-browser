@@ -9,9 +9,11 @@
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsWidget.h"
+#include "../../../../ui/SearchPropertiesDialog.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
+#include <QtCore/QRegularExpression>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
@@ -20,6 +22,7 @@
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
@@ -502,6 +505,148 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			search(getAction(SearchAction));
 
 			break;
+		case CreateSearchAction:
+			{
+				QWebElement parentElement = m_hitResult.element().parent();
+
+				while (!parentElement.isNull() && parentElement.tagName().toLower() != "form")
+				{
+					parentElement = parentElement.parent();
+				}
+
+				const QWebElementCollection inputs = parentElement.findAll("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]");
+
+				if (!parentElement.isNull() && parentElement.hasAttribute("action") && inputs.count() > 0)
+				{
+					QUrlQuery parameters;
+
+					for (int i = 0; i < inputs.count(); ++i)
+					{
+						QString value;
+
+						if (inputs.at(i).tagName().toLower() == "textarea")
+						{
+							value = inputs.at(i).toPlainText();
+						}
+						else if (inputs.at(i).tagName().toLower() == "select")
+						{
+							const QWebElementCollection options = inputs.at(i).findAll("option");
+
+							for (int j = 0; j < options.count(); ++j)
+							{
+								if (options.at(j).hasAttribute("selected"))
+								{
+									value = options.at(j).attribute("value", options.at(j).toPlainText());
+
+									break;
+								}
+							}
+						}
+						else
+						{
+							if ((inputs.at(i).attribute("type") == "checkbox" || inputs.at(i).attribute("type") == "radio") && !inputs.at(i).hasAttribute("checked"))
+							{
+								continue;
+							}
+
+							value = inputs.at(i).attribute("value");
+						}
+
+						parameters.addQueryItem(inputs.at(i).attribute("name"), ((inputs.at(i) == m_hitResult.element()) ? "{searchTerms}" : value));
+					}
+
+					const QStringList identifiers = SearchesManager::getEngines();
+					QStringList shortcuts;
+					QList<SearchInformation*> engines;
+
+					for (int i = 0; i < identifiers.count(); ++i)
+					{
+						SearchInformation *engine = SearchesManager::getEngine(identifiers.at(i));
+
+						if (!engine)
+						{
+							continue;
+						}
+
+						engines.append(engine);
+
+						const QString shortcut = engine->shortcut;
+
+						if (!shortcut.isEmpty())
+						{
+							shortcuts.append(shortcut);
+						}
+					}
+
+					QString identifier = getUrl().host().toLower().remove(QRegularExpression("[^a-z0-9]"));
+
+					while (identifier.isEmpty() || identifiers.contains(identifier))
+					{
+						identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Search Engine Identifier:"));
+
+						if (identifier.isEmpty())
+						{
+							return;
+						}
+					}
+
+					const QIcon icon = m_webView->icon();
+					const QUrl url(parentElement.attribute("action"));
+					QVariantHash engineData;
+					engineData["identifier"] = identifier;
+					engineData["isDefault"] = false;
+					engineData["encoding"] = "UTF-8";
+					engineData["selfUrl"] = QString();
+					engineData["resultsUrl"] = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+					engineData["resultsEnctype"] = parentElement.attribute("enctype");
+					engineData["resultsMethod"] = ((parentElement.attribute("method", "get").toLower() == "post") ? "post" : "get");
+					engineData["resultsParameters"] = parameters.toString(QUrl::FullyDecoded);
+					engineData["suggestionsUrl"] = QString();
+					engineData["suggestionsEnctype"] = QString();
+					engineData["suggestionsMethod"] = "get";
+					engineData["suggestionsParameters"] = QString();
+					engineData["shortcut"] = QString();
+					engineData["title"] = getTitle();
+					engineData["description"] = QString();
+					engineData["icon"] = (icon.isNull() ? Utils::getIcon("edit-find") : icon);
+
+					SearchPropertiesDialog dialog(engineData, shortcuts, this);
+
+					if (dialog.exec() == QDialog::Rejected)
+					{
+						return;
+					}
+
+					engineData = dialog.getEngineData();
+
+					if (shortcuts.contains(engineData["shortcut"].toString()))
+					{
+						engineData["shortcut"] = QString();
+					}
+
+					SearchInformation *engine = new SearchInformation();
+					engine->identifier = engineData["identifier"].toString();
+					engine->title = engineData["title"].toString();
+					engine->description = engineData["description"].toString();
+					engine->shortcut = engineData["shortcut"].toString();
+					engine->encoding = engineData["encoding"].toString();
+					engine->selfUrl = engineData["selfUrl"].toString();
+					engine->resultsUrl.url = engineData["resultsUrl"].toString();
+					engine->resultsUrl.enctype = engineData["resultsEnctype"].toString();
+					engine->resultsUrl.method = engineData["resultsMethod"].toString();
+					engine->resultsUrl.parameters = QUrlQuery(engineData["resultsParameters"].toString());
+					engine->icon = engineData["icon"].value<QIcon>();
+
+					engines.append(engine);
+
+					if (SearchesManager::setEngines(engines) && engineData["isDefault"].toBool())
+					{
+						SettingsManager::setValue("Browser/DefaultSearchEngine", engineData["identifier"].toString());
+					}
+				}
+			}
+
+			break;
 		default:
 			break;
 	}
@@ -574,9 +719,19 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 
-	if (m_hitResult.element().tagName().toLower() == "textarea" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
+	if (m_hitResult.element().tagName().toLower() == "textarea" || m_hitResult.element().tagName().toLower() == "select" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
 	{
-		flags |= FormMenu;
+		QWebElement parentElement = m_hitResult.element().parent();
+
+		while (!parentElement.isNull() && parentElement.tagName().toLower() != "form")
+		{
+			parentElement = parentElement.parent();
+		}
+
+		if (!parentElement.isNull() && parentElement.hasAttribute("action") && !parentElement.findFirst("input[name], select[name], textarea[name]").isNull())
+		{
+			flags |= FormMenu;
+		}
 	}
 
 	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
@@ -814,8 +969,6 @@ QAction *QtWebKitWebWidget::getAction(WindowAction action)
 			break;
 		case CreateSearchAction:
 			ActionsManager::setupLocalAction(actionObject, "CreateSearch", true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case ReloadOrStopAction:

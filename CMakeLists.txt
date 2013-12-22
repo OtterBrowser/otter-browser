@@ -71,6 +71,7 @@ set(otter_src
 	src/ui/PreviewWidget.cpp
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchDelegate.cpp
+	src/ui/SearchPropertiesDialog.cpp
 	src/ui/SearchWidget.cpp
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/StatusBarWidget.cpp
@@ -78,7 +79,6 @@ set(otter_src
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
-	src/ui/preferences/SearchPropertiesDialog.cpp
 	src/ui/preferences/ShortcutDelegate.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
@@ -104,10 +104,10 @@ qt5_wrap_ui(otter_ui
 	src/ui/MainWindow.ui
 	src/ui/PreferencesDialog.ui
 	src/ui/SaveSessionDialog.ui
+	src/ui/SearchPropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/BlockedContentDialog.ui
-	src/ui/preferences/SearchPropertiesDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
 	src/modules/windows/cookies/CookiePropertiesDialog.ui

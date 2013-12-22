@@ -302,7 +302,7 @@ bool SearchesManager::setupQuery(const QString &query, const QString &engine, QN
 	QUrl url(urlString);
 	QUrlQuery getQuery(url);
 	QUrlQuery postQuery;
-	const QList<QPair<QString, QString> > parameters = search.parameters.queryItems();
+	const QList<QPair<QString, QString> > parameters = search.parameters.queryItems(QUrl::FullyDecoded);
 
 	for (int i = 0; i < parameters.count(); ++i)
 	{
