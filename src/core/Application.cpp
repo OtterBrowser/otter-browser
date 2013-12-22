@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ActionsManager.h"
 #include "BookmarksManager.h"
+#include "HistoryManager.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
@@ -87,7 +88,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SettingsManager::createInstance(path + "/otter.conf", this);
 
-	QSettings defaults(":/files/options.ini", QSettings::IniFormat, this);
+	QSettings defaults(":/schemas/options.ini", QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
 
 	for (int i = 0; i < groups.count(); ++i)
@@ -134,6 +135,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	ActionsManager::createInstance(this);
 
 	BookmarksManager::createInstance(this);
+
+	HistoryManager::createInstance(this);
 
 	WebBackendsManager::createInstance(this);
 

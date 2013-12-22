@@ -19,7 +19,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	m_model->sort(0);
 
-	QSettings defaults(":/files/options.ini", QSettings::IniFormat, this);
+	QSettings defaults(":/schemas/options.ini", QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
 
 	for (int i = 0; i < groups.count(); ++i)

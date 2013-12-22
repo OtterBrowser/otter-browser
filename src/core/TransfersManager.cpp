@@ -197,7 +197,7 @@ void TransfersManager::save()
 	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
 	history.clear();
 
-	if (SettingsManager::getValue("Browser/PrivateMode").toBool() || !SettingsManager::getValue("Browser/RememberDownloads").toBool())
+	if (SettingsManager::getValue("Browser/PrivateMode").toBool() || !SettingsManager::getValue("Browser/RememberDownloadsHistory").toBool())
 	{
 		return;
 	}

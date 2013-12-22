@@ -2,6 +2,7 @@
 #include "QtWebKitWebPage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
+#include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
@@ -37,8 +38,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_searchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
+	m_historyEntry(-1),
 	m_isLinkHovered(false),
-	m_isLoading(false)
+	m_isLoading(false),
+	m_isTyped(false)
 {
 	m_splitter->addWidget(m_webView);
 	m_splitter->setChildrenCollapsible(false);
@@ -189,6 +192,10 @@ void QtWebKitWebWidget::loadStarted()
 	if (!isPrivate())
 	{
 		SessionsManager::markSessionModified();
+
+		m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+
+		m_isTyped = false;
 	}
 
 	emit loadingChanged(true);
@@ -212,10 +219,23 @@ void QtWebKitWebWidget::loadFinished(bool ok)
 		action->setShortcut(QKeySequence());
 	}
 
-	if (ok && !isPrivate())
+	if (!isPrivate())
 	{
-		SessionsManager::markSessionModified();
+		if (ok)
+		{
+			SessionsManager::markSessionModified();
+
+			if (m_historyEntry >= 0)
+			{
+				HistoryManager::updateEntry(m_historyEntry, getUrl(), m_webView->title(), m_webView->icon());
+			}
+		}
+		else if (m_historyEntry >= 0)
+		{
+			HistoryManager::removeEntry(m_historyEntry);
+		}
 	}
+
 
 	emit loadingChanged(false);
 }
@@ -741,6 +761,8 @@ void QtWebKitWebWidget::setUrl(const QUrl &url)
 
 		return;
 	}
+
+	m_isTyped = true;
 
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{

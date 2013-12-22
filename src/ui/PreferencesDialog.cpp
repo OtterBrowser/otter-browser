@@ -108,7 +108,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue("Browser/PrivateMode").toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
-	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberDownloads").toBool());
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberBrowsingHistory").toBool());
+	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberDownloadsHistory").toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
 
 	const QStringList engines = SearchesManager::getSearchEngines();
@@ -461,7 +462,8 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
-	SettingsManager::setValue("Browser/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
+	SettingsManager::setValue("Browser/RememberBrowsingHistory", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
+	SettingsManager::setValue("Browser/RememberDownloadsHistory", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
 
 	QList<SearchInformation*> engines;

@@ -65,7 +65,6 @@
         <file>icons/task-ongoing.png</file>
         <file>icons/task-reject.png</file>
         <file>icons/configuration.png</file>
-        <file>files/options.ini</file>
         <file>searches/google.xml</file>
         <file>searches/bing.xml</file>
         <file>searches/duckduckgo.xml</file>
@@ -75,5 +74,7 @@
         <file>icons/audio-volume-muted.png</file>
         <file>icons/media-playback-pause.png</file>
         <file>icons/media-playback-start.png</file>
+        <file>schemas/browsingHistory.sql</file>
+        <file>schemas/options.ini</file>
     </qresource>
 </RCC>

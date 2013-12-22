@@ -37,6 +37,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Sensors REQUIRED)
+find_package(Qt5Sql REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5WebKit REQUIRED)
 find_package(Qt5WebKitWidgets REQUIRED)
@@ -48,6 +49,7 @@ set(otter_src
 	src/core/BookmarksManager.cpp
 	src/core/CookieJar.cpp
 	src/core/FileSystemCompleterModel.cpp
+	src/core/HistoryManager.cpp
 	src/core/LocalListingNetworkReply.cpp
 	src/core/NetworkAccessManager.cpp
 	src/core/SearchesManager.cpp

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network printsupport sensors webkitwidgets widgets
+QT += core gui network printsupport sensors sql webkitwidgets widgets
 
 TARGET = otter-browser
 TEMPLATE = app
@@ -15,6 +15,7 @@ SOURCES += src/main.cpp \
     src/core/BookmarksManager.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
+    src/core/HistoryManager.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/NetworkAccessManager.cpp \
     src/core/SearchesManager.cpp \
@@ -66,6 +67,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/BookmarksManager.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
+    src/core/HistoryManager.h \
     src/core/LocalListingNetworkReply.h \
     src/core/NetworkAccessManager.h \
     src/core/SearchesManager.h \

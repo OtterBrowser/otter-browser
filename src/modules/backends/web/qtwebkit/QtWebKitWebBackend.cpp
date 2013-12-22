@@ -19,6 +19,8 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+	globalSettings->setIconDatabasePath(cachePath);
+	globalSettings->setOfflineStoragePath(cachePath);
 
 	optionChanged("Browser/");
 

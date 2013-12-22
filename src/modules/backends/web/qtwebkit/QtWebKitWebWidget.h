@@ -81,8 +81,10 @@ private:
 	QPixmap m_thumbnail;
 	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_actions;
+	qint64 m_historyEntry;
 	bool m_isLinkHovered;
 	bool m_isLoading;
+	bool m_isTyped;
 };
 
 }
