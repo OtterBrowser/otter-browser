@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -1006,9 +1006,6 @@
              <layout class="QHBoxLayout" name="clearHistoryLayout">
               <item>
                <widget class="QCheckBox" name="clearHistoryCheckBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="text">
                  <string>Clear history when application closes</string>
                 </property>
@@ -1029,9 +1026,6 @@
               </item>
               <item>
                <widget class="QPushButton" name="clearHistoryButton">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="text">
                  <string>Settings...</string>
                 </property>

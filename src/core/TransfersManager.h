@@ -46,6 +46,7 @@ public:
 	~TransfersManager();
 
 	static void createInstance(QObject *parent = NULL);
+	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
 	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
 	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);

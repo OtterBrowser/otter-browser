@@ -197,7 +197,7 @@ void TransfersManager::save()
 	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
 	history.clear();
 
-	if (SettingsManager::getValue("Browser/PrivateMode").toBool() || !SettingsManager::getValue("Browser/RememberDownloadsHistory").toBool())
+	if (SettingsManager::getValue("Browser/PrivateMode").toBool() || !SettingsManager::getValue("History/RememberDownloads").toBool())
 	{
 		return;
 	}
@@ -222,6 +222,17 @@ void TransfersManager::save()
 	}
 
 	history.sync();
+}
+
+void TransfersManager::clearTransfers(int period)
+{
+	for (int i = 0; i < m_transfers.count(); ++i)
+	{
+		if (m_transfers.at(i)->state == FinishedTransfer && (period == 0 || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.secsTo(QDateTime::currentDateTime()) > (period * 3600))))
+		{
+			TransfersManager::removeTransfer(m_transfers.at(i));
+		}
+	}
 }
 
 TransfersManager* TransfersManager::getInstance()

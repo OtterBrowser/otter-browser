@@ -29,6 +29,7 @@ public:
 		AcceptExistingCookies = 2
 	};
 
+	void clearCookies(int period = 0);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies() const;
 

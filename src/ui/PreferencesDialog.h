@@ -29,6 +29,7 @@ protected slots:
 	void fontChanged(QWidget *editor);
 	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void colorChanged(QWidget *editor);
+	void setupClearHistory();
 	void filterSearch(const QString &filter);
 	void currentSearchChanged(int currentRow);
 	void addSearch();

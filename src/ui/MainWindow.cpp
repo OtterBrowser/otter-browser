@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
+#include "ClearHistoryDialog.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
@@ -7,6 +8,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
+#include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -216,6 +218,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionViewHistory, SIGNAL(triggered()), this, SLOT(actionViewHistory()));
+	connect(m_ui->actionClearHistory, SIGNAL(triggered()), this, SLOT(actionClearHistory()));
 	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
 	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
@@ -300,6 +303,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				event->ignore();
 
 				return;
+			}
+		}
+
+		QStringList clearSettings = SettingsManager::getValue("History/ClearOnClose").toStringList();
+		clearSettings.removeAll(QString());
+
+		if (!clearSettings.isEmpty())
+		{
+			if (clearSettings.contains("browsing"))
+			{
+				HistoryManager::clearHistory();
+			}
+
+			if (clearSettings.contains("cookies"))
+			{
+				NetworkAccessManager::clearCookies();
+			}
+
+			if (clearSettings.contains("downloads"))
+			{
+				TransfersManager::clearTransfers();
+			}
+
+			if (clearSettings.contains("cache"))
+			{
+				NetworkAccessManager::clearCache();
 			}
 		}
 	}
@@ -444,6 +473,12 @@ void MainWindow::actionViewHistory()
 	{
 		m_windowsManager->open(url);
 	}
+}
+
+void MainWindow::actionClearHistory()
+{
+	ClearHistoryDialog dialog(false, this);
+	dialog.exec();
 }
 
 void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)

@@ -30,6 +30,7 @@ SOURCES += src/main.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
+    src/ui/ClearHistoryDialog.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/ItemDelegate.cpp \
@@ -83,6 +84,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/AddressWidget.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
+    src/ui/ClearHistoryDialog.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/ItemDelegate.h \
@@ -118,6 +120,7 @@ HEADERS += src/core/ActionsManager.h \
 
 FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
+    src/ui/ClearHistoryDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/SaveSessionDialog.ui \

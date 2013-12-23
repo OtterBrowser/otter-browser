@@ -29,7 +29,7 @@ class HistoryManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void clear();
+	static void clearHistory(int period = 0);
 	static HistoryManager* getInstance();
 	static HistoryEntry getEntry(qint64 entry);
 	static QList<HistoryEntry> getEntries(bool typed = false);

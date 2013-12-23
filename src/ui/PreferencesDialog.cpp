@@ -1,4 +1,5 @@
 #include "PreferencesDialog.h"
+#include "ClearHistoryDialog.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
@@ -108,9 +109,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue("Browser/PrivateMode").toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
-	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberBrowsingHistory").toBool());
-	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("Browser/RememberDownloadsHistory").toBool());
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberBrowsing").toBool());
+	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberDownloads").toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
+	m_ui->clearHistoryCheckBox->setChecked(!SettingsManager::getValue("History/ClearOnClose").toString().isEmpty());
 
 	const QStringList engines = SearchesManager::getSearchEngines();
 
@@ -253,6 +255,14 @@ void PreferencesDialog::colorChanged(QWidget *editor)
 		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setBackgroundColor(QColor(widget->getValue().toString()));
 		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setData(Qt::EditRole, widget->getValue());
 	}
+}
+
+void PreferencesDialog::setupClearHistory()
+{
+	ClearHistoryDialog dialog(true, this);
+	dialog.exec();
+
+	m_ui->clearHistoryCheckBox->setChecked(!SettingsManager::getValue("History/ClearOnClose").toString().isEmpty());
 }
 
 void PreferencesDialog::filterSearch(const QString &filter)
@@ -462,8 +472,8 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
-	SettingsManager::setValue("Browser/RememberBrowsingHistory", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
-	SettingsManager::setValue("Browser/RememberDownloadsHistory", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
+	SettingsManager::setValue("History/RememberBrowsing", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
+	SettingsManager::setValue("History/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
 
 	QList<SearchInformation*> engines;

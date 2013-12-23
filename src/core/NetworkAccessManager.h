@@ -18,7 +18,8 @@ public:
 	explicit NetworkAccessManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
 
 	void resetStatistics();
-
+	static void clearCookies(int period = 0);
+	static void clearCache(int period = 0);
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
 	static QNetworkDiskCache* getCache();
 

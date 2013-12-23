@@ -18,7 +18,7 @@ bool HistoryManager::m_enabled = false;
 HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	m_cleanupTimer(0)
 {
-	optionChanged("Browser/RememberBrowsingHistory");
+	optionChanged("History/RememberBrowsing");
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
@@ -48,18 +48,35 @@ void HistoryManager::scheduleCleanup()
 	}
 }
 
-void HistoryManager::clear()
+void HistoryManager::clearHistory(int period)
 {
 	QSqlDatabase database = QSqlDatabase::database("browsingHistory");
+
+	if (period > 0 && !database.isValid())
+	{
+		database = QSqlDatabase::addDatabase("QSQLITE", "browsingHistory");
+		database.setDatabaseName(SettingsManager::getPath() + "/browsingHistory.sqlite");
+		database.open();
+	}
+
 	const QString path = SettingsManager::getPath() + "/browsingHistory.sqlite";
 
 	if (database.isValid())
 	{
-		database.exec("DELETE FROM \"visits\";");
-		database.exec("DELETE FROM \"locations\";");
-		database.exec("DELETE FROM \"hosts\";");
-		database.exec("DELETE FROM \"icons\";");
-		database.exec("VACUUM;");
+		if (period > 0)
+		{
+			database.exec(QString("DELETE FROM \"visits\" WHERE \"time\" >= %1;").arg(QDateTime::currentDateTime().toTime_t() - (period * 3600)));
+
+			m_instance->scheduleCleanup();
+		}
+		else
+		{
+			database.exec("DELETE FROM \"visits\";");
+			database.exec("DELETE FROM \"locations\";");
+			database.exec("DELETE FROM \"hosts\";");
+			database.exec("DELETE FROM \"icons\";");
+			database.exec("VACUUM;");
+		}
 	}
 	else if (QFile::exists(path))
 	{
@@ -71,9 +88,9 @@ void HistoryManager::clear()
 
 void HistoryManager::optionChanged(const QString &option)
 {
-	if (option == "Browser/RememberBrowsingHistory" || option == "Browser/PrivateMode")
+	if (option == "History/RememberBrowsing" || option == "Browser/PrivateMode")
 	{
-		const bool enabled = (SettingsManager::getValue("Browser/RememberBrowsingHistory").toBool() && !SettingsManager::getValue("Browser/PrivateMode").toBool());
+		const bool enabled = (SettingsManager::getValue("History/RememberBrowsing").toBool() && !SettingsManager::getValue("Browser/PrivateMode").toBool());
 
 		if (enabled && !m_enabled)
 		{

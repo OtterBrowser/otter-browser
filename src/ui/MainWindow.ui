@@ -420,9 +420,6 @@
    </property>
   </action>
   <action name="actionClearHistory">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Clear History...</string>
    </property>

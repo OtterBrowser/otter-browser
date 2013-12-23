@@ -72,6 +72,14 @@ void CookieJar::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
+void CookieJar::clearCookies(int period)
+{
+	Q_UNUSED(period)
+
+	setAllCookies(QList<QNetworkCookie>());
+	save();
+}
+
 void CookieJar::save()
 {
 	QFile file(SettingsManager::getPath() + "/cookies.dat");

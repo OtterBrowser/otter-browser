@@ -6,6 +6,7 @@
 #include "../ui/AuthenticationDialog.h"
 #include "../ui/ContentsWidget.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QStandardPaths>
@@ -65,6 +66,53 @@ void NetworkAccessManager::resetStatistics()
 	m_bytesTotal = 0;
 	m_finishedRequests = 0;
 	m_startedRequests = 0;
+}
+
+void NetworkAccessManager::clearCookies(int period)
+{
+	if (!m_cookieJar)
+	{
+		m_cookieJar = new CookieJar(QCoreApplication::instance());
+	}
+
+	m_cookieJar->clearCookies(period);
+}
+
+void NetworkAccessManager::clearCache(int period)
+{
+	QNetworkDiskCache *cache = getCache();
+
+	if (period <= 0)
+	{
+		cache->clear();
+
+		return;
+	}
+
+	const QDir cacheDirectory(cache->cacheDirectory());
+	const QStringList directories = cacheDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+	for (int i = 0; i < directories.count(); ++i)
+	{
+		const QDir cacheSubDirectory(cacheDirectory.absoluteFilePath(directories.at(i)));
+		const QStringList subDirectories = cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+		for (int j = 0; j < subDirectories.count(); ++j)
+		{
+			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
+			const QStringList files = cacheFilesDirectory.entryList(QDir::Files);
+
+			for (int k = 0; k < files.count(); ++k)
+			{
+				const QNetworkCacheMetaData metaData = cache->fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k)));
+
+				if (metaData.isValid() && metaData.lastModified().isValid() && metaData.lastModified().secsTo(QDateTime::currentDateTime()) > (period * 3600))
+				{
+					cache->remove(metaData.url());
+				}
+			}
+		}
+	}
 }
 
 void NetworkAccessManager::timerEvent(QTimerEvent *event)

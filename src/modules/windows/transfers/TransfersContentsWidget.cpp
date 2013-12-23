@@ -281,15 +281,7 @@ void TransfersContentsWidget::startQuickTransfer()
 
 void TransfersContentsWidget::clearFinishedTransfers()
 {
-	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
-
-	for (int i = 0; i < transfers.count(); ++i)
-	{
-		if (transfers.at(i)->state == FinishedTransfer)
-		{
-			TransfersManager::removeTransfer(transfers.at(i));
-		}
-	}
+	TransfersManager::clearTransfers();
 }
 
 void TransfersContentsWidget::showContextMenu(const QPoint &point)
