@@ -3,6 +3,7 @@
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
+#include "../modules/windows/history/HistoryContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
 
@@ -124,7 +125,7 @@ void Window::setSearchEngine(const QString &engine)
 	}
 }
 
-void Window::setHistory(const HistoryInformation &history)
+void Window::setHistory(const WindowHistoryInformation &history)
 {
 	m_contentsWidget->setHistory(history);
 }
@@ -158,6 +159,10 @@ void Window::setUrl(const QUrl &url)
 		else if (url.path() == "cookies")
 		{
 			newWidget = new CookiesContentsWidget(this);
+		}
+		else if (url.path() == "history")
+		{
+			newWidget = new HistoryContentsWidget(this);
 		}
 		else if (url.path() == "transfers")
 		{
@@ -299,7 +304,7 @@ QPixmap Window::getThumbnail() const
 	return m_contentsWidget->getThumbnail();
 }
 
-HistoryInformation Window::getHistory() const
+WindowHistoryInformation Window::getHistory() const
 {
 	return m_contentsWidget->getHistory();
 }

@@ -373,7 +373,7 @@ void TransfersContentsWidget::triggerAction(WindowAction action, bool checked)
 	}
 }
 
-void TransfersContentsWidget::setHistory(const HistoryInformation &history)
+void TransfersContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
 }
@@ -472,15 +472,15 @@ QPixmap TransfersContentsWidget::getThumbnail() const
 	return QPixmap();
 }
 
-HistoryInformation TransfersContentsWidget::getHistory() const
+WindowHistoryInformation TransfersContentsWidget::getHistory() const
 {
-	HistoryEntry entry;
+	WindowHistoryEntry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	HistoryInformation information;
+	WindowHistoryInformation information;
 	information.index = 0;
 	information.entries.append(entry);
 

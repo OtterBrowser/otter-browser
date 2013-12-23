@@ -249,7 +249,7 @@ void CookiesContentsWidget::triggerAction()
 	}
 }
 
-void CookiesContentsWidget::setHistory(const HistoryInformation &history)
+void CookiesContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
 }
@@ -374,15 +374,15 @@ QPixmap CookiesContentsWidget::getThumbnail() const
 	return QPixmap();
 }
 
-HistoryInformation CookiesContentsWidget::getHistory() const
+WindowHistoryInformation CookiesContentsWidget::getHistory() const
 {
-	HistoryEntry entry;
+	WindowHistoryEntry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	HistoryInformation information;
+	WindowHistoryInformation information;
 	information.index = 0;
 	information.entries.append(entry);
 

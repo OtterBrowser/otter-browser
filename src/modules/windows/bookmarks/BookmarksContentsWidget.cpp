@@ -317,7 +317,7 @@ void BookmarksContentsWidget::triggerAction(WindowAction action, bool checked)
 	Q_UNUSED(checked)
 }
 
-void BookmarksContentsWidget::setHistory(const HistoryInformation &history)
+void BookmarksContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
 }
@@ -415,15 +415,15 @@ QPixmap BookmarksContentsWidget::getThumbnail() const
 	return QPixmap();
 }
 
-HistoryInformation BookmarksContentsWidget::getHistory() const
+WindowHistoryInformation BookmarksContentsWidget::getHistory() const
 {
-	HistoryEntry entry;
+	WindowHistoryEntry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	HistoryInformation information;
+	WindowHistoryInformation information;
 	information.index = 0;
 	information.entries.append(entry);
 

@@ -17,8 +17,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 {
 	m_ui->setupUi(this);
 
-	m_model->sort(0);
-
 	QSettings defaults(":/schemas/options.ini", QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
 
@@ -64,6 +62,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	labels << tr("Name") << tr("Type") << tr("Value");
 
 	m_model->setHorizontalHeaderLabels(labels);
+	m_model->sort(0);
 
 	m_ui->configurationView->setModel(m_model);
 	m_ui->configurationView->setItemDelegate(new ItemDelegate(this));
@@ -106,7 +105,7 @@ void ConfigurationContentsWidget::triggerAction(WindowAction action, bool checke
 	Q_UNUSED(checked)
 }
 
-void ConfigurationContentsWidget::setHistory(const HistoryInformation &history)
+void ConfigurationContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
 }
@@ -242,15 +241,15 @@ QPixmap ConfigurationContentsWidget::getThumbnail() const
 	return QPixmap();
 }
 
-HistoryInformation ConfigurationContentsWidget::getHistory() const
+WindowHistoryInformation ConfigurationContentsWidget::getHistory() const
 {
-	HistoryEntry entry;
+	WindowHistoryEntry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;
 
-	HistoryInformation information;
+	WindowHistoryInformation information;
 	information.index = 0;
 	information.entries.append(entry);
 

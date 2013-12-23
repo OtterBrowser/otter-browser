@@ -54,7 +54,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
-	virtual HistoryInformation getHistory() const = 0;
+	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -63,7 +63,7 @@ public:
 public slots:
 	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
-	virtual void setHistory(const HistoryInformation &history) = 0;
+	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);

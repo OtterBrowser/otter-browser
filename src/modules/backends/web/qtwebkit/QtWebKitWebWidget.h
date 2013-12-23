@@ -35,7 +35,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
-	HistoryInformation getHistory() const;
+	WindowHistoryInformation getHistory() const;
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
@@ -47,7 +47,7 @@ public slots:
 	void hideDialog(QWidget *dialog);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
-	void setHistory(const HistoryInformation &history);
+	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 
@@ -57,8 +57,8 @@ protected:
 protected slots:
 	void search(QAction *action);
 	void triggerAction();
-	void loadStarted();
-	void loadFinished(bool ok);
+	void pageLoadStarted();
+	void pageLoadFinished(bool ok);
 	void downloadFile(const QNetworkRequest &request);
 	void downloadFile(QNetworkReply *reply);
 	void linkHovered(const QString &link, const QString &title);

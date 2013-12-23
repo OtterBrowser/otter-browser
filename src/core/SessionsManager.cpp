@@ -181,7 +181,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 			for (int k = 1; k <= history; ++k)
 			{
-				HistoryEntry historyEntry;
+				WindowHistoryEntry historyEntry;
 				historyEntry.url = sessionData.value(QString("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
 				historyEntry.title = sessionData.value(QString("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
 				historyEntry.position = sessionData.value(QString("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toPoint();

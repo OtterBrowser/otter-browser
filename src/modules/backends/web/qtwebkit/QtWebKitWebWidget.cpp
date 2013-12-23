@@ -109,8 +109,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
-	connect(page, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
 	connect(page, SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
@@ -164,7 +164,7 @@ void QtWebKitWebWidget::setQuickSearchEngine(const QString &searchEngine)
 	}
 }
 
-void QtWebKitWebWidget::loadStarted()
+void QtWebKitWebWidget::pageLoadStarted()
 {
 	m_isLoading = true;
 
@@ -202,8 +202,13 @@ void QtWebKitWebWidget::loadStarted()
 	emit statusMessageChanged(QString());
 }
 
-void QtWebKitWebWidget::loadFinished(bool ok)
+void QtWebKitWebWidget::pageLoadFinished(bool ok)
 {
+	if (!m_isLoading)
+	{
+		return;
+	}
+
 	m_isLoading = false;
 
 	m_thumbnail = QPixmap();
@@ -701,7 +706,7 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 	m_webView->reload();
 }
 
-void QtWebKitWebWidget::setHistory(const HistoryInformation &history)
+void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
 	{
@@ -1215,7 +1220,7 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 	return pixmap;
 }
 
-HistoryInformation QtWebKitWebWidget::getHistory() const
+WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantHash data;
 	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
@@ -1224,13 +1229,13 @@ HistoryInformation QtWebKitWebWidget::getHistory() const
 	m_webView->history()->currentItem().setUserData(data);
 
 	QWebHistory *history = m_webView->history();
-	HistoryInformation information;
+	WindowHistoryInformation information;
 	information.index = history->currentItemIndex();
 
 	for (int i = 0; i < history->count(); ++i)
 	{
 		const QWebHistoryItem item = history->itemAt(i);
-		HistoryEntry entry;
+		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
 		entry.position = item.userData().toHash().value("position", QPoint(0, 0)).toPoint();

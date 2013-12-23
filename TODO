@@ -1,12 +1,11 @@
 High priority / ASAP:
-- history browsing
 - start page
 - proxy configuration
 - page specific preferences
+- passwords manager
 
 Medium priority / soon:
 - mail and feeds client (as module)
-- passwords manager
 - delayed loading of Flash objects
 - content blocking
 - spell checking

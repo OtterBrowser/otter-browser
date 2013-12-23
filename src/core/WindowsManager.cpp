@@ -49,7 +49,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 		{
 			if (window->isPrivate() == privateWindow)
 			{
-				window->setHistory(HistoryInformation());
+				window->setHistory(WindowHistoryInformation());
 				window->setUrl(url);
 
 				return;
@@ -72,7 +72,7 @@ void WindowsManager::search(const QString &query, const QString &engine)
 	if (window && window->isClonable())
 	{
 		window = window->clone(m_area);
-		window->setHistory(HistoryInformation());
+		window->setHistory(WindowHistoryInformation());
 
 		addWindow(window);
 	}
@@ -160,7 +160,7 @@ void WindowsManager::restore(int index)
 	}
 
 	SessionWindow entry = m_closedWindows.at(index);
-	HistoryInformation history;
+	WindowHistoryInformation history;
 	history.index = entry.index;
 	history.entries = entry.history;
 
@@ -369,7 +369,7 @@ void WindowsManager::closeWindow(Window *window)
 
 	if (window && !window->isPrivate())
 	{
-		const HistoryInformation history = window->getHistory();
+		const WindowHistoryInformation history = window->getHistory();
 		SessionWindow information;
 		information.searchEngine = window->getSearchEngine();
 		information.history = history.entries;
@@ -577,7 +577,7 @@ SessionEntry WindowsManager::getSession() const
 
 		if (window && !window->isPrivate())
 		{
-			const HistoryInformation history = window->getHistory();
+			const WindowHistoryInformation history = window->getHistory();
 			SessionWindow information;
 			information.searchEngine = window->getSearchEngine();
 			information.history = history.entries;

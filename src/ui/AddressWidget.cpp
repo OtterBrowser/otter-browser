@@ -74,7 +74,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			}
 
 			QStringList moduleUrls;
-			moduleUrls << "about:bookmarks" << "about:config" << "about:cookies" << "about:transfers";
+			moduleUrls << "about:bookmarks" << "about:config" << "about:cookies" << "about:history" << "about:transfers";
 
 			for (int i = 0; i < moduleUrls.count(); ++i)
 			{

@@ -1,7 +1,6 @@
-#ifndef OTTER_BOOKMARKSCONTENTSWIDGET_H
-#define OTTER_BOOKMARKSCONTENTSWIDGET_H
+#ifndef OTTER_HISTORYCONTENTSWIDGET_H
+#define OTTER_HISTORYCONTENTSWIDGET_H
 
-#include "../../../core/BookmarksManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
@@ -11,18 +10,20 @@ namespace Otter
 
 namespace Ui
 {
-	class BookmarksContentsWidget;
+	class HistoryContentsWidget;
 }
+
+struct HistoryEntry;
 
 class Window;
 
-class BookmarksContentsWidget : public ContentsWidget
+class HistoryContentsWidget : public ContentsWidget
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarksContentsWidget(Window *window);
-	~BookmarksContentsWidget();
+	explicit HistoryContentsWidget(Window *window);
+	~HistoryContentsWidget();
 
 	void print(QPrinter *printer);
 	ContentsWidget* clone(Window *window = NULL);
@@ -48,27 +49,22 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	void gatherBookmarks(int folder);
-	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
-	int findFolder(const QModelIndex &index);
+	void updateGroups();
+	QStandardItem* findEntry(qint64 entry);
 
 protected slots:
-	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
-	void addBookmark();
-	void addFolder();
-	void addSeparator();
-	void deleteBookmark();
-	void openBookmark(const QModelIndex &index);
-	void bookmarkProperties();
-	void updateFolder(int folder);
-	void updateActions();
-	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
+	void filterHistory(const QString &filter);
+	void clearEntries();
+	void addEntry(qint64 entry);
+	void addEntry(const HistoryEntry &entry, bool sort = true);
+	void updateEntry(qint64 entry);
+	void removeEntry(qint64 entry);
+	void openEntry(const QModelIndex &index);
 
 private:
 	QStandardItemModel *m_model;
-	QList<QString> m_bookmarksToOpen;
 	QHash<WindowAction, QAction*> m_actions;
-	Ui::BookmarksContentsWidget *m_ui;
+	Ui::HistoryContentsWidget *m_ui;
 };
 
 }

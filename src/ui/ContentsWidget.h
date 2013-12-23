@@ -25,7 +25,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const = 0;
-	virtual HistoryInformation getHistory() const = 0;
+	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool canZoom() const = 0;
 	virtual bool isClonable() const = 0;
@@ -36,7 +36,7 @@ public slots:
 	void showDialog(QWidget *dialog);
 	void hideDialog(QWidget *dialog);
 	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
-	virtual void setHistory(const HistoryInformation &history) = 0;
+	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url) = 0;
 

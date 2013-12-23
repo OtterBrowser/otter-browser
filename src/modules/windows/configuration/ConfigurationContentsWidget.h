@@ -4,7 +4,6 @@
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
-#include <QtNetwork/QNetworkCookie>
 
 namespace Otter
 {
@@ -33,7 +32,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
-	HistoryInformation getHistory() const;
+	WindowHistoryInformation getHistory() const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool isClonable() const;
@@ -42,7 +41,7 @@ public:
 
 public slots:
 	void triggerAction(WindowAction action, bool checked = false);
-	void setHistory(const HistoryInformation &history);
+	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 

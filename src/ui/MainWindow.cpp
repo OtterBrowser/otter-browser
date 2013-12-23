@@ -215,6 +215,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionViewHistory, SIGNAL(triggered()), this, SLOT(actionViewHistory()));
 	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
 	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
@@ -435,6 +436,16 @@ void MainWindow::actionClosedWindows(QAction *action)
 	}
 }
 
+void MainWindow::actionViewHistory()
+{
+	const QUrl url("about:history");
+
+	if (!SessionsManager::hasUrl(url, true))
+	{
+		m_windowsManager->open(url);
+	}
+}
+
 void MainWindow::actionAddBookmark(const QUrl &url)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
@@ -461,7 +472,7 @@ void MainWindow::actionManageBookmarks()
 {
 	const QUrl url("about:bookmarks");
 
-	if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
+	if (!SessionsManager::hasUrl(url, true))
 	{
 		m_windowsManager->open(url);
 	}

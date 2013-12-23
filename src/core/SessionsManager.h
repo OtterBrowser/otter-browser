@@ -8,28 +8,28 @@
 namespace Otter
 {
 
-struct HistoryEntry
+struct WindowHistoryEntry
 {
 	QString url;
 	QString title;
 	QPoint position;
 	int zoom;
 
-	HistoryEntry() : zoom(100) {}
+	WindowHistoryEntry() : zoom(100) {}
 };
 
-struct HistoryInformation
+struct WindowHistoryInformation
 {
-	QList<HistoryEntry> entries;
+	QList<WindowHistoryEntry> entries;
 	int index;
 
-	HistoryInformation() : index(-1) {}
+	WindowHistoryInformation() : index(-1) {}
 };
 
 struct SessionWindow
 {
 	QString searchEngine;
-	QList<HistoryEntry> history;
+	QList<WindowHistoryEntry> history;
 	int group;
 	int index;
 	bool pinned;

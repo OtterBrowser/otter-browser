@@ -415,9 +415,6 @@
    </property>
   </action>
   <action name="actionViewHistory">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>View History</string>
    </property>

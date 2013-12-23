@@ -119,7 +119,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
-	HistoryInformation getHistory() const;
+	WindowHistoryInformation getHistory() const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool isClonable() const;
@@ -132,7 +132,7 @@ public slots:
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setSearchEngine(const QString &engine);
-	void setHistory(const HistoryInformation &history);
+	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 	void setPinned(bool pinned);

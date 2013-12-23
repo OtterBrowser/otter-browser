@@ -116,7 +116,7 @@ void WebContentsWidget::setDefaultTextEncoding(const QString &encoding)
 	m_webWidget->setDefaultTextEncoding(encoding);
 }
 
-void WebContentsWidget::setHistory(const HistoryInformation &history)
+void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	m_webWidget->setHistory(history);
 }
@@ -280,7 +280,7 @@ QPixmap WebContentsWidget::getThumbnail() const
 	return m_webWidget->getThumbnail();
 }
 
-HistoryInformation WebContentsWidget::getHistory() const
+WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
 }
