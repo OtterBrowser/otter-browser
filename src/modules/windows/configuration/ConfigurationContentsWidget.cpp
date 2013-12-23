@@ -41,6 +41,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
 			optionItems[2]->setData(key, Qt::UserRole);
 			optionItems[2]->setData(type, (Qt::UserRole + 1));
+			optionItems[2]->setData(((type == "enumeration") ? defaults.value(QString("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
 
 			if (value != defaultValue)
 			{

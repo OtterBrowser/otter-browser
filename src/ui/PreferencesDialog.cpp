@@ -110,6 +110,19 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 		m_ui->colorsWidget->setItem(i, 1, previewItem);
 	}
 
+	const QString doNotTrackPolicyString = SettingsManager::getValue("Browser/DoNotTrackPolicy").toString();
+	int doNotTrackPolicyIndex = 2;
+
+	if (doNotTrackPolicyString == "allow")
+	{
+		doNotTrackPolicyIndex = 1;
+	}
+	else if (doNotTrackPolicyString == "doNotAllow")
+	{
+		doNotTrackPolicyIndex = 0;
+	}
+
+	m_ui->doNotTrackComboBox->setCurrentIndex(doNotTrackPolicyIndex);
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue("Browser/PrivateMode").toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberBrowsing").toBool());
@@ -482,6 +495,19 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(m_ui->colorsWidget->item(i, 1)->data(Qt::UserRole).toString() , m_ui->colorsWidget->item(i, 1)->data(Qt::EditRole));
 	}
 
+	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->currentIndex();
+	QString doNotTrackPolicyString = "skip";
+
+	if (doNotTrackPolicyIndex == 1)
+	{
+		doNotTrackPolicyString = "allow";
+	}
+	else if (doNotTrackPolicyIndex == 0)
+	{
+		doNotTrackPolicyString = "doNotAllow";
+	}
+
+	SettingsManager::setValue("Browser/DoNotTrackPolicy", doNotTrackPolicyString);
 	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue("History/RememberBrowsing", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue("History/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());

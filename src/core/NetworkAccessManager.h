@@ -13,9 +13,17 @@ class CookieJar;
 class NetworkAccessManager : public QNetworkAccessManager
 {
 	Q_OBJECT
+	Q_ENUMS(DoNotTrackPolicy)
 
 public:
 	explicit NetworkAccessManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
+
+	enum DoNotTrackPolicy
+	{
+		SkipTrackPolicy = 0,
+		AllowToTrackPolicy = 1,
+		DoNotAllowToTrackPolicy = 2
+	};
 
 	void resetStatistics();
 	static void clearCookies(int period = 0);
@@ -29,6 +37,7 @@ protected:
 	QNetworkReply *createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void requestFinished(QNetworkReply *reply);
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
@@ -42,6 +51,7 @@ private:
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
 	qint64 m_bytesTotal;
+	DoNotTrackPolicy m_doNotTrackPolicy;
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;

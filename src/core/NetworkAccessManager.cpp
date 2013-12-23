@@ -26,6 +26,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
+	m_doNotTrackPolicy(SkipTrackPolicy),
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
@@ -46,6 +47,9 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 		cache->setParent(QCoreApplication::instance());
 	}
 
+	optionChanged("Browser/DoNotTrackPolicy", SettingsManager::getValue("Browser/DoNotTrackPolicy"));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
@@ -290,6 +294,11 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	if (SettingsManager::getValue("Network/WorkOffline", false).toBool())
 	{
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
+
+		if (m_doNotTrackPolicy != SkipTrackPolicy)
+		{
+			mutableRequest.setRawHeader(QByteArray("DNT"), QByteArray((m_doNotTrackPolicy == DoNotAllowToTrackPolicy) ? "1" : "0"));
+		}
 	}
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
@@ -312,6 +321,27 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	}
 
 	return reply;
+}
+
+void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "Browser/DoNotTrackPolicy")
+	{
+		const QString policyValue = value.toString();
+
+		if (policyValue == "allow")
+		{
+			m_doNotTrackPolicy = AllowToTrackPolicy;
+		}
+		else if (policyValue == "doNotAllow")
+		{
+			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
+		}
+		else
+		{
+			m_doNotTrackPolicy = SkipTrackPolicy;
+		}
+	}
 }
 
 QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
