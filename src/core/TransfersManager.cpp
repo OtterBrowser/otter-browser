@@ -206,7 +206,7 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue("Transfers/KeepHistoryDays", 7).toInt()))
+		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue("History/DownloadsLimitPeriod").toInt()))
 		{
 			continue;
 		}

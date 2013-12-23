@@ -57,6 +57,7 @@ protected:
 protected slots:
 	void search(QAction *action);
 	void triggerAction();
+	void optionChanged(const QString &option, const QVariant &value);
 	void pageLoadStarted();
 	void pageLoadFinished(bool ok);
 	void downloadFile(const QNetworkRequest &request);

@@ -486,7 +486,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue("History/RememberBrowsing", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue("History/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
-	SettingsManager::setValue("History/ClearOnClose", m_clearSettings);
+	SettingsManager::setValue("History/ClearOnClose", (m_ui->clearHistoryCheckBox->isChecked() ? m_clearSettings : QStringList()));
 
 	QList<SearchInformation*> engines;
 

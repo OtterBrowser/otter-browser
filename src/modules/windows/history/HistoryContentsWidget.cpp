@@ -27,8 +27,6 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 		m_model->appendRow(new QStandardItem(Utils::getIcon("inode-directory"), groups.at(i)));
 	}
 
-	updateGroups();
-
 	QStringList labels;
 	labels << tr("Address") << tr("Title") << tr("Date");
 
@@ -41,29 +39,13 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyView->expand(m_model->index(0, 0));
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
-
-		QStandardItem *groupItem = m_model->item(i, 0);
-
-		if (groupItem)
-		{
-			groupItem->sortChildren(2, Qt::DescendingOrder);
-		}
-	}
-
-	const QList<HistoryEntry> entries = HistoryManager::getEntries();
-
-	for (int i = 0; i < entries.count(); ++i)
-	{
-		addEntry(entries.at(i), false);
-	}
+	populateEntries();
 
 	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(clearEntries()));
 	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(qint64)), this, SLOT(addEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(qint64)), this, SLOT(updateEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(qint64)), this, SLOT(removeEntry(qint64)));
+	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterHistory(QString)));
 	connect(m_ui->historyView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
 	connect(m_ui->historyView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -86,24 +68,6 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 			break;
 		default:
 			break;
-	}
-}
-
-void HistoryContentsWidget::updateGroups()
-{
-//TODO call each midnight, update each entry (except older)
-	const QDate date = QDate::currentDate();
-	QList<QDate> dates;
-	dates << date << date.addDays(-1) << date.addDays(-7) << date.addDays(-14) << date.addDays(-30) << date.addDays(-365);
-
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *groupItem = m_model->item(i, 0);
-
-		if (groupItem)
-		{
-			groupItem->setData(dates.value(i, QDate()), Qt::UserRole);
-		}
 	}
 }
 
@@ -146,6 +110,43 @@ void HistoryContentsWidget::filterHistory(const QString &filter)
 
 		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), !found);
 		m_ui->historyView->setExpanded(groupItem->index(), !filter.isEmpty());
+	}
+}
+
+void HistoryContentsWidget::populateEntries()
+{
+	const QDate date = QDate::currentDate();
+	QList<QDate> dates;
+	dates << date << date.addDays(-1) << date.addDays(-7) << date.addDays(-14) << date.addDays(-30) << date.addDays(-365);
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
+
+		QStandardItem *groupItem = m_model->item(i, 0);
+
+		if (groupItem)
+		{
+			groupItem->setData(dates.value(i, QDate()), Qt::UserRole);
+			groupItem->removeRows(0, groupItem->rowCount());
+		}
+	}
+
+	const QList<HistoryEntry> entries = HistoryManager::getEntries();
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		addEntry(entries.at(i), false);
+	}
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *groupItem = m_model->item(i, 0);
+
+		if (groupItem)
+		{
+			groupItem->sortChildren(2, Qt::DescendingOrder);
+		}
 	}
 }
 

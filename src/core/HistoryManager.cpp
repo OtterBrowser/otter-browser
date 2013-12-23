@@ -18,6 +18,8 @@ bool HistoryManager::m_enabled = false;
 HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	m_cleanupTimer(0)
 {
+	m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
+
 	optionChanged("History/RememberBrowsing");
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
@@ -36,7 +38,41 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 
 		m_cleanupTimer = 0;
 
-//TODO remove unused entries and VACUUM
+		QSqlDatabase database = QSqlDatabase::database("browsingHistory");
+
+		if (!database.isValid())
+		{
+			return;
+		}
+
+		QSqlQuery query(QSqlDatabase::database("browsingHistory"));
+		query.prepare("SELECT COUNT(*) AS \"amount\" FROM \"visits\";");
+		query.exec();
+
+		if (query.next())
+		{
+			const int amount = query.record().field("amount").value().toInt();
+
+			if (amount > SettingsManager::getValue("History/BrowsingLimitAmountGlobal").toInt())
+			{
+				removeOldEntries();
+			}
+		}
+
+		database.exec("DELETE FROM \"icons\" WHERE \"id\" NOT IN(SELECT DISTINCT \"icon\" FROM \"visits\");");
+		database.exec("DELETE FROM \"locations\" WHERE \"id\" NOT IN(SELECT DISTINCT \"location\" FROM \"visits\");");
+		database.exec("DELETE FROM \"hosts\" WHERE \"id\" NOT IN(SELECT DISTINCT \"host\" FROM \"locations\");");
+		database.exec("VACUUM;");
+	}
+	else if (event->timerId() == m_dayTimer)
+	{
+		killTimer(m_dayTimer);
+
+		removeOldEntries(QDateTime::currentDateTime().addDays(SettingsManager::getValue("History/BrowsingLimitPeriod").toInt()));
+
+		emit dayChanged();
+
+		m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
 	}
 }
 
@@ -46,6 +82,41 @@ void HistoryManager::scheduleCleanup()
 	{
 		m_cleanupTimer = startTimer(2500);
 	}
+}
+
+void HistoryManager::removeOldEntries(const QDateTime &date)
+{
+	int timestamp = (date.isValid() ? date.toTime_t() : 0);
+
+	if (timestamp == 0)
+	{
+		QSqlQuery query(QSqlDatabase::database("browsingHistory"));
+		query.prepare(QString("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue("History/BrowsingLimitAmountGlobal").toInt()));
+		query.exec();
+
+		if (query.next())
+		{
+			timestamp = query.record().field("time").value().toInt();
+		}
+
+		if (timestamp == 0)
+		{
+			return;
+		}
+	}
+
+	QList<qint64> entries;
+	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
+	query.prepare("SELECT \"visits\".\"id\" FROM \"visits\" WHERE \"visits\".\"time\" <= ?;");
+	query.bindValue(0, timestamp);
+	query.exec();
+
+	while (query.next())
+	{
+		entries.append(query.record().field("id").value().toLongLong());
+	}
+
+	removeEntries(entries);
 }
 
 void HistoryManager::clearHistory(int period)

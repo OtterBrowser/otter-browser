@@ -102,10 +102,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
-
+	optionChanged("History/BrowsingLimitAmountWindow", SettingsManager::getValue("History/BrowsingLimitAmountWindow"));
 	setZoom(SettingsManager::getValue("Content/DefaultZoom", 100).toInt());
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchActions()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
@@ -1323,6 +1324,14 @@ void QtWebKitWebWidget::triggerAction()
 	if (action)
 	{
 		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
+}
+
+void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "History/BrowsingLimitAmountWindow")
+	{
+		m_webView->page()->history()->setMaximumItemCount(value.toInt());
 	}
 }
 

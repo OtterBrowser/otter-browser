@@ -33,12 +33,12 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
-	void updateGroups();
 	QStandardItem* findEntry(qint64 entry);
 	qint64 getEntry(const QModelIndex &index);
 
 protected slots:
 	void filterHistory(const QString &filter);
+	void populateEntries();
 	void clearEntries();
 	void addEntry(qint64 entry);
 	void addEntry(const HistoryEntry &entry, bool sort = true);

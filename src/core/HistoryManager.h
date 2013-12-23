@@ -41,6 +41,7 @@ public:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void scheduleCleanup();
+	void removeOldEntries(const QDateTime &date = QDateTime());
 	static HistoryEntry getEntry(const QSqlRecord &record);
 	static qint64 getRecord(const QString &table, const QVariantHash &values);
 	static qint64 getLocation(const QUrl &url);
@@ -53,6 +54,7 @@ private:
 	explicit HistoryManager(QObject *parent = NULL);
 
 	int m_cleanupTimer;
+	int m_dayTimer;
 
 	static HistoryManager *m_instance;
 	static bool m_enabled;
@@ -62,6 +64,7 @@ signals:
 	void entryAdded(qint64 entry);
 	void entryUpdated(qint64 entry);
 	void entryRemoved(qint64 entry);
+	void dayChanged();
 };
 
 }
