@@ -1,5 +1,6 @@
 #include "ContentsWidget.h"
 #include "ContentsDialog.h"
+#include "../core/HistoryManager.h"
 
 namespace Otter
 {
@@ -85,6 +86,27 @@ void ContentsWidget::hideDialog(QWidget *dialog)
 	}
 }
 
+void ContentsWidget::triggerAction(WindowAction action, bool checked)
+{
+	Q_UNUSED(action)
+	Q_UNUSED(checked)
+}
+
+void ContentsWidget::setHistory(const WindowHistoryInformation &history)
+{
+	Q_UNUSED(history)
+}
+
+void ContentsWidget::setZoom(int zoom)
+{
+	Q_UNUSED(zoom)
+}
+
+void ContentsWidget::setUrl(const QUrl &url, bool typed)
+{
+	HistoryManager::addEntry(url, getTitle(), getIcon(), typed);
+}
+
 void ContentsWidget::setParent(Window *window)
 {
 	if (window)
@@ -93,6 +115,70 @@ void ContentsWidget::setParent(Window *window)
 	}
 
 	QWidget::setParent(window);
+}
+
+ContentsWidget* ContentsWidget::clone(Window *window)
+{
+	Q_UNUSED(window)
+
+	return NULL;
+}
+
+QAction* ContentsWidget::getAction(WindowAction action)
+{
+	Q_UNUSED(action)
+
+	return NULL;
+}
+
+QUndoStack* ContentsWidget::getUndoStack()
+{
+	return NULL;
+}
+
+QPixmap ContentsWidget::getThumbnail() const
+{
+	return QPixmap();
+}
+
+WindowHistoryInformation ContentsWidget::getHistory() const
+{
+	WindowHistoryEntry entry;
+	entry.url = getUrl().toString();
+	entry.title = getTitle();
+	entry.position = QPoint(0, 0);
+	entry.zoom = 100;
+
+	WindowHistoryInformation information;
+	information.index = 0;
+	information.entries.append(entry);
+
+	return information;
+}
+
+int ContentsWidget::getZoom() const
+{
+	return 100;
+}
+
+bool ContentsWidget::canZoom() const
+{
+	return false;
+}
+
+bool ContentsWidget::isClonable() const
+{
+	return false;
+}
+
+bool ContentsWidget::isLoading() const
+{
+	return false;
+}
+
+bool ContentsWidget::isPrivate() const
+{
+	return false;
 }
 
 }

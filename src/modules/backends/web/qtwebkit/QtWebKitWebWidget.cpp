@@ -751,7 +751,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 	}
 }
 
-void QtWebKitWebWidget::setUrl(const QUrl &url)
+void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == "javascript")
 	{
@@ -767,7 +767,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url)
 		return;
 	}
 
-	m_isTyped = true;
+	m_isTyped = typed;
 
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{

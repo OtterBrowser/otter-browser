@@ -75,6 +75,16 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+void TransfersContentsWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
+}
+
 void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 {
 	QList<QStandardItem*> items;
@@ -373,34 +383,12 @@ void TransfersContentsWidget::triggerAction(WindowAction action, bool checked)
 	}
 }
 
-void TransfersContentsWidget::setHistory(const WindowHistoryInformation &history)
-{
-	Q_UNUSED(history)
-}
-
-void TransfersContentsWidget::setZoom(int zoom)
-{
-	Q_UNUSED(zoom)
-}
-
-void TransfersContentsWidget::setUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-}
-
 TransferInformation* TransfersContentsWidget::getTransfer(const QModelIndex &index)
 {
 	if (index.isValid() && m_model->item(index.row(), 0))
 	{
 		return static_cast<TransferInformation*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
 	}
-
-	return NULL;
-}
-
-ContentsWidget* TransfersContentsWidget::clone(Window *window)
-{
-	Q_UNUSED(window)
 
 	return NULL;
 }
@@ -442,11 +430,6 @@ QAction* TransfersContentsWidget::getAction(WindowAction action)
 	return actionObject;
 }
 
-QUndoStack* TransfersContentsWidget::getUndoStack()
-{
-	return NULL;
-}
-
 QString TransfersContentsWidget::getTitle() const
 {
 	return tr("Transfers Manager");
@@ -467,31 +450,6 @@ QIcon TransfersContentsWidget::getIcon() const
 	return QIcon(":/icons/transfers.png");
 }
 
-QPixmap TransfersContentsWidget::getThumbnail() const
-{
-	return QPixmap();
-}
-
-WindowHistoryInformation TransfersContentsWidget::getHistory() const
-{
-	WindowHistoryEntry entry;
-	entry.url = getUrl().toString();
-	entry.title = getTitle();
-	entry.position = QPoint(0, 0);
-	entry.zoom = 100;
-
-	WindowHistoryInformation information;
-	information.index = 0;
-	information.entries.append(entry);
-
-	return information;
-}
-
-int TransfersContentsWidget::getZoom() const
-{
-	return 100;
-}
-
 int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 {
 	if (!transfer)
@@ -508,36 +466,6 @@ int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 	}
 
 	return -1;
-}
-
-void TransfersContentsWidget::triggerAction()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
-	}
-}
-
-bool TransfersContentsWidget::canZoom() const
-{
-	return false;
-}
-
-bool TransfersContentsWidget::isClonable() const
-{
-	return false;
-}
-
-bool TransfersContentsWidget::isLoading() const
-{
-	return false;
-}
-
-bool TransfersContentsWidget::isPrivate() const
-{
-	return false;
 }
 
 }

@@ -65,7 +65,7 @@ public slots:
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
-	virtual void setUrl(const QUrl &url) = 0;
+	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 
 signals:

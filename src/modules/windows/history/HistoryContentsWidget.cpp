@@ -108,27 +108,6 @@ void HistoryContentsWidget::print(QPrinter *printer)
 	m_ui->historyView->render(printer);
 }
 
-void HistoryContentsWidget::triggerAction(WindowAction action, bool checked)
-{
-	Q_UNUSED(action)
-	Q_UNUSED(checked)
-}
-
-void HistoryContentsWidget::setHistory(const WindowHistoryInformation &history)
-{
-	Q_UNUSED(history)
-}
-
-void HistoryContentsWidget::setZoom(int zoom)
-{
-	Q_UNUSED(zoom)
-}
-
-void HistoryContentsWidget::setUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-}
-
 void HistoryContentsWidget::filterHistory(const QString &filter)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -282,25 +261,6 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 	}
 }
 
-ContentsWidget* HistoryContentsWidget::clone(Window *window)
-{
-	Q_UNUSED(window)
-
-	return NULL;
-}
-
-QAction* HistoryContentsWidget::getAction(WindowAction action)
-{
-	Q_UNUSED(action)
-
-	return NULL;
-}
-
-QUndoStack* HistoryContentsWidget::getUndoStack()
-{
-	return NULL;
-}
-
 QStandardItem* HistoryContentsWidget::findEntry(qint64 entry)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -342,51 +302,6 @@ QUrl HistoryContentsWidget::getUrl() const
 QIcon HistoryContentsWidget::getIcon() const
 {
 	return QIcon(":/icons/view-history.png");
-}
-
-QPixmap HistoryContentsWidget::getThumbnail() const
-{
-	return QPixmap();
-}
-
-WindowHistoryInformation HistoryContentsWidget::getHistory() const
-{
-	WindowHistoryEntry entry;
-	entry.url = getUrl().toString();
-	entry.title = getTitle();
-	entry.position = QPoint(0, 0);
-	entry.zoom = 100;
-
-	WindowHistoryInformation information;
-	information.index = 0;
-	information.entries.append(entry);
-
-	return information;
-}
-
-int HistoryContentsWidget::getZoom() const
-{
-	return 100;
-}
-
-bool HistoryContentsWidget::canZoom() const
-{
-	return false;
-}
-
-bool HistoryContentsWidget::isClonable() const
-{
-	return false;
-}
-
-bool HistoryContentsWidget::isLoading() const
-{
-	return false;
-}
-
-bool HistoryContentsWidget::isPrivate() const
-{
-	return false;
 }
 
 }

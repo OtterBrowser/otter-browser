@@ -311,27 +311,6 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 	m_ui->bookmarksView->render(printer);
 }
 
-void BookmarksContentsWidget::triggerAction(WindowAction action, bool checked)
-{
-	Q_UNUSED(action)
-	Q_UNUSED(checked)
-}
-
-void BookmarksContentsWidget::setHistory(const WindowHistoryInformation &history)
-{
-	Q_UNUSED(history)
-}
-
-void BookmarksContentsWidget::setZoom(int zoom)
-{
-	Q_UNUSED(zoom)
-}
-
-void BookmarksContentsWidget::setUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-}
-
 QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *item)
 {
 	if (folder == 0)
@@ -371,25 +350,6 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 	return NULL;
 }
 
-ContentsWidget* BookmarksContentsWidget::clone(Window *window)
-{
-	Q_UNUSED(window)
-
-	return NULL;
-}
-
-QAction* BookmarksContentsWidget::getAction(WindowAction action)
-{
-	Q_UNUSED(action)
-
-	return NULL;
-}
-
-QUndoStack* BookmarksContentsWidget::getUndoStack()
-{
-	return NULL;
-}
-
 QString BookmarksContentsWidget::getTitle() const
 {
 	return tr("Bookmarks Manager");
@@ -410,26 +370,6 @@ QIcon BookmarksContentsWidget::getIcon() const
 	return QIcon(":/icons/bookmarks.png");
 }
 
-QPixmap BookmarksContentsWidget::getThumbnail() const
-{
-	return QPixmap();
-}
-
-WindowHistoryInformation BookmarksContentsWidget::getHistory() const
-{
-	WindowHistoryEntry entry;
-	entry.url = getUrl().toString();
-	entry.title = getTitle();
-	entry.position = QPoint(0, 0);
-	entry.zoom = 100;
-
-	WindowHistoryInformation information;
-	information.index = 0;
-	information.entries.append(entry);
-
-	return information;
-}
-
 int BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
 	if (index.isValid())
@@ -443,31 +383,6 @@ int BookmarksContentsWidget::findFolder(const QModelIndex &index)
 	}
 
 	return 0;
-}
-
-int BookmarksContentsWidget::getZoom() const
-{
-	return 100;
-}
-
-bool BookmarksContentsWidget::canZoom() const
-{
-	return false;
-}
-
-bool BookmarksContentsWidget::isClonable() const
-{
-	return false;
-}
-
-bool BookmarksContentsWidget::isLoading() const
-{
-	return false;
-}
-
-bool BookmarksContentsWidget::isPrivate() const
-{
-	return false;
 }
 
 }

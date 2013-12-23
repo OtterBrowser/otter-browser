@@ -25,26 +25,10 @@ public:
 	~BookmarksContentsWidget();
 
 	void print(QPrinter *printer);
-	ContentsWidget* clone(Window *window = NULL);
-	QAction* getAction(WindowAction action);
-	QUndoStack* getUndoStack();
 	QString getTitle() const;
 	QString getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	QPixmap getThumbnail() const;
-	WindowHistoryInformation getHistory() const;
-	int getZoom() const;
-	bool canZoom() const;
-	bool isClonable() const;
-	bool isLoading() const;
-	bool isPrivate() const;
-
-public slots:
-	void triggerAction(WindowAction action, bool checked = false);
-	void setHistory(const WindowHistoryInformation &history);
-	void setZoom(int zoom);
-	void setUrl(const QUrl &url);
 
 protected:
 	void changeEvent(QEvent *event);

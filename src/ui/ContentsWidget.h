@@ -17,28 +17,28 @@ public:
 
 	virtual void print(QPrinter *printer) = 0;
 	void setParent(Window *window);
-	virtual ContentsWidget* clone(Window *window = NULL) = 0;
-	virtual QAction* getAction(WindowAction action) = 0;
-	virtual QUndoStack* getUndoStack() = 0;
+	virtual ContentsWidget* clone(Window *window = NULL);
+	virtual QAction* getAction(WindowAction action);
+	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
 	virtual QString getType() const = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
-	virtual QPixmap getThumbnail() const = 0;
-	virtual WindowHistoryInformation getHistory() const = 0;
-	virtual int getZoom() const = 0;
-	virtual bool canZoom() const = 0;
-	virtual bool isClonable() const = 0;
-	virtual bool isLoading() const = 0;
-	virtual bool isPrivate() const = 0;
+	virtual QPixmap getThumbnail() const;
+	virtual WindowHistoryInformation getHistory() const;
+	virtual int getZoom() const;
+	virtual bool canZoom() const;
+	virtual bool isClonable() const;
+	virtual bool isLoading() const;
+	virtual bool isPrivate() const;
 
 public slots:
 	void showDialog(QWidget *dialog);
 	void hideDialog(QWidget *dialog);
-	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
-	virtual void setHistory(const WindowHistoryInformation &history) = 0;
-	virtual void setZoom(int zoom) = 0;
-	virtual void setUrl(const QUrl &url) = 0;
+	virtual void triggerAction(WindowAction action, bool checked = false);
+	virtual void setHistory(const WindowHistoryInformation &history);
+	virtual void setZoom(int zoom);
+	virtual void setUrl(const QUrl &url, bool typed = true);
 
 protected:
 	void resizeEvent(QResizeEvent *event);

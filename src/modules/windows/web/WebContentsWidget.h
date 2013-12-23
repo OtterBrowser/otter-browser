@@ -45,7 +45,7 @@ public slots:
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
-	void setUrl(const QUrl &url);
+	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
 	void changeEvent(QEvent *event);

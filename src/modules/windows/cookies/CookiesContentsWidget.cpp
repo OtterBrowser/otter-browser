@@ -249,21 +249,6 @@ void CookiesContentsWidget::triggerAction()
 	}
 }
 
-void CookiesContentsWidget::setHistory(const WindowHistoryInformation &history)
-{
-	Q_UNUSED(history)
-}
-
-void CookiesContentsWidget::setZoom(int zoom)
-{
-	Q_UNUSED(zoom)
-}
-
-void CookiesContentsWidget::setUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-}
-
 void CookiesContentsWidget::updateActions()
 {
 	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
@@ -296,13 +281,6 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 			return m_model->item(i, 0);
 		}
 	}
-
-	return NULL;
-}
-
-ContentsWidget* CookiesContentsWidget::clone(Window *window)
-{
-	Q_UNUSED(window)
 
 	return NULL;
 }
@@ -344,11 +322,6 @@ QAction* CookiesContentsWidget::getAction(WindowAction action)
 	return actionObject;
 }
 
-QUndoStack* CookiesContentsWidget::getUndoStack()
-{
-	return NULL;
-}
-
 QString CookiesContentsWidget::getTitle() const
 {
 	return tr("Cookies Manager");
@@ -367,51 +340,6 @@ QUrl CookiesContentsWidget::getUrl() const
 QIcon CookiesContentsWidget::getIcon() const
 {
 	return QIcon(":/icons/cookies.png");
-}
-
-QPixmap CookiesContentsWidget::getThumbnail() const
-{
-	return QPixmap();
-}
-
-WindowHistoryInformation CookiesContentsWidget::getHistory() const
-{
-	WindowHistoryEntry entry;
-	entry.url = getUrl().toString();
-	entry.title = getTitle();
-	entry.position = QPoint(0, 0);
-	entry.zoom = 100;
-
-	WindowHistoryInformation information;
-	information.index = 0;
-	information.entries.append(entry);
-
-	return information;
-}
-
-int CookiesContentsWidget::getZoom() const
-{
-	return 100;
-}
-
-bool CookiesContentsWidget::canZoom() const
-{
-	return false;
-}
-
-bool CookiesContentsWidget::isClonable() const
-{
-	return false;
-}
-
-bool CookiesContentsWidget::isLoading() const
-{
-	return false;
-}
-
-bool CookiesContentsWidget::isPrivate() const
-{
-	return false;
 }
 
 }

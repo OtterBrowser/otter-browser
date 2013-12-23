@@ -126,9 +126,9 @@ void WebContentsWidget::setZoom(int zoom)
 	m_webWidget->setZoom(zoom);
 }
 
-void WebContentsWidget::setUrl(const QUrl &url)
+void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 {
-	m_webWidget->setUrl(url);
+	m_webWidget->setUrl(url, typed);
 }
 
 void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)
