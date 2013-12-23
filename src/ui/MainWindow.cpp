@@ -477,7 +477,7 @@ void MainWindow::actionViewHistory()
 
 void MainWindow::actionClearHistory()
 {
-	ClearHistoryDialog dialog(false, this);
+	ClearHistoryDialog dialog(SettingsManager::getValue("History/ClearOnClose").toStringList(), false, this);
 	dialog.exec();
 }
 

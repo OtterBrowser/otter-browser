@@ -41,6 +41,7 @@ protected slots:
 
 private:
 	QString m_defaultSearch;
+	QStringList m_clearSettings;
 	Ui::PreferencesDialog *m_ui;
 };
 

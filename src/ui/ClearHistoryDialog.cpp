@@ -11,25 +11,23 @@
 namespace Otter
 {
 
-ClearHistoryDialog::ClearHistoryDialog(bool configureMode, QWidget *parent) : QDialog(parent),
+ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent) : QDialog(parent),
 	m_configureMode(configureMode),
 	m_ui(new Ui::ClearHistoryDialog)
 {
 	m_ui->setupUi(this);
 
-	QStringList clearSettings = SettingsManager::getValue("History/ClearOnClose").toStringList();
-	clearSettings.removeAll(QString());
+	QStringList settings = clearSettings;
+	settings.removeAll(QString());
 
-	if (clearSettings.isEmpty())
+	if (settings.isEmpty())
 	{
-		clearSettings << "browsing" << "cookies" << "forms" << "downloads" << "caches";
+		settings << "browsing" << "cookies" << "forms" << "downloads" << "caches";
 	}
 
 	if (m_configureMode)
 	{
 		m_ui->periodWidget->hide();
-
-		connect(this, SIGNAL(accepted()), this, SLOT(saveSettings()));
 	}
 	else
 	{
@@ -38,14 +36,14 @@ ClearHistoryDialog::ClearHistoryDialog(bool configureMode, QWidget *parent) : QD
 		connect(this, SIGNAL(accepted()), this, SLOT(clearHistory()));
 	}
 
-	m_ui->clearBrowsingHistoryCheckBox->setChecked(clearSettings.contains("browsing"));
-	m_ui->clearCookiesCheckBox->setChecked(clearSettings.contains("cookies"));
-	m_ui->clearFormsHistoryCheckBox->setChecked(clearSettings.contains("forms"));
-	m_ui->clearDownloadsHistoryCheckBox->setChecked(clearSettings.contains("downloads"));
-	m_ui->clearSearchHistoryCheckBox->setChecked(clearSettings.contains("search"));
-	m_ui->clearCachesCheckBox->setChecked(clearSettings.contains("caches"));
-	m_ui->clearStorageCheckBox->setChecked(clearSettings.contains("storage"));
-	m_ui->clearPasswordsCheckBox->setChecked(clearSettings.contains("passwords"));
+	m_ui->clearBrowsingHistoryCheckBox->setChecked(settings.contains("browsing"));
+	m_ui->clearCookiesCheckBox->setChecked(settings.contains("cookies"));
+	m_ui->clearFormsHistoryCheckBox->setChecked(settings.contains("forms"));
+	m_ui->clearDownloadsHistoryCheckBox->setChecked(settings.contains("downloads"));
+	m_ui->clearSearchHistoryCheckBox->setChecked(settings.contains("search"));
+	m_ui->clearCachesCheckBox->setChecked(settings.contains("caches"));
+	m_ui->clearStorageCheckBox->setChecked(settings.contains("storage"));
+	m_ui->clearPasswordsCheckBox->setChecked(settings.contains("passwords"));
 }
 
 ClearHistoryDialog::~ClearHistoryDialog()
@@ -91,7 +89,7 @@ void ClearHistoryDialog::clearHistory()
 	}
 }
 
-void ClearHistoryDialog::saveSettings()
+QStringList ClearHistoryDialog::getClearSettings() const
 {
 	QStringList clearSettings;
 
@@ -135,7 +133,7 @@ void ClearHistoryDialog::saveSettings()
 		clearSettings.append("passwords");
 	}
 
-	SettingsManager::setValue("History/ClearOnClose", clearSettings);
+	return clearSettings;
 }
 
 }

@@ -20,9 +20,12 @@ namespace Otter
 
 PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : QDialog(parent),
 	m_defaultSearch(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
+	m_clearSettings(SettingsManager::getValue("History/ClearOnClose").toStringList()),
 	m_ui(new Ui::PreferencesDialog)
 {
 	m_ui->setupUi(this);
+
+	m_clearSettings.removeAll(QString());
 
 	if (section == "content")
 	{
@@ -112,7 +115,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberBrowsing").toBool());
 	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberDownloads").toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
-	m_ui->clearHistoryCheckBox->setChecked(!SettingsManager::getValue("History/ClearOnClose").toString().isEmpty());
+	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
+	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
 
 	const QStringList engines = SearchesManager::getSearchEngines();
 
@@ -165,6 +169,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	connect(m_ui->colorsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentColorChanged(int,int,int,int)));
 	connect(colorsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(colorChanged(QWidget*)));
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
+	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
+	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterSearch(QString)));
 	connect(m_ui->searchWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentSearchChanged(int)));
 	connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearch()));
@@ -259,10 +265,15 @@ void PreferencesDialog::colorChanged(QWidget *editor)
 
 void PreferencesDialog::setupClearHistory()
 {
-	ClearHistoryDialog dialog(true, this);
-	dialog.exec();
+	ClearHistoryDialog dialog(m_clearSettings, true, this);
 
-	m_ui->clearHistoryCheckBox->setChecked(!SettingsManager::getValue("History/ClearOnClose").toString().isEmpty());
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_clearSettings = dialog.getClearSettings();
+	}
+
+	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
+	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
 }
 
 void PreferencesDialog::filterSearch(const QString &filter)
@@ -475,6 +486,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue("History/RememberBrowsing", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue("History/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
+	SettingsManager::setValue("History/ClearOnClose", m_clearSettings);
 
 	QList<SearchInformation*> engines;
 
