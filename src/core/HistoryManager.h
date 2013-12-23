@@ -36,6 +36,7 @@ public:
 	static qint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed = false);
 	static bool updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon);
 	static bool removeEntry(qint64 entry);
+	static bool removeEntries(const QList<qint64> &entries);
 
 protected:
 	void timerEvent(QTimerEvent *event);

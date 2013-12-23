@@ -34,7 +34,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->findPreviousButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
-	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl)), this, SIGNAL(requestedAddBookmark(QUrl)));
+	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool)), this, SLOT(notifyRequestedOpenUrl(QUrl,bool,bool)));
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*)), this, SLOT(notifyRequestedNewWindow(WebWidget*)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));

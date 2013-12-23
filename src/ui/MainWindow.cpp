@@ -174,7 +174,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
 	connect(tabBar, SIGNAL(showNewTabButton(bool)), newTabButton, SLOT(setVisible(bool)));
-	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl)), this, SLOT(actionAddBookmark(QUrl)));
+	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
@@ -446,7 +446,7 @@ void MainWindow::actionViewHistory()
 	}
 }
 
-void MainWindow::actionAddBookmark(const QUrl &url)
+void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 
@@ -457,7 +457,7 @@ void MainWindow::actionAddBookmark(const QUrl &url)
 
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->url = bookmarkUrl;
-	bookmark->title = m_windowsManager->getTitle();
+	bookmark->title = (url.isValid() ? title : m_windowsManager->getTitle());
 	bookmark->type = UrlBookmark;
 
 	BookmarkPropertiesDialog dialog(bookmark, 0, this);

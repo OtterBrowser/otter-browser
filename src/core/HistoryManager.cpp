@@ -299,4 +299,40 @@ bool HistoryManager::removeEntry(qint64 entry)
 	return success;
 }
 
+bool HistoryManager::removeEntries(const QList<qint64> &entries)
+{
+	QStringList list;
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		if (entries.at(i) >= 0)
+		{
+			list.append(QString::number(entries.at(i)));
+		}
+	}
+
+	if (list.isEmpty())
+	{
+		return false;
+	}
+
+	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
+	query.prepare(QString("DELETE FROM \"visits\" WHERE \"id\" IN(%1);").arg(list.join(", ")));
+	query.exec();
+
+	const bool success = (query.numRowsAffected() > 0);
+
+	if (success)
+	{
+		m_instance->scheduleCleanup();
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			emit m_instance->entryRemoved(entries.at(i));
+		}
+	}
+
+	return success;
+}
+
 }

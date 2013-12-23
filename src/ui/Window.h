@@ -154,7 +154,7 @@ signals:
 	void aboutToClose();
 	void requestedCloseWindow(Window *window);
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
-	void requestedAddBookmark(QUrl url);
+	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget);
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();

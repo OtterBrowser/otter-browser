@@ -35,6 +35,7 @@ protected:
 	void changeEvent(QEvent *event);
 	void updateGroups();
 	QStandardItem* findEntry(qint64 entry);
+	qint64 getEntry(const QModelIndex &index);
 
 protected slots:
 	void filterHistory(const QString &filter);
@@ -43,7 +44,12 @@ protected slots:
 	void addEntry(const HistoryEntry &entry, bool sort = true);
 	void updateEntry(qint64 entry);
 	void removeEntry(qint64 entry);
-	void openEntry(const QModelIndex &index);
+	void removeEntry();
+	void removeDomainEntries();
+	void openEntry(const QModelIndex &index = QModelIndex());
+	void bookmarkEntry();
+	void copyEntryLink();
+	void showContextMenu(const QPoint &point);
 
 private:
 	QStandardItemModel *m_model;

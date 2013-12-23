@@ -35,6 +35,9 @@
    </item>
    <item>
     <widget class="QTreeView" name="historyView">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>

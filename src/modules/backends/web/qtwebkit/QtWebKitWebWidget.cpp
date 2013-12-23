@@ -467,7 +467,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case BookmarkLinkAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				emit requestedAddBookmark(m_hitResult.linkUrl());
+				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute("title"));
 			}
 
 			break;

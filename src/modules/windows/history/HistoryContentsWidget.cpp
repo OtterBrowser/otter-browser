@@ -1,4 +1,5 @@
 #include "HistoryContentsWidget.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ItemDelegate.h"
@@ -6,6 +7,8 @@
 #include "ui_HistoryContentsWidget.h"
 
 #include <QtCore/QSettings>
+#include <QtGui/QClipboard>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -63,6 +66,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(qint64)), this, SLOT(removeEntry(qint64)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterHistory(QString)));
 	connect(m_ui->historyView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
+	connect(m_ui->historyView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 HistoryContentsWidget::~HistoryContentsWidget()
@@ -246,19 +250,114 @@ void HistoryContentsWidget::removeEntry(qint64 entry)
 	}
 }
 
-void HistoryContentsWidget::openEntry(const QModelIndex &index)
+void HistoryContentsWidget::removeEntry()
 {
-	if (!index.isValid() || index.parent() == m_model->invisibleRootItem()->index())
+	const qint64 entry = getEntry(m_ui->historyView->currentIndex());
+
+	if (entry >= 0)
+	{
+		HistoryManager::removeEntry(entry);
+	}
+}
+
+void HistoryContentsWidget::removeDomainEntries()
+{
+	QStandardItem *domainItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+
+	if (!domainItem)
 	{
 		return;
 	}
 
-	const QUrl url(index.sibling(index.row(), 0).data(Qt::DisplayRole).toString());
+	const QString host = QUrl(domainItem->text()).host();
+	QList<qint64> entries;
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *groupItem = m_model->item(i, 0);
+
+		if (!groupItem)
+		{
+			continue;
+		}
+
+		for (int j = (groupItem->rowCount() - 1); j >= 0; --j)
+		{
+			QStandardItem *entryItem = groupItem->child(j, 0);
+
+			if (entryItem && host == QUrl(entryItem->text()).host())
+			{
+				entries.append(entryItem->data(Qt::UserRole).toLongLong());
+			}
+		}
+	}
+
+	HistoryManager::removeEntries(entries);
+}
+
+void HistoryContentsWidget::openEntry(const QModelIndex &index)
+{
+	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->historyView->currentIndex());
+
+	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
+	{
+		return;
+	}
+
+	const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::DisplayRole).toString());
 
 	if (url.isValid())
 	{
-		emit requestedOpenUrl(url);
+		QAction *action = qobject_cast<QAction*>(sender());
+
+		emit requestedOpenUrl(url, false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
 	}
+}
+
+void HistoryContentsWidget::bookmarkEntry()
+{
+	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+
+	if (entryItem)
+	{
+		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyView->currentIndex().sibling(m_ui->historyView->currentIndex().row(), 1).data(Qt::DisplayRole).toString());
+	}
+}
+
+void HistoryContentsWidget::copyEntryLink()
+{
+	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+
+	if (entryItem)
+	{
+		QApplication::clipboard()->setText(entryItem->text());
+	}
+}
+
+void HistoryContentsWidget::showContextMenu(const QPoint &point)
+{
+	const qint64 entry = getEntry(m_ui->historyView->indexAt(point));
+	QMenu menu(this);
+
+	if (entry >= 0)
+	{
+		menu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName("new-tab");
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName("new-background-tab");
+		menu.addSeparator();
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName("new-window");
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName("new-background-window");
+		menu.addSeparator();
+		menu.addAction(tr("Add to Bookmarks..."), this, SLOT(bookmarkEntry()));
+		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
+		menu.addSeparator();
+		menu.addAction(tr("Remove Entry"), this, SLOT(removeEntry()));
+		menu.addAction(tr("Remove All Entries from This Domain"), this, SLOT(removeDomainEntries()));
+		menu.addSeparator();
+	}
+
+	menu.addAction(ActionsManager::getAction("ClearHistory"));
+	menu.exec(m_ui->historyView->mapToGlobal(point));
 }
 
 QStandardItem* HistoryContentsWidget::findEntry(qint64 entry)
@@ -302,6 +401,11 @@ QUrl HistoryContentsWidget::getUrl() const
 QIcon HistoryContentsWidget::getIcon() const
 {
 	return QIcon(":/icons/view-history.png");
+}
+
+qint64 HistoryContentsWidget::getEntry(const QModelIndex &index)
+{
+	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toLongLong() : -1);
 }
 
 }

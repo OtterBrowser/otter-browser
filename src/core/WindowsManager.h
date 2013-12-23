@@ -74,7 +74,7 @@ private:
 	bool m_privateSession;
 
 signals:
-	void requestedAddBookmark(QUrl url);
+	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(bool privateSession, bool background, QUrl url);
 	void actionsChanged();
 	void canZoomChanged(bool can);
