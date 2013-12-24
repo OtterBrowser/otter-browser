@@ -1,15 +1,14 @@
 #include "NetworkAccessManager.h"
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
+#include "NetworkCache.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "../ui/AuthenticationDialog.h"
 #include "../ui/ContentsWidget.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
-#include <QtCore/QStandardPaths>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -17,7 +16,7 @@ namespace Otter
 
 CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
-QNetworkDiskCache* NetworkAccessManager::m_cache = NULL;
+NetworkCache* NetworkAccessManager::m_cache = NULL;
 
 NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
@@ -84,39 +83,7 @@ void NetworkAccessManager::clearCookies(int period)
 
 void NetworkAccessManager::clearCache(int period)
 {
-	QNetworkDiskCache *cache = getCache();
-
-	if (period <= 0)
-	{
-		cache->clear();
-
-		return;
-	}
-
-	const QDir cacheDirectory(cache->cacheDirectory());
-	const QStringList directories = cacheDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-
-	for (int i = 0; i < directories.count(); ++i)
-	{
-		const QDir cacheSubDirectory(cacheDirectory.absoluteFilePath(directories.at(i)));
-		const QStringList subDirectories = cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-
-		for (int j = 0; j < subDirectories.count(); ++j)
-		{
-			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
-			const QStringList files = cacheFilesDirectory.entryList(QDir::Files);
-
-			for (int k = 0; k < files.count(); ++k)
-			{
-				const QNetworkCacheMetaData metaData = cache->fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k)));
-
-				if (metaData.isValid() && metaData.lastModified().isValid() && metaData.lastModified().secsTo(QDateTime::currentDateTime()) > (period * 3600))
-				{
-					cache->remove(metaData.url());
-				}
-			}
-		}
-	}
+	getCache()->clearCache(period);
 }
 
 void NetworkAccessManager::timerEvent(QTimerEvent *event)
@@ -359,12 +326,11 @@ QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
 	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
 }
 
-QNetworkDiskCache *NetworkAccessManager::getCache()
+NetworkCache *NetworkAccessManager::getCache()
 {
 	if (!m_cache)
 	{
-		m_cache = new QNetworkDiskCache(QCoreApplication::instance());
-		m_cache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+		m_cache = new NetworkCache(QCoreApplication::instance());
 	}
 
 	return m_cache;

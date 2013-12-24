@@ -9,6 +9,7 @@ namespace Otter
 
 class ContentsWidget;
 class CookieJar;
+class NetworkCache;
 
 class NetworkAccessManager : public QNetworkAccessManager
 {
@@ -29,7 +30,7 @@ public:
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
-	static QNetworkDiskCache* getCache();
+	static NetworkCache* getCache();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -59,7 +60,7 @@ private:
 
 	static CookieJar *m_cookieJar;
 	static QNetworkCookieJar *m_privateCookieJar;
-	static QNetworkDiskCache *m_cache;
+	static NetworkCache *m_cache;
 
 signals:
 	void messageChanged(const QString &message = QString());
