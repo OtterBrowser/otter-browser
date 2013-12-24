@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>416</height>
+    <width>400</width>
+    <height>400</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
@@ -58,6 +58,18 @@
       </sizepolicy>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>3</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
+      <property name="bottomMargin">
+       <number>3</number>
+      </property>
       <item>
        <widget class="QWidget" name="formWidget" native="true">
         <property name="sizePolicy">
@@ -67,6 +79,18 @@
          </sizepolicy>
         </property>
         <layout class="QFormLayout" name="formLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="addressLabel">
            <property name="text">
@@ -129,6 +153,18 @@
          </size>
         </property>
         <layout class="QVBoxLayout" name="actionsLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="previewLabel">
            <property name="minimumSize">
@@ -214,6 +250,11 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>filterLineEdit</tabstop>
+  <tabstop>cacheView</tabstop>
+  <tabstop>deleteButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

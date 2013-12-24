@@ -269,7 +269,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	QTemporaryFile temporaryFile("otter-download-XXXXXX.dat", m_instance);
 	TransferInformation *transfer = new TransferInformation();
-	transfer->source = reply->url().toString(QUrl::RemovePassword);
+	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
 	transfer->started = QDateTime::currentDateTime();
 	transfer->isPrivate = privateTransfer;
@@ -432,7 +432,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	if (m_replies.contains(reply))
 	{
-		disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+		if (transfer->state == RunningTransfer)
+		{
+			disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+		}
+		else
+		{
+			m_replies.remove(reply);
+		}
 	}
 
 	temporaryFile.reset();
@@ -446,6 +453,8 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		if (reply->isFinished())
 		{
 			m_instance->downloadFinished(reply);
+
+			transfer->device = NULL;
 		}
 		else
 		{
@@ -454,8 +463,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	}
-
-	if (reply->isFinished())
+	else
 	{
 		transfer->device = NULL;
 	}

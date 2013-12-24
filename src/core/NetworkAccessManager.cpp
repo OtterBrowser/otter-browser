@@ -160,14 +160,11 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 		++m_finishedRequests;
 	}
 
-	if (reply)
+	if (!m_simpleMode && reply)
 	{
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 
-		if (!m_simpleMode)
-		{
-			reply->deleteLater();
-		}
+		reply->deleteLater();
 	}
 }
 
