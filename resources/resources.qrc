@@ -76,5 +76,6 @@
         <file>icons/media-playback-start.png</file>
         <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>
+        <file>icons/cache.png</file>
     </qresource>
 </RCC>

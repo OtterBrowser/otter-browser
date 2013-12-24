@@ -47,6 +47,7 @@ SOURCES += src/main.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/StatusBarWidget.cpp \
     src/ui/TabBarWidget.cpp \
+    src/ui/TextLabelWidget.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
@@ -55,6 +56,7 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
+    src/modules/windows/cache/CacheContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
     src/modules/windows/cookies/CookiePropertiesDialog.cpp \
     src/modules/windows/cookies/CookiesContentsWidget.cpp \
@@ -102,6 +104,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/StatusBarWidget.h \
     src/ui/TabBarWidget.h \
+    src/ui/TextLabelWidget.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
@@ -110,6 +113,7 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
+    src/modules/windows/cache/CacheContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \
     src/modules/windows/cookies/CookiePropertiesDialog.h \
     src/modules/windows/cookies/CookiesContentsWidget.h \
@@ -131,6 +135,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/Window.ui \
     src/ui/preferences/BlockedContentDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
+    src/modules/windows/cache/CacheContentsWidget.ui \
     src/modules/windows/configuration/ConfigurationContentsWidget.ui \
     src/modules/windows/cookies/CookiePropertiesDialog.ui \
     src/modules/windows/cookies/CookiesContentsWidget.ui \

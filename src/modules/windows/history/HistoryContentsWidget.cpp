@@ -6,7 +6,6 @@
 
 #include "ui_HistoryContentsWidget.h"
 
-#include <QtCore/QSettings>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QMenu>
 
@@ -404,7 +403,7 @@ QIcon HistoryContentsWidget::getIcon() const
 	return QIcon(":/icons/view-history.png");
 }
 
-qint64 HistoryContentsWidget::getEntry(const QModelIndex &index)
+qint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toLongLong() : -1);
 }

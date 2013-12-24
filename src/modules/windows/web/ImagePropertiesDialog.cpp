@@ -13,10 +13,9 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 	m_ui(new Ui::ImagePropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->addressValueLineEdit->setText(url.toString());
-	m_ui->addressValueLineEdit->setCursorPosition(0);
-	m_ui->alternativeTextValueLabel->setText(alternativeText.toHtmlEscaped());
-	m_ui->longDescriptionValueLabel->setText(longDescription.toHtmlEscaped());
+	m_ui->addressLabelWidget->setText(url.toString());
+	m_ui->alternativeTextLabelWidget->setText(alternativeText.toHtmlEscaped());
+	m_ui->longDescriptionLabelWidget->setText(longDescription.toHtmlEscaped());
 
 	QByteArray array;
 	QImage image;
@@ -58,7 +57,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 			size = tr("%1 B").arg(device->size());
 		}
 
-		m_ui->fileSizeValueLabel->setText(size);
+		m_ui->fileSizeLabelWidget->setText(size);
 
 		QImageReader reader(device);
 
@@ -71,26 +70,28 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 	{
 		if (frames > 1)
 		{
-			m_ui->sizeValueLabel->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frames", "", frames).arg(image.width()).arg(image.height()).arg(image.depth()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frames", "", frames).arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 		else
 		{
-			m_ui->sizeValueLabel->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 	}
 	else if (!pixmap.isNull())
 	{
-		m_ui->sizeValueLabel->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(pixmap.width()).arg(pixmap.height()).arg(pixmap.depth()));
+		m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(pixmap.width()).arg(pixmap.height()).arg(pixmap.depth()));
 	}
 
 	if (device)
 	{
 		device->reset();
 
-		m_ui->typeValueLabel->setText(QMimeDatabase().mimeTypeForData(device).comment());
+		m_ui->typeLabelWidget->setText(QMimeDatabase().mimeTypeForData(device).comment());
 
 		device->deleteLater();
 	}
+
+	setMinimumWidth(400);
 }
 
 ImagePropertiesDialog::~ImagePropertiesDialog()

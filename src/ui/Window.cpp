@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "../core/SettingsManager.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
+#include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
@@ -151,6 +152,10 @@ void Window::setUrl(const QUrl &url)
 		if (url.path() == "bookmarks")
 		{
 			newWidget = new BookmarksContentsWidget(this);
+		}
+		else if (url.path() == "cache")
+		{
+			newWidget = new CacheContentsWidget(this);
 		}
 		else if (url.path() == "config")
 		{

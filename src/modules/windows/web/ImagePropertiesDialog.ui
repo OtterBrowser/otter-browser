@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>250</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,16 +23,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="sizeValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="typeLabel">
        <property name="text">
@@ -40,30 +30,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="typeValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="fileSizeLabel">
        <property name="text">
         <string>File Size:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="fileSizeValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
        </property>
       </widget>
      </item>
@@ -88,41 +58,23 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="alternativeTextValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
+     <item row="0" column="1">
+      <widget class="Otter::TextLabelWidget" name="sizeLabelWidget" native="true"/>
      </item>
-     <item row="5" column="1">
-      <widget class="QLabel" name="longDescriptionValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
+     <item row="1" column="1">
+      <widget class="Otter::TextLabelWidget" name="typeLabelWidget" native="true"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="Otter::TextLabelWidget" name="fileSizeLabelWidget" native="true"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="Otter::TextLabelWidget" name="alternativeTextLabelWidget" native="true"/>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="addressValueLineEdit">
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {border:none;background:transparent;}</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="Otter::TextLabelWidget" name="addressLabelWidget" native="true"/>
+     </item>
+     <item row="5" column="1">
+      <widget class="Otter::TextLabelWidget" name="longDescriptionLabelWidget" native="true"/>
      </item>
     </layout>
    </item>
@@ -138,6 +90,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::TextLabelWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/TextLabelWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

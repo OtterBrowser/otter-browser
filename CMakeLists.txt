@@ -81,6 +81,7 @@ set(otter_src
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/StatusBarWidget.cpp
 	src/ui/TabBarWidget.cpp
+	src/ui/TextLabelWidget.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
@@ -89,6 +90,7 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
+	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
 	src/modules/windows/cookies/CookiePropertiesDialog.cpp
 	src/modules/windows/cookies/CookiesContentsWidget.cpp
@@ -116,6 +118,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/Window.ui
 	src/ui/preferences/BlockedContentDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
+	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
 	src/modules/windows/cookies/CookiePropertiesDialog.ui
 	src/modules/windows/cookies/CookiesContentsWidget.ui

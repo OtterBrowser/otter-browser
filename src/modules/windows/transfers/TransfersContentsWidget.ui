@@ -11,7 +11,16 @@
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -103,16 +112,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="sourceValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="targetLabel">
        <property name="text">
@@ -123,16 +122,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="targetValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="0">
       <widget class="QLabel" name="progressLabel">
        <property name="text">
@@ -140,26 +129,6 @@
        </property>
        <property name="textInteractionFlags">
         <set>Qt::NoTextInteraction</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="progressValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="sizeValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::TextSelectableByMouse</set>
        </property>
       </widget>
      </item>
@@ -180,17 +149,33 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <widget class="Otter::TextLabelWidget" name="sourceLabelWidget" native="true"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="Otter::TextLabelWidget" name="targetLabelWidget" native="true"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="Otter::TextLabelWidget" name="sizeLabelWidget" native="true"/>
+     </item>
      <item row="3" column="1">
-      <widget class="QLabel" name="downloadedValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
+      <widget class="Otter::TextLabelWidget" name="downloadedLabelWidget" native="true"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="Otter::TextLabelWidget" name="progressLabelWidget" native="true"/>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::TextLabelWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/TextLabelWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

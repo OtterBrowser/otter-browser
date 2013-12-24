@@ -22,8 +22,9 @@ private:
 	QHash<QIODevice*, QUrl> m_devices;
 
 signals:
-	void urlInserted(QUrl url);
-	void urlRemoved(QUrl url);
+	void cleared();
+	void entryAdded(QUrl url);
+	void entryRemoved(QUrl url);
 };
 
 }

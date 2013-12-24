@@ -18,6 +18,8 @@ void NetworkCache::clearCache(int period)
 	{
 		clear();
 
+		emit cleared();
+
 		return;
 	}
 
@@ -53,7 +55,7 @@ void NetworkCache::insert(QIODevice *device)
 
 	if (m_devices.contains(device))
 	{
-		emit urlInserted(m_devices[device]);
+		emit entryAdded(m_devices[device]);
 
 		m_devices.remove(device);
 	}
@@ -77,7 +79,7 @@ bool NetworkCache::remove(const QUrl &url)
 
 	if (result)
 	{
-		emit urlRemoved(url);
+		emit entryRemoved(url);
 	}
 
 	return result;
