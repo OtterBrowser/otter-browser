@@ -1,4 +1,5 @@
 #include "NetworkCache.h"
+#include "SettingsManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
@@ -10,6 +11,9 @@ namespace Otter
 NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 {
 	setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+	setMaximumCacheSize(SettingsManager::getValue("Cache/DiskCacheLimit").toInt() * 1024);
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void NetworkCache::clearCache(int period)
@@ -115,6 +119,14 @@ bool NetworkCache::remove(const QUrl &url)
 	}
 
 	return result;
+}
+
+void NetworkCache::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "Cache/DiskCacheLimit")
+	{
+		setMaximumCacheSize(value.toInt() * 1024);
+	}
 }
 
 }

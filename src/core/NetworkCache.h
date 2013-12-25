@@ -19,6 +19,9 @@ public:
 	QList<QUrl> getEntries() const;
 	bool remove(const QUrl &url);
 
+protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
+
 private:
 	QHash<QIODevice*, QUrl> m_devices;
 

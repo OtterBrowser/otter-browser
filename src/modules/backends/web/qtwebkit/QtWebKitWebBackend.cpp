@@ -22,6 +22,8 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 	globalSettings->setIconDatabasePath(cachePath);
 	globalSettings->setOfflineStoragePath(cachePath);
 
+	QWebSettings::setMaximumPagesInCache(SettingsManager::getValue("Cache/PagesInMemoryLimit").toInt());
+
 	optionChanged("Browser/");
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
@@ -29,6 +31,11 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
 
 void QtWebKitWebBackend::optionChanged(const QString &option)
 {
+	if (option == "Cache/PagesInMemoryLimit")
+	{
+		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue("Cache/PagesInMemoryLimit").toInt());
+	}
+
 	if (!(option.startsWith("Browser/") || option.startsWith("Content/")))
 	{
 		return;
