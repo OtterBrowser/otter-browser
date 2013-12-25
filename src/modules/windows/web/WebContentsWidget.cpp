@@ -240,12 +240,12 @@ WebContentsWidget* WebContentsWidget::clone(Window *parent)
 	return new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(), parent);
 }
 
-QAction *WebContentsWidget::getAction(WindowAction action)
+QAction* WebContentsWidget::getAction(WindowAction action)
 {
 	return m_webWidget->getAction(action);
 }
 
-QUndoStack *WebContentsWidget::getUndoStack()
+QUndoStack* WebContentsWidget::getUndoStack()
 {
 	return m_webWidget->getUndoStack();
 }

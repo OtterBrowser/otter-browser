@@ -130,7 +130,7 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 			m_autoSaveTimer = startTimer(1000);
 		}
 
-		emit cookieInserted(cookie);
+		emit cookieAdded(cookie);
 	}
 
 	return result;
@@ -152,7 +152,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 			m_autoSaveTimer = startTimer(1000);
 		}
 
-		emit cookieDeleted(cookie);
+		emit cookieRemoved(cookie);
 	}
 
 	return result;

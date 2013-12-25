@@ -37,15 +37,17 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	QStandardItem* findDomain(const QString &domain);
+	QNetworkCookie getCookie(const QModelIndex &index) const;
 
 protected slots:
 	void triggerAction();
 	void populateCookies();
 	void filterCookies(const QString &filter);
-	void insertCookie(const QNetworkCookie &cookie);
-	void deleteCookie(const QNetworkCookie &cookie);
-	void deleteCookies();
-	void cookieProperties();
+	void addCookie(const QNetworkCookie &cookie);
+	void removeCookie(const QNetworkCookie &cookie);
+	void removeCookies();
+	void removeDomainCookies();
+	void showContextMenu(const QPoint &point);
 	void updateActions();
 
 private:

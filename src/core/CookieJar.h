@@ -48,8 +48,8 @@ private:
 	bool m_enableCookies;
 
 signals:
-	void cookieInserted(QNetworkCookie cookie);
-	void cookieDeleted(QNetworkCookie cookie);
+	void cookieAdded(QNetworkCookie cookie);
+	void cookieRemoved(QNetworkCookie cookie);
 };
 
 }

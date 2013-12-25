@@ -92,7 +92,6 @@ set(otter_src
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
-	src/modules/windows/cookies/CookiePropertiesDialog.cpp
 	src/modules/windows/cookies/CookiesContentsWidget.cpp
 	src/modules/windows/history/HistoryContentsWidget.cpp
 	src/modules/windows/transfers/ProgressBarDelegate.cpp
@@ -120,7 +119,6 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
-	src/modules/windows/cookies/CookiePropertiesDialog.ui
 	src/modules/windows/cookies/CookiesContentsWidget.ui
 	src/modules/windows/history/HistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
