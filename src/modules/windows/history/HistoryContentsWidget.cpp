@@ -135,7 +135,7 @@ void HistoryContentsWidget::populateEntries()
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-		addEntry(entries.at(i), false);
+		addEntry(entries.at(i));
 	}
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -159,7 +159,7 @@ void HistoryContentsWidget::addEntry(qint64 entry)
 	addEntry(HistoryManager::getEntry(entry));
 }
 
-void HistoryContentsWidget::addEntry(const HistoryEntry &entry, bool sort)
+void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 {
 	if (entry.identifier < 0)
 	{
@@ -195,7 +195,7 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry, bool sort)
 
 	m_ui->historyView->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
 
-	if (sort)
+	if (sender())
 	{
 		groupItem->sortChildren(2, Qt::DescendingOrder);
 	}

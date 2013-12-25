@@ -114,7 +114,7 @@ void CookiesContentsWidget::deleteCookie(const QNetworkCookie &cookie)
 	{
 		QStandardItem *domainItem = m_model->item(i, 0);
 
-		if (domainItem->text() == domain)
+		if (domainItem && domainItem->text() == domain)
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{

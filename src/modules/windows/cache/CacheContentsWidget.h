@@ -31,19 +31,23 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	QStandardItem* findDomain(const QString &domain);
 	QStandardItem* findEntry(const QUrl &entry);
 	QUrl getEntry(const QModelIndex &index) const;
 
 protected slots:
+	void populateCache();
 	void filterCache(const QString &filter);
 	void clearEntries();
-	void addEntry(const QUrl &entry, bool sort = true);
+	void addEntry(const QUrl &entry);
 	void removeEntry(const QUrl &entry);
 	void removeEntry();
 	void removeDomainEntries();
+	void removeDomainEntriesOrEntry();
 	void openEntry(const QModelIndex &index = QModelIndex());
 	void copyEntryLink();
 	void showContextMenu(const QPoint &point);
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;

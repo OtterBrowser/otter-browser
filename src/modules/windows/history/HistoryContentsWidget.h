@@ -41,7 +41,7 @@ protected slots:
 	void populateEntries();
 	void clearEntries();
 	void addEntry(qint64 entry);
-	void addEntry(const HistoryEntry &entry, bool sort = true);
+	void addEntry(const HistoryEntry &entry);
 	void updateEntry(qint64 entry);
 	void removeEntry(qint64 entry);
 	void removeEntry();

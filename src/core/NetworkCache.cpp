@@ -73,6 +73,38 @@ QIODevice* NetworkCache::prepare(const QNetworkCacheMetaData &metaData)
 	return device;
 }
 
+QList<QUrl> NetworkCache::getEntries() const
+{
+	QList<QUrl> entries;
+
+	const QDir cacheMainDirectory(cacheDirectory());
+	const QStringList directories = cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+	for (int i = 0; i < directories.count(); ++i)
+	{
+		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directories.at(i)));
+		const QStringList subDirectories = cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+		for (int j = 0; j < subDirectories.count(); ++j)
+		{
+			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
+			const QStringList files = cacheFilesDirectory.entryList(QDir::Files);
+
+			for (int k = 0; k < files.count(); ++k)
+			{
+				const QNetworkCacheMetaData metaData = fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k)));
+
+				if (metaData.url().isValid())
+				{
+					entries.append(metaData.url());
+				}
+			}
+		}
+	}
+
+	return entries;
+}
+
 bool NetworkCache::remove(const QUrl &url)
 {
 	const bool result = QNetworkDiskCache::remove(url);
