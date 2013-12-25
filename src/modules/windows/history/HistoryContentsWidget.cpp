@@ -6,6 +6,7 @@
 
 #include "ui_HistoryContentsWidget.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QMenu>
 
@@ -38,7 +39,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyView->expand(m_model->index(0, 0));
 
-	populateEntries();
+	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
 	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(clearEntries()));
 	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(qint64)), this, SLOT(addEntry(qint64)));
