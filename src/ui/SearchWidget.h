@@ -19,6 +19,7 @@ class SearchWidget : public QComboBox
 public:
 	explicit SearchWidget(QWidget *parent = NULL);
 
+	void hidePopup();
 	QString getCurrentSearchEngine() const;
 
 public slots:
@@ -26,7 +27,7 @@ public slots:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void currentSearchChanged(int index);
+	void currentSearchEngineChanged(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
 	void updateSearchEngines();
@@ -38,6 +39,7 @@ private:
 	SearchSuggester *m_suggester;
 	QString m_query;
 	int m_index;
+	bool m_sendRequest;
 
 signals:
 	void requestedSearch(QString query, QString engine);

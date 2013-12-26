@@ -16,7 +16,8 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_model(new QStandardItemModel(this)),
 	m_completer(new QCompleter(this)),
 	m_suggester(NULL),
-	m_index(0)
+	m_index(0),
+	m_sendRequest(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -32,10 +33,19 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchEngines()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
+}
+
+void SearchWidget::hidePopup()
+{
+	if (!m_query.isEmpty())
+	{
+		m_sendRequest = true;
+	}
+
+	QComboBox::hidePopup();
 }
 
 void SearchWidget::optionChanged(const QString &option, const QVariant &value)
@@ -59,18 +69,18 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
-void SearchWidget::currentSearchChanged(int index)
+void SearchWidget::currentSearchEngineChanged(int index)
 {
 	if (itemData(index, (Qt::UserRole + 1)).toString().isEmpty())
 	{
 		setCurrentIndex(m_index);
 
-		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 
 		PreferencesDialog dialog("search", this);
 		dialog.exec();
 
-		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 	}
 	else
 	{
@@ -86,13 +96,18 @@ void SearchWidget::currentSearchChanged(int index)
 		}
 
 		SessionsManager::markSessionModified();
-
-		sendRequest();
 	}
 }
 
 void SearchWidget::queryChanged(const QString &query)
 {
+	if (m_sendRequest)
+	{
+		sendRequest();
+
+		m_sendRequest = false;
+	}
+
 	m_query = query;
 }
 
@@ -115,7 +130,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 void SearchWidget::updateSearchEngines()
 {
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 
 	m_model->clear();
 
@@ -161,7 +176,7 @@ void SearchWidget::updateSearchEngines()
 
 	setCurrentSearchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString());
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
 
 void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
@@ -195,7 +210,7 @@ void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
 
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
 {
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 
 	const QStringList engines = SearchesManager::getSearchEngines();
 
@@ -206,7 +221,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue("Browser/DefaultSearchEngine").toString() : engine));
 
-	currentSearchChanged(index);
+	currentSearchEngineChanged(index);
 	setCurrentIndex(index);
 
 	if (m_suggester)
@@ -214,7 +229,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 		m_suggester->setEngine(getCurrentSearchEngine());
 	}
 
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchChanged(int)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
 
 QString SearchWidget::getCurrentSearchEngine() const
