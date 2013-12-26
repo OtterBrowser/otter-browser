@@ -49,6 +49,7 @@ protected slots:
 	void openTransferFolder(const QModelIndex &index = QModelIndex());
 	void copyTransferInformation();
 	void stopResumeTransfer();
+	void redownloadTransfer();
 	void startQuickTransfer();
 	void clearFinishedTransfers();
 	void showContextMenu(const QPoint &point);

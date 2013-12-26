@@ -53,6 +53,7 @@ public:
 	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
 	static QList<TransferInformation*> getTransfers();
 	static bool resumeTransfer(TransferInformation *transfer);
+	static bool restartTransfer(TransferInformation *transfer);
 	static bool removeTransfer(TransferInformation *transfer, bool keepFile = true);
 	static bool stopTransfer(TransferInformation *transfer);
 	static bool isDownloading(const QString &source, const QString &target = QString());

@@ -51,8 +51,9 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	connect(m_ui->transfersView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->transfersView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openTransfer(QModelIndex)));
 	connect(m_ui->transfersView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
 	connect(m_ui->downloadLineEdit, SIGNAL(returnPressed()), this, SLOT(startQuickTransfer()));
+	connect(m_ui->stopResumeButton, SIGNAL(clicked()), this, SLOT(stopResumeTransfer()));
+	connect(m_ui->redownloadButton, SIGNAL(clicked()), this, SLOT(redownloadTransfer()));
 }
 
 TransfersContentsWidget::~TransfersContentsWidget()
@@ -272,6 +273,16 @@ void TransfersContentsWidget::stopResumeTransfer()
 	}
 }
 
+void TransfersContentsWidget::redownloadTransfer()
+{
+	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+
+	if (transfer)
+	{
+		TransfersManager::restartTransfer(transfer);
+	}
+}
+
 void TransfersContentsWidget::startQuickTransfer()
 {
 	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), false, true);
@@ -327,6 +338,7 @@ void TransfersContentsWidget::updateActions()
 
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
 	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
+	m_ui->redownloadButton->setEnabled(transfer);
 
 	getAction(CopyAction)->setEnabled(transfer);
 	getAction(DeleteAction)->setEnabled(transfer);

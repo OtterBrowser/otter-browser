@@ -33,7 +33,7 @@ TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 		transfer->finished = history.value(QString("%1/finished").arg(entries.at(i))).toDateTime();
 		transfer->bytesTotal = history.value(QString("%1/bytesTotal").arg(entries.at(i))).toLongLong();
 		transfer->bytesReceived = history.value(QString("%1/bytesReceived").arg(entries.at(i))).toLongLong();
-		transfer->state = ((transfer->bytesTotal == transfer->bytesReceived) ? FinishedTransfer : ErrorTransfer);
+		transfer->state = ((transfer->bytesReceived > 0 && transfer->bytesTotal == transfer->bytesReceived) ? FinishedTransfer : ErrorTransfer);
 
 		m_transfers.append(transfer);
 	}
@@ -532,6 +532,52 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(transfer->source));
 	request.setRawHeader("Range", "bytes=" + QByteArray::number(file->size()) + '-');
+
+	if (!m_networkAccessManager)
+	{
+		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
+		m_networkAccessManager->setParent(m_instance);
+	}
+
+	QNetworkReply *reply = m_networkAccessManager->get(request);
+
+	m_replies[reply] = transfer;
+
+	m_instance->downloadData(reply);
+
+	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
+	connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+	connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
+	connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), m_instance, SLOT(downloadError(QNetworkReply::NetworkError)));
+
+	m_instance->startUpdates();
+
+	return true;
+}
+
+bool TransfersManager::restartTransfer(TransferInformation *transfer)
+{
+	if (!transfer || !m_transfers.contains(transfer))
+	{
+		return false;
+	}
+
+	stopTransfer(transfer);
+
+	QFile *file = new QFile(transfer->target);
+
+	if (!file->open(QIODevice::WriteOnly))
+	{
+		return false;
+	}
+
+	transfer->device = file;
+	transfer->started = QDateTime::currentDateTime();
+	transfer->bytesStart = 0;
+
+	QNetworkRequest request;
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	request.setUrl(QUrl(transfer->source));
 
 	if (!m_networkAccessManager)
 	{
