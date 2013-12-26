@@ -30,6 +30,7 @@ public:
 	QString getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
+	bool isLoading() const;
 
 public slots:
 	void triggerAction(WindowAction action, bool checked = false);
@@ -59,6 +60,7 @@ private:
 	QStandardItemModel *m_model;
 	QHash<WindowAction, QAction*> m_actions;
 	QHash<TransferInformation*, QQueue<qint64> > m_speeds;
+	bool m_isLoading;
 	Ui::TransfersContentsWidget *m_ui;
 };
 

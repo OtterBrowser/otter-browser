@@ -21,6 +21,7 @@ namespace Otter
 
 TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),
+	m_isLoading(false),
 	m_ui(new Ui::TransfersContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -223,6 +224,40 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	if (m_ui->transfersView->selectionModel()->hasSelection())
 	{
 		updateActions();
+	}
+
+	const bool isRunning = (transfer && transfer->state == RunningTransfer);
+
+	if (isRunning != m_isLoading)
+	{
+		if (isRunning)
+		{
+			m_isLoading = true;
+
+			emit loadingChanged(true);
+		}
+		else
+		{
+			const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+			bool hasRunning = false;
+
+			for (int i = 0; i < transfers.count(); ++i)
+			{
+				if (transfers.at(i) && transfers.at(i)->state == RunningTransfer)
+				{
+					hasRunning = true;
+
+					break;
+				}
+			}
+
+			if (!hasRunning)
+			{
+				m_isLoading = false;
+
+				emit loadingChanged(false);
+			}
+		}
 	}
 }
 
@@ -472,6 +507,11 @@ int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 	}
 
 	return -1;
+}
+
+bool TransfersContentsWidget::isLoading() const
+{
+	return m_isLoading;
 }
 
 }
