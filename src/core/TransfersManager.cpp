@@ -154,9 +154,14 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	transfer->finished = QDateTime::currentDateTime();
 	transfer->bytesReceived = transfer->device->size();
 
-	if (transfer->bytesTotal <= 0)
+	if (transfer->bytesTotal <= 0 && transfer->bytesReceived > 0)
 	{
 		transfer->bytesTotal = transfer->bytesReceived;
+	}
+
+	if (transfer->bytesReceived == 0 || transfer->bytesReceived < transfer->bytesTotal)
+	{
+		transfer->state = ErrorTransfer;
 	}
 
 	emit m_instance->transferFinished(transfer);
@@ -469,6 +474,19 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	}
 
 	temporaryFile.close();
+
+	if (transfer->state == FinishedTransfer)
+	{
+		if (transfer->bytesTotal <= 0 && transfer->bytesReceived > 0)
+		{
+			transfer->bytesTotal = transfer->bytesReceived;
+		}
+
+		if (transfer->bytesReceived == 0 || transfer->bytesReceived < transfer->bytesTotal)
+		{
+			transfer->state = ErrorTransfer;
+		}
+	}
 
 	emit m_instance->transferStarted(transfer);
 
