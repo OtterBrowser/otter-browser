@@ -43,7 +43,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	path = QFileInfo(path).canonicalFilePath();
+	path = QFileInfo(path).absoluteFilePath();
 
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(path.toUtf8());
@@ -84,6 +84,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 			m_localServer->listen(server);
 		}
+	}
+
+	if (!QFile::exists(path))
+	{
+		QDir().mkpath(path);
 	}
 
 	SettingsManager::createInstance(path + "/otter.conf", this);
