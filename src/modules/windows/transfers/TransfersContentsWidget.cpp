@@ -151,36 +151,38 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 	QString remainingTime;
 
-	if (m_speeds.contains(transfer))
+	if (transfer->state == RunningTransfer)
 	{
-		if (transfer->state == RunningTransfer)
+		if (!m_speeds.contains(transfer))
 		{
-			m_speeds[transfer].enqueue(transfer->speed);
+			m_speeds[transfer] = QQueue<qint64>();
+		}
 
-			if (m_speeds[transfer].count() > 10)
+		m_speeds[transfer].enqueue(transfer->speed);
+
+		if (m_speeds[transfer].count() > 10)
+		{
+			m_speeds[transfer].dequeue();
+		}
+
+		if (transfer->bytesTotal > 0)
+		{
+			qint64 speedSum = 0;
+			const QList<qint64> speeds = m_speeds[transfer];
+
+			for (int i = 0; i < speeds.count(); ++i)
 			{
-				m_speeds[transfer].dequeue();
+				speedSum += speeds.at(i);
 			}
 
-			if (transfer->bytesTotal > 0)
-			{
-				qint64 speedSum = 0;
-				const QList<qint64> speeds = m_speeds[transfer];
+			speedSum /= (speeds.count());
 
-				for (int i = 0; i < speeds.count(); ++i)
-				{
-					speedSum += speeds.at(i);
-				}
-
-				speedSum /= (speeds.count());
-
-				remainingTime = Utils::formatTime(qreal(transfer->bytesTotal - transfer->bytesReceived) / speedSum);
-			}
+			remainingTime = Utils::formatTime(qreal(transfer->bytesTotal - transfer->bytesReceived) / speedSum);
 		}
-		else
-		{
-			m_speeds.remove(transfer);
-		}
+	}
+	else
+	{
+		m_speeds.remove(transfer);
 	}
 
 	QIcon icon;
