@@ -920,7 +920,7 @@ void MainWindow::updateActions()
 	m_ui->actionZoomOriginal->setEnabled(canZoom);
 }
 
-WindowsManager *MainWindow::getWindowsManager()
+WindowsManager* MainWindow::getWindowsManager()
 {
 	return m_windowsManager;
 }

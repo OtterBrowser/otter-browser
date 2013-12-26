@@ -1,6 +1,8 @@
 #include "WindowsManager.h"
+#include "Application.h"
 #include "SettingsManager.h"
 #include "../ui/ContentsWidget.h"
+#include "../ui/MainWindow.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 
@@ -23,6 +25,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 {
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
@@ -263,6 +266,8 @@ void WindowsManager::addWindow(Window *window, bool background)
 		return;
 	}
 
+	window->setParent(m_area);
+
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
 	mdiWindow->showMaximized();
 
@@ -295,11 +300,16 @@ void WindowsManager::addWindow(Window *window, bool background)
 	emit windowAdded(index);
 }
 
-void WindowsManager::addWindow(ContentsWidget *widget)
+void WindowsManager::addWindow(ContentsWidget *widget, bool detached)
 {
 	if (widget)
 	{
 		addWindow(new Window(widget->isPrivate(), widget, m_area));
+
+		if (detached)
+		{
+			closeOther();
+		}
 	}
 }
 
@@ -310,6 +320,29 @@ void WindowsManager::cloneWindow(int index)
 	if (window && window->isClonable())
 	{
 		addWindow(window->clone(m_area));
+	}
+}
+
+void WindowsManager::detachWindow(int index)
+{
+	Window *window = getWindow(index);
+
+	if (!window)
+	{
+		return;
+	}
+
+	MainWindow *mainWindow = Application::getInstance()->createWindow(m_privateSession, false);
+
+	if (mainWindow)
+	{
+		window->getContentsWidget()->setParent(NULL);
+
+		mainWindow->getWindowsManager()->addWindow(window->getContentsWidget(), true);
+
+		m_tabBar->removeTab(index);
+
+		emit windowRemoved(index);
 	}
 }
 

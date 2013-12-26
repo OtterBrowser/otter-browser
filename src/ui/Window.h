@@ -110,6 +110,7 @@ public:
 	void close();
 	void print(QPrinter *printer);
 	Window* clone(QWidget *parent = NULL);
+	ContentsWidget* getContentsWidget();
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;

@@ -22,6 +22,7 @@ public:
 	~Application();
 
 	void removeWindow(MainWindow* window);
+	static Application* getInstance();
 	MainWindow* createWindow(bool privateSession = false, bool background = false, const SessionEntry &windows = SessionEntry());
 	MainWindow* getWindow();
 	QList<MainWindow*> getWindows();
@@ -35,6 +36,7 @@ protected slots:
 	void newConnection();
 
 private:
+	static Application *m_instance;
 	QLocalServer *m_localServer;
 	QList<MainWindow*> m_windows;
 };

@@ -43,6 +43,7 @@ protected:
 protected slots:
 	void closeOther();
 	void cloneTab();
+	void detachTab();
 	void pinTab();
 
 private:
@@ -54,6 +55,7 @@ private:
 
 signals:
 	void requestedClone(int index);
+	void requestedDetach(int index);
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);

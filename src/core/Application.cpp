@@ -23,11 +23,15 @@
 namespace Otter
 {
 
+Application* Application::m_instance = NULL;
+
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
 	setApplicationName("Otter");
 	setApplicationVersion("0.1.01");
+
+	m_instance = this;
 
 	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter";
 	QCommandLineParser *parser = getParser();
@@ -246,6 +250,11 @@ void Application::newWindow(bool privateSession, bool background, const QUrl &ur
 	{
 		window->openUrl(url);
 	}
+}
+
+Application* Application::getInstance()
+{
+	return m_instance;
 }
 
 MainWindow* Application::createWindow(bool privateSession, bool background, const SessionEntry &windows)

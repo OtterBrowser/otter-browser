@@ -186,8 +186,6 @@ void Window::setUrl(const QUrl &url)
 	}
 
 	m_contentsWidget->setUrl(url);
-
-	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == "web");
 }
 
 void Window::setPinned(bool pinned)
@@ -213,6 +211,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
+	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == "web");
 	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(getAction(ReloadOrStopAction));
@@ -254,12 +253,17 @@ Window* Window::clone(QWidget *parent)
 	return window;
 }
 
-QAction *Window::getAction(WindowAction action)
+ContentsWidget* Window::getContentsWidget()
+{
+	return m_contentsWidget;
+}
+
+QAction* Window::getAction(WindowAction action)
 {
 	return m_contentsWidget->getAction(action);
 }
 
-QUndoStack *Window::getUndoStack()
+QUndoStack* Window::getUndoStack()
 {
 	return m_contentsWidget->getUndoStack();
 }

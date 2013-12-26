@@ -152,7 +152,7 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 
 	transfer->state = FinishedTransfer;
 	transfer->finished = QDateTime::currentDateTime();
-	transfer->bytesReceived = transfer->device->size();
+	transfer->bytesReceived = (transfer->device ? transfer->device->size() : -1);
 
 	if (transfer->bytesTotal <= 0 && transfer->bytesReceived > 0)
 	{

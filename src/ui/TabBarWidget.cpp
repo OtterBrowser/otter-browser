@@ -89,6 +89,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, "isClonable", false).toBool());
 		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
 		menu.addSeparator();
+		menu.addAction(tr("Detach Tab"), this, SLOT(detachTab()))->setEnabled(count() > 1);
+		menu.addSeparator();
 
 		if (isPinned)
 		{
@@ -341,9 +343,20 @@ void TabBarWidget::cloneTab()
 	}
 }
 
+void TabBarWidget::detachTab()
+{
+	if (m_clickedTab >= 0)
+	{
+		emit requestedDetach(m_clickedTab);
+	}
+}
+
 void TabBarWidget::pinTab()
 {
-	emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, "isPinned", false).toBool());
+	if (m_clickedTab >= 0)
+	{
+		emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, "isPinned", false).toBool());
+	}
 }
 
 void TabBarWidget::updateTabs(int index)
