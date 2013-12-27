@@ -35,8 +35,8 @@ public:
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
 	int getZoom() const;
+	bool canClone() const;
 	bool canZoom() const;
-	bool isClonable() const;
 	bool isLoading() const;
 	bool isPrivate() const;
 

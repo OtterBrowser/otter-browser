@@ -94,11 +94,11 @@ class Window : public QWidget
 {
 	Q_OBJECT
 	Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
+	Q_PROPERTY(QString type READ getType)
 	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
 	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
 	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
-	Q_PROPERTY(int zoom READ getZoom WRITE setZoom NOTIFY zoomChanged)
-	Q_PROPERTY(bool isClonable READ isClonable)
+	Q_PROPERTY(bool canClone READ canClone)
 	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
 	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
 	Q_PROPERTY(bool isPrivate READ isPrivate)
@@ -108,11 +108,8 @@ public:
 	~Window();
 
 	void close();
-	void print(QPrinter *printer);
 	Window* clone(QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
-	QAction* getAction(WindowAction action);
-	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getSearchEngine() const;
 	QString getTitle() const;
@@ -120,21 +117,15 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
-	WindowHistoryInformation getHistory() const;
-	int getZoom() const;
-	bool canZoom() const;
-	bool isClonable() const;
+	bool canClone() const;
 	bool isLoading() const;
 	bool isPinned() const;
 	bool isPrivate() const;
 
 public slots:
 	void search(const QString &query, const QString &engine);
-	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setSearchEngine(const QString &engine);
-	void setHistory(const WindowHistoryInformation &history);
-	void setZoom(int zoom);
 	void setUrl(const QUrl &url);
 	void setPinned(bool pinned);
 

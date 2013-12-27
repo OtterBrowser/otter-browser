@@ -333,9 +333,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		}
 	}
 
-	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
+	Application *application = Application::getInstance();
 
-	if (application && application->getWindows().count() == 1)
+	if (application->getWindows().count() == 1)
 	{
 		if (SessionsManager::getCurrentSession() == "default")
 		{

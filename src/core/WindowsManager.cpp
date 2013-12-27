@@ -52,7 +52,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 		{
 			if (window->isPrivate() == privateWindow)
 			{
-				window->setHistory(WindowHistoryInformation());
+				window->getContentsWidget()->setHistory(WindowHistoryInformation());
 				window->setUrl(url);
 
 				return;
@@ -72,10 +72,10 @@ void WindowsManager::search(const QString &query, const QString &engine)
 {
 	Window *window = getWindow();
 
-	if (window && window->isClonable())
+	if (window && window->canClone())
 	{
 		window = window->clone(m_area);
-		window->setHistory(WindowHistoryInformation());
+		window->getContentsWidget()->setHistory(WindowHistoryInformation());
 
 		addWindow(window);
 	}
@@ -169,10 +169,10 @@ void WindowsManager::restore(int index)
 
 	Window *window = new Window(m_privateSession, NULL, m_area);
 	window->setUrl(entry.url());
-	window->setHistory(history);
+	window->getContentsWidget()->setHistory(history);
 	window->setSearchEngine(entry.searchEngine);
 	window->setPinned(entry.pinned);
-	window->setZoom(entry.zoom());
+	window->getContentsWidget()->setZoom(entry.zoom());
 
 	m_closedWindows.removeAt(index);
 
@@ -202,7 +202,7 @@ void WindowsManager::print(int index)
 		return;
 	}
 
-	window->print(&printer);
+	window->getContentsWidget()->print(&printer);
 }
 
 void WindowsManager::printPreview(int index)
@@ -235,7 +235,7 @@ void WindowsManager::printPreview(QPrinter *printer)
 
 	if (window)
 	{
-		window->print(printer);
+		window->getContentsWidget()->print(printer);
 	}
 }
 
@@ -245,7 +245,7 @@ void WindowsManager::triggerAction(WindowAction action, bool checked)
 
 	if (window)
 	{
-		window->triggerAction(action, checked);
+		window->getContentsWidget()->triggerAction(action, checked);
 	}
 }
 
@@ -273,7 +273,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	const int index = (SettingsManager::getValue("Tabs/OpenNextToActive").toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
 
-	m_tabBar->insertTab(index, window->getTitle());
+	m_tabBar->insertTab(index, window->getContentsWidget()->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
 	if (background)
@@ -317,7 +317,7 @@ void WindowsManager::cloneWindow(int index)
 {
 	Window *window = getWindow(index);
 
-	if (window && window->isClonable())
+	if (window && window->canClone())
 	{
 		addWindow(window->clone(m_area));
 	}
@@ -402,7 +402,7 @@ void WindowsManager::closeWindow(Window *window)
 
 	if (window && !window->isPrivate())
 	{
-		const WindowHistoryInformation history = window->getHistory();
+		const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
 		SessionWindow information;
 		information.searchEngine = window->getSearchEngine();
 		information.history = history.entries;
@@ -453,7 +453,7 @@ void WindowsManager::setZoom(int zoom)
 
 	if (window)
 	{
-		window->setZoom(zoom);
+		window->getContentsWidget()->setZoom(zoom);
 	}
 }
 
@@ -481,19 +481,19 @@ void WindowsManager::setCurrentWindow(int index)
 			window->parentWidget()->hide();
 		}
 
-		if (window->getUndoStack())
+		if (window->getContentsWidget()->getUndoStack())
 		{
-			disconnect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
 		}
 
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		disconnect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		disconnect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
-		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
+		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
 	}
 
 	m_statusBar->clearMessage();
@@ -511,24 +511,24 @@ void WindowsManager::setCurrentWindow(int index)
 			m_area->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
 		}
 
-		m_statusBar->setZoom(window->getZoom());
-		m_statusBar->setZoomEnabled(window->canZoom());
+		m_statusBar->setZoom(window->getContentsWidget()->getZoom());
+		m_statusBar->setZoomEnabled(window->getContentsWidget()->canZoom());
 
-		emit windowTitleChanged(QString("%1 - Otter").arg(window->getTitle()));
+		emit windowTitleChanged(QString("%1 - Otter").arg(window->getContentsWidget()->getTitle()));
 
-		if (window->getUndoStack())
+		if (window->getContentsWidget()->getUndoStack())
 		{
-			connect(window->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			connect(window->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			connect(window->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-			connect(window->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
+			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
+			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
 		}
 
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
 		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		connect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
-		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window, SLOT(setZoom(int)));
+		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
 	}
 
 	emit actionsChanged();
@@ -557,7 +557,7 @@ QAction *WindowsManager::getAction(WindowAction action)
 
 	if (window)
 	{
-		return window->getAction(action);
+		return window->getContentsWidget()->getAction(action);
 	}
 
 	return NULL;
@@ -589,14 +589,14 @@ QString WindowsManager::getTitle() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->getTitle() : tr("Empty"));
+	return (window ? window->getContentsWidget()->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->getUrl() : QUrl());
+	return (window ? window->getContentsWidget()->getUrl() : QUrl());
 }
 
 SessionEntry WindowsManager::getSession() const
@@ -610,7 +610,7 @@ SessionEntry WindowsManager::getSession() const
 
 		if (window && !window->isPrivate())
 		{
-			const WindowHistoryInformation history = window->getHistory();
+			const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
 			SessionWindow information;
 			information.searchEngine = window->getSearchEngine();
 			information.history = history.entries;
@@ -648,14 +648,14 @@ int WindowsManager::getZoom() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->getZoom() : 100);
+	return (window ? window->getContentsWidget()->getZoom() : 100);
 }
 
 bool WindowsManager::canZoom() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->canZoom() : false);
+	return (window ? window->getContentsWidget()->canZoom() : false);
 }
 
 bool WindowsManager::hasUrl(const QUrl &url, bool activate)
@@ -664,7 +664,7 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 	{
 		Window *window = getWindow(i);
 
-		if (window && window->getUrl() == url)
+		if (window && window->getContentsWidget()->getUrl() == url)
 		{
 			if (activate)
 			{

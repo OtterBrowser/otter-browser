@@ -13,7 +13,7 @@ namespace Otter
 SessionsManager* SessionsManager::m_instance = NULL;
 QPointer<QWidget> SessionsManager::m_activeWindow = NULL;
 QString SessionsManager::m_session;
-QList<WindowsManager*> SessionsManager::m_windows;
+QList<WindowsManager*> SessionsManager::m_managers;
 QList<SessionEntry> SessionsManager::m_closedWindows;
 bool SessionsManager::m_dirty = false;
 
@@ -60,7 +60,7 @@ void SessionsManager::registerWindow(WindowsManager *manager)
 {
 	if (manager)
 	{
-		m_windows.append(manager);
+		m_managers.append(manager);
 	}
 }
 
@@ -70,6 +70,8 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 	{
 		return;
 	}
+
+	m_managers.removeAll(manager);
 
 	SessionEntry session = manager->getSession();
 
@@ -224,19 +226,12 @@ QStringList SessionsManager::getSessions()
 
 bool SessionsManager::restoreClosedWindow(int index)
 {
-	Application *application = qobject_cast<Application*>(QCoreApplication::instance());
-
-	if (!application)
-	{
-		return false;
-	}
-
 	if (index < 0)
 	{
 		index = 0;
 	}
 
-	application->createWindow(false, false, m_closedWindows.value(index, SessionEntry()));
+	Application::getInstance()->createWindow(false, false, m_closedWindows.value(index, SessionEntry()));
 
 	m_closedWindows.removeAt(index);
 
@@ -297,14 +292,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	}
 	else
 	{
-		Application *application = qobject_cast<Application*>(QCoreApplication::instance());
-
-		if (!application)
-		{
-			return false;
-		}
-
-		windows = application->getWindows();
+		windows = Application::getInstance()->getWindows();
 	}
 
 	QDir().mkpath(SettingsManager::getPath() + "/sessions/");
@@ -384,16 +372,16 @@ bool SessionsManager::moveSession(const QString &from, const QString &to)
 
 bool SessionsManager::isLastWindow()
 {
-	return (m_windows.count() == 1);
+	return (m_managers.count() == 1);
 }
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
-	for (int i = 0; i < m_windows.count(); ++i)
+	for (int i = 0; i < m_managers.count(); ++i)
 	{
-		if (m_windows.at(i)->hasUrl(url, activate))
+		if (m_managers.at(i)->hasUrl(url, activate))
 		{
-			QWidget *window = qobject_cast<QWidget*>(m_windows.at(i)->parent());
+			QWidget *window = qobject_cast<QWidget*>(m_managers.at(i)->parent());
 
 			if (window)
 			{

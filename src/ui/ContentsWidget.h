@@ -27,8 +27,8 @@ public:
 	virtual QPixmap getThumbnail() const;
 	virtual WindowHistoryInformation getHistory() const;
 	virtual int getZoom() const;
+	virtual bool canClone() const;
 	virtual bool canZoom() const;
-	virtual bool isClonable() const;
 	virtual bool isLoading() const;
 	virtual bool isPrivate() const;
 

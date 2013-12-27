@@ -161,12 +161,12 @@ int ContentsWidget::getZoom() const
 	return 100;
 }
 
-bool ContentsWidget::canZoom() const
+bool ContentsWidget::canClone() const
 {
 	return false;
 }
 
-bool ContentsWidget::isClonable() const
+bool ContentsWidget::canZoom() const
 {
 	return false;
 }

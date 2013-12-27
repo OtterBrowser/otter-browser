@@ -126,7 +126,7 @@ private:
 	static SessionsManager *m_instance;
 	static QPointer<QWidget> m_activeWindow;
 	static QString m_session;
-	static QList<WindowsManager*> m_windows;
+	static QList<WindowsManager*> m_managers;
 	static QList<SessionEntry> m_closedWindows;
 	static bool m_dirty;
 

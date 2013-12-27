@@ -232,7 +232,7 @@ void WebContentsWidget::setLoading(bool loading)
 
 WebContentsWidget* WebContentsWidget::clone(Window *parent)
 {
-	if (!isClonable())
+	if (!canClone())
 	{
 		return NULL;
 	}
@@ -290,12 +290,12 @@ int WebContentsWidget::getZoom() const
 	return m_webWidget->getZoom();
 }
 
-bool WebContentsWidget::canZoom() const
+bool WebContentsWidget::canClone() const
 {
 	return true;
 }
 
-bool WebContentsWidget::isClonable() const
+bool WebContentsWidget::canZoom() const
 {
 	return true;
 }

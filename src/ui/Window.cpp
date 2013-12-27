@@ -85,16 +85,6 @@ void Window::search(const QString &query, const QString &engine)
 	}
 }
 
-void Window::print(QPrinter *printer)
-{
-	m_contentsWidget->print(printer);
-}
-
-void Window::triggerAction(WindowAction action, bool checked)
-{
-	m_contentsWidget->triggerAction(action, checked);
-}
-
 void Window::notifyRequestedCloseWindow()
 {
 	emit requestedCloseWindow(this);
@@ -124,16 +114,6 @@ void Window::setSearchEngine(const QString &engine)
 	{
 		m_ui->searchWidget->setCurrentSearchEngine(engine);
 	}
-}
-
-void Window::setHistory(const WindowHistoryInformation &history)
-{
-	m_contentsWidget->setHistory(history);
-}
-
-void Window::setZoom(int zoom)
-{
-	m_contentsWidget->setZoom(zoom);
 }
 
 void Window::setUrl(const QUrl &url)
@@ -212,9 +192,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	layout()->addWidget(m_contentsWidget);
 
 	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == "web");
-	m_ui->backButton->setDefaultAction(getAction(GoBackAction));
-	m_ui->forwardButton->setDefaultAction(getAction(GoForwardAction));
-	m_ui->reloadOrStopButton->setDefaultAction(getAction(ReloadOrStopAction));
+	m_ui->backButton->setDefaultAction(m_contentsWidget->getAction(GoBackAction));
+	m_ui->forwardButton->setDefaultAction(m_contentsWidget->getAction(GoForwardAction));
+	m_ui->reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));
 	m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
 	m_ui->addressWidget->setFocus();
 
@@ -241,7 +221,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 Window* Window::clone(QWidget *parent)
 {
-	if (!isClonable())
+	if (!canClone())
 	{
 		return NULL;
 	}
@@ -256,16 +236,6 @@ Window* Window::clone(QWidget *parent)
 ContentsWidget* Window::getContentsWidget()
 {
 	return m_contentsWidget;
-}
-
-QAction* Window::getAction(WindowAction action)
-{
-	return m_contentsWidget->getAction(action);
-}
-
-QUndoStack* Window::getUndoStack()
-{
-	return m_contentsWidget->getUndoStack();
 }
 
 QString Window::getDefaultTextEncoding() const
@@ -313,24 +283,9 @@ QPixmap Window::getThumbnail() const
 	return m_contentsWidget->getThumbnail();
 }
 
-WindowHistoryInformation Window::getHistory() const
+bool Window::canClone() const
 {
-	return m_contentsWidget->getHistory();
-}
-
-int Window::getZoom() const
-{
-	return m_contentsWidget->getZoom();
-}
-
-bool Window::canZoom() const
-{
-	return m_contentsWidget->canZoom();
-}
-
-bool Window::isClonable() const
-{
-	return m_contentsWidget->isClonable();
+	return m_contentsWidget->canClone();
 }
 
 bool Window::isLoading() const
