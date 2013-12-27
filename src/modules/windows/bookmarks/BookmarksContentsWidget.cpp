@@ -313,7 +313,7 @@ void BookmarksContentsWidget::updateFolder(int folder)
 void BookmarksContentsWidget::updateActions()
 {
 	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>((m_ui->bookmarksView->selectionModel()->hasSelection() ? m_ui->bookmarksView->selectionModel()->currentIndex() : QModelIndex()).data(Qt::UserRole).value<void*>());
 
 	m_ui->propertiesButton->setEnabled((hasSelecion && bookmark && bookmark->type != SeparatorBookmark));
 	m_ui->deleteButton->setEnabled(hasSelecion);

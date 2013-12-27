@@ -338,7 +338,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 
 void CacheContentsWidget::updateActions()
 {
-	const QModelIndex index = m_ui->cacheView->currentIndex();
+	const QModelIndex index = (m_ui->cacheView->selectionModel()->hasSelection() ? m_ui->cacheView->selectionModel()->currentIndex() : QModelIndex());
 	const QUrl entry = getEntry(index);
 	const QString domain = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
 
