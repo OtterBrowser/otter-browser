@@ -26,6 +26,7 @@ public:
 	~MainWindow();
 
 	WindowsManager* getWindowsManager();
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void openUrl(const QUrl &url = QUrl());
@@ -62,6 +63,7 @@ protected slots:
 	void menuTextEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
 	void menuBookmarksAboutToShow();
+	void openBookmark();
 	void triggerWindowAction();
 	void updateClosedWindows();
 	void updateBookmarks(int folder);
@@ -72,6 +74,7 @@ private:
 	QAction *m_closedWindowsAction;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_textEncodingGroup;
+	QString m_currentBookmark;
 	QList<QString> m_bookmarksToOpen;
 	Ui::MainWindow *m_ui;
 

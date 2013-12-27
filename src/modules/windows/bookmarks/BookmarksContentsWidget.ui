@@ -160,6 +160,13 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>filterLineEdit</tabstop>
+  <tabstop>bookmarksView</tabstop>
+  <tabstop>propertiesButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+  <tabstop>addButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

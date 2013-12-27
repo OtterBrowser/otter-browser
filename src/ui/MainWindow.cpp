@@ -38,6 +38,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
+	m_ui->menuBookmarks->installEventFilter(this);
 
 	SessionsManager::setActiveWindow(this);
 
@@ -760,6 +761,9 @@ void MainWindow::menuBookmarksAboutToShow()
 		return;
 	}
 
+	menu->setObjectName("bookmarks");
+	menu->installEventFilter(this);
+
 	const int folder = menu->menuAction()->data().toInt();
 
 	if ((folder == 0 && menu->actions().count() == 3) || (folder != 0 && menu->actions().isEmpty()))
@@ -808,6 +812,22 @@ void MainWindow::menuBookmarksAboutToShow()
 			}
 		}
 	}
+}
+
+void MainWindow::openBookmark()
+{
+	const QUrl url(m_currentBookmark);
+
+	if (url.isValid())
+	{
+		QAction *action = qobject_cast<QAction*>(sender());
+
+		m_windowsManager->open(url, false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
+
+		m_ui->menuBookmarks->close();
+	}
+
+	m_currentBookmark = QString();
 }
 
 void MainWindow::triggerWindowAction()
@@ -933,6 +953,38 @@ bool MainWindow::event(QEvent *event)
 	}
 
 	return QMainWindow::event(event);
+}
+
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+	if (object->objectName().contains("bookmarks", Qt::CaseInsensitive) && event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		QMenu *menu = qobject_cast<QMenu*>(object);
+
+		if (contextMenuEvent && menu)
+		{
+			QAction *action = menu->actionAt(contextMenuEvent->pos());
+
+			if (action && action->data().type() == QVariant::String)
+			{
+				m_currentBookmark = action->data().toString();
+
+				QMenu contextMenu(this);
+				contextMenu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openBookmark()));
+				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName("new-tab");
+				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName("new-background-tab");
+				contextMenu.addSeparator();
+				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName("new-window");
+				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName("new-background-window");
+				contextMenu.exec(contextMenuEvent->globalPos());
+
+				return true;
+			}
+		}
+	}
+
+	return QMainWindow::eventFilter(object, event);
 }
 
 }
