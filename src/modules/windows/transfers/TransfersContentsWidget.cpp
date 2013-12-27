@@ -343,6 +343,9 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()));
 		menu.addSeparator();
 		menu.addAction(((transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->state == RunningTransfer || transfer->state == ErrorTransfer);
+		menu.addAction("Redownload", this, SLOT(redownloadTransfer()));
+		menu.addSeparator();
+		menu.addAction(tr("Copy Transfer Information"), this, SLOT(copyTransferInformation()));
 		menu.addSeparator();
 		menu.addAction(tr("Remove"), this, SLOT(removeTransfer()));
 	}
@@ -359,13 +362,6 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(tr("Clear Finished Transfers"), this, SLOT(clearFinishedTransfers()))->setEnabled(finishedTransfers > 0);
-
-	if (transfer)
-	{
-		menu.addSeparator();
-		menu.addAction(tr("Copy Transfer Information"), this, SLOT(copyTransferInformation()));
-	}
-
 	menu.exec(m_ui->transfersView->mapToGlobal(point));
 }
 
