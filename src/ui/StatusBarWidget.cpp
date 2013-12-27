@@ -20,11 +20,11 @@ void StatusBarWidget::setup()
 	m_zoomSlider->setMaximumWidth(100);
 
 	QToolButton *zoomOutButton = new QToolButton(this);
-	zoomOutButton->setDefaultAction(ActionsManager::getAction("ZoomOut"));
+	zoomOutButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomOut")));
 	zoomOutButton->setAutoRaise(true);
 
 	QToolButton *zoomInButton = new QToolButton(this);
-	zoomInButton->setDefaultAction(ActionsManager::getAction("ZoomIn"));
+	zoomInButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomIn")));
 	zoomInButton->setAutoRaise(true);
 
 	addPermanentWidget(zoomOutButton);

@@ -332,7 +332,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction("ClearHistory"));
+	menu.addAction(ActionsManager::getAction(QLatin1String("ClearHistory")));
 	menu.exec(m_ui->cacheView->mapToGlobal(point));
 }
 

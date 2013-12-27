@@ -222,7 +222,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction("ClearHistory"));
+	menu.addAction(ActionsManager::getAction(QLatin1String("ClearHistory")));
 	menu.exec(m_ui->cookiesView->mapToGlobal(point));
 }
 
@@ -343,11 +343,11 @@ QAction* CookiesContentsWidget::getAction(WindowAction action)
 	switch (action)
 	{
 		case SelectAllAction:
-			ActionsManager::setupLocalAction(actionObject, "SelectAll");
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("SelectAll"));
 
 			break;
 		case DeleteAction:
-			ActionsManager::setupLocalAction(actionObject, "Delete");
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("Delete"));
 
 			break;
 		default:

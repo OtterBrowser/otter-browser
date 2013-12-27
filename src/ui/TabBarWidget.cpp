@@ -32,7 +32,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	updateTabs();
 
 	m_newTabButton->setAutoRaise(true);
-	m_newTabButton->setDefaultAction(ActionsManager::getAction("NewTab"));
+	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab")));
 	m_newTabButton->raise();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
@@ -68,8 +68,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction("NewTab"));
-	menu.addAction(ActionsManager::getAction("NewTabPrivate"));
+	menu.addAction(ActionsManager::getAction(QLatin1String("NewTab")));
+	menu.addAction(ActionsManager::getAction(QLatin1String("NewTabPrivate")));
 
 	if (m_clickedTab >= 0)
 	{
@@ -96,13 +96,13 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			QAction *closeAction = menu.addAction(QString());
 
-			ActionsManager::setupLocalAction(closeAction, "CloseTab", true);
+			ActionsManager::setupLocalAction(closeAction, QLatin1String("CloseTab"), true);
 
 			closeAction->setEnabled(false);
 		}
 		else
 		{
-			menu.addAction(ActionsManager::getAction("CloseTab"));
+			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab")));
 		}
 
 		menu.addAction(QIcon(":/icons/tab-close-other.png"), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0);
@@ -124,7 +124,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 	if (tab < 0)
 	{
-		ActionsManager::triggerAction("NewTab");
+		ActionsManager::triggerAction(QLatin1String("NewTab"));
 	}
 	else if (SettingsManager::getValue("Tabs/CloseOnDoubleClick").toBool())
 	{

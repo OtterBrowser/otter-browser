@@ -445,11 +445,11 @@ QAction* TransfersContentsWidget::getAction(WindowAction action)
 	switch (action)
 	{
 		case CopyAction:
-			ActionsManager::setupLocalAction(actionObject, "Copy");
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("Copy"));
 
 			break;
 		case DeleteAction:
-			ActionsManager::setupLocalAction(actionObject, "Delete");
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("Delete"));
 
 			break;
 		default:
