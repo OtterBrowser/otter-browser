@@ -41,9 +41,11 @@ protected slots:
 	void addBookmark();
 	void addFolder();
 	void addSeparator();
-	void deleteBookmark();
-	void openBookmark(const QModelIndex &index);
+	void removeBookmark();
+	void openBookmark(const QModelIndex &index = QModelIndex());
+	void copyBookmarkLink();
 	void bookmarkProperties();
+	void showContextMenu(const QPoint &point);
 	void updateFolder(int folder);
 	void updateActions();
 	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);

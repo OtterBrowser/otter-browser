@@ -8,6 +8,7 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
+#include <QtGui/QClipboard>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
@@ -41,9 +42,10 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
 	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
+	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
-	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteBookmark()));
+	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
 }
 
@@ -148,7 +150,7 @@ void BookmarksContentsWidget::addSeparator()
 	BookmarksManager::addBookmark(bookmark, bookmark->parent);
 }
 
-void BookmarksContentsWidget::deleteBookmark()
+void BookmarksContentsWidget::removeBookmark()
 {
 	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
 
@@ -160,7 +162,7 @@ void BookmarksContentsWidget::deleteBookmark()
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(index.data(Qt::UserRole).value<void*>());
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(Qt::UserRole).value<void*>());
 
 	if (!bookmark || bookmark->type == SeparatorBookmark)
 	{
@@ -169,7 +171,9 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 
 	if (bookmark->type == UrlBookmark)
 	{
-		emit requestedOpenUrl(QUrl(bookmark->url));
+		QAction *action = qobject_cast<QAction*>(sender());
+
+		emit requestedOpenUrl(QUrl(bookmark->url), false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
 
 		return;
 	}
@@ -200,12 +204,26 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 		SettingsManager::setValue("Choices/WarnOpenBookmarkFolder", !messageBox.checkBox()->isChecked());
 	}
 
+	QAction *action = qobject_cast<QAction*>(sender());
+	const bool background = (action && action->objectName().contains("background"));
+	const bool newWindow = (action && action->objectName().contains("window"));
+
 	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
 	{
-		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)));
+		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)), false, background, newWindow);
 	}
 
 	m_bookmarksToOpen.clear();
+}
+
+void BookmarksContentsWidget::copyBookmarkLink()
+{
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+
+	if (bookmark)
+	{
+		QGuiApplication::clipboard()->setText(bookmark->url);
+	}
 }
 
 void BookmarksContentsWidget::bookmarkProperties()
@@ -217,6 +235,43 @@ void BookmarksContentsWidget::bookmarkProperties()
 		BookmarkPropertiesDialog dialog(bookmark, -1, this);
 		dialog.exec();
 	}
+}
+
+void BookmarksContentsWidget::showContextMenu(const QPoint &point)
+{
+	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->indexAt(point).data(Qt::UserRole).value<void*>());
+	QMenu menu(this);
+
+	if (bookmark)
+	{
+		menu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openBookmark()));
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName("new-tab");
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName("new-background-tab");
+		menu.addSeparator();
+		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName("new-window");
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName("new-background-window");
+
+		if (bookmark->type == SeparatorBookmark || (bookmark->type == FolderBookmark && bookmark->children.isEmpty()))
+		{
+			for (int i = 0; i < menu.actions().count(); ++i)
+			{
+				menu.actions().at(i)->setEnabled(false);
+			}
+		}
+
+		menu.addSeparator();
+		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(bookmark->type == UrlBookmark);
+		menu.addSeparator();
+		menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
+		menu.addSeparator();
+		menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
+	}
+	else
+	{
+		menu.addAction(tr("Add Bookmark..."), this, SLOT(addBookmark()));
+	}
+
+	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
 }
 
 void BookmarksContentsWidget::gatherBookmarks(int folder)
@@ -262,48 +317,19 @@ void BookmarksContentsWidget::updateActions()
 
 	m_ui->propertiesButton->setEnabled((hasSelecion && bookmark && bookmark->type != SeparatorBookmark));
 	m_ui->deleteButton->setEnabled(hasSelecion);
-}
 
-bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
-{
-	if (!branch)
+	if (bookmark)
 	{
-		if (sender())
-		{
-			branch = m_model->invisibleRootItem();
-		}
-		else
-		{
-			return false;
-		}
+		m_ui->addressLabelWidget->setText(bookmark->url);
+		m_ui->titleLabelWidget->setText(bookmark->title);
+		m_ui->descriptionLabelWidget->setText(bookmark->description);
 	}
-
-	bool found = filter.isEmpty();
-
-	for (int i = 0; i < branch->rowCount(); ++i)
+	else
 	{
-		QStandardItem *item = branch->child(i, 0);
-
-		if (item && filterBookmarks(filter, item))
-		{
-			found = true;
-		}
+		m_ui->addressLabelWidget->setText(QString());
+		m_ui->titleLabelWidget->setText(QString());
+		m_ui->descriptionLabelWidget->setText(QString());
 	}
-
-	if (!found)
-	{
-		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(branch->data(Qt::UserRole).value<void*>());
-
-		if (bookmark && bookmark->type != SeparatorBookmark && (bookmark->url.contains(filter, Qt::CaseInsensitive) || bookmark->title.contains(filter, Qt::CaseInsensitive) || bookmark->description.contains(filter, Qt::CaseInsensitive)))
-		{
-			found = true;
-		}
-	}
-
-	m_ui->bookmarksView->setRowHidden(branch->row(), branch->index().parent(), !found);
-	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
-
-	return found;
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
@@ -383,6 +409,48 @@ int BookmarksContentsWidget::findFolder(const QModelIndex &index)
 	}
 
 	return 0;
+}
+
+bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
+{
+	if (!branch)
+	{
+		if (sender())
+		{
+			branch = m_model->invisibleRootItem();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool found = filter.isEmpty();
+
+	for (int i = 0; i < branch->rowCount(); ++i)
+	{
+		QStandardItem *item = branch->child(i, 0);
+
+		if (item && filterBookmarks(filter, item))
+		{
+			found = true;
+		}
+	}
+
+	if (!found)
+	{
+		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(branch->data(Qt::UserRole).value<void*>());
+
+		if (bookmark && bookmark->type != SeparatorBookmark && (bookmark->url.contains(filter, Qt::CaseInsensitive) || bookmark->title.contains(filter, Qt::CaseInsensitive) || bookmark->description.contains(filter, Qt::CaseInsensitive)))
+		{
+			found = true;
+		}
+	}
+
+	m_ui->bookmarksView->setRowHidden(branch->row(), branch->index().parent(), !found);
+	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
+
+	return found;
 }
 
 }
