@@ -312,7 +312,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		return false;
 	}
 
-	const QString defaultSearchEngine = SettingsManager::getValue("Browser/DefaultSearchEngine").toString();
+	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
 	stream << "[Session]\n";
 	stream << "title=" << sessionTitle.replace('\n', "\\n") << '\n';

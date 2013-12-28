@@ -268,7 +268,7 @@ QStringList SearchesManager::getSearchEngines()
 			}
 		}
 
-		m_searchEnginesOrder = SettingsManager::getValue("Browser/SearchEnginesOrder").toStringList();
+		m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Browser/SearchEnginesOrder")).toStringList();
 		m_searchEnginesOrder.removeAll(QString());
 
 		if (m_searchEnginesOrder.isEmpty())
@@ -430,7 +430,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 				delete engines.at(j);
 			}
 
-			SettingsManager::setValue("Browser/SearchEnginesOrder", m_searchEnginesOrder);
+			SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
 
 			emit m_instance->searchEnginesModified();
 
@@ -444,7 +444,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 		m_searchEnginesOrder.append(engines.at(i)->identifier);
 	}
 
-	SettingsManager::setValue("Browser/SearchEnginesOrder", m_searchEnginesOrder);
+	SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
 
 	emit m_instance->searchEnginesModified();
 

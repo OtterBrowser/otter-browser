@@ -42,7 +42,7 @@ CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
 		}
 	}
 
-	optionChanged("Browser/EnableCookies", SettingsManager::getValue("Browser/EnableCookies"));
+	optionChanged(QLatin1String("Browser/EnableCookies"), SettingsManager::getValue(QLatin1String("Browser/EnableCookies")));
 	setAllCookies(allCookies);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -62,13 +62,13 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 void CookieJar::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Browser/PrivateMode")
+	if (option == QLatin1String("Browser/PrivateMode"))
 	{
 		m_enableCookies = !value.toBool();
 	}
-	else if (option == "Browser/EnableCookies")
+	else if (option == QLatin1String("Browser/EnableCookies"))
 	{
-		m_enableCookies = (value.toBool() && !SettingsManager::getValue("Browser/PrivateMode").toBool());
+		m_enableCookies = (value.toBool() && !SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 	}
 }
 

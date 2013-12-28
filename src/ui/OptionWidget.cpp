@@ -22,6 +22,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 {
 	const QVariant currentValue = (value.isNull() ? SettingsManager::getValue(option) : value);
 	QWidget *widget = NULL;
+
 	if (type == "color")
 	{
 		widget = m_colorButton = new QPushButton(this);

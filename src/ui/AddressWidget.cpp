@@ -23,9 +23,9 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	optionChanged("AddressField/SuggestBookmarks", SettingsManager::getValue("AddressField/SuggestBookmarks"));
-	optionChanged("AddressField/ShowBookmarkIcon", SettingsManager::getValue("AddressField/ShowBookmarkIcon"));
-	optionChanged("AddressField/ShowUrlIcon", SettingsManager::getValue("AddressField/ShowUrlIcon"));
+	optionChanged(QLatin1String("AddressField/SuggestBookmarks"), SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")));
+	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
+	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 	setCompleter(m_completer);
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
@@ -53,7 +53,7 @@ void AddressWidget::removeIcon()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
 
-	if (action && SettingsManager::contains(QString("AddressField/Show%1Icon").arg(action->data().toString())))
+	if (action)
 	{
 		SettingsManager::setValue(QString("AddressField/Show%1Icon").arg(action->data().toString()), false);
 	}
@@ -61,7 +61,7 @@ void AddressWidget::removeIcon()
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "AddressField/SuggestBookmarks")
+	if (option == QLatin1String("AddressField/SuggestBookmarks"))
 	{
 		if (value.toBool() && (!m_completer->model() || m_completer->model()->rowCount() == 0))
 		{
@@ -182,11 +182,11 @@ void AddressWidget::updateBookmark()
 
 void AddressWidget::updateCompletion()
 {
-	if (SettingsManager::getValue("AddressField/SuggestBookmarks").toBool())
+	if (SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool())
 	{
 		m_completer->model()->removeRows(0, m_completer->model()->rowCount());
 
-		optionChanged("AddressField/SuggestBookmarks", true);
+		optionChanged(QLatin1String("AddressField/SuggestBookmarks"), true);
 	}
 }
 

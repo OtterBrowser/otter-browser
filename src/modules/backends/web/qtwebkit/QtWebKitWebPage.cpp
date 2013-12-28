@@ -22,8 +22,8 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent),
 	m_ignoreJavaScriptPopups(false)
 {
-	optionChanged("Content/ZoomTextOnly", SettingsManager::getValue("Content/ZoomTextOnly"));
-	optionChanged("Content/BackgroundColor", QVariant());
+	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
+	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(clearIgnoreJavaScriptPopups()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -36,13 +36,13 @@ void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
 
 void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Content/ZoomTextOnly")
+	if (option == QLatin1String("Content/ZoomTextOnly"))
 	{
 		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
 	}
-	else if (option.startsWith("Content/") && option.contains("Color"))
+	else if (QString(option).startsWith(QLatin1String("Content/")))
 	{
-		settings()->setUserStyleSheetUrl(QUrl("data:text/css;charset=utf-8;base64," + QString(QString("html {background: %1; color: %2;} a {color: %3;} a:visited {color: %4;}").arg(SettingsManager::getValue("Content/BackgroundColor").toString()).arg(SettingsManager::getValue("Content/TextColor").toString()).arg(SettingsManager::getValue("Content/LinkColor").toString()).arg(SettingsManager::getValue("Content/VisitedLinkColor").toString()).toUtf8().toBase64())));
+		settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + QString(QString("html {background: %1; color: %2;} a {color: %3;} a:visited {color: %4;}").arg(SettingsManager::getValue(QLatin1String("Content/BackgroundColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8().toBase64())));
 	}
 }
 
@@ -132,7 +132,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		return true;
 	}
 
-	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue("Choices/WarnFormResend", true).toBool())
+	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
 	{
 		QMessageBox dialog;
 		dialog.setWindowTitle(tr("Question"));
@@ -167,7 +167,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 			cancel = (dialog.exec() == QMessageBox::Cancel);
 		}
 
-		SettingsManager::setValue("Choices/WarnFormResend", !dialog.checkBox()->isChecked());
+		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), !dialog.checkBox()->isChecked());
 
 		if (cancel)
 		{

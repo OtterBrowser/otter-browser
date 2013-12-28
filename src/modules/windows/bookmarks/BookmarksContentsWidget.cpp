@@ -185,7 +185,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 		return;
 	}
 
-	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue("Choices/WarnOpenBookmarkFolder", true).toBool())
+	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
@@ -201,7 +201,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 			m_bookmarksToOpen.clear();
 		}
 
-		SettingsManager::setValue("Choices/WarnOpenBookmarkFolder", !messageBox.checkBox()->isChecked());
+		SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
 	}
 
 	QAction *action = qobject_cast<QAction*>(sender());

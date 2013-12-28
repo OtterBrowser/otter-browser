@@ -202,7 +202,7 @@ void TransfersManager::save()
 	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
 	history.clear();
 
-	if (SettingsManager::getValue("Browser/PrivateMode").toBool() || !SettingsManager::getValue("History/RememberDownloads").toBool())
+	if (SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())
 	{
 		return;
 	}
@@ -211,7 +211,7 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue("History/DownloadsLimitPeriod").toInt()))
+		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt()))
 		{
 			continue;
 		}
@@ -361,14 +361,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		QString path;
 
-		if (!quickTransfer && !SettingsManager::getValue("Browser/AlwaysAskWhereToSaveDownload").toBool())
+		if (!quickTransfer && !SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
 		{
 			quickTransfer = true;
 		}
 
 		if (quickTransfer)
 		{
-			path = SettingsManager::getValue("Paths/Downloads").toString() + '/' + fileName;
+			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + '/' + fileName;
 
 			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
@@ -380,7 +380,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		{
 			if (path.isEmpty())
 			{
-				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue("Paths/SaveFile", SettingsManager::getValue("Paths/Downloads")).toString() + '/' + fileName);
+				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
 			}
 
 			if (isDownloading(QString(), path))
@@ -408,7 +408,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			return NULL;
 		}
 
-		SettingsManager::setValue("Paths/SaveFile", QFileInfo(path).dir().canonicalPath());
+		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
 
 		transfer->target = path;
 	}

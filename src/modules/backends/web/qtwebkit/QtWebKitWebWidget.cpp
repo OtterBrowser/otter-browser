@@ -37,7 +37,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	m_inspector(NULL),
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
-	m_searchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
+	m_searchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString()),
 	m_historyEntry(-1),
 	m_isLinkHovered(false),
 	m_isLoading(false),
@@ -102,8 +102,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
-	optionChanged("History/BrowsingLimitAmountWindow", SettingsManager::getValue("History/BrowsingLimitAmountWindow"));
-	setZoom(SettingsManager::getValue("Content/DefaultZoom", 100).toInt());
+	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
+	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -685,7 +685,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 					if (SearchesManager::setSearchEngines(engines) && engineData["isDefault"].toBool())
 					{
-						SettingsManager::setValue("Browser/DefaultSearchEngine", engineData["identifier"].toString());
+						SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), engineData["identifier"].toString());
 					}
 				}
 			}
@@ -1329,7 +1329,7 @@ void QtWebKitWebWidget::triggerAction()
 
 void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "History/BrowsingLimitAmountWindow")
+	if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
 	{
 		m_webView->page()->history()->setMaximumItemCount(value.toInt());
 	}

@@ -28,7 +28,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
 	updateSearchEngines();
-	optionChanged("Browser/SearchEnginesSuggestions", SettingsManager::getValue("Browser/SearchEnginesSuggestions"));
+	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
 	lineEdit()->setCompleter(m_completer);
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchEngines()));
@@ -50,7 +50,7 @@ void SearchWidget::hidePopup()
 
 void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Browser/SearchEnginesSuggestions")
+	if (option == QLatin1String("Browser/SearchEnginesSuggestions"))
 	{
 		if (value.toBool() && !m_suggester)
 		{
@@ -77,7 +77,7 @@ void SearchWidget::currentSearchEngineChanged(int index)
 
 		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 
-		PreferencesDialog dialog("search", this);
+		PreferencesDialog dialog(QLatin1String("search"), this);
 		dialog.exec();
 
 		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
@@ -174,7 +174,7 @@ void SearchWidget::updateSearchEngines()
 		lineEdit()->setPlaceholderText(QString());
 	}
 
-	setCurrentSearchEngine(SettingsManager::getValue("Browser/DefaultSearchEngine").toString());
+	setCurrentSearchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
@@ -219,7 +219,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 		return;
 	}
 
-	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue("Browser/DefaultSearchEngine").toString() : engine));
+	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : engine));
 
 	currentSearchEngineChanged(index);
 	setCurrentIndex(index);

@@ -20,7 +20,7 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 {
 	m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
 
-	optionChanged("History/RememberBrowsing");
+	optionChanged(QLatin1String("History/RememberBrowsing"));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
@@ -53,7 +53,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 		{
 			const int amount = query.record().field("amount").value().toInt();
 
-			if (amount > SettingsManager::getValue("History/BrowsingLimitAmountGlobal").toInt())
+			if (amount > SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt())
 			{
 				removeOldEntries();
 			}
@@ -68,7 +68,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 	{
 		killTimer(m_dayTimer);
 
-		removeOldEntries(QDateTime::currentDateTime().addDays(SettingsManager::getValue("History/BrowsingLimitPeriod").toInt()));
+		removeOldEntries(QDateTime::currentDateTime().addDays(SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt()));
 
 		emit dayChanged();
 
@@ -91,7 +91,7 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 	if (timestamp == 0)
 	{
 		QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-		query.prepare(QString("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue("History/BrowsingLimitAmountGlobal").toInt()));
+		query.prepare(QString("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt()));
 		query.exec();
 
 		if (query.next())
@@ -159,9 +159,9 @@ void HistoryManager::clearHistory(int period)
 
 void HistoryManager::optionChanged(const QString &option)
 {
-	if (option == "History/RememberBrowsing" || option == "Browser/PrivateMode")
+	if (option == QLatin1String("History/RememberBrowsing") || option == QLatin1String("Browser/PrivateMode"))
 	{
-		const bool enabled = (SettingsManager::getValue("History/RememberBrowsing").toBool() && !SettingsManager::getValue("Browser/PrivateMode").toBool());
+		const bool enabled = (SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool() && !SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 
 		if (enabled && !m_enabled)
 		{

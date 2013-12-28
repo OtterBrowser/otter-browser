@@ -169,7 +169,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_ui->tabsWidgetContents->setLayout(tabsLayout);
 	m_ui->tabsWidget->setTitleBarWidget(NULL);
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, (privateSession || SettingsManager::getValue("Browser/PrivateMode").toBool()));
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(m_windowsManager);
 
@@ -237,10 +237,14 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_windowsManager->restore(windows.windows);
 	m_windowsManager->setCurrentWindow(windows.index);
 
+	SettingsManager::setDefaultValue(QLatin1String("Window/Size"), size());
+	SettingsManager::setDefaultValue(QLatin1String("Window/Position"), pos());
+	SettingsManager::setDefaultValue(QLatin1String("Window/State"), QByteArray());
+
 	updateActions();
-	resize(SettingsManager::getValue("Window/size", size()).toSize());
-	move(SettingsManager::getValue("Window/position", pos()).toPoint());
-	restoreState(SettingsManager::getValue("Window/state", QByteArray()).toByteArray());
+	resize(SettingsManager::getValue(QLatin1String("Window/Size")).toSize());
+	move(SettingsManager::getValue(QLatin1String("Window/Position")).toPoint());
+	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
 	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	m_ui->panelWidget->hide();
@@ -281,7 +285,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			}
 		}
 
-		if (runningTransfers > 0 && SettingsManager::getValue("Choices/WarnQuitTransfers", true).toBool())
+		if (runningTransfers > 0 && SettingsManager::getValue(QLatin1String("Choices/WarnQuitTransfers")).toBool())
 		{
 			QMessageBox messageBox;
 			messageBox.setWindowTitle(tr("Question"));
@@ -297,7 +301,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				runningTransfers = 0;
 			}
 
-			SettingsManager::setValue("Choices/WarnQuitTransfers", !messageBox.checkBox()->isChecked());
+			SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
 
 			if (runningTransfers > 0)
 			{
@@ -307,27 +311,27 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			}
 		}
 
-		QStringList clearSettings = SettingsManager::getValue("History/ClearOnClose").toStringList();
+		QStringList clearSettings = SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList();
 		clearSettings.removeAll(QString());
 
 		if (!clearSettings.isEmpty())
 		{
-			if (clearSettings.contains("browsing"))
+			if (clearSettings.contains(QLatin1String("browsing")))
 			{
 				HistoryManager::clearHistory();
 			}
 
-			if (clearSettings.contains("cookies"))
+			if (clearSettings.contains(QLatin1String("cookies")))
 			{
 				NetworkAccessManager::clearCookies();
 			}
 
-			if (clearSettings.contains("downloads"))
+			if (clearSettings.contains(QLatin1String("downloads")))
 			{
 				TransfersManager::clearTransfers();
 			}
 
-			if (clearSettings.contains("cache"))
+			if (clearSettings.contains(QLatin1String("cache")))
 			{
 				NetworkAccessManager::clearCache();
 			}
@@ -338,7 +342,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	if (application->getWindows().count() == 1)
 	{
-		if (SessionsManager::getCurrentSession() == "default")
+		if (SessionsManager::getCurrentSession() == QLatin1String("default"))
 		{
 			SessionsManager::saveSession();
 		}
@@ -350,9 +354,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	m_windowsManager->closeAll();
 
-	SettingsManager::setValue("Window/size", size());
-	SettingsManager::setValue("Window/position", pos());
-	SettingsManager::setValue("Window/state", saveState());
+	SettingsManager::setValue(QLatin1String("Window/Size"), size());
+	SettingsManager::setValue(QLatin1String("Window/Position"), pos());
+	SettingsManager::setValue(QLatin1String("Window/State"), saveState());
 
 	if (application)
 	{
@@ -426,7 +430,7 @@ void MainWindow::actionSession(QAction *action)
 
 void MainWindow::actionWorkOffline(bool enabled)
 {
-	SettingsManager::setValue("Network/WorkOffline", enabled);
+	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enabled);
 }
 
 void MainWindow::actionTextEncoding(QAction *action)
@@ -478,7 +482,7 @@ void MainWindow::actionViewHistory()
 
 void MainWindow::actionClearHistory()
 {
-	ClearHistoryDialog dialog(SettingsManager::getValue("History/ClearOnClose").toStringList(), false, this);
+	ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList(), false, this);
 	dialog.exec();
 }
 
@@ -540,7 +544,7 @@ void MainWindow::actionOpenBookmarkFolder()
 		return;
 	}
 
-	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue("Choices/WarnOpenBookmarkFolder", true).toBool())
+	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
@@ -556,7 +560,7 @@ void MainWindow::actionOpenBookmarkFolder()
 			m_bookmarksToOpen.clear();
 		}
 
-		SettingsManager::setValue("Choices/WarnOpenBookmarkFolder", !messageBox.checkBox()->isChecked());
+		SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
 	}
 
 	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
@@ -589,18 +593,18 @@ void MainWindow::actionTransfers()
 
 void MainWindow::actionPreferences()
 {
-	PreferencesDialog dialog(QString(), this);
+	PreferencesDialog dialog(QLatin1String("general"), this);
 	dialog.exec();
 }
 
 void MainWindow::actionAboutApplication()
 {
-	QMessageBox::about(this, "Otter", QString(tr("<b>Otter %1</b><br>Ultra flexible web browser.").arg(QApplication::applicationVersion())));
+	QMessageBox::about(this, QLatin1String("Otter"), QString(tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(QApplication::applicationVersion())));
 }
 
 void MainWindow::menuFileAboutToShow()
 {
-	m_ui->actionWorkOffline->setChecked(SettingsManager::getValue("Network/WorkOffline", false).toBool());
+	m_ui->actionWorkOffline->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 }
 
 void MainWindow::menuSessionsAboutToShow()

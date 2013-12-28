@@ -16,7 +16,7 @@ class PreferencesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QString &section, QWidget *parent = NULL);
+	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
 	~PreferencesDialog();
 
 protected:

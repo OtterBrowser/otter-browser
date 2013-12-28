@@ -18,28 +18,28 @@
 namespace Otter
 {
 
-PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : QDialog(parent),
+PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
 	m_defaultSearch(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
-	m_clearSettings(SettingsManager::getValue("History/ClearOnClose").toStringList()),
+	m_clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
 	m_ui(new Ui::PreferencesDialog)
 {
 	m_ui->setupUi(this);
 
 	m_clearSettings.removeAll(QString());
 
-	if (section == "content")
+	if (section == QLatin1String("content"))
 	{
 		m_ui->tabWidget->setCurrentIndex(1);
 	}
-	else if (section == "privacy")
+	else if (section == QLatin1String("privacy"))
 	{
 		m_ui->tabWidget->setCurrentIndex(2);
 	}
-	else if (section == "search")
+	else if (section == QLatin1String("search"))
 	{
 		m_ui->tabWidget->setCurrentIndex(3);
 	}
-	else if (section == "advanced")
+	else if (section == QLatin1String("advanced"))
 	{
 		m_ui->tabWidget->setCurrentIndex(4);
 	}
@@ -49,19 +49,19 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	}
 
 	m_ui->downloadsLineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
-	m_ui->downloadsLineEdit->setText(SettingsManager::getValue("Paths/Downloads").toString());
-	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue("Browser/AlwaysAskWhereToSaveDownload").toBool());
-	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue("Browser/OpenLinksInNewTab").toBool());
-	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue("Tabs/OpenNextToActive").toBool());
+	m_ui->downloadsLineEdit->setText(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
+	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
+	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
+	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(QLatin1String("Tabs/OpenNextToActive")).toBool());
 
-	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue("Content/DefaultZoom").toInt());
-	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue("Content/ZoomTextOnly").toBool());
-	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue("Content/DefaultFontSize").toInt());
-	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue("Content/DefaultFixedFontSize").toInt());
-	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue("Content/MinimumFontSize").toInt());
+	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
+	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")).toBool());
+	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());
+	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
+	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/MinimumFontSize")).toInt());
 
-	QStringList fonts;
-	fonts << "StandardFont" << "FixedFont" << "SerifFont" << "SansSerifFont" << "CursiveFont" << "FantasyFont";
+	QList<QLatin1String> fonts;
+	fonts << QLatin1String("StandardFont") << QLatin1String("FixedFont") << QLatin1String("SerifFont") << QLatin1String("SansSerifFont") << QLatin1String("CursiveFont") << QLatin1String("FantasyFont");
 
 	QStringList fontCategories;
 	fontCategories << tr("Standard Font") << tr("Fixed Font") << tr("Serif Font") << tr("Sans Serif Font") << tr("Cursive Font") << tr("Fantasy Font");
@@ -73,10 +73,10 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
-		const QString family = SettingsManager::getValue("Content/" + fonts.at(i)).toString();
+		const QString family = SettingsManager::getValue(QLatin1String("Content/") + fonts.at(i)).toString();
 		QTableWidgetItem *familyItem = new QTableWidgetItem(family);
-		familyItem->setData(Qt::UserRole, "Content/" + fonts.at(i));
-		familyItem->setData((Qt::UserRole + 1), "font");
+		familyItem->setData(Qt::UserRole, QLatin1String("Content/") + fonts.at(i));
+		familyItem->setData((Qt::UserRole + 1), QLatin1String("font"));
 
 		QTableWidgetItem *previewItem = new QTableWidgetItem(tr("The quick brown fox jumps over the lazy dog"));
 		previewItem->setFont(QFont(family));
@@ -86,8 +86,8 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 		m_ui->fontsWidget->setItem(i, 2, previewItem);
 	}
 
-	QStringList colors;
-	colors << "BackgroundColor" << "TextColor" << "LinkColor" << "VisitedLinkColor";
+	QList<QLatin1String> colors;
+	colors << QLatin1String("BackgroundColor") << QLatin1String("TextColor") << QLatin1String("LinkColor") << QLatin1String("VisitedLinkColor");
 
 	QStringList colorTypes;
 	colorTypes << tr("Background Color") << tr("Text Color") << tr("Link Color") << tr("Visited Link Color");
@@ -99,35 +99,35 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
-		const QString color = SettingsManager::getValue("Content/" + colors.at(i)).toString();
+		const QString color = SettingsManager::getValue(QLatin1String("Content/") + colors.at(i)).toString();
 		QTableWidgetItem *previewItem = new QTableWidgetItem(color);
 		previewItem->setBackgroundColor(QColor(color));
 		previewItem->setTextColor(Qt::transparent);
-		previewItem->setData(Qt::UserRole, "Content/" + colors.at(i));
-		previewItem->setData((Qt::UserRole + 1), "color");
+		previewItem->setData(Qt::UserRole, QLatin1String("Content/") + colors.at(i));
+		previewItem->setData((Qt::UserRole + 1), QLatin1String("color"));
 
 		m_ui->colorsWidget->setItem(i, 0, new QTableWidgetItem(colorTypes.at(i)));
 		m_ui->colorsWidget->setItem(i, 1, previewItem);
 	}
 
-	const QString doNotTrackPolicyString = SettingsManager::getValue("Browser/DoNotTrackPolicy").toString();
+	const QString doNotTrackPolicyString = SettingsManager::getValue(QLatin1String("Browser/DoNotTrackPolicy")).toString();
 	int doNotTrackPolicyIndex = 2;
 
-	if (doNotTrackPolicyString == "allow")
+	if (doNotTrackPolicyString == QLatin1String("allow"))
 	{
 		doNotTrackPolicyIndex = 1;
 	}
-	else if (doNotTrackPolicyString == "doNotAllow")
+	else if (doNotTrackPolicyString == QLatin1String("doNotAllow"))
 	{
 		doNotTrackPolicyIndex = 0;
 	}
 
 	m_ui->doNotTrackComboBox->setCurrentIndex(doNotTrackPolicyIndex);
-	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue("Browser/PrivateMode").toBool());
+	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
-	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberBrowsing").toBool());
-	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue("History/RememberDownloads").toBool());
-	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue("Browser/EnableCookies").toBool());
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
+	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool());
+	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
 	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
 
@@ -170,9 +170,9 @@ PreferencesDialog::PreferencesDialog(const QString &section, QWidget *parent) : 
 	m_ui->searchWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchWidget->setItemDelegateForColumn(1, new ShortcutDelegate(this));
-	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue("Browser/SearchEnginesSuggestions").toBool());
+	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")).toBool());
 
-	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue("AddressField/SuggestBookmarks").toBool());
+	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -474,16 +474,16 @@ void PreferencesDialog::moveUpSearch()
 
 void PreferencesDialog::save()
 {
-	SettingsManager::setValue("Paths/Downloads", m_ui->downloadsLineEdit->text());
-	SettingsManager::setValue("Browser/AlwaysAskWhereSaveFile", m_ui->alwaysAskCheckBox->isChecked());
-	SettingsManager::setValue("Browser/OpenLinksInNewTab", m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
-	SettingsManager::setValue("Tabs/OpenNextToActive", m_ui->openNextToActiveheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Tabs/OpenNextToActive"), m_ui->openNextToActiveheckBox->isChecked());
 
-	SettingsManager::setValue("Content/DefaultZoom", m_ui->defaultZoomSpinBox->value());
-	SettingsManager::setValue("Content/ZoomTextOnly", m_ui->zoomTextOnlyCheckBox->isChecked());
-	SettingsManager::setValue("Content/DefaultFontSize", m_ui->proportionalFontSizeSpinBox->value());
-	SettingsManager::setValue("Content/DefaultFixedFontSize", m_ui->fixedFontSizeSpinBox->value());
-	SettingsManager::setValue("Content/MinimumFontSize", m_ui->minimumFontSizeSpinBox->value());
+	SettingsManager::setValue(QLatin1String("Content/DefaultZoom"), m_ui->defaultZoomSpinBox->value());
+	SettingsManager::setValue(QLatin1String("Content/ZoomTextOnly"), m_ui->zoomTextOnlyCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Content/DefaultFontSize"), m_ui->proportionalFontSizeSpinBox->value());
+	SettingsManager::setValue(QLatin1String("Content/DefaultFixedFontSize"), m_ui->fixedFontSizeSpinBox->value());
+	SettingsManager::setValue(QLatin1String("Content/MinimumFontSize"), m_ui->minimumFontSizeSpinBox->value());
 
 	for (int i = 0; i < m_ui->fontsWidget->rowCount(); ++i)
 	{
@@ -496,23 +496,23 @@ void PreferencesDialog::save()
 	}
 
 	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->currentIndex();
-	QString doNotTrackPolicyString = "skip";
+	QLatin1String doNotTrackPolicyString = QLatin1String("skip");
 
 	if (doNotTrackPolicyIndex == 1)
 	{
-		doNotTrackPolicyString = "allow";
+		doNotTrackPolicyString = QLatin1String("allow");
 	}
 	else if (doNotTrackPolicyIndex == 0)
 	{
-		doNotTrackPolicyString = "doNotAllow";
+		doNotTrackPolicyString = QLatin1String("doNotAllow");
 	}
 
-	SettingsManager::setValue("Browser/DoNotTrackPolicy", doNotTrackPolicyString);
-	SettingsManager::setValue("Browser/PrivateMode", m_ui->privateModeCheckBox->isChecked());
-	SettingsManager::setValue("History/RememberBrowsing", m_ui->rememberBrowsingHistoryCheckBox->isChecked());
-	SettingsManager::setValue("History/RememberDownloads", m_ui->rememberDownloadsHistoryCheckBox->isChecked());
-	SettingsManager::setValue("Browser/EnableCookies", m_ui->acceptCookiesCheckBox->isChecked());
-	SettingsManager::setValue("History/ClearOnClose", (m_ui->clearHistoryCheckBox->isChecked() ? m_clearSettings : QStringList()));
+	SettingsManager::setValue(QLatin1String("Browser/DoNotTrackPolicy"), doNotTrackPolicyString);
+	SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/EnableCookies"), m_ui->acceptCookiesCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearSettings : QStringList()));
 
 	QList<SearchInformation*> engines;
 
@@ -548,12 +548,12 @@ void PreferencesDialog::save()
 
 	if (SearchesManager::setSearchEngines(engines))
 	{
-		SettingsManager::setValue("Browser/DefaultSearchEngine", m_defaultSearch);
+		SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), m_defaultSearch);
 	}
 
-	SettingsManager::setValue("Browser/SearchEnginesSuggestions", m_ui->searchSuggestionsCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
 
-	SettingsManager::setValue("AddressField/SuggestBookmarks", m_ui->suggestBookmarksCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
 
 	close();
 }

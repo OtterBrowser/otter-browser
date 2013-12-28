@@ -33,7 +33,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			const QString key = QString("%1/%2").arg(groups.at(i)).arg(keys.at(j));
 			const QString type = defaults.value(QString("%1/type").arg(keys.at(j))).toString();
 			const QVariant defaultValue = SettingsManager::getDefaultValue(key);
-			const QVariant value = SettingsManager::getValue(key, defaultValue);
+			const QVariant value = SettingsManager::getValue(key);
 			QList<QStandardItem*> optionItems;
 			optionItems.append(new QStandardItem(keys.at(j)));
 			optionItems.append(new QStandardItem(type));
@@ -153,7 +153,7 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 	{
 		QStandardItem *groupItem = m_model->item(i, 0);
 
-		if (!groupItem || !option.startsWith(groupItem->text()))
+		if (!groupItem || !QString(option).startsWith(groupItem->text()))
 		{
 			continue;
 		}

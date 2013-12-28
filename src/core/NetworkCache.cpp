@@ -11,7 +11,7 @@ namespace Otter
 NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 {
 	setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	setMaximumCacheSize(SettingsManager::getValue("Cache/DiskCacheLimit").toInt() * 1024);
+	setMaximumCacheSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
@@ -123,7 +123,7 @@ bool NetworkCache::remove(const QUrl &url)
 
 void NetworkCache::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Cache/DiskCacheLimit")
+	if (option == QLatin1String("Cache/DiskCacheLimit"))
 	{
 		setMaximumCacheSize(value.toInt() * 1024);
 	}

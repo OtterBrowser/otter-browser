@@ -46,7 +46,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 		cache->setParent(QCoreApplication::instance());
 	}
 
-	optionChanged("Browser/DoNotTrackPolicy", SettingsManager::getValue("Browser/DoNotTrackPolicy"));
+	optionChanged(QLatin1String("Browser/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Browser/DoNotTrackPolicy")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
@@ -255,7 +255,7 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 
 	QNetworkRequest mutableRequest(request);
 
-	if (SettingsManager::getValue("Network/WorkOffline", false).toBool())
+	if (SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool())
 	{
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
 
@@ -289,15 +289,15 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 
 void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Browser/DoNotTrackPolicy")
+	if (option == QLatin1String("Browser/DoNotTrackPolicy"))
 	{
 		const QString policyValue = value.toString();
 
-		if (policyValue == "allow")
+		if (policyValue == QLatin1String("allow"))
 		{
 			m_doNotTrackPolicy = AllowToTrackPolicy;
 		}
-		else if (policyValue == "doNotAllow")
+		else if (policyValue == QLatin1String("doNotAllow"))
 		{
 			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
 		}
