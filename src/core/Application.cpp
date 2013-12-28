@@ -28,22 +28,22 @@ Application* Application::m_instance = NULL;
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
-	setApplicationName("Otter");
-	setApplicationVersion("0.1.01");
+	setApplicationName(QLatin1String("Otter"));
+	setApplicationVersion(QLatin1String("0.1.01"));
 
 	m_instance = this;
 
-	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter";
+	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
 	QCommandLineParser *parser = getParser();
 	parser->process(arguments());
 
-	if (!parser->value("path").isEmpty())
+	if (!parser->value(QLatin1String("path")).isEmpty())
 	{
-		path = parser->value("path");
+		path = parser->value(QLatin1String("path"));
 
 		if (QFileInfo(path).isRelative())
 		{
-			path = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/otter/profiles/").absoluteFilePath(path);
+			path = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter/profiles/")).absoluteFilePath(path);
 		}
 	}
 
@@ -95,9 +95,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		QDir().mkpath(path);
 	}
 
-	SettingsManager::createInstance(path + "/otter.conf", this);
+	SettingsManager::createInstance(path + QLatin1String("/otter.conf"), this);
 
-	QSettings defaults(":/schemas/options.ini", QSettings::IniFormat, this);
+	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
 
 	for (int i = 0; i < groups.count(); ++i)
@@ -116,7 +116,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SettingsManager::setDefaultValue(QLatin1String("Paths/Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-	SettingsManager::setDefaultValue(QLatin1String("Actions/NewTab"), "Ctrl+T");
+	SettingsManager::setDefaultValue(QLatin1String("Actions/NewTab"), QKeySequence(QLatin1String("Ctrl+T")).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/NewWindow"), QKeySequence(QKeySequence::New).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Open"), QKeySequence(QKeySequence::Open).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Save"), QKeySequence(QKeySequence::Save).toString());
@@ -139,7 +139,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Forward"), QKeySequence(QKeySequence::Forward).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Help"), QKeySequence(QKeySequence::HelpContents).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/ApplicationConfiguration"), QKeySequence(QKeySequence::Preferences).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Fullscreen"), QKeySequence("F11").toString());
+	SettingsManager::setDefaultValue(QLatin1String("Actions/Fullscreen"), QKeySequence(QLatin1String("F11")).toString());
 
 	ActionsManager::createInstance(this);
 
@@ -156,10 +156,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	TransfersManager::createInstance(this);
 
 	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
 	QTranslator applicationTranslator;
-	applicationTranslator.load(":/translations/otter_" + QLocale::system().name());
+	applicationTranslator.load(QLatin1String(":/translations/otter-browser_") + QLocale::system().name());
 
 	installTranslator(&qtTranslator);
 	installTranslator(&applicationTranslator);
@@ -205,9 +205,9 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (!SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() && !parser->isSet("privatesession"))
+	if (!SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() && !parser->isSet(QLatin1String("privatesession")))
 	{
-		window = createWindow(parser->isSet("privatesession"));
+		window = createWindow(parser->isSet(QLatin1String("privatesession")));
 	}
 	else
 	{
@@ -301,10 +301,10 @@ QCommandLineParser* Application::getParser() const
 	QCommandLineParser *parser = new QCommandLineParser();
 	parser->addHelpOption();
 	parser->addVersionOption();
-	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), "[url]");
-	parser->addOption(QCommandLineOption("path", QCoreApplication::translate("main", "Uses <path> as profile directory."), "path", QString()));
-	parser->addOption(QCommandLineOption("session", QCoreApplication::translate("main", "Restores session <session> if it exists."), "session", QString()));
-	parser->addOption(QCommandLineOption("privatesession", QCoreApplication::translate("main", "Starts private session.")));
+	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), QLatin1String("[url]"));
+	parser->addOption(QCommandLineOption(QLatin1String("path"), QCoreApplication::translate("main", "Uses <path> as profile directory."), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists."), QLatin1String("session"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session.")));
 
 	return parser;
 }

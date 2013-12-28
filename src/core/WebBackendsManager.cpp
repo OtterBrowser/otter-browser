@@ -10,7 +10,7 @@ QHash<QString, WebBackend*> WebBackendsManager::m_backends;
 
 WebBackendsManager::WebBackendsManager(QObject *parent) : QObject(parent)
 {
-	registerBackend(new QtWebKitWebBackend(this), "qtwebkit");
+	registerBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
 }
 
 void WebBackendsManager::createInstance(QObject *parent)

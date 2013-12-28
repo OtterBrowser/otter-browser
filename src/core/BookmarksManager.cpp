@@ -34,7 +34,7 @@ void BookmarksManager::load()
 	m_bookmarks.clear();
 	m_identifier = 0;
 
-	QFile file(SettingsManager::getPath() + "/bookmarks.xbel");
+	QFile file(SettingsManager::getPath() + QLatin1String("/bookmarks.xbel"));
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
@@ -43,11 +43,11 @@ void BookmarksManager::load()
 
 	QXmlStreamReader reader(file.readAll());
 
-	if (reader.readNextStartElement() && reader.name() == "xbel" && reader.attributes().value("version").toString() == "1.0")
+	if (reader.readNextStartElement() && reader.name() == QLatin1String("xbel") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
 	{
 		while (reader.readNextStartElement())
 		{
-			if (reader.name() == "folder" || reader.name() == "bookmark" || reader.name() == "separator")
+			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
 			{
 				m_bookmarks.append(readBookmark(&reader, 0));
 			}
@@ -68,8 +68,8 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 	switch (bookmark->type)
 	{
 		case FolderBookmark:
-			writer->writeStartElement("folder");
-			writer->writeTextElement("title", bookmark->title);
+			writer->writeStartElement(QLatin1String("folder"));
+			writer->writeTextElement(QLatin1String("title"), bookmark->title);
 
 			for (int i = 0; i < bookmark->children.count(); ++i)
 			{
@@ -80,25 +80,25 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 
 			break;
 		case UrlBookmark:
-			writer->writeStartElement("bookmark");
+			writer->writeStartElement(QLatin1String("bookmark"));
 
 			if (!bookmark->url.isEmpty())
 			{
-				writer->writeAttribute("href", bookmark->url);
+				writer->writeAttribute(QLatin1String("href"), bookmark->url);
 			}
 
-			writer->writeTextElement("title", bookmark->title);
+			writer->writeTextElement(QLatin1String("title"), bookmark->title);
 
 			if (!bookmark->description.isEmpty())
 			{
-				writer->writeAttribute("desc", bookmark->description);
+				writer->writeAttribute(QLatin1String("desc"), bookmark->description);
 			}
 
 			writer->writeEndElement();
 
 			break;
 		default:
-			writer->writeEmptyElement("separator");
+			writer->writeEmptyElement(QLatin1String("separator"));
 
 			break;
 	}
@@ -144,7 +144,7 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->parent = parent;
 
-	if (reader->name() == "folder")
+	if (reader->name() == QLatin1String("folder"))
 	{
 		bookmark->type = FolderBookmark;
 		bookmark->identifier = ++m_identifier;
@@ -153,15 +153,15 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 		{
 			if (reader->isStartElement())
 			{
-				if (reader->name() == "title")
+				if (reader->name() == QLatin1String("title"))
 				{
 					bookmark->title = reader->readElementText().trimmed();
 				}
-				else if (reader->name() == "desc")
+				else if (reader->name() == QLatin1String("desc"))
 				{
 					bookmark->description = reader->readElementText().trimmed();
 				}
-				else if (reader->name() == "folder" || reader->name() == "bookmark" || reader->name() == "separator")
+				else if (reader->name() == QLatin1String("folder") || reader->name() == QLatin1String("bookmark") || reader->name() == QLatin1String("separator"))
 				{
 					bookmark->children.append(readBookmark(reader, bookmark->identifier));
 				}
@@ -170,7 +170,7 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 					reader->skipCurrentElement();
 				}
 			}
-			else if (reader->isEndElement() && reader->name() == "folder")
+			else if (reader->isEndElement() && reader->name() == QLatin1String("folder"))
 			{
 				break;
 			}
@@ -178,20 +178,20 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 
 		m_pointers[bookmark->identifier] = bookmark;
 	}
-	else if (reader->name() == "bookmark")
+	else if (reader->name() == QLatin1String("bookmark"))
 	{
 		bookmark->type = UrlBookmark;
-		bookmark->url = reader->attributes().value("href").toString();
+		bookmark->url = reader->attributes().value(QLatin1String("href")).toString();
 
 		while (reader->readNext())
 		{
 			if (reader->isStartElement())
 			{
-				if (reader->name() == "title")
+				if (reader->name() == QLatin1String("title"))
 				{
 					bookmark->title = reader->readElementText().trimmed();
 				}
-				else if (reader->name() == "desc")
+				else if (reader->name() == QLatin1String("desc"))
 				{
 					bookmark->description = reader->readElementText().trimmed();
 				}
@@ -200,13 +200,13 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 					reader->skipCurrentElement();
 				}
 			}
-			else if (reader->isEndElement() && reader->name() == "bookmark")
+			else if (reader->isEndElement() && reader->name() == QLatin1String("bookmark"))
 			{
 				break;
 			}
 		}
 	}
-	else if (reader->name() == "separator")
+	else if (reader->name() == QLatin1String("separator"))
 	{
 		bookmark->type = SeparatorBookmark;
 
@@ -368,7 +368,7 @@ bool BookmarksManager::hasBookmark(const QUrl &url)
 
 bool BookmarksManager::save(const QString &path)
 {
-	QFile file(path.isEmpty() ? SettingsManager::getPath() + "/bookmarks.xbel" : path);
+	QFile file(path.isEmpty() ? SettingsManager::getPath() + QLatin1String("/bookmarks.xbel") : path);
 
 	if (!file.open(QFile::WriteOnly))
 	{

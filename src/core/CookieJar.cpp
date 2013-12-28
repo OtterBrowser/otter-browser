@@ -10,7 +10,7 @@ namespace Otter
 CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
 	m_autoSaveTimer(0)
 {
-	QFile file(SettingsManager::getPath() + "/cookies.dat");
+	QFile file(SettingsManager::getPath() + QLatin1String("/cookies.dat"));
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -82,7 +82,7 @@ void CookieJar::clearCookies(int period)
 
 void CookieJar::save()
 {
-	QFile file(SettingsManager::getPath() + "/cookies.dat");
+	QFile file(SettingsManager::getPath() + QLatin1String("/cookies.dat"));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{

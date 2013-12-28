@@ -17,7 +17,7 @@ QString formatTime(int value)
 
 	if (value > 3600)
 	{
-		QString string = time.toString("hh:mm:ss");
+		QString string = time.toString(QLatin1String("hh:mm:ss"));
 
 		if (value > 86400)
 		{
@@ -27,7 +27,7 @@ QString formatTime(int value)
 		return string;
 	}
 
-	return time.toString("mm:ss");
+	return time.toString(QLatin1String("mm:ss"));
 }
 
 QString formatUnit(qint64 value, bool isSpeed, int precision)

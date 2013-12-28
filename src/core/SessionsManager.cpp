@@ -85,7 +85,7 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 
 void SessionsManager::markSessionModified()
 {
-	if (m_session == "default" && !m_dirty)
+	if (m_session == QLatin1String("default") && !m_dirty)
 	{
 		m_dirty = true;
 
@@ -119,18 +119,18 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 
 	if (cleanPath.isEmpty())
 	{
-		cleanPath = "default.ini";
+		cleanPath = QLatin1String("default.ini");
 	}
 	else
 	{
-		if (!cleanPath.endsWith(".ini"))
+		if (!cleanPath.endsWith(QLatin1String(".ini")))
 		{
-			cleanPath += ".ini";
+			cleanPath += QLatin1String(".ini");
 		}
 
 		if (bound)
 		{
-			cleanPath = cleanPath.replace('/', QString()).replace('\\', QString());
+			cleanPath = cleanPath.replace(QLatin1Char('/'), QString()).replace(QLatin1Char('\\'), QString());
 		}
 		else if (QFileInfo(cleanPath).isAbsolute())
 		{
@@ -138,7 +138,7 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 		}
 	}
 
-	return SettingsManager::getPath() + "/sessions/" + cleanPath;
+	return SettingsManager::getPath() + QLatin1String("/sessions/") + cleanPath;
 }
 
 QStringList SessionsManager::getClosedWindows()
@@ -160,11 +160,11 @@ SessionInformation SessionsManager::getSession(const QString &path)
 {
 	const QString sessionPath = getSessionPath(path);
 	const QSettings sessionData(sessionPath, QSettings::IniFormat);
-	const int windows = sessionData.value("Session/windows", 0).toInt();
+	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
 	SessionInformation session;
 	session.path = path;
-	session.title = sessionData.value("Session/title", ((path == "default") ? tr("Default") : tr("(Untitled)"))).toString();
-	session.index = (sessionData.value("Session/index", 1).toInt() - 1);
+	session.title = sessionData.value(QLatin1String("Session/title"), ((path == "default") ? tr("Default") : tr("(Untitled)"))).toString();
+	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
 
 	for (int i = 1; i <= windows; ++i)
 	{
@@ -202,7 +202,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries = QDir(SettingsManager::getPath() + "/sessions/").entryList(QStringList("*.ini"), QDir::Files);
+	QStringList entries = QDir(SettingsManager::getPath() + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files);
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
@@ -214,9 +214,9 @@ QStringList SessionsManager::getSessions()
 		entries.append(m_session);
 	}
 
-	if (!entries.contains("default"))
+	if (!entries.contains(QLatin1String("default")))
 	{
-		entries.append("default");
+		entries.append(QLatin1String("default"));
 	}
 
 	entries.sort();
@@ -246,9 +246,9 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 
 	if (session.windows.isEmpty())
 	{
-		if (m_session.isEmpty() && path == "default")
+		if (m_session.isEmpty() && path == QLatin1String("default"))
 		{
-			m_session = "default";
+			m_session = QLatin1String("default");
 		}
 
 		return false;
@@ -295,10 +295,10 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = Application::getInstance()->getWindows();
 	}
 
-	QDir().mkpath(SettingsManager::getPath() + "/sessions/");
+	QDir().mkpath(SettingsManager::getPath() + QLatin1String("/sessions/"));
 
 	const QString sessionPath = getSessionPath(path);
-	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value("Session/title").toString();
+	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value(QLatin1String("Session/title")).toString();
 
 	if (!title.isEmpty())
 	{
@@ -314,36 +314,36 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
-	stream << "[Session]\n";
-	stream << "title=" << sessionTitle.replace('\n', "\\n") << '\n';
-	stream << "windows=" << windows.count() << '\n';
-	stream << "index=1\n\n";
+	stream << QLatin1String("[Session]\n");
+	stream << QLatin1String("title=") << sessionTitle.replace(QLatin1Char(QLatin1Char('\n')), QLatin1String("\\n")) << QLatin1Char(QLatin1Char('\n'));
+	stream << QLatin1String("windows=") << windows.count() << QLatin1Char(QLatin1Char('\n'));
+	stream << QLatin1String("index=1\n\n");
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
 		const SessionEntry sessionEntry = windows.at(i)->getWindowsManager()->getSession();
 
 		stream << QString("[%1/Properties]\n").arg(i + 1);
-		stream << "groups=0\n";
-		stream << "windows=" << sessionEntry.windows.count() << '\n';
-		stream << "index=" << (sessionEntry.index + 1) << "\n\n";
+		stream << QLatin1String("groups=0\n");
+		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char(QLatin1Char('\n'));
+		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
 			stream << QString("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
-			stream << "searchEngine=" << ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine) << '\n';
-			stream << "pinned=" << sessionEntry.windows.at(j).pinned << '\n';
-			stream << "group=0\n";
-			stream << "history=" << sessionEntry.windows.at(j).history.count() << '\n';
-			stream << "index=" << (sessionEntry.windows.at(j).index +  1) << "\n\n";
+			stream << QLatin1String("searchEngine=") << ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine) << QLatin1Char('\n');
+			stream << QLatin1String("pinned=") << sessionEntry.windows.at(j).pinned << QLatin1Char('\n');
+			stream << QLatin1String("group=0\n");
+			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');
+			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).index +  1) << QLatin1String("\n\n");
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
 				stream << QString("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
-				stream << "url=" << sessionEntry.windows.at(j).history.at(k).url << '\n';
-				stream << "title=" << QString(sessionEntry.windows.at(j).history.at(k).title).replace('\n', "\\n") << '\n';
-				stream << "position=" << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << '\n';
-				stream << "zoom=" << sessionEntry.windows.at(j).history.at(k).zoom << "\n\n";
+				stream << QLatin1String("url=") << sessionEntry.windows.at(j).history.at(k).url << QLatin1Char('\n');
+				stream << QLatin1String("title=") << QString(sessionEntry.windows.at(j).history.at(k).title).replace(QLatin1Char('\n'), "\\n") << QLatin1Char('\n');
+				stream << QLatin1String("position=") << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << QLatin1Char('\n');
+				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << "\n\n";
 			}
 		}
 	}

@@ -34,13 +34,13 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 
 	QString urlString = searchUrl.url;
 	QHash<QString, QString> values;
-	values["searchTerms"] = query;
-	values["count"] = QString();
-	values["startIndex"] = QString();
-	values["startPage"] = QString();
-	values["language"] = QLocale::system().name();
-	values["inputEncoding"] = "UTF-8";
-	values["outputEncoding"] = "UTF-8";
+	values[QLatin1String("searchTerms")] = query;
+	values[QLatin1String("count")] = QString();
+	values[QLatin1String("startIndex")] = QString();
+	values[QLatin1String("startPage")] = QString();
+	values[QLatin1String("language")] = QLocale::system().name();
+	values[QLatin1String("inputEncoding")] = QLatin1String("UTF-8");
+	values[QLatin1String("outputEncoding")] = QLatin1String("UTF-8");
 
 	QHash<QString, QString>::iterator valuesIterator;
 
@@ -49,7 +49,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 		urlString = urlString.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
 	}
 
-	*method = ((searchUrl.method == "post") ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
+	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
 
 	QUrl url(urlString);
 	QUrlQuery getQuery(url);
@@ -71,11 +71,11 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 		}
 		else
 		{
-			if (searchUrl.enctype == "application/x-www-form-urlencoded")
+			if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
 			{
 				postQuery.addQueryItem(parameters.at(i).first, QUrl::toPercentEncoding(value));
 			}
-			else if (searchUrl.enctype == "multipart/form-data")
+			else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 			{
 				QString encodedValue;
 				QByteArray plainValue = value.toUtf8();
@@ -97,29 +97,29 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 					}
 				}
 
-				body->append("--AaB03x\r\ncontent-disposition: form-data; name=\"" + parameters.at(i).first +  "\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n" + encodedValue + "\r\n--AaB03x\r\n");
+				body->append(QLatin1String("--AaB03x\r\ncontent-disposition: form-data; name=\"") + parameters.at(i).first +  QLatin1String("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n") + encodedValue + QLatin1String("\r\n--AaB03x\r\n"));
 			}
 		}
 	}
 
 	if (*method == QNetworkAccessManager::PostOperation)
 	{
-		if (searchUrl.enctype == "application/x-www-form-urlencoded")
+		if (searchUrl.enctype == QLatin1String("application/x-www-form-urlencoded"))
 		{
 			QUrl postUrl;
 			postUrl.setQuery(postQuery);
 
 			*body = postUrl.toString().mid(1).toUtf8();
 		}
-		else if (searchUrl.enctype == "multipart/form-data")
+		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 		{
 			request->setRawHeader("Content-Type", "multipart/form-data; boundary=AaB03x");
 			request->setRawHeader("Content-Length", QString::number(body->length()).toUtf8());
 		}
 	}
 
-	getQuery.removeAllQueryItems("sourceid");
-	getQuery.addQueryItem("sourceid", "otter");
+	getQuery.removeAllQueryItems(QLatin1String("sourceid"));
+	getQuery.addQueryItem(QLatin1String("sourceid"), QLatin1String("otter"));
 
 	url.setQuery(getQuery);
 
@@ -135,7 +135,7 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 	SearchUrl *currentUrl = NULL;
 	QXmlStreamReader reader(device->readAll());
 
-	if (reader.readNextStartElement() && reader.name() == "OpenSearchDescription")
+	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
 	{
 		while (!reader.atEnd())
 		{
@@ -143,17 +143,17 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 
 			if (reader.isStartElement())
 			{
-				if (reader.name() == "Url")
+				if (reader.name() == QLatin1String("Url"))
 				{
-					if (reader.attributes().value("rel") == "self")
+					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self"))
 					{
-						search->selfUrl = reader.attributes().value("template").toString();
+						search->selfUrl = reader.attributes().value(QLatin1String("template")).toString();
 					}
-					else if (reader.attributes().value("rel") == "suggestions" || reader.attributes().value("type") == "application/x-suggestions+json")
+					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
 						currentUrl = &search->suggestionsUrl;
 					}
-					else if (!reader.attributes().hasAttribute("rel") || reader.attributes().value("rel") == "results")
+					else if (!reader.attributes().hasAttribute(QLatin1String("rel")) || reader.attributes().value(QLatin1String("rel")) == QLatin1String("results"))
 					{
 						currentUrl = &search->resultsUrl;
 					}
@@ -164,16 +164,16 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 
 					if (currentUrl)
 					{
-						currentUrl->url = reader.attributes().value("template").toString();
-						currentUrl->enctype = reader.attributes().value("enctype").toString().toLower();
-						currentUrl->method = reader.attributes().value("method").toString().toLower();
+						currentUrl->url = reader.attributes().value(QLatin1String("template")).toString();
+						currentUrl->enctype = reader.attributes().value(QLatin1String("enctype")).toString().toLower();
+						currentUrl->method = reader.attributes().value(QLatin1String("method")).toString().toLower();
 					}
 				}
-				else if ((reader.name() == "Param" || reader.name() == "Parameter") && currentUrl)
+				else if ((reader.name() == QLatin1String("Param") || reader.name() == QLatin1String("Parameter")) && currentUrl)
 				{
-					currentUrl->parameters.addQueryItem(reader.attributes().value("name").toString(), reader.attributes().value("value").toString());
+					currentUrl->parameters.addQueryItem(reader.attributes().value(QLatin1String("name")).toString(), reader.attributes().value(QLatin1String("value")).toString());
 				}
-				else if (reader.name() == "Shortcut")
+				else if (reader.name() == QLatin1String("Shortcut"))
 				{
 					const QString shortcut = reader.readElementText();
 
@@ -184,23 +184,23 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 						m_searchShortcuts.append(shortcut);
 					}
 				}
-				else if (reader.name() == "ShortName")
+				else if (reader.name() == QLatin1String("ShortName"))
 				{
 					search->title = reader.readElementText();
 				}
-				else if (reader.name() == "Description")
+				else if (reader.name() == QLatin1String("Description"))
 				{
 					search->description = reader.readElementText();
 				}
-				else if (reader.name() == "InputEncoding")
+				else if (reader.name() == QLatin1String("InputEncoding"))
 				{
 					search->encoding = reader.readElementText();
 				}
-				else if (reader.name() == "Image")
+				else if (reader.name() == QLatin1String("Image"))
 				{
 					const QString data = reader.readElementText();
 
-					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8()), "png")));
+					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
 				}
 			}
 		}
@@ -227,7 +227,7 @@ SearchInformation* SearchesManager::getSearchEngine(const QString &identifier)
 
 QStringList SearchesManager::getSearchEngines()
 {
-	const QString path = SettingsManager::getPath() + "/searches/";
+	const QString path = SettingsManager::getPath() + QLatin1String("/searches/");
 	const QDir directory(path);
 
 	if (!QFile::exists(path))
@@ -236,11 +236,11 @@ QStringList SearchesManager::getSearchEngines()
 
 		if (directory.entryList(QDir::Files).isEmpty())
 		{
-			const QStringList definitions = QDir(":/searches/").entryList(QDir::Files);
+			const QStringList definitions = QDir(QLatin1String(":/searches/")).entryList(QDir::Files);
 
 			for (int i = 0; i < definitions.count(); ++i)
 			{
-				QFile::copy(":/searches/" + definitions.at(i), directory.filePath(definitions.at(i)));
+				QFile::copy(QLatin1String(":/searches/") + definitions.at(i), directory.filePath(definitions.at(i)));
 				QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
 			}
 		}
@@ -294,12 +294,12 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 	writer.setAutoFormatting(true);
 	writer.setAutoFormattingIndent(-1);
 	writer.writeStartDocument();
-	writer.writeStartElement("OpenSearchDescription");
-	writer.writeAttribute("xmlns", "http://a9.com/-/spec/opensearch/1.1/");
-	writer.writeTextElement("Shortcut", search->shortcut);
-	writer.writeTextElement("ShortName", search->title);
-	writer.writeTextElement("Description", search->description);
-	writer.writeTextElement("InputEncoding", search->encoding);
+	writer.writeStartElement(QLatin1String("OpenSearchDescription"));
+	writer.writeAttribute(QLatin1String("xmlns"), QLatin1String("http://a9.com/-/spec/opensearch/1.1/"));
+	writer.writeTextElement(QLatin1String("Shortcut"), search->shortcut);
+	writer.writeTextElement(QLatin1String("ShortName"), search->title);
+	writer.writeTextElement(QLatin1String("Description"), search->description);
+	writer.writeTextElement(QLatin1String("InputEncoding"), search->encoding);
 
 	if (!search->icon.isNull())
 	{
@@ -310,38 +310,38 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 		search->icon.pixmap(size).save(&buffer, "PNG");
 
-		writer.writeStartElement("Image");
-		writer.writeAttribute("width", QString::number(size.width()));
-		writer.writeAttribute("height", QString::number(size.height()));
-		writer.writeAttribute("type", "image/png");
+		writer.writeStartElement(QLatin1String("Image"));
+		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
+		writer.writeAttribute(QLatin1String("height"), QString::number(size.height()));
+		writer.writeAttribute(QLatin1String("type"), QLatin1String("image/png"));
 		writer.writeCharacters(QString("data:image/png;base64,%1").arg(QString(data.toBase64())));
 		writer.writeEndElement();
 	}
 
 	if (!search->selfUrl.isEmpty())
 	{
-		writer.writeStartElement("Url");
-		writer.writeAttribute("type", "application/opensearchdescription+xml");
-		writer.writeAttribute("template", search->selfUrl);
+		writer.writeStartElement(QLatin1String("Url"));
+		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/opensearchdescription+xml"));
+		writer.writeAttribute(QLatin1String("template"), search->selfUrl);
 		writer.writeEndElement();
 	}
 
 	if (!search->resultsUrl.url.isEmpty())
 	{
-		writer.writeStartElement("Url");
-		writer.writeAttribute("rel", "results");
-		writer.writeAttribute("type", "text/html");
-		writer.writeAttribute("method", search->resultsUrl.method.toUpper());
-		writer.writeAttribute("enctype", search->resultsUrl.enctype.toLower());
-		writer.writeAttribute("template", search->resultsUrl.url);
+		writer.writeStartElement(QLatin1String("Url"));
+		writer.writeAttribute(QLatin1String("rel"), QLatin1String("results"));
+		writer.writeAttribute(QLatin1String("type"), QLatin1String("text/html"));
+		writer.writeAttribute(QLatin1String("method"), search->resultsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), search->resultsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), search->resultsUrl.url);
 
 		const QList<QPair<QString, QString> > parameters = search->resultsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
-			writer.writeStartElement("Param");
-			writer.writeAttribute("name", parameters.at(i).first);
-			writer.writeAttribute("value", parameters.at(i).second);
+			writer.writeStartElement(QLatin1String("Param"));
+			writer.writeAttribute(QLatin1String("name"), parameters.at(i).first);
+			writer.writeAttribute(QLatin1String("value"), parameters.at(i).second);
 			writer.writeEndElement();
 		}
 
@@ -350,20 +350,20 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 	if (!search->suggestionsUrl.url.isEmpty())
 	{
-		writer.writeStartElement("Url");
-		writer.writeAttribute("rel", "suggestions");
-		writer.writeAttribute("type", "application/x-suggestions+json");
-		writer.writeAttribute("method", search->suggestionsUrl.method.toUpper());
-		writer.writeAttribute("enctype", search->suggestionsUrl.enctype.toLower());
-		writer.writeAttribute("template", search->suggestionsUrl.url);
+		writer.writeStartElement(QLatin1String("Url"));
+		writer.writeAttribute(QLatin1String("rel"), QLatin1String("suggestions"));
+		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/x-suggestions+json"));
+		writer.writeAttribute(QLatin1String("method"), search->suggestionsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), search->suggestionsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), search->suggestionsUrl.url);
 
 		const QList<QPair<QString, QString> > parameters = search->suggestionsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
-			writer.writeStartElement("Param");
-			writer.writeAttribute("name", parameters.at(i).first);
-			writer.writeAttribute("value", parameters.at(i).second);
+			writer.writeStartElement(QLatin1String("Param"));
+			writer.writeAttribute(QLatin1String("name"), parameters.at(i).first);
+			writer.writeAttribute(QLatin1String("value"), parameters.at(i).second);
 			writer.writeEndElement();
 		}
 
@@ -396,7 +396,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 	{
 		if (!engines.contains(existingEngines.at(i)))
 		{
-			const QString path = SettingsManager::getPath() + "/searches/" + QString(existingEngines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml";
+			const QString path = SettingsManager::getPath() + QLatin1String("/searches/") + QString(existingEngines.at(i)->identifier).remove(QRegularExpression(QLatin1String("[\\/\\\\]"))) + QLatin1String(".xml");
 
 			if (QFile::exists(path) && !QFile::remove(path))
 			{
@@ -421,7 +421,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 			continue;
 		}
 
-		QFile file(SettingsManager::getPath() + "/searches/" + QString(engines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml");
+		QFile file(SettingsManager::getPath() + QLatin1String("/searches/") + QString(engines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml");
 
 		if (!file.open(QIODevice::WriteOnly) || !writeSearch(&file, engines.at(i)))
 		{

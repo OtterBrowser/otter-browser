@@ -21,7 +21,7 @@ QList<TransferInformation*> TransfersManager::m_transfers;
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 	m_updateTimer(0)
 {
-	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
+	QSettings history(SettingsManager::getPath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
 	const QStringList entries = history.childGroups();
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -199,7 +199,7 @@ void TransfersManager::downloadError(QNetworkReply::NetworkError error)
 
 void TransfersManager::save()
 {
-	QSettings history(SettingsManager::getPath() + "/transfers.ini", QSettings::IniFormat);
+	QSettings history(SettingsManager::getPath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
 	history.clear();
 
 	if (SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())
@@ -272,7 +272,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		return NULL;
 	}
 
-	QTemporaryFile temporaryFile("otter-download-XXXXXX.dat", m_instance);
+	QTemporaryFile temporaryFile(QLatin1String("otter-download-XXXXXX.dat"), m_instance);
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
@@ -313,7 +313,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (reply->rawHeaderList().contains("Content-Disposition"))
 		{
-			fileInfo = QFileInfo(QRegularExpression(" filename=\"?([^\"]+)\"?").match(QString(reply->rawHeader("Content-Disposition"))).captured(1));
+			fileInfo = QFileInfo(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader("Content-Disposition"))).captured(1));
 
 			fileName = fileInfo.fileName();
 		}
@@ -368,7 +368,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (quickTransfer)
 		{
-			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + '/' + fileName;
+			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + QLatin1Char('/') + fileName;
 
 			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{

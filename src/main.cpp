@@ -16,11 +16,11 @@ int main(int argc, char *argv[])
 	QCommandLineParser *parser = application.getParser();
 	parser->process(application);
 
-	const QString session = ((Otter::SessionsManager::getCurrentSession().isEmpty() || !parser->value("session").isEmpty()) ? (parser->value("session").isEmpty() ? "default" : parser->value("session")) : QString());
+	const QString session = ((Otter::SessionsManager::getCurrentSession().isEmpty() || !parser->value(QLatin1String("session")).isEmpty()) ? (parser->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : parser->value(QLatin1String("session"))) : QString());
 
 	if (session.isEmpty() || !Otter::SessionsManager::restoreSession(session))
 	{
-		Otter::MainWindow *window = application.createWindow(parser->isSet("privatesession"));
+		Otter::MainWindow *window = application.createWindow(parser->isSet(QLatin1String("privatesession")));
 
 		if (window && !parser->positionalArguments().isEmpty())
 		{

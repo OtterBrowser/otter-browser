@@ -19,7 +19,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
 
-	QFile file(":/files/listing.html");
+	QFile file(QLatin1String(":/files/listing.html"));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
@@ -36,15 +36,15 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	while (directory.cdUp());
 
 	QHash<QString, QString> variables;
-	variables["title"] = QFileInfo(request.url().toLocalFile()).canonicalFilePath();
-	variables["description"] = tr("Directory Contents");
-	variables["dir"] = (QGuiApplication::isLeftToRight() ? "ltr" : "rtl");
-	variables["navigation"] = navigation.join(QString());
-	variables["header_name"] = tr("Name");
-	variables["header_type"] = tr("Type");
-	variables["header_size"] = tr("Size");
-	variables["header_date"] = tr("Date");
-	variables["body"] = QString();
+	variables[QLatin1String("title")] = QFileInfo(request.url().toLocalFile()).canonicalFilePath();
+	variables[QLatin1String("description")] = tr("Directory Contents");
+	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
+	variables[QLatin1String("navigation")] = navigation.join(QString());
+	variables[QLatin1String("header_name")] = tr("Name");
+	variables[QLatin1String("header_type")] = tr("Type");
+	variables[QLatin1String("header_size")] = tr("Size");
+	variables[QLatin1String("header_date")] = tr("Date");
+	variables[QLatin1String("body")] = QString();
 
 	QMimeDatabase database;
 
@@ -53,9 +53,9 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 		const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
 		QByteArray byteArray;
 		QBuffer buffer(&byteArray);
-		QIcon::fromTheme(mimeType.iconName(), QIcon(entries.at(i).isDir() ? ":icons/inode-directory.png" : ":/icons/unknown.png")).pixmap(16, 16).save(&buffer, "PNG");
+		QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(entries.at(i).isDir() ? "inode-directory" : "unknown")).pixmap(16, 16).save(&buffer, "PNG");
 
-		variables["body"].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(entries.at(i).lastModified().toString()));
+		variables[QLatin1String("body")].append(QString("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(entries.at(i).lastModified().toString()));
 	}
 
 	QString html = stream.readAll();

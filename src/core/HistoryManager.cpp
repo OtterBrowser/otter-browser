@@ -38,20 +38,20 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 
 		m_cleanupTimer = 0;
 
-		QSqlDatabase database = QSqlDatabase::database("browsingHistory");
+		QSqlDatabase database = QSqlDatabase::database(QLatin1String("browsingHistory"));
 
 		if (!database.isValid())
 		{
 			return;
 		}
 
-		QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-		query.prepare("SELECT COUNT(*) AS \"amount\" FROM \"visits\";");
+		QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+		query.prepare(QLatin1String("SELECT COUNT(*) AS \"amount\" FROM \"visits\";"));
 		query.exec();
 
 		if (query.next())
 		{
-			const int amount = query.record().field("amount").value().toInt();
+			const int amount = query.record().field(QLatin1String("amount")).value().toInt();
 
 			if (amount > SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt())
 			{
@@ -59,10 +59,10 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 			}
 		}
 
-		database.exec("DELETE FROM \"icons\" WHERE \"id\" NOT IN(SELECT DISTINCT \"icon\" FROM \"visits\");");
-		database.exec("DELETE FROM \"locations\" WHERE \"id\" NOT IN(SELECT DISTINCT \"location\" FROM \"visits\");");
-		database.exec("DELETE FROM \"hosts\" WHERE \"id\" NOT IN(SELECT DISTINCT \"host\" FROM \"locations\");");
-		database.exec("VACUUM;");
+		database.exec(QLatin1String("DELETE FROM \"icons\" WHERE \"id\" NOT IN(SELECT DISTINCT \"icon\" FROM \"visits\");"));
+		database.exec(QLatin1String("DELETE FROM \"locations\" WHERE \"id\" NOT IN(SELECT DISTINCT \"location\" FROM \"visits\");"));
+		database.exec(QLatin1String("DELETE FROM \"hosts\" WHERE \"id\" NOT IN(SELECT DISTINCT \"host\" FROM \"locations\");"));
+		database.exec(QLatin1String("VACUUM;"));
 	}
 	else if (event->timerId() == m_dayTimer)
 	{
@@ -90,13 +90,13 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 
 	if (timestamp == 0)
 	{
-		QSqlQuery query(QSqlDatabase::database("browsingHistory"));
+		QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 		query.prepare(QString("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt()));
 		query.exec();
 
 		if (query.next())
 		{
-			timestamp = query.record().field("time").value().toInt();
+			timestamp = query.record().field(QLatin1String("time")).value().toInt();
 		}
 
 		if (timestamp == 0)
@@ -106,8 +106,8 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 	}
 
 	QList<qint64> entries;
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("SELECT \"visits\".\"id\" FROM \"visits\" WHERE \"visits\".\"time\" <= ?;");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("SELECT \"visits\".\"id\" FROM \"visits\" WHERE \"visits\".\"time\" <= ?;"));
 	query.bindValue(0, timestamp);
 	query.exec();
 
@@ -121,16 +121,16 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 
 void HistoryManager::clearHistory(int period)
 {
-	QSqlDatabase database = QSqlDatabase::database("browsingHistory");
+	QSqlDatabase database = QSqlDatabase::database(QLatin1String("browsingHistory"));
 
 	if (period > 0 && !database.isValid())
 	{
-		database = QSqlDatabase::addDatabase("QSQLITE", "browsingHistory");
-		database.setDatabaseName(SettingsManager::getPath() + "/browsingHistory.sqlite");
+		database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
+		database.setDatabaseName(SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite"));
 		database.open();
 	}
 
-	const QString path = SettingsManager::getPath() + "/browsingHistory.sqlite";
+	const QString path = SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite");
 
 	if (database.isValid())
 	{
@@ -142,11 +142,11 @@ void HistoryManager::clearHistory(int period)
 		}
 		else
 		{
-			database.exec("DELETE FROM \"visits\";");
-			database.exec("DELETE FROM \"locations\";");
-			database.exec("DELETE FROM \"hosts\";");
-			database.exec("DELETE FROM \"icons\";");
-			database.exec("VACUUM;");
+			database.exec(QLatin1String("DELETE FROM \"visits\";"));
+			database.exec(QLatin1String("DELETE FROM \"locations\";"));
+			database.exec(QLatin1String("DELETE FROM \"hosts\";"));
+			database.exec(QLatin1String("DELETE FROM \"icons\";"));
+			database.exec(QLatin1String("VACUUM;"));
 		}
 	}
 	else if (QFile::exists(path))
@@ -165,16 +165,16 @@ void HistoryManager::optionChanged(const QString &option)
 
 		if (enabled && !m_enabled)
 		{
-			QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE", "browsingHistory");
-			database.setDatabaseName(SettingsManager::getPath() + "/browsingHistory.sqlite");
+			QSqlDatabase database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
+			database.setDatabaseName(SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite"));
 			database.open();
 
-			if (!database.tables().contains("visits"))
+			if (!database.tables().contains(QLatin1String("visits")))
 			{
-				QFile file(":/schemas/browsingHistory.sql");
+				QFile file(QLatin1String(":/schemas/browsingHistory.sql"));
 				file.open(QIODevice::ReadOnly);
 
-				const QStringList queries = QString(file.readAll()).split(";\n");
+				const QStringList queries = QString(file.readAll()).split(QLatin1String(";\n"));
 
 				for (int i = 0; i < queries.count(); ++i)
 				{
@@ -184,7 +184,7 @@ void HistoryManager::optionChanged(const QString &option)
 		}
 		else if (!enabled && m_enabled)
 		{
-			QSqlDatabase::database("browsingHistory").close();
+			QSqlDatabase::database(QLatin1String("browsingHistory")).close();
 		}
 
 		m_enabled = enabled;
@@ -204,26 +204,26 @@ HistoryEntry HistoryManager::getEntry(const QSqlRecord &record)
 	}
 
 	QPixmap pixmap;
-	pixmap.loadFromData(record.field("icon").value().toByteArray());
+	pixmap.loadFromData(record.field(QLatin1String("icon")).value().toByteArray());
 
 	HistoryEntry historyEntry;
-	historyEntry.url.setScheme(record.field("scheme").value().toString());
-	historyEntry.url.setHost(record.field("host").value().toString());
-	historyEntry.url.setPath(record.field("path").value().toString());
-	historyEntry.title = record.field("title").value().toString();
-	historyEntry.time = QDateTime::fromTime_t(record.field("time").value().toInt(), Qt::LocalTime);
+	historyEntry.url.setScheme(record.field(QLatin1String("scheme")).value().toString());
+	historyEntry.url.setHost(record.field(QLatin1String("host")).value().toString());
+	historyEntry.url.setPath(record.field(QLatin1String("path")).value().toString());
+	historyEntry.title = record.field(QLatin1String("title")).value().toString();
+	historyEntry.time = QDateTime::fromTime_t(record.field(QLatin1String("time")).value().toInt(), Qt::LocalTime);
 	historyEntry.icon = QIcon(pixmap);
-	historyEntry.identifier = record.field("id").value().toLongLong();
-	historyEntry.visits = record.field("visits").value().toInt();
-	historyEntry.typed = record.field("typed").value().toBool();
+	historyEntry.identifier = record.field(QLatin1String("id")).value().toLongLong();
+	historyEntry.visits = record.field(QLatin1String("visits")).value().toInt();
+	historyEntry.typed = record.field(QLatin1String("typed")).value().toBool();
 
 	return historyEntry;
 }
 
 HistoryEntry HistoryManager::getEntry(qint64 entry)
 {
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" WHERE \"visits\".\"id\" = ?;");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" WHERE \"visits\".\"id\" = ?;"));
 	query.bindValue(0, entry);
 	query.exec();
 
@@ -238,8 +238,8 @@ HistoryEntry HistoryManager::getEntry(qint64 entry)
 QList<HistoryEntry> HistoryManager::getEntries(bool typed)
 {
 	QList<HistoryEntry> entries;
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\"" + (typed ? " \"visits\".\"typed\" = 1" : QString()) + " ORDER BY \"visits\".\"time\" DESC;");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\"") + (typed ? QLatin1String(" \"visits\".\"typed\" = 1") : QString()) + QLatin1String(" ORDER BY \"visits\".\"time\" DESC;"));
 	query.exec();
 
 	while (query.next())
@@ -250,7 +250,7 @@ QList<HistoryEntry> HistoryManager::getEntries(bool typed)
 	return entries;
 }
 
-qint64 HistoryManager::getRecord(const QString &table, const QVariantHash &values)
+qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash &values)
 {
 	const QStringList keys = values.keys();
 	QStringList placeholders;
@@ -260,8 +260,8 @@ qint64 HistoryManager::getRecord(const QString &table, const QVariantHash &value
 		placeholders.append(QString('?'));
 	}
 
-	QSqlQuery selectQuery(QSqlDatabase::database("browsingHistory"));
-	selectQuery.prepare(QString("SELECT \"id\" FROM \"%1\" WHERE \"%2\" = ?;").arg(table).arg(keys.join("\" = ? AND \"")));
+	QSqlQuery selectQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	selectQuery.prepare(QString("SELECT \"id\" FROM \"%1\" WHERE \"%2\" = ?;").arg(table).arg(keys.join(QLatin1String("\" = ? AND \""))));
 
 	for (int i = 0; i < keys.count(); ++i)
 	{
@@ -272,11 +272,11 @@ qint64 HistoryManager::getRecord(const QString &table, const QVariantHash &value
 
 	if (selectQuery.first())
 	{
-		return selectQuery.record().field("id").value().toLongLong();
+		return selectQuery.record().field(QLatin1String("id")).value().toLongLong();
 	}
 
-	QSqlQuery insertQuery(QSqlDatabase::database("browsingHistory"));
-	insertQuery.prepare(QString("INSERT INTO \"%1\" (\"%2\") VALUES(%3);").arg(table).arg(keys.join("\", \"")).arg(placeholders.join(", ")));
+	QSqlQuery insertQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	insertQuery.prepare(QString("INSERT INTO \"%1\" (\"%2\") VALUES(%3);").arg(table).arg(keys.join(QLatin1String("\", \""))).arg(placeholders.join(QLatin1String(", "))));
 
 	for (int i = 0; i < keys.count(); ++i)
 	{
@@ -291,17 +291,17 @@ qint64 HistoryManager::getRecord(const QString &table, const QVariantHash &value
 qint64 HistoryManager::getLocation(const QUrl &url)
 {
 	QVariantHash hostsRecord;
-	hostsRecord["host"] = url.host();
+	hostsRecord[QLatin1String("host")] = url.host();
 
 	QUrl simplifiedUrl(url);
 	simplifiedUrl.setHost(QString());
 
 	QVariantHash locationsRecord;
-	locationsRecord["host"] = getRecord("hosts", hostsRecord);
-	locationsRecord["scheme"] = url.scheme();
-	locationsRecord["path"] = simplifiedUrl.toString(QUrl::RemovePassword | QUrl::RemoveScheme | QUrl::NormalizePathSegments | QUrl::PreferLocalFile | QUrl::FullyDecoded);
+	locationsRecord[QLatin1String("host")] = getRecord(QLatin1String("hosts"), hostsRecord);
+	locationsRecord[QLatin1String("scheme")] = url.scheme();
+	locationsRecord[QLatin1String("path")] = simplifiedUrl.toString(QUrl::RemovePassword | QUrl::RemoveScheme | QUrl::NormalizePathSegments | QUrl::PreferLocalFile | QUrl::FullyDecoded);
 
-	return getRecord("locations", locationsRecord);
+	return getRecord(QLatin1String("locations"), locationsRecord);
 }
 
 qint64 HistoryManager::getIcon(const QIcon &icon)
@@ -313,9 +313,9 @@ qint64 HistoryManager::getIcon(const QIcon &icon)
 	icon.pixmap(QSize(16, 16)).save(&buffer, "PNG");
 
 	QVariantHash record;
-	record["icon"] = data;
+	record[QLatin1String("icon")] = data;
 
-	return getRecord("icons", record);
+	return getRecord(QLatin1String("icons"), record);
 }
 
 qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed)
@@ -325,8 +325,8 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 		return -1;
 	}
 
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("INSERT INTO \"visits\" (\"location\", \"icon\", \"title\", \"time\", \"typed\") VALUES(?, ?, ?, ?, ?);");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("INSERT INTO \"visits\" (\"location\", \"icon\", \"title\", \"time\", \"typed\") VALUES(?, ?, ?, ?, ?);"));
 	query.bindValue(0, getLocation(url));
 	query.bindValue(1, getIcon(icon));
 	query.bindValue(2, title);
@@ -348,8 +348,8 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 
 bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon)
 {
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("UPDATE \"visits\" SET \"location\" = ?, \"icon\" = ?, \"title\" = ? WHERE \"id\" = ?;");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("UPDATE \"visits\" SET \"location\" = ?, \"icon\" = ?, \"title\" = ? WHERE \"id\" = ?;"));
 	query.bindValue(0, getLocation(url));
 	query.bindValue(1, getIcon(icon));
 	query.bindValue(2, title);
@@ -370,8 +370,8 @@ bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &t
 
 bool HistoryManager::removeEntry(qint64 entry)
 {
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare("DELETE FROM \"visits\" WHERE \"id\" = ?;");
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QLatin1String("DELETE FROM \"visits\" WHERE \"id\" = ?;"));
 	query.bindValue(0, entry);
 	query.exec();
 
@@ -404,8 +404,8 @@ bool HistoryManager::removeEntries(const QList<qint64> &entries)
 		return false;
 	}
 
-	QSqlQuery query(QSqlDatabase::database("browsingHistory"));
-	query.prepare(QString("DELETE FROM \"visits\" WHERE \"id\" IN(%1);").arg(list.join(", ")));
+	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+	query.prepare(QString("DELETE FROM \"visits\" WHERE \"id\" IN(%1);").arg(list.join(QLatin1String(", "))));
 	query.exec();
 
 	const bool success = (query.numRowsAffected() > 0);

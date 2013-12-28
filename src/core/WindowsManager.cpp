@@ -48,7 +48,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	{
 		window = getWindow(getCurrentWindow());
 
-		if (window && window->getType() == "web" && window->getUrl().scheme() == "about" && (window->getUrl().path() == "blank" || window->getUrl().path().isEmpty()))
+		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && (window->getUrl().path() == QLatin1String("blank") || window->getUrl().path().isEmpty()))
 		{
 			if (window->isPrivate() == privateWindow)
 			{
@@ -352,7 +352,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 	for (int i = 0; i < m_tabBar->count(); ++i)
 	{
-		if (!m_tabBar->getTabProperty(i, "isPinned", false).toBool())
+		if (!m_tabBar->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
 		{
 			break;
 		}
@@ -362,15 +362,15 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 	if (!pin)
 	{
-		m_tabBar->setTabProperty(index, "isPinned", false);
-		m_tabBar->setTabText(index, m_tabBar->getTabProperty(index, "title", tr("(Untitled)")).toString());
+		m_tabBar->setTabProperty(index, QLatin1String("isPinned"), false);
+		m_tabBar->setTabText(index, m_tabBar->getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString());
 		m_tabBar->moveTab(index, offset);
 		m_tabBar->updateTabs();
 
 		return;
 	}
 
-	m_tabBar->setTabProperty(index, "isPinned", true);
+	m_tabBar->setTabProperty(index, QLatin1String("isPinned"), true);
 	m_tabBar->setTabText(index, QString());
 	m_tabBar->moveTab(index, offset);
 	m_tabBar->updateTabs();
@@ -378,7 +378,7 @@ void WindowsManager::pinWindow(int index, bool pin)
 
 void WindowsManager::closeWindow(int index)
 {
-	if (index < 0 || index >= m_tabBar->count() || m_tabBar->getTabProperty(index, "isPinned", false).toBool())
+	if (index < 0 || index >= m_tabBar->count() || m_tabBar->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
 		return;
 	}
@@ -419,7 +419,7 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		window = getWindow(0);
 
-		if (window && window->getType() == "web")
+		if (window && window->getType() == QLatin1String("web"))
 		{
 			window->setUrl(QUrl("about:blank"));
 
@@ -540,7 +540,7 @@ void WindowsManager::setTitle(const QString &title)
 	const QString text = (title.isEmpty() ? tr("Empty") : title);
 	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
 
-	if (!m_tabBar->getTabProperty(index, "isPinned", false).toBool())
+	if (!m_tabBar->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
 		m_tabBar->setTabText(index, text);
 	}
@@ -634,6 +634,19 @@ QList<SessionWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
+int WindowsManager::getWindowIndex(Window *window) const
+{
+	for (int i = 0; i < m_tabBar->count(); ++i)
+	{
+		if (window == qvariant_cast<Window*>(m_tabBar->tabData(i)))
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 int WindowsManager::getWindowCount() const
 {
 	return m_tabBar->count();
@@ -676,19 +689,6 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 	}
 
 	return false;
-}
-
-int WindowsManager::getWindowIndex(Window *window) const
-{
-	for (int i = 0; i < m_tabBar->count(); ++i)
-	{
-		if (window == qvariant_cast<Window*>(m_tabBar->tabData(i)))
-		{
-			return i;
-		}
-	}
-
-	return -1;
 }
 
 }

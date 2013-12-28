@@ -43,7 +43,7 @@ protected:
 	void scheduleCleanup();
 	void removeOldEntries(const QDateTime &date = QDateTime());
 	static HistoryEntry getEntry(const QSqlRecord &record);
-	static qint64 getRecord(const QString &table, const QVariantHash &values);
+	static qint64 getRecord(const QLatin1String &table, const QVariantHash &values);
 	static qint64 getLocation(const QUrl &url);
 	static qint64 getIcon(const QIcon &icon);
 
