@@ -108,7 +108,7 @@ void SessionsManagerDialog::deleteSession()
 
 void SessionsManagerDialog::currentChanged(int index)
 {
-	m_ui->deleteButton->setEnabled(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString() != "default");
+	m_ui->deleteButton->setEnabled(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString() != QLatin1String("default"));
 }
 
 }

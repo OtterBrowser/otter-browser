@@ -16,29 +16,29 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	m_ui(new Ui::SearchPropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->iconButton->setIcon(engineData["icon"].value<QIcon>());
-	m_ui->titleLineEdit->setText(engineData["title"].toString());
-	m_ui->descriptionLineEdit->setText(engineData["description"].toString());
-	m_ui->shortcutLineEdit->setText(engineData["shortcut"].toString());
+	m_ui->iconButton->setIcon(engineData[QLatin1String("icon")].value<QIcon>());
+	m_ui->titleLineEdit->setText(engineData[QLatin1String("title")].toString());
+	m_ui->descriptionLineEdit->setText(engineData[QLatin1String("description")].toString());
+	m_ui->shortcutLineEdit->setText(engineData[QLatin1String("shortcut")].toString());
 	m_ui->shortcutLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QString("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), m_ui->shortcutLineEdit));
-	m_ui->defaultSearchCheckBox->setChecked(engineData["isDefault"].toBool());
+	m_ui->defaultSearchCheckBox->setChecked(engineData[QLatin1String("isDefault")].toBool());
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
 
-	m_ui->resultsAddressLineEdit->setText(engineData["resultsUrl"].toString());
+	m_ui->resultsAddressLineEdit->setText(engineData[QLatin1String("resultsUrl")].toString());
 	m_ui->resultsAddressLineEdit->installEventFilter(this);
-	m_ui->resultsQueryLineEdit->setText(engineData["resultsParameters"].toString());
+	m_ui->resultsQueryLineEdit->setText(engineData[QLatin1String("resultsParameters")].toString());
 	m_ui->resultsQueryLineEdit->installEventFilter(this);
-	m_ui->resultsPostMethodCheckBox->setChecked(engineData["resultsMethod"].toString() == "post");
-	m_ui->resultsEnctypeComboBox->setCurrentText(engineData["resultsEnctype"].toString());
+	m_ui->resultsPostMethodCheckBox->setChecked(engineData[QLatin1String("resultsMethod")].toString() == QLatin1String("post"));
+	m_ui->resultsEnctypeComboBox->setCurrentText(engineData[QLatin1String("resultsEnctype")].toString());
 
-	m_ui->suggestionsAddressLineEdit->setText(engineData["suggestionsUrl"].toString());
+	m_ui->suggestionsAddressLineEdit->setText(engineData[QLatin1String("suggestionsUrl")].toString());
 	m_ui->suggestionsAddressLineEdit->installEventFilter(this);
-	m_ui->suggestionsQueryLineEdit->setText(engineData["suggestionsParameters"].toString());
+	m_ui->suggestionsQueryLineEdit->setText(engineData[QLatin1String("suggestionsParameters")].toString());
 	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
-	m_ui->suggestionsPostMethodCheckBox->setChecked(engineData["suggestionsMethod"].toString() == "post");
-	m_ui->suggestionsEnctypeComboBox->setCurrentText(engineData["suggestionsEnctype"].toString());
+	m_ui->suggestionsPostMethodCheckBox->setChecked(engineData[QLatin1String("suggestionsMethod")].toString() == QLatin1String("post"));
+	m_ui->suggestionsEnctypeComboBox->setCurrentText(engineData[QLatin1String("suggestionsEnctype")].toString());
 
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
@@ -84,19 +84,19 @@ void SearchPropertiesDialog::selectIcon()
 QVariantHash SearchPropertiesDialog::getEngineData() const
 {
 	QVariantHash engineData = m_engineData;
-	engineData["icon"] = m_ui->iconButton->icon();
-	engineData["title"] = m_ui->titleLineEdit->text();
-	engineData["description"] = m_ui->descriptionLineEdit->text();
-	engineData["shortcut"] = m_ui->shortcutLineEdit->text();
-	engineData["isDefault"] = m_ui->defaultSearchCheckBox->isChecked();
-	engineData["resultsUrl"] = m_ui->resultsAddressLineEdit->text();
-	engineData["resultsParameters"] = m_ui->resultsQueryLineEdit->text();
-	engineData["resultsMethod"] = (m_ui->resultsPostMethodCheckBox->isChecked() ? "post" : "get");
-	engineData["resultsEnctype"] = m_ui->resultsEnctypeComboBox->currentText();
-	engineData["suggestionsUrl"] = m_ui->suggestionsAddressLineEdit->text();
-	engineData["suggestionsParameters"] = m_ui->suggestionsQueryLineEdit->text();
-	engineData["suggestionsMethod"] = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? "post" : "get");
-	engineData["suggestionsEnctype"] = m_ui->suggestionsEnctypeComboBox->currentText();
+	engineData[QLatin1String("icon")] = m_ui->iconButton->icon();
+	engineData[QLatin1String("title")] = m_ui->titleLineEdit->text();
+	engineData[QLatin1String("description")] = m_ui->descriptionLineEdit->text();
+	engineData[QLatin1String("shortcut")] = m_ui->shortcutLineEdit->text();
+	engineData[QLatin1String("isDefault")] = m_ui->defaultSearchCheckBox->isChecked();
+	engineData[QLatin1String("resultsUrl")] = m_ui->resultsAddressLineEdit->text();
+	engineData[QLatin1String("resultsParameters")] = m_ui->resultsQueryLineEdit->text();
+	engineData[QLatin1String("resultsMethod")] = (m_ui->resultsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
+	engineData[QLatin1String("resultsEnctype")] = m_ui->resultsEnctypeComboBox->currentText();
+	engineData[QLatin1String("suggestionsUrl")] = m_ui->suggestionsAddressLineEdit->text();
+	engineData[QLatin1String("suggestionsParameters")] = m_ui->suggestionsQueryLineEdit->text();
+	engineData[QLatin1String("suggestionsMethod")] = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
+	engineData[QLatin1String("suggestionsEnctype")] = m_ui->suggestionsEnctypeComboBox->currentText();
 
 	return engineData;
 }
@@ -115,8 +115,8 @@ bool SearchPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			contextMenu->addSeparator();
 
 			QMenu *placeholdersMenu = contextMenu->addMenu(tr("Placeholders"));
-			placeholdersMenu->addAction(tr("Search Terms"))->setData("searchTerms");
-			placeholdersMenu->addAction(tr("Language"))->setData("language");
+			placeholdersMenu->addAction(tr("Search Terms"))->setData(QLatin1String("searchTerms"));
+			placeholdersMenu->addAction(tr("Language"))->setData(QLatin1String("language"));
 
 			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
 

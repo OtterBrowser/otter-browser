@@ -472,7 +472,7 @@ void MainWindow::actionClosedWindows(QAction *action)
 
 void MainWindow::actionViewHistory()
 {
-	const QUrl url("about:history");
+	const QUrl url(QLatin1String("about:history"));
 
 	if (!SessionsManager::hasUrl(url, true))
 	{
@@ -510,7 +510,7 @@ void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)
 
 void MainWindow::actionManageBookmarks()
 {
-	const QUrl url("about:bookmarks");
+	const QUrl url(QLatin1String("about:bookmarks"));
 
 	if (!SessionsManager::hasUrl(url, true))
 	{
@@ -573,7 +573,7 @@ void MainWindow::actionOpenBookmarkFolder()
 
 void MainWindow::actionCookies()
 {
-	const QUrl url("about:cookies");
+	const QUrl url(QLatin1String("about:cookies"));
 
 	if (!SessionsManager::hasUrl(url, true))
 	{
@@ -583,7 +583,7 @@ void MainWindow::actionCookies()
 
 void MainWindow::actionTransfers()
 {
-	const QUrl url("about:transfers");
+	const QUrl url(QLatin1String("about:transfers"));
 
 	if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
 	{
@@ -765,7 +765,7 @@ void MainWindow::menuBookmarksAboutToShow()
 		return;
 	}
 
-	menu->setObjectName("bookmarks");
+	menu->setObjectName(QLatin1String("bookmarks"));
 	menu->installEventFilter(this);
 
 	const int folder = menu->menuAction()->data().toInt();
@@ -826,7 +826,7 @@ void MainWindow::openBookmark()
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		m_windowsManager->open(url, false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
+		m_windowsManager->open(url, false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
 
 		m_ui->menuBookmarks->close();
 	}
@@ -961,7 +961,7 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-	if (object->objectName().contains("bookmarks", Qt::CaseInsensitive) && event->type() == QEvent::ContextMenu)
+	if (event->type() == QEvent::ContextMenu && object->objectName().contains(QLatin1String("bookmarks"), Qt::CaseInsensitive))
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 		QMenu *menu = qobject_cast<QMenu*>(object);
@@ -976,11 +976,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 				QMenu contextMenu(this);
 				contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName("new-tab");
-				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName("new-background-tab");
+				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-tab"));
+				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-tab"));
 				contextMenu.addSeparator();
-				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName("new-window");
-				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName("new-background-window");
+				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-window"));
+				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-window"));
 				contextMenu.exec(contextMenuEvent->globalPos());
 
 				return true;

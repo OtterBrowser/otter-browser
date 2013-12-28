@@ -36,7 +36,7 @@ void PreviewWidget::setPosition(const QPoint &position)
 {
 	if (!m_moveAnimation)
 	{
-		m_moveAnimation = new QPropertyAnimation(this, "pos");
+		m_moveAnimation = new QPropertyAnimation(this, QStringLiteral("pos").toLatin1());
 		m_moveAnimation->setDuration(250);
 	}
 

@@ -421,7 +421,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (window && window->getType() == QLatin1String("web"))
 		{
-			window->setUrl(QUrl("about:blank"));
+			window->setUrl(QUrl(QLatin1String("about:blank")));
 
 			return;
 		}

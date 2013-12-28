@@ -97,7 +97,7 @@ void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWi
 
 void Window::setDefaultTextEncoding(const QString &encoding)
 {
-	if (m_contentsWidget->getType() == "web")
+	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
 		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
@@ -120,42 +120,42 @@ void Window::setUrl(const QUrl &url)
 {
 	ContentsWidget *newWidget = NULL;
 
-	if (url.scheme() == "about")
+	if (url.scheme() == QLatin1String("about"))
 	{
-		if (!url.path().isEmpty() && url.path() != "blank" && SessionsManager::hasUrl(url, true))
+		if (!url.path().isEmpty() && url.path() != QLatin1String("blank") && SessionsManager::hasUrl(url, true))
 		{
 			m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
 
 			return;
 		}
 
-		if (url.path() == "bookmarks")
+		if (url.path() == QLatin1String("bookmarks"))
 		{
 			newWidget = new BookmarksContentsWidget(this);
 		}
-		else if (url.path() == "cache")
+		else if (url.path() == QLatin1String("cache"))
 		{
 			newWidget = new CacheContentsWidget(this);
 		}
-		else if (url.path() == "config")
+		else if (url.path() == QLatin1String("config"))
 		{
 			newWidget = new ConfigurationContentsWidget(this);
 		}
-		else if (url.path() == "cookies")
+		else if (url.path() == QLatin1String("cookies"))
 		{
 			newWidget = new CookiesContentsWidget(this);
 		}
-		else if (url.path() == "history")
+		else if (url.path() == QLatin1String("history"))
 		{
 			newWidget = new HistoryContentsWidget(this);
 		}
-		else if (url.path() == "transfers")
+		else if (url.path() == QLatin1String("transfers"))
 		{
 			newWidget = new TransfersContentsWidget(this);
 		}
 	}
 
-	if (!newWidget && m_contentsWidget->getType() != "web")
+	if (!newWidget && m_contentsWidget->getType() != QLatin1String("web"))
 	{
 		newWidget = new WebContentsWidget(false, NULL, this);
 	}
@@ -164,6 +164,8 @@ void Window::setUrl(const QUrl &url)
 	{
 		setContentsWidget(newWidget);
 	}
+
+	m_ui->addressWidget->setUrl(url);
 
 	m_contentsWidget->setUrl(url);
 }
@@ -191,7 +193,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == "web");
+	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == QLatin1String("web"));
 	m_ui->backButton->setDefaultAction(m_contentsWidget->getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(m_contentsWidget->getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));
@@ -240,7 +242,7 @@ ContentsWidget* Window::getContentsWidget()
 
 QString Window::getDefaultTextEncoding() const
 {
-	if (m_contentsWidget->getType() == "web")
+	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
 		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
@@ -263,7 +265,7 @@ QString Window::getTitle() const
 	return m_contentsWidget->getTitle();
 }
 
-QString Window::getType() const
+QLatin1String Window::getType() const
 {
 	return m_contentsWidget->getType();
 }

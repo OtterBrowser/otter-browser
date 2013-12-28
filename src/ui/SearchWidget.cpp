@@ -157,7 +157,7 @@ void SearchWidget::updateSearchEngines()
 		setEnabled(true);
 
 		QStandardItem *separatorItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());
-		separatorItem->setData("separator", Qt::AccessibleDescriptionRole);
+		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
 		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());

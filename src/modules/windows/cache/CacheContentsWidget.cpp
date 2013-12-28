@@ -457,7 +457,7 @@ QLatin1String CacheContentsWidget::getType() const
 
 QUrl CacheContentsWidget::getUrl() const
 {
-	return QUrl("about:cache");
+	return QUrl(QLatin1String("about:cache"));
 }
 
 QIcon CacheContentsWidget::getIcon() const

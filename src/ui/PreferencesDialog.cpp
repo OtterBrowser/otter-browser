@@ -143,18 +143,18 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		}
 
 		QVariantHash engineData;
-		engineData["identifier"] = engine->identifier;
-		engineData["isDefault"] = (engine->identifier == m_defaultSearch);
-		engineData["encoding"] = engine->encoding;
-		engineData["selfUrl"] = engine->selfUrl;
-		engineData["resultsUrl"] = engine->resultsUrl.url;
-		engineData["resultsEnctype"] = engine->resultsUrl.enctype;
-		engineData["resultsMethod"] = engine->resultsUrl.method;
-		engineData["resultsParameters"] = engine->resultsUrl.parameters.toString(QUrl::FullyDecoded);
-		engineData["suggestionsUrl"] = engine->suggestionsUrl.url;
-		engineData["suggestionsEnctype"] = engine->suggestionsUrl.enctype;
-		engineData["suggestionsMethod"] = engine->suggestionsUrl.method;
-		engineData["suggestionsParameters"] = engine->suggestionsUrl.parameters.toString(QUrl::FullyDecoded);
+		engineData[QLatin1String("identifier")] = engine->identifier;
+		engineData[QLatin1String("isDefault")] = (engine->identifier == m_defaultSearch);
+		engineData[QLatin1String("encoding")] = engine->encoding;
+		engineData[QLatin1String("selfUrl")] = engine->selfUrl;
+		engineData[QLatin1String("resultsUrl")] = engine->resultsUrl.url;
+		engineData[QLatin1String("resultsEnctype")] = engine->resultsUrl.enctype;
+		engineData[QLatin1String("resultsMethod")] = engine->resultsUrl.method;
+		engineData[QLatin1String("resultsParameters")] = engine->resultsUrl.parameters.toString(QUrl::FullyDecoded);
+		engineData[QLatin1String("suggestionsUrl")] = engine->suggestionsUrl.url;
+		engineData[QLatin1String("suggestionsEnctype")] = engine->suggestionsUrl.enctype;
+		engineData[QLatin1String("suggestionsMethod")] = engine->suggestionsUrl.method;
+		engineData[QLatin1String("suggestionsParameters")] = engine->suggestionsUrl.parameters.toString(QUrl::FullyDecoded);
 
 		QTableWidgetItem *engineItem = new QTableWidgetItem(engine->icon, engine->title);
 		engineItem->setToolTip(engine->description);
@@ -322,7 +322,7 @@ void PreferencesDialog::addSearch()
 			continue;
 		}
 
-		identifiers.append(item->data(Qt::UserRole).toHash()["identifier"].toString());
+		identifiers.append(item->data(Qt::UserRole).toHash()[QLatin1String("identifier")].toString());
 
 		const QString shortcut = m_ui->searchWidget->item(i, 1)->data(Qt::DisplayRole).toString();
 
@@ -344,22 +344,22 @@ void PreferencesDialog::addSearch()
 	while (identifiers.contains(identifier));
 
 	QVariantHash engineData;
-	engineData["identifier"] = identifier;
-	engineData["isDefault"] = false;
-	engineData["encoding"] = "UTF-8";
-	engineData["selfUrl"] = QString();
-	engineData["resultsUrl"] = QString();
-	engineData["resultsEnctype"] = QString();
-	engineData["resultsMethod"] = "get";
-	engineData["resultsParameters"] = QString();
-	engineData["suggestionsUrl"] = QString();
-	engineData["suggestionsEnctype"] = QString();
-	engineData["suggestionsMethod"] = "get";
-	engineData["suggestionsParameters"] = QString();
-	engineData["shortcut"] = QString();
-	engineData["title"] = tr("New Search Engine");
-	engineData["description"] = QString();
-	engineData["icon"] = Utils::getIcon(QLatin1String("edit-find"));
+	engineData[QLatin1String("identifier")] = identifier;
+	engineData[QLatin1String("isDefault")] = false;
+	engineData[QLatin1String("encoding")] = QLatin1String("UTF-8");
+	engineData[QLatin1String("selfUrl")] = QString();
+	engineData[QLatin1String("resultsUrl")] = QString();
+	engineData[QLatin1String("resultsEnctype")] = QString();
+	engineData[QLatin1String("resultsMethod")] = QLatin1String("get");
+	engineData[QLatin1String("resultsParameters")] = QString();
+	engineData[QLatin1String("suggestionsUrl")] = QString();
+	engineData[QLatin1String("suggestionsEnctype")] = QString();
+	engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
+	engineData[QLatin1String("suggestionsParameters")] = QString();
+	engineData[QLatin1String("shortcut")] = QString();
+	engineData[QLatin1String("title")] = tr("New Search Engine");
+	engineData[QLatin1String("description")] = QString();
+	engineData[QLatin1String("icon")] = Utils::getIcon(QLatin1String("edit-find"));
 
 	SearchPropertiesDialog dialog(engineData, shortcuts, this);
 
@@ -370,25 +370,25 @@ void PreferencesDialog::addSearch()
 
 	engineData = dialog.getEngineData();
 
-	if (shortcuts.contains(engineData["shortcut"].toString()))
+	if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
 	{
-		engineData["shortcut"] = QString();
+		engineData[QLatin1String("shortcut")] = QString();
 	}
 
-	if (engineData["isDefault"].toBool())
+	if (engineData[QLatin1String("isDefault")].toBool())
 	{
-		m_defaultSearch = engineData["identifier"].toString();
+		m_defaultSearch = engineData[QLatin1String("identifier")].toString();
 	}
 
-	QTableWidgetItem *engineItem = new QTableWidgetItem(engineData["icon"].value<QIcon>(), engineData["title"].toString());
-	engineItem->setToolTip(engineData["description"].toString());
+	QTableWidgetItem *engineItem = new QTableWidgetItem(engineData[QLatin1String("icon")].value<QIcon>(), engineData[QLatin1String("title")].toString());
+	engineItem->setToolTip(engineData[QLatin1String("description")].toString());
 	engineItem->setData(Qt::UserRole, engineData);
 
 	const int row = (m_ui->searchWidget->currentRow() + 1);
 
 	m_ui->searchWidget->insertRow(row);
 	m_ui->searchWidget->setItem(row, 0, engineItem);
-	m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engineData["shortcut"].toString()));
+	m_ui->searchWidget->setItem(row, 1, new QTableWidgetItem(engineData[QLatin1String("shortcut")].toString()));
 }
 
 void PreferencesDialog::editSearch()
@@ -401,10 +401,10 @@ void PreferencesDialog::editSearch()
 	}
 
 	QVariantHash engineData = item->data(Qt::UserRole).toHash();
-	engineData["shortcut"] = m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->text();
-	engineData["title"] = item->text();
-	engineData["description"] = item->toolTip();
-	engineData["icon"] = item->icon();
+	engineData[QLatin1String("shortcut")] = m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->text();
+	engineData[QLatin1String("title")] = item->text();
+	engineData[QLatin1String("description")] = item->toolTip();
+	engineData[QLatin1String("icon")] = item->icon();
 
 	QStringList shortcuts;
 
@@ -424,21 +424,21 @@ void PreferencesDialog::editSearch()
 	{
 		engineData = dialog.getEngineData();
 
-		if (shortcuts.contains(engineData["shortcut"].toString()))
+		if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
 		{
-			engineData["shortcut"] = QString();
+			engineData[QLatin1String("shortcut")] = QString();
 		}
 
-		if (engineData["isDefault"].toBool())
+		if (engineData[QLatin1String("isDefault")].toBool())
 		{
-			m_defaultSearch = engineData["identifier"].toString();
+			m_defaultSearch = engineData[QLatin1String("identifier")].toString();
 		}
 
-		m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->setText(engineData["shortcut"].toString());
+		m_ui->searchWidget->item(m_ui->searchWidget->currentRow(), 1)->setText(engineData[QLatin1String("shortcut")].toString());
 
-		item->setText(engineData["title"].toString());
-		item->setToolTip(engineData["description"].toString());
-		item->setIcon(engineData["icon"].value<QIcon>());
+		item->setText(engineData[QLatin1String("title")].toString());
+		item->setToolTip(engineData[QLatin1String("description")].toString());
+		item->setIcon(engineData[QLatin1String("icon")].value<QIcon>());
 		item->setData(Qt::UserRole, engineData);
 	}
 }
@@ -527,20 +527,20 @@ void PreferencesDialog::save()
 
 		const QVariantHash engineData = item->data(Qt::UserRole).toHash();
 		SearchInformation *engine = new SearchInformation();
-		engine->identifier = engineData["identifier"].toString();
+		engine->identifier = engineData[QLatin1String("identifier")].toString();
 		engine->title = item->text();
 		engine->description = item->toolTip();
 		engine->shortcut = m_ui->searchWidget->item(i, 1)->text();
-		engine->encoding = engineData["encoding"].toString();
-		engine->selfUrl = engineData["selfUrl"].toString();
-		engine->resultsUrl.url = engineData["resultsUrl"].toString();
-		engine->resultsUrl.enctype = engineData["resultsEnctype"].toString();
-		engine->resultsUrl.method = engineData["resultsMethod"].toString();
-		engine->resultsUrl.parameters = QUrlQuery(engineData["resultsParameters"].toString());
-		engine->suggestionsUrl.url = engineData["suggestionsUrl"].toString();
-		engine->suggestionsUrl.enctype = engineData["suggestionsEnctype"].toString();
-		engine->suggestionsUrl.method = engineData["suggestionsMethod"].toString();
-		engine->suggestionsUrl.parameters = QUrlQuery(engineData["suggestionsParameters"].toString());
+		engine->encoding = engineData[QLatin1String("encoding")].toString();
+		engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
+		engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();
+		engine->resultsUrl.enctype = engineData[QLatin1String("resultsEnctype")].toString();
+		engine->resultsUrl.method = engineData[QLatin1String("resultsMethod")].toString();
+		engine->resultsUrl.parameters = QUrlQuery(engineData[QLatin1String("resultsParameters")].toString());
+		engine->suggestionsUrl.url = engineData[QLatin1String("suggestionsUrl")].toString();
+		engine->suggestionsUrl.enctype = engineData[QLatin1String("suggestionsEnctype")].toString();
+		engine->suggestionsUrl.method = engineData[QLatin1String("suggestionsMethod")].toString();
+		engine->suggestionsUrl.parameters = QUrlQuery(engineData[QLatin1String("suggestionsParameters")].toString());
 		engine->icon = item->icon();
 
 		engines.append(engine);

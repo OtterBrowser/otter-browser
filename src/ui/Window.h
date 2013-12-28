@@ -113,7 +113,7 @@ public:
 	QString getDefaultTextEncoding() const;
 	QString getSearchEngine() const;
 	QString getTitle() const;
-	QString getType() const;
+	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;

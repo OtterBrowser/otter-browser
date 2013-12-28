@@ -73,8 +73,8 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 				model->appendRow(new QStandardItem(bookmarks.at(i)));
 			}
 
-			QStringList moduleUrls;
-			moduleUrls << "about:bookmarks" << "about:cache" << "about:config" << "about:cookies" << "about:history" << "about:transfers";
+			QList<QLatin1String> moduleUrls;
+			moduleUrls << QLatin1String("about:bookmarks") << QLatin1String("about:cache") << QLatin1String("about:config") << QLatin1String("about:cookies") << QLatin1String("about:history") << QLatin1String("about:transfers");
 
 			for (int i = 0; i < moduleUrls.count(); ++i)
 			{
@@ -93,7 +93,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 		if (value.toBool() && !m_bookmarkLabel)
 		{
 			m_bookmarkLabel = new QLabel(this);
-			m_bookmarkLabel->setObjectName("Bookmark");
+			m_bookmarkLabel->setObjectName(QLatin1String("Bookmark"));
 			m_bookmarkLabel->setAutoFillBackground(false);
 			m_bookmarkLabel->setFixedSize(16, 16);
 			m_bookmarkLabel->move((width() - 22), 4);
@@ -112,13 +112,13 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 		if (value.toBool() && !m_urlIconLabel)
 		{
 			m_urlIconLabel = new QLabel(this);
-			m_urlIconLabel->setObjectName("Url");
+			m_urlIconLabel->setObjectName(QLatin1String("Url"));
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
 			m_urlIconLabel->move(6, 4);
 			m_urlIconLabel->installEventFilter(this);
 
-			setStyleSheet("QLineEdit {padding-left:22px;}");
+			setStyleSheet(QLatin1String("QLineEdit {padding-left:22px;}"));
 		}
 		else if (!value.toBool() && m_urlIconLabel)
 		{
@@ -132,10 +132,10 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
-	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join('|'))).match(text()).hasMatch())
+	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(text()).hasMatch())
 	{
 		const QStringList engines = SearchesManager::getSearchEngines();
-		const QString shortcut = text().section(' ', 0, 0);
+		const QString shortcut = text().section(QLatin1Char(' '), 0, 0);
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
@@ -143,7 +143,7 @@ void AddressWidget::notifyRequestedLoadUrl()
 
 			if (search && shortcut == search->shortcut)
 			{
-				emit requestedSearch(text().section(' ', 1), search->identifier);
+				emit requestedSearch(text().section(QLatin1Char(' '), 1), search->identifier);
 
 				return;
 			}
@@ -164,7 +164,7 @@ void AddressWidget::updateBookmark()
 
 	const QUrl url = getUrl();
 
-	if (url.scheme() == "about")
+	if (url.scheme() == QLatin1String("about"))
 	{
 		m_bookmarkLabel->setEnabled(false);
 		m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
@@ -200,7 +200,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 
 void AddressWidget::setUrl(const QUrl &url)
 {
-	setText((url.scheme() == "about" && url.path() == "blank") ? QString() : url.toString());
+	setText((url.scheme() == QLatin1String("about") && url.path() == QLatin1String("blank")) ? QString() : url.toString());
 	updateBookmark();
 }
 
@@ -219,7 +219,7 @@ void AddressWidget::setWindow(Window *window)
 
 QUrl AddressWidget::getUrl() const
 {
-	return QUrl(text().isEmpty() ? "about:blank" : text());
+	return QUrl(text().isEmpty() ? QLatin1String("about:blank") : text());
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)

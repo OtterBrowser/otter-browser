@@ -23,7 +23,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	const QVariant currentValue = (value.isNull() ? SettingsManager::getValue(option) : value);
 	QWidget *widget = NULL;
 
-	if (type == "color")
+	if (type == QLatin1String("color"))
 	{
 		widget = m_colorButton = new QPushButton(this);
 
@@ -34,7 +34,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 
 		connect(m_colorButton, SIGNAL(clicked()), this, SLOT(selectColor()));
 	}
-	else if (type == "font")
+	else if (type == QLatin1String("font"))
 	{
 		widget = m_fontComboBox = new QFontComboBox(this);
 
@@ -43,7 +43,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 
 		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(modified()));
 	}
-	else if (type == "integer")
+	else if (type == QLatin1String("integer"))
 	{
 		widget = m_spinBox = new QSpinBox(this);
 
@@ -56,11 +56,11 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	}
 	else
 	{
-		if (type != "bool" && choices.isEmpty())
+		if (type != QLatin1String("bool") && choices.isEmpty())
 		{
 			widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
 
-			if (type == "path")
+			if (type == QLatin1String("path"))
 			{
 				m_lineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
 			}
@@ -73,10 +73,10 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		{
 			widget = m_comboBox = new QComboBox(this);
 
-			if (type == "bool")
+			if (type == QLatin1String("bool"))
 			{
-				m_comboBox->addItem("false");
-				m_comboBox->addItem("true");
+				m_comboBox->addItem(QLatin1String("false"));
+				m_comboBox->addItem(QLatin1String("true"));
 			}
 			else
 			{

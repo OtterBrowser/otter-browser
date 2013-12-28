@@ -311,9 +311,9 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		QFileInfo fileInfo;
 		QString fileName;
 
-		if (reply->rawHeaderList().contains("Content-Disposition"))
+		if (reply->rawHeaderList().contains(QStringLiteral("Content-Disposition").toLatin1()))
 		{
-			fileInfo = QFileInfo(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader("Content-Disposition"))).captured(1));
+			fileInfo = QFileInfo(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
 
 			fileName = fileInfo.fileName();
 		}

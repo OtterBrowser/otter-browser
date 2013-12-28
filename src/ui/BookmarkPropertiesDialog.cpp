@@ -40,7 +40,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 	view->setHeaderHidden(true);
 	view->setItemsExpandable(false);
 	view->setRootIsDecorated(false);
-	view->setStyleSheet("QTreeView::branch {border-image: url(invalid.png);}");
+	view->setStyleSheet(QLatin1String("QTreeView::branch {border-image: url(invalid.png);}"));
 
 	reloadFolders();
 

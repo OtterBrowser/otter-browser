@@ -105,7 +105,7 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 			break;
 		default:
 			item = new QStandardItem();
-			item->setData("separator", Qt::AccessibleDescriptionRole);
+			item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 
 			break;
 	}
@@ -388,7 +388,7 @@ QLatin1String BookmarksContentsWidget::getType() const
 
 QUrl BookmarksContentsWidget::getUrl() const
 {
-	return QUrl("about:bookmarks");
+	return QUrl(QLatin1String("about:bookmarks"));
 }
 
 QIcon BookmarksContentsWidget::getIcon() const

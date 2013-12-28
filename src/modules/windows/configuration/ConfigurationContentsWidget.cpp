@@ -189,7 +189,7 @@ QLatin1String ConfigurationContentsWidget::getType() const
 
 QUrl ConfigurationContentsWidget::getUrl() const
 {
-	return QUrl("about:config");
+	return QUrl(QLatin1String("about:config"));
 }
 
 QIcon ConfigurationContentsWidget::getIcon() const

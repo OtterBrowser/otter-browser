@@ -73,12 +73,12 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_clickedTab >= 0)
 	{
-		const bool isPinned = getTabProperty(m_clickedTab, "isPinned", false).toBool();
+		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
 		int amount = 0;
 
 		for (int i = 0; i < count(); ++i)
 		{
-			if (getTabProperty(i, "isPinned", false).toBool() || i == m_clickedTab)
+			if (getTabProperty(i, QLatin1String("isPinned"), false).toBool() || i == m_clickedTab)
 			{
 				continue;
 			}
@@ -86,7 +86,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			++amount;
 		}
 
-		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, "canClone", false).toBool());
+		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
 		menu.addSeparator();
 		menu.addAction(tr("Detach Tab"), this, SLOT(detachTab()))->setEnabled(count() > 1);
@@ -277,7 +277,7 @@ void TabBarWidget::showPreview(int index)
 		QRect rectangle = tabRect(index);
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
-		m_previewWidget->setPreview(getTabProperty(index, "title", tr("(Untitled)")).toString().toHtmlEscaped(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
+		m_previewWidget->setPreview(getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString().toHtmlEscaped(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
 
 		switch (shape())
 		{
@@ -355,13 +355,13 @@ void TabBarWidget::pinTab()
 {
 	if (m_clickedTab >= 0)
 	{
-		emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, "isPinned", false).toBool());
+		emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool());
 	}
 }
 
 void TabBarWidget::updateTabs(int index)
 {
-	if (index < 0 && sender() && sender()->inherits("Otter::Window"))
+	if (index < 0 && sender() && sender()->inherits(QStringLiteral("Otter::Window").toLatin1()))
 	{
 		for (int i = 0; i < count(); ++i)
 		{
@@ -390,7 +390,7 @@ void TabBarWidget::updateTabs(int index)
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
-		const bool isLoading = getTabProperty(i, "isLoading", false).toBool();
+		const bool isLoading = getTabProperty(i, QLatin1String("isLoading"), false).toBool();
 		QLabel *label = qobject_cast<QLabel*>(tabButton(i, QTabBar::LeftSide));
 
 		if (label)
@@ -399,7 +399,7 @@ void TabBarWidget::updateTabs(int index)
 			{
 				if (!label->movie())
 				{
-					QMovie *movie = new QMovie(":/icons/loading.gif", QByteArray(), label);
+					QMovie *movie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), label);
 					movie->start();
 
 					label->setMovie(movie);
@@ -413,7 +413,7 @@ void TabBarWidget::updateTabs(int index)
 					label->setMovie(NULL);
 				}
 
-				label->setPixmap(getTabProperty(i, "icon", QIcon(getTabProperty(i, "isPrivate", false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
+				label->setPixmap(getTabProperty(i, QLatin1String("icon"), QIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
 			}
 		}
 
@@ -423,7 +423,7 @@ void TabBarWidget::updateTabs(int index)
 
 			if (button)
 			{
-				button->setVisible((!isNarrow || (i == currentIndex())) && !getTabProperty(i, "isPinned", false).toBool());
+				button->setVisible((!isNarrow || (i == currentIndex())) && !getTabProperty(i, QLatin1String("isPinned"), false).toBool());
 			}
 		}
 	}
@@ -543,7 +543,7 @@ QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVari
 
 QSize TabBarWidget::tabSizeHint(int index) const
 {
-	if (getTabProperty(index, "isPinned", false).toBool())
+	if (getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
 		QSize size = m_tabSize;
 

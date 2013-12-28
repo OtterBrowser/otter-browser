@@ -6,7 +6,7 @@ namespace Otter
 TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent)
 {
 	setFrame(false);
-	setStyleSheet(QStringLiteral("QLineEdit {background:transparent;}"));
+	setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setReadOnly(true);
 }
