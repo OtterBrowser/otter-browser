@@ -45,6 +45,7 @@ find_package(Qt5WebKitWidgets REQUIRED)
 set(otter_src
 	src/main.cpp
 	src/core/ActionsManager.cpp
+	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
 	src/core/BookmarksManager.cpp
 	src/core/CookieJar.cpp

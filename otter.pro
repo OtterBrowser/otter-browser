@@ -11,6 +11,7 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp \
     src/core/ActionsManager.cpp \
+    src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
     src/core/BookmarksManager.cpp \
     src/core/CookieJar.cpp \
@@ -67,6 +68,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/WebContentsWidget.cpp
 
 HEADERS += src/core/ActionsManager.h \
+    src/core/AddressCompletionModel.h \
     src/core/Application.h \
     src/core/BookmarksManager.h \
     src/core/CookieJar.h \

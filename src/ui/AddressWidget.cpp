@@ -1,6 +1,7 @@
 #include "AddressWidget.h"
 #include "BookmarkPropertiesDialog.h"
 #include "Window.h"
+#include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
@@ -15,7 +16,7 @@ namespace Otter
 
 AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
-	m_completer(new QCompleter(this)),
+	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
 	m_urlIconLabel(NULL)
 {
@@ -23,14 +24,12 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	optionChanged(QLatin1String("AddressField/SuggestBookmarks"), SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")));
 	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 	setCompleter(m_completer);
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateCompletion()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
@@ -61,34 +60,7 @@ void AddressWidget::removeIcon()
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("AddressField/SuggestBookmarks"))
-	{
-		if (value.toBool() && (!m_completer->model() || m_completer->model()->rowCount() == 0))
-		{
-			QStandardItemModel *model = new QStandardItemModel(m_completer);
-			const QStringList bookmarks = BookmarksManager::getUrls();
-
-			for (int i = 0; i < bookmarks.count(); ++i)
-			{
-				model->appendRow(new QStandardItem(bookmarks.at(i)));
-			}
-
-			QList<QLatin1String> moduleUrls;
-			moduleUrls << QLatin1String("about:bookmarks") << QLatin1String("about:cache") << QLatin1String("about:config") << QLatin1String("about:cookies") << QLatin1String("about:history") << QLatin1String("about:transfers");
-
-			for (int i = 0; i < moduleUrls.count(); ++i)
-			{
-				model->appendRow(new QStandardItem(moduleUrls.at(i)));
-			}
-
-			m_completer->setModel(model);
-		}
-		else if (!value.toBool() && m_completer->model() && m_completer->model()->rowCount() > 0)
-		{
-			m_completer->model()->removeRows(0, m_completer->model()->rowCount());
-		}
-	}
-	else if (option == "AddressField/ShowBookmarkIcon")
+if (option == "AddressField/ShowBookmarkIcon")
 	{
 		if (value.toBool() && !m_bookmarkLabel)
 		{
@@ -178,16 +150,6 @@ void AddressWidget::updateBookmark()
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
-}
-
-void AddressWidget::updateCompletion()
-{
-	if (SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool())
-	{
-		m_completer->model()->removeRows(0, m_completer->model()->rowCount());
-
-		optionChanged(QLatin1String("AddressField/SuggestBookmarks"), true);
-	}
 }
 
 void AddressWidget::setIcon(const QIcon &icon)
