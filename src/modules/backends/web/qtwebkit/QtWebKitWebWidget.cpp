@@ -165,6 +165,14 @@ void QtWebKitWebWidget::setQuickSearchEngine(const QString &searchEngine)
 	}
 }
 
+void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
+	{
+		m_webView->page()->history()->setMaximumItemCount(value.toInt());
+	}
+}
+
 void QtWebKitWebWidget::pageLoadStarted()
 {
 	m_isLoading = true;
@@ -277,8 +285,8 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 	if (frame == m_webView->page()->mainFrame())
 	{
 		QVariantHash data;
-		data["position"] = m_webView->page()->mainFrame()->scrollPosition();
-		data["zoom"] = getZoom();
+		data[QLatin1String("position")] = m_webView->page()->mainFrame()->scrollPosition();
+		data[QLatin1String("zoom")] = getZoom();
 
 		item->setUserData(data);
 	}
@@ -288,11 +296,11 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
 	if (frame == m_webView->page()->mainFrame())
 	{
-		setZoom(m_webView->history()->currentItem().userData().toHash().value("zoom", getZoom()).toInt());
+		setZoom(m_webView->history()->currentItem().userData().toHash().value(QLatin1String("zoom"), getZoom()).toInt());
 
 		if (m_webView->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toHash().value("position").toPoint());
+			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toHash().value(QLatin1String("position")).toPoint());
 		}
 	}
 }
@@ -389,6 +397,16 @@ void QtWebKitWebWidget::hideDialog(QWidget *dialog)
 	m_parent->hideDialog(dialog);
 }
 
+void QtWebKitWebWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
+}
+
 void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
@@ -468,7 +486,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case BookmarkLinkAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute("title"));
+				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute(QLatin1String("title")));
 			}
 
 			break;
@@ -478,7 +496,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			break;
 		case ImagePropertiesAction:
 			{
-				ImagePropertiesDialog dialog(m_hitResult.imageUrl(), m_hitResult.element().attribute("alt"), m_hitResult.element().attribute("longdesc"), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
+				ImagePropertiesDialog dialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
 				QEventLoop eventLoop;
 
 				m_parent->showDialog(&dialog);
@@ -558,9 +576,9 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 					parentElement = parentElement.parent();
 				}
 
-				const QWebElementCollection inputs = parentElement.findAll("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]");
+				const QWebElementCollection inputs = parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]"));
 
-				if (!parentElement.isNull() && parentElement.hasAttribute("action") && inputs.count() > 0)
+				if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")) && inputs.count() > 0)
 				{
 					QUrlQuery parameters;
 
@@ -568,19 +586,19 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 					{
 						QString value;
 
-						if (inputs.at(i).tagName().toLower() == "textarea")
+						if (inputs.at(i).tagName().toLower() == QLatin1String("textarea"))
 						{
 							value = inputs.at(i).toPlainText();
 						}
-						else if (inputs.at(i).tagName().toLower() == "select")
+						else if (inputs.at(i).tagName().toLower() == QLatin1String("select"))
 						{
-							const QWebElementCollection options = inputs.at(i).findAll("option");
+							const QWebElementCollection options = inputs.at(i).findAll(QLatin1String("option"));
 
 							for (int j = 0; j < options.count(); ++j)
 							{
-								if (options.at(j).hasAttribute("selected"))
+								if (options.at(j).hasAttribute(QLatin1String("selected")))
 								{
-									value = options.at(j).attribute("value", options.at(j).toPlainText());
+									value = options.at(j).attribute(QLatin1String("value"), options.at(j).toPlainText());
 
 									break;
 								}
@@ -588,15 +606,15 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 						}
 						else
 						{
-							if ((inputs.at(i).attribute("type") == "checkbox" || inputs.at(i).attribute("type") == "radio") && !inputs.at(i).hasAttribute("checked"))
+							if ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked")))
 							{
 								continue;
 							}
 
-							value = inputs.at(i).attribute("value");
+							value = inputs.at(i).attribute(QLatin1String("value"));
 						}
 
-						parameters.addQueryItem(inputs.at(i).attribute("name"), ((inputs.at(i) == m_hitResult.element()) ? "{searchTerms}" : value));
+						parameters.addQueryItem(inputs.at(i).attribute(QLatin1String("name")), ((inputs.at(i) == m_hitResult.element()) ? QLatin1String("{searchTerms}") : value));
 					}
 
 					const QStringList identifiers = SearchesManager::getSearchEngines();
@@ -622,7 +640,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 						}
 					}
 
-					QString identifier = getUrl().host().toLower().remove(QRegularExpression("[^a-z0-9]"));
+					QString identifier = getUrl().host().toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9]")));
 
 					while (identifier.isEmpty() || identifiers.contains(identifier))
 					{
@@ -635,24 +653,24 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 					}
 
 					const QIcon icon = m_webView->icon();
-					const QUrl url(parentElement.attribute("action"));
+					const QUrl url(parentElement.attribute(QLatin1String("action")));
 					QVariantHash engineData;
-					engineData["identifier"] = identifier;
-					engineData["isDefault"] = false;
-					engineData["encoding"] = "UTF-8";
-					engineData["selfUrl"] = QString();
-					engineData["resultsUrl"] = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-					engineData["resultsEnctype"] = parentElement.attribute("enctype");
-					engineData["resultsMethod"] = ((parentElement.attribute("method", "get").toLower() == "post") ? "post" : "get");
-					engineData["resultsParameters"] = parameters.toString(QUrl::FullyDecoded);
-					engineData["suggestionsUrl"] = QString();
-					engineData["suggestionsEnctype"] = QString();
-					engineData["suggestionsMethod"] = "get";
-					engineData["suggestionsParameters"] = QString();
-					engineData["shortcut"] = QString();
-					engineData["title"] = getTitle();
-					engineData["description"] = QString();
-					engineData["icon"] = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+					engineData[QLatin1String("identifier")] = identifier;
+					engineData[QLatin1String("isDefault")] = false;
+					engineData[QLatin1String("encoding")] = QLatin1String("UTF-8");
+					engineData[QLatin1String("selfUrl")] = QString();
+					engineData[QLatin1String("resultsUrl")] = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+					engineData[QLatin1String("resultsEnctype")] = parentElement.attribute(QLatin1String("enctype"));
+					engineData[QLatin1String("resultsMethod")] = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
+					engineData[QLatin1String("resultsParameters")] = parameters.toString(QUrl::FullyDecoded);
+					engineData[QLatin1String("suggestionsUrl")] = QString();
+					engineData[QLatin1String("suggestionsEnctype")] = QString();
+					engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
+					engineData[QLatin1String("suggestionsParameters")] = QString();
+					engineData[QLatin1String("shortcut")] = QString();
+					engineData[QLatin1String("title")] = getTitle();
+					engineData[QLatin1String("description")] = QString();
+					engineData[QLatin1String("icon")] = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
 
 					SearchPropertiesDialog dialog(engineData, shortcuts, this);
 
@@ -663,29 +681,29 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 					engineData = dialog.getEngineData();
 
-					if (shortcuts.contains(engineData["shortcut"].toString()))
+					if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
 					{
-						engineData["shortcut"] = QString();
+						engineData[QLatin1String("shortcut")] = QString();
 					}
 
 					SearchInformation *engine = new SearchInformation();
-					engine->identifier = engineData["identifier"].toString();
-					engine->title = engineData["title"].toString();
-					engine->description = engineData["description"].toString();
-					engine->shortcut = engineData["shortcut"].toString();
-					engine->encoding = engineData["encoding"].toString();
-					engine->selfUrl = engineData["selfUrl"].toString();
-					engine->resultsUrl.url = engineData["resultsUrl"].toString();
-					engine->resultsUrl.enctype = engineData["resultsEnctype"].toString();
-					engine->resultsUrl.method = engineData["resultsMethod"].toString();
-					engine->resultsUrl.parameters = QUrlQuery(engineData["resultsParameters"].toString());
-					engine->icon = engineData["icon"].value<QIcon>();
+					engine->identifier = engineData[QLatin1String("identifier")].toString();
+					engine->title = engineData[QLatin1String("title")].toString();
+					engine->description = engineData[QLatin1String("description")].toString();
+					engine->shortcut = engineData[QLatin1String("shortcut")].toString();
+					engine->encoding = engineData[QLatin1String("encoding")].toString();
+					engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
+					engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();
+					engine->resultsUrl.enctype = engineData[QLatin1String("resultsEnctype")].toString();
+					engine->resultsUrl.method = engineData[QLatin1String("resultsMethod")].toString();
+					engine->resultsUrl.parameters = QUrlQuery(engineData[QLatin1String("resultsParameters")].toString());
+					engine->icon = engineData[QLatin1String("icon")].value<QIcon>();
 
 					engines.append(engine);
 
-					if (SearchesManager::setSearchEngines(engines) && engineData["isDefault"].toBool())
+					if (SearchesManager::setSearchEngines(engines) && engineData[QLatin1String("isDefault")].toBool())
 					{
-						SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), engineData["identifier"].toString());
+						SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), engineData[QLatin1String("identifier")].toString());
 					}
 				}
 			}
@@ -733,8 +751,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
 		QVariantHash data;
-		data["position"] = history.entries.at(i).position;
-		data["zoom"] = history.entries.at(i).zoom;
+		data[QLatin1String("position")] = history.entries.at(i).position;
+		data[QLatin1String("zoom")] = history.entries.at(i).zoom;
 
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
@@ -754,7 +772,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 
 void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 {
-	if (url.scheme() == "javascript")
+	if (url.scheme() == QLatin1String("javascript"))
 	{
 		evaluateJavaScript(url.path());
 
@@ -773,14 +791,14 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
 		QUrl httpUrl = url;
-		httpUrl.setScheme("http");
+		httpUrl.setScheme(QLatin1String("http"));
 
 		m_webView->setUrl(httpUrl);
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
 	{
 		QUrl localUrl = url;
-		localUrl.setScheme("file");
+		localUrl.setScheme(QLatin1String("file"));
 
 		m_webView->setUrl(localUrl);
 	}
@@ -799,16 +817,16 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
 
-	if (m_hitResult.element().tagName().toLower() == "textarea" || m_hitResult.element().tagName().toLower() == "select" || (m_hitResult.element().tagName().toLower() == "input" && (m_hitResult.element().attribute("type").isEmpty() || m_hitResult.element().attribute("type").toLower() == "text")))
+	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text"))))
 	{
 		QWebElement parentElement = m_hitResult.element().parent();
 
-		while (!parentElement.isNull() && parentElement.tagName().toLower() != "form")
+		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 		{
 			parentElement = parentElement.parent();
 		}
 
-		if (!parentElement.isNull() && parentElement.hasAttribute("action") && !parentElement.findFirst("input[name], select[name], textarea[name]").isNull())
+		if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")) && !parentElement.findFirst(QLatin1String("input[name], select[name], textarea[name]")).isNull())
 		{
 			flags |= FormMenu;
 		}
@@ -840,12 +858,12 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	{
 		flags |= MediaMenu;
 
-		const bool isVideo = (m_hitResult.element().tagName().toLower() == "video");
-		const bool isPaused = m_hitResult.element().evaluateJavaScript("this.paused").toBool();
-		const bool isMuted = m_hitResult.element().evaluateJavaScript("this.muted").toBool();
+		const bool isVideo = (m_hitResult.element().tagName().toLower() == QLatin1String("video"));
+		const bool isPaused = m_hitResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool();
+		const bool isMuted = m_hitResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool();
 
-		getAction(SaveMediaToDiskAction)->setText(isVideo ? "Save Video..." : "Save Audio...");
-		getAction(CopyMediaUrlToClipboardAction)->setText(isVideo ? "Copy Video Link to Clipboard" : "Copy Audio Link to Clipboard");
+		getAction(SaveMediaToDiskAction)->setText(isVideo ? tr("Save Video...") : tr("Save Audio..."));
+		getAction(CopyMediaUrlToClipboardAction)->setText(isVideo ? tr("Copy Video Link to Clipboard") : tr("Copy Audio Link to Clipboard"));
 		getAction(ToggleMediaControlsAction)->setText(tr("Show Controls"));
 		getAction(ToggleMediaLoopAction)->setText(tr("Looping"));
 		getAction(ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
@@ -1132,7 +1150,7 @@ QString QtWebKitWebWidget::getTitle() const
 	{
 		const QUrl url = getUrl();
 
-		if (url.scheme() == "about" && (url.path().isEmpty() || url.path() == "blank"))
+		if (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank")))
 		{
 			return tr("New Tab");
 		}
@@ -1167,12 +1185,12 @@ QIcon QtWebKitWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
-		return QIcon(":/icons/tab-private.png");
+		return Utils::getIcon(QLatin1String("tab-private"));
 	}
 
 	const QIcon icon = m_webView->icon();
 
-	return (icon.isNull() ? QIcon(":/icons/tab.png") : icon);
+	return (icon.isNull() ? Utils::getIcon(QLatin1String("tab")) : icon);
 }
 
 QPixmap QtWebKitWebWidget::getThumbnail()
@@ -1224,8 +1242,8 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantHash data;
-	data["position"] = m_webView->page()->mainFrame()->scrollPosition();
-	data["zoom"] = getZoom();
+	data[QLatin1String("position")] = m_webView->page()->mainFrame()->scrollPosition();
+	data[QLatin1String("zoom")] = getZoom();
 
 	m_webView->history()->currentItem().setUserData(data);
 
@@ -1239,8 +1257,8 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
-		entry.position = item.userData().toHash().value("position", QPoint(0, 0)).toPoint();
-		entry.zoom = item.userData().toHash().value("zoom").toInt();
+		entry.position = item.userData().toHash().value(QLatin1String("position"), QPoint(0, 0)).toPoint();
+		entry.zoom = item.userData().toHash().value(QLatin1String("zoom")).toInt();
 
 		information.entries.append(entry);
 	}
@@ -1315,24 +1333,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 	}
 
 	return QWebPage::NoWebAction;
-}
-
-void QtWebKitWebWidget::triggerAction()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
-	}
-}
-
-void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
-{
-	if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
-	{
-		m_webView->page()->history()->setMaximumItemCount(value.toInt());
-	}
 }
 
 int QtWebKitWebWidget::getZoom() const

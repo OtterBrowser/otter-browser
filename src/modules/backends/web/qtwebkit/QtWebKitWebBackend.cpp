@@ -36,7 +36,7 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
 	}
 
-	if (!(QString(option).startsWith(QLatin1String("Browser/")) || QString(option).startsWith(QLatin1String("Content/"))))
+	if (!(option.startsWith(QLatin1String("Browser/")) || option.startsWith(QLatin1String("Content/"))))
 	{
 		return;
 	}

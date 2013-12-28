@@ -40,7 +40,7 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	{
 		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
 	}
-	else if (QString(option).startsWith(QLatin1String("Content/")))
+	else if (option.startsWith(QLatin1String("Content/")))
 	{
 		settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + QString(QString("html {background: %1; color: %2;} a {color: %3;} a:visited {color: %4;}").arg(SettingsManager::getValue(QLatin1String("Content/BackgroundColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8().toBase64())));
 	}
@@ -125,7 +125,7 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 
 bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
 {
-	if (request.url().scheme() == "javascript" && frame)
+	if (request.url().scheme() == QLatin1String("javascript") && frame)
 	{
 		frame->evaluateJavaScript(request.url().path());
 
@@ -266,16 +266,16 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 			return false;
 		}
 
-		QFile file(":/files/error.html");
+		QFile file(QLatin1String(":/files/error.html"));
 		file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 		QTextStream stream(&file);
 		stream.setCodec("UTF-8");
 
 		QHash<QString, QString> variables;
-		variables["title"] = tr("Error %1").arg(errorOption->error);
-		variables["description"] = errorOption->errorString;
-		variables["dir"] = (QGuiApplication::isLeftToRight() ? "ltr" : "rtl");
+		variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
+		variables[QLatin1String("description")] = errorOption->errorString;
+		variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 
 		QString html = stream.readAll();
 		QHash<QString, QString>::iterator iterator;
