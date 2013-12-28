@@ -191,15 +191,15 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	switch (transfer->state)
 	{
 		case RunningTransfer:
-			icon = Utils::getIcon("task-ongoing");
+			icon = Utils::getIcon(QLatin1String("task-ongoing"));
 
 			break;
 		case FinishedTransfer:
-			icon = Utils::getIcon("task-complete");
+			icon = Utils::getIcon(QLatin1String("task-complete"));
 
 			break;
 		case ErrorTransfer:
-			icon = Utils::getIcon("task-reject");
+			icon = Utils::getIcon(QLatin1String("task-reject"));
 
 			break;
 		default:

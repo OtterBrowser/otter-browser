@@ -24,7 +24,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		m_model->appendRow(new QStandardItem(Utils::getIcon("inode-directory"), groups.at(i)));
+		m_model->appendRow(new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), groups.at(i)));
 	}
 
 	QStringList labels;
@@ -187,7 +187,7 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	}
 
 	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem((entry.icon.isNull() ? Utils::getIcon("text-html") : entry.icon), entry.url.toString()));
+	entryItems.append(new QStandardItem((entry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry.icon), entry.url.toString()));
 	entryItems.append(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
 	entryItems.append(new QStandardItem(entry.time.toString()));
 	entryItems[0]->setData(entry.identifier, Qt::UserRole);
@@ -220,7 +220,7 @@ void HistoryContentsWidget::updateEntry(qint64 entry)
 
 	HistoryEntry historyEntry = HistoryManager::getEntry(entry);
 
-	entryItem->setIcon(historyEntry.icon.isNull() ? Utils::getIcon("text-html") : historyEntry.icon);
+	entryItem->setIcon(historyEntry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : historyEntry.icon);
 	entryItem->setText(historyEntry.url.toString());
 	entryItem->parent()->child(entryItem->row(), 1)->setText(historyEntry.title.isEmpty() ? tr("(Untitled)") : historyEntry.title);
 	entryItem->parent()->child(entryItem->row(), 2)->setText(historyEntry.time.toString());
@@ -342,7 +342,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 
 	if (entry >= 0)
 	{
-		menu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName("new-tab");
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName("new-background-tab");
 		menu.addSeparator();

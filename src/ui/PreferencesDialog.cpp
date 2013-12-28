@@ -359,7 +359,7 @@ void PreferencesDialog::addSearch()
 	engineData["shortcut"] = QString();
 	engineData["title"] = tr("New Search Engine");
 	engineData["description"] = QString();
-	engineData["icon"] = Utils::getIcon("edit-find");
+	engineData["icon"] = Utils::getIcon(QLatin1String("edit-find"));
 
 	SearchPropertiesDialog dialog(engineData, shortcuts, this);
 

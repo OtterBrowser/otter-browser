@@ -33,7 +33,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 
 	QMenu *addMenu = new QMenu(m_ui->addButton);
-	addMenu->addAction(Utils::getIcon("inode-directory"), tr("Add Folder"), this, SLOT(addFolder()));
+	addMenu->addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
 	addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
@@ -91,7 +91,7 @@ void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStanda
 	switch (bookmark->type)
 	{
 		case FolderBookmark:
-			item = new QStandardItem(Utils::getIcon("inode-directory"), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
+			item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
 
 			for (int i = 0; i < bookmark->children.count(); ++i)
 			{
@@ -244,7 +244,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 
 	if (bookmark)
 	{
-		menu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openBookmark()));
+		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName("new-tab");
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName("new-background-tab");
 		menu.addSeparator();

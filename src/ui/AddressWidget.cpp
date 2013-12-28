@@ -97,7 +97,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_bookmarkLabel->setAutoFillBackground(false);
 			m_bookmarkLabel->setFixedSize(16, 16);
 			m_bookmarkLabel->move((width() - 22), 4);
-			m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+			m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
 			m_bookmarkLabel->setCursor(Qt::ArrowCursor);
 			m_bookmarkLabel->installEventFilter(this);
 		}
@@ -167,7 +167,7 @@ void AddressWidget::updateBookmark()
 	if (url.scheme() == "about")
 	{
 		m_bookmarkLabel->setEnabled(false);
-		m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+		m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
 		m_bookmarkLabel->setToolTip(QString());
 
 		return;
@@ -176,7 +176,7 @@ void AddressWidget::updateBookmark()
 	const bool hasBookmark = BookmarksManager::hasBookmark(url);
 
 	m_bookmarkLabel->setEnabled(true);
-	m_bookmarkLabel->setPixmap(Utils::getIcon("bookmarks").pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
+	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
 

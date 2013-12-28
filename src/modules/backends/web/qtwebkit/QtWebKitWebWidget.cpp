@@ -101,7 +101,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	ActionsManager::setupLocalAction(getAction(ToggleMediaMuteAction), QLatin1String("ToggleMediaMute"));
 
 	getAction(ReloadAction)->setEnabled(true);
-	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon("document-open"));
+	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
@@ -362,7 +362,7 @@ void QtWebKitWebWidget::updateSearchActions(const QString &engine)
 	if (search)
 	{
 		defaultSearchAction->setEnabled(true);
-		defaultSearchAction->setIcon(search->icon.isNull() ? Utils::getIcon("edit-find") : search->icon);
+		defaultSearchAction->setIcon(search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon);
 		defaultSearchAction->setText(search->title);
 		defaultSearchAction->setToolTip(search->description);
 
@@ -652,7 +652,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 					engineData["shortcut"] = QString();
 					engineData["title"] = getTitle();
 					engineData["description"] = QString();
-					engineData["icon"] = (icon.isNull() ? Utils::getIcon("edit-find") : icon);
+					engineData["icon"] = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
 
 					SearchPropertiesDialog dialog(engineData, shortcuts, this);
 
@@ -848,9 +848,9 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		getAction(CopyMediaUrlToClipboardAction)->setText(isVideo ? "Copy Video Link to Clipboard" : "Copy Audio Link to Clipboard");
 		getAction(ToggleMediaControlsAction)->setText(tr("Show Controls"));
 		getAction(ToggleMediaLoopAction)->setText(tr("Looping"));
-		getAction(ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? "media-playback-start" : "media-playback-pause"));
+		getAction(ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
 		getAction(ToggleMediaPlayPauseAction)->setText(isPaused ? tr("Play") : tr("Pause"));
-		getAction(ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? "audio-volume-medium" : "audio-volume-muted"));
+		getAction(ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		getAction(ToggleMediaMuteAction)->setText(isMuted ? tr("Unmute") : tr("Mute"));
 	}
 

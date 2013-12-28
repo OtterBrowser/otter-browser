@@ -22,7 +22,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 	m_ui(new Ui::CacheContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->previewLabel->setPixmap(Utils::getIcon("unknown").pixmap(64, 64));
+	m_ui->previewLabel->setPixmap(Utils::getIcon(QLatin1String("unknown")).pixmap(64, 64));
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
@@ -314,7 +314,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 
 	if (entry.isValid())
 	{
-		menu.addAction(Utils::getIcon("document-open"), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName("new-tab");
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName("new-background-tab");
 		menu.addSeparator();
@@ -381,7 +381,7 @@ void CacheContentsWidget::updateActions()
 
 		if (preview.isNull())
 		{
-			preview = QIcon::fromTheme(mimeType.iconName(), Utils::getIcon("unknown")).pixmap(64, 64);
+			preview = QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
 		}
 
 		m_ui->addressLabelWidget->setText(entry.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
@@ -400,7 +400,7 @@ void CacheContentsWidget::updateActions()
 		m_ui->sizeLabelWidget->setText(QString());
 		m_ui->lastModifiedLabelWidget->setText(QString());
 		m_ui->expiresLabelWidget->setText(QString());
-		m_ui->previewLabel->setPixmap(Utils::getIcon("unknown").pixmap(64, 64));
+		m_ui->previewLabel->setPixmap(Utils::getIcon(QLatin1String("unknown")).pixmap(64, 64));
 
 		if (!domain.isEmpty())
 		{

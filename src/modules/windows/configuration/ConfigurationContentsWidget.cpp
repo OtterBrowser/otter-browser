@@ -22,7 +22,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		QStandardItem *groupItem = new QStandardItem(Utils::getIcon("inode-directory"), groups.at(i));
+		QStandardItem *groupItem = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), groups.at(i));
 
 		defaults.beginGroup(groups.at(i));
 

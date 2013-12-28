@@ -142,7 +142,7 @@ void SearchWidget::updateSearchEngines()
 
 		if (search)
 		{
-			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon("edit-find") : search->icon), QString());
+			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon), QString());
 			item->setData(search->title, Qt::UserRole);
 			item->setData(search->identifier, (Qt::UserRole + 1));
 			item->setData(search->shortcut, (Qt::UserRole + 2));
@@ -156,11 +156,11 @@ void SearchWidget::updateSearchEngines()
 	{
 		setEnabled(true);
 
-		QStandardItem *separatorItem = new QStandardItem(Utils::getIcon("configure"), QString());
+		QStandardItem *separatorItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());
 		separatorItem->setData("separator", Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-		QStandardItem *manageItem = new QStandardItem(Utils::getIcon("configure"), QString());
+		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());
 		manageItem->setData(tr("Manage Search Engines..."), Qt::UserRole);
 		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
 

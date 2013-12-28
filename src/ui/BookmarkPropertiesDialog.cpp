@@ -78,7 +78,7 @@ void BookmarkPropertiesDialog::populateFolder(const QList<BookmarkInformation*> 
 		if (bookmarks.at(i)->type == FolderBookmark)
 		{
 			const QString title = (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title);
-			QStandardItem *item = new QStandardItem(Utils::getIcon("inode-directory"), title);
+			QStandardItem *item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), title);
 			item->setData(bookmarks.at(i)->identifier, Qt::UserRole);
 			item->setToolTip(title);
 
@@ -103,7 +103,7 @@ void BookmarkPropertiesDialog::reloadFolders()
 {
 	m_model->clear();
 
-	QStandardItem *item = new QStandardItem(Utils::getIcon("inode-directory"), tr("Bookmarks"));
+	QStandardItem *item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), tr("Bookmarks"));
 	item->setData(0, Qt::UserRole);
 	item->setToolTip(tr("Bookmarks"));
 
