@@ -292,7 +292,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		emit requestedOpenUrl(url, false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
+		emit requestedOpenUrl(url, false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
 	}
 }
 
@@ -315,11 +315,11 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 	if (entry.isValid())
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName("new-tab");
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName("new-background-tab");
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-tab"));
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-tab"));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName("new-window");
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName("new-background-window");
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-window"));
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-window"));
 		menu.addSeparator();
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
 		menu.addSeparator();
@@ -366,7 +366,7 @@ void CacheContentsWidget::updateActions()
 		QPixmap preview;
 		const int size = (m_ui->formWidget->contentsRect().height() - 10);
 
-		if (mimeType.name().startsWith("image"))
+		if (mimeType.name().startsWith(QLatin1String("image")))
 		{
 			QImage image;
 			image.load(device, "");
@@ -450,9 +450,9 @@ QString CacheContentsWidget::getTitle() const
 	return tr("Cache");
 }
 
-QString CacheContentsWidget::getType() const
+QLatin1String CacheContentsWidget::getType() const
 {
-	return "cache";
+	return QLatin1String("cache");
 }
 
 QUrl CacheContentsWidget::getUrl() const
@@ -462,7 +462,7 @@ QUrl CacheContentsWidget::getUrl() const
 
 QIcon CacheContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/cache.png");
+	return Utils::getIcon(QLatin1String("cache"), false);
 }
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const

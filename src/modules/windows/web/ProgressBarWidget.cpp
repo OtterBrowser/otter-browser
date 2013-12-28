@@ -91,7 +91,7 @@ void ProgressBarWidget::setLoading(bool loading)
 	if (loading)
 	{
 		m_progressBar->setValue(0);
-		m_elapsedLabel->setText(tr("Time: %1").arg("0:00"));
+		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
 
 		updateLoadStatus(0, 0, 0, 0, 0);
 		show();

@@ -2,6 +2,7 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/CookieJar.h"
 #include "../../../core/NetworkAccessManager.h"
+#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
 
@@ -284,7 +285,7 @@ void CookiesContentsWidget::updateActions()
 	{
 		const QModelIndex index = indexes.first();
 		QUrl url;
-		url.setScheme("http");
+		url.setScheme(QLatin1String("http"));
 		url.setHost(index.parent().data(Qt::DisplayRole).toString());
 		url.setPath(index.data(Qt::UserRole).toString());
 
@@ -370,9 +371,9 @@ QString CookiesContentsWidget::getTitle() const
 	return tr("Cookies Manager");
 }
 
-QString CookiesContentsWidget::getType() const
+QLatin1String CookiesContentsWidget::getType() const
 {
-	return "cookies";
+	return QLatin1String("cookies");
 }
 
 QUrl CookiesContentsWidget::getUrl() const
@@ -382,7 +383,7 @@ QUrl CookiesContentsWidget::getUrl() const
 
 QIcon CookiesContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/cookies.png");
+	return Utils::getIcon(QLatin1String("cookies"), false);
 }
 
 QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const

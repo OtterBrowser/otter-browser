@@ -173,7 +173,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		emit requestedOpenUrl(QUrl(bookmark->url), false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
+		emit requestedOpenUrl(QUrl(bookmark->url), false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
 
 		return;
 	}
@@ -205,8 +205,8 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	}
 
 	QAction *action = qobject_cast<QAction*>(sender());
-	const bool background = (action && action->objectName().contains("background"));
-	const bool newWindow = (action && action->objectName().contains("window"));
+	const bool background = (action && action->objectName().contains(QLatin1String("background")));
+	const bool newWindow = (action && action->objectName().contains(QLatin1String("window")));
 
 	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
 	{
@@ -245,11 +245,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	if (bookmark)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName("new-tab");
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName("new-background-tab");
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-tab"));
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-tab"));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName("new-window");
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName("new-background-window");
+		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-window"));
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-window"));
 
 		if (bookmark->type == SeparatorBookmark || (bookmark->type == FolderBookmark && bookmark->children.isEmpty()))
 		{
@@ -381,9 +381,9 @@ QString BookmarksContentsWidget::getTitle() const
 	return tr("Bookmarks Manager");
 }
 
-QString BookmarksContentsWidget::getType() const
+QLatin1String BookmarksContentsWidget::getType() const
 {
-	return "bookmarks";
+	return QLatin1String("bookmarks");
 }
 
 QUrl BookmarksContentsWidget::getUrl() const
@@ -393,7 +393,7 @@ QUrl BookmarksContentsWidget::getUrl() const
 
 QIcon BookmarksContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/bookmarks.png");
+	return Utils::getIcon(QLatin1String("bookmarks"), false);
 }
 
 int BookmarksContentsWidget::findFolder(const QModelIndex &index)

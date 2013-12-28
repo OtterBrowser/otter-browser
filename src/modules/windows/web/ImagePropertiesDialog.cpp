@@ -21,11 +21,11 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 	QImage image;
 	int frames = 1;
 
-	if (url.scheme() == "data" && !device)
+	if (url.scheme() == QLatin1String("data") && !device)
 	{
 		const QString data = url.path();
 
-		array = QByteArray::fromBase64(data.mid(data.indexOf("base64,") + 7).toUtf8());
+		array = QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8());
 
 		device = new QBuffer(&array, this);
 	}

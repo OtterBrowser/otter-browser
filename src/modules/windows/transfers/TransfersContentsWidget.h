@@ -27,7 +27,7 @@ public:
 	void print(QPrinter *printer);
 	QAction* getAction(WindowAction action);
 	QString getTitle() const;
-	QString getType() const;
+	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	bool isLoading() const;

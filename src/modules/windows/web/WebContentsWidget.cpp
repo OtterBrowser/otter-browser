@@ -143,7 +143,7 @@ void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget)
 
 void WebContentsWidget::updateFind(bool backwards)
 {
-	if (sender() && sender()->objectName() == "findPreviousButton")
+	if (sender() && sender()->objectName() == QLatin1String("findPreviousButton"))
 	{
 		backwards = true;
 	}
@@ -167,17 +167,17 @@ void WebContentsWidget::updateFind(bool backwards)
 	{
 		if (found)
 		{
-			palette.setColor(QPalette::Base, QColor("#CEF6DF"));
+			palette.setColor(QPalette::Base, QColor(QLatin1String("#CEF6DF")));
 		}
 		else
 		{
-			palette.setColor(QPalette::Base, QColor("#F1E7E4"));
+			palette.setColor(QPalette::Base, QColor(QLatin1String("#F1E7E4")));
 		}
 	}
 
 	m_ui->findLineEdit->setPalette(palette);
 
-	if (sender() && sender()->objectName() == "caseSensitiveButton")
+	if (sender() && sender()->objectName() == QLatin1String("caseSensitiveButton"))
 	{
 		m_webWidget->find(m_ui->findLineEdit->text(), (flags | BackwardFind));
 	}
@@ -260,9 +260,9 @@ QString WebContentsWidget::getTitle() const
 	return m_webWidget->getTitle();
 }
 
-QString WebContentsWidget::getType() const
+QLatin1String WebContentsWidget::getType() const
 {
-	return "web";
+	return QLatin1String("web");
 }
 
 QUrl WebContentsWidget::getUrl() const

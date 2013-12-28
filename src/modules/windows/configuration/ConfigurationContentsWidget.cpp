@@ -17,7 +17,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 {
 	m_ui->setupUi(this);
 
-	QSettings defaults(":/schemas/options.ini", QSettings::IniFormat, this);
+	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
 
 	for (int i = 0; i < groups.count(); ++i)
@@ -182,9 +182,9 @@ QString ConfigurationContentsWidget::getTitle() const
 	return tr("Configuration Manager");
 }
 
-QString ConfigurationContentsWidget::getType() const
+QLatin1String ConfigurationContentsWidget::getType() const
 {
-	return "config";
+	return QLatin1String("config");
 }
 
 QUrl ConfigurationContentsWidget::getUrl() const
@@ -194,7 +194,7 @@ QUrl ConfigurationContentsWidget::getUrl() const
 
 QIcon ConfigurationContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/configuration.png");
+	return Utils::getIcon(QLatin1String("configuration"), false);
 }
 
 }

@@ -26,7 +26,7 @@ public:
 
 	void print(QPrinter *printer);
 	QString getTitle() const;
-	QString getType() const;
+	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 

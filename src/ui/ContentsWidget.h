@@ -21,7 +21,7 @@ public:
 	virtual QAction* getAction(WindowAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
-	virtual QString getType() const = 0;
+	virtual QLatin1String getType() const = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const;

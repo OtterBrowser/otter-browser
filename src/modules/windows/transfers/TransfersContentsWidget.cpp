@@ -211,8 +211,8 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	m_model->item(row, 3)->setText((transfer->bytesTotal > 0) ? QString::number(qFloor(((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
 	m_model->item(row, 4)->setText(remainingTime);
 	m_model->item(row, 5)->setText((transfer->state == RunningTransfer) ? Utils::formatUnit(transfer->speed, true, 1) : QString());
-	m_model->item(row, 6)->setText(transfer->started.toString("yyyy-MM-dd HH:mm:ss"));
-	m_model->item(row, 7)->setText(transfer->finished.toString("yyyy-MM-dd HH:mm:ss"));
+	m_model->item(row, 6)->setText(transfer->started.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
+	m_model->item(row, 7)->setText(transfer->finished.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 
 	const QString tooltip = tr("<pre style='font-family:auto;'>Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</pre>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QString("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
 
@@ -287,7 +287,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 	if (item)
 	{
-		QApplication::clipboard()->setText(item->toolTip().remove(QRegularExpression("<[^>]*>")));
+		QApplication::clipboard()->setText(item->toolTip().remove(QRegularExpression(QLatin1String("<[^>]*>"))));
 	}
 }
 
@@ -472,9 +472,9 @@ QString TransfersContentsWidget::getTitle() const
 	return tr("Transfers Manager");
 }
 
-QString TransfersContentsWidget::getType() const
+QLatin1String TransfersContentsWidget::getType() const
 {
-	return "transfers";
+	return QLatin1String("transfers");
 }
 
 QUrl TransfersContentsWidget::getUrl() const
@@ -484,7 +484,7 @@ QUrl TransfersContentsWidget::getUrl() const
 
 QIcon TransfersContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/transfers.png");
+	return Utils::getIcon(QLatin1String("transfers"), false);
 }
 
 int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const

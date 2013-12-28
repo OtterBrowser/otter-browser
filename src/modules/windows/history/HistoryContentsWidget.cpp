@@ -311,7 +311,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		emit requestedOpenUrl(url, false, (action && action->objectName().contains("background")), (action && action->objectName().contains("window")));
+		emit requestedOpenUrl(url, false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
 	}
 }
 
@@ -343,11 +343,11 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	if (entry >= 0)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName("new-tab");
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName("new-background-tab");
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-tab"));
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-tab"));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName("new-window");
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName("new-background-window");
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-window"));
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-window"));
 		menu.addSeparator();
 		menu.addAction(tr("Add to Bookmarks..."), this, SLOT(bookmarkEntry()));
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
@@ -389,9 +389,9 @@ QString HistoryContentsWidget::getTitle() const
 	return tr("History");
 }
 
-QString HistoryContentsWidget::getType() const
+QLatin1String HistoryContentsWidget::getType() const
 {
-	return "history";
+	return QLatin1String("history");
 }
 
 QUrl HistoryContentsWidget::getUrl() const
@@ -401,7 +401,7 @@ QUrl HistoryContentsWidget::getUrl() const
 
 QIcon HistoryContentsWidget::getIcon() const
 {
-	return QIcon(":/icons/view-history.png");
+	return Utils::getIcon(QLatin1String("view-history"), false);
 }
 
 qint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
