@@ -27,9 +27,11 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QWidget(parent),
 
 	m_textLabel->setFixedWidth(260);
 	m_textLabel->setAlignment(Qt::AlignCenter);
+	m_textLabel->setPalette(palette);
 
 	m_pixmapLabel->setFixedWidth(260);
 	m_pixmapLabel->setAlignment(Qt::AlignCenter);
+	m_pixmapLabel->setPalette(palette);
 }
 
 void PreviewWidget::setPosition(const QPoint &position)

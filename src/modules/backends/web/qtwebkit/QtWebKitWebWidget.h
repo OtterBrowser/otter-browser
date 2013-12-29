@@ -35,6 +35,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
+	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	int getZoom() const;
 	bool isLoading() const;

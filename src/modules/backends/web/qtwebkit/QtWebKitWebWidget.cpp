@@ -68,10 +68,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	page->setNetworkAccessManager(m_networkAccessManager);
 	page->setForwardUnsupportedContent(true);
 
-	m_webView->installEventFilter(this);
 	m_webView->setPage(page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
+	m_webView->installEventFilter(this);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), QLatin1String("Cut"));
 	ActionsManager::setupLocalAction(getAction(CopyAction), QLatin1String("Copy"));
@@ -118,12 +119,16 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
 	connect(page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
+	connect(page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
+	connect(page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(page->mainFrame(), SIGNAL(loadStarted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
+	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 }
 
 void QtWebKitWebWidget::search(QAction *action)
@@ -196,6 +201,7 @@ void QtWebKitWebWidget::pageLoadStarted()
 		ActionsManager::setupLocalAction(action, QLatin1String("Stop"));
 
 		action->setShortcut(QKeySequence());
+		action->setEnabled(true);
 	}
 
 	if (!isPrivate())
@@ -526,6 +532,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			getAction(InspectPageAction)->setChecked(checked);
 
 			emit actionsChanged();
+			emit progressBarGeometryChanged();
 
 			break;
 		case SaveLinkToDownloadsAction:
@@ -1239,6 +1246,32 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 	return pixmap;
 }
 
+QRect QtWebKitWebWidget::getProgressBarGeometry() const
+{
+	QRect geometry(QPoint(0, (height() - ((m_inspector && m_inspector->isVisible()) ? m_inspector->height() : 0) - 30)), QSize(width(), 30));
+	const QRect horizontalScrollBar = m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal);
+	const QRect verticalScrollBar = m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical);
+
+	if (horizontalScrollBar.height() > 0 && geometry.intersects(horizontalScrollBar))
+	{
+		geometry.moveTop(m_webView->height() - 30 - horizontalScrollBar.height());
+	}
+
+	if (verticalScrollBar.width() > 0 && geometry.intersects(verticalScrollBar))
+	{
+		if (verticalScrollBar.left() == 0)
+		{
+			geometry.setLeft(verticalScrollBar.right());
+		}
+		else
+		{
+			geometry.setRight(verticalScrollBar.left());
+		}
+	}
+
+	return geometry;
+}
+
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantHash data;
@@ -1376,7 +1409,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		if (event->type() == QEvent::ToolTip && m_isLinkHovered)
+		if (event->type() == QEvent::Resize)
+		{
+			emit progressBarGeometryChanged();
+		}
+		else if (event->type() == QEvent::ToolTip && m_isLinkHovered)
 		{
 			event->accept();
 

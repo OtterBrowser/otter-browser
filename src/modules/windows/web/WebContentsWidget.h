@@ -52,6 +52,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 	void notifyRequestedNewWindow(WebWidget *widget);
 	void updateFind(bool backwards = false);
@@ -62,6 +63,7 @@ protected slots:
 private:
 	WebWidget *m_webWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	bool m_showProgressBar;
 	Ui::WebContentsWidget *m_ui;
 };
 

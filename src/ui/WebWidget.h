@@ -54,6 +54,7 @@ public:
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
+	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
@@ -74,6 +75,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget);
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
+	void progressBarGeometryChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

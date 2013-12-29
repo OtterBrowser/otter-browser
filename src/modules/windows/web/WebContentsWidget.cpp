@@ -13,6 +13,7 @@ namespace Otter
 WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
 	m_progressBarWidget(NULL),
+	m_showProgressBar(true),
 	m_ui(new Ui::WebContentsWidget)
 {
 	if (m_webWidget)
@@ -24,10 +25,13 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 		m_webWidget = WebBackendsManager::getBackend()->createWidget(privateWindow, this);
 	}
 
+	optionChanged("Browser/ShowDetailedProgressBar", SettingsManager::getValue("Browser/ShowDetailedProgressBar"));
+
 	m_ui->setupUi(this);
 	m_ui->findWidget->hide();
 	m_ui->verticalLayout->addWidget(m_webWidget);
 
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
 	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
@@ -70,9 +74,35 @@ void WebContentsWidget::changeEvent(QEvent *event)
 
 void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
-	updateProgressBarWidget();
+	if (m_showProgressBar)
+	{
+		updateProgressBarWidget();
+	}
 
 	ContentsWidget::resizeEvent(event);
+}
+
+void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == "Browser/ShowDetailedProgressBar")
+	{
+		m_showProgressBar = value.toBool();
+
+		if (!m_showProgressBar && m_progressBarWidget)
+		{
+			m_progressBarWidget->deleteLater();
+			m_progressBarWidget = NULL;
+		}
+
+		if (m_progressBarWidget)
+		{
+			connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
+		}
+		else
+		{
+			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
+		}
+	}
 }
 
 void WebContentsWidget::search(const QString &search, const QString &query)
@@ -214,12 +244,16 @@ void WebContentsWidget::updateProgressBarWidget()
 		return;
 	}
 
-	m_progressBarWidget->resize(QSize(width(), 30));
-	m_progressBarWidget->move(QPoint(0, (height() - 30)));
+	m_progressBarWidget->setGeometry(m_webWidget->getProgressBarGeometry());
 }
 
 void WebContentsWidget::setLoading(bool loading)
 {
+	if (!m_showProgressBar)
+	{
+		return;
+	}
+
 	if (loading && !m_progressBarWidget)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
