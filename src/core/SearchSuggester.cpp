@@ -13,6 +13,7 @@ namespace Otter
 SearchSuggester::SearchSuggester(const QString &engine, QObject *parent) : QObject(parent),
 	m_networkAccessManager(new NetworkAccessManager(true, true, NULL)),
 	m_currentReply(NULL),
+	m_model(NULL),
 	m_engine(engine)
 {
 	connect(m_networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
@@ -74,6 +75,11 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 		m_currentReply = NULL;
 	}
 
+	if (m_model)
+	{
+		m_model->clear();
+	}
+
 	const QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
 
 	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)
@@ -90,6 +96,11 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 			suggestion.description = descriptionsArray.at(i).toString();
 			suggestion.url = urlsArray.at(i).toString();
 
+			if (m_model)
+			{
+				m_model->appendRow(new QStandardItem(suggestion.completion));
+			}
+
 			suggestions.append(suggestion);
 		}
 
@@ -97,6 +108,16 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 	}
 
 	QTimer::singleShot(250, reply, SLOT(deleteLater()));
+}
+
+QStandardItemModel* SearchSuggester::getModel()
+{
+	if (!m_model)
+	{
+		m_model = new QStandardItemModel(this);
+	}
+
+	return m_model;
 }
 
 }

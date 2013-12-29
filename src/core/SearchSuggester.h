@@ -2,6 +2,7 @@
 #define OTTER_SEARCHSUGGESTER_H
 
 #include <QtCore/QObject>
+#include <QtGui/QStandardItemModel>
 #include <QtNetwork/QNetworkAccessManager>
 
 namespace Otter
@@ -23,6 +24,8 @@ class SearchSuggester : public QObject
 public:
 	explicit SearchSuggester(const QString &engine, QObject *parent = NULL);
 
+	QStandardItemModel* getModel();
+
 public slots:
 	void setEngine(const QString &engine);
 	void setQuery(const QString &query);
@@ -33,6 +36,7 @@ protected slots:
 private:
 	NetworkAccessManager *m_networkAccessManager;
 	QNetworkReply *m_currentReply;
+	QStandardItemModel *m_model;
 	QString m_engine;
 	QString m_query;
 

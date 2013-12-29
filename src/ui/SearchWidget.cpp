@@ -32,10 +32,20 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(setCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(this, SIGNAL(activated(int)), this, SLOT(currentSearchEngineChanged(int)));
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
+	connect(this, SIGNAL(activated(int)), this, SLOT(searchEngineSelected(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
+}
+
+void SearchWidget::wheelEvent(QWheelEvent *event)
+{
+	disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+
+	QComboBox::wheelEvent(event);
+
+	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
 void SearchWidget::hidePopup()
@@ -56,34 +66,39 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 		{
 			m_suggester = new SearchSuggester(getCurrentSearchEngine(), this);
 
+			m_completer->setModel(m_suggester->getModel());
+
 			connect(lineEdit(), SIGNAL(textEdited(QString)), m_suggester, SLOT(setQuery(QString)));
-			connect(m_suggester, SIGNAL(suggestionsChanged(QList<SearchSuggestion>)), this, SLOT(updateSuggestions(QList<SearchSuggestion>)));
 		}
 		else if (!value.toBool() && m_suggester)
 		{
 			m_suggester->deleteLater();
 			m_suggester = NULL;
 
-			m_completer->model()->removeRows(0, m_completer->model()->rowCount());
+			m_completer->setModel(NULL);
 		}
 	}
 }
 
 void SearchWidget::currentSearchEngineChanged(int index)
 {
-	if (itemData(index, Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
+	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
-		setCurrentIndex(m_index);
-
-		PreferencesDialog dialog(QLatin1String("search"), this);
-		dialog.exec();
+		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
 	}
 	else
 	{
-		m_index = index;
+		lineEdit()->setPlaceholderText(QString());
+	}
 
-		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
-		lineEdit()->setText(m_query);
+	lineEdit()->setText(m_query);
+}
+
+void SearchWidget::searchEngineSelected(int index)
+{
+	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
+	{
+		m_index = index;
 
 		if (m_suggester)
 		{
@@ -92,6 +107,16 @@ void SearchWidget::currentSearchEngineChanged(int index)
 		}
 
 		SessionsManager::markSessionModified();
+	}
+	else
+	{
+		setCurrentIndex(m_index);
+
+		if (itemData(index, Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
+		{
+			PreferencesDialog dialog(QLatin1String("search"), this);
+			dialog.exec();
+		}
 	}
 }
 
@@ -119,38 +144,9 @@ void SearchWidget::sendRequest(const QString &query)
 		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
 	}
 
-	lineEdit()->clear();
-
 	m_query = QString();
-}
 
-void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
-{
-	if (suggestions.isEmpty())
-	{
-		if (m_completer->model())
-		{
-			m_completer->model()->removeRows(0, m_completer->model()->rowCount());
-		}
-
-		return;
-	}
-
-	QStandardItemModel *model = qobject_cast<QStandardItemModel*>(m_completer->model());
-
-	if (!model)
-	{
-		model = new QStandardItemModel(m_completer);
-
-		m_completer->setModel(model);
-	}
-
-	model->clear();
-
-	for (int i = 0; i < suggestions.count(); ++i)
-	{
-		model->appendRow(new QStandardItem(suggestions.at(i).completion));
-	}
+	lineEdit()->clear();
 }
 
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
@@ -180,6 +176,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 
 	setCurrentIndex(index);
 	currentSearchEngineChanged(index);
+	searchEngineSelected(index);
 
 	if (m_suggester)
 	{

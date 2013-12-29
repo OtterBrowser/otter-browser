@@ -7,8 +7,6 @@
 namespace Otter
 {
 
-struct SearchSuggestion;
-
 class SearchSuggester;
 
 class SearchWidget : public QComboBox
@@ -24,12 +22,15 @@ public:
 public slots:
 	void setCurrentSearchEngine(const QString &engine = QString());
 
+protected:
+	void wheelEvent(QWheelEvent *event);
+
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void currentSearchEngineChanged(int index);
+	void searchEngineSelected(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
-	void updateSuggestions(const QList<SearchSuggestion> &suggestions);
 
 private:
 	QCompleter *m_completer;
