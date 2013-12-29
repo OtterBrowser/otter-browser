@@ -1,0 +1,40 @@
+0.1.01 (01.01.2014):
+- added dedicated context menu for media content (AUIDIO and VIDEO tags);
+- added global history with manager;
+- added dialog to clear history (browsing, cookies, caches etc.);
+- added cache viewer (about:cache);
+- implemented tab detaching;
+- overhauled about: pages;
+- some optimizations.
+
+0.0.02 (22.12.2013):
+- added warning in case of SSL errors;
+- added web search capabilities;
+- added advanced configuration page (about:config);
+- added preferences dialog (not all options are implemented yet);
+- added CMake project file;
+- added bookmarks manager;
+- implemented dialogs that are model only for single tab instead of whole window (used by JavaScript pop-ups (alert confirm, prompt), authentication and image properties dialogs);
+- implemented quick search menu for text selection;
+- implemented more missing context menu actions;
+- implemented adding search engines from scratch or web page FORM;
+- implemented restoring of tab history from previous session;
+- many other changes.
+
+0.0.01 (11.12.2013):
+- initial release;
+- added basic MDI+TDI interface;
+- added private browsing capabilities;
+- added basic support for bookmarks (XBEL format);
+- added basic support for saving, restoring and manually deleting cookies;
+- added transfers manager;
+- added basic sessions management;
+- added detailed progress bar;
+- implemented backends for layout engines (for now only QtWebKit)
+- implemented restoring of closed tabs and windows;
+- implemented find in page actions;
+- specified custom context menus;
+- fine-tuned tab bar to be more robust (smart resizing, cloning, pinning, rearranging, previews, changing location / orientation etc.);
+- enabled printing;
+- force single application instance per profile (but allow multiple windows);
+- lots of other things.
