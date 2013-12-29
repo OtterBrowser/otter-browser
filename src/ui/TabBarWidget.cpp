@@ -3,6 +3,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QtMath>
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
@@ -18,7 +19,7 @@ namespace Otter
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
-	m_newTabButton(new QToolButton(this)),
+	m_tabSize(0),
 	m_clickedTab(-1),
 	m_previewTimer(0)
 {
@@ -30,10 +31,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
 	updateTabs();
-
-	m_newTabButton->setAutoRaise(true);
-	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab")));
-	m_newTabButton->raise();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateTabs()));
@@ -134,6 +131,8 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+	QTabBar::mouseReleaseEvent(event);
+
 	if (event->button() == Qt::MidButton && SettingsManager::getValue(QLatin1String("Tabs/CloseOnMiddleClick")).toBool())
 	{
 		const int tab = tabAt(event->pos());
@@ -143,12 +142,12 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 			emit requestedClose(tab);
 		}
 	}
-
-	QTabBar::mouseReleaseEvent(event);
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 {
+	QTabBar::mouseMoveEvent(event);
+
 	if (m_previewWidget && !m_previewWidget->isVisible() && m_previewTimer == 0)
 	{
 		m_previewWidget->show();
@@ -158,8 +157,6 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 	{
 		showPreview(tabAt(event->pos()));
 	}
-
-	QTabBar::mouseMoveEvent(event);
 }
 
 void TabBarWidget::enterEvent(QEvent *event)
@@ -185,7 +182,9 @@ void TabBarWidget::leaveEvent(QEvent *event)
 		m_previewWidget->hide();
 	}
 
-	updateTabs();
+	m_tabSize = 0;
+
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
 }
 
 void TabBarWidget::resizeEvent(QResizeEvent *event)
@@ -198,6 +197,7 @@ void TabBarWidget::resizeEvent(QResizeEvent *event)
 void TabBarWidget::tabInserted(int index)
 {
 	QTabBar::tabInserted(index);
+
 	QLabel *label = new QLabel();
 	label->setFixedSize(QSize(16, 16));
 
@@ -209,12 +209,12 @@ void TabBarWidget::tabRemoved(int index)
 {
 	QTabBar::tabRemoved(index);
 
-	updateTabs();
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
 }
 
 void TabBarWidget::tabLayoutChange()
 {
-	setUpdatesEnabled(false);
+	QTabBar::tabLayoutChange();
 
 	int offset = 0;
 	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
@@ -231,37 +231,28 @@ void TabBarWidget::tabLayoutChange()
 		}
 	}
 
-	if ((offset + (isHorizontal ? m_newTabButton->width() : m_newTabButton->height())) >= (isHorizontal ? width() : height()))
+	emit moveNewTabButton(offset);
+}
+
+void TabBarWidget::removeTab(int index)
+{
+	if (underMouse())
 	{
-		if (m_newTabButton->isVisible())
-		{
-			emit showNewTabButton(true);
+		const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+		const QSize size = tabSizeHint(count() - 1);
 
-			m_newTabButton->hide();
-		}
-	}
-	else
-	{
-		if (isHorizontal)
-		{
-			m_newTabButton->move(offset, ((height() - m_newTabButton->height()) / 2));
-		}
-		else
-		{
-			m_newTabButton->move(((width() - m_newTabButton->width()) / 2), offset);
-		}
-
-		if (!m_newTabButton->isVisible())
-		{
-			emit showNewTabButton(false);
-
-			m_newTabButton->show();
-		}
+		m_tabSize = (isHorizontal ? size.width() : size.height());
 	}
 
-	setUpdatesEnabled(true);
+	QTabBar::removeTab(index);
 
-	QTabBar::tabLayoutChange();
+	if (underMouse() && tabAt(mapFromGlobal(QCursor::pos())) < 0)
+	{
+		m_tabSize = 0;
+
+		updateGeometry();
+		adjustSize();
+	}
 }
 
 void TabBarWidget::showPreview(int index)
@@ -374,19 +365,18 @@ void TabBarWidget::updateTabs(int index)
 		}
 	}
 
-	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
-	const QSize size = getTabSize(isHorizontal);
 	const bool canResize = !underMouse();
-	const bool isNarrow = ((isHorizontal ? size.width() : size.height()) < 60);
 
 	if (canResize)
 	{
-		m_tabSize = size;
-
+		adjustSize();
 		updateGeometry();
 	}
 
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+	const QSize size = tabSizeHint(count() - 1);
 	const int limit = ((index >= 0) ? (index + 1) : count());
+	const bool isNarrow = ((isHorizontal ? size.width() : size.height()) < 60);
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
@@ -497,8 +487,6 @@ void TabBarWidget::setShape(QTabBar::Shape shape)
 		parentWidget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 	}
 
-	m_tabSize = getTabSize(shape == QTabBar::RoundedNorth || shape == QTabBar::RoundedSouth);
-
 	QTabBar::setShape(shape);
 
 	QTimer::singleShot(100, this, SLOT(updateTabs()));
@@ -543,28 +531,19 @@ QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVari
 
 QSize TabBarWidget::tabSizeHint(int index) const
 {
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+
 	if (getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
-		QSize size = m_tabSize;
-
-		if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+		if (isHorizontal)
 		{
-			size.setWidth(40);
-		}
-		else
-		{
-			size.setHeight(40);
+			return QSize(40, QTabBar::tabSizeHint(0).height());
 		}
 
-		return size;
+		return QSize(QTabBar::tabSizeHint(0).width(), 40);
 	}
 
-	return m_tabSize;
-}
-
-QSize TabBarWidget::getTabSize(bool isHorizontal) const
-{
-	const int size = qBound(40, ((isHorizontal ? geometry().width() : geometry().height()) / ((count() == 0) ? 1 : count())), 250);
+	const int size = ((underMouse() && m_tabSize > 0) ? m_tabSize : qBound(40, qFloor((isHorizontal ? geometry().width() : geometry().height()) / qMax(1, count())), 250));
 
 	if (isHorizontal)
 	{

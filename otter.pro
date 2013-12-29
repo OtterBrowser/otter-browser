@@ -47,6 +47,7 @@ SOURCES += src/main.cpp \
     src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/StatusBarWidget.cpp \
+    src/ui/TabBarDockWidget.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TextLabelWidget.cpp \
     src/ui/WebWidget.cpp \
@@ -104,6 +105,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/StatusBarWidget.h \
+    src/ui/TabBarDockWidget.h \
     src/ui/TabBarWidget.h \
     src/ui/TextLabelWidget.h \
     src/ui/WebWidget.h \

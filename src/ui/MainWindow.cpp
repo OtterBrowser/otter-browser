@@ -4,7 +4,6 @@
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
-#include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
@@ -20,12 +19,9 @@
 #include <QtCore/QTextCodec>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
-#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
-#include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -150,33 +146,18 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	m_closedWindowsAction->setMenu(new QMenu(this));
 	m_closedWindowsAction->setEnabled(false);
 
-	TabBarWidget *tabBar = new TabBarWidget(m_ui->tabsWidgetContents);
-	QToolButton *trashButton = new QToolButton(m_ui->tabsWidgetContents);
-	trashButton->setAutoRaise(true);
-	trashButton->setDefaultAction(m_closedWindowsAction);
+	m_ui->tabsDockWidget->setup(m_closedWindowsAction);
+	m_ui->tabsDockWidget->setFloating(true);
+	m_ui->tabsDockWidget->adjustSize();
+	m_ui->tabsDockWidget->setFloating(false);
 
-	QToolButton *newTabButton = new QToolButton(m_ui->tabsWidgetContents);
-	newTabButton->setAutoRaise(true);
-	newTabButton->setDefaultAction(m_ui->actionNewTab);
-
-	QBoxLayout *tabsLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_ui->tabsWidgetContents);
-	tabsLayout->addWidget(tabBar);
-	tabsLayout->addWidget(newTabButton);
-	tabsLayout->addWidget(trashButton);
-	tabsLayout->setContentsMargins(0, 0, 0, 0);
-	tabsLayout->setSpacing(0);
-
-	m_ui->tabsWidgetContents->setLayout(tabsLayout);
-	m_ui->tabsWidget->setTitleBarWidget(NULL);
-
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, tabBar, m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	m_windowsManager = new WindowsManager(m_ui->mdiArea, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(m_windowsManager);
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
-	connect(tabBar, SIGNAL(showNewTabButton(bool)), newTabButton, SLOT(setVisible(bool)));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
@@ -185,7 +166,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClosedWindows(QAction*)));
-	connect(m_ui->tabsWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -247,7 +227,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
 	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
-	m_ui->panelWidget->hide();
+	m_ui->panelDockWidget->hide();
 }
 
 MainWindow::~MainWindow()

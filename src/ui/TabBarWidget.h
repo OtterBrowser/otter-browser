@@ -2,7 +2,6 @@
 #define OTTER_TABBARWIDGET_H
 
 #include <QtWidgets/QTabBar>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -16,6 +15,7 @@ class TabBarWidget : public QTabBar
 public:
 	explicit TabBarWidget(QWidget *parent = NULL);
 
+	void removeTab(int index);
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 
 public slots:
@@ -38,7 +38,6 @@ protected:
 	void tabLayoutChange();
 	void showPreview(int index);
 	QSize tabSizeHint(int index) const;
-	QSize getTabSize(bool isHorizontal) const;
 
 protected slots:
 	void closeOther();
@@ -48,8 +47,7 @@ protected slots:
 
 private:
 	PreviewWidget *m_previewWidget;
-	QToolButton *m_newTabButton;
-	QSize m_tabSize;
+	int m_tabSize;
 	int m_clickedTab;
 	int m_previewTimer;
 
@@ -59,7 +57,7 @@ signals:
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);
-	void showNewTabButton(bool visible);
+	void moveNewTabButton(int position);
 };
 
 }
