@@ -5,7 +5,7 @@
 - added cache viewer (about:cache);
 - implemented tab detaching;
 - overhauled about: pages;
-- some optimizations.
+- some optimizations and other changes.
 
 0.0.02 (22.12.2013):
 - added warning in case of SSL errors;

@@ -11,6 +11,13 @@ SearchDelegate::SearchDelegate(QObject *parent) : QItemDelegate(parent)
 
 void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
+	{
+		QItemDelegate::paint(painter, option, index);
+
+		return;
+	}
+
 	drawBackground(painter, option, index);
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))

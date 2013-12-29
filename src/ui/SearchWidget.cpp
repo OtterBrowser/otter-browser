@@ -5,15 +5,14 @@
 #include "../core/SearchSuggester.h"
 #include "../core/SessionsManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/Utils.h"
 
+#include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
 SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
-	m_model(new QStandardItemModel(this)),
 	m_completer(new QCompleter(this)),
 	m_suggester(NULL),
 	m_index(0),
@@ -23,16 +22,17 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	setModel(m_model);
 	setEditable(true);
 	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
-	updateSearchEngines();
+	setModel(SearchesManager::getSearchEnginesModel());
+	setCurrentSearchEngine();
 	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
 	lineEdit()->setCompleter(m_completer);
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchEngines()));
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(setCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(this, SIGNAL(activated(int)), this, SLOT(currentSearchEngineChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
@@ -71,16 +71,12 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 
 void SearchWidget::currentSearchEngineChanged(int index)
 {
-	if (itemData(index, (Qt::UserRole + 1)).toString().isEmpty())
+	if (itemData(index, Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
 	{
 		setCurrentIndex(m_index);
 
-		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
-
 		PreferencesDialog dialog(QLatin1String("search"), this);
 		dialog.exec();
-
-		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 	}
 	else
 	{
@@ -128,57 +124,6 @@ void SearchWidget::sendRequest(const QString &query)
 	m_query = QString();
 }
 
-void SearchWidget::updateSearchEngines()
-{
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
-
-	m_model->clear();
-
-	const QStringList engines = SearchesManager::getSearchEngines();
-
-	for (int i = 0; i < engines.count(); ++i)
-	{
-		SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
-
-		if (search)
-		{
-			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon), QString());
-			item->setData(search->title, Qt::UserRole);
-			item->setData(search->identifier, (Qt::UserRole + 1));
-			item->setData(search->shortcut, (Qt::UserRole + 2));
-			item->setData(QSize(-1, 22), Qt::SizeHintRole);
-
-			m_model->appendRow(item);
-		}
-	}
-
-	if (engines.count() > 0)
-	{
-		setEnabled(true);
-
-		QStandardItem *separatorItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());
-		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
-		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
-
-		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), QString());
-		manageItem->setData(tr("Manage Search Engines..."), Qt::UserRole);
-		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
-
-		m_model->appendRow(separatorItem);
-		m_model->appendRow(manageItem);
-	}
-	else
-	{
-		setEnabled(false);
-
-		lineEdit()->setPlaceholderText(QString());
-	}
-
-	setCurrentSearchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
-
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
-}
-
 void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
 {
 	if (suggestions.isEmpty())
@@ -210,26 +155,36 @@ void SearchWidget::updateSuggestions(const QList<SearchSuggestion> &suggestions)
 
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
 {
-	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
-
 	const QStringList engines = SearchesManager::getSearchEngines();
 
 	if (engines.isEmpty())
 	{
+		hidePopup();
+		setEnabled(false);
+
+		lineEdit()->setPlaceholderText(QString());
+
+		return;
+	}
+
+	setEnabled(true);
+
+	if (sender() == SearchesManager::getInstance() && engines.contains(getCurrentSearchEngine()))
+	{
+		currentSearchEngineChanged(currentIndex());
+
 		return;
 	}
 
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : engine));
 
-	currentSearchEngineChanged(index);
 	setCurrentIndex(index);
+	currentSearchEngineChanged(index);
 
 	if (m_suggester)
 	{
 		m_suggester->setEngine(getCurrentSearchEngine());
 	}
-
-	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
 
 QString SearchWidget::getCurrentSearchEngine() const

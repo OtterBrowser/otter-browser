@@ -162,7 +162,10 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
-	SessionWindow entry = m_closedWindows.at(index);
+	const SessionWindow entry = m_closedWindows.at(index);
+
+	m_closedWindows.removeAt(index);
+
 	WindowHistoryInformation history;
 	history.index = entry.index;
 	history.entries = entry.history;
@@ -173,8 +176,6 @@ void WindowsManager::restore(int index)
 	window->setSearchEngine(entry.searchEngine);
 	window->setPinned(entry.pinned);
 	window->getContentsWidget()->setZoom(entry.zoom());
-
-	m_closedWindows.removeAt(index);
 
 	if (SessionsManager::getClosedWindows().isEmpty())
 	{

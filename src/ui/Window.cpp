@@ -110,10 +110,7 @@ void Window::setDefaultTextEncoding(const QString &encoding)
 
 void Window::setSearchEngine(const QString &engine)
 {
-	if (!engine.isEmpty())
-	{
-		m_ui->searchWidget->setCurrentSearchEngine(engine);
-	}
+	m_ui->searchWidget->setCurrentSearchEngine(engine);
 }
 
 void Window::setUrl(const QUrl &url)

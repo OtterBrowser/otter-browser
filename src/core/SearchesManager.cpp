@@ -1,5 +1,6 @@
 #include "SearchesManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
@@ -12,6 +13,7 @@ namespace Otter
 {
 
 SearchesManager* SearchesManager::m_instance = NULL;
+QStandardItemModel* SearchesManager::m_searchEnginesModel = NULL;
 QStringList SearchesManager::m_searchEnginesOrder;
 QStringList SearchesManager::m_searchShortcuts;
 QHash<QString, SearchInformation*> SearchesManager::m_searchEngines;
@@ -23,6 +25,48 @@ SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 void SearchesManager::createInstance(QObject *parent)
 {
 	m_instance = new SearchesManager(parent);
+}
+
+void SearchesManager::updateSearchEnginesModel()
+{
+	if (!m_searchEnginesModel)
+	{
+		return;
+	}
+
+	m_searchEnginesModel->clear();
+
+	const QStringList engines = getSearchEngines();
+
+	for (int i = 0; i < engines.count(); ++i)
+	{
+		SearchInformation *search = getSearchEngine(engines.at(i));
+
+		if (search)
+		{
+			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon), QString());
+			item->setData(search->title, Qt::UserRole);
+			item->setData(search->identifier, (Qt::UserRole + 1));
+			item->setData(search->shortcut, (Qt::UserRole + 2));
+			item->setData(QSize(-1, 22), Qt::SizeHintRole);
+
+			m_searchEnginesModel->appendRow(item);
+		}
+	}
+
+	if (engines.count() > 0)
+	{
+		QStandardItem *separatorItem = new QStandardItem();
+		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
+
+		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), tr("Manage Search Engines..."));
+		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
+		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
+
+		m_searchEnginesModel->appendRow(separatorItem);
+		m_searchEnginesModel->appendRow(manageItem);
+	}
 }
 
 void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
@@ -225,6 +269,18 @@ SearchInformation* SearchesManager::getSearchEngine(const QString &identifier)
 	return m_searchEngines.value(identifier, NULL);
 }
 
+QStandardItemModel* SearchesManager::getSearchEnginesModel()
+{
+	if (!m_searchEnginesModel)
+	{
+		m_searchEnginesModel = new QStandardItemModel(m_instance);
+
+		m_instance->updateSearchEnginesModel();
+	}
+
+	return m_searchEnginesModel;
+}
+
 QStringList SearchesManager::getSearchEngines()
 {
 	const QString path = SettingsManager::getPath() + QLatin1String("/searches/");
@@ -400,6 +456,8 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 
 			if (QFile::exists(path) && !QFile::remove(path))
 			{
+				m_instance->updateSearchEnginesModel();
+
 				return false;
 			}
 
@@ -432,6 +490,8 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 
 			SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
 
+			m_instance->updateSearchEnginesModel();
+
 			emit m_instance->searchEnginesModified();
 
 			return false;
@@ -445,6 +505,8 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
+
+	m_instance->updateSearchEnginesModel();
 
 	emit m_instance->searchEnginesModified();
 
