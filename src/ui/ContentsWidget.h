@@ -35,6 +35,7 @@ public:
 public slots:
 	void showDialog(QWidget *dialog);
 	void hideDialog(QWidget *dialog);
+	virtual void goToHistoryIndex(int index);
 	virtual void triggerAction(WindowAction action, bool checked = false);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);

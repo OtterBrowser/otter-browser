@@ -403,6 +403,11 @@ void QtWebKitWebWidget::hideDialog(QWidget *dialog)
 	m_parent->hideDialog(dialog);
 }
 
+void QtWebKitWebWidget::goToHistoryIndex(int index)
+{
+	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
+}
+
 void QtWebKitWebWidget::triggerAction()
 {
 	QAction *action = qobject_cast<QAction*>(sender());

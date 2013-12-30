@@ -86,6 +86,11 @@ void ContentsWidget::hideDialog(QWidget *dialog)
 	}
 }
 
+void ContentsWidget::goToHistoryIndex(int index)
+{
+	Q_UNUSED(index)
+}
+
 void ContentsWidget::triggerAction(WindowAction action, bool checked)
 {
 	Q_UNUSED(action)

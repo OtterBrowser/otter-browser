@@ -115,6 +115,11 @@ void WebContentsWidget::print(QPrinter *printer)
 	m_webWidget->print(printer);
 }
 
+void WebContentsWidget::goToHistoryIndex(int index)
+{
+	m_webWidget->goToHistoryIndex(index);
+}
+
 void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 {
 	if (action == FindAction)

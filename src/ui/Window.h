@@ -6,8 +6,8 @@
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
 #include <QtPrintSupport/QPrinter>
-#include <QtWidgets/QWidget>
 #include <QtWidgets/QUndoStack>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -134,8 +134,11 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
+	void goToHistoryIndex(QAction *action);
 	void notifyRequestedCloseWindow();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
+	void updateGoBackMenu();
+	void updateGoForwardMenu();
 
 private:
 	ContentsWidget *m_contentsWidget;

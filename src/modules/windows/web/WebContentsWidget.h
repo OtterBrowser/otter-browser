@@ -41,6 +41,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
+	void goToHistoryIndex(int index);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);

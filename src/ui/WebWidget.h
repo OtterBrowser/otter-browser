@@ -62,6 +62,7 @@ public:
 	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
 
 public slots:
+	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;

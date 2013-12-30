@@ -46,6 +46,7 @@ public:
 public slots:
 	void showDialog(QWidget *dialog);
 	void hideDialog(QWidget *dialog);
+	void goToHistoryIndex(int index);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);

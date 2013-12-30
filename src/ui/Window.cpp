@@ -1,5 +1,7 @@
 #include "Window.h"
 #include "../core/SettingsManager.h"
+#include "../core/WebBackend.h"
+#include "../core/WebBackendsManager.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
@@ -11,6 +13,7 @@
 #include "ui_Window.h"
 
 #include <QtCore/QTimer>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -85,6 +88,14 @@ void Window::search(const QString &query, const QString &engine)
 	}
 }
 
+void Window::goToHistoryIndex(QAction *action)
+{
+	if (action && action->data().type() == QVariant::Int)
+	{
+		m_contentsWidget->goToHistoryIndex(action->data().toInt());
+	}
+}
+
 void Window::notifyRequestedCloseWindow()
 {
 	emit requestedCloseWindow(this);
@@ -93,6 +104,46 @@ void Window::notifyRequestedCloseWindow()
 void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)
 {
 	emit requestedOpenUrl(url, isPrivate(), background, newWindow);
+}
+
+void Window::updateGoBackMenu()
+{
+	if (!m_ui->backButton->menu() || !m_contentsWidget)
+	{
+		return;
+	}
+
+	m_ui->backButton->menu()->clear();
+
+	WebBackend *backend = WebBackendsManager::getBackend();
+	const WindowHistoryInformation history = m_contentsWidget->getHistory();
+
+	for (int i = (history.index - 1); i >= 0; --i)
+	{
+		const QString title = history.entries.at(i).title;
+
+		m_ui->backButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title))->setData(i);
+	}
+}
+
+void Window::updateGoForwardMenu()
+{
+	if (!m_ui->forwardButton->menu() || !m_contentsWidget)
+	{
+		return;
+	}
+
+	m_ui->forwardButton->menu()->clear();
+
+	WebBackend *backend = WebBackendsManager::getBackend();
+	const WindowHistoryInformation history = m_contentsWidget->getHistory();
+
+	for (int i = (history.index + 1); i < history.entries.count(); ++i)
+	{
+		const QString title = history.entries.at(i).title;
+
+		m_ui->forwardButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title))->setData(i);
+	}
 }
 
 void Window::setDefaultTextEncoding(const QString &encoding)
@@ -192,6 +243,28 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 
 	m_contentsWidget = widget;
+
+	if (m_contentsWidget->getType() == QLatin1String("web") && !m_ui->backButton->menu())
+	{
+		m_ui->backButton->setMenu(new QMenu(m_ui->backButton));
+		m_ui->backButton->setPopupMode(QToolButton::DelayedPopup);
+
+		m_ui->forwardButton->setMenu(new QMenu(m_ui->forwardButton));
+		m_ui->forwardButton->setPopupMode(QToolButton::DelayedPopup);
+
+		connect(m_ui->backButton->menu(), SIGNAL(aboutToShow()), this, SLOT(updateGoBackMenu()));
+		connect(m_ui->backButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
+		connect(m_ui->forwardButton->menu(), SIGNAL(aboutToShow()), this, SLOT(updateGoForwardMenu()));
+		connect(m_ui->forwardButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
+	}
+	else if (m_contentsWidget->getType() != QLatin1String("web") && m_ui->backButton->menu())
+	{
+		m_ui->backButton->menu()->deleteLater();
+		m_ui->backButton->setMenu(NULL);
+
+		m_ui->forwardButton->menu()->deleteLater();
+		m_ui->forwardButton->setMenu(NULL);
+	}
 
 	layout()->addWidget(m_contentsWidget);
 
