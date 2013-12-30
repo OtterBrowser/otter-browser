@@ -23,6 +23,7 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 	m_printedWindow(-1),
 	m_privateSession(privateSession)
 {
+	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
 	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
@@ -411,6 +412,11 @@ void WindowsManager::closeWindow(Window *window)
 		information.index = history.index;
 		information.pinned = window->isPinned();
 
+		if (window->getType() != QLatin1String("web"))
+		{
+			removeStoredUrl(information.url());
+		}
+
 		m_closedWindows.prepend(information);
 
 		emit closedWindowsAvailableChanged(true);
@@ -436,6 +442,24 @@ void WindowsManager::closeWindow(Window *window)
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
+}
+
+void WindowsManager::removeStoredUrl(const QString &url)
+{
+	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
+	{
+		if (url == m_closedWindows.at(i).url())
+		{
+			m_closedWindows.removeAt(i);
+
+			break;
+		}
+	}
+
+	if (m_closedWindows.isEmpty())
+	{
+		emit closedWindowsAvailableChanged(false);
+	}
 }
 
 void WindowsManager::setDefaultTextEncoding(const QString &encoding)

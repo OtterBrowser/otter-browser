@@ -93,6 +93,11 @@ void SessionsManager::markSessionModified()
 	}
 }
 
+void SessionsManager::removeStoredUrl(const QString &url)
+{
+	emit m_instance->requestedRemoveStoredUrl(url);
+}
+
 void SessionsManager::setActiveWindow(QWidget *window)
 {
 	m_activeWindow = window;

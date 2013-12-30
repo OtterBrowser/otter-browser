@@ -80,6 +80,13 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 		m_model->clear();
 	}
 
+	if (reply->size() <= 0)
+	{
+		QTimer::singleShot(250, reply, SLOT(deleteLater()));
+
+		return;
+	}
+
 	const QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
 
 	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)

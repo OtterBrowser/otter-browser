@@ -63,6 +63,7 @@ protected slots:
 	void pinWindow(int index, bool pin);
 	void closeWindow(int index);
 	void closeWindow(Window *window);
+	void removeStoredUrl(const QString &url);
 	void setTitle(const QString &title);
 
 private:

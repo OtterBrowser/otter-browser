@@ -150,6 +150,11 @@ void Window::setUrl(const QUrl &url)
 		{
 			newWidget = new TransfersContentsWidget(this);
 		}
+
+		if (!newWidget->canClone())
+		{
+			SessionsManager::removeStoredUrl(newWidget->getUrl().toString());
+		}
 	}
 
 	if (!newWidget && m_contentsWidget->getType() != QLatin1String("web"))

@@ -98,6 +98,7 @@ public:
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
 	static void markSessionModified();
+	static void removeStoredUrl(const QString &url);
 	static void setActiveWindow(QWidget *window);
 	static SessionsManager* getInstance();
 	static QWidget* getActiveWindow();
@@ -132,6 +133,7 @@ private:
 
 signals:
 	void closedWindowsChanged();
+	void requestedRemoveStoredUrl(QString url);
 };
 
 }
