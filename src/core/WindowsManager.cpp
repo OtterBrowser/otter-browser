@@ -429,6 +429,7 @@ void WindowsManager::closeWindow(Window *window)
 		if (window && window->getType() == QLatin1String("web"))
 		{
 			window->setUrl(QUrl(QLatin1String("about:blank")));
+			window->getContentsWidget()->setHistory(WindowHistoryInformation());
 
 			return;
 		}
@@ -442,6 +443,11 @@ void WindowsManager::closeWindow(Window *window)
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
+
+	if (m_tabBar->count() < 1)
+	{
+		open();
+	}
 }
 
 void WindowsManager::removeStoredUrl(const QString &url)

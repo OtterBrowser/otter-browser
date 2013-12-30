@@ -202,7 +202,7 @@ void Window::setUrl(const QUrl &url)
 			newWidget = new TransfersContentsWidget(this);
 		}
 
-		if (!newWidget->canClone())
+		if (newWidget && !newWidget->canClone())
 		{
 			SessionsManager::removeStoredUrl(newWidget->getUrl().toString());
 		}

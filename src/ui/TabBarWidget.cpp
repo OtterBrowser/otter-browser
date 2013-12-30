@@ -184,14 +184,15 @@ void TabBarWidget::leaveEvent(QEvent *event)
 
 	m_tabSize = 0;
 
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
+	updateGeometry();
+	adjustSize();
 }
 
 void TabBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QTabBar::resizeEvent(event);
 
-	updateTabs();
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
 }
 
 void TabBarWidget::tabInserted(int index)
@@ -365,17 +366,10 @@ void TabBarWidget::updateTabs(int index)
 		}
 	}
 
-	const bool canResize = !underMouse();
-
-	if (canResize)
-	{
-		adjustSize();
-		updateGeometry();
-	}
-
-	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 	const QSize size = tabSizeHint(count() - 1);
 	const int limit = ((index >= 0) ? (index + 1) : count());
+	const bool canResize = (m_tabSize > 0);
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 	const bool isNarrow = ((isHorizontal ? size.width() : size.height()) < 60);
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
@@ -543,7 +537,7 @@ QSize TabBarWidget::tabSizeHint(int index) const
 		return QSize(QTabBar::tabSizeHint(0).width(), 40);
 	}
 
-	const int size = ((underMouse() && m_tabSize > 0) ? m_tabSize : qBound(40, qFloor((isHorizontal ? geometry().width() : geometry().height()) / qMax(1, count())), 250));
+	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(40, qFloor((isHorizontal ? geometry().width() : geometry().height()) / qMax(1, count())), 250));
 
 	if (isHorizontal)
 	{

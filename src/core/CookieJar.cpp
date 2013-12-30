@@ -8,7 +8,8 @@ namespace Otter
 {
 
 CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
-	m_autoSaveTimer(0)
+	m_autoSaveTimer(0),
+	m_enableCookies(true)
 {
 	QFile file(SettingsManager::getPath() + QLatin1String("/cookies.dat"));
 
@@ -64,7 +65,7 @@ void CookieJar::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Browser/PrivateMode"))
 	{
-		m_enableCookies = !value.toBool();
+		m_enableCookies = (!value.toBool() && SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
 	}
 	else if (option == QLatin1String("Browser/EnableCookies"))
 	{
@@ -138,11 +139,6 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
-	if (!m_enableCookies)
-	{
-		return false;
-	}
-
 	const bool result = QNetworkCookieJar::deleteCookie(cookie);
 
 	if (result)
