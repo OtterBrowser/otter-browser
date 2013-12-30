@@ -138,6 +138,7 @@ target_link_libraries(otter-browser
 	Qt5::Core
 	Qt5::Network
 	Qt5::PrintSupport
+	Qt5::Sql
 	Qt5::Widgets
 	Qt5::WebKitWidgets
 )
