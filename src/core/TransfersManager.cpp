@@ -186,7 +186,7 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	emit m_instance->transferFinished(transfer);
 	emit m_instance->transferUpdated(transfer);
 
-	if (transfer->canClose && transfer->device)
+	if (transfer->device && !transfer->device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
 	{
 		transfer->device->close();
 		transfer->device->deleteLater();
@@ -291,6 +291,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		return NULL;
 	}
 
+	QPointer<QNetworkReply> replyPointer = reply;
 	QTemporaryFile temporaryFile(QLatin1String("otter-download-XXXXXX.dat"), m_instance);
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
@@ -422,7 +423,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		{
 			transfer->device = NULL;
 
+			m_replies.remove(reply);
+
 			removeTransfer(transfer, false);
+
+			if (replyPointer)
+			{
+				reply->abort();
+			}
 
 			return NULL;
 		}
@@ -435,8 +443,6 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	{
 		transfer->target = QFileInfo(target).canonicalFilePath();
 	}
-
-	transfer->canClose = true;
 
 	if (!target.isEmpty() && QFile::exists(transfer->target) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(transfer->target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 	{
@@ -456,7 +462,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	if (m_replies.contains(reply))
 	{
-		if (transfer->state == RunningTransfer)
+		if (transfer->state == RunningTransfer && replyPointer)
 		{
 			disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 		}
@@ -472,7 +478,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	transfer->device = file;
 
-	if (m_replies.contains(reply))
+	if (m_replies.contains(reply) && replyPointer)
 	{
 		if (reply->isFinished())
 		{
@@ -509,7 +515,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	emit m_instance->transferStarted(transfer);
 
-	if (m_replies.contains(reply))
+	if (m_replies.contains(reply) && replyPointer)
 	{
 		m_instance->startUpdates();
 	}

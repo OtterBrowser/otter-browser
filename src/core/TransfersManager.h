@@ -51,10 +51,9 @@ struct TransferInformation
 	qint64 bytesReceived;
 	qint64 bytesTotal;
 	TransferState state;
-	bool canClose;
 	bool isPrivate;
 
-	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), canClose(false), isPrivate(false) {}
+	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false) {}
 };
 
 class TransfersManager : public QObject
