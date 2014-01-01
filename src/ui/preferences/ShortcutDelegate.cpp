@@ -37,12 +37,6 @@ void ShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
 	editor->setGeometry(option.rect);
 }
 
-void ShortcutDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
-{
-	Q_UNUSED(editor)
-	Q_UNUSED(index)
-}
-
 void ShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QLineEdit *widget = qobject_cast<QLineEdit*>(editor);

@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-WebWidget::WebWidget(bool privateWindow = false, ContentsWidget *parent) : QWidget(parent)
+WebWidget::WebWidget(bool privateWindow, ContentsWidget *parent) : QWidget(parent)
 {
 	Q_UNUSED(privateWindow)
 }

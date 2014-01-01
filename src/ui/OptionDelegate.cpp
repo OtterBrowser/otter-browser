@@ -36,12 +36,6 @@ void OptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionVie
 	editor->setGeometry(option.rect);
 }
 
-void OptionDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
-{
-	Q_UNUSED(editor)
-	Q_UNUSED(index)
-}
-
 void OptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	if (m_simple)
