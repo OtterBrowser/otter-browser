@@ -47,9 +47,9 @@ namespace Otter
 
 MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
-	m_closedWindowsAction(new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this)),
 	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
+	m_closedWindowsMenu(new QMenu(this)),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -162,10 +162,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	setStyleSheet(QLatin1String("QMainWindow::separator {width:0;height:0;}"));
 
-	m_closedWindowsAction->setMenu(new QMenu(this));
-	m_closedWindowsAction->setEnabled(false);
-
-	m_ui->tabsDockWidget->setup(m_closedWindowsAction);
+	m_ui->tabsDockWidget->setup(m_closedWindowsMenu);
 	m_ui->tabsDockWidget->setFloating(true);
 	m_ui->tabsDockWidget->adjustSize();
 	m_ui->tabsDockWidget->setFloating(false);
@@ -180,10 +177,10 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
-	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_closedWindowsAction, SLOT(setEnabled(bool)));
+	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->tabsDockWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
-	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -722,7 +719,7 @@ void MainWindow::menuTextEncodingAboutToShow()
 
 void MainWindow::menuClosedWindowsAboutToShow()
 {
-	m_closedWindowsAction->menu()->clear();
+	m_closedWindowsMenu->clear();
 
 	m_ui->menuClosedWindows->clear();
 	m_ui->menuClosedWindows->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
@@ -748,7 +745,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title(), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
-	m_closedWindowsAction->menu()->addActions(m_ui->menuClosedWindows->actions());
+	m_closedWindowsMenu->addActions(m_ui->menuClosedWindows->actions());
 }
 
 void MainWindow::menuBookmarksAboutToShow()
@@ -841,7 +838,7 @@ void MainWindow::triggerWindowAction()
 
 void MainWindow::updateClosedWindows()
 {
-	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
+	m_ui->tabsDockWidget->setClosedWindowsMenuEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void MainWindow::updateBookmarks(int folder)

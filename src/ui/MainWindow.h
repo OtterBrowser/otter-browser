@@ -91,9 +91,9 @@ protected slots:
 
 private:
 	WindowsManager *m_windowsManager;
-	QAction *m_closedWindowsAction;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_textEncodingGroup;
+	QMenu *m_closedWindowsMenu;
 	QString m_currentBookmark;
 	QList<QString> m_bookmarksToOpen;
 	Ui::MainWindow *m_ui;

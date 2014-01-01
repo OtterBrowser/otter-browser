@@ -35,8 +35,11 @@ class TabBarDockWidget : public QDockWidget
 public:
 	explicit TabBarDockWidget(QWidget *parent = NULL);
 
-	void setup(QAction *closedWindowsAction);
+	void setup(QMenu *closedWindowsMenu);
 	TabBarWidget* getTabBar();
+
+public slots:
+	void setClosedWindowsMenuEnabled(bool enabled);
 
 protected slots:
 	void moveNewTabButton(int position);
@@ -44,6 +47,7 @@ protected slots:
 private:
 	TabBarWidget *m_tabBar;
 	QToolButton *m_newTabButton;
+	QToolButton *m_trashButton;
 };
 
 }

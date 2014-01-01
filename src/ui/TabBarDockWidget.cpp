@@ -20,32 +20,39 @@
 #include "TabBarDockWidget.h"
 #include "TabBarWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/Utils.h"
 
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
 TabBarDockWidget::TabBarDockWidget(QWidget *parent) : QDockWidget(parent),
 	m_tabBar(NULL),
-	m_newTabButton(new QToolButton(this))
+	m_newTabButton(new QToolButton(this)),
+	m_trashButton(NULL)
 {
 }
 
-void TabBarDockWidget::setup(QAction *closedWindowsAction)
+void TabBarDockWidget::setup(QMenu *closedWindowsMenu)
 {
 	QWidget *widget = new QWidget(this);
 
 	m_tabBar = new TabBarWidget(widget);
 
-	QToolButton *trashButton = new QToolButton(widget);
-	trashButton->setAutoRaise(true);
-	trashButton->setDefaultAction(closedWindowsAction);
+	m_trashButton = new QToolButton(widget);
+	m_trashButton->setAutoRaise(true);
+	m_trashButton->setEnabled(false);
+	m_trashButton->setIcon(Utils::getIcon(QLatin1String("user-trash")));
+	m_trashButton->setToolTip(tr("Closed Tabs"));
+	m_trashButton->setMenu(closedWindowsMenu);
+	m_trashButton->setPopupMode(QToolButton::InstantPopup);
 
 	QBoxLayout *tabsLayout = new QBoxLayout(QBoxLayout::LeftToRight, widget);
 	tabsLayout->addWidget(m_tabBar);
 	tabsLayout->addSpacing(32);
-	tabsLayout->addWidget(trashButton);
+	tabsLayout->addWidget(m_trashButton);
 	tabsLayout->setContentsMargins(0, 0, 0, 0);
 	tabsLayout->setSpacing(0);
 
@@ -74,6 +81,12 @@ void TabBarDockWidget::moveNewTabButton(int position)
 		m_newTabButton->move(isHorizontal ? QPoint((qMin(position, m_tabBar->width()) + widget()->pos().x()), ((m_tabBar->height() - m_newTabButton->height()) / 2)) : QPoint(((m_tabBar->width() - m_newTabButton->width()) / 2), (qMin(position, m_tabBar->height()) + widget()->pos().y())));
 	}
 }
+
+void TabBarDockWidget::setClosedWindowsMenuEnabled(bool enabled)
+{
+	m_trashButton->setEnabled(enabled);
+}
+
 
 TabBarWidget* TabBarDockWidget::getTabBar()
 {
