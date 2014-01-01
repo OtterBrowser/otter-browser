@@ -184,7 +184,6 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsAction->menu(), SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
-	connect(m_closedWindowsAction->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClosedWindows(QAction*)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -449,21 +448,23 @@ void MainWindow::actionTextEncoding(QAction *action)
 	m_windowsManager->setDefaultTextEncoding(encoding.toLower());
 }
 
-void MainWindow::actionClosedWindows(QAction *action)
+void MainWindow::actionClearClosedWindows()
 {
-	const int index = action->data().toInt();
+	m_windowsManager->clearClosedWindows();
 
-	if (index == 0)
-	{
-		m_windowsManager->clearClosedWindows();
+	SessionsManager::clearClosedWindows();
+}
 
-		SessionsManager::clearClosedWindows();
-	}
-	else if (index > 0)
+void MainWindow::actionRestoreClosedWindow()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+	const int index = ((action && action->data().type() == QVariant::Int) ? action->data().toInt() : 0);
+
+	if (index > 0)
 	{
 		m_windowsManager->restore(index - 1);
 	}
-	else
+	else if (index < 0)
 	{
 		SessionsManager::restoreClosedWindow(-index - 1);
 	}
@@ -721,13 +722,10 @@ void MainWindow::menuTextEncodingAboutToShow()
 
 void MainWindow::menuClosedWindowsAboutToShow()
 {
-	m_ui->menuClosedWindows->clear();
-
 	m_closedWindowsAction->menu()->clear();
 
-	QAction *clearAction = m_ui->menuClosedWindows->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"));
-	clearAction->setData(0);
-
+	m_ui->menuClosedWindows->clear();
+	m_ui->menuClosedWindows->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
 	m_ui->menuClosedWindows->addSeparator();
 
 	const QStringList windows = SessionsManager::getClosedWindows();
@@ -736,8 +734,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			QAction *action = m_ui->menuClosedWindows->addAction(QString("Window - %1").arg(windows.at(i)));
-			action->setData(-(i + 1));
+			m_ui->menuClosedWindows->addAction(QString("Window - %1").arg(windows.at(i)), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
 		m_ui->menuClosedWindows->addSeparator();
@@ -748,8 +745,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		QAction *action = m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title());
-		action->setData(i + 1);
+		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title(), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
 	m_closedWindowsAction->menu()->addActions(m_ui->menuClosedWindows->actions());
@@ -845,7 +841,7 @@ void MainWindow::triggerWindowAction()
 
 void MainWindow::updateClosedWindows()
 {
-	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() || (SessionsManager::getClosedWindows().count() > 0));
+	m_closedWindowsAction->setEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void MainWindow::updateBookmarks(int folder)

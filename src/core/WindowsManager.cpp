@@ -197,7 +197,7 @@ void WindowsManager::restore(int index)
 	window->setPinned(entry.pinned);
 	window->getContentsWidget()->setZoom(entry.zoom());
 
-	if (SessionsManager::getClosedWindows().isEmpty())
+	if (m_closedWindows.isEmpty() && SessionsManager::getClosedWindows().isEmpty())
 	{
 		emit closedWindowsAvailableChanged(false);
 	}
