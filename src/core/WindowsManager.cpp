@@ -142,7 +142,7 @@ void WindowsManager::closeOther(int index)
 		index = getCurrentWindow();
 	}
 
-	if (index >= m_tabBar->count())
+	if (index < 0 || index >= m_tabBar->count())
 	{
 		return;
 	}
@@ -152,9 +152,9 @@ void WindowsManager::closeOther(int index)
 		closeWindow(i);
 	}
 
-	for (int i = 0; i < index; ++i)
+	for (int i = (index - 1); i >= 0; --i)
 	{
-		closeWindow(0);
+		closeWindow(i);
 	}
 }
 
