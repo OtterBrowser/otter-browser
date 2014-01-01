@@ -91,7 +91,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void updateSearchActions(const QString &engine = QString());
-	void showContextMenu(const QPoint &position);
+	void showContextMenu(const QPoint &position = QPoint());
 
 private:
 	ContentsWidget *m_parent;

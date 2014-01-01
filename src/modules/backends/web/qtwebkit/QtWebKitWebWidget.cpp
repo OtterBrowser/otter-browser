@@ -34,6 +34,7 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
@@ -844,9 +845,15 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
+	if (position.isNull() && m_webView->selectedText().isEmpty())
+	{
+		return;
+	}
+
+	const QPoint hitPosition = (position.isNull() ? m_webView->mapFromGlobal(QCursor::pos()) : position);
 	MenuFlags flags = NoMenu;
 
-	m_hitResult = m_webView->page()->frameAt(position)->hitTestContent(position);
+	m_hitResult = m_webView->page()->frameAt(hitPosition)->hitTestContent(hitPosition);
 
 	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text"))))
 	{
@@ -920,7 +927,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	WebWidget::showContextMenu(position, flags);
+	WebWidget::showContextMenu(hitPosition, flags);
 }
 
 WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
@@ -1477,6 +1484,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				event->accept();
 
 				return true;
+			}
+		}
+		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+			{
+				QTimer::singleShot(250, this, SLOT(showContextMenu()));
 			}
 		}
 		else if (event->type() == QEvent::Wheel)
