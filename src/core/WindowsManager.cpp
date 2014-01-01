@@ -290,18 +290,22 @@ void WindowsManager::addWindow(Window *window, bool background)
 	window->setParent(m_area);
 
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
-	mdiWindow->showMaximized();
+
+	if (background)
+	{
+		mdiWindow->hide();
+	}
+	else
+	{
+		mdiWindow->showMaximized();
+	}
 
 	const int index = (SettingsManager::getValue(QLatin1String("Tabs/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
 
 	m_tabBar->insertTab(index, window->getContentsWidget()->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
-	if (background)
-	{
-		setCurrentWindow(m_tabBar->currentIndex());
-	}
-	else
+	if (!background)
 	{
 		m_tabBar->setCurrentIndex(index);
 
