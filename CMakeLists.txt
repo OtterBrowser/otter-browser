@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8.11)
 project(otter-browser)
 
 set(MAJOR_VERSION "0")
-set(MINOR_VERSION "1")
-set(PATCH_VERSION "01")
+set(MINOR_VERSION "2")
+set(PATCH_VERSION "01-dev")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)

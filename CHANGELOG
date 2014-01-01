@@ -1,5 +1,5 @@
 0.1.01 (01.01.2014):
-- added dedicated context menu for media content (AUIDIO and VIDEO tags);
+- added dedicated context menu for media content (AUDIO and VIDEO tags);
 - added global history with manager;
 - added dialog to clear history (browsing, cookies, caches etc.);
 - added cache viewer (about:cache);
