@@ -22,9 +22,17 @@
 
 #include <QtCore/QObject>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
+
+struct ActionTemplate
+{
+	QString text;
+	QIcon icon;
+	QList<QShortcut> shortcuts;
+};
 
 class ActionsManager : public QObject
 {
@@ -38,11 +46,11 @@ public:
 	static void registerActions(QWidget *window, QList<QAction*> actions);
 	static void triggerAction(const QLatin1String &action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
-	static void restoreDefaultShortcut(const QLatin1String &action);
-	static void setShortcut(const QLatin1String &action, const QKeySequence &shortcut);
+	static void restoreDefaultShortcuts(const QLatin1String &action);
+	static void setShortcuts(const QLatin1String &action, const QList<QKeySequence> &shortcuts);
 	static QAction* getAction(const QLatin1String &action);
-	static QKeySequence getShortcut(const QLatin1String &action);
-	static QKeySequence getDefaultShortcut(const QLatin1String &action);
+	static QList<QKeySequence> getShortcuts(const QLatin1String &action);
+	static QList<QKeySequence> getDefaultShortcuts(const QLatin1String &action);
 	static QStringList getIdentifiers();
 	static bool hasShortcut(const QKeySequence &shortcut, const QLatin1String &excludeAction);
 
@@ -55,7 +63,8 @@ private:
 	void addWindow(QWidget *window);
 
 	static ActionsManager *m_instance;
-	static QHash<QWidget*, QHash<QString, QAction*> > m_actions;
+	static QHash<QString, ActionTemplate*> m_templateActions;
+	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
 };
 
 }
