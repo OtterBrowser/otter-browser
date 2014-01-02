@@ -139,6 +139,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue(QLatin1String("Actions/NewWindow"), QKeySequence(QKeySequence::New).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Open"), QKeySequence(QKeySequence::Open).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Save"), QKeySequence(QKeySequence::Save).toString());
+	SettingsManager::setDefaultValue(QLatin1String("Actions/CloseTab"), QKeySequence(QLatin1String("Ctrl+W")).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Exit"), QKeySequence(QKeySequence::Quit).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Undo"), QKeySequence(QKeySequence::Undo).toString());
 	SettingsManager::setDefaultValue(QLatin1String("Actions/Redo"), QKeySequence(QKeySequence::Redo).toString());
