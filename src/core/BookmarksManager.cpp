@@ -110,7 +110,7 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 
 			if (!bookmark->description.isEmpty())
 			{
-				writer->writeAttribute(QLatin1String("desc"), bookmark->description);
+				writer->writeTextElement(QLatin1String("desc"), bookmark->description);
 			}
 
 			writer->writeEndElement();
