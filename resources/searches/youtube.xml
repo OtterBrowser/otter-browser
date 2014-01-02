@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<Shortcut>t</Shortcut>
+	<ShortName>Youtube</ShortName>
+	<Description>Search Youtube</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gECFyMLQ5st2AAAAVFJREFUOMvFkz9LA0EQxX93t4kJQSEHgmAIGhFRjE0a/QCpxEbUwsIPYWFpEQQRBRH/oODnMIFoE0UstBIUwSpgJ7GInsdmL2thlGQjESsXHrvDvPd2Bmbgv4915caiwDEwAqSB8C+aW0ACd5OVtyWhNKvA4h8+TTfuzEU89mQrdFahaUYQDjG0d0golcLMGcjaNUjWgGYEkQju3AITpyXis/OY+SYkbalxpYZmvNfB932kbTO4vcvA1g6qK4LJkxpXSHDa29R4nvcddU/PkAgCHleWTaIjalq3y+utBi/lMqWDfRI/cIWEAKMKjcb3fQDuC3nO19cYlT7Sskx9IKSmAvS2GKg6XrXK2eYGz/kTxoWNg4VsL6BiHfVEr4FMiy1wKRXDwqHPtjrNxI1Q6KJpADAV/uxKoTsZFIXS5IB+YOxrwjoIHoDXxrsA5P59GfkAI5Kg4Uip8kcAAAAASUVORK5CYII=</Image>
+	<Url type="text/html" method="GET" template="https://www.youtube.com/results?search_query={searchTerms}" />
+</OpenSearchDescription>
