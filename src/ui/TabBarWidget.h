@@ -63,6 +63,7 @@ protected slots:
 	void cloneTab();
 	void detachTab();
 	void pinTab();
+	void updateButtons();
 
 private:
 	PreviewWidget *m_previewWidget;

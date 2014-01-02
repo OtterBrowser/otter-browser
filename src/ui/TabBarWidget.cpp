@@ -49,10 +49,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
-	updateTabs();
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateTabs()));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateButtons()));
 }
 
 void TabBarWidget::timerEvent(QTimerEvent *event)
@@ -252,6 +251,8 @@ void TabBarWidget::tabLayoutChange()
 	}
 
 	emit moveNewTabButton(offset);
+
+	updateButtons();
 }
 
 void TabBarWidget::removeTab(int index)
@@ -370,6 +371,22 @@ void TabBarWidget::pinTab()
 	}
 }
 
+void TabBarWidget::updateButtons()
+{
+	const QSize size = tabSizeHint(count() - 1);
+	const bool isNarrow = (((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? size.width() : size.height()) < 60);
+
+	for (int i = 0; i < count(); ++i)
+	{
+		QWidget *button = tabButton(i, QTabBar::RightSide);
+
+		if (button)
+		{
+			button->setVisible((!isNarrow || (i == currentIndex())) && !getTabProperty(i, QLatin1String("isPinned"), false).toBool());
+		}
+	}
+}
+
 void TabBarWidget::updateTabs(int index)
 {
 	if (index < 0 && sender() && sender()->inherits(QStringLiteral("Otter::Window").toLatin1()))
@@ -385,11 +402,7 @@ void TabBarWidget::updateTabs(int index)
 		}
 	}
 
-	const QSize size = tabSizeHint(count() - 1);
 	const int limit = ((index >= 0) ? (index + 1) : count());
-	const bool canResize = (m_tabSize > 0);
-	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
-	const bool isNarrow = ((isHorizontal ? size.width() : size.height()) < 60);
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
@@ -417,16 +430,6 @@ void TabBarWidget::updateTabs(int index)
 				}
 
 				label->setPixmap(getTabProperty(i, QLatin1String("icon"), QIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
-			}
-		}
-
-		if (canResize)
-		{
-			QWidget *button = tabButton(i, QTabBar::RightSide);
-
-			if (button)
-			{
-				button->setVisible((!isNarrow || (i == currentIndex())) && !getTabProperty(i, QLatin1String("isPinned"), false).toBool());
 			}
 		}
 	}
