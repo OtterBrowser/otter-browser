@@ -326,6 +326,7 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 
 	m_bookmarks.removeAll(bookmark);
 	m_allBookmarks.removeAll(bookmark);
+	m_pointers[folder]->children.removeAll(bookmark);
 
 	if (bookmark->type == FolderBookmark)
 	{
