@@ -27,18 +27,13 @@
 namespace Otter
 {
 
-struct ActionTemplate
-{
-	QString text;
-	QIcon icon;
-	QList<QShortcut> shortcuts;
-};
-
 class ActionsManager : public QObject
 {
 	Q_OBJECT
 
 public:
+	~ActionsManager();
+
 	static void createInstance(QObject *parent = NULL);
 	static void registerWindow(QWidget *window);
 	static void registerAction(QWidget *window, const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
@@ -63,7 +58,7 @@ private:
 	void addWindow(QWidget *window);
 
 	static ActionsManager *m_instance;
-	static QHash<QString, ActionTemplate*> m_templateActions;
+	static QHash<QString, QAction*> m_applicationActions;
 	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
 };
 

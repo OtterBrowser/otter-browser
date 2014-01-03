@@ -25,11 +25,18 @@ namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QHash<QString, ActionTemplate*> ActionsManager::m_templateActions;
+QHash<QString, QAction*> ActionsManager::m_applicationActions;
 QHash<QWidget*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent)
 {
+}
+
+ActionsManager::~ActionsManager()
+{
+	qDeleteAll(m_applicationActions);
+
+	m_applicationActions.clear();
 }
 
 void ActionsManager::createInstance(QObject *parent)
@@ -53,12 +60,19 @@ void ActionsManager::registerWindow(QWidget *window)
 	{
 		m_windowActions[window] = QHash<QString, QAction*>();
 
+//TODO setup shortcuts
+
 		connect(window, SIGNAL(destroyed(QObject*)), m_instance, SLOT(removeWindow(QObject*)));
 	}
 }
 
 void ActionsManager::registerAction(QWidget *window, const QLatin1String &name, const QString &text, const QIcon &icon)
 {
+	if (m_applicationActions.contains(name))
+	{
+		return;
+	}
+
 	QAction *action = new QAction(icon, text, window);
 	action->setObjectName(name);
 
