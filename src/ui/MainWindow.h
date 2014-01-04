@@ -64,6 +64,7 @@ protected slots:
 	void actionSaveSession();
 	void actionManageSessions();
 	void actionSession(QAction *action);
+	void actionImportBookmarks();
 	void actionWorkOffline(bool enabled);
 	void actionTextEncoding(QAction *action);
 	void actionClearClosedWindows();

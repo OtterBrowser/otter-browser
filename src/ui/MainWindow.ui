@@ -79,7 +79,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>24</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -95,12 +95,10 @@
      <addaction name="separator"/>
     </widget>
     <widget class="QMenu" name="menuImportExport">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="title">
       <string>Import and Export</string>
      </property>
+     <addaction name="actionImportBookmarks"/>
     </widget>
     <addaction name="actionNewTab"/>
     <addaction name="actionNewTabPrivate"/>
@@ -508,6 +506,11 @@
    </property>
    <property name="text">
     <string>Blocked Content...</string>
+   </property>
+  </action>
+  <action name="actionImportBookmarks">
+   <property name="text">
+    <string>Import Bookmarks</string>
    </property>
   </action>
  </widget>
