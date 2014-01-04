@@ -44,7 +44,7 @@ BookmarksManager::~BookmarksManager()
 {
 	for (int i = 0; i < m_bookmarks.count(); ++i)
 	{
-		deleteBookmark(m_bookmarks.at(i), false);
+		delete m_bookmarks.at(i);
 	}
 }
 
