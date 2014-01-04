@@ -27,7 +27,9 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QRegularExpression>
+#include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -64,6 +66,27 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 	if (m_urlIconLabel)
 	{
 		m_urlIconLabel->move(6, ((height() - m_urlIconLabel->height()) / 2));
+	}
+}
+
+void AddressWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty())
+	{
+		const QString text = QApplication::clipboard()->text().trimmed();
+
+		if (QRegularExpression(QLatin1String("^[\\S]+\\.[\\S]+$")).match(text).hasMatch())
+		{
+			emit requestedLoadUrl(QUrl(text));
+		}
+		else
+		{
+			emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+		}
+	}
+	else
+	{
+		QLineEdit::mousePressEvent(event);
 	}
 }
 

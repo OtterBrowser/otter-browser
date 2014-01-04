@@ -1,3 +1,7 @@
+0.2.01 (--.--.2014):
+- added quick go to or search of clipboard contents on middle click on address field;
+- some other fixes and minor improvements.
+
 0.1.01 (01.01.2014):
 - added dedicated context menu for media content (AUDIO and VIDEO tags);
 - added global history with manager;
