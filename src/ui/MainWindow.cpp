@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
+#include "BookmarksImportDialog.h"
 #include "ClearHistoryDialog.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
@@ -189,6 +190,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionSaveSession, SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
+	connect(m_ui->actionImportBookmarks, SIGNAL(triggered()), this, SLOT(actionImportBookmarks()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_ui->actionWorkOffline, SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
@@ -421,6 +423,12 @@ void MainWindow::actionSession(QAction *action)
 	{
 		SessionsManager::restoreSession(action->data().toString());
 	}
+}
+
+void MainWindow::actionImportBookmarks()
+{
+	BookmarksImportDialog dialog(this);
+	dialog.exec();
 }
 
 void MainWindow::actionWorkOffline(bool enabled)
