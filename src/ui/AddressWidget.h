@@ -46,6 +46,7 @@ public slots:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 
 protected slots:
 	void removeIcon();
