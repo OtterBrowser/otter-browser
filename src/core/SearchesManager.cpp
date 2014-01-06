@@ -41,6 +41,16 @@ SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
 }
 
+SearchesManager::~SearchesManager()
+{
+	QHash<QString, SearchInformation*>::iterator iterator;
+
+	for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
+	{
+		delete iterator.value();
+	}
+}
+
 void SearchesManager::createInstance(QObject *parent)
 {
 	m_instance = new SearchesManager(parent);
