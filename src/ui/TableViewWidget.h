@@ -33,14 +33,19 @@ class TableViewWidget : public QTableView
 public:
 	explicit TableViewWidget(QWidget *parent = NULL);
 
+	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);
 	QStandardItemModel* getModel();
+	QModelIndex getIndex(int row, int column) const;
+	int getCurrentRow() const;
+	int getRowCount() const;
+	int getColumnCount() const;
 	bool canMoveUp() const;
 	bool canMoveDown() const;
 
 public slots:
 	void insertRow(const QList<QStandardItem*> &items = QList<QStandardItem*>());
-	void deleteRow();
+	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
 	void setFilter(const QString filter = QString());
@@ -49,7 +54,7 @@ protected:
 	void moveRow(bool up);
 
 protected slots:
-	void currentRowChanged(const QModelIndex &index);
+	void notifySelectionChanged();
 
 private:
 	QStandardItemModel *m_model;

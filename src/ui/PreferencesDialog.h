@@ -40,7 +40,6 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
-	void moveSearch(bool up);
 
 protected slots:
 	void browseDownloadsPath();
@@ -49,13 +48,9 @@ protected slots:
 	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void colorChanged(QWidget *editor);
 	void setupClearHistory();
-	void filterSearch(const QString &filter);
-	void currentSearchChanged(int currentRow);
 	void addSearch();
 	void editSearch();
-	void removeSearch();
-	void moveDownSearch();
-	void moveUpSearch();
+	void updateSearchActions();
 	void save();
 
 private:
