@@ -36,12 +36,10 @@ void TableViewWidget::moveRow(bool up)
 
 	const int sourceRow = currentIndex().row();
 	const int destinationRow = (up ? (sourceRow - 1) : (sourceRow + 1));
-	QList<QStandardItem*> items = m_model->takeRow(sourceRow);
 
 	m_model->insertRow(sourceRow, m_model->takeRow(destinationRow));
-	m_model->insertRow(destinationRow, items);
 
-	setCurrentIndex(m_model->index(destinationRow, 0));
+	setCurrentIndex(getIndex(destinationRow, 0));
 }
 
 void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
@@ -58,14 +56,16 @@ void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
 		{
 			m_model->insertRow(row);
 		}
+
+		setCurrentIndex(getIndex(row, 0));
 	}
 }
 
-void TableViewWidget::deleteRow()
+void TableViewWidget::removeRow()
 {
 	if (m_model)
 	{
-		const int row = (currentIndex().row() + 1);
+		const int row = currentIndex().row();
 
 		if (row >= 0)
 		{
@@ -84,14 +84,12 @@ void TableViewWidget::moveDownRow()
 	moveRow(false);
 }
 
-void TableViewWidget::currentRowChanged(const QModelIndex &index)
+void TableViewWidget::notifySelectionChanged()
 {
 	if (m_model)
 	{
-		const int currentRow = index.row();
-
-		emit canMoveUpChanged(currentRow > 0 && m_model->rowCount() > 1);
-		emit canMoveDownChanged(currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
+		emit canMoveUpChanged(canMoveUp());
+		emit canMoveDownChanged(canMoveDown());
 		emit needsActionsUpdate();
 	}
 }
@@ -126,6 +124,14 @@ void TableViewWidget::setFilter(const QString filter)
 	}
 }
 
+void TableViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+	if (m_model)
+	{
+		m_model->setData(index, value, role);
+	}
+}
+
 void TableViewWidget::setModel(QAbstractItemModel *model)
 {
 	QTableView::setModel(model);
@@ -135,12 +141,32 @@ void TableViewWidget::setModel(QAbstractItemModel *model)
 		m_model = qobject_cast<QStandardItemModel*>(model);
 	}
 
-	connect(selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged(QModelIndex)));
+	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
 }
 
 QStandardItemModel* TableViewWidget::getModel()
 {
 	return m_model;
+}
+
+QModelIndex TableViewWidget::getIndex(int row, int column) const
+{
+	return (m_model ? m_model->index(row, column) : QModelIndex());
+}
+
+int TableViewWidget::getCurrentRow() const
+{
+	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);
+}
+
+int TableViewWidget::getRowCount() const
+{
+	return (m_model ? m_model->rowCount() : 0);
+}
+
+int TableViewWidget::getColumnCount() const
+{
+	return (m_model ? m_model->columnCount() : 0);
 }
 
 bool TableViewWidget::canMoveUp() const

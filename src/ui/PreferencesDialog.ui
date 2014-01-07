@@ -659,7 +659,7 @@
       <attribute name="title">
        <string>Privacy</string>
       </attribute>
-      <layout class="QVBoxLayout" name="privacelLayout">
+      <layout class="QVBoxLayout" name="privacyLayout">
        <item>
         <widget class="QLabel" name="trackingHeader">
          <property name="font">
@@ -752,7 +752,7 @@
          </item>
          <item>
           <widget class="QWidget" name="historyWidget" native="true">
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <layout class="QVBoxLayout" name="historyLayout_2">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -1110,129 +1110,118 @@
       <attribute name="title">
        <string>Search</string>
       </attribute>
-      <layout class="QHBoxLayout" name="searchLayout">
+      <layout class="QVBoxLayout" name="searchLayout">
        <item>
-        <layout class="QVBoxLayout" name="searchViewLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLineEdit" name="searchFilterLineEdit">
-           <property name="placeholderText">
-            <string>Search...</string>
-           </property>
-           <property name="clearButtonEnabled">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="searchViewLayout">
+           <item>
+            <widget class="QLineEdit" name="searchFilterLineEdit">
+             <property name="placeholderText">
+              <string>Search...</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Otter::TableViewWidget" name="searchViewWidget">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <property name="showGrid">
+              <bool>false</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+             <attribute name="horizontalHeaderHighlightSections">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="searchWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::DoubleClicked</set>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <column>
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Shortcut</string>
-            </property>
-           </column>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="searchSuggestionsCheckBox">
-           <property name="text">
-            <string>Enable  Search Suggestions</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="searchButtonsLayout" stretch="0,0,0,1,0">
+           <item>
+            <widget class="QPushButton" name="addSearchButton">
+             <property name="text">
+              <string>Add...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editSearchButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Edit...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="removeSearchButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>13</width>
+               <height>13</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="searchMoveButtonsLayout">
+             <item>
+              <widget class="QToolButton" name="moveUpSearchButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="moveDownSearchButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="searchButtonsLayout" stretch="0,0,0,0,0,1">
-         <item>
-          <widget class="QPushButton" name="addSearchButton">
-           <property name="text">
-            <string>Add...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="editSearchButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Edit...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="removeSearchButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Remove</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="moveUpSearchButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Move Up</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="moveDownSearchButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Move Down</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QCheckBox" name="searchSuggestionsCheckBox">
+         <property name="text">
+          <string>Enable  Search Suggestions</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1280,7 +1269,7 @@
           <number>0</number>
          </property>
          <widget class="QWidget" name="addressFieldPage">
-          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,1">
+          <layout class="QVBoxLayout" name="addressFieldLayout" stretch="0,0,1">
            <item>
             <widget class="QLabel" name="suggestionsHeader">
              <property name="font">
@@ -1343,7 +1332,7 @@
          <widget class="QWidget" name="networkPage"/>
          <widget class="QWidget" name="securityPage"/>
          <widget class="QWidget" name="keyboardPage">
-          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <layout class="QVBoxLayout" name="keyboardLayout">
            <item>
             <widget class="QLabel" name="actionShortcutsHeader">
              <property name="font">
@@ -1552,6 +1541,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::TableViewWidget</class>
+   <extends>QTableView</extends>
+   <header>src/ui/TableViewWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>startupComboBox</tabstop>
@@ -1594,12 +1590,9 @@
   <tabstop>masterPasswordCheckBox</tabstop>
   <tabstop>masterPasswordButton</tabstop>
   <tabstop>searchFilterLineEdit</tabstop>
-  <tabstop>searchWidget</tabstop>
   <tabstop>addSearchButton</tabstop>
   <tabstop>editSearchButton</tabstop>
   <tabstop>removeSearchButton</tabstop>
-  <tabstop>moveUpSearchButton</tabstop>
-  <tabstop>moveDownSearchButton</tabstop>
   <tabstop>advancedListWidget</tabstop>
   <tabstop>suggestBookmarksCheckBox</tabstop>
   <tabstop>suggestHistoryCheckBox</tabstop>
