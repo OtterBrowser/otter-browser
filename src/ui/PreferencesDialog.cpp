@@ -318,7 +318,7 @@ void PreferencesDialog::filterSearch(const QString &filter)
 
 void PreferencesDialog::currentSearchChanged(int currentRow)
 {
-	const bool isSelected = currentRow >= 0 && currentRow < m_ui->searchWidget->rowCount();
+	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->searchWidget->rowCount());
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);

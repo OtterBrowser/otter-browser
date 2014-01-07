@@ -83,6 +83,7 @@ set(otter_src
 	src/ui/StatusBarWidget.cpp
 	src/ui/TabBarDockWidget.cpp
 	src/ui/TabBarWidget.cpp
+	src/ui/TableViewWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
