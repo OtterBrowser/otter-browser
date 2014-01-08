@@ -1207,16 +1207,19 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="searchMoveButtonsSpacer">
+            <layout class="QHBoxLayout" name="searchMoveButtonsLayout">
              <item>
               <widget class="QToolButton" name="moveUpSearchButton">
                <property name="enabled">
                 <bool>false</bool>
                </property>
+               <property name="toolTip">
+                <string>Move Up</string>
+               </property>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_2">
+              <spacer name="searchMoveButtonsSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1229,6 +1232,9 @@
               <widget class="QToolButton" name="moveDownSearchButton">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Down</string>
                </property>
               </widget>
              </item>
@@ -1371,10 +1377,10 @@
            <item>
             <layout class="QHBoxLayout" name="actionShortcutsLayout">
              <item>
-              <widget class="QListWidget" name="actionShortcutsWidget"/>
+              <widget class="Otter::TableViewWidget" name="actionShortcutsViewWidget"/>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,0,0,1">
+              <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,1,0">
                <item>
                 <widget class="QPushButton" name="actionShortcutsAddButton">
                  <property name="enabled">
@@ -1416,26 +1422,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="actionShortcutsMoveUpButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Move Up</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="actionShortcutsButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Move Down</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <spacer name="actionShortcutsSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -1447,6 +1433,40 @@
                   </size>
                  </property>
                 </spacer>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="actionShortcutsMoveButtonsLayout">
+                 <item>
+                  <widget class="QToolButton" name="actionShortcutsMoveUpButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>Move Up</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="actionShortcutsMoveButtonsSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="actionShortcutsMoveDownButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>Move Down</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1468,10 +1488,10 @@
            <item>
             <layout class="QHBoxLayout" name="actionMacrosLayout">
              <item>
-              <widget class="QListWidget" name="actionMacrosWidget"/>
+              <widget class="Otter::TableViewWidget" name="actionMacrosViewWidget"/>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="pushButtonsLayout" stretch="0,0,0,0,0,0,1">
+              <layout class="QVBoxLayout" name="pushButtonsLayout" stretch="0,0,0,0,1,0">
                <item>
                 <widget class="QPushButton" name="actionMacrosAddButton">
                  <property name="enabled">
@@ -1494,6 +1514,9 @@
                </item>
                <item>
                 <widget class="QPushButton" name="actionMacrosCloneButton">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Clone</string>
                  </property>
@@ -1510,26 +1533,6 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="actionMacrosMoveUpButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Move Up</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="actionMacrosMoveDownButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Move Down</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <spacer name="actionMacrosSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -1541,6 +1544,46 @@
                   </size>
                  </property>
                 </spacer>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="actionMacrosMoveButtonsLayout">
+                 <item>
+                  <widget class="QToolButton" name="actionMacrosMoveUpButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>Move Up</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="actionMacrosMoveButtonsSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="actionMacrosMoveDownButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>Move Down</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
