@@ -185,7 +185,9 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		items.append(new QStandardItem(engine->icon, engine->title));
 		items[0]->setToolTip(engine->description);
 		items[0]->setData(engineData, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 		items.append(new QStandardItem(engine->shortcut));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 		searchEnginesModel->appendRow(items);
 	}
