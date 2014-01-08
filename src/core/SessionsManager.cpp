@@ -24,6 +24,7 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QSaveFile>
 #include <QtCore/QSettings>
 
 namespace Otter
@@ -329,7 +330,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		sessionTitle = title;
 	}
 
-	QFile file(sessionPath);
+	QSaveFile file(sessionPath);
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -372,9 +373,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		}
 	}
 
-	file.close();
-
-	return true;
+	return file.commit();
 }
 
 bool SessionsManager::deleteSession(const QString &path)
