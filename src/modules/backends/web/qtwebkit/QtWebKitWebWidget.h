@@ -27,6 +27,7 @@
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebView>
 #include <QtWidgets/QSplitter>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -87,6 +88,7 @@ protected slots:
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
 	void searchMenuAboutToShow();
+	void hideInspector();
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
@@ -97,6 +99,7 @@ private:
 	ContentsWidget *m_parent;
 	QWebView *m_webView;
 	QWebInspector *m_inspector;
+	QToolButton *m_inspectorCloseButton;
 	NetworkAccessManager *m_networkAccessManager;
 	QSplitter *m_splitter;
 	QString m_searchEngine;

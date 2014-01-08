@@ -55,6 +55,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent,
 	m_parent(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
+	m_inspectorCloseButton(NULL),
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_searchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString()),
@@ -353,6 +354,11 @@ void QtWebKitWebWidget::searchMenuAboutToShow()
 	}
 }
 
+void QtWebKitWebWidget::hideInspector()
+{
+	triggerAction(InspectPageAction, false);
+}
+
 void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -548,11 +554,32 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 				m_inspector->setPage(m_webView->page());
 				m_inspector->setContextMenuPolicy(Qt::NoContextMenu);
 				m_inspector->setMinimumHeight(200);
+				m_inspector->installEventFilter(this);
 
 				m_splitter->addWidget(m_inspector);
+
+				m_inspectorCloseButton = new QToolButton(m_inspector);
+				m_inspectorCloseButton->setAutoFillBackground(false);
+				m_inspectorCloseButton->setAutoRaise(true);
+				m_inspectorCloseButton->setIcon(Utils::getIcon(QLatin1String("window-close")));
+				m_inspectorCloseButton->setToolTip(tr("Close"));
+
+				connect(m_inspectorCloseButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
 			}
 
 			m_inspector->setVisible(checked);
+
+			if (checked)
+			{
+				m_inspectorCloseButton->setFixedSize(16, 16);
+				m_inspectorCloseButton->show();
+				m_inspectorCloseButton->raise();
+				m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
+			}
+			else
+			{
+				m_inspectorCloseButton->hide();
+			}
 
 			getAction(InspectPageAction)->setChecked(checked);
 
@@ -1456,7 +1483,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent->button() == Qt::MiddleButton)
 			{
-				QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
 				if (result.linkUrl().isValid())
 				{
@@ -1509,6 +1536,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 		}
+	}
+	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
+	{
+		m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
 	}
 
 	return QObject::eventFilter(object, event);
