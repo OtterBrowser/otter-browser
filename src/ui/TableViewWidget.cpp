@@ -19,12 +19,34 @@
 
 #include "TableViewWidget.h"
 
+#include <QtCore/QTimer>
+#include <QtGui/QDropEvent>
+
 namespace Otter
 {
 
 TableViewWidget::TableViewWidget(QWidget *parent) : QTableView(parent),
-	m_model(NULL)
+	m_model(NULL),
+	m_dropRow(-1)
 {
+	viewport()->setAcceptDrops(true);
+}
+
+void TableViewWidget::dropEvent(QDropEvent *event)
+{
+	QTableView::dropEvent(event);
+
+	if (event->isAccepted())
+	{
+		m_dropRow = indexAt(event->pos()).row();
+
+		if (dropIndicatorPosition() == QAbstractItemView::BelowItem)
+		{
+			++m_dropRow;
+		}
+
+		QTimer::singleShot(50, this, SLOT(updateDropSelection()));
+	}
 }
 
 void TableViewWidget::moveRow(bool up)
@@ -94,6 +116,13 @@ void TableViewWidget::notifySelectionChanged()
 	}
 }
 
+void TableViewWidget::updateDropSelection()
+{
+	setCurrentIndex(getIndex(qBound(0, m_dropRow, getRowCount()), 0));
+
+	m_dropRow = -1;
+}
+
 void TableViewWidget::setFilter(const QString filter)
 {
 	if (!m_model)
@@ -135,6 +164,8 @@ void TableViewWidget::setData(const QModelIndex &index, const QVariant &value, i
 void TableViewWidget::setModel(QAbstractItemModel *model)
 {
 	QTableView::setModel(model);
+
+	model->setParent(this);
 
 	if (model->inherits(QStringLiteral("QStandardItemModel").toLatin1()))
 	{

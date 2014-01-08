@@ -51,13 +51,16 @@ public slots:
 	void setFilter(const QString filter = QString());
 
 protected:
+	void dropEvent(QDropEvent *event);
 	void moveRow(bool up);
 
 protected slots:
 	void notifySelectionChanged();
+	void updateDropSelection();
 
 private:
 	QStandardItemModel *m_model;
+	int m_dropRow;
 
 signals:
 	void canMoveUpChanged(bool available);
