@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network printsupport sensors sql webkitwidgets widgets
+QT += core gui network printsupport sql webkitwidgets widgets
 
 TARGET = otter-browser
 TEMPLATE = app
