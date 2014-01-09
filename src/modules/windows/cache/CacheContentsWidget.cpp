@@ -38,6 +38,7 @@ namespace Otter
 
 CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),
+	m_isLoading(true),
 	m_ui(new Ui::CacheContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -98,6 +99,10 @@ void CacheContentsWidget::populateCache()
 	m_ui->cacheView->setItemDelegate(new ItemDelegate(this));
 	m_ui->cacheView->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->cacheView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+	m_isLoading = false;
+
+	emit loadingChanged(false);
 
 	connect(cache, SIGNAL(cleared()), this, SLOT(clearEntries()));
 	connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
@@ -499,6 +504,11 @@ QIcon CacheContentsWidget::getIcon() const
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 {
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toUrl() : QUrl());
+}
+
+bool CacheContentsWidget::isLoading() const
+{
+	return m_isLoading;
 }
 
 }

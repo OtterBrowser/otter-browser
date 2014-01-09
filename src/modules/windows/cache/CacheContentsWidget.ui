@@ -79,6 +79,9 @@
          </sizepolicy>
         </property>
         <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -98,12 +101,18 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="Otter::TextLabelWidget" name="addressLabelWidget" native="true"/>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="typeLabel">
            <property name="text">
             <string>Type:</string>
            </property>
           </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="Otter::TextLabelWidget" name="typeLabelWidget" native="true"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="sizeLabel">
@@ -112,6 +121,9 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="Otter::TextLabelWidget" name="sizeLabelWidget" native="true"/>
+         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="lastModifiedLabel">
            <property name="text">
@@ -119,24 +131,15 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="1">
+          <widget class="Otter::TextLabelWidget" name="lastModifiedLabelWidget" native="true"/>
+         </item>
          <item row="4" column="0">
           <widget class="QLabel" name="expiresLabel">
            <property name="text">
             <string>Expires:</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="Otter::TextLabelWidget" name="addressLabelWidget" native="true"/>
-         </item>
-         <item row="1" column="1">
-          <widget class="Otter::TextLabelWidget" name="typeLabelWidget" native="true"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="Otter::TextLabelWidget" name="sizeLabelWidget" native="true"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="Otter::TextLabelWidget" name="lastModifiedLabelWidget" native="true"/>
          </item>
          <item row="4" column="1">
           <widget class="Otter::TextLabelWidget" name="expiresLabelWidget" native="true"/>
@@ -175,6 +178,12 @@
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>
