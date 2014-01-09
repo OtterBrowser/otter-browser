@@ -41,7 +41,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 	m_ui(new Ui::CacheContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->previewLabel->setPixmap(Utils::getIcon(QLatin1String("unknown")).pixmap(64, 64));
+	m_ui->previewLabel->hide();
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
@@ -364,6 +364,8 @@ void CacheContentsWidget::updateActions()
 	const QUrl entry = getEntry(index);
 	const QString domain = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
 
+	m_ui->previewLabel->hide();
+	m_ui->previewLabel->setPixmap(QPixmap());
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
 
 	if (entry.isValid())
@@ -401,7 +403,7 @@ void CacheContentsWidget::updateActions()
 			preview = QPixmap::fromImage(image);
 		}
 
-		if (preview.isNull())
+		if (preview.isNull() && QIcon::hasThemeIcon(mimeType.iconName()))
 		{
 			preview = QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
 		}
@@ -411,7 +413,12 @@ void CacheContentsWidget::updateActions()
 		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
 		m_ui->lastModifiedLabelWidget->setText(metaData.lastModified().toString());
 		m_ui->expiresLabelWidget->setText(metaData.expirationDate().toString());
-		m_ui->previewLabel->setPixmap(preview);
+
+		if (!preview.isNull())
+		{
+			m_ui->previewLabel->show();
+			m_ui->previewLabel->setPixmap(preview);
+		}
 
 		if (device)
 		{
@@ -425,7 +432,6 @@ void CacheContentsWidget::updateActions()
 		m_ui->sizeLabelWidget->setText(QString());
 		m_ui->lastModifiedLabelWidget->setText(QString());
 		m_ui->expiresLabelWidget->setText(QString());
-		m_ui->previewLabel->setPixmap(Utils::getIcon(QLatin1String("unknown")).pixmap(64, 64));
 
 		if (!domain.isEmpty())
 		{
