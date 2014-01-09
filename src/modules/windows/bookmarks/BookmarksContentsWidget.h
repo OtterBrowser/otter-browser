@@ -48,6 +48,7 @@ public:
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
+	bool isLoading() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -56,6 +57,7 @@ protected:
 	int findFolder(const QModelIndex &index);
 
 protected slots:
+	void populateBookmarks();
 	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
 	void addBookmark();
 	void addFolder();
@@ -73,6 +75,7 @@ private:
 	QStandardItemModel *m_model;
 	QList<QString> m_bookmarksToOpen;
 	QHash<WindowAction, QAction*> m_actions;
+	bool m_isLoading;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 

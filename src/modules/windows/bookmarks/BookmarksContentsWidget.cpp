@@ -27,6 +27,7 @@
 
 #include "ui_BookmarksContentsWidget.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
@@ -37,19 +38,10 @@ namespace Otter
 
 BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),
+	m_isLoading(true),
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
-
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder();
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		addBookmark(bookmarks.at(i), m_model->invisibleRootItem());
-	}
-
-	m_ui->bookmarksView->setModel(m_model);
-	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 
 	QMenu *addMenu = new QMenu(m_ui->addButton);
 	addMenu->addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
@@ -58,11 +50,8 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 
 	m_ui->addButton->setMenu(addMenu);
 
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
-	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
-	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	QTimer::singleShot(100, this, SLOT(populateBookmarks()));
+
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
@@ -86,6 +75,29 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void BookmarksContentsWidget::populateBookmarks()
+{
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder();
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		addBookmark(bookmarks.at(i), m_model->invisibleRootItem());
+	}
+
+	m_ui->bookmarksView->setModel(m_model);
+	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
+
+	m_isLoading = false;
+
+	emit loadingChanged(false);
+
+	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
+	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
+	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 
 void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStandardItem *parent)
@@ -470,6 +482,11 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
 
 	return found;
+}
+
+bool BookmarksContentsWidget::isLoading() const
+{
+	return m_isLoading;
 }
 
 }

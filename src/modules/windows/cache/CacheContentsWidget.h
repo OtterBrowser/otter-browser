@@ -47,6 +47,7 @@ public:
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
+	bool isLoading() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -71,6 +72,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	QHash<WindowAction, QAction*> m_actions;
+	bool m_isLoading;
 	Ui::CacheContentsWidget *m_ui;
 };
 

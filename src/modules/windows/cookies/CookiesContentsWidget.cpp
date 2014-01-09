@@ -35,6 +35,7 @@ namespace Otter
 
 CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),
+	m_isLoading(true),
 	m_ui(new Ui::CookiesContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -80,6 +81,10 @@ void CookiesContentsWidget::populateCookies()
 	m_model->sort(0);
 
 	m_ui->cookiesView->setModel(m_model);
+
+	m_isLoading = false;
+
+	emit loadingChanged(false);
 
 	connect(cookieJar, SIGNAL(cookieAdded(QNetworkCookie)), this, SLOT(addCookie(QNetworkCookie)));
 	connect(cookieJar, SIGNAL(cookieRemoved(QNetworkCookie)), this, SLOT(removeCookie(QNetworkCookie)));
@@ -412,6 +417,11 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 	cookie.setPath(index.data(Qt::UserRole).toString());
 
 	return cookie;
+}
+
+bool CookiesContentsWidget::isLoading() const
+{
+	return m_isLoading;
 }
 
 }

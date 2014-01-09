@@ -34,6 +34,7 @@ namespace Otter
 
 HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),
+	m_isLoading(true),
 	m_ui(new Ui::HistoryContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -167,6 +168,10 @@ void HistoryContentsWidget::populateEntries()
 			groupItem->sortChildren(2, Qt::DescendingOrder);
 		}
 	}
+
+	m_isLoading = false;
+
+	emit loadingChanged(false);
 }
 
 void HistoryContentsWidget::clearEntries()
@@ -426,6 +431,11 @@ QIcon HistoryContentsWidget::getIcon() const
 qint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toLongLong() : -1);
+}
+
+bool HistoryContentsWidget::isLoading() const
+{
+	return m_isLoading;
 }
 
 }
