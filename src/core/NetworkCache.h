@@ -35,6 +35,7 @@ public:
 	void clearCache(int period = 0);
 	void insert(QIODevice *device);
 	QIODevice* prepare(const QNetworkCacheMetaData &metaData);
+	QString getPathForUrl(const QUrl &url);
 	QList<QUrl> getEntries() const;
 	bool remove(const QUrl &url);
 

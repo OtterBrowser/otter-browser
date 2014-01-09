@@ -96,6 +96,42 @@ QIODevice* NetworkCache::prepare(const QNetworkCacheMetaData &metaData)
 	return device;
 }
 
+QString NetworkCache::getPathForUrl(const QUrl &url)
+{
+	if (!url.isValid() || !metaData(url).isValid())
+	{
+		return QString();
+	}
+
+	const QDir cacheMainDirectory(cacheDirectory());
+	const QStringList directories = cacheMainDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+	for (int i = 0; i < directories.count(); ++i)
+	{
+		const QDir cacheSubDirectory(cacheMainDirectory.absoluteFilePath(directories.at(i)));
+		const QStringList subDirectories = cacheSubDirectory.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+		for (int j = 0; j < subDirectories.count(); ++j)
+		{
+			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
+			const QStringList files = cacheFilesDirectory.entryList(QDir::Files);
+
+			for (int k = 0; k < files.count(); ++k)
+			{
+				const QString cacheFilePath = cacheFilesDirectory.absoluteFilePath(files.at(k));
+				const QNetworkCacheMetaData metaData = fileMetaData(cacheFilePath);
+
+				if (metaData.isValid() && url == metaData.url())
+				{
+					return cacheFilePath;
+				}
+			}
+		}
+	}
+
+	return QString();
+}
+
 QList<QUrl> NetworkCache::getEntries() const
 {
 	QList<QUrl> entries;
