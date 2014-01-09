@@ -196,24 +196,27 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		}
 	}
 
-	const QMimeType mimeType = (type.isEmpty() ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+	const QMimeType mimeType = ((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 	QList<QStandardItem*> entryItems;
 	entryItems.append(new QStandardItem(entry.path()));
 	entryItems.append(new QStandardItem(mimeType.name()));
-	entryItems.append(new QStandardItem(Utils::formatUnit(device->size())));
+	entryItems.append(new QStandardItem(device ? Utils::formatUnit(device->size()) : tr("Unknown")));
 	entryItems.append(new QStandardItem(metaData.lastModified().toString()));
 	entryItems.append(new QStandardItem(metaData.expirationDate().toString()));
 	entryItems[0]->setData(entry, Qt::UserRole);
 
 	QStandardItem *sizeItem = m_model->item(domainItem->row(), 2);
 
-	if (sizeItem)
+	if (sizeItem && device)
 	{
 		sizeItem->setData((sizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
 		sizeItem->setText(Utils::formatUnit(sizeItem->data(Qt::UserRole).toLongLong()));
 	}
 
-	device->deleteLater();
+	if (device)
+	{
+		device->deleteLater();
+	}
 
 	domainItem->appendRow(entryItems);
 	domainItem->setText(QString("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
@@ -381,11 +384,11 @@ void CacheContentsWidget::updateActions()
 			}
 		}
 
-		const QMimeType mimeType = (type.isEmpty() ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+		const QMimeType mimeType = ((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 		QPixmap preview;
 		const int size = (m_ui->formWidget->contentsRect().height() - 10);
 
-		if (mimeType.name().startsWith(QLatin1String("image")))
+		if (mimeType.name().startsWith(QLatin1String("image")) && device)
 		{
 			QImage image;
 			image.load(device, "");
@@ -405,12 +408,15 @@ void CacheContentsWidget::updateActions()
 
 		m_ui->addressLabelWidget->setText(entry.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
 		m_ui->typeLabelWidget->setText(mimeType.name());
-		m_ui->sizeLabelWidget->setText(Utils::formatUnit(device->size(), false, 2));
+		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
 		m_ui->lastModifiedLabelWidget->setText(metaData.lastModified().toString());
 		m_ui->expiresLabelWidget->setText(metaData.expirationDate().toString());
 		m_ui->previewLabel->setPixmap(preview);
 
-		device->deleteLater();
+		if (device)
+		{
+			device->deleteLater();
+		}
 	}
 	else
 	{
