@@ -369,6 +369,7 @@ void CacheContentsWidget::updateActions()
 	const QUrl entry = getEntry(index);
 	const QString domain = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
 
+	m_ui->locationLabelWidget->setText(QString());
 	m_ui->previewLabel->hide();
 	m_ui->previewLabel->setPixmap(QPixmap());
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
@@ -414,6 +415,7 @@ void CacheContentsWidget::updateActions()
 		}
 
 		m_ui->addressLabelWidget->setText(entry.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
+		m_ui->locationLabelWidget->setText(cache->getPathForUrl(entry));
 		m_ui->typeLabelWidget->setText(mimeType.name());
 		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
 		m_ui->lastModifiedLabelWidget->setText(metaData.lastModified().toString());
