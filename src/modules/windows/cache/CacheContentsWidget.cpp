@@ -205,7 +205,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	QList<QStandardItem*> entryItems;
 	entryItems.append(new QStandardItem(entry.path()));
 	entryItems.append(new QStandardItem(mimeType.name()));
-	entryItems.append(new QStandardItem(device ? Utils::formatUnit(device->size()) : tr("Unknown")));
+	entryItems.append(new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()));
 	entryItems.append(new QStandardItem(metaData.lastModified().toString()));
 	entryItems.append(new QStandardItem(metaData.expirationDate().toString()));
 	entryItems[0]->setData(entry, Qt::UserRole);
@@ -427,8 +427,44 @@ void CacheContentsWidget::updateActions()
 			m_ui->previewLabel->setPixmap(preview);
 		}
 
+		QStandardItem *typeItem = m_model->itemFromIndex(index.sibling(index.row(), 1));
+
+		if (typeItem && typeItem->text().isEmpty())
+		{
+			typeItem->setText(mimeType.name());
+		}
+
+		QStandardItem *lastModifiedItem = m_model->itemFromIndex(index.sibling(index.row(), 3));
+
+		if (lastModifiedItem && lastModifiedItem->text().isEmpty())
+		{
+			lastModifiedItem->setText(metaData.lastModified().toString());
+		}
+
+		QStandardItem *expiresItem = m_model->itemFromIndex(index.sibling(index.row(), 4));
+
+		if (expiresItem && expiresItem->text().isEmpty())
+		{
+			expiresItem->setText(metaData.expirationDate().toString());
+		}
+
 		if (device)
 		{
+			QStandardItem *sizeItem = m_model->itemFromIndex(index.sibling(index.row(), 2));
+
+			if (sizeItem && sizeItem->text().isEmpty())
+			{
+				sizeItem->setText(Utils::formatUnit(device->size()));
+
+				QStandardItem *domainSizeItem = (sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : NULL);
+
+				if (domainSizeItem)
+				{
+					domainSizeItem->setData((domainSizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
+					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(Qt::UserRole).toLongLong()));
+				}
+			}
+
 			device->deleteLater();
 		}
 	}
