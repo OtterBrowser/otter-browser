@@ -29,6 +29,7 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtWidgets/QMessageBox>
+#include <QtNetwork/QNetworkProxy>
 
 namespace Otter
 {
@@ -70,6 +71,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
+	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
@@ -206,6 +208,29 @@ void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QA
 	else
 	{
 		AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
+		dialog.exec();
+	}
+}
+
+void NetworkAccessManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
+{
+	if (m_widget)
+	{
+		AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, m_widget);
+		QEventLoop eventLoop;
+
+		m_widget->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		m_widget->hideDialog(&dialog);
+	}
+	else
+	{
+		AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, SessionsManager::getActiveWindow());
 		dialog.exec();
 	}
 }
