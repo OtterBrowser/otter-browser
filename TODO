@@ -5,22 +5,24 @@ High priority / ASAP:
 - passwords manager
 
 Medium priority / soon:
-- mail and feeds client (as module)
 - delayed loading of Flash objects
 - content blocking
 - spell checking
+- feeds reader (as module)
 - panels (page informations, notes, transfers, bookmarks etc.)
+- greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
 - system tray icon
 
 Low priority / later:
-- fine-tune UI (sizes and margins)
+- mail client (as module)
+- shared contacts database
+- fine-tune UI (sizes, margins and other details)
 - form auto completion
 - exposing MDI features
 - mouse gestures
-- tabs grouping
-- import of existing settings etc.
-- allow to overwrite list of available context menu actions
-- extensions
+- tabs grouping (stacking and panorama mode)
+- import of existing settings, bookmarks etc.
+- extensions (Firefox and Chrome APIs support)
 - Opera Link like solution
 - improved integration with different platforms (Windows taskbar integration etc.)
 - Blink backend (with upcoming QtWebEngine, when API will be useful)
@@ -31,4 +33,4 @@ Low priority / maybe:
 - BitTorrent module
 - support for tab thumbnails embedded in tab bar
 
-And lots of smaller things. ;-)
+And lots of smaller or obvious things. ;-)
