@@ -43,11 +43,15 @@ public:
 	~CacheContentsWidget();
 
 	void print(QPrinter *printer);
+	QAction* getAction(WindowAction action);
 	QString getTitle() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	bool isLoading() const;
+
+public slots:
+	void triggerAction(WindowAction action, bool checked = false);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -56,6 +60,7 @@ protected:
 	QUrl getEntry(const QModelIndex &index) const;
 
 protected slots:
+	void triggerAction();
 	void populateCache();
 	void filterCache(const QString &filter);
 	void clearEntries();

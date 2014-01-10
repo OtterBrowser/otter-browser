@@ -77,6 +77,26 @@ void CacheContentsWidget::print(QPrinter *printer)
 	m_ui->cacheView->render(printer);
 }
 
+void CacheContentsWidget::triggerAction(WindowAction action, bool checked)
+{
+	Q_UNUSED(checked)
+
+	if (action == DeleteAction)
+	{
+		removeDomainEntriesOrEntry();
+	}
+}
+
+void CacheContentsWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
+}
+
 void CacheContentsWidget::populateCache()
 {
 	NetworkCache *cache = NetworkAccessManager::getCache();
@@ -482,6 +502,13 @@ void CacheContentsWidget::updateActions()
 			m_ui->addressLabelWidget->setText(domain);
 		}
 	}
+
+	if (m_ui->deleteButton->isEnabled() != getAction(DeleteAction)->isEnabled())
+	{
+		getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+
+		emit actionsChanged();
+	}
 }
 
 QStandardItem* CacheContentsWidget::findDomain(const QString &domain)
@@ -518,6 +545,30 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	}
 
 	return NULL;
+}
+
+QAction* CacheContentsWidget::getAction(WindowAction action)
+{
+	if (m_actions.contains(action))
+	{
+		return m_actions[action];
+	}
+
+	if (action != DeleteAction)
+	{
+		return NULL;
+	}
+
+	QAction *actionObject = new QAction(this);
+	actionObject->setData(action);
+
+	ActionsManager::setupLocalAction(actionObject, QLatin1String("Delete"));
+
+	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	m_actions[action] = actionObject;
+
+	return actionObject;
 }
 
 QString CacheContentsWidget::getTitle() const
