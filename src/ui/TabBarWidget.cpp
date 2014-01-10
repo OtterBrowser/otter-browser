@@ -313,12 +313,12 @@ void TabBarWidget::showPreview(int index)
 
 		const QRect screen = QApplication::desktop()->screenGeometry(this);
 
-		if ((position.x() + m_previewWidget->width()) > screen.width())
+		if ((position.x() + m_previewWidget->width()) > screen.bottomRight().x())
 		{
 			position.setX(screen.width() - m_previewWidget->width());
 		}
 
-		if ((position.y() + m_previewWidget->height()) > screen.height())
+		if ((position.y() + m_previewWidget->height()) > screen.bottomRight().y())
 		{
 			position.setY(screen.height() - m_previewWidget->height());
 		}
