@@ -1480,6 +1480,33 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		else if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			Qt::KeyboardModifiers modifiers = mouseEvent->modifiers();
+
+			if (mouseEvent->button() == Qt::LeftButton)
+			{
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (m_hitResult.linkUrl().isValid())
+				{
+					if (modifiers.testFlag(Qt::ControlModifier))
+					{
+						triggerAction(OpenLinkInNewTabBackgroundAction);
+
+						event->accept();
+
+						return true;
+					}
+					else if (modifiers.testFlag(Qt::ShiftModifier))
+					{
+						triggerAction(OpenLinkInNewTabAction);
+
+						event->accept();
+
+						return true;
+					}
+				}
+
+			}
 
 			if (mouseEvent->button() == Qt::MiddleButton)
 			{
