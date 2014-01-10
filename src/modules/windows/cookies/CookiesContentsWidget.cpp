@@ -88,6 +88,7 @@ void CookiesContentsWidget::populateCookies()
 
 	connect(cookieJar, SIGNAL(cookieAdded(QNetworkCookie)), this, SLOT(addCookie(QNetworkCookie)));
 	connect(cookieJar, SIGNAL(cookieRemoved(QNetworkCookie)), this, SLOT(removeCookie(QNetworkCookie)));
+	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->cookiesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 

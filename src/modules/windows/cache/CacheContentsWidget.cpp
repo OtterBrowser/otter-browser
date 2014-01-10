@@ -107,6 +107,7 @@ void CacheContentsWidget::populateCache()
 	connect(cache, SIGNAL(cleared()), this, SLOT(clearEntries()));
 	connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
 	connect(cache, SIGNAL(entryRemoved(QUrl)), this, SLOT(removeEntry(QUrl)));
+	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->cacheView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 
