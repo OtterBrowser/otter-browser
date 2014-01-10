@@ -141,7 +141,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	{
 		ActionsManager::triggerAction(QLatin1String("NewTab"));
 	}
-	else if (SettingsManager::getValue(QLatin1String("Tabs/CloseOnDoubleClick")).toBool())
+	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
 	{
 		emit requestedClose(tab);
 	}
@@ -151,7 +151,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	QTabBar::mouseReleaseEvent(event);
 
-	if (event->button() == Qt::MidButton && SettingsManager::getValue(QLatin1String("Tabs/CloseOnMiddleClick")).toBool())
+	if (event->button() == Qt::MidButton && SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 	{
 		const int tab = tabAt(event->pos());
 
