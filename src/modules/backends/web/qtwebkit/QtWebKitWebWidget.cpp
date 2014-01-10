@@ -1480,7 +1480,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		else if (event->type() == QEvent::MouseButtonPress)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-			Qt::KeyboardModifiers modifiers = mouseEvent->modifiers();
 
 			if (mouseEvent->button() == Qt::LeftButton)
 			{
@@ -1488,7 +1487,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (m_hitResult.linkUrl().isValid())
 				{
-					if (modifiers.testFlag(Qt::ControlModifier))
+					if (mouseEvent->modifiers() & Qt::ControlModifier)
 					{
 						triggerAction(OpenLinkInNewTabBackgroundAction);
 
@@ -1496,7 +1495,8 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 						return true;
 					}
-					else if (modifiers.testFlag(Qt::ShiftModifier))
+
+					if (mouseEvent->modifiers() & Qt::ShiftModifier)
 					{
 						triggerAction(OpenLinkInNewTabAction);
 
@@ -1505,7 +1505,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 				}
-
 			}
 
 			if (mouseEvent->button() == Qt::MiddleButton)
