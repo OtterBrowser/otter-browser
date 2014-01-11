@@ -230,6 +230,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	entryItems.append(new QStandardItem(metaData.lastModified().toString()));
 	entryItems.append(new QStandardItem(metaData.expirationDate().toString()));
 	entryItems[0]->setData(entry, Qt::UserRole);
+	entryItems[2]->setData((device ? device->size() : 0), Qt::UserRole);
 
 	QStandardItem *sizeItem = m_model->item(domainItem->row(), 2);
 
@@ -268,11 +269,24 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 
 		if (domainItem)
 		{
+			QStandardItem *sizeItem = domainItem->child(entryItem->row(), 2);
+			const qint64 size = (sizeItem ? sizeItem->data(Qt::UserRole).toLongLong() : 0);
+
 			m_model->removeRow(entryItem->row(), domainItem->index());
 
 			if (domainItem->rowCount() == 0)
 			{
 				m_model->invisibleRootItem()->removeRow(domainItem->row());
+			}
+			else
+			{
+				QStandardItem *domainSizeItem = m_model->item(domainItem->row(), 2);
+
+				if (domainSizeItem && size > 0)
+				{
+					domainSizeItem->setData((domainSizeItem->data(Qt::UserRole).toLongLong() - size), Qt::UserRole);
+					domainSizeItem->setText(Utils::formatUnit(domainSizeItem->data(Qt::UserRole).toLongLong()));
+				}
 			}
 		}
 	}
@@ -476,6 +490,7 @@ void CacheContentsWidget::updateActions()
 			if (sizeItem && sizeItem->text().isEmpty())
 			{
 				sizeItem->setText(Utils::formatUnit(device->size()));
+				sizeItem->setData(device->size(), Qt::UserRole);
 
 				QStandardItem *domainSizeItem = (sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : NULL);
 
