@@ -428,21 +428,25 @@ void WindowsManager::closeWindow(Window *window)
 	if (window && !window->isPrivate())
 	{
 		const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
-		SessionWindow information;
-		information.searchEngine = window->getSearchEngine();
-		information.history = history.entries;
-		information.group = 0;
-		information.index = history.index;
-		information.pinned = window->isPinned();
 
-		if (window->getType() != QLatin1String("web"))
+		if (!history.entries.isEmpty())
 		{
-			removeStoredUrl(information.url());
+			SessionWindow information;
+			information.searchEngine = window->getSearchEngine();
+			information.history = history.entries;
+			information.group = 0;
+			information.index = history.index;
+			information.pinned = window->isPinned();
+
+			if (window->getType() != QLatin1String("web"))
+			{
+				removeStoredUrl(information.url());
+			}
+
+			m_closedWindows.prepend(information);
+
+			emit closedWindowsAvailableChanged(true);
 		}
-
-		m_closedWindows.prepend(information);
-
-		emit closedWindowsAvailableChanged(true);
 	}
 
 	if (m_tabBar->count() == 1)
