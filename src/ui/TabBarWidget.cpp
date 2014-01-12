@@ -49,6 +49,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
+	setDocumentMode(true);
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateButtons()));
