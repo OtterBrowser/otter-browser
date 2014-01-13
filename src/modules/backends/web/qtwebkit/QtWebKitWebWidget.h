@@ -33,6 +33,7 @@ namespace Otter
 {
 
 class NetworkAccessManager;
+class QtWebKitWebBackend;
 class QtWebKitWebPage;
 
 class QtWebKitWebWidget : public WebWidget
@@ -40,8 +41,6 @@ class QtWebKitWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebWidget(bool privateWindow = false, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
-
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	void setQuickSearchEngine(const QString &searchEngine);
@@ -74,6 +73,8 @@ public slots:
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
+	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
+
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
@@ -110,6 +111,9 @@ private:
 	bool m_isLinkHovered;
 	bool m_isLoading;
 	bool m_isTyped;
+
+friend class QtWebKitWebBackend;
+friend class QtWebKitWebPage;
 };
 
 }

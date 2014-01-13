@@ -27,7 +27,8 @@
 namespace Otter
 {
 
-WebWidget::WebWidget(bool privateWindow, ContentsWidget *parent) : QWidget(parent)
+WebWidget::WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
+	m_backend(backend)
 {
 	Q_UNUSED(privateWindow)
 }
@@ -183,6 +184,11 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	}
 
 	menu.exec(mapToGlobal(position));
+}
+
+WebBackend* WebWidget::getBackend()
+{
+	return m_backend;
 }
 
 }

@@ -125,7 +125,7 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebPage *page = new QtWebKitWebPage(NULL);
-		QtWebKitWebWidget *widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, page);
+		QtWebKitWebWidget *widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), (m_webWidget ? m_webWidget->getBackend() : NULL), NULL, page);
 
 		if (m_webWidget)
 		{

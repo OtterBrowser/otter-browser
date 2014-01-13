@@ -35,6 +35,8 @@ public:
 	WebWidget* createWidget(bool privateWindow = false, ContentsWidget *parent = NULL);
 	QString getTitle() const;
 	QString getDescription() const;
+	QString getVersion() const;
+	QString getEngineVersion() const;
 	QIcon getIconForUrl(const QUrl &url);
 
 protected slots:

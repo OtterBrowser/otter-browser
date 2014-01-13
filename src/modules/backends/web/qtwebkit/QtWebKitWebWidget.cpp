@@ -51,7 +51,7 @@
 namespace Otter
 {
 
-QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, ContentsWidget *parent, QtWebKitWebPage *page) : WebWidget(parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent, QtWebKitWebPage *page) : WebWidget(privateWindow, backend, parent),
 	m_parent(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
@@ -959,7 +959,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), parent);
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
 	widget->setQuickSearchEngine(m_searchEngine);
 	widget->setUrl(getUrl());

@@ -55,13 +55,13 @@ enum FindFlag
 
 Q_DECLARE_FLAGS(FindFlags, FindFlag)
 
+class WebBackend;
+
 class WebWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit WebWidget(bool privateWindow, ContentsWidget *parent = NULL);
-
 	virtual void search(const QString &query, const QString &engine) = 0;
 	virtual void print(QPrinter *printer) = 0;
 	virtual WebWidget* clone(ContentsWidget *parent = NULL) = 0;
@@ -75,6 +75,7 @@ public:
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	WebBackend* getBackend();
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -88,6 +89,12 @@ public slots:
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
+
+protected:
+	explicit WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent = NULL);
+
+private:
+	WebBackend *m_backend;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);

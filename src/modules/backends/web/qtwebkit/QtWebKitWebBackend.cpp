@@ -25,6 +25,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QStandardPaths>
 #include <QtWebKit/QWebSettings>
+#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
@@ -89,7 +90,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
 
-	return new QtWebKitWebWidget(privateWindow, parent);
+	return new QtWebKitWebWidget(privateWindow, this, parent);
 }
 
 QString QtWebKitWebBackend::getTitle() const
@@ -100,6 +101,16 @@ QString QtWebKitWebBackend::getTitle() const
 QString QtWebKitWebBackend::getDescription() const
 {
 	return tr("Backend utilizing QtWebKit module");
+}
+
+QString QtWebKitWebBackend::getVersion() const
+{
+	return QCoreApplication::applicationVersion();
+}
+
+QString QtWebKitWebBackend::getEngineVersion() const
+{
+	return qWebKitVersion();
 }
 
 QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)
