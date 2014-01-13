@@ -25,11 +25,34 @@ namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QHash<QString, QAction*> ActionsManager::m_applicationActions;
 QHash<QWidget*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
+QHash<QString, QAction*> ActionsManager::m_applicationActions;
+QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent)
 {
+	m_nativeShortcuts[QLatin1String("NewWindow")] = QKeySequence(QKeySequence::New);
+	m_nativeShortcuts[QLatin1String("Open")] = QKeySequence(QKeySequence::Open);
+	m_nativeShortcuts[QLatin1String("Save")] = QKeySequence(QKeySequence::Save);
+	m_nativeShortcuts[QLatin1String("Exit")] = QKeySequence(QKeySequence::Quit);
+	m_nativeShortcuts[QLatin1String("Undo")] = QKeySequence(QKeySequence::Undo);
+	m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
+	m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
+	m_nativeShortcuts[QLatin1String("Cut")] = QKeySequence(QKeySequence::Cut);
+	m_nativeShortcuts[QLatin1String("Copy")] = QKeySequence(QKeySequence::Copy);
+	m_nativeShortcuts[QLatin1String("Paste")] = QKeySequence(QKeySequence::Paste);
+	m_nativeShortcuts[QLatin1String("Delete")] = QKeySequence(QKeySequence::Delete);
+	m_nativeShortcuts[QLatin1String("SelectAll")] = QKeySequence(QKeySequence::SelectAll);
+	m_nativeShortcuts[QLatin1String("Find")] = QKeySequence(QKeySequence::Find);
+	m_nativeShortcuts[QLatin1String("FindNext")] = QKeySequence(QKeySequence::FindNext);
+	m_nativeShortcuts[QLatin1String("FindPrevious")] = QKeySequence(QKeySequence::FindPrevious);
+	m_nativeShortcuts[QLatin1String("Reload")] = QKeySequence(QKeySequence::Refresh);
+	m_nativeShortcuts[QLatin1String("ZoomIn")] = QKeySequence(QKeySequence::ZoomIn);
+	m_nativeShortcuts[QLatin1String("ZoomOut")] = QKeySequence(QKeySequence::ZoomOut);
+	m_nativeShortcuts[QLatin1String("Back")] = QKeySequence(QKeySequence::Back);
+	m_nativeShortcuts[QLatin1String("Forward")] = QKeySequence(QKeySequence::Forward);
+	m_nativeShortcuts[QLatin1String("Help")] = QKeySequence(QKeySequence::HelpContents);
+	m_nativeShortcuts[QLatin1String("ApplicationConfiguration")] = QKeySequence(QKeySequence::Preferences);
 }
 
 ActionsManager::~ActionsManager()

@@ -58,8 +58,9 @@ private:
 	void addWindow(QWidget *window);
 
 	static ActionsManager *m_instance;
-	static QHash<QString, QAction*> m_applicationActions;
 	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
+	static QHash<QString, QAction*> m_applicationActions;
+	static QHash<QString, QKeySequence> m_nativeShortcuts;
 };
 
 }
