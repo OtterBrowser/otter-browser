@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Otter Browser
+GenericName=Web Browser
+GenericName[ru]=Веб браузер
+Icon=
+Type=Application
+Categories=Application;Network;
+Encoding=UTF-8
+Exec=otter-browser %u
+Terminal=false
+StartupNotify=false
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
