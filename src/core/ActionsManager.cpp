@@ -19,7 +19,6 @@
 
 #include "ActionsManager.h"
 #include "SessionsManager.h"
-#include "SettingsManager.h"
 
 namespace Otter
 {
@@ -111,7 +110,10 @@ void ActionsManager::registerAction(QWidget *window, QAction *action)
 
 	const QString name = (action->objectName().startsWith(QLatin1String("action")) ? action->objectName().mid(6) : action->objectName());
 
-	action->setShortcut(QKeySequence(SettingsManager::getDefaultValue(QLatin1String("Actions/") + name).toString()));
+	if (m_nativeShortcuts.contains(name))
+	{
+		action->setShortcut(QKeySequence(m_nativeShortcuts[name]));
+	}
 
 	m_windowActions[window][name] = action;
 }

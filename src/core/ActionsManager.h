@@ -55,8 +55,6 @@ protected slots:
 private:
 	explicit ActionsManager(QObject *parent = NULL);
 
-	void addWindow(QWidget *window);
-
 	static ActionsManager *m_instance;
 	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
 	static QHash<QString, QAction*> m_applicationActions;

@@ -135,31 +135,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SettingsManager::setDefaultValue(QLatin1String("Paths/Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-	SettingsManager::setDefaultValue(QLatin1String("Actions/NewTab"), QKeySequence(QLatin1String("Ctrl+T")).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/NewWindow"), QKeySequence(QKeySequence::New).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Open"), QKeySequence(QKeySequence::Open).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Save"), QKeySequence(QKeySequence::Save).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/CloseTab"), QKeySequence(QLatin1String("Ctrl+W")).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Exit"), QKeySequence(QKeySequence::Quit).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Undo"), QKeySequence(QKeySequence::Undo).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Redo"), QKeySequence(QKeySequence::Redo).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Redo"), QKeySequence(QKeySequence::Redo).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Cut"), QKeySequence(QKeySequence::Cut).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Copy"), QKeySequence(QKeySequence::Copy).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Paste"), QKeySequence(QKeySequence::Paste).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Delete"), QKeySequence(QKeySequence::Delete).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/SelectAll"), QKeySequence(QKeySequence::SelectAll).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Find"), QKeySequence(QKeySequence::Find).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/FindNext"), QKeySequence(QKeySequence::FindNext).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/FindPrevious"), QKeySequence(QKeySequence::FindPrevious).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Reload"), QKeySequence(QKeySequence::Refresh).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/ZoomIn"), QKeySequence(QKeySequence::ZoomIn).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/ZoomOut"), QKeySequence(QKeySequence::ZoomOut).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Back"), QKeySequence(QKeySequence::Back).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Forward"), QKeySequence(QKeySequence::Forward).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Help"), QKeySequence(QKeySequence::HelpContents).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/ApplicationConfiguration"), QKeySequence(QKeySequence::Preferences).toString());
-	SettingsManager::setDefaultValue(QLatin1String("Actions/Fullscreen"), QKeySequence(QLatin1String("F11")).toString());
 
 	ActionsManager::createInstance(this);
 
