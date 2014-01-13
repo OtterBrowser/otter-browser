@@ -39,6 +39,9 @@ public:
 
 protected slots:
 	void optionChanged(const QString &option);
+
+private:
+	bool m_isInitialized;
 };
 
 }

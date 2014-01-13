@@ -29,23 +29,9 @@
 namespace Otter
 {
 
-QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent)
+QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
+	m_isInitialized(false)
 {
-	const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-
-	QDir().mkpath(cachePath);
-
-	QWebSettings *globalSettings = QWebSettings::globalSettings();
-	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-	globalSettings->setIconDatabasePath(cachePath);
-	globalSettings->setOfflineStoragePath(cachePath);
-
-	QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
-
-	optionChanged(QLatin1String("Browser/"));
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
 void QtWebKitWebBackend::optionChanged(const QString &option)
@@ -82,6 +68,27 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 
 WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *parent)
 {
+	if (!m_isInitialized)
+	{
+		m_isInitialized = true;
+
+		const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+
+		QDir().mkpath(cachePath);
+
+		QWebSettings *globalSettings = QWebSettings::globalSettings();
+		globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+		globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+		globalSettings->setIconDatabasePath(cachePath);
+		globalSettings->setOfflineStoragePath(cachePath);
+
+		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
+
+		optionChanged(QLatin1String("Browser/"));
+
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	}
+
 	return new QtWebKitWebWidget(privateWindow, parent);
 }
 
