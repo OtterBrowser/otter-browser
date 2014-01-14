@@ -79,5 +79,8 @@
         <file>schemas/options.ini</file>
         <file>icons/cache.png</file>
         <file>keyboard/default.ini</file>
+        <file>keyboard/platform.ini</file>
+        <file>macros/default.ini</file>
+        <file>macros/platform.ini</file>
     </qresource>
 </RCC>

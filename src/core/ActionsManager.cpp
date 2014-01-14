@@ -19,6 +19,7 @@
 
 #include "ActionsManager.h"
 #include "SessionsManager.h"
+#include "SettingsManager.h"
 
 namespace Otter
 {
@@ -52,6 +53,11 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent)
 	m_nativeShortcuts[QLatin1String("Forward")] = QKeySequence(QKeySequence::Forward);
 	m_nativeShortcuts[QLatin1String("Help")] = QKeySequence(QKeySequence::HelpContents);
 	m_nativeShortcuts[QLatin1String("ApplicationConfiguration")] = QKeySequence(QKeySequence::Preferences);
+
+	optionChanged(QLatin1String("Browser/ActionMacrosProfiles"), SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfiles")));
+	optionChanged(QLatin1String("Browser/KeyboardShortcutsProfiles"), SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfiles")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 ActionsManager::~ActionsManager()
@@ -64,6 +70,20 @@ ActionsManager::~ActionsManager()
 void ActionsManager::createInstance(QObject *parent)
 {
 	m_instance = new ActionsManager(parent);
+}
+
+void ActionsManager::optionChanged(const QString &option, const QVariant &value)
+{
+	Q_UNUSED(value)
+
+	if (option == QLatin1String("Browser/ActionMacrosProfiles"))
+	{
+//TODO
+	}
+	else if (option == QLatin1String("Browser/KeyboardShortcutsProfiles"))
+	{
+//TODO
+	}
 }
 
 void ActionsManager::removeWindow(QObject *window)

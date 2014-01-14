@@ -50,6 +50,7 @@ public:
 	static bool hasShortcut(const QKeySequence &shortcut, const QLatin1String &excludeAction);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void removeWindow(QObject *window);
 
 private:
