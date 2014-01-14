@@ -209,6 +209,31 @@ void TabBarWidget::leaveEvent(QEvent *event)
 	adjustSize();
 }
 
+void TabBarWidget::wheelEvent(QWheelEvent *event)
+{
+	QWidget::wheelEvent(event);
+
+	if (!(event->modifiers() & Qt::ControlModifier))
+	{
+		return;
+	}
+
+	const int index = (currentIndex() + (event->delta() > 0 ? -1 : 1));
+
+	if (index < 0)
+	{
+		setCurrentIndex(count() - 1);
+	}
+	else if (index >= count())
+	{
+		setCurrentIndex(0);
+	}
+	else
+	{
+		setCurrentIndex(index);
+	}
+}
+
 void TabBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QTabBar::resizeEvent(event);

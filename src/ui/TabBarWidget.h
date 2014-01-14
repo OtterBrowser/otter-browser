@@ -51,6 +51,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);
+	void wheelEvent(QWheelEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void tabInserted(int index);
 	void tabRemoved(int index);
