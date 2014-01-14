@@ -596,7 +596,7 @@ void MainWindow::actionPreferences()
 
 void MainWindow::actionAboutApplication()
 {
-	QMessageBox::about(this, QLatin1String("Otter"), QString(tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(QApplication::applicationVersion())));
+    QMessageBox::about(this, QLatin1String("Otter"), QString(tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.<br>License: GPL-3<br>Site:<a href=\"%2\">%2</a>").arg(QApplication::applicationVersion(),"https://github.com/Emdek/otter")));
 }
 
 void MainWindow::menuFileAboutToShow()
