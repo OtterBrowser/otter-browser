@@ -46,11 +46,13 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setExpanding(false);
 	setMovable(true);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
-	setTabsClosable(true);
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
 	setDocumentMode(true);
 
+	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateButtons()));
 }
@@ -337,6 +339,14 @@ void TabBarWidget::showPreview(int index)
 	else if (m_previewWidget)
 	{
 		m_previewWidget->hide();
+	}
+}
+
+void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("TabBar/ShowCloseButton"))
+	{
+		setTabsClosable(value.toBool());
 	}
 }
 

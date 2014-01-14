@@ -59,6 +59,7 @@ protected:
 	QSize tabSizeHint(int index) const;
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void closeOther();
 	void cloneTab();
 	void detachTab();
