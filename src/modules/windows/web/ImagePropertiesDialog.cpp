@@ -133,4 +133,9 @@ void ImagePropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
+void ImagePropertiesDialog::setButtonsVisible(bool visible)
+{
+	m_ui->buttonBox->setVisible(visible);
+}
+
 }

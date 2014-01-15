@@ -20,6 +20,8 @@
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/SettingsManager.h"
+#include "../../../../core/Utils.h"
+#include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFile>
@@ -27,9 +29,9 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QInputDialog>
-#include <QtWidgets/QLayout>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
@@ -72,35 +74,31 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 		return;
 	}
 
-	if (m_webWidget)
+	if (!m_webWidget)
 	{
-		QMessageBox dialog;
-		dialog.setModal(false);
-		dialog.setWindowTitle(tr("JavaScript"));
-		dialog.setText(message.toHtmlEscaped());
-		dialog.setStandardButtons(QMessageBox::Ok);
-		dialog.setCheckBox(new QCheckBox(tr("Disable JavaScript popups")));
-
-		QEventLoop eventLoop;
-
-		m_webWidget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_webWidget->hideDialog(&dialog);
-
-		if (dialog.checkBox()->isChecked())
-		{
-			m_ignoreJavaScriptPopups = true;
-		}
+		QWebPage::javaScriptAlert(frame, message);
 
 		return;
 	}
 
-	QWebPage::javaScriptAlert(frame, message);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message.toHtmlEscaped(), QString(), QDialogButtonBox::Ok, NULL, m_webWidget);
+	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
+
+	QEventLoop eventLoop;
+
+	m_webWidget->showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	m_webWidget->hideDialog(&dialog);
+
+	if (dialog.getCheckBoxState())
+	{
+		m_ignoreJavaScriptPopups = true;
+	}
 }
 
 void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
@@ -153,20 +151,13 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 
 	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
 	{
-		QMessageBox dialog;
-		dialog.setWindowTitle(tr("Question"));
-		dialog.setText(tr("Are you sure that you want to send form data again?"));
-		dialog.setInformativeText("Do you want to resend data?");
-		dialog.setIcon(QMessageBox::Question);
-		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-		dialog.setDefaultButton(QMessageBox::Cancel);
-		dialog.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
 		bool cancel = false;
+		bool warn = true;
 
 		if (m_webWidget)
 		{
-			dialog.setModal(false);
+			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_webWidget);
+			dialog.setCheckBox(tr("Do not show this message again"), true);
 
 			QEventLoop eventLoop;
 
@@ -179,14 +170,25 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 
 			m_webWidget->hideDialog(&dialog);
 
-			cancel = (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::RejectRole);
+			cancel = !dialog.isAccepted();
+			warn = !dialog.getCheckBoxState();
 		}
 		else
 		{
+			QMessageBox dialog;
+			dialog.setWindowTitle(tr("Question"));
+			dialog.setText(tr("Are you sure that you want to send form data again?"));
+			dialog.setInformativeText(tr("Do you want to resend data?"));
+			dialog.setIcon(QMessageBox::Question);
+			dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+			dialog.setDefaultButton(QMessageBox::Cancel);
+			dialog.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
 			cancel = (dialog.exec() == QMessageBox::Cancel);
+			warn = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), !dialog.checkBox()->isChecked());
+		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), warn);
 
 		if (cancel)
 		{
@@ -204,35 +206,31 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 		return false;
 	}
 
-	if (m_webWidget)
+	if (!m_webWidget)
 	{
-		QMessageBox dialog;
-		dialog.setModal(false);
-		dialog.setWindowTitle(tr("JavaScript"));
-		dialog.setText(message.toHtmlEscaped());
-		dialog.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-		dialog.setCheckBox(new QCheckBox(tr("Disable JavaScript popups")));
-
-		QEventLoop eventLoop;
-
-		m_webWidget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_webWidget->hideDialog(&dialog);
-
-		if (dialog.checkBox()->isChecked())
-		{
-			m_ignoreJavaScriptPopups = true;
-		}
-
-		return (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::AcceptRole);
+		return QWebPage::javaScriptConfirm(frame, message);
 	}
 
-	return QWebPage::javaScriptConfirm(frame, message);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message.toHtmlEscaped(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_webWidget);
+	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
+
+	QEventLoop eventLoop;
+
+	m_webWidget->showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	m_webWidget->hideDialog(&dialog);
+
+	if (dialog.getCheckBoxState())
+	{
+		m_ignoreJavaScriptPopups = true;
+	}
+
+	return dialog.isAccepted();
 }
 
 bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result)
@@ -242,35 +240,42 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 		return false;
 	}
 
-	if (m_webWidget)
+	if (!m_webWidget)
 	{
-		QInputDialog dialog;
-		dialog.setModal(false);
-		dialog.setWindowTitle(tr("JavaScript"));
-		dialog.setLabelText(message.toHtmlEscaped());
-		dialog.setInputMode(QInputDialog::TextInput);
-		dialog.setTextValue(defaultValue);
-
-		QEventLoop eventLoop;
-
-		m_webWidget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_webWidget->hideDialog(&dialog);
-
-		if (dialog.result() == QDialog::Accepted)
-		{
-			*result = dialog.textValue();
-		}
-
-		return (dialog.result() == QDialog::Accepted);
+		return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
 	}
 
-	return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
+	QWidget *widget = new QWidget(m_webWidget);
+	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
+	QHBoxLayout *layout = new QHBoxLayout(widget);
+	layout->addWidget(new QLabel(message.toHtmlEscaped(), widget));
+	layout->addWidget(lineEdit);
+
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_webWidget);
+	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
+
+	QEventLoop eventLoop;
+
+	m_webWidget->showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	m_webWidget->hideDialog(&dialog);
+
+	if (dialog.isAccepted())
+	{
+		*result = lineEdit->text();
+	}
+
+	if (dialog.getCheckBoxState())
+	{
+		m_ignoreJavaScriptPopups = true;
+	}
+
+	return dialog.isAccepted();
 }
 
 bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
@@ -316,14 +321,7 @@ bool QtWebKitWebPage::shouldInterruptJavaScript()
 {
 	if (m_webWidget)
 	{
-		QMessageBox dialog;
-		dialog.setModal(false);
-		dialog.setWindowTitle(tr("Question"));
-		dialog.setText(tr("The script on this page appears to have a problem."));
-		dialog.setInformativeText(tr("Do you want to stop the script?"));
-		dialog.setIcon(QMessageBox::Question);
-		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_webWidget);
 		QEventLoop eventLoop;
 
 		m_webWidget->showDialog(&dialog);
@@ -335,7 +333,7 @@ bool QtWebKitWebPage::shouldInterruptJavaScript()
 
 		m_webWidget->hideDialog(&dialog);
 
-		return (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::YesRole);
+		return dialog.isAccepted();
 	}
 
 	return QWebPage::shouldInterruptJavaScript();

@@ -32,6 +32,7 @@
 namespace Otter
 {
 
+class ContentsDialog;
 class NetworkAccessManager;
 class QtWebKitWebBackend;
 class QtWebKitWebPage;
@@ -63,8 +64,8 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void showDialog(QWidget *dialog);
-	void hideDialog(QWidget *dialog);
+	void showDialog(ContentsDialog *dialog);
+	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);

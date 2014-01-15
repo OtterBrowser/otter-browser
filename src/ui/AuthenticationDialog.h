@@ -40,6 +40,8 @@ public:
 	explicit AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, QWidget *parent = NULL);
 	~AuthenticationDialog();
 
+	void setButtonsVisible(bool visible);
+
 protected:
 	void changeEvent(QEvent *event);
 

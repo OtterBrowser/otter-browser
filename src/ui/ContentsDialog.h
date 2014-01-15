@@ -20,6 +20,8 @@
 #ifndef OTTER_CONTENTSDIALOG_H
 #define OTTER_CONTENTSDIALOG_H
 
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QLabel>
 
 namespace Otter
@@ -30,14 +32,31 @@ class ContentsDialog : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ContentsDialog(QWidget *payload, QWidget *parent = NULL);
+	explicit ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent);
 
+	void adjustSize();
+	void close(QDialogButtonBox::StandardButton button = QDialogButtonBox::NoButton);
+	void setCheckBox(const QString &text, bool state);
+	bool getCheckBoxState() const;
+	bool isAccepted() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
+protected slots:
+	void clicked(QAbstractButton *button);
+
 private:
-	QWidget *m_payload;
+	QLabel *m_iconLabel;
 	QLabel *m_titleLabel;
+	QLabel *m_closeLabel;
+	QCheckBox *m_checkBox;
+	QDialogButtonBox *m_buttonBox;
 	QPoint m_offset;
+	bool m_isAccepted;
+
+signals:
+	void accepted();
+	void rejected();
+	void closed(bool accepted, QDialogButtonBox::StandardButton button);
 };
 
 }

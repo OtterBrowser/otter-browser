@@ -33,6 +33,26 @@ ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
 	}
 }
 
+void ContentsWidget::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+
+	if (m_layer)
+	{
+		m_layer->resize(size());
+
+		for (int i = 0; i < m_dialogs.count(); ++i)
+		{
+			if (m_dialogs.at(i))
+			{
+				m_dialogs.at(i)->raise();
+				m_dialogs.at(i)->adjustSize();
+				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
+			}
+		}
+	}
+}
+
 void ContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
@@ -45,7 +65,8 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 		{
 			if (m_dialogs.at(i))
 			{
-				m_dialogs.at(i)->parentWidget()->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->parentWidget()->size()).center());
+				m_dialogs.at(i)->raise();
+				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
 			}
 		}
 	}
@@ -62,12 +83,14 @@ void ContentsWidget::close()
 	}
 }
 
-void ContentsWidget::showDialog(QWidget *dialog)
+void ContentsWidget::showDialog(ContentsDialog *dialog)
 {
 	if (!dialog)
 	{
 		return;
 	}
+
+	m_dialogs.append(dialog);
 
 	if (!m_layer)
 	{
@@ -82,18 +105,14 @@ void ContentsWidget::showDialog(QWidget *dialog)
 		m_layer->raise();
 	}
 
-	ContentsDialog *contentsDialog = new ContentsDialog(dialog, this);
-	contentsDialog->show();
-	contentsDialog->adjustSize();
-	contentsDialog->raise();
-	contentsDialog->move(geometry().center() - QRect(QPoint(0, 0), contentsDialog->size()).center());
-
+	dialog->setParent(m_layer);
+	dialog->show();
+	dialog->raise();
 	dialog->setFocus();
-
-	m_dialogs.append(dialog);
+	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
 }
 
-void ContentsWidget::hideDialog(QWidget *dialog)
+void ContentsWidget::hideDialog(ContentsDialog *dialog)
 {
 	m_dialogs.removeAll(dialog);
 

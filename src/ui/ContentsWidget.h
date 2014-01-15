@@ -27,6 +27,8 @@
 namespace Otter
 {
 
+class ContentsDialog;
+
 class ContentsWidget : public QWidget
 {
 	Q_OBJECT
@@ -52,8 +54,8 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
-	void showDialog(QWidget *dialog);
-	void hideDialog(QWidget *dialog);
+	void showDialog(ContentsDialog *dialog);
+	void hideDialog(ContentsDialog *dialog);
 	virtual void goToHistoryIndex(int index);
 	virtual void triggerAction(WindowAction action, bool checked = false);
 	virtual void setHistory(const WindowHistoryInformation &history);
@@ -61,13 +63,14 @@ public slots:
 	virtual void setUrl(const QUrl &url, bool typed = true);
 
 protected:
+	void showEvent(QShowEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void close();
 
 private:
-	QList<QPointer<QWidget> > m_dialogs;
+	QList<QPointer<ContentsDialog> > m_dialogs;
 	QWidget *m_layer;
 
 signals:

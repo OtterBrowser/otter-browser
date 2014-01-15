@@ -63,4 +63,9 @@ void AuthenticationDialog::setup()
 	m_authenticator->setPassword(m_ui->passwordLineEdit->text());
 }
 
+void AuthenticationDialog::setButtonsVisible(bool visible)
+{
+	m_ui->buttonBox->setVisible(visible);
+}
+
 }

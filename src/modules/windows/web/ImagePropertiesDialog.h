@@ -39,6 +39,8 @@ public:
 	explicit ImagePropertiesDialog(const QUrl &url, const QString &alternativeText, const QString &longDescription, const QPixmap &pixmap, QIODevice *device, QWidget *parent = NULL);
 	~ImagePropertiesDialog();
 
+	void setButtonsVisible(bool visible);
+
 protected:
 	void changeEvent(QEvent *event);
 

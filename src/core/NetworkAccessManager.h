@@ -54,7 +54,7 @@ public:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void updateStatus();
-	QNetworkReply *createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
+	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

@@ -23,7 +23,9 @@
 #include "NetworkCache.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 #include "../ui/AuthenticationDialog.h"
+#include "../ui/ContentsDialog.h"
 #include "../ui/ContentsWidget.h"
 
 #include <QtCore/QEventLoop>
@@ -214,12 +216,18 @@ void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QA
 {
 	if (m_widget)
 	{
-		AuthenticationDialog dialog(reply->url(), authenticator, m_widget);
+		AuthenticationDialog *authenticationDialog = new AuthenticationDialog(reply->url(), authenticator, m_widget);
+		authenticationDialog->setButtonsVisible(false);
+
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
+
+		connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+
 		QEventLoop eventLoop;
 
 		m_widget->showDialog(&dialog);
 
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
@@ -237,12 +245,18 @@ void NetworkAccessManager::handleProxyAuthenticationRequired(const QNetworkProxy
 {
 	if (m_widget)
 	{
-		AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, m_widget);
+		AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);
+		authenticationDialog->setButtonsVisible(false);
+
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
+
+		connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+
 		QEventLoop eventLoop;
 
 		m_widget->showDialog(&dialog);
 
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
@@ -277,25 +291,19 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 
 	if (m_widget)
 	{
-		QMessageBox dialog;
-		dialog.setModal(false);
-		dialog.setWindowTitle(tr("Warning"));
-		dialog.setText(tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')));
-		dialog.setIcon(QMessageBox::Warning);
-		dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
 		QEventLoop eventLoop;
 
 		m_widget->showDialog(&dialog);
 
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
 
 		m_widget->hideDialog(&dialog);
 
-		if (dialog.buttonRole(dialog.clickedButton()) == QMessageBox::YesRole)
+		if (dialog.isAccepted())
 		{
 			reply->ignoreSslErrors(errors);
 		}
