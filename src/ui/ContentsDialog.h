@@ -23,6 +23,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QScrollArea>
 
 namespace Otter
 {
@@ -41,6 +42,9 @@ public:
 	bool isAccepted() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
+protected:
+	void resizeEvent(QResizeEvent *event);
+
 protected slots:
 	void clicked(QAbstractButton *button);
 
@@ -48,6 +52,7 @@ private:
 	QLabel *m_iconLabel;
 	QLabel *m_titleLabel;
 	QLabel *m_closeLabel;
+	QScrollArea *m_scrollArea;
 	QCheckBox *m_checkBox;
 	QDialogButtonBox *m_buttonBox;
 	QPoint m_offset;

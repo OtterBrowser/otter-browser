@@ -22,7 +22,7 @@
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QScrollBar>
 
 namespace Otter
 {
@@ -31,6 +31,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	m_iconLabel(new QLabel(this)),
 	m_titleLabel(new QLabel(title, this)),
 	m_closeLabel(new QLabel(this)),
+	m_scrollArea(NULL),
 	m_checkBox(NULL),
 	m_buttonBox(NULL),
 	m_isAccepted(false)
@@ -80,15 +81,16 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 	if (payload || !details.isEmpty())
 	{
-		QScrollArea *scrollArea = new QScrollArea(this);
-		QWidget *scrollWidget = new QWidget(scrollArea);
+		m_scrollArea = new QScrollArea(this);
+
+		QWidget *scrollWidget = new QWidget(m_scrollArea);
 		scrollWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 		QBoxLayout *scrollLayout = new QBoxLayout(QBoxLayout::TopToBottom, scrollWidget);
 		scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 		scrollLayout->setContentsMargins(3, 3, 3, 3);
 
-		scrollArea->setWidget(scrollWidget);
+		m_scrollArea->setWidget(scrollWidget);
 
 		if (!details.isEmpty())
 		{
@@ -103,7 +105,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		scrollWidget->setLayout(scrollLayout);
 		scrollWidget->adjustSize();
 
-		mainLayout->addWidget(scrollArea);
+		mainLayout->addWidget(m_scrollArea);
 	}
 
 	if (buttons != QDialogButtonBox::NoButton)
@@ -121,6 +123,16 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	setWindowFlags(Qt::Widget);
 	setWindowTitle(title);
 	setLayout(mainLayout);
+}
+
+void ContentsDialog::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+
+	if (m_scrollArea)
+	{
+		m_scrollArea->setFrameShape(((m_scrollArea->horizontalScrollBar() && m_scrollArea->horizontalScrollBar()->isVisible()) || (m_scrollArea->verticalScrollBar() && m_scrollArea->verticalScrollBar()->isVisible())) ? QFrame::StyledPanel : QFrame::NoFrame);
+	}
 }
 
 void ContentsDialog::adjustSize()
