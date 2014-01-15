@@ -395,11 +395,11 @@ void MainWindow::actionNewWindowPrivate()
 
 void MainWindow::actionOpen()
 {
-	const QUrl url = QFileDialog::getOpenFileUrl(this, tr("Open File"));
+	const QString path = QFileDialog::getOpenFileName(this, tr("Open File"));
 
-	if (!url.isEmpty())
+	if (!path.isEmpty())
 	{
-		m_windowsManager->open(url);
+		m_windowsManager->open(QUrl(path));
 	}
 }
 
