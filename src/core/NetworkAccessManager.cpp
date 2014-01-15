@@ -75,6 +75,27 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
+void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Browser/DoNotTrackPolicy"))
+	{
+		const QString policyValue = value.toString();
+
+		if (policyValue == QLatin1String("allow"))
+		{
+			m_doNotTrackPolicy = AllowToTrackPolicy;
+		}
+		else if (policyValue == QLatin1String("doNotAllow"))
+		{
+			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
+		}
+		else
+		{
+			m_doNotTrackPolicy = SkipTrackPolicy;
+		}
+	}
+}
+
 void NetworkAccessManager::resetStatistics()
 {
 	killTimer(m_updateTimer);
@@ -285,7 +306,7 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 	}
 }
 
-QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
+QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
 	if (!m_simpleMode)
 	{
@@ -331,27 +352,6 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	return reply;
 }
 
-void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
-{
-	if (option == QLatin1String("Browser/DoNotTrackPolicy"))
-	{
-		const QString policyValue = value.toString();
-
-		if (policyValue == QLatin1String("allow"))
-		{
-			m_doNotTrackPolicy = AllowToTrackPolicy;
-		}
-		else if (policyValue == QLatin1String("doNotAllow"))
-		{
-			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
-		}
-		else
-		{
-			m_doNotTrackPolicy = SkipTrackPolicy;
-		}
-	}
-}
-
 QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
 {
 	if (!m_cookieJar && !privateCookieJar)
@@ -367,7 +367,7 @@ QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
 	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
 }
 
-NetworkCache *NetworkAccessManager::getCache()
+NetworkCache* NetworkAccessManager::getCache()
 {
 	if (!m_cache)
 	{
