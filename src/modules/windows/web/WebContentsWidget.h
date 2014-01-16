@@ -68,21 +68,23 @@ public slots:
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void changeEvent(QEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void scheduleGeometryUpdate();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 	void notifyRequestedNewWindow(WebWidget *widget);
 	void updateFind(bool backwards = false);
 	void updateFindHighlight();
-	void updateProgressBarWidget();
 	void setLoading(bool loading);
 
 private:
 	WebWidget *m_webWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	int m_progressBarTimer;
 	bool m_showProgressBar;
 	Ui::WebContentsWidget *m_ui;
 };

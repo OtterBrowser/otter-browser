@@ -32,6 +32,7 @@ namespace Otter
 WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
 	m_progressBarWidget(NULL),
+	m_progressBarTimer(0),
 	m_showProgressBar(true),
 	m_ui(new Ui::WebContentsWidget)
 {
@@ -44,11 +45,11 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 		m_webWidget = WebBackendsManager::getBackend()->createWidget(privateWindow, this);
 	}
 
-	optionChanged("Browser/ShowDetailedProgressBar", SettingsManager::getValue("Browser/ShowDetailedProgressBar"));
-
 	m_ui->setupUi(this);
 	m_ui->findWidget->hide();
 	m_ui->verticalLayout->addWidget(m_webWidget);
+
+	optionChanged("Browser/ShowDetailedProgressBar", SettingsManager::getValue("Browser/ShowDetailedProgressBar"));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
@@ -76,6 +77,21 @@ WebContentsWidget::~WebContentsWidget()
 	delete m_ui;
 }
 
+void WebContentsWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_progressBarTimer)
+	{
+		killTimer(m_progressBarTimer);
+
+		m_progressBarTimer = 0;
+
+		if (m_progressBarWidget)
+		{
+			m_progressBarWidget->setGeometry(m_webWidget->getProgressBarGeometry());
+		}
+	}
+}
+
 void WebContentsWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
@@ -95,7 +111,7 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	if (m_showProgressBar)
 	{
-		updateProgressBarWidget();
+		scheduleGeometryUpdate();
 	}
 
 	ContentsWidget::resizeEvent(event);
@@ -103,7 +119,7 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 
 void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == "Browser/ShowDetailedProgressBar")
+	if (option == QLatin1String("Browser/ShowDetailedProgressBar"))
 	{
 		m_showProgressBar = value.toBool();
 
@@ -113,14 +129,22 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 			m_progressBarWidget = NULL;
 		}
 
-		if (m_progressBarWidget)
+		if (m_showProgressBar)
 		{
-			connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
+			connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 		}
 		else
 		{
 			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
 		}
+	}
+}
+
+void WebContentsWidget::scheduleGeometryUpdate()
+{
+	if (m_progressBarWidget && m_progressBarTimer == 0)
+	{
+		m_progressBarTimer = startTimer(50);
 	}
 }
 
@@ -261,16 +285,6 @@ void WebContentsWidget::updateFindHighlight()
 	}
 }
 
-void WebContentsWidget::updateProgressBarWidget()
-{
-	if (!m_progressBarWidget)
-	{
-		return;
-	}
-
-	m_progressBarWidget->setGeometry(m_webWidget->getProgressBarGeometry());
-}
-
 void WebContentsWidget::setLoading(bool loading)
 {
 	if (!m_showProgressBar)
@@ -285,7 +299,7 @@ void WebContentsWidget::setLoading(bool loading)
 		m_progressBarWidget->raise();
 	}
 
-	updateProgressBarWidget();
+	scheduleGeometryUpdate();
 }
 
 WebContentsWidget* WebContentsWidget::clone(Window *parent)
