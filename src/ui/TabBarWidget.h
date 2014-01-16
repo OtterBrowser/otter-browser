@@ -61,6 +61,7 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void currentTabChanged(int index);
 	void closeOther();
 	void cloneTab();
 	void detachTab();

@@ -57,8 +57,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SIGNAL(requestedClose(int)));
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateButtons()));
 }
 
 void TabBarWidget::timerEvent(QTimerEvent *event)
@@ -376,6 +376,21 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	if (option == QLatin1String("TabBar/ShowCloseButton"))
 	{
 		setTabsClosable(value.toBool());
+	}
+}
+
+void TabBarWidget::currentTabChanged(int index)
+{
+	Q_UNUSED(index)
+
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
+	}
+
+	if (tabsClosable())
+	{
+		updateButtons();
 	}
 }
 
