@@ -61,7 +61,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_searchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString()),
 	m_historyEntry(-1),
-	m_isLinkHovered(false),
 	m_isLoading(false),
 	m_isTyped(false)
 {
@@ -136,7 +135,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
 	connect(page, SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
-	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString,QString)));
 	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -290,22 +288,6 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
 	TransfersManager::startTransfer(reply, QString(), isPrivate());
-}
-
-void QtWebKitWebWidget::linkHovered(const QString &link, const QString &title)
-{
-	QString text;
-
-	if (!link.isEmpty())
-	{
-		text = (title.isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(title).arg(link));
-	}
-
-	m_isLinkHovered = !text.isEmpty();
-
-	QToolTip::showText(QCursor::pos(), text, m_webView);
-
-	emit statusMessageChanged(link, 0);
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
@@ -634,7 +616,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			{
 				QWebElement parentElement = m_hitResult.element().parent();
 
-				while (!parentElement.isNull() && parentElement.tagName().toLower() != "form")
+				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 				{
 					parentElement = parentElement.parent();
 				}
@@ -1476,8 +1458,50 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			emit progressBarGeometryChanged();
 		}
-		else if (event->type() == QEvent::ToolTip && m_isLinkHovered)
+		else if (event->type() == QEvent::ToolTip)
 		{
+			const QPoint position = QCursor::pos();
+			const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(position));
+			QString link = result.linkUrl().toString();
+			QString text;
+
+			if (link.isEmpty() && result.element().tagName().toLower() == QLatin1String("input") && (result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
+			{
+				QWebElement parentElement = result.element().parent();
+
+				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
+				{
+					parentElement = parentElement.parent();
+				}
+
+				if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
+				{
+					const QUrl url(parentElement.attribute(QLatin1String("action")));
+
+					link = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+				}
+			}
+
+			if (SettingsManager::getValue(QLatin1String("Browser/ShowAddressToolTips")).toBool())
+			{
+				if (!link.isEmpty())
+				{
+					text = (result.title().isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(result.title()).arg(link));
+				}
+				else if (!result.title().isEmpty())
+				{
+					text = result.title();
+				}
+			}
+			else
+			{
+				text = result.title();
+			}
+
+			emit statusMessageChanged(link, 0);
+
+			QToolTip::showText(position, text, m_webView);
+
 			event->accept();
 
 			return true;
