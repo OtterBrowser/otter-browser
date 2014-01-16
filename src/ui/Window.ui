@@ -27,7 +27,7 @@
     <widget class="QWidget" name="navigationWidget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,3,1">
       <property name="spacing">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
