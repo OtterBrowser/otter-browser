@@ -44,8 +44,8 @@ public:
 	static Application* getInstance();
 	MainWindow* createWindow(bool privateSession = false, bool background = false, const SessionEntry &windows = SessionEntry());
 	MainWindow* getWindow();
-	QList<MainWindow*> getWindows();
 	QCommandLineParser* getParser() const;
+	QList<MainWindow*> getWindows();
 	bool isRunning() const;
 
 public slots:

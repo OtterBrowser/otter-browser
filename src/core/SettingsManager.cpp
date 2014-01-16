@@ -68,11 +68,6 @@ SettingsManager* SettingsManager::getInstance()
 	return m_instance;
 }
 
-QString SettingsManager::getPath()
-{
-	return QFileInfo(m_path).absolutePath();
-}
-
 QVariant SettingsManager::getDefaultValue(const QString &key)
 {
 	return m_defaults[key];

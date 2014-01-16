@@ -23,7 +23,6 @@
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QStandardPaths>
 #include <QtWebKit/QWebSettings>
 #include <QtWebKitWidgets/QWebPage>
 
@@ -73,15 +72,19 @@ WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *
 	{
 		m_isInitialized = true;
 
-		const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-
-		QDir().mkpath(cachePath);
-
 		QWebSettings *globalSettings = QWebSettings::globalSettings();
 		globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 		globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-		globalSettings->setIconDatabasePath(cachePath);
-		globalSettings->setOfflineStoragePath(cachePath);
+
+		const QString cachePath = SessionsManager::getCachePath();
+
+		if (!cachePath.isEmpty())
+		{
+			QDir().mkpath(cachePath);
+
+			globalSettings->setIconDatabasePath(cachePath);
+			globalSettings->setOfflineStoragePath(cachePath);
+		}
 
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
 

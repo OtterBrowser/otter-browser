@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "BookmarksManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
@@ -53,7 +54,7 @@ void BookmarksManager::load()
 	m_bookmarks.clear();
 	m_identifier = 0;
 
-	QFile file(SettingsManager::getPath() + QLatin1String("/bookmarks.xbel"));
+	QFile file(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
@@ -392,7 +393,7 @@ bool BookmarksManager::hasBookmark(const QUrl &url)
 
 bool BookmarksManager::save(const QString &path)
 {
-	QFile file(path.isEmpty() ? SettingsManager::getPath() + QLatin1String("/bookmarks.xbel") : path);
+	QFile file(path.isEmpty() ? SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel") : path);
 
 	if (!file.open(QFile::WriteOnly))
 	{

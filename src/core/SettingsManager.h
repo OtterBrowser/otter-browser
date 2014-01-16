@@ -36,7 +36,6 @@ public:
 	static void setDefaultValue(const QString &key, const QVariant &value);
 	static void setValue(const QString &key, const QVariant &value);
 	static SettingsManager* getInstance();
-	static QString getPath();
 	static QVariant getDefaultValue(const QString &key);
 	static QVariant getValue(const QString &key);
 

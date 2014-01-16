@@ -33,6 +33,8 @@ namespace Otter
 SessionsManager* SessionsManager::m_instance = NULL;
 QPointer<QWidget> SessionsManager::m_activeWindow = NULL;
 QString SessionsManager::m_session;
+QString SessionsManager::m_cachePath;
+QString SessionsManager::m_profilePath;
 QList<WindowsManager*> SessionsManager::m_managers;
 QList<SessionEntry> SessionsManager::m_closedWindows;
 bool SessionsManager::m_dirty = false;
@@ -56,17 +58,19 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 	}
 }
 
+void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, QObject *parent)
+{
+	m_instance = new SessionsManager(parent);
+	m_cachePath = cachePath;
+	m_profilePath = profilePath;
+}
+
 void SessionsManager::scheduleAutoSave()
 {
 	if (m_autoSaveTimer == 0)
 	{
 		m_autoSaveTimer = startTimer(1000);
 	}
-}
-
-void SessionsManager::createInstance(QObject *parent)
-{
-	m_instance = new SessionsManager(parent);
 }
 
 void SessionsManager::clearClosedWindows()
@@ -138,6 +142,16 @@ QString SessionsManager::getCurrentSession()
 	return m_session;
 }
 
+QString SessionsManager::getCachePath()
+{
+	return m_cachePath;
+}
+
+QString SessionsManager::getProfilePath()
+{
+	return m_profilePath;
+}
+
 QString SessionsManager::getSessionPath(const QString &path, bool bound)
 {
 	QString cleanPath = path;
@@ -163,7 +177,7 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 		}
 	}
 
-	return SettingsManager::getPath() + QLatin1String("/sessions/") + cleanPath;
+	return m_profilePath + QLatin1String("/sessions/") + cleanPath;
 }
 
 QStringList SessionsManager::getClosedWindows()
@@ -227,7 +241,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries = QDir(SettingsManager::getPath() + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files);
+	QStringList entries = QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files);
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
@@ -320,7 +334,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = Application::getInstance()->getWindows();
 	}
 
-	QDir().mkpath(SettingsManager::getPath() + QLatin1String("/sessions/"));
+	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
 
 	const QString sessionPath = getSessionPath(path);
 	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value(QLatin1String("Session/title")).toString();

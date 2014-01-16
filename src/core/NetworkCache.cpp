@@ -18,19 +18,26 @@
 **************************************************************************/
 
 #include "NetworkCache.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
-#include <QtCore/QStandardPaths>
 
 namespace Otter
 {
 
 NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 {
-	setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	setMaximumCacheSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
+	const QString cachePath = SessionsManager::getCachePath();
+
+	if (!cachePath.isEmpty())
+	{
+		QDir().mkpath(cachePath);
+
+		setCacheDirectory(cachePath);
+		setMaximumCacheSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
+	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }

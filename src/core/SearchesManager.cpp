@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SearchesManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
 
@@ -312,7 +313,7 @@ QStandardItemModel* SearchesManager::getSearchEnginesModel()
 
 QStringList SearchesManager::getSearchEngines()
 {
-	const QString path = SettingsManager::getPath() + QLatin1String("/searches/");
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/");
 	const QDir directory(path);
 
 	if (!QFile::exists(path))
@@ -481,7 +482,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 	{
 		if (!engines.contains(existingEngines.at(i)))
 		{
-			const QString path = SettingsManager::getPath() + QLatin1String("/searches/") + QString(existingEngines.at(i)->identifier).remove(QRegularExpression(QLatin1String("[\\/\\\\]"))) + QLatin1String(".xml");
+			const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + QString(existingEngines.at(i)->identifier).remove(QRegularExpression(QLatin1String("[\\/\\\\]"))) + QLatin1String(".xml");
 
 			if (QFile::exists(path) && !QFile::remove(path))
 			{
@@ -508,7 +509,7 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 			continue;
 		}
 
-		QFile file(SettingsManager::getPath() + QLatin1String("/searches/") + QString(engines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml");
+		QFile file(SessionsManager::getProfilePath() + QLatin1String("/searches/") + QString(engines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml");
 
 		if (!file.open(QIODevice::WriteOnly) || !writeSearch(&file, engines.at(i)))
 		{

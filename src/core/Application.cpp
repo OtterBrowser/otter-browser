@@ -52,24 +52,38 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_instance = this;
 
-	QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
+	QString profilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
+	QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 	QCommandLineParser *parser = getParser();
 	parser->process(arguments());
 
-	if (!parser->value(QLatin1String("path")).isEmpty())
+	if (parser->isSet(QLatin1String("portable")))
 	{
-		path = parser->value(QLatin1String("path"));
+		profilePath = applicationDirPath() + QLatin1String("/profile");
+		cachePath = applicationDirPath() + QLatin1String("/cache");
+	}
 
-		if (QFileInfo(path).isRelative())
+	if (parser->isSet(QLatin1String("profile")))
+	{
+		profilePath = parser->value(QLatin1String("profile"));
+
+		if (QFileInfo(profilePath).isRelative())
 		{
-			path = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter/profiles/")).absoluteFilePath(path);
+			profilePath = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter/profiles/")).absoluteFilePath(profilePath);
 		}
 	}
 
-	path = QFileInfo(path).absoluteFilePath();
+	profilePath = QFileInfo(profilePath).absoluteFilePath();
+
+	if (parser->isSet(QLatin1String("cache")))
+	{
+		cachePath = parser->value(QLatin1String("cache"));
+	}
+
+	cachePath = QFileInfo(cachePath).absoluteFilePath();
 
 	QCryptographicHash hash(QCryptographicHash::Md5);
-	hash.addData(path.toUtf8());
+	hash.addData(profilePath.toUtf8());
 
 	const QString identifier = hash.result().toBase64();
 
@@ -109,12 +123,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	if (!QFile::exists(path))
+	if (!QFile::exists(profilePath))
 	{
-		QDir().mkpath(path);
+		QDir().mkpath(profilePath);
 	}
 
-	SettingsManager::createInstance(path + QLatin1String("/otter.conf"), this);
+	SettingsManager::createInstance(profilePath + QLatin1String("/otter.conf"), this);
 
 	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();
@@ -136,6 +150,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue(QLatin1String("Paths/Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
+	SessionsManager::createInstance(profilePath, cachePath, this);
+
 	ActionsManager::createInstance(this);
 
 	BookmarksManager::createInstance(this);
@@ -145,8 +161,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	WebBackendsManager::createInstance(this);
 
 	SearchesManager::createInstance(this);
-
-	SessionsManager::createInstance(this);
 
 	TransfersManager::createInstance(this);
 
@@ -286,22 +300,24 @@ MainWindow* Application::getWindow()
 	return m_windows[0];
 }
 
-QList<MainWindow*> Application::getWindows()
-{
-	return m_windows;
-}
-
 QCommandLineParser* Application::getParser() const
 {
 	QCommandLineParser *parser = new QCommandLineParser();
 	parser->addHelpOption();
 	parser->addVersionOption();
 	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), QLatin1String("[url]"));
-	parser->addOption(QCommandLineOption(QLatin1String("path"), QCoreApplication::translate("main", "Uses <path> as profile directory."), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory."), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory."), QLatin1String("path"), QString()));
 	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists."), QLatin1String("session"), QString()));
 	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session.")));
+	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary.")));
 
 	return parser;
+}
+
+QList<MainWindow*> Application::getWindows()
+{
+	return m_windows;
 }
 
 bool Application::isRunning() const

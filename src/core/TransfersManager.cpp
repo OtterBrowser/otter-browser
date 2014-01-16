@@ -40,7 +40,7 @@ QList<TransferInformation*> TransfersManager::m_transfers;
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 	m_updateTimer(0)
 {
-	QSettings history(SettingsManager::getPath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
+	QSettings history(SessionsManager::getProfilePath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
 	const QStringList entries = history.childGroups();
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -218,7 +218,7 @@ void TransfersManager::downloadError(QNetworkReply::NetworkError error)
 
 void TransfersManager::save()
 {
-	QSettings history(SettingsManager::getPath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
+	QSettings history(SessionsManager::getProfilePath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
 	history.clear();
 
 	if (SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())

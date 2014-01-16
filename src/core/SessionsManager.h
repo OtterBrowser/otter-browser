@@ -112,7 +112,7 @@ class SessionsManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(const QString &profilePath, const QString &cachePath, QObject *parent = NULL);
 	static void clearClosedWindows();
 	static void registerWindow(WindowsManager *manager);
 	static void storeClosedWindow(WindowsManager *manager);
@@ -122,6 +122,8 @@ public:
 	static SessionsManager* getInstance();
 	static QWidget* getActiveWindow();
 	static QString getCurrentSession();
+	static QString getCachePath();
+	static QString getProfilePath();
 	static QString getSessionPath(const QString &path, bool bound = false);
 	static QStringList getClosedWindows();
 	static SessionInformation getSession(const QString &path);
@@ -146,6 +148,8 @@ private:
 	static SessionsManager *m_instance;
 	static QPointer<QWidget> m_activeWindow;
 	static QString m_session;
+	static QString m_cachePath;
+	static QString m_profilePath;
 	static QList<WindowsManager*> m_managers;
 	static QList<SessionEntry> m_closedWindows;
 	static bool m_dirty;

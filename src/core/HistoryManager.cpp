@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "HistoryManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QBuffer>
@@ -145,11 +146,11 @@ void HistoryManager::clearHistory(int period)
 	if (period > 0 && !database.isValid())
 	{
 		database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
-		database.setDatabaseName(SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite"));
+		database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
 		database.open();
 	}
 
-	const QString path = SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite");
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite");
 
 	if (database.isValid())
 	{
@@ -185,7 +186,7 @@ void HistoryManager::optionChanged(const QString &option)
 		if (enabled && !m_enabled)
 		{
 			QSqlDatabase database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
-			database.setDatabaseName(SettingsManager::getPath() + QLatin1String("/browsingHistory.sqlite"));
+			database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
 			database.open();
 
 			if (!database.tables().contains(QLatin1String("visits")))
