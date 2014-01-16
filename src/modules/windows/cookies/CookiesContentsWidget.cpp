@@ -128,34 +128,33 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	cookieItem->setToolTip(cookie.name());
 
 	domainItem->appendRow(cookieItem);
+	domainItem->setText(QString("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
 }
 
 void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 {
 	const QString domain = (cookie.domain().startsWith('.') ? cookie.domain().mid(1) : cookie.domain());
+	QStandardItem *domainItem = findDomain(domain);
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
+	if (domainItem)
 	{
-		QStandardItem *domainItem = m_model->item(i, 0);
-
-		if (domainItem && domainItem->text() == domain)
+		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
-			for (int j = 0; j < domainItem->rowCount(); ++j)
+			if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
 			{
-				if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
-				{
-					domainItem->removeRow(j);
+				domainItem->removeRow(j);
 
-					break;
-				}
+				break;
 			}
+		}
 
-			if (domainItem->rowCount() == 0)
-			{
-				m_model->invisibleRootItem()->removeRow(domainItem->row());
-			}
-
-			break;
+		if (domainItem->rowCount() == 0)
+		{
+			m_model->invisibleRootItem()->removeRow(domainItem->row());
+		}
+		else
+		{
+			domainItem->setText(QString("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
 		}
 	}
 }
@@ -345,7 +344,7 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->item(i, 0)->text() == domain)
+		if (domain == m_model->item(i, 0)->toolTip())
 		{
 			return m_model->item(i, 0);
 		}
