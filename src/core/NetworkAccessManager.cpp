@@ -151,13 +151,20 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 
 	if (reply && reply == m_mainReply)
 	{
-		if (bytesTotal > 0)
+		if (m_mainReply && m_mainReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
-			emit documentLoadProgressChanged(((bytesReceived * 1.0) / bytesTotal) * 100);
+			m_mainReply = NULL;
 		}
 		else
 		{
-			emit documentLoadProgressChanged(-1);
+			if (bytesTotal > 0)
+			{
+				emit documentLoadProgressChanged(((bytesReceived * 1.0) / bytesTotal) * 100);
+			}
+			else
+			{
+				emit documentLoadProgressChanged(-1);
+			}
 		}
 	}
 
