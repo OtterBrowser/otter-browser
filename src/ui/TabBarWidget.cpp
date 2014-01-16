@@ -26,6 +26,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
+#include <QtWidgets/QStyle>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDesktopWidget>
@@ -49,6 +50,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
 	setDocumentMode(true);
+
+	m_closeButtonPosition = static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition));
+	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
 
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
 
@@ -248,7 +252,7 @@ void TabBarWidget::tabInserted(int index)
 	QLabel *label = new QLabel();
 	label->setFixedSize(QSize(16, 16));
 
-	setTabButton(index, QTabBar::LeftSide, label);
+	setTabButton(index, m_iconButtonPosition, label);
 	updateTabs();
 }
 
@@ -414,7 +418,7 @@ void TabBarWidget::updateButtons()
 
 	for (int i = 0; i < count(); ++i)
 	{
-		QWidget *button = tabButton(i, QTabBar::RightSide);
+		QWidget *button = tabButton(i, m_closeButtonPosition);
 
 		if (button)
 		{
@@ -443,7 +447,7 @@ void TabBarWidget::updateTabs(int index)
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
 		const bool isLoading = getTabProperty(i, QLatin1String("isLoading"), false).toBool();
-		QLabel *label = qobject_cast<QLabel*>(tabButton(i, QTabBar::LeftSide));
+		QLabel *label = qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition));
 
 		if (label)
 		{

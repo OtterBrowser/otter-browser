@@ -69,6 +69,8 @@ protected slots:
 
 private:
 	PreviewWidget *m_previewWidget;
+	QTabBar::ButtonPosition m_closeButtonPosition;
+	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
 	int m_clickedTab;
 	int m_previewTimer;
