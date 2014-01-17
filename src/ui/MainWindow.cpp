@@ -353,10 +353,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	SettingsManager::setValue(QLatin1String("Window/Position"), pos());
 	SettingsManager::setValue(QLatin1String("Window/State"), saveState());
 
-	if (application)
-	{
-		application->removeWindow(this);
-	}
+	application->removeWindow(this);
 
 	event->accept();
 }
@@ -647,7 +644,7 @@ void MainWindow::menuSessionsAboutToShow()
 			windows += sorted.at(i).windows.at(j).windows.count();
 		}
 
-		QAction *action = m_ui->menuSessions->addAction(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title);
+		QAction *action = m_ui->menuSessions->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
 
@@ -752,7 +749,7 @@ void MainWindow::menuBookmarksAboutToShow()
 {
 	QMenu *menu = qobject_cast<QMenu*>(sender());
 
-	if (!menu && !menu->menuAction())
+	if (!menu || !menu->menuAction())
 	{
 		return;
 	}
