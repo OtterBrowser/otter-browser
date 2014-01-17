@@ -167,7 +167,7 @@ void ContentsDialog::clicked(QAbstractButton *button)
 
 void ContentsDialog::close(QDialogButtonBox::StandardButton button)
 {
-	m_isAccepted = (button != QDialogButtonBox::NoButton && button != QDialogButtonBox::Cancel && button != QDialogButtonBox::Close && button != QDialogButtonBox::Abort && button != QDialogButtonBox::Discard);
+	m_isAccepted = (button != QDialogButtonBox::NoButton && button != QDialogButtonBox::Cancel && button != QDialogButtonBox::No && button != QDialogButtonBox::Close && button != QDialogButtonBox::Abort && button != QDialogButtonBox::Discard);
 
 	emit closed(m_isAccepted, button);
 
