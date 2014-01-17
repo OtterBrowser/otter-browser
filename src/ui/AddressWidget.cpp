@@ -29,8 +29,10 @@
 #include <QtCore/QRegularExpression>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QStyleOptionFrame>
 
 namespace Otter
 {
@@ -48,6 +50,8 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 	setCompleter(m_completer);
+	setMinimumWidth(100);
+	setMouseTracking(true);
 
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
@@ -65,7 +69,21 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 
 	if (m_urlIconLabel)
 	{
-		m_urlIconLabel->move(6, ((height() - m_urlIconLabel->height()) / 2));
+		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
+	}
+}
+
+void AddressWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	QLineEdit::mouseMoveEvent(event);
+
+	if (m_securityBadgeRectangle.contains(event->pos()))
+	{
+		setCursor(Qt::ArrowCursor);
+	}
+	else
+	{
+		setCursor(Qt::IBeamCursor);
 	}
 }
 
@@ -90,6 +108,38 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 	}
 }
 
+void AddressWidget::paintEvent(QPaintEvent *event)
+{
+	QLineEdit::paintEvent(event);
+
+	QColor badgeColor = QColor(245, 245, 245);
+	QStyleOptionFrame panel;
+
+	initStyleOption(&panel);
+
+	panel.palette = palette();
+	panel.palette.setColor(QPalette::Base, badgeColor);
+	panel.state = QStyle::State_Active;
+
+	QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+	rectangle.setWidth(30);
+	rectangle.moveTo(panel.lineWidth, panel.lineWidth);
+
+	m_securityBadgeRectangle = rectangle;
+
+	QPainter painter(this);
+	painter.fillRect(rectangle, badgeColor);
+	painter.setClipRect(rectangle);
+
+	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
+
+	QPalette linePalette = palette();
+	linePalette.setCurrentColorGroup(QPalette::Disabled);
+
+	painter.setPen(QPen(linePalette.mid().color(), 1));
+	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
+}
+
 void AddressWidget::removeIcon()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
@@ -102,7 +152,7 @@ void AddressWidget::removeIcon()
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-if (option == "AddressField/ShowBookmarkIcon")
+	if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
 	{
 		if (value.toBool() && !m_bookmarkLabel)
 		{
@@ -121,7 +171,7 @@ if (option == "AddressField/ShowBookmarkIcon")
 			m_bookmarkLabel = NULL;
 		}
 	}
-	else if (option == "AddressField/ShowUrlIcon")
+	else if (option == QLatin1String("AddressField/ShowUrlIcon"))
 	{
 		if (value.toBool() && !m_urlIconLabel)
 		{
@@ -129,17 +179,20 @@ if (option == "AddressField/ShowBookmarkIcon")
 			m_urlIconLabel->setObjectName(QLatin1String("Url"));
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
-			m_urlIconLabel->move(6, 4);
+			m_urlIconLabel->move(36, 4);
 			m_urlIconLabel->installEventFilter(this);
 
-			setStyleSheet(QLatin1String("QLineEdit {padding-left:22px;}"));
+			setStyleSheet(QLatin1String("QLineEdit {padding-left:52px;}"));
 		}
-		else if (!value.toBool() && m_urlIconLabel)
+		else
 		{
-			m_urlIconLabel->deleteLater();
-			m_urlIconLabel = NULL;
+			if (!value.toBool() && m_urlIconLabel)
+			{
+				m_urlIconLabel->deleteLater();
+				m_urlIconLabel = NULL;
+			}
 
-			setStyleSheet(QString());
+			setStyleSheet(QLatin1String("QLineEdit {padding-left:30px;}"));
 		}
 	}
 }

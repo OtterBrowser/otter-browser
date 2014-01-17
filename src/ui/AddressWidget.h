@@ -45,7 +45,9 @@ public slots:
 	void setUrl(const QUrl &url);
 
 protected:
+	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 
 protected slots:
@@ -60,6 +62,7 @@ private:
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_urlIconLabel;
+	QRect m_securityBadgeRectangle;
 
 signals:
 	void requestedLoadUrl(QUrl url);
