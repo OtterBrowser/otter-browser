@@ -151,7 +151,7 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 
 	if (reply && reply == m_mainReply)
 	{
-		if (m_mainReply && m_mainReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
+		if (m_mainReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
 			m_mainReply = NULL;
 		}
