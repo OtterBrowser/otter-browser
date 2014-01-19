@@ -36,6 +36,7 @@
 #include "ui_MainWindow.h"
 
 #include <QtCore/QTextCodec>
+#include <QtCore/QtMath>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QCheckBox>
@@ -54,6 +55,10 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 {
 	m_ui->setupUi(this);
 	m_ui->menuBookmarks->installEventFilter(this);
+
+#ifdef Q_OS_WIN
+	m_taskbarButton = NULL;
+#endif
 
 	SessionsManager::setActiveWindow(this);
 
@@ -243,6 +248,14 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	m_ui->panelDockWidget->hide();
+
+#ifdef Q_OS_WIN
+	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -932,6 +945,45 @@ void MainWindow::updateActions()
 	m_ui->actionZoomIn->setEnabled(canZoom);
 	m_ui->actionZoomOriginal->setEnabled(canZoom);
 }
+
+#ifdef Q_OS_WIN
+void MainWindow::updateWindowsTaskbarProgress()
+{
+	const QList<TransferInformation*> transfers = TransfersManager::getInstance()->getTransfers();
+	qint64 bytesTotal = 0;
+	qint64 bytesReceived = 0;
+	bool hasActiveTransfers = false;
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		if (transfers[i]->state == RunningTransfer && transfers[i]->bytesTotal > 0)
+		{
+			hasActiveTransfers = true;
+			bytesTotal += transfers[i]->bytesTotal;
+			bytesReceived += transfers[i]->bytesReceived;
+		}
+	}
+
+	if (hasActiveTransfers)
+	{
+		if (!m_taskbarButton)
+		{
+			m_taskbarButton = new QWinTaskbarButton(this);
+			m_taskbarButton->setWindow(windowHandle());
+			m_taskbarButton->progress()->show();
+		}
+
+		m_taskbarButton->progress()->setValue((bytesReceived > 0) ? qFloor(((qreal) bytesReceived / bytesTotal) * 100) : 0);
+	}
+	else if (m_taskbarButton)
+	{
+		m_taskbarButton->progress()->reset();
+		m_taskbarButton->progress()->hide();
+		m_taskbarButton->deleteLater();
+		m_taskbarButton = NULL;
+	}
+}
+#endif
 
 WindowsManager* MainWindow::getWindowsManager()
 {

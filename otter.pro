@@ -6,6 +6,10 @@
 
 QT += core gui network printsupport sql webkitwidgets widgets
 
+win32 {
+    QT += winextras
+}
+
 TARGET = otter-browser
 TEMPLATE = app
 
