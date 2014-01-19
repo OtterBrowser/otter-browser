@@ -36,12 +36,12 @@
 #include "ui_MainWindow.h"
 
 #include <QtCore/QTextCodec>
+#include <QtCore/QtMath>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
-#include <QtMath>
 
 namespace Otter
 {
