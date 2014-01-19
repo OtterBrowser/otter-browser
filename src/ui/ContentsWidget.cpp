@@ -179,6 +179,11 @@ QUndoStack* ContentsWidget::getUndoStack()
 	return NULL;
 }
 
+QString ContentsWidget::getVersion()
+{
+	return QCoreApplication::applicationVersion();
+}
+
 QPixmap ContentsWidget::getThumbnail() const
 {
 	return QPixmap();
