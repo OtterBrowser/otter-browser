@@ -199,10 +199,12 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
-	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(text()).hasMatch())
+	const QString url = text().trimmed();
+
+	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(url).hasMatch())
 	{
 		const QStringList engines = SearchesManager::getSearchEngines();
-		const QString shortcut = text().section(QLatin1Char(' '), 0, 0);
+		const QString shortcut = url.section(QLatin1Char(' '), 0, 0);
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
@@ -210,7 +212,7 @@ void AddressWidget::notifyRequestedLoadUrl()
 
 			if (search && shortcut == search->shortcut)
 			{
-				emit requestedSearch(text().section(QLatin1Char(' '), 1), search->identifier);
+				emit requestedSearch(url.section(QLatin1Char(' '), 1), search->identifier);
 
 				return;
 			}
