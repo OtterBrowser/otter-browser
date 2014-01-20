@@ -1,4 +1,5 @@
 0.2.01 (--.--.2014):
+- added support for proxy configuration;
 - added quick go to or search of clipboard contents on middle click on address field;
 - minor improvements in cache viewer;
 - some other fixes and minor improvements.

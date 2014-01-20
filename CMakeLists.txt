@@ -53,6 +53,7 @@ set(otter_src
 	src/core/LocalListingNetworkReply.cpp
 	src/core/NetworkAccessManager.cpp
 	src/core/NetworkCache.cpp
+	src/core/NetworkProxyFactory.cpp
 	src/core/SearchesManager.cpp
 	src/core/SearchSuggester.cpp
 	src/core/SessionsManager.cpp

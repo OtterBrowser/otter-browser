@@ -21,11 +21,11 @@
 #include "ActionsManager.h"
 #include "BookmarksManager.h"
 #include "HistoryManager.h"
+#include "NetworkProxyFactory.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
-#include "NetworkProxyFactory.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
@@ -165,7 +165,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	TransfersManager::createInstance(this);
 
-	NetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
+	QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
 	QTranslator qtTranslator;
 	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

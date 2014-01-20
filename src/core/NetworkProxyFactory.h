@@ -29,7 +29,7 @@ namespace Otter
 class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 {
 	Q_OBJECT
-    Q_ENUMS(ProxyMode)
+	Q_ENUMS(ProxyMode)
 
 public:
 	explicit NetworkProxyFactory();
@@ -42,13 +42,7 @@ public:
 		AutomaticProxy = 3
 	};
 
-	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery & query);
-	
-protected:
-	void setManualProxy();
-	void setPACProxy();
-	void setSystemProxy();
-	void setupProxy(const QNetworkProxy::ProxyType initType, const QString address, const QString port);
+	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
 
 protected slots:
 	void optionChanged(const QString &option);

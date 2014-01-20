@@ -1,11 +1,10 @@
 High priority / ASAP:
 - start page
-- proxy configuration
 - page specific preferences
 - passwords manager
+- delayed loading of Flash objects
 
 Medium priority / soon:
-- delayed loading of Flash objects
 - content blocking
 - spell checking
 - feeds reader (as module)

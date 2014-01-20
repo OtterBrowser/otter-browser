@@ -208,7 +208,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->actionMacrosMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->actionMacrosMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
-	const QString proxyString = SettingsManager::getValue(QLatin1String("Proxy/ProxyMode")).toString();
+	const QString proxyString = SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString();
 	int proxyIndex = 0;
 
 	if (proxyString == QLatin1String("system"))
@@ -225,6 +225,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	}
 
 	m_ui->proxyModeComboBox->setCurrentIndex(proxyIndex);
+
 	if (proxyIndex == 2)
 	{
 		proxyModeChanged(proxyIndex);
@@ -235,11 +236,11 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->httpsProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseHttps")).toBool());
 	m_ui->ftpProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseFtp")).toBool());
 	m_ui->socksProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSocks")).toBool());
-	m_ui->allProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/CommonAddress")).toString());
-	m_ui->httpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpAddress")).toString());
-	m_ui->httpsProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpsAddress")).toString());
-	m_ui->ftpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/FtpAddress")).toString());
-	m_ui->socksProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/SocksAddress")).toString());
+	m_ui->allProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/CommonServers")).toString());
+	m_ui->httpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpServers")).toString());
+	m_ui->httpsProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpsServers")).toString());
+	m_ui->ftpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/FtpServers")).toString());
+	m_ui->socksProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/SocksServers")).toString());
 	m_ui->allProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/CommonPort")).toInt());
 	m_ui->httpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpPort")).toInt());
 	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpsPort")).toInt());
@@ -634,7 +635,7 @@ void PreferencesDialog::save()
 		proxyString = QLatin1String("automatic");
 	}
 
-	SettingsManager::setValue(QLatin1String("Proxy/ProxyMode"), proxyString);
+	SettingsManager::setValue(QLatin1String("Network/ProxyMode"), proxyString);
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())
 	{
@@ -657,11 +658,11 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(QLatin1String("Proxy/UseSocks"), m_ui->socksProxyCheckBox->isChecked());
 	}
 
-	SettingsManager::setValue(QLatin1String("Proxy/CommonAddress"), m_ui->allProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpAddress"), m_ui->httpProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpsAddress"), m_ui->httpsProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/FtpAddress"), m_ui->ftpProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/SocksAddress"), m_ui->socksProxyServersLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/CommonServers"), m_ui->allProxyServersLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/HttpServers"), m_ui->httpProxyServersLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/HttpsServers"), m_ui->httpsProxyServersLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/FtpServers"), m_ui->ftpProxyServersLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/SocksServers"), m_ui->socksProxyServersLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Proxy/CommonPort"), m_ui->allProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/HttpPort"), m_ui->httpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/HttpsPort"), m_ui->httpsProxyPortSpinBox->value());

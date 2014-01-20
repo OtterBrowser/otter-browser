@@ -21,151 +21,109 @@
 #include "NetworkProxyFactory.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QFile>
 #include <QtNetwork/QNetworkProxy>
-#include <QFile>
 
 namespace Otter
 {
 
-NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory()
+NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
+	m_proxyMode(SystemProxy)
 {
-	optionChanged(QLatin1String("Proxy/ProxyMode"));
+	optionChanged(QLatin1String("Network/ProxyMode"));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
-QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery & query) 
-{
-	if (m_proxyMode == ManualProxy)
-	{
-		const QString protocol = query.protocolTag().toLower();
-
-		if (!m_proxies[QNetworkProxy::Socks5Proxy].isEmpty())
-		{
-			return m_proxies[QNetworkProxy::Socks5Proxy];
-		}
-		else if (protocol == QLatin1String("http") && !m_proxies[QNetworkProxy::HttpProxy].isEmpty())
-		{
-			return m_proxies[QNetworkProxy::HttpProxy];
-		}
-		else if (protocol == QLatin1String("https") && !m_proxies[QNetworkProxy::HttpCachingProxy].isEmpty())
-		{
-			return m_proxies[QNetworkProxy::HttpCachingProxy];
-		}
-		else if (protocol == QLatin1String("ftp") && !m_proxies[QNetworkProxy::FtpCachingProxy].isEmpty())
-		{
-			return m_proxies[QNetworkProxy::FtpCachingProxy];
-		}
-	}
-
-	return m_proxies[QNetworkProxy::DefaultProxy];
-}
-
-void NetworkProxyFactory::setManualProxy()
-{
-	if (SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool())
-	{
-		setupProxy(QNetworkProxy::DefaultProxy, QLatin1String("Proxy/CommonAddress"), QLatin1String("Proxy/CommonPort"));
-	}
-
-	if (SettingsManager::getValue(QLatin1String("Proxy/UseHttp")).toBool())
-	{
-		setupProxy(QNetworkProxy::HttpProxy, QLatin1String("Proxy/HttpAddress"), QLatin1String("Proxy/HttpPort"));
-	}
-
-	if (SettingsManager::getValue(QLatin1String("Proxy/UseHttps")).toBool())
-	{
-		setupProxy(QNetworkProxy::HttpCachingProxy, QLatin1String("Proxy/HttpsAddress"), QLatin1String("Proxy/HttpsPort"));
-	}
-
-	if (SettingsManager::getValue(QLatin1String("Proxy/UseFtp")).toBool())
-	{
-		setupProxy(QNetworkProxy::FtpCachingProxy, QLatin1String("Proxy/FtpAddress"), QLatin1String("Proxy/FtpPort"));
-	}
-
-	if (SettingsManager::getValue(QLatin1String("Proxy/UseSocks")).toBool())
-	{
-		setupProxy(QNetworkProxy::Socks5Proxy, QLatin1String("Proxy/SocksAddress"), QLatin1String("Proxy/SocksPort"));
-	}
-}
-
-void NetworkProxyFactory::setSystemProxy()
-{
-	const QString proxyTestAddress = SettingsManager::getValue(QLatin1String("Proxy/AutomaticTestAddress")).toString();
-
-	QList<QNetworkProxy> listOfProxies = systemProxyForQuery(QNetworkProxyQuery(QUrl(proxyTestAddress)));
-	if (listOfProxies.size())
-	{
-		m_proxies[QNetworkProxy::DefaultProxy] << listOfProxies;
-	}
-}
-
-void NetworkProxyFactory::setPACProxy()
-{
-	QFile scriptFile(SettingsManager::getValue(QLatin1String("Network/PACFilePath")).toString());
-	const QString loadedScript = scriptFile.readAll();
-	scriptFile.close();
-
-	// TODO:
-}
-
-void NetworkProxyFactory::setupProxy(const QNetworkProxy::ProxyType initType, const QString address, const QString port)
-{
-	const QString host = SettingsManager::getValue(address).toString();
-	const int portNumber = SettingsManager::getValue(port).toInt();
-
-	if (initType == QNetworkProxy::DefaultProxy) // Common proxy
-	{
-		m_proxies[initType].clear();
-		m_proxies[initType] << QNetworkProxy(QNetworkProxy::HttpProxy, host, portNumber);
-		m_proxies[initType] << QNetworkProxy(QNetworkProxy::FtpCachingProxy, host, portNumber);
-		m_proxies[initType] << QNetworkProxy(QNetworkProxy::Socks5Proxy, host, portNumber);
-		return;
-	}
-	else if (initType == QNetworkProxy::HttpCachingProxy) // Https proxy
-	{
-		m_proxies[initType] << QNetworkProxy(QNetworkProxy::HttpProxy, host, portNumber);
-		return;
-	}
-	
-	m_proxies[initType] << QNetworkProxy(initType, host, portNumber);
-}
-
 void NetworkProxyFactory::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Proxy/ProxyMode"))
+	if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("manual")) || (option.startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
+	{
+		m_proxyMode = ManualProxy;
+
+		m_proxies.clear();
+		m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
+
+		const bool useCommon = SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool();
+		QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes;
+		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("Http")) << qMakePair(QNetworkProxy::HttpCachingProxy, QLatin1String("Https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("Ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("Proxy/Socks"));
+
+		for (int i = 0; i < proxyTypes.count(); ++i)
+		{
+			if (useCommon)
+			{
+				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QString("Proxy/CommonServers")).toString(), SettingsManager::getValue(QString("Proxy/CommonPort")).toInt());
+			}
+
+			if (SettingsManager::getValue(QString("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
+			{
+				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QString("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QString("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
+			}
+		}
+	}
+	else if (option == QLatin1String("Network/ProxyMode"))
 	{
 		m_proxies.clear();
+
 		const QString value = SettingsManager::getValue(option).toString();
 
-		if (value == QLatin1String("manual"))
+		if (value == QLatin1String("automatic"))
 		{
-			m_proxyMode = ManualProxy;
-			m_proxies[QNetworkProxy::DefaultProxy] << QNetworkProxy(QNetworkProxy::DefaultProxy);
-			setManualProxy();
+			m_proxyMode = AutomaticProxy;
+
+			QFile scriptFile(SettingsManager::getValue(QLatin1String("Network/AutomaticConfigurationPath")).toString());
+			const QString loadedScript = scriptFile.readAll();
+
+// TODO
+
+			scriptFile.close();
 		}
 		else if (value == QLatin1String("system"))
 		{
 			m_proxyMode = SystemProxy;
-			setSystemProxy();
-		}
-		else if (value == QLatin1String("automatic"))
-		{
-			m_proxyMode = AutomaticProxy;
-			setPACProxy();
 		}
 		else
 		{
 			m_proxyMode = NoProxy;
-			m_proxies[QNetworkProxy::DefaultProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
+			m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
 		}
 	}
-	else if (option.contains(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy)
+}
+
+QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &query)
+{
+	if (m_proxyMode == SystemProxy)
 	{
-		m_proxies.clear();
-		m_proxies[QNetworkProxy::DefaultProxy] << QNetworkProxy(QNetworkProxy::DefaultProxy);
-		setManualProxy();
+		return QNetworkProxyFactory::systemProxyForQuery(query);
 	}
+
+	if (m_proxyMode == ManualProxy)
+	{
+		const QString protocol = query.protocolTag().toLower();
+
+		if (m_proxies.contains(QNetworkProxy::Socks5Proxy))
+		{
+			return m_proxies[QNetworkProxy::Socks5Proxy];
+		}
+		else if (protocol == QLatin1String("http") && m_proxies.contains(QNetworkProxy::HttpProxy))
+		{
+			return m_proxies[QNetworkProxy::HttpProxy];
+		}
+		else if (protocol == QLatin1String("https") && m_proxies.contains(QNetworkProxy::HttpCachingProxy))
+		{
+			return m_proxies[QNetworkProxy::HttpCachingProxy];
+		}
+		else if (protocol == QLatin1String("ftp") && m_proxies.contains(QNetworkProxy::FtpCachingProxy))
+		{
+			return m_proxies[QNetworkProxy::FtpCachingProxy];
+		}
+		else
+		{
+			return m_proxies[QNetworkProxy::NoProxy];
+		}
+	}
+
+	return m_proxies[QNetworkProxy::NoProxy];
 }
 
 }
