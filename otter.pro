@@ -71,7 +71,8 @@ SOURCES += src/main.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
-    src/modules/windows/web/WebContentsWidget.cpp
+    src/modules/windows/web/WebContentsWidget.cpp \
+    src/core/NetworkProxyFactory.cpp
 
 HEADERS += src/core/ActionsManager.h \
     src/core/AddressCompletionModel.h \
@@ -130,7 +131,8 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
-    src/modules/windows/web/WebContentsWidget.h
+    src/modules/windows/web/WebContentsWidget.h \
+    src/core/NetworkProxyFactory.h
 
 FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \

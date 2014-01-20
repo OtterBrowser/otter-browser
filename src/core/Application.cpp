@@ -25,6 +25,7 @@
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
+#include "NetworkProxyFactory.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
@@ -163,6 +164,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SearchesManager::createInstance(this);
 
 	TransfersManager::createInstance(this);
+
+	NetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
 	QTranslator qtTranslator;
 	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
