@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -1300,7 +1300,7 @@
        <item>
         <widget class="QStackedWidget" name="advancedStackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="addressFieldPage">
           <layout class="QVBoxLayout" name="addressFieldLayout" stretch="0,0,1">
@@ -1393,7 +1393,7 @@
              <item row="0" column="1">
               <widget class="QComboBox" name="proxyModeComboBox">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <item>
                 <property name="text">
@@ -1458,7 +1458,7 @@
                    <number>0</number>
                   </property>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="httpProxySevrversLineEdit">
+                   <widget class="QLineEdit" name="httpProxyServersLineEdit">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -1469,12 +1469,18 @@
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
+                    <property name="maximum">
+                     <number>65535</number>
+                    </property>
                    </widget>
                   </item>
                   <item row="3" column="2">
-                   <widget class="QSpinBox" name="httpsProxyPosrtSpinBox">
+                   <widget class="QSpinBox" name="httpsProxyPortSpinBox">
                     <property name="enabled">
                      <bool>false</bool>
+                    </property>
+                    <property name="maximum">
+                     <number>65535</number>
                     </property>
                    </widget>
                   </item>
@@ -1490,12 +1496,18 @@
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
+                    <property name="maximum">
+                     <number>65535</number>
+                    </property>
                    </widget>
                   </item>
                   <item row="4" column="2">
                    <widget class="QSpinBox" name="ftpProxyPortSpinBox">
                     <property name="enabled">
                      <bool>false</bool>
+                    </property>
+                    <property name="maximum">
+                     <number>65535</number>
                     </property>
                    </widget>
                   </item>
@@ -1556,7 +1568,7 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="ftpProxyServersLneEdit">
+                   <widget class="QLineEdit" name="ftpProxyServersLineEdit">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -1573,7 +1585,11 @@
                    <widget class="QLineEdit" name="allProxyServersLineEdit"/>
                   </item>
                   <item row="1" column="2">
-                   <widget class="QSpinBox" name="allProxyPortSpinBox"/>
+                   <widget class="QSpinBox" name="allProxyPortSpinBox">
+                    <property name="maximum">
+                     <number>65535</number>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1631,6 +1647,12 @@
             <spacer name="networkPageSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
              </property>
             </spacer>
            </item>
