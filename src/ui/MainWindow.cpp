@@ -62,14 +62,10 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
-	ActionsManager::registerWindow(this);
-	ActionsManager::registerActions(this, m_ui->menuFile->actions());
-	ActionsManager::registerActions(this, m_ui->menuEdit->actions());
-	ActionsManager::registerActions(this, m_ui->menuView->actions());
-	ActionsManager::registerActions(this, m_ui->menuHistory->actions());
-	ActionsManager::registerActions(this, m_ui->menuBookmarks->actions());
-	ActionsManager::registerActions(this, m_ui->menuTools->actions());
-	ActionsManager::registerActions(this, m_ui->menuHelp->actions());
+	QList<QAction*> actions;
+	actions << m_ui->menuFile->actions() << m_ui->menuEdit->actions() << m_ui->menuView->actions() << m_ui->menuHistory->actions() << m_ui->menuBookmarks->actions() << m_ui->menuTools->actions() << m_ui->menuHelp->actions();
+
+	ActionsManager::registerWindow(this, actions);
 	ActionsManager::registerAction(this, QLatin1String("OpenLinkInThisTab"), tr("Open"));
 	ActionsManager::registerAction(this, QLatin1String("OpenLinkInNewTab"), tr("Open in New Tab"));
 	ActionsManager::registerAction(this, QLatin1String("OpenLinkInNewTabBackground"), tr("Open in New Background Tab"));
@@ -107,6 +103,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	ActionsManager::registerAction(this, QLatin1String("ToggleMediaLoop"), tr("Looping"));
 	ActionsManager::registerAction(this, QLatin1String("ToggleMediaPlayPause"), tr("Play"));
 	ActionsManager::registerAction(this, QLatin1String("ToggleMediaMute"), tr("Mute"));
+	ActionsManager::setupWindowActions(this);
 
 	m_ui->actionNewTab->setIcon(Utils::getIcon(QLatin1String("tab-new")));
 	m_ui->actionNewTabPrivate->setIcon(Utils::getIcon(QLatin1String("tab-new-private")));

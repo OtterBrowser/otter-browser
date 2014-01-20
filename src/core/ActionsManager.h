@@ -35,30 +35,36 @@ public:
 	~ActionsManager();
 
 	static void createInstance(QObject *parent = NULL);
-	static void registerWindow(QWidget *window);
+	static void loadProfiles();
 	static void registerAction(QWidget *window, const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
 	static void registerAction(QWidget *window, QAction *action);
-	static void registerActions(QWidget *window, QList<QAction*> actions);
-	static void triggerAction(const QLatin1String &action);
+	static void registerWindow(QWidget *window, QList<QAction*> actions);
+	static void triggerAction(const QString &action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
-	static void restoreDefaultShortcuts(const QLatin1String &action);
-	static void setShortcuts(const QLatin1String &action, const QList<QKeySequence> &shortcuts);
-	static QAction* getAction(const QLatin1String &action);
+	static void setupWindowActions(QWidget *window);
+	static QAction* getAction(const QString &action);
 	static QList<QKeySequence> getShortcuts(const QLatin1String &action);
-	static QList<QKeySequence> getDefaultShortcuts(const QLatin1String &action);
 	static QStringList getIdentifiers();
 	static bool hasShortcut(const QKeySequence &shortcut, const QLatin1String &excludeAction);
 
+protected:
+	void timerEvent(QTimerEvent *event);
+
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(const QString &option);
 	void removeWindow(QObject *window);
+	void triggerMacro();
 
 private:
 	explicit ActionsManager(QObject *parent = NULL);
 
+	int m_reloadTimer;
+
 	static ActionsManager *m_instance;
 	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
 	static QHash<QString, QAction*> m_applicationActions;
+	static QHash<QString, QStringList> m_applicationMacros;
+	static QHash<QString, QList<QKeySequence> > m_profileShortcuts;
 	static QHash<QString, QKeySequence> m_nativeShortcuts;
 };
 
