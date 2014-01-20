@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,47 +18,44 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESDIALOG_H
-#define OTTER_PREFERENCESDIALOG_H
+#ifndef OTTER_NETWORKPROXYMANAGER_H
+#define OTTER_NETWORKPROXYMANAGER_H
 
-#include <QtWidgets/QDialog>
+#include <QtNetwork/QNetworkProxy>
 
 namespace Otter
 {
 
-namespace Ui
-{
-	class PreferencesDialog;
-}
-
-class PreferencesDialog : public QDialog
+class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 {
 	Q_OBJECT
+    Q_ENUMS(ProxyMode)
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
-	~PreferencesDialog();
+	explicit NetworkProxyFactory();
 
+	enum ProxyMode
+	{
+		NoProxy = 0,
+		ManualProxy = 1,
+		SystemProxy = 2,
+		AutomaticProxy = 3
+	};
+
+	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery & query);
+	
 protected:
-	void changeEvent(QEvent *event);
+	void setManualProxy();
+	void setPACProxy();
+	void setSystemProxy();
+	void setupProxy(const QNetworkProxy::ProxyType initType, const QString address, const QString port);
 
 protected slots:
-	void browseDownloadsPath();
-	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-	void fontChanged(QWidget *editor);
-	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-	void colorChanged(QWidget *editor);
-	void proxyModeChanged(int index);
-	void setupClearHistory();
-	void addSearch();
-	void editSearch();
-	void updateSearchActions();
-	void save();
+	void optionChanged(const QString &option);
 
 private:
-	QString m_defaultSearch;
-	QStringList m_clearSettings;
-	Ui::PreferencesDialog *m_ui;
+	ProxyMode m_proxyMode;
+	QHash<QNetworkProxy::ProxyType, QList<QNetworkProxy> > m_proxies;
 };
 
 }
