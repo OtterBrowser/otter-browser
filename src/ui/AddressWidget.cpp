@@ -87,7 +87,7 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
-void AddressWidget::mousePressEvent(QMouseEvent *event)
+void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty())
 	{
@@ -101,6 +101,8 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 		{
 			emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
 		}
+
+		event->accept();
 	}
 	else
 	{
