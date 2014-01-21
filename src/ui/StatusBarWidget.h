@@ -34,6 +34,7 @@ public:
 	explicit StatusBarWidget(QWidget *parent = NULL);
 
 	void setup();
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setZoom(int zoom);

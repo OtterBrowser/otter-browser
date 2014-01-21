@@ -20,6 +20,8 @@
 #include "StatusBarWidget.h"
 #include "../core/ActionsManager.h"
 
+#include <QtGui/QMouseEvent>
+#include <QtWidgets/QStyleOptionSlider>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
@@ -36,7 +38,9 @@ void StatusBarWidget::setup()
 	m_zoomSlider->setRange(10, 250);
 	m_zoomSlider->setTracking(true);;
 	m_zoomSlider->setOrientation(Qt::Horizontal);
+	m_zoomSlider->setFocusPolicy(Qt::TabFocus);
 	m_zoomSlider->setMaximumWidth(100);
+	m_zoomSlider->installEventFilter(this);
 
 	QToolButton *zoomOutButton = new QToolButton(this);
 	zoomOutButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomOut")));
@@ -63,6 +67,35 @@ void StatusBarWidget::setZoom(int zoom)
 void StatusBarWidget::setZoomEnabled(bool enabled)
 {
 	m_zoomSlider->setEnabled(enabled);
+}
+
+bool StatusBarWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (m_zoomSlider && object == m_zoomSlider && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+		QStyleOptionSlider option;
+		option.initFrom(m_zoomSlider);
+
+		const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
+		const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this);
+		int value = 0;
+
+		if (m_zoomSlider->orientation() == Qt::Horizontal)
+		{
+			value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
+		}
+		else
+		{
+			value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
+		}
+
+		m_zoomSlider->setValue(value);
+
+		return true;
+	}
+
+	return QWidget::eventFilter(object, event);
 }
 
 }
