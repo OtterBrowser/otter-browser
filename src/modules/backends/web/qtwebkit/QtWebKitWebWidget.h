@@ -76,6 +76,7 @@ public slots:
 protected:
 	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
 
+	void focusInEvent(QFocusEvent *event);
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:

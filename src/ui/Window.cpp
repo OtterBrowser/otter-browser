@@ -183,7 +183,7 @@ void Window::setSearchEngine(const QString &engine)
 	m_ui->searchWidget->setCurrentSearchEngine(engine);
 }
 
-void Window::setUrl(const QUrl &url)
+void Window::setUrl(const QUrl &url, bool typed)
 {
 	ContentsWidget *newWidget = NULL;
 
@@ -239,7 +239,7 @@ void Window::setUrl(const QUrl &url)
 
 	m_ui->addressWidget->setUrl(url);
 
-	m_contentsWidget->setUrl(url);
+	m_contentsWidget->setUrl(url, typed);
 }
 
 void Window::setPinned(bool pinned)

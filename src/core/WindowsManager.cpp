@@ -73,7 +73,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 			if (window->isPrivate() == privateWindow)
 			{
 				window->getContentsWidget()->setHistory(WindowHistoryInformation());
-				window->setUrl(url);
+				window->setUrl(url, false);
 
 				return;
 			}
@@ -83,7 +83,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	}
 
 	window = new Window(privateWindow, NULL, m_area);
-	window->setUrl(url);
+	window->setUrl(url, false);
 
 	addWindow(window, background);
 }
@@ -191,7 +191,7 @@ void WindowsManager::restore(int index)
 	history.entries = entry.history;
 
 	Window *window = new Window(m_privateSession, NULL, m_area);
-	window->setUrl(entry.url());
+	window->setUrl(entry.url(), false);
 	window->getContentsWidget()->setHistory(history);
 	window->setSearchEngine(entry.searchEngine);
 	window->setPinned(entry.pinned);
@@ -455,7 +455,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (window && window->getType() == QLatin1String("web"))
 		{
-			window->setUrl(QUrl(QLatin1String("about:blank")));
+			window->setUrl(QUrl(QLatin1String("about:blank")), false);
 			window->getContentsWidget()->setHistory(WindowHistoryInformation());
 
 			return;

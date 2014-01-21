@@ -151,6 +151,13 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 }
 
+void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
+{
+	WebWidget::focusInEvent(event);
+
+	m_webView->setFocus();
+}
+
 void QtWebKitWebWidget::search(QAction *action)
 {
 	const QString engine = ((!action || action->data().type() != QVariant::String) ? m_searchEngine : action->data().toString());
