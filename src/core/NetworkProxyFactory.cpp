@@ -50,7 +50,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 		for (int i = 0; i < proxyTypes.count(); ++i)
 		{
-			if (useCommon)
+			if (useCommon && proxyTypes.at(i).first != QNetworkProxy::Socks5Proxy)
 			{
 				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QString("Proxy/CommonServers")).toString(), SettingsManager::getValue(QString("Proxy/CommonPort")).toInt());
 			}
