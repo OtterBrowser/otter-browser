@@ -216,9 +216,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="delayTabsLoadingCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Delay loading of tabs until selected</string>
          </property>
