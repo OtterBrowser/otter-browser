@@ -300,7 +300,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		menu.addAction(tr("Add Bookmark..."), this, SLOT(addBookmark()));
+		menu.addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+		menu.addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
 
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
