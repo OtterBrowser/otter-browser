@@ -36,7 +36,7 @@ QString SessionsManager::m_session;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
 QList<WindowsManager*> SessionsManager::m_managers;
-QList<SessionEntry> SessionsManager::m_closedWindows;
+QList<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_dirty = false;
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
@@ -97,7 +97,7 @@ void SessionsManager::storeClosedWindow(WindowsManager *manager)
 
 	m_managers.removeAll(manager);
 
-	SessionEntry session = manager->getSession();
+	SessionMainWindow session = manager->getSession();
 
 	if (!session.windows.isEmpty())
 	{
@@ -186,8 +186,8 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
-		const SessionEntry window = m_closedWindows.at(i);
-		const QString title = window.windows.value(window.index, SessionWindow()).title();
+		const SessionMainWindow window = m_closedWindows.at(i);
+		const QString title = window.windows.value(window.index, SessionWindow()).getTitle();
 
 		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
 	}
@@ -208,7 +208,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	for (int i = 1; i <= windows; ++i)
 	{
 		const int tabs = sessionData.value(QString("%1/Properties/windows").arg(i), 0).toInt();
-		SessionEntry sessionEntry;
+		SessionMainWindow sessionEntry;
 		sessionEntry.index = (sessionData.value(QString("%1/Properties/index").arg(i), 1).toInt() - 1);
 
 		for (int j = 1; j <= tabs; ++j)
@@ -270,7 +270,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 		index = 0;
 	}
 
-	Application::getInstance()->createWindow(false, false, m_closedWindows.value(index, SessionEntry()));
+	Application::getInstance()->createWindow(false, false, m_closedWindows.value(index, SessionMainWindow()));
 
 	m_closedWindows.removeAt(index);
 
@@ -293,7 +293,7 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 		return false;
 	}
 
-	const QList<SessionEntry> closedWindows = m_closedWindows;
+	const QList<SessionMainWindow> closedWindows = m_closedWindows;
 
 	if (m_session.isEmpty())
 	{
@@ -304,7 +304,7 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 
 	if (window && m_closedWindows.count() > 0)
 	{
-		window->getWindowsManager()->restore(m_closedWindows.first().windows);
+		window->getWindowsManager()->restore(m_closedWindows.first());
 
 		m_closedWindows.removeAt(0);
 	}
@@ -360,7 +360,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		const SessionEntry sessionEntry = windows.at(i)->getWindowsManager()->getSession();
+		const SessionMainWindow sessionEntry = windows.at(i)->getWindowsManager()->getSession();
 
 		stream << QString("[%1/Properties]\n").arg(i + 1);
 		stream << QLatin1String("groups=0\n");

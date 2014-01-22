@@ -40,15 +40,9 @@ WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWi
 	m_statusBar(statusBar),
 	m_currentWindow(-1),
 	m_printedWindow(-1),
-	m_privateSession(privateSession)
+	m_isPrivate(privateSession),
+	m_isRestored(false)
 {
-	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
-	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
-	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
-	connect(m_tabBar, SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
-	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
-	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
-	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 }
 
 void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, bool newWindow)
@@ -62,7 +56,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 	Window *window = NULL;
 
-	privateWindow = (m_privateSession || privateWindow);
+	privateWindow = (m_isPrivate || privateWindow);
 
 	if (!url.isEmpty())
 	{
@@ -158,21 +152,33 @@ void WindowsManager::closeOther(int index)
 	}
 }
 
-void WindowsManager::restore(const QList<SessionWindow> &windows)
+void WindowsManager::restore(const SessionMainWindow &session)
 {
-	if (windows.isEmpty())
+	if (session.windows.isEmpty())
 	{
 		open();
 
 		return;
 	}
 
-	m_closedWindows = windows;
+	m_closedWindows = session.windows;
 
-	for (int i = 0; i < windows.count(); ++i)
+	for (int i = 0; i < session.windows.count(); ++i)
 	{
 		restore(0);
 	}
+
+	m_isRestored = true;
+
+	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
+	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
+	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
+	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
+
+	setCurrentWindow(session.index);
 }
 
 void WindowsManager::restore(int index)
@@ -182,20 +188,10 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
-	const SessionWindow entry = m_closedWindows.at(index);
+	Window *window = new Window(m_isPrivate, NULL, m_area);
+	window->restore(m_closedWindows.at(index));
 
 	m_closedWindows.removeAt(index);
-
-	WindowHistoryInformation history;
-	history.index = entry.index;
-	history.entries = entry.history;
-
-	Window *window = new Window(m_privateSession, NULL, m_area);
-	window->setUrl(entry.url(), false);
-	window->getContentsWidget()->setHistory(history);
-	window->setSearchEngine(entry.searchEngine);
-	window->setPinned(entry.pinned);
-	window->getContentsWidget()->setZoom(entry.zoom());
 
 	if (m_closedWindows.isEmpty() && SessionsManager::getClosedWindows().isEmpty())
 	{
@@ -291,7 +287,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
 
-	if (background)
+	if (background || !m_isRestored)
 	{
 		mdiWindow->hide();
 	}
@@ -302,14 +298,17 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	const int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
 
-	m_tabBar->insertTab(index, window->getContentsWidget()->getTitle());
+	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
 	if (!background)
 	{
 		m_tabBar->setCurrentIndex(index);
 
-		setCurrentWindow(index);
+		if (m_isRestored)
+		{
+			setCurrentWindow(index);
+		}
 	}
 
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
@@ -357,7 +356,7 @@ void WindowsManager::detachWindow(int index)
 		return;
 	}
 
-	MainWindow *mainWindow = Application::getInstance()->createWindow(m_privateSession, false);
+	MainWindow *mainWindow = Application::getInstance()->createWindow(m_isPrivate, false);
 
 	if (mainWindow)
 	{
@@ -440,7 +439,7 @@ void WindowsManager::closeWindow(Window *window)
 
 			if (window->getType() != QLatin1String("web"))
 			{
-				removeStoredUrl(information.url());
+				removeStoredUrl(information.getUrl());
 			}
 
 			m_closedWindows.prepend(information);
@@ -453,10 +452,9 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		window = getWindow(0);
 
-		if (window && window->getType() == QLatin1String("web"))
+		if (window)
 		{
-			window->setUrl(QUrl(QLatin1String("about:blank")), false);
-			window->getContentsWidget()->setHistory(WindowHistoryInformation());
+			window->restore(SessionWindow());
 
 			return;
 		}
@@ -481,7 +479,7 @@ void WindowsManager::removeStoredUrl(const QString &url)
 {
 	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
 	{
-		if (url == m_closedWindows.at(i).url())
+		if (url == m_closedWindows.at(i).getUrl())
 		{
 			m_closedWindows.removeAt(i);
 
@@ -647,19 +645,19 @@ QString WindowsManager::getTitle() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->getContentsWidget()->getTitle() : tr("Empty"));
+	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
 {
 	Window *window = getWindow(getCurrentWindow());
 
-	return (window ? window->getContentsWidget()->getUrl() : QUrl());
+	return (window ? window->getUrl() : QUrl());
 }
 
-SessionEntry WindowsManager::getSession() const
+SessionMainWindow WindowsManager::getSession() const
 {
-	SessionEntry session;
+	SessionMainWindow session;
 	session.index = getCurrentWindow();
 
 	for (int i = 0; i < m_tabBar->count(); ++i)
@@ -668,7 +666,7 @@ SessionEntry WindowsManager::getSession() const
 
 		if (window && !window->isPrivate())
 		{
-			const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
+			const WindowHistoryInformation history = window->getHistory();
 			SessionWindow information;
 			information.searchEngine = window->getSearchEngine();
 			information.history = history.entries;
@@ -735,7 +733,7 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 	{
 		Window *window = getWindow(i);
 
-		if (window && window->getContentsWidget()->getUrl() == url)
+		if (window && window->getUrl() == url)
 		{
 			if (activate)
 			{

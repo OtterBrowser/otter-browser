@@ -55,7 +55,7 @@ struct SessionWindow
 
 	SessionWindow() : group(0), index(-1), pinned(false) {}
 
-	QString url() const
+	QString getUrl() const
 	{
 		if (index >= 0 && index < history.count())
 		{
@@ -65,17 +65,17 @@ struct SessionWindow
 		return QString();
 	}
 
-	QString title() const
+	QString getTitle() const
 	{
 		if (index >= 0 && index < history.count())
 		{
-			return history.at(index).title;
+			return (history.at(index).title.isEmpty() ? QCoreApplication::translate("main", "(Untitled)") : history.at(index).title);
 		}
 
 		return QCoreApplication::translate("main", "(Untitled)");
 	}
 
-	int zoom() const
+	int getZoom() const
 	{
 		if (index >= 0 && index < history.count())
 		{
@@ -86,19 +86,19 @@ struct SessionWindow
 	}
 };
 
-struct SessionEntry
+struct SessionMainWindow
 {
 	QList<SessionWindow> windows;
 	int index;
 
-	SessionEntry() : index(-1) {}
+	SessionMainWindow() : index(-1) {}
 };
 
 struct SessionInformation
 {
 	QString path;
 	QString title;
-	QList<SessionEntry> windows;
+	QList<SessionMainWindow> windows;
 	int index;
 
 	SessionInformation() : index(-1) {}
@@ -151,7 +151,7 @@ private:
 	static QString m_cachePath;
 	static QString m_profilePath;
 	static QList<WindowsManager*> m_managers;
-	static QList<SessionEntry> m_closedWindows;
+	static QList<SessionMainWindow> m_closedWindows;
 	static bool m_dirty;
 
 signals:

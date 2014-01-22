@@ -46,7 +46,7 @@ public:
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
 	QUrl getUrl() const;
-	SessionEntry getSession() const;
+	SessionMainWindow getSession() const;
 	QList<SessionWindow> getClosedWindows() const;
 	int getWindowCount() const;
 	int getCurrentWindow() const;
@@ -61,7 +61,7 @@ public slots:
 	void closeAll();
 	void closeOther(int index = -1);
 	void restore(int index = 0);
-	void restore(const QList<SessionWindow> &windows);
+	void restore(const SessionMainWindow &session);
 	void print(int index = -1);
 	void printPreview(int index = -1);
 	void triggerAction(WindowAction action, bool checked = false);
@@ -92,7 +92,8 @@ private:
 	QList<SessionWindow> m_closedWindows;
 	int m_currentWindow;
 	int m_printedWindow;
-	bool m_privateSession;
+	bool m_isPrivate;
+	bool m_isRestored;
 
 signals:
 	void requestedAddBookmark(QUrl url, QString title);

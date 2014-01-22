@@ -42,7 +42,7 @@ public:
 
 	void removeWindow(MainWindow* window);
 	static Application* getInstance();
-	MainWindow* createWindow(bool privateSession = false, bool background = false, const SessionEntry &windows = SessionEntry());
+	MainWindow* createWindow(bool privateSession = false, bool background = false, const SessionMainWindow &windows = SessionMainWindow());
 	MainWindow* getWindow();
 	QCommandLineParser* getParser() const;
 	QList<MainWindow*> getWindows();

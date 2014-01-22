@@ -126,6 +126,7 @@ public:
 	explicit Window(bool privateWindow, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
+	void restore(SessionWindow session);
 	void close();
 	Window* clone(QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
@@ -136,6 +137,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
+	WindowHistoryInformation getHistory() const;
 	bool canClone() const;
 	bool isLoading() const;
 	bool isPinned() const;
@@ -150,6 +152,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
+	void showEvent(QShowEvent *event);
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
@@ -161,7 +164,9 @@ protected slots:
 
 private:
 	ContentsWidget *m_contentsWidget;
+	SessionWindow m_session;
 	bool m_isPinned;
+	bool m_isPrivate;
 	Ui::Window *m_ui;
 
 signals:

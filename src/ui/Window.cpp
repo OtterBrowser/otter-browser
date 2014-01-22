@@ -40,6 +40,7 @@ namespace Otter
 Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_contentsWidget(NULL),
 	m_isPinned(false),
+	m_isPrivate(privateWindow),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
@@ -47,17 +48,12 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	if (widget)
 	{
 		widget->setParent(this);
-	}
-	else
-	{
-		widget = new WebContentsWidget(privateWindow, NULL, this);
-	}
 
-	setContentsWidget(widget);
+		setContentsWidget(widget);
+	}
 
 	m_ui->addressWidget->setWindow(this);
 
-	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
@@ -80,6 +76,29 @@ void Window::changeEvent(QEvent *event)
 			break;
 		default:
 			break;
+	}
+}
+
+void Window::showEvent(QShowEvent *event)
+{
+	QWidget::showEvent(event);
+
+	if (!m_contentsWidget)
+	{
+		setUrl(m_session.getUrl(), false);
+	}
+}
+
+void Window::restore(SessionWindow session)
+{
+	m_session = session;
+
+	setSearchEngine(session.searchEngine);
+	setPinned(session.pinned);
+
+	if (!SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
+	{
+		setUrl(session.getUrl(), false);
 	}
 }
 
@@ -189,9 +208,9 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (!url.path().isEmpty() && url.path() != QLatin1String("blank") && SessionsManager::hasUrl(url, true))
+		if (m_session.index < 0 && !url.path().isEmpty() && url.path() != QLatin1String("blank") && SessionsManager::hasUrl(url, true))
 		{
-			m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
+			m_ui->addressWidget->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
 
 			return;
 		}
@@ -227,9 +246,9 @@ void Window::setUrl(const QUrl &url, bool typed)
 		}
 	}
 
-	if (!newWidget && m_contentsWidget->getType() != QLatin1String("web"))
+	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
-		newWidget = new WebContentsWidget(false, NULL, this);
+		newWidget = new WebContentsWidget(m_isPrivate, NULL, this);
 	}
 
 	if (newWidget)
@@ -237,9 +256,12 @@ void Window::setUrl(const QUrl &url, bool typed)
 		setContentsWidget(newWidget);
 	}
 
-	m_ui->addressWidget->setUrl(url);
+	if (m_contentsWidget)
+	{
+		m_ui->addressWidget->setUrl(url);
 
-	m_contentsWidget->setUrl(url, typed);
+		m_contentsWidget->setUrl(url, typed);
+	}
 }
 
 void Window::setPinned(bool pinned)
@@ -262,6 +284,11 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 
 	m_contentsWidget = widget;
+
+	if (!m_contentsWidget)
+	{
+		return;
+	}
 
 	if (m_contentsWidget->getType() == QLatin1String("web") && !m_ui->backButton->menu())
 	{
@@ -294,11 +321,25 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
 	m_ui->addressWidget->setFocus();
 
+	if (m_session.index >= 0)
+	{
+		WindowHistoryInformation history;
+		history.index = m_session.index;
+		history.entries = m_session.history;
+
+		m_contentsWidget->setHistory(history);
+		m_contentsWidget->setZoom(m_session.getZoom());
+		m_contentsWidget->setFocus();
+
+		m_session = SessionWindow();
+	}
+
 	emit actionsChanged();
 	emit canZoomChanged(m_contentsWidget->canZoom());
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
 
+	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SIGNAL(requestedNewWindow(ContentsWidget*)));
@@ -317,7 +358,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 Window* Window::clone(QWidget *parent)
 {
-	if (!canClone())
+	if (!m_contentsWidget || !canClone())
 	{
 		return NULL;
 	}
@@ -331,12 +372,17 @@ Window* Window::clone(QWidget *parent)
 
 ContentsWidget* Window::getContentsWidget()
 {
+	if (!m_contentsWidget)
+	{
+		setUrl(m_session.getUrl(), false);
+	}
+
 	return m_contentsWidget;
 }
 
 QString Window::getDefaultTextEncoding() const
 {
-	if (m_contentsWidget->getType() == QLatin1String("web"))
+	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
 	{
 		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
@@ -356,37 +402,51 @@ QString Window::getSearchEngine() const
 
 QString Window::getTitle() const
 {
-	return m_contentsWidget->getTitle();
+	return (m_contentsWidget ? m_contentsWidget->getTitle() : m_session.getTitle());
 }
 
 QLatin1String Window::getType() const
 {
-	return m_contentsWidget->getType();
+	return (m_contentsWidget ? m_contentsWidget->getType() : QLatin1String("unknown"));
 }
 
 QUrl Window::getUrl() const
 {
-	return m_contentsWidget->getUrl();
+	return (m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
 }
 
 QIcon Window::getIcon() const
 {
-	return m_contentsWidget->getIcon();
+	return (m_contentsWidget ? m_contentsWidget->getIcon() : WebBackendsManager::getBackend()->getIconForUrl(m_session.getUrl()));
 }
 
 QPixmap Window::getThumbnail() const
 {
-	return m_contentsWidget->getThumbnail();
+	return (m_contentsWidget ? m_contentsWidget->getThumbnail() : QPixmap());
+}
+
+WindowHistoryInformation Window::getHistory() const
+{
+	if (!m_contentsWidget)
+	{
+		WindowHistoryInformation history;
+		history.index = m_session.index;
+		history.entries = m_session.history;
+
+		return history;
+	}
+
+	return m_contentsWidget->getHistory();
 }
 
 bool Window::canClone() const
 {
-	return m_contentsWidget->canClone();
+	return (m_contentsWidget ? m_contentsWidget->canClone() : false);
 }
 
 bool Window::isLoading() const
 {
-	return m_contentsWidget->isLoading();
+	return (m_contentsWidget ? m_contentsWidget->isLoading() : false);
 }
 
 bool Window::isPinned() const
@@ -396,7 +456,7 @@ bool Window::isPinned() const
 
 bool Window::isPrivate() const
 {
-	return m_contentsWidget->isPrivate();
+	return (m_contentsWidget ? m_contentsWidget->isPrivate() : m_isPrivate);
 }
 
 }

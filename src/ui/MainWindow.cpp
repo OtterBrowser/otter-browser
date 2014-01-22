@@ -46,7 +46,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
@@ -231,8 +231,7 @@ MainWindow::MainWindow(bool privateSession, const SessionEntry &windows, QWidget
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 
-	m_windowsManager->restore(windows.windows);
-	m_windowsManager->setCurrentWindow(windows.index);
+	m_windowsManager->restore(windows);
 
 	SettingsManager::setDefaultValue(QLatin1String("Window/Size"), size());
 	SettingsManager::setDefaultValue(QLatin1String("Window/Position"), pos());
@@ -749,7 +748,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).url())), tabs.at(i).title(), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
+		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), tabs.at(i).getTitle(), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
 	m_closedWindowsMenu->addActions(m_ui->menuClosedWindows->actions());

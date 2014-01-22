@@ -269,7 +269,7 @@ Application* Application::getInstance()
 	return m_instance;
 }
 
-MainWindow* Application::createWindow(bool privateSession, bool background, const SessionEntry &windows)
+MainWindow* Application::createWindow(bool privateSession, bool background, const SessionMainWindow &windows)
 {
 	MainWindow *window = new MainWindow(privateSession, windows);
 

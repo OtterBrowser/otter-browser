@@ -47,7 +47,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(bool privateSession = false, const SessionEntry &windows = SessionEntry(), QWidget *parent = NULL);
+	explicit MainWindow(bool privateSession = false, const SessionMainWindow &windows = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
 	WindowsManager* getWindowsManager();
