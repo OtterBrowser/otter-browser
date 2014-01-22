@@ -73,6 +73,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	layout->setContentsMargins(0, 0, 0, 0);
 
 	setLayout(layout);
+	setFocusPolicy(Qt::StrongFocus);
 
 	if (page)
 	{

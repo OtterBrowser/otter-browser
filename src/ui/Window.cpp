@@ -43,6 +43,8 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	m_isPrivate(privateWindow),
 	m_ui(new Ui::Window)
 {
+	setFocusPolicy(Qt::StrongFocus);
+
 	m_ui->setupUi(this);
 
 	if (widget)
@@ -86,6 +88,20 @@ void Window::showEvent(QShowEvent *event)
 	if (!m_contentsWidget)
 	{
 		setUrl(m_session.getUrl(), false);
+	}
+}
+
+void Window::focusInEvent(QFocusEvent *event)
+{
+	QWidget::focusInEvent(event);
+
+	if (getUrl().isEmpty())
+	{
+		m_ui->addressWidget->setFocus();
+	}
+	else if (m_contentsWidget)
+	{
+		m_contentsWidget->setFocus();
 	}
 }
 
@@ -319,7 +335,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_ui->forwardButton->setDefaultAction(m_contentsWidget->getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));
 	m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
-	m_ui->addressWidget->setFocus();
 
 	if (m_session.index >= 0)
 	{
@@ -332,6 +347,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		m_contentsWidget->setFocus();
 
 		m_session = SessionWindow();
+	}
+	else
+	{
+		m_ui->addressWidget->setFocus();
 	}
 
 	emit actionsChanged();

@@ -45,6 +45,8 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 		m_webWidget = WebBackendsManager::getBackend()->createWidget(privateWindow, this);
 	}
 
+	setFocusPolicy(Qt::StrongFocus);
+
 	m_ui->setupUi(this);
 	m_ui->findWidget->hide();
 	m_ui->verticalLayout->addWidget(m_webWidget);
@@ -105,6 +107,13 @@ void WebContentsWidget::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void WebContentsWidget::focusInEvent(QFocusEvent *event)
+{
+	QWidget::focusInEvent(event);
+
+	m_webWidget->setFocus();
 }
 
 void WebContentsWidget::resizeEvent(QResizeEvent *event)

@@ -70,6 +70,7 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void changeEvent(QEvent *event);
+	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:

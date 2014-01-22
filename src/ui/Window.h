@@ -153,6 +153,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	void showEvent(QShowEvent *event);
+	void focusInEvent(QFocusEvent *event);
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
