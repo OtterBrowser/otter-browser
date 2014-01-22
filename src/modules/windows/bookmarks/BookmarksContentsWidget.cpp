@@ -294,6 +294,13 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(bookmark->type == UrlBookmark);
 		menu.addSeparator();
+
+		QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
+		addMenu->addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+		addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+		addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+
+		menu.addSeparator();
 		menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
 		menu.addSeparator();
 		menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
