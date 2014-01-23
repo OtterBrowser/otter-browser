@@ -272,12 +272,14 @@ void Window::setUrl(const QUrl &url, bool typed)
 		newWidget = new WebContentsWidget(m_isPrivate, NULL, this);
 	}
 
+	const bool isRestoring = (!m_contentsWidget && m_session.index >= 0);
+
 	if (newWidget)
 	{
 		setContentsWidget(newWidget);
 	}
 
-	if (m_contentsWidget)
+	if (!isRestoring && m_contentsWidget)
 	{
 		m_ui->addressWidget->setUrl(url);
 
