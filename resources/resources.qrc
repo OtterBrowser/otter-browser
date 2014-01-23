@@ -78,13 +78,13 @@
         <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>
         <file>icons/cache.png</file>
-        <file>keyboard/default.ini</file>
-        <file>keyboard/platform.ini</file>
-        <file>macros/default.ini</file>
-        <file>macros/platform.ini</file>
         <file>icons/dialog-error.png</file>
         <file>icons/dialog-password.png</file>
         <file>icons/dialog-warning.png</file>
         <file>icons/dialog-information.png</file>
+        <file>keyboard/default.ini</file>
+        <file>keyboard/platform.ini</file>
+        <file>macros/default.ini</file>
+        <file>macros/platform.ini</file>
     </qresource>
 </RCC>

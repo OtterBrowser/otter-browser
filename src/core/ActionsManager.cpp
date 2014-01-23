@@ -20,12 +20,17 @@
 #include "ActionsManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
+
+#include <QtCore/QFile>
+#include <QtCore/QSettings>
 
 namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QHash<QWidget*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
+QHash<QAction*, QList<QShortcut*> > ActionsManager::m_actionShortcuts;
+QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
 QHash<QString, QAction*> ActionsManager::m_applicationActions;
 QHash<QString, QStringList> ActionsManager::m_applicationMacros;
 QHash<QString, QList<QKeySequence> > ActionsManager::m_profileShortcuts;
@@ -34,30 +39,6 @@ QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	m_nativeShortcuts[QLatin1String("NewWindow")] = QKeySequence(QKeySequence::New);
-	m_nativeShortcuts[QLatin1String("Open")] = QKeySequence(QKeySequence::Open);
-	m_nativeShortcuts[QLatin1String("Save")] = QKeySequence(QKeySequence::Save);
-	m_nativeShortcuts[QLatin1String("Exit")] = QKeySequence(QKeySequence::Quit);
-	m_nativeShortcuts[QLatin1String("Undo")] = QKeySequence(QKeySequence::Undo);
-	m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
-	m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
-	m_nativeShortcuts[QLatin1String("Cut")] = QKeySequence(QKeySequence::Cut);
-	m_nativeShortcuts[QLatin1String("Copy")] = QKeySequence(QKeySequence::Copy);
-	m_nativeShortcuts[QLatin1String("Paste")] = QKeySequence(QKeySequence::Paste);
-	m_nativeShortcuts[QLatin1String("Delete")] = QKeySequence(QKeySequence::Delete);
-	m_nativeShortcuts[QLatin1String("SelectAll")] = QKeySequence(QKeySequence::SelectAll);
-	m_nativeShortcuts[QLatin1String("Find")] = QKeySequence(QKeySequence::Find);
-	m_nativeShortcuts[QLatin1String("FindNext")] = QKeySequence(QKeySequence::FindNext);
-	m_nativeShortcuts[QLatin1String("FindPrevious")] = QKeySequence(QKeySequence::FindPrevious);
-	m_nativeShortcuts[QLatin1String("Reload")] = QKeySequence(QKeySequence::Refresh);
-	m_nativeShortcuts[QLatin1String("ZoomIn")] = QKeySequence(QKeySequence::ZoomIn);
-	m_nativeShortcuts[QLatin1String("ZoomOut")] = QKeySequence(QKeySequence::ZoomOut);
-	m_nativeShortcuts[QLatin1String("Back")] = QKeySequence(QKeySequence::Back);
-	m_nativeShortcuts[QLatin1String("Forward")] = QKeySequence(QKeySequence::Forward);
-	m_nativeShortcuts[QLatin1String("Help")] = QKeySequence(QKeySequence::HelpContents);
-	m_nativeShortcuts[QLatin1String("ApplicationConfiguration")] = QKeySequence(QKeySequence::Preferences);
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
 ActionsManager::~ActionsManager()
@@ -86,12 +67,56 @@ void ActionsManager::createInstance(QObject *parent)
 
 void ActionsManager::loadProfiles()
 {
-	m_applicationActions.clear();
+	QHash<QString, QStringList>::iterator iterator;
+
+	for (iterator = m_applicationMacros.begin(); iterator != m_applicationMacros.end(); ++iterator)
+	{
+		if (m_applicationActions.contains(iterator.key()))
+		{
+			m_applicationActions[iterator.key()]->deleteLater();
+
+			m_applicationActions.remove(iterator.key());
+		}
+	}
+
 	m_applicationMacros.clear();
+	m_profileShortcuts.clear();
+
+	QList<QKeySequence> shortcutsInUse;
+	const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
+
+	for (int i = 0; i < shortcutsProfiles.count(); ++i)
+	{
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
+		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QStringList actions = profile.allKeys();
+
+		for (int j = 0; j < actions.count(); ++j)
+		{
+			const QStringList rawShortcuts = profile.value(actions.at(j), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
+
+			for (int k = 0; k < rawShortcuts.count(); ++k)
+			{
+				QKeySequence shortcut = ((rawShortcuts.at(k) == QLatin1String("native")) ? m_nativeShortcuts.value(actions.at(j), QKeySequence()) : QKeySequence(rawShortcuts.at(k)));
+
+				if (!shortcut.isEmpty() && !shortcutsInUse.contains(shortcut))
+				{
+					actionShortcuts.append(shortcut);
+					shortcutsInUse.append(shortcut);
+				}
+			}
+
+			if (!actionShortcuts.isEmpty())
+			{
+				m_profileShortcuts[actions.at(j)] = actionShortcuts;
+			}
+		}
+	}
 
 //TODO load profiles, setup application shortcuts and macros
 
-	QList<QWidget*> windows = m_windowActions.keys();
+	QList<QObject*> windows = m_windowActions.keys();
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
@@ -101,7 +126,7 @@ void ActionsManager::loadProfiles()
 
 void ActionsManager::optionChanged(const QString &option)
 {
-	if ((option == QLatin1String("Browser/ActionMacrosProfiles") || option == QLatin1String("Browser/KeyboardShortcutsProfiles")) && m_reloadTimer == 0)
+	if ((option == QLatin1String("Browser/ActionMacrosProfilesOrder") || option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder")) && m_reloadTimer == 0)
 	{
 		m_reloadTimer = startTimer(50);
 	}
@@ -109,37 +134,34 @@ void ActionsManager::optionChanged(const QString &option)
 
 void ActionsManager::removeWindow(QObject *window)
 {
+	if (!m_windowActions.contains(window))
+	{
+		return;
+	}
+
+	const QHash<QString, QAction*> actions = m_windowActions[window];
+	QHash<QString, QAction*>::const_iterator iterator;
+
+	for (iterator = actions.constBegin(); iterator != actions.constEnd(); ++iterator)
+	{
+		if (m_actionShortcuts.contains(iterator.value()))
+		{
+			qDeleteAll(m_actionShortcuts[iterator.value()]);
+
+			m_actionShortcuts.remove(iterator.value());
+		}
+	}
+
 	m_windowActions.remove(qobject_cast<QWidget*>(window));
 }
 
-void ActionsManager::registerAction(QWidget *window, const QLatin1String &name, const QString &text, const QIcon &icon)
+void ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon)
 {
-	if (m_applicationActions.contains(name))
-	{
-		return;
-	}
-
-	QAction *action = new QAction(icon, text, window);
+	QAction *action = new QAction(icon, text, m_instance);
 	action->setObjectName(name);
+	action->setShortcutContext(Qt::ApplicationShortcut);
 
-	registerAction(window, action);
-}
-
-void ActionsManager::registerAction(QWidget *window, QAction *action)
-{
-	if (!action || action->isSeparator() || action->objectName().isEmpty() || !m_windowActions.contains(window))
-	{
-		return;
-	}
-
-	const QString name = (action->objectName().startsWith(QLatin1String("action")) ? action->objectName().mid(6) : action->objectName());
-
-	if (m_nativeShortcuts.contains(name))
-	{
-		action->setShortcut(QKeySequence(m_nativeShortcuts[name]));
-	}
-
-	m_windowActions[window][name] = action;
+	m_applicationActions[name] = action;
 }
 
 void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
@@ -147,6 +169,74 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 	if (!window)
 	{
 		return;
+	}
+
+	if (m_profileShortcuts.isEmpty())
+	{
+		m_nativeShortcuts[QLatin1String("NewWindow")] = QKeySequence(QKeySequence::New);
+		m_nativeShortcuts[QLatin1String("Open")] = QKeySequence(QKeySequence::Open);
+		m_nativeShortcuts[QLatin1String("Save")] = QKeySequence(QKeySequence::Save);
+		m_nativeShortcuts[QLatin1String("Exit")] = QKeySequence(QKeySequence::Quit);
+		m_nativeShortcuts[QLatin1String("Undo")] = QKeySequence(QKeySequence::Undo);
+		m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
+		m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
+		m_nativeShortcuts[QLatin1String("Cut")] = QKeySequence(QKeySequence::Cut);
+		m_nativeShortcuts[QLatin1String("Copy")] = QKeySequence(QKeySequence::Copy);
+		m_nativeShortcuts[QLatin1String("Paste")] = QKeySequence(QKeySequence::Paste);
+		m_nativeShortcuts[QLatin1String("Delete")] = QKeySequence(QKeySequence::Delete);
+		m_nativeShortcuts[QLatin1String("SelectAll")] = QKeySequence(QKeySequence::SelectAll);
+		m_nativeShortcuts[QLatin1String("Find")] = QKeySequence(QKeySequence::Find);
+		m_nativeShortcuts[QLatin1String("FindNext")] = QKeySequence(QKeySequence::FindNext);
+		m_nativeShortcuts[QLatin1String("FindPrevious")] = QKeySequence(QKeySequence::FindPrevious);
+		m_nativeShortcuts[QLatin1String("Reload")] = QKeySequence(QKeySequence::Refresh);
+		m_nativeShortcuts[QLatin1String("ZoomIn")] = QKeySequence(QKeySequence::ZoomIn);
+		m_nativeShortcuts[QLatin1String("ZoomOut")] = QKeySequence(QKeySequence::ZoomOut);
+		m_nativeShortcuts[QLatin1String("Back")] = QKeySequence(QKeySequence::Back);
+		m_nativeShortcuts[QLatin1String("Forward")] = QKeySequence(QKeySequence::Forward);
+		m_nativeShortcuts[QLatin1String("Help")] = QKeySequence(QKeySequence::HelpContents);
+		m_nativeShortcuts[QLatin1String("ApplicationConfiguration")] = QKeySequence(QKeySequence::Preferences);
+
+		registerAction(QLatin1String("OpenLinkInThisTab"), tr("Open"));
+		registerAction(QLatin1String("OpenLinkInNewTab"), tr("Open in New Tab"));
+		registerAction(QLatin1String("OpenLinkInNewTabBackground"), tr("Open in New Background Tab"));
+		registerAction(QLatin1String("OpenLinkInNewWindow"), tr("Open in New Window"));
+		registerAction(QLatin1String("OpenLinkInNewWindowBackground"), tr("Open in New Background Window"));
+		registerAction(QLatin1String("CopyLinkToClipboard"), tr("Copy Link to Clipboard"));
+		registerAction(QLatin1String("OpenFrameInThisTab"), tr("Open"));
+		registerAction(QLatin1String("OpenFrameInNewTab"), tr("Open in New Tab"));
+		registerAction(QLatin1String("OpenFrameInNewTabBackground"), tr("Open in New Background Tab"));
+		registerAction(QLatin1String("CopyFrameLinkToClipboard"), tr("Copy Frame Link to Clipboard"));
+		registerAction(QLatin1String("ReloadFrame"), tr("Reload"));
+		registerAction(QLatin1String("ViewSourceFrame"), tr("View Source"));
+		registerAction(QLatin1String("SaveLinkToDisk"), tr("Save Link Target As..."));
+		registerAction(QLatin1String("SaveLinkToDownloads"), tr("Save to Downloads"));
+		registerAction(QLatin1String("BookmarkLink"), tr("Bookmark Link..."), Utils::getIcon(QLatin1String("bookmark-new")));
+		registerAction(QLatin1String("ReloadTime"), tr("Reload Each"));
+		registerAction(QLatin1String("CopyAddress"), tr("Copy Address"));
+		registerAction(QLatin1String("Validate"), tr("Validate"));
+		registerAction(QLatin1String("ContentBlocking"), tr("Content Blocking..."));
+		registerAction(QLatin1String("WebsitePreferences"), tr("Website Preferences..."));
+		registerAction(QLatin1String("ImageProperties"), tr("Image Properties..."));
+		registerAction(QLatin1String("OpenImageInNewTab"), tr("Open Image"));
+		registerAction(QLatin1String("SaveImageToDisk"), tr("Save Image..."));
+		registerAction(QLatin1String("CopyImageToClipboard"), tr("Copy Image to Clipboard"));
+		registerAction(QLatin1String("CopyImageUrlToClipboard"), tr("Copy Image Link to Clipboard"));
+		registerAction(QLatin1String("Search"), tr("Search"));
+		registerAction(QLatin1String("SearchMenu"), tr("Search Using"));
+		registerAction(QLatin1String("OpenSelectionAsLink"), tr("Go to This Address"));
+		registerAction(QLatin1String("ClearAll"), tr("Clear All"));
+		registerAction(QLatin1String("SpellCheck"), tr("Check Spelling"));
+		registerAction(QLatin1String("CreateSearch"), tr("Create Search..."));
+		registerAction(QLatin1String("SaveMediaToDisk"), tr("Save Media..."));
+		registerAction(QLatin1String("CopyMediaUrlToClipboard"), tr("Copy Media Link to Clipboard"));
+		registerAction(QLatin1String("ToggleMediaControls"), tr("Show Controls"));
+		registerAction(QLatin1String("ToggleMediaLoop"), tr("Looping"));
+		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
+		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
+
+		loadProfiles();
+
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
 	}
 
 	if (!m_windowActions.contains(window))
@@ -158,8 +248,13 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		registerAction(window, actions.at(i));
+		if (actions.at(i) && !actions.at(i)->isSeparator() && !actions.at(i)->objectName().isEmpty())
+		{
+			m_windowActions[window][actions.at(i)->objectName().startsWith(QLatin1String("action")) ? actions.at(i)->objectName().mid(6) : actions.at(i)->objectName()] = actions.at(i);
+		}
 	}
+
+	setupWindowActions(window);
 }
 
 void ActionsManager::triggerAction(const QString &action)
@@ -213,7 +308,7 @@ void ActionsManager::setupLocalAction(QAction *localAction, const QLatin1String 
 	}
 }
 
-void ActionsManager::setupWindowActions(QWidget *window)
+void ActionsManager::setupWindowActions(QObject *window)
 {
 	if (!m_windowActions.contains(window))
 	{
@@ -222,10 +317,35 @@ void ActionsManager::setupWindowActions(QWidget *window)
 
 	const QHash<QString, QAction*> actions = m_windowActions[window];
 	QHash<QString, QAction*>::const_iterator iterator;
+	QWidget *widget = qobject_cast<QWidget*>(window);
 
 	for (iterator = actions.constBegin(); iterator != actions.constEnd(); ++iterator)
 	{
-//TODO
+		if (m_profileShortcuts.contains(iterator.key()))
+		{
+			const QList<QKeySequence> keySequences = m_profileShortcuts[iterator.key()];
+			QList<QShortcut*> shortcuts;
+
+			iterator.value()->setShortcut(keySequences.value(0));
+
+			for (int i = 1; i < keySequences.count(); ++i)
+			{
+				QShortcut *shortcut = new QShortcut(keySequences.at(i), widget);
+
+				connect(shortcut, SIGNAL(activated()), iterator.value(), SLOT(trigger()));
+
+				shortcuts.append(shortcut);
+			}
+
+			if (!shortcuts.isEmpty())
+			{
+				m_actionShortcuts[iterator.value()] = shortcuts;
+			}
+		}
+		else
+		{
+			iterator.value()->setShortcut(QKeySequence());
+		}
 	}
 }
 

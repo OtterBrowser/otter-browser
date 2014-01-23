@@ -36,12 +36,9 @@ public:
 
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
-	static void registerAction(QWidget *window, const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
-	static void registerAction(QWidget *window, QAction *action);
 	static void registerWindow(QWidget *window, QList<QAction*> actions);
 	static void triggerAction(const QString &action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
-	static void setupWindowActions(QWidget *window);
 	static QAction* getAction(const QString &action);
 	static QList<QKeySequence> getShortcuts(const QLatin1String &action);
 	static QStringList getIdentifiers();
@@ -49,10 +46,12 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	static void registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
+	static void setupWindowActions(QObject *window);
 
 protected slots:
 	void optionChanged(const QString &option);
-	void removeWindow(QObject *window);
+	void removeWindow(QObject *object);
 	void triggerMacro();
 
 private:
@@ -61,7 +60,8 @@ private:
 	int m_reloadTimer;
 
 	static ActionsManager *m_instance;
-	static QHash<QWidget*, QHash<QString, QAction*> > m_windowActions;
+	static QHash<QAction*, QList<QShortcut*> > m_actionShortcuts;
+	static QHash<QObject*, QHash<QString, QAction*> > m_windowActions;
 	static QHash<QString, QAction*> m_applicationActions;
 	static QHash<QString, QStringList> m_applicationMacros;
 	static QHash<QString, QList<QKeySequence> > m_profileShortcuts;
