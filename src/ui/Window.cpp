@@ -150,6 +150,11 @@ void Window::goToHistoryIndex(QAction *action)
 	}
 }
 
+void Window::notifyLoadingStateChanged(bool loading)
+{
+	emit loadingStateChanged(loading ? LoadingState : LoadedState);
+}
+
 void Window::notifyRequestedCloseWindow()
 {
 	emit requestedCloseWindow(this);
@@ -370,8 +375,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_ui->addressWidget, SLOT(setUrl(QUrl)));
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
-	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
-	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
+	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SLOT(notifyLoadingStateChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 }
 
@@ -458,14 +462,14 @@ WindowHistoryInformation Window::getHistory() const
 	return m_contentsWidget->getHistory();
 }
 
+WindowLoadingState Window::getLoadingState() const
+{
+	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
+}
+
 bool Window::canClone() const
 {
 	return (m_contentsWidget ? m_contentsWidget->canClone() : false);
-}
-
-bool Window::isLoading() const
-{
-	return (m_contentsWidget ? m_contentsWidget->isLoading() : false);
 }
 
 bool Window::isPinned() const

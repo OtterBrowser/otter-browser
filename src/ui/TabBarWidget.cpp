@@ -19,6 +19,7 @@
 
 #include "TabBarWidget.h"
 #include "PreviewWidget.h"
+#include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 
@@ -43,6 +44,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1),
 	m_previewTimer(0)
 {
+	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
 	setDrawBase(false);
 	setExpanding(false);
 	setMovable(true);
@@ -461,12 +463,12 @@ void TabBarWidget::updateTabs(int index)
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
-		const bool isLoading = getTabProperty(i, QLatin1String("isLoading"), false).toBool();
+		const WindowLoadingState loadingState = static_cast<WindowLoadingState>(getTabProperty(i, QLatin1String("loadingState"), LoadedState).toInt());
 		QLabel *label = qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition));
 
 		if (label)
 		{
-			if (isLoading)
+			if (loadingState != LoadedState)
 			{
 				if (!label->movie())
 				{
@@ -475,6 +477,8 @@ void TabBarWidget::updateTabs(int index)
 
 					label->setMovie(movie);
 				}
+
+				label->movie()->setSpeed((loadingState == LoadingState) ? 100 : 10);
 			}
 			else
 			{

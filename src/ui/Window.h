@@ -107,6 +107,13 @@ enum WindowAction
 	ToggleMediaMuteAction
 };
 
+enum WindowLoadingState
+{
+	DelayedState = 0,
+	LoadingState = 1,
+	LoadedState = 2
+};
+
 class ContentsWidget;
 
 class Window : public QWidget
@@ -117,8 +124,8 @@ class Window : public QWidget
 	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
 	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
 	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
+	Q_PROPERTY(WindowLoadingState loadingState READ getLoadingState NOTIFY loadingStateChanged)
 	Q_PROPERTY(bool canClone READ canClone)
-	Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
 	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
 	Q_PROPERTY(bool isPrivate READ isPrivate)
 
@@ -138,8 +145,8 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
+	WindowLoadingState getLoadingState() const;
 	bool canClone() const;
-	bool isLoading() const;
 	bool isPinned() const;
 	bool isPrivate() const;
 
@@ -158,6 +165,7 @@ protected:
 
 protected slots:
 	void goToHistoryIndex(QAction *action);
+	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
 	void updateGoBackMenu();
@@ -183,7 +191,7 @@ signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
-	void loadingChanged(bool loading);
+	void loadingStateChanged(WindowLoadingState loading);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
 };

@@ -318,7 +318,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 	connect(window, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
-	connect(window, SIGNAL(loadingChanged(bool)), m_tabBar, SLOT(updateTabs()));
+	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), m_tabBar, SLOT(updateTabs()));
 	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
 	emit windowAdded(index);
