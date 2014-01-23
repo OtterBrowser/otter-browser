@@ -354,8 +354,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
 	stream << QLatin1String("[Session]\n");
-	stream << QLatin1String("title=") << sessionTitle.replace(QLatin1Char(QLatin1Char('\n')), QLatin1String("\\n")) << QLatin1Char(QLatin1Char('\n'));
-	stream << QLatin1String("windows=") << windows.count() << QLatin1Char(QLatin1Char('\n'));
+	stream << QLatin1String("title=") << sessionTitle.replace(QLatin1Char('\n'), QLatin1String("\\n")) << QLatin1Char('\n');
+	stream << QLatin1String("windows=") << windows.count() << QLatin1Char('\n');
 	stream << QLatin1String("index=1\n\n");
 
 	for (int i = 0; i < windows.count(); ++i)
@@ -364,7 +364,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 		stream << QString("[%1/Properties]\n").arg(i + 1);
 		stream << QLatin1String("groups=0\n");
-		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char(QLatin1Char('\n'));
+		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
 		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
@@ -380,9 +380,9 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			{
 				stream << QString("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
 				stream << QLatin1String("url=") << sessionEntry.windows.at(j).history.at(k).url << QLatin1Char('\n');
-				stream << QLatin1String("title=") << QString(sessionEntry.windows.at(j).history.at(k).title).replace(QLatin1Char('\n'), "\\n") << QLatin1Char('\n');
+				stream << QLatin1String("title=") << QString(sessionEntry.windows.at(j).history.at(k).title).replace(QLatin1Char('\n'), QLatin1String("\\n")) << QLatin1Char('\n');
 				stream << QLatin1String("position=") << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << QLatin1Char('\n');
-				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << "\n\n";
+				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << QLatin1String("\n\n");
 			}
 		}
 	}
