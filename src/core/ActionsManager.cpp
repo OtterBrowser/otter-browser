@@ -89,11 +89,11 @@ void ActionsManager::loadProfiles()
 	{
 		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
 		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList actions = profile.allKeys();
+		const QStringList actions = profile.childGroups();
 
 		for (int j = 0; j < actions.count(); ++j)
 		{
-			const QStringList rawShortcuts = profile.value(actions.at(j), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			const QStringList rawShortcuts = profile.value(actions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 			QList<QKeySequence> actionShortcuts;
 
 			for (int k = 0; k < rawShortcuts.count(); ++k)
