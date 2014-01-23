@@ -334,6 +334,11 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = Application::getInstance()->getWindows();
 	}
 
+	if (windows.isEmpty())
+	{
+		return false;
+	}
+
 	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
 
 	const QString sessionPath = getSessionPath(path);
@@ -351,6 +356,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		return false;
 	}
 
+	int tabs = 0;
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
 	stream << QLatin1String("[Session]\n");
@@ -361,6 +367,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	for (int i = 0; i < windows.count(); ++i)
 	{
 		const SessionMainWindow sessionEntry = windows.at(i)->getWindowsManager()->getSession();
+
+		tabs += sessionEntry.windows.count();
 
 		stream << QString("[%1/Properties]\n").arg(i + 1);
 		stream << QLatin1String("groups=0\n");
@@ -385,6 +393,13 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << QLatin1String("\n\n");
 			}
 		}
+	}
+
+	if (tabs == 0)
+	{
+		file.cancelWriting();
+
+		return false;
 	}
 
 	return file.commit();
