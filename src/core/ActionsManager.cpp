@@ -30,22 +30,15 @@ namespace Otter
 
 ActionsManager* ActionsManager::m_instance = NULL;
 QHash<QAction*, QList<QShortcut*> > ActionsManager::m_actionShortcuts;
+QHash<QAction*, QStringList> ActionsManager::m_applicationMacros;
 QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
 QHash<QString, QAction*> ActionsManager::m_applicationActions;
-QHash<QString, QStringList> ActionsManager::m_applicationMacros;
 QHash<QString, QList<QKeySequence> > ActionsManager::m_profileShortcuts;
 QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-}
-
-ActionsManager::~ActionsManager()
-{
-	qDeleteAll(m_applicationActions);
-
-	m_applicationActions.clear();
 }
 
 void ActionsManager::timerEvent(QTimerEvent *event)
@@ -67,15 +60,17 @@ void ActionsManager::createInstance(QObject *parent)
 
 void ActionsManager::loadProfiles()
 {
-	QHash<QString, QStringList>::iterator iterator;
+	QHash<QAction*, QStringList>::iterator macrosIterator;
 
-	for (iterator = m_applicationMacros.begin(); iterator != m_applicationMacros.end(); ++iterator)
+	for (macrosIterator = m_applicationMacros.begin(); macrosIterator != m_applicationMacros.end(); ++macrosIterator)
 	{
-		if (m_applicationActions.contains(iterator.key()))
-		{
-			m_applicationActions[iterator.key()]->deleteLater();
+		const QString indentifier = macrosIterator.key()->objectName();
 
-			m_applicationActions.remove(iterator.key());
+		if (m_applicationActions.contains(indentifier))
+		{
+			m_applicationActions[indentifier]->deleteLater();
+
+			m_applicationActions.remove(indentifier);
 		}
 	}
 
@@ -98,7 +93,7 @@ void ActionsManager::loadProfiles()
 
 			for (int k = 0; k < rawShortcuts.count(); ++k)
 			{
-				QKeySequence shortcut = ((rawShortcuts.at(k) == QLatin1String("native")) ? m_nativeShortcuts.value(actions.at(j), QKeySequence()) : QKeySequence(rawShortcuts.at(k)));
+				const QKeySequence shortcut = ((rawShortcuts.at(k) == QLatin1String("native")) ? m_nativeShortcuts.value(actions.at(j), QKeySequence()) : QKeySequence(rawShortcuts.at(k)));
 
 				if (!shortcut.isEmpty() && !shortcutsInUse.contains(shortcut))
 				{
@@ -114,7 +109,105 @@ void ActionsManager::loadProfiles()
 		}
 	}
 
-//TODO load profiles, setup application shortcuts and macros
+	QHash<QString, QAction*>::iterator actionsIterator;
+
+	for (actionsIterator = m_applicationActions.begin(); actionsIterator != m_applicationActions.end(); ++actionsIterator)
+	{
+		if (m_profileShortcuts.contains(actionsIterator.key()))
+		{
+			const QList<QKeySequence> keySequences = m_profileShortcuts[actionsIterator.key()];
+			QList<QShortcut*> shortcuts;
+
+			actionsIterator.value()->setShortcut(keySequences.value(0));
+
+			for (int i = 1; i < keySequences.count(); ++i)
+			{
+				QShortcut *shortcut = new QShortcut(keySequences.at(i), NULL);
+				shortcut->setParent(m_instance);
+				shortcut->setContext(Qt::ApplicationShortcut);
+
+				connect(shortcut, SIGNAL(activated()), actionsIterator.value(), SLOT(trigger()));
+
+				shortcuts.append(shortcut);
+			}
+
+			if (!shortcuts.isEmpty())
+			{
+				m_actionShortcuts[actionsIterator.value()] = shortcuts;
+			}
+		}
+		else
+		{
+			actionsIterator.value()->setShortcut(QKeySequence());
+		}
+	}
+
+	const QStringList macrosProfiles = SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfilesOrder")).toStringList();
+
+	for (int i = 0; i < macrosProfiles.count(); ++i)
+	{
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/macros/") + macrosProfiles.at(i) + QLatin1String(".ini");
+		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/macros/") + macrosProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QStringList macros = profile.childGroups();
+
+		for (int j = 0; j < macros.count(); ++j)
+		{
+			const QStringList actions = profile.value(macros.at(j) + QLatin1String("/actions"), QString()).toStringList();
+
+			if (m_applicationActions.contains(macros.at(j)) || actions.isEmpty())
+			{
+				continue;
+			}
+
+			QAction *action = new QAction(profile.value(macros.at(j) + QLatin1String("/title"), QString()).toString(), SessionsManager::getActiveWindow());
+			action->setObjectName(macros.at(j));
+
+			connect(action, SIGNAL(triggered()), m_instance, SLOT(triggerMacro()));
+
+			m_applicationActions[macros.at(j)] = action;
+			m_applicationMacros[action] = actions;
+
+			const QStringList rawShortcuts = profile.value(macros.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
+
+			for (int k = 0; k < rawShortcuts.count(); ++k)
+			{
+				const QKeySequence shortcut(rawShortcuts.at(k));
+
+				if (!shortcut.isEmpty() && !shortcutsInUse.contains(shortcut))
+				{
+					actionShortcuts.append(shortcut);
+					shortcutsInUse.append(shortcut);
+				}
+			}
+
+			if (!actionShortcuts.isEmpty())
+			{
+				QList<QShortcut*> shortcuts;
+
+				m_profileShortcuts[macros.at(j)] = actionShortcuts;
+
+				action->setShortcut(actionShortcuts.value(0));
+				action->setShortcutContext(Qt::ApplicationShortcut);
+
+				for (int i = 1; i < actionShortcuts.count(); ++i)
+				{
+					QShortcut *shortcut = new QShortcut(actionShortcuts.at(i), NULL);
+					shortcut->setParent(m_instance);
+					shortcut->setContext(Qt::ApplicationShortcut);
+
+					connect(shortcut, SIGNAL(activated()), action, SLOT(trigger()));
+
+					shortcuts.append(shortcut);
+				}
+
+				if (!shortcuts.isEmpty())
+				{
+					m_actionShortcuts[action] = shortcuts;
+				}
+			}
+		}
+	}
 
 	QList<QObject*> windows = m_windowActions.keys();
 
@@ -273,7 +366,7 @@ void ActionsManager::triggerMacro()
 
 	if (action)
 	{
-		const QStringList actions = m_applicationMacros.value(action->objectName(), QStringList());
+		const QStringList actions = m_applicationMacros.value(action, QStringList());
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
@@ -316,37 +409,39 @@ void ActionsManager::setupWindowActions(QObject *window)
 	}
 
 	const QHash<QString, QAction*> actions = m_windowActions[window];
-	QHash<QString, QAction*>::const_iterator iterator;
+	QHash<QString, QAction*>::const_iterator windowActionsIterator;
 	QWidget *widget = qobject_cast<QWidget*>(window);
 
-	for (iterator = actions.constBegin(); iterator != actions.constEnd(); ++iterator)
+	for (windowActionsIterator = actions.constBegin(); windowActionsIterator != actions.constEnd(); ++windowActionsIterator)
 	{
-		if (m_profileShortcuts.contains(iterator.key()))
+		if (m_profileShortcuts.contains(windowActionsIterator.key()))
 		{
-			const QList<QKeySequence> keySequences = m_profileShortcuts[iterator.key()];
+			const QList<QKeySequence> keySequences = m_profileShortcuts[windowActionsIterator.key()];
 			QList<QShortcut*> shortcuts;
 
-			iterator.value()->setShortcut(keySequences.value(0));
+			windowActionsIterator.value()->setShortcut(keySequences.value(0));
 
 			for (int i = 1; i < keySequences.count(); ++i)
 			{
 				QShortcut *shortcut = new QShortcut(keySequences.at(i), widget);
 
-				connect(shortcut, SIGNAL(activated()), iterator.value(), SLOT(trigger()));
+				connect(shortcut, SIGNAL(activated()), windowActionsIterator.value(), SLOT(trigger()));
 
 				shortcuts.append(shortcut);
 			}
 
 			if (!shortcuts.isEmpty())
 			{
-				m_actionShortcuts[iterator.value()] = shortcuts;
+				m_actionShortcuts[windowActionsIterator.value()] = shortcuts;
 			}
 		}
 		else
 		{
-			iterator.value()->setShortcut(QKeySequence());
+			windowActionsIterator.value()->setShortcut(QKeySequence());
 		}
 	}
+
+	widget->addActions(m_applicationActions.values());
 }
 
 QAction* ActionsManager::getAction(const QString &action)
