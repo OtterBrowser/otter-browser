@@ -22,6 +22,7 @@
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/Utils.h"
 
 #include <QtCore/QtMath>
 #include <QtCore/QTimer>
@@ -129,7 +130,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab")));
 		}
 
-		menu.addAction(QIcon(":/icons/tab-close-other.png"), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0);
+		menu.addAction(Utils::getIcon(QLatin1String("tab-close-other")), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0);
 	}
 
 	menu.exec(event->globalPos());
@@ -168,6 +169,18 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 		{
 			emit requestedClose(tab);
 		}
+	}
+
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		m_previewWidget->hide();
+	}
+
+	if (m_previewTimer > 0)
+	{
+		killTimer(m_previewTimer);
+
+		m_previewTimer = 0;
 	}
 }
 
@@ -488,12 +501,15 @@ void TabBarWidget::updateTabs(int index)
 					label->setMovie(NULL);
 				}
 
-				label->setPixmap(getTabProperty(i, QLatin1String("icon"), QIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? ":/icons/tab-private.png" : ":/icons/tab.png")).value<QIcon>().pixmap(16, 16));
+				label->setPixmap(getTabProperty(i, QLatin1String("icon"), Utils::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>().pixmap(16, 16));
 			}
 		}
 	}
 
-	showPreview(tabAt(mapFromGlobal(QCursor::pos())));
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
+	}
 }
 
 void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
