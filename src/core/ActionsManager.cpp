@@ -351,12 +351,19 @@ void ActionsManager::setupWindowActions(QObject *window)
 
 QAction* ActionsManager::getAction(const QString &action)
 {
-	if (!m_windowActions.contains(SessionsManager::getActiveWindow()) || !m_windowActions[SessionsManager::getActiveWindow()].contains(action))
+	if (m_applicationActions.contains(action))
 	{
-		return NULL;
+		return m_applicationActions[action];
 	}
 
-	return m_windowActions[SessionsManager::getActiveWindow()][action];
+	QWidget *window = SessionsManager::getActiveWindow();
+
+	if (m_windowActions.contains(window) && m_windowActions[window].contains(action))
+	{
+		return m_windowActions[window][action];
+	}
+
+	return NULL;
 }
 
 QList<QKeySequence> ActionsManager::getShortcuts(const QLatin1String &action)
