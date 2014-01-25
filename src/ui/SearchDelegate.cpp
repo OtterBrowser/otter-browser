@@ -24,19 +24,13 @@
 namespace Otter
 {
 
-SearchDelegate::SearchDelegate(QObject *parent) : QItemDelegate(parent)
+SearchDelegate::SearchDelegate(int height, QObject *parent) : QItemDelegate(parent),
+	m_height(height)
 {
 }
 
 void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
-	{
-		QItemDelegate::paint(painter, option, index);
-
-		return;
-	}
-
 	drawBackground(painter, option, index);
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
@@ -52,26 +46,27 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		return;
 	}
 
-	const int shortcutWidth = ((option.rect.width() > 150) ? 40 : 0);
+	const bool configureEntry = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
+	const int shortcutWidth = ((!configureEntry && option.rect.width() > 150) ? 40 : 0);
 	QRect titleReactangle = option.rect;
 
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 	{
 		QRect decorationRectangle = option.rect;
-		decorationRectangle.setRight(option.rect.left() + option.rect.height());
+		decorationRectangle.setRight(option.rect.left() + 20);
 		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
-
-		titleReactangle.setLeft(option.rect.left() + option.rect.height());
 	}
+
+	titleReactangle.setLeft(option.rect.left() + 32);
 
 	if (shortcutWidth > 0)
 	{
 		titleReactangle.setRight(titleReactangle.right() - (shortcutWidth + 5));
 	}
 
-	drawDisplay(painter, option, titleReactangle, index.data(Qt::UserRole).toString());
+	drawDisplay(painter, option, titleReactangle, index.data(configureEntry ? Qt::DisplayRole : Qt::UserRole).toString());
 
 	if (shortcutWidth > 0)
 	{
@@ -80,6 +75,18 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 		drawDisplay(painter, option, shortcutReactangle, index.data(Qt::UserRole + 2).toString());
 	}
+}
+
+QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
+	{
+		return index.data(Qt::SizeHintRole).toSize();
+	}
+
+	return QSize(-1, m_height);
 }
 
 }

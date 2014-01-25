@@ -45,7 +45,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
 	setEditable(true);
-	setItemDelegate(new SearchDelegate(this));
+	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
 	setCurrentSearchEngine();
 	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
@@ -98,21 +98,26 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	const QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
 	m_selectButtonIconRectangle = rectangle;
-	m_selectButtonIconRectangle.setWidth(rectangle.height());
+	m_selectButtonIconRectangle.setWidth(20);
 	m_selectButtonIconRectangle = m_selectButtonIconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 	m_selectButtonArrowRectangle = rectangle;
-	m_selectButtonArrowRectangle.setLeft(rectangle.height());
+	m_selectButtonArrowRectangle.setLeft(rectangle.left() + 20);
 	m_selectButtonArrowRectangle.setWidth(12);
 
 	m_searchButtonRectangle = rectangle;
-	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
+	m_searchButtonRectangle.setLeft(rectangle.right() - 20);
 	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width()), rectangle.height());
 	lineEdit()->move(m_selectButtonArrowRectangle.topRight());
 
 	m_lineEditRectangle = lineEdit()->geometry();
+
+	if (event->size().height() != event->oldSize().height())
+	{
+		setItemDelegate(new SearchDelegate(height(), this));
+	}
 }
 
 void SearchWidget::mousePressEvent(QMouseEvent *event)
