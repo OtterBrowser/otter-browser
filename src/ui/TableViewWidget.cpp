@@ -59,9 +59,13 @@ void TableViewWidget::moveRow(bool up)
 	const int sourceRow = currentIndex().row();
 	const int destinationRow = (up ? (sourceRow - 1) : (sourceRow + 1));
 
-	m_model->insertRow(sourceRow, m_model->takeRow(destinationRow));
+	if ((up && sourceRow > 0) || (!up && sourceRow < (m_model->rowCount() - 1)))
+	{
+		m_model->insertRow(sourceRow, m_model->takeRow(destinationRow));
 
-	setCurrentIndex(getIndex(destinationRow, 0));
+		setCurrentIndex(getIndex(destinationRow, 0));
+		notifySelectionChanged();
+	}
 }
 
 void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
