@@ -181,6 +181,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setObjectName(QLatin1String("Url"));
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
+			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
 			m_urlIconLabel->move(36, 4);
 			m_urlIconLabel->installEventFilter(this);
 
