@@ -42,6 +42,10 @@ public slots:
 	void setCurrentSearchEngine(const QString &engine = QString());
 
 protected:
+	void paintEvent(QPaintEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 
 protected slots:
@@ -55,6 +59,10 @@ private:
 	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;
+	QRect m_selectButtonIconRectangle;
+	QRect m_selectButtonArrowRectangle;
+	QRect m_lineEditRectangle;
+	QRect m_searchButtonRectangle;
 	int m_index;
 	bool m_sendRequest;
 

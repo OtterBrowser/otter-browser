@@ -58,6 +58,38 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
+void AddressWidget::paintEvent(QPaintEvent *event)
+{
+	QLineEdit::paintEvent(event);
+
+	QColor badgeColor = QColor(245, 245, 245);
+	QStyleOptionFrame panel;
+
+	initStyleOption(&panel);
+
+	panel.palette = palette();
+	panel.palette.setColor(QPalette::Base, badgeColor);
+	panel.state = QStyle::State_Active;
+
+	QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+	rectangle.setWidth(30);
+	rectangle.moveTo(panel.lineWidth, panel.lineWidth);
+
+	m_securityBadgeRectangle = rectangle;
+
+	QPainter painter(this);
+	painter.fillRect(rectangle, badgeColor);
+	painter.setClipRect(rectangle);
+
+	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
+
+	QPalette linePalette = palette();
+	linePalette.setCurrentColorGroup(QPalette::Disabled);
+
+	painter.setPen(QPen(linePalette.mid().color(), 1));
+	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
+}
+
 void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	QLineEdit::resizeEvent(event);
@@ -106,40 +138,8 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 	else
 	{
-		QLineEdit::mousePressEvent(event);
+		QLineEdit::mouseReleaseEvent(event);
 	}
-}
-
-void AddressWidget::paintEvent(QPaintEvent *event)
-{
-	QLineEdit::paintEvent(event);
-
-	QColor badgeColor = QColor(245, 245, 245);
-	QStyleOptionFrame panel;
-
-	initStyleOption(&panel);
-
-	panel.palette = palette();
-	panel.palette.setColor(QPalette::Base, badgeColor);
-	panel.state = QStyle::State_Active;
-
-	QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
-	rectangle.setWidth(30);
-	rectangle.moveTo(panel.lineWidth, panel.lineWidth);
-
-	m_securityBadgeRectangle = rectangle;
-
-	QPainter painter(this);
-	painter.fillRect(rectangle, badgeColor);
-	painter.setClipRect(rectangle);
-
-	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
-
-	QPalette linePalette = palette();
-	linePalette.setCurrentColorGroup(QPalette::Disabled);
-
-	painter.setPen(QPen(linePalette.mid().color(), 1));
-	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
 }
 
 void AddressWidget::removeIcon()

@@ -24,7 +24,10 @@
 #include "../core/SearchSuggester.h"
 #include "../core/SessionsManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/Utils.h"
 
+#include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QLineEdit>
 
@@ -42,12 +45,13 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
 	setEditable(true);
-	setInsertPolicy(QComboBox::NoInsert);
 	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchesManager::getSearchEnginesModel());
 	setCurrentSearchEngine();
 	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
+
 	lineEdit()->setCompleter(m_completer);
+	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(setCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -56,6 +60,80 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
+}
+
+void SearchWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	QPainter painter(this);
+	QStyleOptionFrame panel;
+	panel.initFrom(lineEdit());
+	panel.rect = rect();
+	panel.palette = palette();
+	panel.lineWidth = 1;
+
+	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
+
+	currentData(Qt::DecorationRole).value<QIcon>().paint(&painter, m_selectButtonIconRectangle);
+
+	QStyleOption arrow;
+	arrow.initFrom(this);
+	arrow.rect = m_selectButtonArrowRectangle;
+
+	style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+
+	Utils::getIcon(QLatin1String("edit-find")).paint(&painter, m_searchButtonRectangle);
+}
+
+void SearchWidget::resizeEvent(QResizeEvent *event)
+{
+	QComboBox::resizeEvent(event);
+
+	QStyleOptionFrame panel;
+	panel.initFrom(lineEdit());
+	panel.rect = rect();
+	panel.lineWidth = 1;
+
+	const QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+
+	m_selectButtonIconRectangle = rectangle;
+	m_selectButtonIconRectangle.setWidth(rectangle.height());
+	m_selectButtonIconRectangle = m_selectButtonIconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+	m_selectButtonArrowRectangle = rectangle;
+	m_selectButtonArrowRectangle.setLeft(rectangle.height());
+	m_selectButtonArrowRectangle.setWidth(12);
+
+	m_searchButtonRectangle = rectangle;
+	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
+	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width()), rectangle.height());
+	lineEdit()->move(m_selectButtonArrowRectangle.topRight());
+
+	m_lineEditRectangle = lineEdit()->geometry();
+}
+
+void SearchWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+}
+
+void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (m_selectButtonIconRectangle.contains(event->pos()) || m_selectButtonArrowRectangle.contains(event->pos()))
+	{
+		showPopup();
+	}
+	else if (m_searchButtonRectangle.contains(event->pos()))
+	{
+		sendRequest();
+	}
+	else
+	{
+		QWidget::mouseReleaseEvent(event);
+	}
 }
 
 void SearchWidget::wheelEvent(QWheelEvent *event)
@@ -101,6 +179,8 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 
 void SearchWidget::currentSearchEngineChanged(int index)
 {
+	lineEdit()->setGeometry(m_lineEditRectangle);
+
 	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
 		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
@@ -160,7 +240,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(m_query, itemData(currentIndex(), (Qt::UserRole + 1)).toString());
+		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString());
 	}
 
 	m_query = QString();
@@ -205,7 +285,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 
 QString SearchWidget::getCurrentSearchEngine() const
 {
-	return itemData(currentIndex(), (Qt::UserRole + 1)).toString();
+	return currentData(Qt::UserRole + 1).toString();
 }
 
 }
