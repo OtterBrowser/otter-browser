@@ -196,6 +196,11 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		}
 	}
 
+	if (type == QWebPage::NavigationTypeReload && m_webWidget)
+	{
+		m_webWidget->markPageRealoded();
+	}
+
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 

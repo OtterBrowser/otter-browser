@@ -62,6 +62,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	m_searchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString()),
 	m_historyEntry(-1),
 	m_isLoading(false),
+	m_isReloading(false),
 	m_isTyped(false)
 {
 	m_splitter->addWidget(m_webView);
@@ -208,6 +209,11 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 
 void QtWebKitWebWidget::pageLoadStarted()
 {
+	if (m_isLoading)
+	{
+		return;
+	}
+
 	m_isLoading = true;
 
 	m_thumbnail = QPixmap();
@@ -236,7 +242,14 @@ void QtWebKitWebWidget::pageLoadStarted()
 	{
 		SessionsManager::markSessionModified();
 
-		m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+		if (m_isReloading)
+		{
+			m_isReloading = false;
+		}
+		else
+		{
+			m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+		}
 
 		m_isTyped = false;
 	}
@@ -348,6 +361,11 @@ void QtWebKitWebWidget::searchMenuAboutToShow()
 void QtWebKitWebWidget::hideInspector()
 {
 	triggerAction(InspectPageAction, false);
+}
+
+void QtWebKitWebWidget::markPageRealoded()
+{
+	m_isReloading = true;
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()

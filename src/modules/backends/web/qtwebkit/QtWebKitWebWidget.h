@@ -77,6 +77,7 @@ protected:
 	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
 
 	void focusInEvent(QFocusEvent *event);
+	void markPageRealoded();
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
@@ -110,6 +111,7 @@ private:
 	QHash<WindowAction, QAction*> m_actions;
 	qint64 m_historyEntry;
 	bool m_isLoading;
+	bool m_isReloading;
 	bool m_isTyped;
 
 friend class QtWebKitWebBackend;
