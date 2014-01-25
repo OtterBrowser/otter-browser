@@ -184,7 +184,10 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->move(36, 4);
 			m_urlIconLabel->installEventFilter(this);
 
-			setStyleSheet(QLatin1String("#addressWidget {padding-left:52px;}"));
+			QMargins margins = textMargins();
+			margins.setLeft(52);
+
+			setTextMargins(margins);
 		}
 		else
 		{
@@ -194,7 +197,10 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 				m_urlIconLabel = NULL;
 			}
 
-			setStyleSheet(QLatin1String("#addressWidget {padding-left:30px;}"));
+			QMargins margins = textMargins();
+			margins.setLeft(30);
+
+			setTextMargins(margins);
 		}
 	}
 }
