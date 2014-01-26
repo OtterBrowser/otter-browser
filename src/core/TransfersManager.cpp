@@ -46,12 +46,12 @@ TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		TransferInformation *transfer = new TransferInformation();
-		transfer->source = history.value(QString("%1/source").arg(entries.at(i))).toString();
-		transfer->target = history.value(QString("%1/target").arg(entries.at(i))).toString();
-		transfer->started = history.value(QString("%1/started").arg(entries.at(i))).toDateTime();
-		transfer->finished = history.value(QString("%1/finished").arg(entries.at(i))).toDateTime();
-		transfer->bytesTotal = history.value(QString("%1/bytesTotal").arg(entries.at(i))).toLongLong();
-		transfer->bytesReceived = history.value(QString("%1/bytesReceived").arg(entries.at(i))).toLongLong();
+		transfer->source = history.value(QStringLiteral("%1/source").arg(entries.at(i))).toString();
+		transfer->target = history.value(QStringLiteral("%1/target").arg(entries.at(i))).toString();
+		transfer->started = history.value(QStringLiteral("%1/started").arg(entries.at(i))).toDateTime();
+		transfer->finished = history.value(QStringLiteral("%1/finished").arg(entries.at(i))).toDateTime();
+		transfer->bytesTotal = history.value(QStringLiteral("%1/bytesTotal").arg(entries.at(i))).toLongLong();
+		transfer->bytesReceived = history.value(QStringLiteral("%1/bytesReceived").arg(entries.at(i))).toLongLong();
 		transfer->state = ((transfer->bytesReceived > 0 && transfer->bytesTotal == transfer->bytesReceived) ? FinishedTransfer : ErrorTransfer);
 
 		m_transfers.append(transfer);
@@ -235,12 +235,12 @@ void TransfersManager::save()
 			continue;
 		}
 
-		history.setValue(QString("%1/source").arg(entry), m_transfers.at(i)->source);
-		history.setValue(QString("%1/target").arg(entry), m_transfers.at(i)->target);
-		history.setValue(QString("%1/started").arg(entry), m_transfers.at(i)->started);
-		history.setValue(QString("%1/finished").arg(entry), ((m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->state != RunningTransfer) ? m_transfers.at(i)->finished : QDateTime::currentDateTime()));
-		history.setValue(QString("%1/bytesTotal").arg(entry), m_transfers.at(i)->bytesTotal);
-		history.setValue(QString("%1/bytesReceived").arg(entry), m_transfers.at(i)->bytesReceived);
+		history.setValue(QStringLiteral("%1/source").arg(entry), m_transfers.at(i)->source);
+		history.setValue(QStringLiteral("%1/target").arg(entry), m_transfers.at(i)->target);
+		history.setValue(QStringLiteral("%1/started").arg(entry), m_transfers.at(i)->started);
+		history.setValue(QStringLiteral("%1/finished").arg(entry), ((m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->state != RunningTransfer) ? m_transfers.at(i)->finished : QDateTime::currentDateTime()));
+		history.setValue(QStringLiteral("%1/bytesTotal").arg(entry), m_transfers.at(i)->bytesTotal);
+		history.setValue(QStringLiteral("%1/bytesReceived").arg(entry), m_transfers.at(i)->bytesReceived);
 
 		++entry;
 	}
@@ -556,7 +556,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(transfer->source));
-	request.setRawHeader("Range", "bytes=" + QByteArray::number(file->size()) + '-');
+	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 
 	if (!m_networkAccessManager)
 	{

@@ -64,7 +64,7 @@ QWidget* ShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 	}
 
 	QLineEdit *widget = new QLineEdit(index.data(Qt::DisplayRole).toString(), parent);
-	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QString("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), widget));
+	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), widget));
 
 	return widget;
 }

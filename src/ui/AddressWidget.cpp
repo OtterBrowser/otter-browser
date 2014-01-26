@@ -148,7 +148,7 @@ void AddressWidget::removeIcon()
 
 	if (action)
 	{
-		SettingsManager::setValue(QString("AddressField/Show%1Icon").arg(action->data().toString()), false);
+		SettingsManager::setValue(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString()), false);
 	}
 }
 
@@ -210,7 +210,7 @@ void AddressWidget::notifyRequestedLoadUrl()
 {
 	const QString url = text().trimmed();
 
-	if (QRegularExpression(QString("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(url).hasMatch())
+	if (QRegularExpression(QStringLiteral("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(url).hasMatch())
 	{
 		const QStringList engines = SearchesManager::getSearchEngines();
 		const QString shortcut = url.section(QLatin1Char(' '), 0, 0);

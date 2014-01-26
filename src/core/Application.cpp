@@ -90,7 +90,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	delete parser;
 
-	const QString server = applicationName() + (identifier.isEmpty() ? QString() : QString("-%1").arg(identifier));
+	const QString server = applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier));
 	QLocalSocket socket;
 	socket.connectToServer(server);
 
@@ -142,7 +142,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			SettingsManager::setDefaultValue(QString("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QString("%1/value").arg(keys.at(j))));
+			SettingsManager::setDefaultValue(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QStringLiteral("%1/value").arg(keys.at(j))));
 		}
 
 		defaults.endGroup();

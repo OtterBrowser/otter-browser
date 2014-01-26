@@ -111,7 +111,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	{
 		WebBackend *backend = WebBackendsManager::getBackend();
 
-		domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QString("http://%1/").arg(domain))), domain);
+		domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QStringLiteral("http://%1/").arg(domain))), domain);
 		domainItem->setToolTip(domain);
 
 		m_model->appendRow(domainItem);
@@ -128,7 +128,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	cookieItem->setToolTip(cookie.name());
 
 	domainItem->appendRow(cookieItem);
-	domainItem->setText(QString("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
 }
 
 void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
@@ -154,7 +154,7 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 		}
 		else
 		{
-			domainItem->setText(QString("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+			domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
 		}
 	}
 }

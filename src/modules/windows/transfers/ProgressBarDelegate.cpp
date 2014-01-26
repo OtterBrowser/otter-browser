@@ -40,7 +40,7 @@ void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 	progressBarOption.textAlignment = Qt::AlignCenter;
 	progressBarOption.textVisible = true;
 	progressBarOption.progress = index.data(Qt::DisplayRole).toInt();
-	progressBarOption.text = QString("%1%").arg(progressBarOption.progress);
+	progressBarOption.text = QStringLiteral("%1%").arg(progressBarOption.progress);
 
 	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
 }

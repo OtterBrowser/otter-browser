@@ -83,7 +83,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		seconds = (seconds - (minutes * 60));
 
-		m_elapsedLabel->setText(tr("Time: %1").arg(QString("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
+		m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
 	}
 	else
 	{

@@ -49,8 +49,8 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			const QString key = QString("%1/%2").arg(groups.at(i)).arg(keys.at(j));
-			const QString type = defaults.value(QString("%1/type").arg(keys.at(j))).toString();
+			const QString key = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
+			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
 			const QVariant defaultValue = SettingsManager::getDefaultValue(key);
 			const QVariant value = SettingsManager::getValue(key);
 			QList<QStandardItem*> optionItems;
@@ -60,7 +60,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
 			optionItems[2]->setData(key, Qt::UserRole);
 			optionItems[2]->setData(type, (Qt::UserRole + 1));
-			optionItems[2]->setData(((type == "enumeration") ? defaults.value(QString("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
+			optionItems[2]->setData(((type == "enumeration") ? defaults.value(QStringLiteral("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
 
 			if (value != defaultValue)
 			{
@@ -141,7 +141,7 @@ void ConfigurationContentsWidget::filterConfiguration(const QString &filter)
 				continue;
 			}
 
-			const bool match = (filter.isEmpty() || QString("%1/%2").arg(groupItem->text()).arg(optionItem->text()).contains(filter, Qt::CaseInsensitive) || groupItem->child(j, 2)->text().contains(filter, Qt::CaseInsensitive));
+			const bool match = (filter.isEmpty() || QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()).contains(filter, Qt::CaseInsensitive) || groupItem->child(j, 2)->text().contains(filter, Qt::CaseInsensitive));
 
 			if (match)
 			{
@@ -181,7 +181,7 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 		{
 			QStandardItem *optionItem = groupItem->child(j, 0);
 
-			if (optionItem && option == QString("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
+			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
 			{
 				QFont font = optionItem->font();
 				font.setBold(value != SettingsManager::getDefaultValue(option));

@@ -120,7 +120,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 
 	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 	{
-		urlString = urlString.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+		urlString = urlString.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), valuesIterator.value());
 	}
 
 	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
@@ -136,7 +136,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 
 		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 		{
-			value = value.replace(QString("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+			value = value.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), valuesIterator.value());
 		}
 
 		if (*method == QNetworkAccessManager::GetOperation)
@@ -400,7 +400,7 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
 		writer.writeAttribute(QLatin1String("height"), QString::number(size.height()));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("image/png"));
-		writer.writeCharacters(QString("data:image/png;base64,%1").arg(QString(data.toBase64())));
+		writer.writeCharacters(QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64())));
 		writer.writeEndElement();
 	}
 

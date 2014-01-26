@@ -111,7 +111,7 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 	if (timestamp == 0)
 	{
 		QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
-		query.prepare(QString("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt()));
+		query.prepare(QStringLiteral("SELECT \"visits\".\"time\" FROM \"visits\" ORDER BY \"visits\".\"time\" DESC LIMIT %1, 1;").arg(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt()));
 		query.exec();
 
 		if (query.next())
@@ -156,7 +156,7 @@ void HistoryManager::clearHistory(int period)
 	{
 		if (period > 0)
 		{
-			database.exec(QString("DELETE FROM \"visits\" WHERE \"time\" >= %1;").arg(QDateTime::currentDateTime().toTime_t() - (period * 3600)));
+			database.exec(QStringLiteral("DELETE FROM \"visits\" WHERE \"time\" >= %1;").arg(QDateTime::currentDateTime().toTime_t() - (period * 3600)));
 
 			m_instance->scheduleCleanup();
 		}
@@ -281,7 +281,7 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 	}
 
 	QSqlQuery selectQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
-	selectQuery.prepare(QString("SELECT \"id\" FROM \"%1\" WHERE \"%2\" = ?;").arg(table).arg(keys.join(QLatin1String("\" = ? AND \""))));
+	selectQuery.prepare(QStringLiteral("SELECT \"id\" FROM \"%1\" WHERE \"%2\" = ?;").arg(table).arg(keys.join(QLatin1String("\" = ? AND \""))));
 
 	for (int i = 0; i < keys.count(); ++i)
 	{
@@ -296,7 +296,7 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 	}
 
 	QSqlQuery insertQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
-	insertQuery.prepare(QString("INSERT INTO \"%1\" (\"%2\") VALUES(%3);").arg(table).arg(keys.join(QLatin1String("\", \""))).arg(placeholders.join(QLatin1String(", "))));
+	insertQuery.prepare(QStringLiteral("INSERT INTO \"%1\" (\"%2\") VALUES(%3);").arg(table).arg(keys.join(QLatin1String("\", \""))).arg(placeholders.join(QLatin1String(", "))));
 
 	for (int i = 0; i < keys.count(); ++i)
 	{
@@ -425,7 +425,7 @@ bool HistoryManager::removeEntries(const QList<qint64> &entries)
 	}
 
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
-	query.prepare(QString("DELETE FROM \"visits\" WHERE \"id\" IN(%1);").arg(list.join(QLatin1String(", "))));
+	query.prepare(QStringLiteral("DELETE FROM \"visits\" WHERE \"id\" IN(%1);").arg(list.join(QLatin1String(", "))));
 	query.exec();
 
 	const bool success = (query.numRowsAffected() > 0);

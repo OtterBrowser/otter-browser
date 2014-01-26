@@ -203,7 +203,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	resize(SettingsManager::getValue(QLatin1String("Window/Size")).toSize());
 	move(SettingsManager::getValue(QLatin1String("Window/Position")).toPoint());
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
-	setWindowTitle(QString("%1 - Otter").arg(m_windowsManager->getTitle()));
+	setWindowTitle(QStringLiteral("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	m_ui->panelDockWidget->hide();
 
@@ -699,7 +699,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			m_ui->menuClosedWindows->addAction(QString("Window - %1").arg(windows.at(i)), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
+			m_ui->menuClosedWindows->addAction(tr("Window - %1").arg(windows.at(i)), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
 		m_ui->menuClosedWindows->addSeparator();

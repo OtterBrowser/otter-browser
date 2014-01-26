@@ -570,7 +570,7 @@ void WindowsManager::setCurrentWindow(int index)
 		m_statusBar->setZoom(window->getContentsWidget()->getZoom());
 		m_statusBar->setZoomEnabled(window->getContentsWidget()->canZoom());
 
-		emit windowTitleChanged(QString("%1 - Otter").arg(window->getContentsWidget()->getTitle()));
+		emit windowTitleChanged(QStringLiteral("%1 - Otter").arg(window->getContentsWidget()->getTitle()));
 
 		if (window->getContentsWidget()->getUndoStack())
 		{
@@ -603,7 +603,7 @@ void WindowsManager::setTitle(const QString &title)
 
 	if (index == getCurrentWindow())
 	{
-		emit windowTitleChanged(QString("%1 - Otter").arg(text));
+		emit windowTitleChanged(QStringLiteral("%1 - Otter").arg(text));
 	}
 }
 

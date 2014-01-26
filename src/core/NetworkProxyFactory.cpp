@@ -52,12 +52,12 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		{
 			if (useCommon && proxyTypes.at(i).first != QNetworkProxy::Socks5Proxy)
 			{
-				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QString("Proxy/CommonServers")).toString(), SettingsManager::getValue(QString("Proxy/CommonPort")).toInt());
+				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt());
 			}
 
-			if (SettingsManager::getValue(QString("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
+			if (SettingsManager::getValue(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
 			{
-				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QString("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QString("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
+				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
 			}
 		}
 	}

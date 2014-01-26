@@ -66,7 +66,7 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : QDialog(parent),
 
 		m_ui->sessionsWidget->setItem(i, 0, new QTableWidgetItem(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title));
 		m_ui->sessionsWidget->setItem(i, 1, new QTableWidgetItem(sorted.at(i).path));
-		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QString("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
+		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QStringLiteral("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
 	}
 
 	connect(m_ui->openButton, SIGNAL(clicked()), this, SLOT(openSession()));

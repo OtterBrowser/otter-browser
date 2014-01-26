@@ -39,7 +39,7 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	m_ui->titleLineEdit->setText(engineData[QLatin1String("title")].toString());
 	m_ui->descriptionLineEdit->setText(engineData[QLatin1String("description")].toString());
 	m_ui->shortcutLineEdit->setText(engineData[QLatin1String("shortcut")].toString());
-	m_ui->shortcutLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QString("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), m_ui->shortcutLineEdit));
+	m_ui->shortcutLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), m_ui->shortcutLineEdit));
 	m_ui->defaultSearchCheckBox->setChecked(engineData[QLatin1String("isDefault")].toBool());
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
@@ -86,7 +86,7 @@ void SearchPropertiesDialog::insertPlaceholder(QAction *action)
 {
 	if (m_currentLineEdit && !action->data().toString().isEmpty())
 	{
-		m_currentLineEdit->insert(QString("{%1}").arg(action->data().toString()));
+		m_currentLineEdit->insert(QStringLiteral("{%1}").arg(action->data().toString()));
 	}
 }
 

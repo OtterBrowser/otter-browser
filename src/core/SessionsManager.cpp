@@ -208,25 +208,25 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 	for (int i = 1; i <= windows; ++i)
 	{
-		const int tabs = sessionData.value(QString("%1/Properties/windows").arg(i), 0).toInt();
+		const int tabs = sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt();
 		SessionMainWindow sessionEntry;
-		sessionEntry.index = (sessionData.value(QString("%1/Properties/index").arg(i), 1).toInt() - 1);
+		sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(i), 1).toInt() - 1);
 
 		for (int j = 1; j <= tabs; ++j)
 		{
-			const int history = sessionData.value(QString("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
+			const int history = sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
 			SessionWindow sessionWindow;
-			sessionWindow.searchEngine = sessionData.value(QString("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
-			sessionWindow.group = sessionData.value(QString("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
-			sessionWindow.index = (sessionData.value(QString("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
-			sessionWindow.pinned = sessionData.value(QString("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
+			sessionWindow.searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
+			sessionWindow.group = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
+			sessionWindow.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
+			sessionWindow.pinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
 
 			for (int k = 1; k <= history; ++k)
 			{
 				WindowHistoryEntry historyEntry;
-				historyEntry.url = sessionData.value(QString("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
-				historyEntry.title = sessionData.value(QString("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
-				historyEntry.position = sessionData.value(QString("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toPoint();
+				historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
+				historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
+				historyEntry.position = sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toPoint();
 
 				sessionWindow.history.append(historyEntry);
 			}
@@ -371,14 +371,14 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 		tabs += sessionEntry.windows.count();
 
-		stream << QString("[%1/Properties]\n").arg(i + 1);
+		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
 		stream << QLatin1String("groups=0\n");
 		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
 		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
-			stream << QString("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
+			stream << QStringLiteral("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
 			stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine));
 			stream << QLatin1String("pinned=") << sessionEntry.windows.at(j).pinned << QLatin1Char('\n');
 			stream << QLatin1String("group=0\n");
@@ -387,7 +387,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
-				stream << QString("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
+				stream << QStringLiteral("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
 				stream << Utils::formatConfigurationEntry(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url, true);
 				stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title, true);
 				stream << QLatin1String("position=") << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << QLatin1Char('\n');

@@ -89,7 +89,7 @@ QString formatUnit(qint64 value, bool isSpeed, int precision)
 
 QIcon getIcon(const QLatin1String &name, bool fromTheme)
 {
-	const QIcon icon(QString(":/icons/%1.png").arg(name));
+	const QIcon icon(QStringLiteral(":/icons/%1.png").arg(name));
 
 	return (fromTheme ? QIcon::fromTheme(name, icon) : icon);
 }
