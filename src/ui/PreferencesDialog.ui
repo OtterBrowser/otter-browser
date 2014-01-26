@@ -707,6 +707,19 @@
         </layout>
        </item>
        <item>
+        <widget class="QCheckBox" name="enableReferrerCheckBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Enable sending Referer header</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="historyHeader">
          <property name="font">
           <font>
