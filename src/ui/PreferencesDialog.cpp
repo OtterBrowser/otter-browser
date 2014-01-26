@@ -144,6 +144,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	}
 
 	m_ui->doNotTrackComboBox->setCurrentIndex(doNotTrackPolicyIndex);
+	m_ui->enableReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
@@ -574,6 +575,7 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), doNotTrackPolicyString);
+	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->enableReferrerCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
