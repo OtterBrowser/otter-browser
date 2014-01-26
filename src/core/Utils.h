@@ -29,6 +29,7 @@ namespace Otter
 namespace Utils
 {
 
+QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
 QIcon getIcon(const QLatin1String &name, bool fromTheme = true);

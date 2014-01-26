@@ -29,6 +29,19 @@ namespace Otter
 namespace Utils
 {
 
+QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote)
+{
+	QString escapedValue(value);
+	escapedValue.replace(QLatin1Char('\n'), QLatin1String("\\n"));
+
+	if (quote)
+	{
+		return QStringLiteral("%1=\"%2\"\n").arg(key).arg(escapedValue.replace(QLatin1Char('\"'), QLatin1String("\\\"")));
+	}
+
+	return QStringLiteral("%1=%2\n").arg(key).arg(escapedValue);
+}
+
 QString formatTime(int value)
 {
 	QTime time(0, 0);

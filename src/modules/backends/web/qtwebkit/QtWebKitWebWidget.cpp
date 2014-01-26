@@ -218,25 +218,15 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 	m_thumbnail = QPixmap();
 
-	if (m_actions.contains(RewindBackAction))
-	{
-		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	}
+	getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
-	if (m_actions.contains(RewindForwardAction))
-	{
-		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
-	}
+	QAction *action = getAction(ReloadOrStopAction);
 
-	if (m_actions.contains(ReloadOrStopAction))
-	{
-		QAction *action = getAction(ReloadOrStopAction);
+	ActionsManager::setupLocalAction(action, QLatin1String("Stop"));
 
-		ActionsManager::setupLocalAction(action, QLatin1String("Stop"));
-
-		action->setShortcut(QKeySequence());
-		action->setEnabled(true);
-	}
+	action->setShortcut(QKeySequence());
+	action->setEnabled(true);
 
 	if (!isPrivate())
 	{
@@ -271,14 +261,11 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	m_networkAccessManager->resetStatistics();
 
-	if (m_actions.contains(ReloadOrStopAction))
-	{
-		QAction *action = getAction(ReloadOrStopAction);
+	QAction *action = getAction(ReloadOrStopAction);
 
-		ActionsManager::setupLocalAction(action, QLatin1String("Reload"));
+	ActionsManager::setupLocalAction(action, QLatin1String("Reload"));
 
-		action->setShortcut(QKeySequence());
-	}
+	action->setShortcut(QKeySequence());
 
 	if (!isPrivate())
 	{
@@ -375,15 +362,8 @@ void QtWebKitWebWidget::notifyTitleChanged()
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
-	if (m_actions.contains(RewindBackAction))
-	{
-		getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	}
-
-	if (m_actions.contains(RewindForwardAction))
-	{
-		getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
-	}
+	getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 	emit urlChanged(url);
 }
@@ -802,6 +782,13 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_webView->page()->history()->clear();
 
+		getAction(GoBackAction)->setEnabled(false);
+		getAction(GoForwardAction)->setEnabled(false);
+		getAction(RewindBackAction)->setEnabled(false);
+		getAction(RewindForwardAction)->setEnabled(false);
+
+		emit actionsChanged();
+
 		return;
 	}
 
@@ -813,6 +800,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
+qDebug() << history.entries.at(i).url;
 		stream << history.entries.at(i).url << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal((qreal) history.entries.at(i).zoom / 100) << false << QString() << false;
 	}
 

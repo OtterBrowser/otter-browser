@@ -20,6 +20,7 @@
 #include "SessionsManager.h"
 #include "Application.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 #include "WindowsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -360,7 +361,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
 	stream << QLatin1String("[Session]\n");
-	stream << QLatin1String("title=") << sessionTitle.replace(QLatin1Char('\n'), QLatin1String("\\n")) << QLatin1Char('\n');
+	stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionTitle, true);
 	stream << QLatin1String("windows=") << windows.count() << QLatin1Char('\n');
 	stream << QLatin1String("index=1\n\n");
 
@@ -378,7 +379,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
 			stream << QString("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
-			stream << QLatin1String("searchEngine=") << ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine) << QLatin1Char('\n');
+			stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine));
 			stream << QLatin1String("pinned=") << sessionEntry.windows.at(j).pinned << QLatin1Char('\n');
 			stream << QLatin1String("group=0\n");
 			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');
@@ -387,8 +388,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
 				stream << QString("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
-				stream << QLatin1String("url=") << sessionEntry.windows.at(j).history.at(k).url << QLatin1Char('\n');
-				stream << QLatin1String("title=") << QString(sessionEntry.windows.at(j).history.at(k).title).replace(QLatin1Char('\n'), QLatin1String("\\n")) << QLatin1Char('\n');
+				stream << Utils::formatConfigurationEntry(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url, true);
+				stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title, true);
 				stream << QLatin1String("position=") << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << QLatin1Char('\n');
 				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << QLatin1String("\n\n");
 			}
