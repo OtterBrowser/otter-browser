@@ -51,7 +51,8 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
-	m_simpleMode(simpleMode)
+	m_simpleMode(simpleMode),
+	m_disableReferrer(false)
 {
 	QNetworkCookieJar *cookieJar = getCookieJar(privateWindow);
 
@@ -68,7 +69,8 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 		cache->setParent(QCoreApplication::instance());
 	}
 
-	optionChanged(QLatin1String("Browser/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Browser/DoNotTrackPolicy")));
+	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
+	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
@@ -79,7 +81,7 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 
 void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/DoNotTrackPolicy"))
+	if (option == QLatin1String("Network/DoNotTrackPolicy"))
 	{
 		const QString policyValue = value.toString();
 
@@ -96,12 +98,15 @@ void NetworkAccessManager::optionChanged(const QString &option, const QVariant &
 			m_doNotTrackPolicy = SkipTrackPolicy;
 		}
 	}
+	else if (option == QLatin1String("Network/EnableReferrer"))
+	{
+		m_disableReferrer = !value.toBool();
+	}
 }
 
 void NetworkAccessManager::resetStatistics()
 {
 	killTimer(m_updateTimer);
-
 	updateStatus();
 
 	m_updateTimer = 0;
@@ -334,6 +339,11 @@ QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	}
 
 	QNetworkRequest mutableRequest(request);
+
+	if (m_disableReferrer)
+	{
+		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
 
 	if (SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool())
 	{

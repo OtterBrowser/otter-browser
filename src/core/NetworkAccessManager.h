@@ -77,6 +77,7 @@ private:
 	int m_startedRequests;
 	int m_updateTimer;
 	bool m_simpleMode;
+	bool m_disableReferrer;
 
 	static CookieJar *m_cookieJar;
 	static QNetworkCookieJar *m_privateCookieJar;

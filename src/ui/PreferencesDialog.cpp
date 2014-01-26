@@ -131,7 +131,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->colorsWidget->setItem(i, 1, previewItem);
 	}
 
-	const QString doNotTrackPolicyString = SettingsManager::getValue(QLatin1String("Browser/DoNotTrackPolicy")).toString();
+	const QString doNotTrackPolicyString = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")).toString();
 	int doNotTrackPolicyIndex = 2;
 
 	if (doNotTrackPolicyString == QLatin1String("allow"))
@@ -573,7 +573,7 @@ void PreferencesDialog::save()
 		doNotTrackPolicyString = QLatin1String("doNotAllow");
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/DoNotTrackPolicy"), doNotTrackPolicyString);
+	SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), doNotTrackPolicyString);
 	SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
