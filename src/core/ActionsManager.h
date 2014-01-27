@@ -38,9 +38,7 @@ public:
 	static void triggerAction(const QString &action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
 	static QAction* getAction(const QString &action);
-	static QList<QKeySequence> getShortcuts(const QLatin1String &action);
 	static QStringList getIdentifiers();
-	static bool hasShortcut(const QKeySequence &shortcut, const QLatin1String &excludeAction);
 
 protected:
 	void timerEvent(QTimerEvent *event);

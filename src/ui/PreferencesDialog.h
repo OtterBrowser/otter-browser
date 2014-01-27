@@ -57,6 +57,8 @@ protected slots:
 private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
+	QHash<QString, QVariantHash> m_macrosProfiles;
+	QHash<QString, QVariantHash> m_keyboardProfiles;
 	Ui::PreferencesDialog *m_ui;
 };
 

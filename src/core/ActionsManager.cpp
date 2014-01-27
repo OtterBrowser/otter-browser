@@ -461,16 +461,6 @@ QAction* ActionsManager::getAction(const QString &action)
 	return NULL;
 }
 
-QList<QKeySequence> ActionsManager::getShortcuts(const QLatin1String &action)
-{
-	if (m_profileShortcuts.contains(action))
-	{
-		return m_profileShortcuts[action];
-	}
-
-	return QList<QKeySequence>();
-}
-
 QStringList ActionsManager::getIdentifiers()
 {
 	if (!m_windowActions.contains(SessionsManager::getActiveWindow()))
@@ -479,26 +469,6 @@ QStringList ActionsManager::getIdentifiers()
 	}
 
 	return m_windowActions[SessionsManager::getActiveWindow()].keys();
-}
-
-bool ActionsManager::hasShortcut(const QKeySequence &shortcut, const QLatin1String &excludeAction)
-{
-	if (shortcut.isEmpty())
-	{
-		return false;
-	}
-
-	QHash<QString, QList<QKeySequence> >::iterator iterator;
-
-	for (iterator = m_profileShortcuts.begin(); iterator != m_profileShortcuts.end(); ++iterator)
-	{
-		if (iterator.key() != excludeAction && iterator.value().contains(shortcut))
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 }

@@ -199,7 +199,9 @@ QStringList SessionsManager::getClosedWindows()
 SessionInformation SessionsManager::getSession(const QString &path)
 {
 	const QString sessionPath = getSessionPath(path);
-	const QSettings sessionData(sessionPath, QSettings::IniFormat);
+	QSettings sessionData(sessionPath, QSettings::IniFormat);
+	sessionData.setIniCodec("UTF-8");
+
 	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
 	SessionInformation session;
 	session.path = path;
@@ -360,6 +362,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	int tabs = 0;
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
 	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
 	stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionTitle, true);
 	stream << QLatin1String("windows=") << windows.count() << QLatin1Char('\n');
