@@ -1217,7 +1217,7 @@ QString QtWebKitWebWidget::getTitle() const
 
 		if (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank")))
 		{
-			return tr("New Tab");
+			return tr("Blank Page");
 		}
 
 		if (url.isLocalFile())
