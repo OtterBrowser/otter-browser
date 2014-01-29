@@ -142,6 +142,20 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
+void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		selectAll();
+
+		event->accept();
+	}
+	else
+	{
+		QLineEdit::mouseDoubleClickEvent(event);
+	}
+}
+
 void AddressWidget::removeIcon()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
