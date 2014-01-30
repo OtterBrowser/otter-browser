@@ -62,7 +62,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	{
 		window = getWindow(getCurrentWindow());
 
-		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && (window->getUrl().path() == QLatin1String("blank") || window->getUrl().path().isEmpty()))
+		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && (window->getUrl().path() == QLatin1String("blank") || window->getUrl().path() == QLatin1String("start") || window->getUrl().path().isEmpty()))
 		{
 			if (window->isPrivate() == privateWindow)
 			{

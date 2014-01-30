@@ -68,6 +68,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->tabWidget->setCurrentIndex(0);
 	}
 
+	m_ui->startPageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
 	m_ui->downloadsLineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
 	m_ui->downloadsLineEdit->setText(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
@@ -274,6 +275,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->restoreStartPagehButton, SIGNAL(clicked()), this, SLOT(restoreStartPage()));
 	connect(m_ui->downloadsBrowseButton, SIGNAL(clicked()), this, SLOT(browseDownloadsPath()));
 	connect(m_ui->fontsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentFontChanged(int,int,int,int)));
 	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
@@ -313,6 +315,11 @@ void PreferencesDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void PreferencesDialog::restoreStartPage()
+{
+	m_ui->startPageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/StartPage")).toString());
 }
 
 void PreferencesDialog::browseDownloadsPath()
@@ -578,6 +585,7 @@ void PreferencesDialog::markModified()
 
 void PreferencesDialog::save()
 {
+	SettingsManager::setValue(QLatin1String("Browser/StartPage"), m_ui->startPageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());

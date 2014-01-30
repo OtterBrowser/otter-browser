@@ -86,5 +86,6 @@
         <file>keyboard/platform.ini</file>
         <file>macros/default.ini</file>
         <file>macros/platform.ini</file>
+        <file>files/start.html</file>
     </qresource>
 </RCC>

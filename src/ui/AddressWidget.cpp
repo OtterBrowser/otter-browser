@@ -282,7 +282,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 
 void AddressWidget::setUrl(const QUrl &url)
 {
-	setText((url.scheme() == QLatin1String("about") && url.path() == QLatin1String("blank")) ? QString() : url.toString());
+	setText((url.scheme() == QLatin1String("about") && (url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))) ? QString() : url.toString());
 	updateBookmark();
 }
 

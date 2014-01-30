@@ -229,7 +229,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (m_session.index < 0 && !url.path().isEmpty() && url.path() != QLatin1String("blank") && SessionsManager::hasUrl(url, true))
+		if (m_session.index < 0 && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && SessionsManager::hasUrl(url, true))
 		{
 			m_ui->addressWidget->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
 
@@ -267,19 +267,24 @@ void Window::setUrl(const QUrl &url, bool typed)
 		}
 	}
 
+	const bool isRestoring = (!m_contentsWidget && m_session.index >= 0);
+
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
 		newWidget = new WebContentsWidget(m_isPrivate, NULL, this);
-	}
 
-	const bool isRestoring = (!m_contentsWidget && m_session.index >= 0);
+		if (!isRestoring)
+		{
+			newWidget->setUrl(QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()), false);
+		}
+	}
 
 	if (newWidget)
 	{
 		setContentsWidget(newWidget);
 	}
 
-	if (!isRestoring && m_contentsWidget)
+	if (!isRestoring && m_contentsWidget && url.isValid())
 	{
 		m_ui->addressWidget->setUrl(url);
 
