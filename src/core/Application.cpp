@@ -114,14 +114,11 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
 
-	if (!m_localServer->listen(server))
+	if (!m_localServer->listen(server) && m_localServer->serverError() == QAbstractSocket::AddressInUseError && QFile::exists(m_localServer->fullServerName()))
 	{
-		if (m_localServer->serverError() == QAbstractSocket::AddressInUseError && QFile::exists(m_localServer->serverName()))
-		{
-			QFile::remove(m_localServer->serverName());
+		QFile::remove(m_localServer->fullServerName());
 
-			m_localServer->listen(server);
-		}
+		m_localServer->listen(server);
 	}
 
 	if (!QFile::exists(profilePath))
