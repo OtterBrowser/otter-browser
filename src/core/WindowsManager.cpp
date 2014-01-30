@@ -157,15 +157,15 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	if (session.windows.isEmpty())
 	{
 		open();
-
-		return;
 	}
-
-	m_closedWindows = session.windows;
-
-	for (int i = 0; i < session.windows.count(); ++i)
+	else
 	{
-		restore(0);
+		m_closedWindows = session.windows;
+
+		for (int i = 0; i < session.windows.count(); ++i)
+		{
+			restore(0);
+		}
 	}
 
 	m_isRestored = true;
