@@ -47,11 +47,12 @@ protected slots:
 	void fontChanged(QWidget *editor);
 	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void colorChanged(QWidget *editor);
-	void proxyModeChanged(int index);
 	void setupClearHistory();
 	void addSearch();
 	void editSearch();
 	void updateSearchActions();
+	void proxyModeChanged(int index);
+	void markModified();
 	void save();
 
 private:

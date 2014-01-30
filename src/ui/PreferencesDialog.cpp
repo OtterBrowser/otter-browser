@@ -248,6 +248,30 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 
+	QList<QLineEdit*> lineEdits = findChildren<QLineEdit*>();
+
+	for (int i = 0; i < lineEdits.count(); ++i)
+	{
+		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
+	}
+
+	QList<QAbstractButton*> buttons = findChildren<QAbstractButton*>();
+
+	for (int i = 0; i < buttons.count(); ++i)
+	{
+		connect(buttons.at(i), SIGNAL(toggled(bool)), this, SLOT(markModified()));
+	}
+
+	QList<QComboBox*> comboBoxes = findChildren<QComboBox*>();
+
+	for (int i = 0; i < comboBoxes.count(); ++i)
+	{
+		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(markModified()));
+	}
+
+	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
+
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 	connect(m_ui->downloadsBrowseButton, SIGNAL(clicked()), this, SLOT(browseDownloadsPath()));
@@ -325,6 +349,8 @@ void PreferencesDialog::fontChanged(QWidget *editor)
 		m_ui->fontsWidget->item(widget->getIndex().row(), 1)->setText(m_ui->fontsWidget->item(widget->getIndex().row(), 1)->data(Qt::EditRole).toString());
 		m_ui->fontsWidget->item(widget->getIndex().row(), 2)->setFont(QFont(widget->getValue().toString()));
 	}
+
+	markModified();
 }
 
 void PreferencesDialog::currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -351,42 +377,8 @@ void PreferencesDialog::colorChanged(QWidget *editor)
 		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setBackgroundColor(QColor(widget->getValue().toString()));
 		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setData(Qt::EditRole, widget->getValue());
 	}
-}
 
-void PreferencesDialog::proxyModeChanged(int index)
-{
-	if (index == 2)
-	{
-		m_ui->manualProxyConfigurationWidget->setEnabled(true);
-		m_ui->allProxyCheckBox->setEnabled(true);
-		m_ui->allProxyServersLineEdit->setEnabled(true);
-		m_ui->allProxyPortSpinBox->setEnabled(true);
-
-		if (!m_ui->allProxyCheckBox->isChecked())
-		{
-			m_ui->httpProxyCheckBox->setEnabled(true);
-			m_ui->httpsProxyCheckBox->setEnabled(true);
-			m_ui->ftpProxyCheckBox->setEnabled(true);
-			m_ui->socksProxyCheckBox->setEnabled(true);
-			m_ui->httpProxyServersLineEdit->setEnabled(true);
-			m_ui->httpProxyPortSpinBox->setEnabled(true);
-			m_ui->httpsProxyServersLineEdit->setEnabled(true);
-			m_ui->httpsProxyPortSpinBox->setEnabled(true);
-			m_ui->ftpProxyServersLineEdit->setEnabled(true);
-			m_ui->ftpProxyPortSpinBox->setEnabled(true);
-			m_ui->socksProxyServersLineEdit->setEnabled(true);
-			m_ui->socksProxyPortSpinBox->setEnabled(true);
-		}
-	}
-	else
-	{
-		m_ui->manualProxyConfigurationWidget->setDisabled(true);
-		m_ui->allProxyCheckBox->setChecked(false);
-		m_ui->httpProxyCheckBox->setChecked(false);
-		m_ui->httpsProxyCheckBox->setChecked(false);
-		m_ui->ftpProxyCheckBox->setChecked(false);
-		m_ui->socksProxyCheckBox->setChecked(false);
-	}
+	markModified();
 }
 
 void PreferencesDialog::setupClearHistory()
@@ -396,6 +388,8 @@ void PreferencesDialog::setupClearHistory()
 	if (dialog.exec() == QDialog::Accepted)
 	{
 		m_clearSettings = dialog.getClearSettings();
+
+		markModified();
 	}
 
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
@@ -475,6 +469,8 @@ void PreferencesDialog::addSearch()
 	items.append(new QStandardItem(engineData[QLatin1String("shortcut")].toString()));
 
 	m_ui->searchViewWidget->insertRow(items);
+
+	markModified();
 }
 
 void PreferencesDialog::editSearch()
@@ -526,6 +522,8 @@ void PreferencesDialog::editSearch()
 		m_ui->searchViewWidget->setData(index, engineData, Qt::UserRole);
 		m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("shortcut")], Qt::DisplayRole);
 	}
+
+	markModified();
 }
 
 void PreferencesDialog::updateSearchActions()
@@ -535,6 +533,47 @@ void PreferencesDialog::updateSearchActions()
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);
+}
+
+void PreferencesDialog::proxyModeChanged(int index)
+{
+	if (index == 2)
+	{
+		m_ui->manualProxyConfigurationWidget->setEnabled(true);
+		m_ui->allProxyCheckBox->setEnabled(true);
+		m_ui->allProxyServersLineEdit->setEnabled(true);
+		m_ui->allProxyPortSpinBox->setEnabled(true);
+
+		if (!m_ui->allProxyCheckBox->isChecked())
+		{
+			m_ui->httpProxyCheckBox->setEnabled(true);
+			m_ui->httpsProxyCheckBox->setEnabled(true);
+			m_ui->ftpProxyCheckBox->setEnabled(true);
+			m_ui->socksProxyCheckBox->setEnabled(true);
+			m_ui->httpProxyServersLineEdit->setEnabled(true);
+			m_ui->httpProxyPortSpinBox->setEnabled(true);
+			m_ui->httpsProxyServersLineEdit->setEnabled(true);
+			m_ui->httpsProxyPortSpinBox->setEnabled(true);
+			m_ui->ftpProxyServersLineEdit->setEnabled(true);
+			m_ui->ftpProxyPortSpinBox->setEnabled(true);
+			m_ui->socksProxyServersLineEdit->setEnabled(true);
+			m_ui->socksProxyPortSpinBox->setEnabled(true);
+		}
+	}
+	else
+	{
+		m_ui->manualProxyConfigurationWidget->setDisabled(true);
+		m_ui->allProxyCheckBox->setChecked(false);
+		m_ui->httpProxyCheckBox->setChecked(false);
+		m_ui->httpsProxyCheckBox->setChecked(false);
+		m_ui->ftpProxyCheckBox->setChecked(false);
+		m_ui->socksProxyCheckBox->setChecked(false);
+	}
+}
+
+void PreferencesDialog::markModified()
+{
+	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
 void PreferencesDialog::save()
@@ -643,18 +682,22 @@ void PreferencesDialog::save()
 	{
 		SettingsManager::setValue(QLatin1String("Proxy/UseCommon"), m_ui->allProxyCheckBox->isChecked());
 	}
+
 	if (!m_ui->httpProxyServersLineEdit->text().isEmpty())
 	{
 		SettingsManager::setValue(QLatin1String("Proxy/UseHttp"), m_ui->httpProxyCheckBox->isChecked());
 	}
+
 	if (!m_ui->httpsProxyServersLineEdit->text().isEmpty())
 	{
 		SettingsManager::setValue(QLatin1String("Proxy/UseHttps"), m_ui->httpsProxyCheckBox->isChecked());
 	}
+
 	if (!m_ui->ftpProxyServersLineEdit->text().isEmpty())
 	{
 		SettingsManager::setValue(QLatin1String("Proxy/UseFtp"), m_ui->ftpProxyCheckBox->isChecked());
 	}
+
 	if (!m_ui->socksProxyServersLineEdit->text().isEmpty())
 	{
 		SettingsManager::setValue(QLatin1String("Proxy/UseSocks"), m_ui->socksProxyCheckBox->isChecked());
@@ -671,7 +714,14 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 
-	close();
+	if (sender() == m_ui->buttonBox)
+	{
+		close();
+	}
+	else
+	{
+		m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
+	}
 }
 
 }
