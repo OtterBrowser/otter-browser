@@ -25,6 +25,8 @@
 namespace Otter
 {
 
+class TableViewWidget;
+
 namespace Ui
 {
 	class PreferencesDialog;
@@ -40,9 +42,10 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void loadProfiles(const QString &type, const QString &key, TableViewWidget *view);
 	QString getProfilePath(const QString &type, const QString &identifier);
-	QHash<QString, QString> loadProfileInformation(const QString &path) const;
-	QHash<QString, QVariantHash> loadProfileData(const QString &path) const;
+	QHash<QString, QString> getProfileInformation(const QString &path) const;
+	QHash<QString, QVariantHash> getProfileData(const QString &path) const;
 
 protected slots:
 	void restoreStartPage();

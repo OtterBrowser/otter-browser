@@ -1141,9 +1141,6 @@
              <property name="showGrid">
               <bool>false</bool>
              </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
              <attribute name="horizontalHeaderHighlightSections">
               <bool>false</bool>
              </attribute>
@@ -1667,7 +1664,38 @@
            <item>
             <layout class="QHBoxLayout" name="actionShortcutsLayout">
              <item>
-              <widget class="Otter::TableViewWidget" name="actionShortcutsViewWidget"/>
+              <widget class="Otter::TableViewWidget" name="actionShortcutsViewWidget">
+               <property name="dragEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="dragDropOverwriteMode">
+                <bool>false</bool>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::InternalMove</enum>
+               </property>
+               <property name="defaultDropAction">
+                <enum>Qt::MoveAction</enum>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="showGrid">
+                <bool>false</bool>
+               </property>
+               <attribute name="horizontalHeaderHighlightSections">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+              </widget>
              </item>
              <item>
               <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,1,0">
@@ -1784,7 +1812,38 @@
            <item>
             <layout class="QHBoxLayout" name="actionMacrosLayout">
              <item>
-              <widget class="Otter::TableViewWidget" name="actionMacrosViewWidget"/>
+              <widget class="Otter::TableViewWidget" name="actionMacrosViewWidget">
+               <property name="dragEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="dragDropOverwriteMode">
+                <bool>false</bool>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::InternalMove</enum>
+               </property>
+               <property name="defaultDropAction">
+                <enum>Qt::MoveAction</enum>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="showGrid">
+                <bool>false</bool>
+               </property>
+               <attribute name="horizontalHeaderHighlightSections">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+              </widget>
              </item>
              <item>
               <layout class="QVBoxLayout" name="pushButtonsLayout" stretch="0,0,0,0,1,0">

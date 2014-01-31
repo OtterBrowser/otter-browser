@@ -251,6 +251,9 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 
+	loadProfiles(QLatin1String("keyboard"), QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), m_ui->actionShortcutsViewWidget);
+	loadProfiles(QLatin1String("macros"), QLatin1String("Browser/ActionMacrosProfilesOrder"), m_ui->actionMacrosViewWidget);
+
 	QList<QLineEdit*> lineEdits = findChildren<QLineEdit*>();
 
 	for (int i = 0; i < lineEdits.count(); ++i)
@@ -297,6 +300,14 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
+	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionMacrosMoveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionMacrosMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -580,6 +591,42 @@ void PreferencesDialog::proxyModeChanged(int index)
 	}
 }
 
+void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
+{
+	QStringList labels;
+	labels << tr("Name") << tr("Identifier");
+
+	QStandardItemModel *model = new QStandardItemModel(this);
+	model->setHorizontalHeaderLabels(labels);
+
+	const QStringList profiles = SettingsManager::getValue(key).toStringList();
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		const QString path = getProfilePath(type, profiles.at(i));
+		const QHash<QString, QString> information = getProfileInformation(path);
+
+		if (information.isEmpty())
+		{
+			continue;
+		}
+
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(information.value(QLatin1String("Title"), tr("(Untitled)"))));
+		items[0]->setToolTip(information.value(QLatin1String("Description"), QString()));
+		items[0]->setData(path, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+		items.append(new QStandardItem(profiles.at(i)));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+		model->appendRow(items);
+	}
+
+	view->setModel(model);
+	view->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	view->setItemDelegate(new OptionDelegate(true, this));
+}
+
 void PreferencesDialog::markModified()
 {
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
@@ -724,6 +771,34 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 
+	QStringList shortcutsProfiles;
+
+	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
+
+		if (index.isValid() && !index.data().toString().isEmpty())
+		{
+			shortcutsProfiles.append(index.data().toString());
+		}
+	}
+
+	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
+
+	QStringList macrosProfiles;
+
+	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
+
+		if (index.isValid() && !index.data().toString().isEmpty())
+		{
+			macrosProfiles.append(index.data().toString());
+		}
+	}
+
+	SettingsManager::setValue(QLatin1String("Browser/ActionMacrosProfilesOrder"), macrosProfiles);
+
 	if (sender() == m_ui->buttonBox)
 	{
 		close();
@@ -742,7 +817,7 @@ QString PreferencesDialog::getProfilePath(const QString &type, const QString &id
 	return (QFile::exists(path) ? path : QLatin1Char('/') + directory + identifier + QLatin1String(".ini"));
 }
 
-QHash<QString, QString> PreferencesDialog::loadProfileInformation(const QString &path) const
+QHash<QString, QString> PreferencesDialog::getProfileInformation(const QString &path) const
 {
 	QFile file(path);
 	QHash<QString, QString> information;
@@ -751,6 +826,8 @@ QHash<QString, QString> PreferencesDialog::loadProfileInformation(const QString 
 	{
 		return information;
 	}
+
+	const QRegularExpression expression(QLatin1String(";\\s*"));
 
 	while (!file.atEnd())
 	{
@@ -761,13 +838,13 @@ QHash<QString, QString> PreferencesDialog::loadProfileInformation(const QString 
 			break;
 		}
 
-		information[line.section(QLatin1Char(':'), 0, 0)] = line.section(QLatin1Char(':'), 1).trimmed();
+		information[line.section(QLatin1Char(':'), 0, 0).remove(expression)] = line.section(QLatin1Char(':'), 1).trimmed();
 	}
 
 	return information;
 }
 
-QHash<QString, QVariantHash> PreferencesDialog::loadProfileData(const QString &path) const
+QHash<QString, QVariantHash> PreferencesDialog::getProfileData(const QString &path) const
 {
 	QHash<QString, QVariantHash> data;
 	QSettings settings(path, QSettings::IniFormat);
