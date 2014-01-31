@@ -40,6 +40,9 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	QString getProfilePath(const QString &type, const QString &identifier);
+	QHash<QString, QString> loadProfileInformation(const QString &path) const;
+	QHash<QString, QVariantHash> loadProfileData(const QString &path) const;
 
 protected slots:
 	void restoreStartPage();
@@ -59,8 +62,6 @@ protected slots:
 private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
-	QHash<QString, QVariantHash> m_macrosProfiles;
-	QHash<QString, QVariantHash> m_keyboardProfiles;
 	Ui::PreferencesDialog *m_ui;
 };
 

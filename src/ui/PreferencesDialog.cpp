@@ -27,10 +27,12 @@
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
+#include "../core/SessionsManager.h"
 #include "../core/Utils.h"
 
 #include "ui_PreferencesDialog.h"
 
+#include <QtCore/QSettings>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
@@ -730,6 +732,64 @@ void PreferencesDialog::save()
 	{
 		m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 	}
+}
+
+QString PreferencesDialog::getProfilePath(const QString &type, const QString &identifier)
+{
+	const QString directory = QLatin1Char('/') + type + QLatin1Char('/');
+	const QString path = SessionsManager::getProfilePath() + directory + identifier + QLatin1String(".ini");
+
+	return (QFile::exists(path) ? path : QLatin1Char('/') + directory + identifier + QLatin1String(".ini"));
+}
+
+QHash<QString, QString> PreferencesDialog::loadProfileInformation(const QString &path) const
+{
+	QFile file(path);
+	QHash<QString, QString> information;
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return information;
+	}
+
+	while (!file.atEnd())
+	{
+		const QString line = QString(file.readLine()).trimmed();
+
+		if (!line.startsWith(QLatin1Char(';')))
+		{
+			break;
+		}
+
+		information[line.section(QLatin1Char(':'), 0, 0)] = line.section(QLatin1Char(':'), 1).trimmed();
+	}
+
+	return information;
+}
+
+QHash<QString, QVariantHash> PreferencesDialog::loadProfileData(const QString &path) const
+{
+	QHash<QString, QVariantHash> data;
+	QSettings settings(path, QSettings::IniFormat);
+	const QStringList groups = settings.childGroups();
+
+	for (int i = 0; i < groups.count(); ++i)
+	{
+		settings.beginGroup(groups.at(i));
+
+		data[groups.at(i)] = QVariantHash();
+
+		const QStringList keys = settings.childKeys();
+
+		for (int j = 0; j < keys.count(); ++j)
+		{
+			data[groups.at(i)][keys.at(j)] = settings.value(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
+		}
+
+		settings.endGroup();
+	}
+
+	return data;
 }
 
 }
