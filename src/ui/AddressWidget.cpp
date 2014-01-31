@@ -284,6 +284,11 @@ void AddressWidget::setUrl(const QUrl &url)
 {
 	setText((url.scheme() == QLatin1String("about") && (url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))) ? QString() : url.toString());
 	updateBookmark();
+
+	if (m_window)
+	{
+		setIcon(m_window->getIcon());
+	}
 }
 
 void AddressWidget::setWindow(Window *window)
