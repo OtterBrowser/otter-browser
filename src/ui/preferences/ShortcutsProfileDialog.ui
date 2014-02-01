@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>400</height>
    </rect>
   </property>
@@ -44,6 +44,9 @@
            <property name="showGrid">
             <bool>false</bool>
            </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>200</number>
+           </attribute>
            <attribute name="horizontalHeaderHighlightSections">
             <bool>false</bool>
            </attribute>

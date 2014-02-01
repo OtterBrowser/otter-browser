@@ -93,6 +93,8 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	m_ui->descriptionLineEdit->setText(information.value(QLatin1String("Description"), QString()));
 	m_ui->versionLineEdit->setText(information.value(QLatin1String("Version"), QString()));
 	m_ui->authorLineEdit->setText(information.value(QLatin1String("Author"), QString()));
+
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
 }
 
 ShortcutsProfileDialog::~ShortcutsProfileDialog()
