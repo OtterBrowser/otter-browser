@@ -86,6 +86,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	}
 
 	model->setHorizontalHeaderLabels(labels);
+	model->sort(0);
 
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->titleLineEdit->setText(information.value(QLatin1String("Title"), QString()));

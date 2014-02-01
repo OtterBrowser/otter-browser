@@ -46,6 +46,7 @@ protected:
 	QString getProfilePath(const QString &type, const QString &identifier);
 	QHash<QString, QString> getProfileInformation(const QString &path) const;
 	QHash<QString, QVariantHash> getProfileData(const QString &path) const;
+	QHash<QString, QList<QKeySequence> > getShortcuts() const;
 
 protected slots:
 	void restoreStartPage();
@@ -75,6 +76,10 @@ protected slots:
 private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
+	QHash<QString, QHash<QString, QString> > m_keyboardProfilesInformation;
+	QHash<QString, QHash<QString, QString> > m_macrosProfilesInformation;
+	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;
+	QHash<QString, QHash<QString, QVariantHash> > m_macrosProfilesData;
 	Ui::PreferencesDialog *m_ui;
 };
 

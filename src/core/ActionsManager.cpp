@@ -461,6 +461,11 @@ QAction* ActionsManager::getAction(const QString &action)
 	return NULL;
 }
 
+QKeySequence ActionsManager::getNativeShortcut(const QString &action)
+{
+	return m_nativeShortcuts.value(action, QKeySequence());
+}
+
 QStringList ActionsManager::getIdentifiers()
 {
 	if (!m_windowActions.contains(SessionsManager::getActiveWindow()))

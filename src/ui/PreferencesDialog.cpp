@@ -25,6 +25,7 @@
 #include "SearchPropertiesDialog.h"
 #include "preferences/ShortcutDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
+#include "../core/ActionsManager.h"
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
@@ -609,7 +610,31 @@ void PreferencesDialog::addKeyboardProfile()
 
 void PreferencesDialog::editKeyboardProfile()
 {
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
+	const QString profile = m_ui->actionShortcutsViewWidget->getIndex(index.row(), 1).data().toString();
 
+	if (profile.isEmpty())
+	{
+		return;
+	}
+
+	const QString path = index.data(Qt::UserRole).toString();
+	ShortcutsProfileDialog dialog((m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path)), (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path)), getShortcuts(), false, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	m_keyboardProfilesInformation[profile] = dialog.getInformation();
+	m_keyboardProfilesData[profile] = dialog.getData();
+
+	const QString title = m_keyboardProfilesInformation[profile].value(QLatin1String("Title"), QString());
+
+	m_ui->actionShortcutsViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+	m_ui->actionShortcutsViewWidget->setData(index, m_keyboardProfilesInformation[profile].value(QLatin1String("Description"), QString()), Qt::ToolTipRole);
+
+	markModified();
 }
 
 void PreferencesDialog::removeKeyboardProfile()
@@ -641,7 +666,31 @@ void PreferencesDialog::addMacrosProfile()
 
 void PreferencesDialog::editMacrosProfile()
 {
+	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 0);
+	const QString profile = m_ui->actionMacrosViewWidget->getIndex(index.row(), 1).data().toString();
 
+	if (profile.isEmpty())
+	{
+		return;
+	}
+
+	const QString path = index.data(Qt::UserRole).toString();
+	ShortcutsProfileDialog dialog((m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path)), (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path)), getShortcuts(), true, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	m_macrosProfilesInformation[profile] = dialog.getInformation();
+	m_macrosProfilesData[profile] = dialog.getData();
+
+	const QString title = m_macrosProfilesInformation[profile].value(QLatin1String("Title"), QString());
+
+	m_ui->actionMacrosViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+	m_ui->actionMacrosViewWidget->setData(index, m_macrosProfilesInformation[profile].value(QLatin1String("Description"), QString()), Qt::ToolTipRole);
+
+	markModified();
 }
 
 void PreferencesDialog::removeMacrosProfile()
@@ -852,7 +901,7 @@ void PreferencesDialog::save()
 	{
 		const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
 
-		if (index.isValid() && !index.data().toString().isEmpty())
+		if (!index.data().toString().isEmpty())
 		{
 			shortcutsProfiles.append(index.data().toString());
 		}
@@ -866,7 +915,7 @@ void PreferencesDialog::save()
 	{
 		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
 
-		if (index.isValid() && !index.data().toString().isEmpty())
+		if (!index.data().toString().isEmpty())
 		{
 			macrosProfiles.append(index.data().toString());
 		}
@@ -942,6 +991,81 @@ QHash<QString, QVariantHash> PreferencesDialog::getProfileData(const QString &pa
 	}
 
 	return data;
+}
+
+QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
+{
+	QHash<QString, QList<QKeySequence> > shortcuts;
+
+	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
+
+		if (index.data().toString().isEmpty())
+		{
+			continue;
+		}
+
+		const QHash<QString, QVariantHash> data = (m_keyboardProfilesData.contains(index.data().toString()) ? m_keyboardProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
+		QHash<QString, QVariantHash>::const_iterator iterator;
+
+		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+		{
+			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
+
+			for (int j = 0; j < rawShortcuts.count(); ++j)
+			{
+				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+
+				if (!shortcut.isEmpty())
+				{
+					actionShortcuts.append(QKeySequence(rawShortcuts.at(j)));
+				}
+			}
+
+			if (!actionShortcuts.isEmpty())
+			{
+				shortcuts[iterator.key()] = actionShortcuts;
+			}
+		}
+	}
+
+	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
+
+		if (index.data().toString().isEmpty())
+		{
+			continue;
+		}
+
+		const QHash<QString, QVariantHash> data = (m_macrosProfilesData.contains(index.data().toString()) ? m_macrosProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
+		QHash<QString, QVariantHash>::const_iterator iterator;
+
+		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+		{
+			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
+
+			for (int j = 0; j < rawShortcuts.count(); ++j)
+			{
+				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+
+				if (!shortcut.isEmpty())
+				{
+					actionShortcuts.append(QKeySequence(rawShortcuts.at(j)));
+				}
+			}
+
+			if (!actionShortcuts.isEmpty())
+			{
+				shortcuts[iterator.key()] = actionShortcuts;
+			}
+		}
+	}
+
+	return shortcuts;
 }
 
 }

@@ -38,6 +38,7 @@ public:
 	static void triggerAction(const QString &action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
 	static QAction* getAction(const QString &action);
+	static QKeySequence getNativeShortcut(const QString &action);
 	static QStringList getIdentifiers();
 
 protected:
