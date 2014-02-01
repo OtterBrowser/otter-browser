@@ -88,7 +88,7 @@ set(otter_src
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
-	src/ui/preferences/ShortcutDelegate.cpp
+	src/ui/preferences/SearchShortcutDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp

@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "ShortcutDelegate.h"
+#include "SearchShortcutDelegate.h"
 
 #include <QtGui/QRegularExpressionValidator>
 #include <QtWidgets/QLineEdit>
@@ -25,11 +25,11 @@
 namespace Otter
 {
 
-ShortcutDelegate::ShortcutDelegate(QObject *parent) : QItemDelegate(parent)
+SearchShortcutDelegate::SearchShortcutDelegate(QObject *parent) : QItemDelegate(parent)
 {
 }
 
-void ShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void SearchShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 	Q_UNUSED(index)
@@ -37,7 +37,7 @@ void ShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionV
 	editor->setGeometry(option.rect);
 }
 
-void ShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void SearchShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QLineEdit *widget = qobject_cast<QLineEdit*>(editor);
 
@@ -47,7 +47,7 @@ void ShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 	}
 }
 
-QWidget* ShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget* SearchShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 
