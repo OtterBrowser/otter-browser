@@ -169,17 +169,19 @@ void ShortcutsProfileDialog::addShortcut()
 
 void ShortcutsProfileDialog::updateMacrosActions()
 {
+	disconnect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
+
 	m_ui->shortcutsViewWidget->getModel()->clear();
 
 	QStringList labels;
 	labels << tr("Shortcut");
 
-	const QModelIndex index = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
+	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
 
 	m_ui->shortcutsViewWidget->getModel()->setHorizontalHeaderLabels(labels);
-	m_ui->removeMacroButton->setEnabled(m_macrosMode && index.isValid());
+	m_ui->removeMacroButton->setEnabled(m_macrosMode && m_currentAction.isValid());
 
-	if (!index.isValid())
+	if (!m_currentAction.isValid())
 	{
 		m_ui->addShortcutButton->setEnabled(false);
 		m_ui->removeShortcutButton->setEnabled(true);
@@ -191,11 +193,11 @@ void ShortcutsProfileDialog::updateMacrosActions()
 
 	m_ui->addShortcutButton->setEnabled(true);
 
-	const QStringList rawShortcuts = index.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+	const QStringList rawShortcuts = m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 
 	for (int i = 0; i < rawShortcuts.count(); ++i)
 	{
-		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(index.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
+		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(m_currentAction.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
 
 		if (!shortcut.isEmpty())
 		{
@@ -207,11 +209,34 @@ void ShortcutsProfileDialog::updateMacrosActions()
 		}
 	}
 
+	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }
 
 void ShortcutsProfileDialog::updateShortcutsActions()
 {
 	m_ui->removeShortcutButton->setEnabled(m_ui->shortcutsViewWidget->getCurrentRow() >= 0);
+}
+
+void ShortcutsProfileDialog::saveShortcuts()
+{
+	if (!m_currentAction.isValid())
+	{
+		return;
+	}
+
+	QStringList shortcuts;
+
+	for (int i = 0; i < m_ui->shortcutsViewWidget->getRowCount(); ++i)
+	{
+		const QKeySequence shortcut(m_ui->shortcutsViewWidget->getIndex(i, 0).data().toString());
+
+		if (!shortcut.isEmpty())
+		{
+			shortcuts.append(shortcut.toString());
+		}
+	}
+
+	m_ui->actionsViewWidget->setData(m_currentAction, shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
 }
 
 QHash<QString, QString> ShortcutsProfileDialog::getInformation() const

@@ -20,6 +20,7 @@
 #ifndef OTTER_SHORTCUTSPROFILEDIALOG_H
 #define OTTER_SHORTCUTSPROFILEDIALOG_H
 
+#include <QtCore/QModelIndex>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -49,9 +50,11 @@ protected slots:
 	void addShortcut();
 	void updateMacrosActions();
 	void updateShortcutsActions();
+	void saveShortcuts();
 
 private:
 	QHash<QString, QList<QKeySequence> > m_shortcuts;
+	QModelIndex m_currentAction;
 	bool m_macrosMode;
 	Ui::ShortcutsProfileDialog *m_ui;
 };
