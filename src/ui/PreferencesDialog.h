@@ -59,6 +59,16 @@ protected slots:
 	void editSearch();
 	void updateSearchActions();
 	void proxyModeChanged(int index);
+	void addKeyboardProfile();
+	void editKeyboardProfile();
+	void removeKeyboardProfile();
+	void cloneKeyboardProfile();
+	void updateKeyboardProfleActions();
+	void addMacrosProfile();
+	void editMacrosProfile();
+	void removeMacrosProfile();
+	void cloneMacrosProfile();
+	void updateMacrosProfleActions();
 	void markModified();
 	void save();
 

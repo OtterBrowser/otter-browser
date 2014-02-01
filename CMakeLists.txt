@@ -89,6 +89,7 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
 	src/ui/preferences/ShortcutDelegate.cpp
+	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
@@ -119,6 +120,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SessionsManagerDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/BlockedContentDialog.ui
+	src/ui/preferences/ShortcutsProfileDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui

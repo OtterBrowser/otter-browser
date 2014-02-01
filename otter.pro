@@ -60,6 +60,7 @@ SOURCES += src/main.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
     src/ui/preferences/ShortcutDelegate.cpp \
+    src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
@@ -120,6 +121,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
     src/ui/preferences/ShortcutDelegate.h \
+    src/ui/preferences/ShortcutsProfileDialog.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
@@ -144,6 +146,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/Window.ui \
     src/ui/preferences/BlockedContentDialog.ui \
+    src/ui/preferences/ShortcutsProfileDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/cache/CacheContentsWidget.ui \
     src/modules/windows/configuration/ConfigurationContentsWidget.ui \

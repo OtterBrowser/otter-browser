@@ -24,6 +24,7 @@
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
 #include "preferences/ShortcutDelegate.h"
+#include "preferences/ShortcutsProfileDialog.h"
 #include "../core/FileSystemCompleterModel.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
@@ -302,10 +303,18 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
+	connect(m_ui->actionShortcutsAddButton, SIGNAL(clicked()), this, SLOT(addKeyboardProfile()));
+	connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
+	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(removeRow()));
 	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionMacrosMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionMacrosMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->actionMacrosViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosProfleActions()));
+	connect(m_ui->actionMacrosAddButton, SIGNAL(clicked()), this, SLOT(addMacrosProfile()));
+	connect(m_ui->actionMacrosEditButton, SIGNAL(clicked()), this, SLOT(editMacrosProfile()));
+	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(removeRow()));
 	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
 }
@@ -591,6 +600,70 @@ void PreferencesDialog::proxyModeChanged(int index)
 	}
 }
 
+void PreferencesDialog::addKeyboardProfile()
+{
+
+}
+
+void PreferencesDialog::editKeyboardProfile()
+{
+
+}
+
+void PreferencesDialog::removeKeyboardProfile()
+{
+
+}
+
+void PreferencesDialog::cloneKeyboardProfile()
+{
+
+}
+
+void PreferencesDialog::updateKeyboardProfleActions()
+{
+	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 1);
+	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
+	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
+
+	m_ui->actionShortcutsEditButton->setEnabled(isSelected && isEditable);
+	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
+	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected && isEditable);
+}
+
+void PreferencesDialog::addMacrosProfile()
+{
+
+}
+
+void PreferencesDialog::editMacrosProfile()
+{
+
+}
+
+void PreferencesDialog::removeMacrosProfile()
+{
+
+}
+
+void PreferencesDialog::cloneMacrosProfile()
+{
+
+}
+
+void PreferencesDialog::updateMacrosProfleActions()
+{
+	const int currentRow = m_ui->actionMacrosViewWidget->getCurrentRow();
+	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(currentRow, 1);
+	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
+	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionMacrosViewWidget->getRowCount());
+
+	m_ui->actionMacrosEditButton->setEnabled(isSelected && isEditable);
+	m_ui->actionMacrosCloneButton->setEnabled(isSelected);
+	m_ui->actionMacrosRemoveButton->setEnabled(isSelected && isEditable);
+}
+
 void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
 {
 	QStringList labels;
@@ -615,9 +688,9 @@ void PreferencesDialog::loadProfiles(const QString &type, const QString &key, Ta
 		items.append(new QStandardItem(information.value(QLatin1String("Title"), tr("(Untitled)"))));
 		items[0]->setToolTip(information.value(QLatin1String("Description"), QString()));
 		items[0]->setData(path, Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 		items.append(new QStandardItem(profiles.at(i)));
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 		model->appendRow(items);
 	}

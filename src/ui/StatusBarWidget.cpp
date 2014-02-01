@@ -36,7 +36,7 @@ void StatusBarWidget::setup()
 {
 	m_zoomSlider = new QSlider(this);
 	m_zoomSlider->setRange(10, 250);
-	m_zoomSlider->setTracking(true);;
+	m_zoomSlider->setTracking(true);
 	m_zoomSlider->setOrientation(Qt::Horizontal);
 	m_zoomSlider->setFocusPolicy(Qt::TabFocus);
 	m_zoomSlider->setMaximumWidth(100);
