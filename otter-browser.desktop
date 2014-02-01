@@ -2,6 +2,10 @@
 Name=Otter Browser
 GenericName=Web Browser
 GenericName[ru]=Веб браузер
+GenericName[sr]=Веб прегледач
+GenericName[sr@ijekavian]=Веб прегледач
+GenericName[sr@ijekavianlatin]=Veb pregledač
+GenericName[sr@latin]=Veb pregledač
 Icon=
 Type=Application
 Categories=Application;Network;
