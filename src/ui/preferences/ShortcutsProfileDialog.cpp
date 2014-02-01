@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ShortcutsProfileDialog.h"
+#include "KeyboardShortcutDelegate.h"
 #include "../../core/ActionsManager.h"
 
 #include "ui_ShortcutsProfileDialog.h"
@@ -97,6 +98,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->shortcutsViewWidget->setModel(new QStandardItemModel(this));
+	m_ui->shortcutsViewWidget->setItemDelegate(new KeyboardShortcutDelegate(this));
 	m_ui->titleLineEdit->setText(information.value(QLatin1String("Title"), QString()));
 	m_ui->descriptionLineEdit->setText(information.value(QLatin1String("Description"), QString()));
 	m_ui->versionLineEdit->setText(information.value(QLatin1String("Version"), QString()));
