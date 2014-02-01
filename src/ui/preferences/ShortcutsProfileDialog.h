@@ -44,6 +44,12 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void addMacro();
+	void addShortcut();
+	void updateMacrosActions();
+	void updateShortcutsActions();
+
 private:
 	QHash<QString, QList<QKeySequence> > m_shortcuts;
 	bool m_macrosMode;

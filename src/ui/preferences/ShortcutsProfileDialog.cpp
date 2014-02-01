@@ -22,6 +22,8 @@
 
 #include "ui_ShortcutsProfileDialog.h"
 
+#include <QtWidgets/QInputDialog>
+
 namespace Otter
 {
 
@@ -53,6 +55,11 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 
 			model->appendRow(items);
 		}
+
+		m_ui->addMacroButton->setEnabled(true);
+
+		connect(m_ui->addMacroButton, SIGNAL(clicked()), this, SLOT(addMacro()));
+		connect(m_ui->removeMacroButton, SIGNAL(clicked()), m_ui->actionsViewWidget, SLOT(removeRow()));
 	}
 	else
 	{
@@ -89,12 +96,19 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	model->sort(0);
 
 	m_ui->actionsViewWidget->setModel(model);
+	m_ui->shortcutsViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->titleLineEdit->setText(information.value(QLatin1String("Title"), QString()));
 	m_ui->descriptionLineEdit->setText(information.value(QLatin1String("Description"), QString()));
 	m_ui->versionLineEdit->setText(information.value(QLatin1String("Version"), QString()));
 	m_ui->authorLineEdit->setText(information.value(QLatin1String("Author"), QString()));
 
+	updateMacrosActions();
+
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
+	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosActions()));
+	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
+	connect(m_ui->addShortcutButton, SIGNAL(clicked()), this, SLOT(addShortcut()));
+	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), m_ui->shortcutsViewWidget, SLOT(removeRow()));
 }
 
 ShortcutsProfileDialog::~ShortcutsProfileDialog()
@@ -115,6 +129,89 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void ShortcutsProfileDialog::addMacro()
+{
+//FIXME create list from profiles, like shortcuts
+	const QStringList identifiers = ActionsManager::getIdentifiers();
+	QString identifier;
+
+	do
+	{
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Macro Identifier:"));
+
+		if (identifier.isEmpty())
+		{
+			return;
+		}
+	}
+	while (identifiers.contains(identifier));
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(tr("(Untitled)")));
+	items[0]->setData(identifier, Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items.append(new QStandardItem(QString()));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+
+	m_ui->actionsViewWidget->getModel()->appendRow(items);
+}
+
+void ShortcutsProfileDialog::addShortcut()
+{
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(QString()));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+	m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+}
+
+void ShortcutsProfileDialog::updateMacrosActions()
+{
+	m_ui->shortcutsViewWidget->getModel()->clear();
+
+	QStringList labels;
+	labels << tr("Shortcut");
+
+	const QModelIndex index = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
+
+	m_ui->shortcutsViewWidget->getModel()->setHorizontalHeaderLabels(labels);
+	m_ui->removeMacroButton->setEnabled(m_macrosMode && index.isValid());
+
+	if (!index.isValid())
+	{
+		m_ui->addShortcutButton->setEnabled(false);
+		m_ui->removeShortcutButton->setEnabled(true);
+
+		return;
+	}
+
+	updateShortcutsActions();
+
+	m_ui->addShortcutButton->setEnabled(true);
+
+	const QStringList rawShortcuts = index.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+
+	for (int i = 0; i < rawShortcuts.count(); ++i)
+	{
+		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(index.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
+
+		if (!shortcut.isEmpty())
+		{
+			QList<QStandardItem*> items;
+			items.append(new QStandardItem(shortcut.toString()));
+			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+		}
+	}
+
+}
+
+void ShortcutsProfileDialog::updateShortcutsActions()
+{
+	m_ui->removeShortcutButton->setEnabled(m_ui->shortcutsViewWidget->getCurrentRow() >= 0);
 }
 
 QHash<QString, QString> ShortcutsProfileDialog::getInformation() const

@@ -499,7 +499,9 @@ void PreferencesDialog::addSearch()
 	items.append(new QStandardItem(engineData[QLatin1String("icon")].value<QIcon>(), engineData[QLatin1String("title")].toString()));
 	items[0]->setToolTip(engineData[QLatin1String("description")].toString());
 	items[0]->setData(engineData, Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 	items.append(new QStandardItem(engineData[QLatin1String("shortcut")].toString()));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
 
@@ -1208,7 +1210,7 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 
 				if (!shortcut.isEmpty())
 				{
-					actionShortcuts.append(QKeySequence(rawShortcuts.at(j)));
+					actionShortcuts.append(shortcut);
 				}
 			}
 
@@ -1242,7 +1244,7 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 
 				if (!shortcut.isEmpty())
 				{
-					actionShortcuts.append(QKeySequence(rawShortcuts.at(j)));
+					actionShortcuts.append(shortcut);
 				}
 			}
 

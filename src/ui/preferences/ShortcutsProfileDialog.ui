@@ -29,6 +29,9 @@
          <property name="placeholderText">
           <string>Search...</string>
          </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -36,7 +39,10 @@
          <item>
           <widget class="Otter::TableViewWidget" name="actionsViewWidget">
            <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
+            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
            </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
@@ -113,7 +119,22 @@
          <item>
           <widget class="Otter::TableViewWidget" name="shortcutsViewWidget">
            <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
+            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::InternalMove</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::MoveAction</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
            </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
