@@ -887,7 +887,7 @@ QString PreferencesDialog::getProfilePath(const QString &type, const QString &id
 	const QString directory = QLatin1Char('/') + type + QLatin1Char('/');
 	const QString path = SessionsManager::getProfilePath() + directory + identifier + QLatin1String(".ini");
 
-	return (QFile::exists(path) ? path : QLatin1Char('/') + directory + identifier + QLatin1String(".ini"));
+	return (QFile::exists(path) ? path : QLatin1Char(':') + directory + identifier + QLatin1String(".ini"));
 }
 
 QHash<QString, QString> PreferencesDialog::getProfileInformation(const QString &path) const
