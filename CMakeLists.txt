@@ -4,7 +4,7 @@ project(otter-browser)
 
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "2")
-set(PATCH_VERSION "01-dev")
+set(PATCH_VERSION "01")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
