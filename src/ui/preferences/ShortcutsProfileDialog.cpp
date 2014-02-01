@@ -155,7 +155,7 @@ void ShortcutsProfileDialog::addMacro()
 	items.append(new QStandardItem(QString()));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
-	m_ui->actionsViewWidget->getModel()->appendRow(items);
+	m_ui->actionsViewWidget->insertRow(items);
 }
 
 void ShortcutsProfileDialog::addShortcut()
@@ -164,7 +164,7 @@ void ShortcutsProfileDialog::addShortcut()
 	items.append(new QStandardItem(QString()));
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-	m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+	m_ui->shortcutsViewWidget->insertRow(items);
 }
 
 void ShortcutsProfileDialog::updateMacrosActions()
