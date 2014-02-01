@@ -1701,9 +1701,6 @@
               <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,1,0">
                <item>
                 <widget class="QPushButton" name="actionShortcutsAddButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
                  <property name="text">
                   <string>Add</string>
                  </property>
@@ -1849,9 +1846,6 @@
               <layout class="QVBoxLayout" name="pushButtonsLayout" stretch="0,0,0,0,1,0">
                <item>
                 <widget class="QPushButton" name="actionMacrosAddButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
                  <property name="text">
                   <string>Add</string>
                  </property>

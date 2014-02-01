@@ -608,7 +608,28 @@ void PreferencesDialog::proxyModeChanged(int index)
 
 void PreferencesDialog::addKeyboardProfile()
 {
+	const QString identifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget);
 
+	if (identifier.isEmpty())
+	{
+		return;
+	}
+
+	QHash<QString, QString> hash;
+	hash[QLatin1String("Title")] = tr("(Untitled)");
+
+	m_keyboardProfilesInformation[identifier] = hash;
+	m_keyboardProfilesData[identifier] = QHash<QString, QVariantHash>();
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(tr("(Untitled)")));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	items.append(new QStandardItem(identifier));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->actionShortcutsViewWidget->insertRow(items);
+
+	markModified();
 }
 
 void PreferencesDialog::editKeyboardProfile()
@@ -652,23 +673,26 @@ void PreferencesDialog::cloneKeyboardProfile()
 	const QString profile = index.data().toString();
 	const QString identifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, profile);
 
-	if (!identifier.isEmpty())
+	if (identifier.isEmpty())
 	{
-		const QString path = getProfilePath(QLatin1String("keyboard"), profile);
-
-		m_keyboardProfilesInformation[identifier] = (m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path));
-		m_keyboardProfilesData[identifier] = (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path));
-
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(m_keyboardProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
-		items[0]->setToolTip(m_keyboardProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
-		items[0]->setData(path, Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-		items.append(new QStandardItem(identifier));
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-
-		m_ui->actionShortcutsViewWidget->insertRow(items);
+		return;
 	}
+
+	const QString path = getProfilePath(QLatin1String("keyboard"), profile);
+
+	m_keyboardProfilesInformation[identifier] = (m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path));
+	m_keyboardProfilesData[identifier] = (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path));
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(m_keyboardProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
+	items[0]->setToolTip(m_keyboardProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	items.append(new QStandardItem(identifier));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->actionShortcutsViewWidget->insertRow(items);
+
+	markModified();
 }
 
 void PreferencesDialog::removeKeyboardProfile()
@@ -716,7 +740,28 @@ void PreferencesDialog::updateKeyboardProfleActions()
 
 void PreferencesDialog::addMacrosProfile()
 {
+	const QString identifier = createProfileIdentifier(m_ui->actionMacrosViewWidget);
 
+	if (identifier.isEmpty())
+	{
+		return;
+	}
+
+	QHash<QString, QString> hash;
+	hash[QLatin1String("Title")] = tr("(Untitled)");
+
+	m_keyboardProfilesInformation[identifier] = hash;
+	m_keyboardProfilesData[identifier] = QHash<QString, QVariantHash>();
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(tr("(Untitled)")));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	items.append(new QStandardItem(identifier));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->actionMacrosViewWidget->insertRow(items);
+
+	markModified();
 }
 
 void PreferencesDialog::editMacrosProfile()
@@ -760,23 +805,26 @@ void PreferencesDialog::cloneMacrosProfile()
 	const QString profile = index.data().toString();
 	const QString identifier = createProfileIdentifier(m_ui->actionMacrosViewWidget, profile);
 
-	if (!identifier.isEmpty())
+	if (identifier.isEmpty())
 	{
-		const QString path = getProfilePath(QLatin1String("macros"), profile);
-
-		m_macrosProfilesInformation[identifier] = (m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path));
-		m_macrosProfilesData[identifier] = (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path));
-
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(m_macrosProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
-		items[0]->setToolTip(m_macrosProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
-		items[0]->setData(path, Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-		items.append(new QStandardItem(identifier));
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-
-		m_ui->actionMacrosViewWidget->insertRow(items);
+		return;
 	}
+
+	const QString path = getProfilePath(QLatin1String("macros"), profile);
+
+	m_macrosProfilesInformation[identifier] = (m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path));
+	m_macrosProfilesData[identifier] = (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path));
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(m_macrosProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
+	items[0]->setToolTip(m_macrosProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	items.append(new QStandardItem(identifier));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->actionMacrosViewWidget->insertRow(items);
+
+	markModified();
 }
 
 void PreferencesDialog::removeMacrosProfile()
@@ -1124,7 +1172,7 @@ QHash<QString, QVariantHash> PreferencesDialog::getProfileData(const QString &pa
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			data[groups.at(i)][keys.at(j)] = settings.value(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
+			data[groups.at(i)][keys.at(j)] = settings.value(keys.at(j));
 		}
 
 		settings.endGroup();
