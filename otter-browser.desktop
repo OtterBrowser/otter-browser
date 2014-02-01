@@ -2,9 +2,14 @@
 Name=Otter Browser
 GenericName=Web Browser
 GenericName[ru]=Веб браузер
+Comment=Project aiming to recreate classic Opera (12.x) UI using Qt5
+Comment[sr]=Кут5 пројект који циља да клонира сучеље класичне Опере (12.x)
+Comment[sr@ijekavian]=Кут5 пројект који циља да клонира сучеље класичне Опере (12.x)
+Comment[sr@latin]=Kut5 projekt koji cilja da klonira sučelje klasične Opere (12.x)
+Comment[sr@ijekavianlatin]=Kut5 projekt koji cilja da klonira sučelje klasične Opere (12.x)
 Icon=
 Type=Application
-Categories=Application;Network;
+Categories=Application;Network;WebBrowser;
 Encoding=UTF-8
 Exec=otter-browser %u
 Terminal=false
