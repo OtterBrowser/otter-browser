@@ -35,6 +35,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="Otter::TableViewWidget" name="actionsViewWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
            </property>
@@ -109,6 +112,9 @@
         <layout class="QHBoxLayout" name="shortcutsLayout">
          <item>
           <widget class="Otter::TableViewWidget" name="shortcutsViewWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
            </property>

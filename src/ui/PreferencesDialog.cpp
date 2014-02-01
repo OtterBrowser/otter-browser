@@ -650,7 +650,7 @@ void PreferencesDialog::cloneKeyboardProfile()
 void PreferencesDialog::updateKeyboardProfleActions()
 {
 	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 1);
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 0);
 	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
 
@@ -706,7 +706,7 @@ void PreferencesDialog::cloneMacrosProfile()
 void PreferencesDialog::updateMacrosProfleActions()
 {
 	const int currentRow = m_ui->actionMacrosViewWidget->getCurrentRow();
-	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(currentRow, 1);
+	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(currentRow, 0);
 	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionMacrosViewWidget->getRowCount());
 
