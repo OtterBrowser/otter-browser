@@ -76,6 +76,7 @@ protected slots:
 private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
+	QStringList m_removedProfiles;
 	QHash<QString, QHash<QString, QString> > m_keyboardProfilesInformation;
 	QHash<QString, QHash<QString, QString> > m_macrosProfilesInformation;
 	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;

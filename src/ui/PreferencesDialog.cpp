@@ -38,6 +38,7 @@
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -307,7 +308,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
 	connect(m_ui->actionShortcutsAddButton, SIGNAL(clicked()), this, SLOT(addKeyboardProfile()));
 	connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
-	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(removeRow()));
+	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
 	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionMacrosMoveDownButton, SLOT(setEnabled(bool)));
@@ -315,7 +316,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosProfleActions()));
 	connect(m_ui->actionMacrosAddButton, SIGNAL(clicked()), this, SLOT(addMacrosProfile()));
 	connect(m_ui->actionMacrosEditButton, SIGNAL(clicked()), this, SLOT(editMacrosProfile()));
-	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(removeRow()));
+	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), this, SLOT(removeMacrosProfile()));
 	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
 }
@@ -639,7 +640,34 @@ void PreferencesDialog::editKeyboardProfile()
 
 void PreferencesDialog::removeKeyboardProfile()
 {
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
 
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("Do you really want to remove this profile?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Cancel);
+
+	if (!index.data(Qt::UserRole).toString().isEmpty() && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')))
+	{
+		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
+	}
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+		{
+			m_removedProfiles.append(index.data(Qt::UserRole).toString());
+		}
+
+		m_ui->actionShortcutsViewWidget->removeRow();
+	}
 }
 
 void PreferencesDialog::cloneKeyboardProfile()
@@ -651,12 +679,11 @@ void PreferencesDialog::updateKeyboardProfleActions()
 {
 	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
 	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 0);
-	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
 
-	m_ui->actionShortcutsEditButton->setEnabled(isSelected && isEditable);
+	m_ui->actionShortcutsEditButton->setEnabled(isSelected && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')));
 	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
-	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected && isEditable);
+	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
 }
 
 void PreferencesDialog::addMacrosProfile()
@@ -695,7 +722,34 @@ void PreferencesDialog::editMacrosProfile()
 
 void PreferencesDialog::removeMacrosProfile()
 {
+	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 0);
 
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("Do you really want to remove this profile?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Cancel);
+
+	if (!index.data(Qt::UserRole).toString().isEmpty() && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')))
+	{
+		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
+	}
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+		{
+			m_removedProfiles.append(index.data(Qt::UserRole).toString());
+		}
+
+		m_ui->actionMacrosViewWidget->removeRow();
+	}
 }
 
 void PreferencesDialog::cloneMacrosProfile()
@@ -707,12 +761,11 @@ void PreferencesDialog::updateMacrosProfleActions()
 {
 	const int currentRow = m_ui->actionMacrosViewWidget->getCurrentRow();
 	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(currentRow, 0);
-	const bool isEditable = !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':'));
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionMacrosViewWidget->getRowCount());
 
-	m_ui->actionMacrosEditButton->setEnabled(isSelected && isEditable);
+	m_ui->actionMacrosEditButton->setEnabled(isSelected && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')));
 	m_ui->actionMacrosCloneButton->setEnabled(isSelected);
-	m_ui->actionMacrosRemoveButton->setEnabled(isSelected && isEditable);
+	m_ui->actionMacrosRemoveButton->setEnabled(isSelected);
 }
 
 void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
