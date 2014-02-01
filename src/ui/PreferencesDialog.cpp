@@ -725,7 +725,14 @@ void PreferencesDialog::removeKeyboardProfile()
 			m_removedProfiles.append(index.data(Qt::UserRole).toString());
 		}
 
+		const QString profile = m_ui->actionShortcutsViewWidget->getIndex(index.row(), 1).data().toString();
+
+		m_keyboardProfilesInformation.remove(profile);
+		m_keyboardProfilesData.remove(profile);
+
 		m_ui->actionShortcutsViewWidget->removeRow();
+
+		markModified();
 	}
 }
 
@@ -857,7 +864,14 @@ void PreferencesDialog::removeMacrosProfile()
 			m_removedProfiles.append(index.data(Qt::UserRole).toString());
 		}
 
+		const QString profile = m_ui->actionMacrosViewWidget->getIndex(index.row(), 1).data().toString();
+
+		m_macrosProfilesInformation.remove(profile);
+		m_macrosProfilesData.remove(profile);
+
 		m_ui->actionMacrosViewWidget->removeRow();
+
+		markModified();
 	}
 }
 
@@ -1052,7 +1066,82 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 
-	QStringList shortcutsProfiles;
+	for (int i = 0; i < m_removedProfiles.count(); ++i)
+	{
+		QFile::remove(m_removedProfiles.at(i));
+	}
+
+	const QStringList modifiedKeyboardProfiles = m_keyboardProfilesInformation.keys();
+
+	for (int i = 0; i < modifiedKeyboardProfiles.count(); ++i)
+	{
+		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/keyboard/"));
+		QFile file(SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + modifiedKeyboardProfiles.at(i) + QLatin1String(".ini"));
+
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			continue;
+		}
+
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+		stream << QLatin1String("; Title: ") << m_keyboardProfilesInformation[modifiedKeyboardProfiles.at(i)].value(QLatin1String("Title"), tr("(Untitled)")) << QLatin1Char('\n');
+		stream << QLatin1String("; Description: ") << m_keyboardProfilesInformation[modifiedKeyboardProfiles.at(i)].value(QLatin1String("Description"), QString()) << QLatin1Char('\n');
+		stream << QLatin1String("; Type: keyboard-profile\n");
+		stream << QLatin1String("; Author: ") << m_keyboardProfilesInformation[modifiedKeyboardProfiles.at(i)].value(QLatin1String("Author"), QString()) << QLatin1Char('\n');
+		stream << QLatin1String("; Version: ") << m_keyboardProfilesInformation[modifiedKeyboardProfiles.at(i)].value(QLatin1String("Version"), QString()) << QLatin1String("\n\n");
+
+		QHash<QString, QVariantHash>::iterator iterator;
+
+		for (iterator = m_keyboardProfilesData[modifiedKeyboardProfiles.at(i)].begin(); iterator != m_keyboardProfilesData[modifiedKeyboardProfiles.at(i)].end(); ++iterator)
+		{
+			if (!iterator.key().isEmpty() && !iterator.value().value(QLatin1String("shortcuts")).isNull())
+			{
+				stream << QLatin1Char('[') << iterator.key() << QLatin1String("]\n");
+				stream << QLatin1String("shortcuts=") << iterator.value().value(QLatin1String("shortcuts")).toString() << QLatin1String("\n\n");
+			}
+		}
+
+		file.close();
+	}
+
+	const QStringList modifiedMacrosProfiles = m_macrosProfilesInformation.keys();
+
+	for (int i = 0; i < modifiedMacrosProfiles.count(); ++i)
+	{
+		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/macros/"));
+		QFile file(SessionsManager::getProfilePath() + QLatin1String("/macros/") + modifiedMacrosProfiles.at(i) + QLatin1String(".ini"));
+
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			continue;
+		}
+
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+		stream << QLatin1String("; Title: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Title"), tr("(Untitled)")) << QLatin1Char('\n');
+		stream << QLatin1String("; Description: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Description"), QString()) << QLatin1Char('\n');
+		stream << QLatin1String("; Type: macros-profile\n");
+		stream << QLatin1String("; Author: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Author"), QString()) << QLatin1Char('\n');
+		stream << QLatin1String("; Version: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Version"), QString()) << QLatin1String("\n\n");
+
+		QHash<QString, QVariantHash>::iterator iterator;
+
+		for (iterator = m_macrosProfilesData[modifiedMacrosProfiles.at(i)].begin(); iterator != m_macrosProfilesData[modifiedMacrosProfiles.at(i)].end(); ++iterator)
+		{
+			if (!iterator.key().isEmpty() && !iterator.value().value(QLatin1String("actions")).isNull())
+			{
+				stream << QLatin1Char('[') << iterator.key() << QLatin1String("]\n");
+				stream << Utils::formatConfigurationEntry(QLatin1String("title"), iterator.value().value(QLatin1String("title")).toString(), true);
+				stream << QLatin1String("actions=") << iterator.value().value(QLatin1String("actions")).toString() << QLatin1Char('\n');
+				stream << QLatin1String("shortcuts=") << iterator.value().value(QLatin1String("shortcuts")).toString() << QLatin1String("\n\n");
+			}
+		}
+
+		file.close();
+	}
+
+	QStringList keyboardProfiles;
 
 	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
 	{
@@ -1060,11 +1149,11 @@ void PreferencesDialog::save()
 
 		if (!index.data().toString().isEmpty())
 		{
-			shortcutsProfiles.append(index.data().toString());
+			keyboardProfiles.append(index.data().toString());
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
+	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
 
 	QStringList macrosProfiles;
 
@@ -1079,6 +1168,8 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/ActionMacrosProfilesOrder"), macrosProfiles);
+
+	ActionsManager::loadProfiles();
 
 	if (sender() == m_ui->buttonBox)
 	{

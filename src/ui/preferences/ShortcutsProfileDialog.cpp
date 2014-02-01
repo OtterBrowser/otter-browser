@@ -50,7 +50,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 			items.append(new QStandardItem(iterator.value().value(QLatin1String("title"), tr("(Untitled)")).toString()));
 			items[0]->setData(iterator.key(), Qt::UserRole);
 			items[0]->setData(iterator.value().value(QLatin1String("shortcuts")), (Qt::UserRole + 1));
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 			items.append(new QStandardItem(iterator.value().value(QLatin1String("actions"), QStringList()).toStringList().join(QLatin1String(", "))));
 			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
@@ -153,7 +153,7 @@ void ShortcutsProfileDialog::addMacro()
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(tr("(Untitled)")));
 	items[0]->setData(identifier, Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 	items.append(new QStandardItem(QString()));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
