@@ -531,26 +531,28 @@ void PreferencesDialog::editSearch()
 
 	SearchPropertiesDialog dialog(engineData, shortcuts, this);
 
-	if (dialog.exec() == QDialog::Accepted)
+	if (dialog.exec() == QDialog::Rejected)
 	{
-		engineData = dialog.getEngineData();
-
-		if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
-		{
-			engineData[QLatin1String("shortcut")] = QString();
-		}
-
-		if (engineData[QLatin1String("isDefault")].toBool())
-		{
-			m_defaultSearch = engineData[QLatin1String("identifier")].toString();
-		}
-
-		m_ui->searchViewWidget->setData(index, engineData[QLatin1String("title")], Qt::DisplayRole);
-		m_ui->searchViewWidget->setData(index, engineData[QLatin1String("description")], Qt::ToolTipRole);
-		m_ui->searchViewWidget->setData(index, engineData[QLatin1String("icon")], Qt::DecorationRole);
-		m_ui->searchViewWidget->setData(index, engineData, Qt::UserRole);
-		m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("shortcut")], Qt::DisplayRole);
+		return;
 	}
+
+	engineData = dialog.getEngineData();
+
+	if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
+	{
+		engineData[QLatin1String("shortcut")] = QString();
+	}
+
+	if (engineData[QLatin1String("isDefault")].toBool())
+	{
+		m_defaultSearch = engineData[QLatin1String("identifier")].toString();
+	}
+
+	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("title")], Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("description")], Qt::ToolTipRole);
+	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("icon")], Qt::DecorationRole);
+	m_ui->searchViewWidget->setData(index, engineData, Qt::UserRole);
+	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("shortcut")], Qt::DisplayRole);
 
 	markModified();
 }
