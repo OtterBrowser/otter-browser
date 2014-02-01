@@ -47,6 +47,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	setEditable(true);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
+	setInsertPolicy(QComboBox::NoInsert);
 	setCurrentSearchEngine();
 	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
 
