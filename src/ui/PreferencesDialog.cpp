@@ -308,6 +308,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
 	connect(m_ui->actionShortcutsAddButton, SIGNAL(clicked()), this, SLOT(addKeyboardProfile()));
 	connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
+	connect(m_ui->actionShortcutsCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
 	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
 	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
@@ -316,6 +317,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosProfleActions()));
 	connect(m_ui->actionMacrosAddButton, SIGNAL(clicked()), this, SLOT(addMacrosProfile()));
 	connect(m_ui->actionMacrosEditButton, SIGNAL(clicked()), this, SLOT(editMacrosProfile()));
+	connect(m_ui->actionMacrosCloneButton, SIGNAL(clicked()), this, SLOT(cloneMacrosProfile()));
 	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), this, SLOT(removeMacrosProfile()));
 	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
@@ -638,6 +640,37 @@ void PreferencesDialog::editKeyboardProfile()
 	markModified();
 }
 
+void PreferencesDialog::cloneKeyboardProfile()
+{
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 1);
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	const QString profile = index.data().toString();
+	const QString identifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, profile);
+
+	if (!identifier.isEmpty())
+	{
+		const QString path = getProfilePath(QLatin1String("keyboard"), profile);
+
+		m_keyboardProfilesInformation[identifier] = (m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path));
+		m_keyboardProfilesData[identifier] = (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path));
+
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(m_keyboardProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
+		items[0]->setToolTip(m_keyboardProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
+		items[0]->setData(path, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items.append(new QStandardItem(identifier));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		m_ui->actionShortcutsViewWidget->insertRow(items);
+	}
+}
+
 void PreferencesDialog::removeKeyboardProfile()
 {
 	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
@@ -668,11 +701,6 @@ void PreferencesDialog::removeKeyboardProfile()
 
 		m_ui->actionShortcutsViewWidget->removeRow();
 	}
-}
-
-void PreferencesDialog::cloneKeyboardProfile()
-{
-
 }
 
 void PreferencesDialog::updateKeyboardProfleActions()
@@ -720,6 +748,37 @@ void PreferencesDialog::editMacrosProfile()
 	markModified();
 }
 
+void PreferencesDialog::cloneMacrosProfile()
+{
+	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 1);
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	const QString profile = index.data().toString();
+	const QString identifier = createProfileIdentifier(m_ui->actionMacrosViewWidget, profile);
+
+	if (!identifier.isEmpty())
+	{
+		const QString path = getProfilePath(QLatin1String("macros"), profile);
+
+		m_macrosProfilesInformation[identifier] = (m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path));
+		m_macrosProfilesData[identifier] = (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path));
+
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(m_macrosProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
+		items[0]->setToolTip(m_macrosProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
+		items[0]->setData(path, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items.append(new QStandardItem(identifier));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		m_ui->actionMacrosViewWidget->insertRow(items);
+	}
+}
+
 void PreferencesDialog::removeMacrosProfile()
 {
 	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 0);
@@ -750,11 +809,6 @@ void PreferencesDialog::removeMacrosProfile()
 
 		m_ui->actionMacrosViewWidget->removeRow();
 	}
-}
-
-void PreferencesDialog::cloneMacrosProfile()
-{
-
 }
 
 void PreferencesDialog::updateMacrosProfleActions()
@@ -984,6 +1038,39 @@ void PreferencesDialog::save()
 	{
 		m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 	}
+}
+
+QString PreferencesDialog::createProfileIdentifier(TableViewWidget *view, QString identifier)
+{
+	QStringList identifiers;
+
+	for (int i = 0; i < view->getRowCount(); ++i)
+	{
+		const QString profile = view->getIndex(i, 1).data().toString();
+
+		if (!profile.isEmpty())
+		{
+			identifiers.append(profile);
+		}
+	}
+
+	if (!identifier.isEmpty())
+	{
+		identifier.append(QLatin1String("-copy"));
+	}
+
+	do
+	{
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Profile Identifier:"), QLineEdit::Normal, identifier);
+
+		if (identifier.isEmpty())
+		{
+			return QString();
+		}
+	}
+	while (identifiers.contains(identifier));
+
+	return identifier;
 }
 
 QString PreferencesDialog::getProfilePath(const QString &type, const QString &identifier)

@@ -43,6 +43,7 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void loadProfiles(const QString &type, const QString &key, TableViewWidget *view);
+	QString createProfileIdentifier(TableViewWidget *view, QString identifier = QString());
 	QString getProfilePath(const QString &type, const QString &identifier);
 	QHash<QString, QString> getProfileInformation(const QString &path) const;
 	QHash<QString, QVariantHash> getProfileData(const QString &path) const;
@@ -62,13 +63,13 @@ protected slots:
 	void proxyModeChanged(int index);
 	void addKeyboardProfile();
 	void editKeyboardProfile();
-	void removeKeyboardProfile();
 	void cloneKeyboardProfile();
+	void removeKeyboardProfile();
 	void updateKeyboardProfleActions();
 	void addMacrosProfile();
 	void editMacrosProfile();
-	void removeMacrosProfile();
 	void cloneMacrosProfile();
+	void removeMacrosProfile();
 	void updateMacrosProfleActions();
 	void markModified();
 	void save();
