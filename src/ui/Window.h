@@ -165,6 +165,7 @@ protected:
 
 protected slots:
 	void goToHistoryIndex(QAction *action);
+	void handleSearchRequest(const QString &query, const QString &engine);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
 	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
@@ -184,7 +185,7 @@ signals:
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget);
-	void requestedSearch(QString query, QString search);
+	void requestedSearch(QString query, QString engine);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message, int timeout);

@@ -58,7 +58,7 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
-	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
+	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(handleSearchRequest(QString,QString)));
 }
 
 Window::~Window()
@@ -147,6 +147,18 @@ void Window::goToHistoryIndex(QAction *action)
 	if (action && action->data().type() == QVariant::Int)
 	{
 		m_contentsWidget->goToHistoryIndex(action->data().toInt());
+	}
+}
+
+void Window::handleSearchRequest(const QString &query, const QString &engine)
+{
+	if (getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && (getUrl().path() == QLatin1String("blank") || getUrl().path() == QLatin1String("start") || getUrl().path().isEmpty()))
+	{
+		search(query, engine);
+	}
+	else
+	{
+		emit requestedSearch(query, engine);
 	}
 }
 
