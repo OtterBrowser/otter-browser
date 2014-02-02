@@ -1354,7 +1354,27 @@
           </layout>
          </widget>
          <widget class="QWidget" name="networkPage">
-          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,1">
+          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,1">
+           <item>
+            <widget class="QLabel" name="advancedGeneralHeader">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>General</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="sendReferrerCheckBox">
+             <property name="text">
+              <string>Send referrer information</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QLabel" name="proxyHeader">
              <property name="font">

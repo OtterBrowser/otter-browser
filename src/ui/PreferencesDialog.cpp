@@ -254,6 +254,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 
+	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
+
 	loadProfiles(QLatin1String("keyboard"), QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), m_ui->actionShortcutsViewWidget);
 	loadProfiles(QLatin1String("macros"), QLatin1String("Browser/ActionMacrosProfilesOrder"), m_ui->actionMacrosViewWidget);
 
@@ -1065,6 +1067,8 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/HttpsPort"), m_ui->httpsProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
+
+	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 
 	for (int i = 0; i < m_removedProfiles.count(); ++i)
 	{
