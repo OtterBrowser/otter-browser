@@ -36,6 +36,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
+find_package(Qt5Script REQUIRED)
 find_package(Qt5Sql REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5WebKit REQUIRED)
@@ -54,6 +55,7 @@ set(otter_src
 	src/core/NetworkAccessManager.cpp
 	src/core/NetworkCache.cpp
 	src/core/NetworkProxyFactory.cpp
+	src/core/NetworkAutomaticProxy.cpp
 	src/core/SearchesManager.cpp
 	src/core/SearchSuggester.cpp
 	src/core/SessionsManager.cpp
@@ -148,6 +150,7 @@ target_link_libraries(otter-browser
 	Qt5::Core
 	Qt5::Network
 	Qt5::PrintSupport
+	Qt5::Script
 	Qt5::Sql
 	Qt5::Widgets
 	Qt5::WebKitWidgets

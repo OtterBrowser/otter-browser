@@ -69,14 +69,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 		if (value == QLatin1String("automatic"))
 		{
-			m_proxyMode = AutomaticProxy;
-
-			QFile scriptFile(SettingsManager::getValue(QLatin1String("Network/AutomaticConfigurationPath")).toString());
-			const QString loadedScript = scriptFile.readAll();
-
-// TODO
-
-			scriptFile.close();
+			setupPAC();
 		}
 		else if (value == QLatin1String("system"))
 		{
@@ -87,6 +80,32 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			m_proxyMode = NoProxy;
 			m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
 		}
+	}
+	else if (option == QLatin1String("Proxy/AutomaticConfigurationPath"))
+	{
+		setupPAC();
+	}
+}
+
+void NetworkProxyFactory::setupPAC()
+{
+	m_proxyMode = AutomaticProxy;
+
+	QFile scriptFile(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+	if (!scriptFile.open(QIODevice::ReadOnly|QIODevice::Text))
+	{
+		//TODO: there was an error during opening the file (show error to debug console)
+		m_proxyMode = SystemProxy;
+		return;
+	}
+
+	const QString loadedScript = scriptFile.readAll();
+	scriptFile.close();
+
+	if (!m_automaticProxy.setup(loadedScript))
+	{
+		//TODO: there was an error during parsing the file (show error to debug console)
+		m_proxyMode = SystemProxy;
 	}
 }
 
@@ -121,6 +140,11 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 		{
 			return m_proxies[QNetworkProxy::NoProxy];
 		}
+	}
+
+	if (m_proxyMode == AutomaticProxy)
+	{
+		return m_automaticProxy.getProxy(query.url().toString(), query.peerHostName());
 	}
 
 	return m_proxies[QNetworkProxy::NoProxy];

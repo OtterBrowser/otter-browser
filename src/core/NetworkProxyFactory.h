@@ -21,6 +21,8 @@
 #ifndef OTTER_NETWORKPROXYMANAGER_H
 #define OTTER_NETWORKPROXYMANAGER_H
 
+#include "NetworkAutomaticProxy.h"
+
 #include <QtNetwork/QNetworkProxy>
 
 namespace Otter
@@ -44,12 +46,16 @@ public:
 
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
 
+protected:
+	void setupPAC();
+
 protected slots:
 	void optionChanged(const QString &option);
 
 private:
 	QHash<QNetworkProxy::ProxyType, QList<QNetworkProxy> > m_proxies;
 	ProxyMode m_proxyMode;
+	NetworkAutomaticProxy m_automaticProxy;
 };
 
 }

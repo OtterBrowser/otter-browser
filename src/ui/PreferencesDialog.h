@@ -61,6 +61,7 @@ protected slots:
 	void editSearch();
 	void updateSearchActions();
 	void proxyModeChanged(int index);
+	void autoProxyFileSelect();
 	void addKeyboardProfile();
 	void editKeyboardProfile();
 	void cloneKeyboardProfile();
