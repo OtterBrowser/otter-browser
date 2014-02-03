@@ -28,6 +28,7 @@ namespace Otter
 {
 
 NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
+	m_automaticProxy(NULL),
 	m_proxyMode(SystemProxy)
 {
 	optionChanged(QLatin1String("Network/ProxyMode"));
@@ -35,9 +36,36 @@ NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
+NetworkProxyFactory::~NetworkProxyFactory()
+{
+	if (m_automaticProxy)
+	{
+		delete m_automaticProxy;
+	}
+}
+
 void NetworkProxyFactory::optionChanged(const QString &option)
 {
-	if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("manual")) || (option.startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
+	if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("automatic")) || (option == QLatin1String("Proxy/AutomaticConfigurationPath") && m_proxyMode == AutomaticProxy))
+	{
+		m_proxyMode = AutomaticProxy;
+
+		if (!m_automaticProxy)
+		{
+			m_automaticProxy = new NetworkAutomaticProxy();
+		}
+
+		QFile file(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+
+		if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
+		{
+//TODO: there was an error during opening or parsing the file (send message to debug console)
+			m_proxyMode = SystemProxy;
+		}
+
+		file.close();
+	}
+	else if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("manual")) || (option.startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
 	{
 		m_proxyMode = ManualProxy;
 
@@ -67,11 +95,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 		const QString value = SettingsManager::getValue(option).toString();
 
-		if (value == QLatin1String("automatic"))
-		{
-			setupPAC();
-		}
-		else if (value == QLatin1String("system"))
+		if (value == QLatin1String("system"))
 		{
 			m_proxyMode = SystemProxy;
 		}
@@ -80,32 +104,6 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			m_proxyMode = NoProxy;
 			m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
 		}
-	}
-	else if (option == QLatin1String("Proxy/AutomaticConfigurationPath"))
-	{
-		setupPAC();
-	}
-}
-
-void NetworkProxyFactory::setupPAC()
-{
-	m_proxyMode = AutomaticProxy;
-
-	QFile scriptFile(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
-	if (!scriptFile.open(QIODevice::ReadOnly|QIODevice::Text))
-	{
-		//TODO: there was an error during opening the file (show error to debug console)
-		m_proxyMode = SystemProxy;
-		return;
-	}
-
-	const QString loadedScript = scriptFile.readAll();
-	scriptFile.close();
-
-	if (!m_automaticProxy.setup(loadedScript))
-	{
-		//TODO: there was an error during parsing the file (show error to debug console)
-		m_proxyMode = SystemProxy;
 	}
 }
 
@@ -142,9 +140,9 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 		}
 	}
 
-	if (m_proxyMode == AutomaticProxy)
+	if (m_proxyMode == AutomaticProxy && m_automaticProxy)
 	{
-		return m_automaticProxy.getProxy(query.url().toString(), query.peerHostName());
+		return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName());
 	}
 
 	return m_proxies[QNetworkProxy::NoProxy];

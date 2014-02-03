@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_NETWORKPROXYMANAGER_H
-#define OTTER_NETWORKPROXYMANAGER_H
+#ifndef OTTER_NETWORKPROXYFACTORY_H
+#define OTTER_NETWORKPROXYFACTORY_H
 
 #include "NetworkAutomaticProxy.h"
 
@@ -35,6 +35,7 @@ class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 
 public:
 	explicit NetworkProxyFactory();
+	~NetworkProxyFactory();
 
 	enum ProxyMode
 	{
@@ -46,16 +47,13 @@ public:
 
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
 
-protected:
-	void setupPAC();
-
 protected slots:
 	void optionChanged(const QString &option);
 
 private:
+	NetworkAutomaticProxy *m_automaticProxy;
 	QHash<QNetworkProxy::ProxyType, QList<QNetworkProxy> > m_proxies;
 	ProxyMode m_proxyMode;
-	NetworkAutomaticProxy m_automaticProxy;
 };
 
 }

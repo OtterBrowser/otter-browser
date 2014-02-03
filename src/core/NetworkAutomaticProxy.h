@@ -18,7 +18,6 @@
 *
 **************************************************************************/
 
-
 #ifndef OTTER_NETWORKAUTOMATICPROXY_H
 #define OTTER_NETWORKAUTOMATICPROXY_H
 
@@ -34,8 +33,8 @@ class NetworkAutomaticProxy
 public:
 	explicit NetworkAutomaticProxy();
 
-	bool setup(const QString &loadedScript);
 	QList<QNetworkProxy> getProxy(const QString &url, const QString &host);
+	bool setup(const QString &script);
 
 protected:
 	static QScriptValue alert(QScriptContext *context, QScriptEngine *engine);
@@ -51,13 +50,13 @@ protected:
 	static QScriptValue weekdayRange(QScriptContext *context, QScriptEngine *engine);
 	static QScriptValue dateRange(QScriptContext *context, QScriptEngine *engine);
 	static QScriptValue timeRange(QScriptContext *context, QScriptEngine *engine);
-	static bool compareRange(QVariant valueOne, QVariant valueTwo, QVariant actualValue);
 	static QDateTime getDateTime(QScriptContext *context, int *numberOfArguments = NULL);
-	
+	static bool compareRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue);
+
 private:
 	QScriptEngine m_engine;
 	QScriptValue m_findProxy;
-	QHash<QString, QList<QNetworkProxy> > m_proxyList;
+	QHash<QString, QList<QNetworkProxy> > m_proxies;
 
 	static QStringList m_months;
 	static QStringList m_days;

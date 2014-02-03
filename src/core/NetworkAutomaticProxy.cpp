@@ -20,6 +20,7 @@
 
 #include "NetworkAutomaticProxy.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDate>
 #include <QtNetwork/QHostInfo>
 #include <QtNetwork/QNetworkInterface>
@@ -28,16 +29,13 @@
 namespace Otter
 {
 
-QStringList NetworkAutomaticProxy::m_months = QStringList() << QLatin1String("jan") << QLatin1String("feb") << QLatin1String("mar") << QLatin1String("apr") << QLatin1String("may")
-	<< QLatin1String("jun") << QLatin1String("jul") << QLatin1String("aug") << QLatin1String("sep") << QLatin1String("oct") << QLatin1String("nov") << QLatin1String("dec");
-
-QStringList NetworkAutomaticProxy::m_days = QStringList() << QLatin1String("mon") << QLatin1String("tue") << QLatin1String("wed") << QLatin1String("thu")
-	<< QLatin1String("fri") << QLatin1String("sat") << QLatin1String("sun");
+QStringList NetworkAutomaticProxy::m_months = QStringList() << QLatin1String("jan") << QLatin1String("feb") << QLatin1String("mar") << QLatin1String("apr") << QLatin1String("may") << QLatin1String("jun") << QLatin1String("jul") << QLatin1String("aug") << QLatin1String("sep") << QLatin1String("oct") << QLatin1String("nov") << QLatin1String("dec");
+QStringList NetworkAutomaticProxy::m_days = QStringList() << QLatin1String("mon") << QLatin1String("tue") << QLatin1String("wed") << QLatin1String("thu") << QLatin1String("fri") << QLatin1String("sat") << QLatin1String("sun");
 
 NetworkAutomaticProxy::NetworkAutomaticProxy()
 {
-	m_proxyList.insert(QLatin1String("ERROR"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::DefaultProxy));
-	m_proxyList.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::NoProxy));
+	m_proxies.insert(QLatin1String("ERROR"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::DefaultProxy));
+	m_proxies.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::NoProxy));
 
 	m_engine.globalObject().setProperty(QLatin1String("alert"), m_engine.newFunction(alert));
 	m_engine.globalObject().setProperty(QLatin1String("shExpMatch"), m_engine.newFunction(shExpMatch));
@@ -54,90 +52,72 @@ NetworkAutomaticProxy::NetworkAutomaticProxy()
 	m_engine.globalObject().setProperty(QLatin1String("timeRange"), m_engine.newFunction(timeRange));
 }
 
-bool NetworkAutomaticProxy::setup(const QString &loadedScript)
-{
-	if (!m_engine.canEvaluate(loadedScript) || m_engine.evaluate(loadedScript).isError())
-	{
-		return false;
-	}
-
-	m_findProxy = m_engine.globalObject().property(QLatin1String("FindProxyForURL"));
-
-	if (!m_findProxy.isFunction())
-	{
-		return false;
-	}
-
-	return true;
-}
-
 QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
 {
-	QScriptValueList args;
-	args << m_engine.toScriptValue(url) << m_engine.toScriptValue(host);
+	QScriptValueList arguments;
+	arguments << m_engine.toScriptValue(url) << m_engine.toScriptValue(host);
 
-	const QScriptValue returnedValue = m_findProxy.call(m_engine.globalObject(), args);
+	const QScriptValue result = m_findProxy.call(m_engine.globalObject(), arguments);
 
-	if (returnedValue.isError())
+	if (result.isError())
 	{
-		return m_proxyList[QLatin1String("ERROR")];
+		return m_proxies[QLatin1String("ERROR")];
 	}
 
-	const QString proxyConfiguration = returnedValue.toString().remove(QLatin1Char(' '));
+	const QString configuration = result.toString().remove(QLatin1Char(' '));
 
-	if (!m_proxyList.value(proxyConfiguration).isEmpty()) // cached proxy list with proxies created in previous requests
+	if (!m_proxies.value(configuration).isEmpty())
 	{
-		return m_proxyList[proxyConfiguration];
+		return m_proxies[configuration];
 	}
-	
-	// proxy format: "PROXY host:port; PROXY host:port", "PROXY host:port; SOCKS host:port" etc.
-	// can be combination of DIRECT, PROXY, SOCKS
-	QList<QNetworkProxy> currentList;
-	const QStringList proxies = proxyConfiguration.split(QLatin1Char(';'));
+
+// proxy format: "PROXY host:port; PROXY host:port", "PROXY host:port; SOCKS host:port" etc.
+// can be combination of DIRECT, PROXY, SOCKS
+	const QStringList proxies = configuration.split(QLatin1Char(';'));
+	QList<QNetworkProxy> proxiesForQuery;
 
 	for (int i = 0; i < proxies.count(); ++i)
 	{
-		const QStringList singleProxy = proxies.at(i).split(QLatin1Char(':'));
-		QString proxyHost = singleProxy.at(0);
+		const QStringList proxy = proxies.at(i).split(QLatin1Char(':'));
+		QString proxyHost = proxy.at(0);
 
-		if (singleProxy.count() == 2 && proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
+		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
 		{
-			currentList << QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QLatin1String("")), singleProxy.at(1).toInt());
+			proxiesForQuery << QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt());
+
 			continue;
 		}
 
-		if (singleProxy.count() == 2 && proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
+		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
 		{
-			currentList << QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QLatin1String("")), singleProxy.at(1).toInt());
+			proxiesForQuery << QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt());
+
 			continue;
 		}
 
-		if (singleProxy.count() == 1 && proxyHost.indexOf(QLatin1String("DIRECT"), Qt::CaseInsensitive) == 0)
+		if (proxy.count() == 1 && proxyHost.indexOf(QLatin1String("DIRECT"), Qt::CaseInsensitive) == 0)
 		{
-			currentList << QNetworkProxy(QNetworkProxy::NoProxy);
+			proxiesForQuery << QNetworkProxy(QNetworkProxy::NoProxy);
+
 			continue;
 		}
 
-		//TODO: something is not valid here (show error to debug console)
-		return m_proxyList[QLatin1String("ERROR")];
+//TODO something is not valid here (show error to debug console)
+		return m_proxies[QLatin1String("ERROR")];
 	}
 
-	m_proxyList.insert(proxyConfiguration, currentList);
+	m_proxies.insert(configuration, proxiesForQuery);
 
-	return m_proxyList[proxyConfiguration];
+	return m_proxies[configuration];
 }
 
 QScriptValue NetworkAutomaticProxy::alert(QScriptContext *context, QScriptEngine *engine)
 {
 	Q_UNUSED(engine);
 
-	// will be replaced with debug console in future
-	QMessageBox* msgBox = new QMessageBox();
-	msgBox->setAttribute(Qt::WA_DeleteOnClose);
-	msgBox->setStandardButtons(QMessageBox::Ok);
-	msgBox->setWindowTitle(QLatin1String("Proxy alert"));
-	msgBox->setText(context->argument(0).toString());
-	msgBox->open(NULL, SLOT(msgBoxClosed(QAbstractButton*)));
+//TODO replace with debug console in future
+	QMessageBox* messageBox = new QMessageBox(QMessageBox::Warning, QCoreApplication::translate("main", "Proxy Alert"), context->argument(0).toString(), QMessageBox::Close);
+	messageBox->setAttribute(Qt::WA_DeleteOnClose);
 
 	return engine->undefinedValue();
 }
@@ -150,7 +130,7 @@ QScriptValue NetworkAutomaticProxy::dnsDomainIs(QScriptContext *context, QScript
 	{
 		return context->throwError(QLatin1String("Function dnsDomainIs takes two arguments!"));
 	}
-	
+
 	const QString address = context->argument(0).toString().toLower();
 	const QString domain = context->argument(1).toString().toLower();
 
@@ -164,9 +144,7 @@ QScriptValue NetworkAutomaticProxy::shExpMatch(QScriptContext *context, QScriptE
 		return context->throwError(QLatin1String("Function shExpMatch takes two arguments!"));
 	}
 
-	const QRegExp expression(context->argument(1).toString(), Qt::CaseInsensitive, QRegExp::Wildcard);
-
-	return engine->toScriptValue(expression.exactMatch(context->argument(0).toString()));
+	return engine->toScriptValue(QRegExp(context->argument(1).toString(), Qt::CaseInsensitive, QRegExp::Wildcard).exactMatch(context->argument(0).toString()));
 }
 
 QScriptValue NetworkAutomaticProxy::isInNet(QScriptContext *context, QScriptEngine *engine)
@@ -180,17 +158,9 @@ QScriptValue NetworkAutomaticProxy::isInNet(QScriptContext *context, QScriptEngi
 
 	const QHostAddress address(context->argument(0).toString());
 	const QHostAddress netaddress(context->argument(1).toString());
-    const QHostAddress netmask(context->argument(2).toString());
+	const QHostAddress netmask(context->argument(2).toString());
 
-	if (address.protocol() == QAbstractSocket::IPv4Protocol)
-	{
-		if ((netaddress.toIPv4Address() & netmask.toIPv4Address()) == (address.toIPv4Address() & netmask.toIPv4Address()))
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return (address.protocol() == QAbstractSocket::IPv4Protocol && (netaddress.toIPv4Address() & netmask.toIPv4Address()) == (address.toIPv4Address() & netmask.toIPv4Address()));
 }
 
 QScriptValue NetworkAutomaticProxy::myIpAddress(QScriptContext *context, QScriptEngine *engine)
@@ -202,14 +172,15 @@ QScriptValue NetworkAutomaticProxy::myIpAddress(QScriptContext *context, QScript
 		return context->throwError(QLatin1String("Function myIpAddress does not take any arguments!"));
 	}
 
-	foreach (QHostAddress address, QNetworkInterface::allAddresses())
+	const QList<QHostAddress> addresses = QNetworkInterface::allAddresses();
+
+	for (int i = 0; i < addresses.count(); ++i)
 	{
-		if (!address.isNull() && address != QHostAddress::LocalHost && address != QHostAddress::LocalHostIPv6 && address != QHostAddress::Null
-			&& address != QHostAddress::Broadcast && address != QHostAddress::Any && address != QHostAddress::AnyIPv6)
+		if (!addresses.at(i).isNull() && addresses.at(i) != QHostAddress::LocalHost && addresses.at(i) != QHostAddress::LocalHostIPv6 && addresses.at(i) != QHostAddress::Null && addresses.at(i) != QHostAddress::Broadcast && addresses.at(i) != QHostAddress::Any && addresses.at(i) != QHostAddress::AnyIPv6)
 		{
-			return address.toString();
+			return addresses.at(i).toString();
 		}
-    }
+	}
 
 	return engine->undefinedValue();
 }
@@ -221,13 +192,13 @@ QScriptValue NetworkAutomaticProxy::dnsResolve(QScriptContext *context, QScriptE
 		return context->throwError(QLatin1String("Function dnsResolve takes only one argument!"));
 	}
 
-	const QHostInfo info = QHostInfo::fromName(context->argument(0).toString());
+	const QHostInfo host = QHostInfo::fromName(context->argument(0).toString());
 
-	if (info.error() == QHostInfo::NoError) 
+	if (host.error() == QHostInfo::NoError)
 	{
-		return info.addresses().first().toString();
+		return host.addresses().first().toString();
 	}
-	
+
 	return engine->undefinedValue();
 }
 
@@ -240,12 +211,7 @@ QScriptValue NetworkAutomaticProxy::isPlainHostName(QScriptContext *context, QSc
 		return context->throwError(QLatin1String("Function isPlainHostName takes only one argument!"));
 	}
 
-	if (!context->argument(0).toString().contains(QLatin1Char('.')))
-	{
-		return true;
-	}
-
-	return false;
+	return (!context->argument(0).toString().contains(QLatin1Char('.')));
 }
 
 QScriptValue NetworkAutomaticProxy::isResolvable(QScriptContext *context, QScriptEngine *engine)
@@ -257,14 +223,7 @@ QScriptValue NetworkAutomaticProxy::isResolvable(QScriptContext *context, QScrip
 		return context->throwError(QLatin1String("Function isResolvable takes only one argument!"));
 	}
 
-	const QHostInfo info = QHostInfo::fromName(context->argument(0).toString());
-
-	if (info.error() == QHostInfo::NoError) 
-	{
-		return true;
-	}
-
-	return false;
+	return (QHostInfo::fromName(context->argument(0).toString()).error() == QHostInfo::NoError);
 }
 
 QScriptValue NetworkAutomaticProxy::localHostOrDomainIs(QScriptContext *context, QScriptEngine *engine)
@@ -276,7 +235,7 @@ QScriptValue NetworkAutomaticProxy::localHostOrDomainIs(QScriptContext *context,
 		return context->throwError(QLatin1String("Function localHostOrDomainIs takes two arguments!"));
 	}
 
-	// address "google.com" or "maps.google.com" or "www.google.com", domain ".google.com" - return true
+// address "google.com" or "maps.google.com" or "www.google.com", domain ".google.com" - return true
 	const QString address = QUrl(context->argument(0).toString()).host().toLower();
 	QString domain = context->argument(1).toString().toLower();
 
@@ -285,15 +244,7 @@ QScriptValue NetworkAutomaticProxy::localHostOrDomainIs(QScriptContext *context,
 		return true;
 	}
 
-	if (domain.indexOf(QLatin1Char('.')) == 0)
-	{
-		if (domain.replace(0, 1, QLatin1String("")) == address)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return (domain.indexOf(QLatin1Char('.')) == 0 && domain.replace(0, 1, QString()) == address);
 }
 
 QScriptValue NetworkAutomaticProxy::dnsDomainLevels(QScriptContext *context, QScriptEngine *engine)
@@ -305,9 +256,7 @@ QScriptValue NetworkAutomaticProxy::dnsDomainLevels(QScriptContext *context, QSc
 		return context->throwError(QLatin1String("Function dnsDomainLevels takes only one argument!"));
 	}
 
-	const QString address = context->argument(0).toString().remove(QLatin1String("www."), Qt::CaseInsensitive);
-
-	return address.count(QLatin1Char('.'));
+	return context->argument(0).toString().remove(QLatin1String("www."), Qt::CaseInsensitive).count(QLatin1Char('.'));
 }
 
 QScriptValue NetworkAutomaticProxy::weekdayRange(QScriptContext *context, QScriptEngine *engine)
@@ -322,37 +271,28 @@ QScriptValue NetworkAutomaticProxy::weekdayRange(QScriptContext *context, QScrip
 	const QString beginDay = context->argument(0).toString().toLower();
 	const QString endDay = context->argument(1).toString().toLower();
 	const int currentDay = getDateTime(context).date().dayOfWeek();
-
 	int beginDayNumber = -1;
 	int endDayNumber = -1;
-	int dayCounter = 1;
 
-	foreach (QString day, m_days)
+	for (int i = 0; i < m_days.count(); ++i)
 	{
-		if (beginDay.compare(day) == 0)
+		if (beginDay.compare(m_days.at(i)) == 0)
 		{
-			beginDayNumber = dayCounter;
+			beginDayNumber = (i + 1);
 		}
 
-		if (endDay.compare(day) == 0)
+		if (endDay.compare(m_days.at(i)) == 0)
 		{
-			endDayNumber = dayCounter;
+			endDayNumber = (i + 1);
 		}
-
-		dayCounter++;
 	}
 
-	if (endDayNumber == -1) // weekdayRange("TUE");
+	if (endDayNumber == -1)
 	{
 		endDayNumber = beginDayNumber;
 	}
 
-	if ((beginDayNumber != -1 && endDayNumber != -1) && compareRange(beginDayNumber, endDayNumber, currentDay))
-	{
-		return true;
-	}
-
-	return false;
+	return ((beginDayNumber != -1 && endDayNumber != -1) && compareRange(beginDayNumber, endDayNumber, currentDay));
 }
 
 QScriptValue NetworkAutomaticProxy::dateRange(QScriptContext *context, QScriptEngine *engine)
@@ -364,103 +304,79 @@ QScriptValue NetworkAutomaticProxy::dateRange(QScriptContext *context, QScriptEn
 		return context->throwError(QLatin1String("Function dateRange takes 1 to 7 arguments!"));
 	}
 
-	int numberOfArguments = 0;
-	QList<int> listOfArguments;
-	const QDate currentDay = getDateTime(context, &numberOfArguments).date();
-	
-	for (int i = 0; i < numberOfArguments; ++i)
+	QList<int> arguments;
+	int amount = 0;
+	const QDate currentDay = getDateTime(context, &amount).date();
+
+	for (int i = 0; i < amount; ++i)
 	{
 		if (context->argument(i).isString())
 		{
-			const int monthIndex = m_months.indexOf(context->argument(i).toString().toLower());
+			const int month = (m_months.indexOf(context->argument(i).toString().toLower())  + 1);
 
-			if (monthIndex == -1)
+			if (month < 1)
 			{
 				return false;
 			}
 
-			listOfArguments.append(monthIndex + 1);
+			arguments.append(month);
 		}
 		else
 		{
-			listOfArguments.append(context->argument(i).toInt32());
+			arguments.append(context->argument(i).toInt32());
 		}
 	}
 
-	if (numberOfArguments == 1 && listOfArguments.at(0) > 1500)
+	if (amount == 1 && arguments.at(0) > 1500)
 	{
-		if (currentDay.year() == listOfArguments.at(0))
-		{
-			return true;
-		}
-
-		return false;
+		return (currentDay.year() == arguments.at(0));
 	}
 
-	if (numberOfArguments == 1 && context->argument(0).isNumber())
+	if (amount == 1 && context->argument(0).isNumber())
 	{
-		if (currentDay.day() == listOfArguments.at(0))
-		{
-			return true;
-		}
-
-		return false;
+		return (currentDay.day() == arguments.at(0));
 	}
 
-	if (numberOfArguments == 1) 
+	if (amount == 1)
 	{
-		if (currentDay.month() == listOfArguments.at(0))
-		{
-			return true;
-		}
-
-		return false;
+		return (currentDay.month() == arguments.at(0));
 	}
 
-	if (numberOfArguments == 2 && listOfArguments.at(0) > 1500 && listOfArguments.at(1) > 1500)
+	if (amount == 2 && arguments.at(0) > 1500 && arguments.at(1) > 1500)
 	{
-		return compareRange(listOfArguments.at(0), listOfArguments.at(1), currentDay.year());
+		return compareRange(arguments.at(0), arguments.at(1), currentDay.year());
 	}
 
-	if (numberOfArguments == 2 && context->argument(0).isNumber() && context->argument(1).isNumber())
+	if (amount == 2 && context->argument(0).isNumber() && context->argument(1).isNumber())
 	{
-		return compareRange(listOfArguments.at(0), listOfArguments.at(1), currentDay.day());
+		return compareRange(arguments.at(0), arguments.at(1), currentDay.day());
 	}
 
-	if (numberOfArguments == 2)
+	if (amount == 2)
 	{
-		return compareRange(listOfArguments.at(0), listOfArguments.at(1), currentDay.month());
+		return compareRange(arguments.at(0), arguments.at(1), currentDay.month());
 	}
 
-	if (numberOfArguments == 3)
+	if (amount == 3)
 	{
-		const QDate dateOne (listOfArguments.at(2), listOfArguments.at(1), listOfArguments.at(0));
+		const QDate dateOne(arguments.at(2), arguments.at(1), arguments.at(0));
 
 		return compareRange(dateOne, dateOne, currentDay);
 	}
 
-	if (numberOfArguments == 4 && listOfArguments.at(1) > 1500 && listOfArguments.at(3) > 1500)
+	if (amount == 4 && arguments.at(1) > 1500 && arguments.at(3) > 1500)
 	{
-		const QDate dateOne (listOfArguments.at(1), listOfArguments.at(0), currentDay.day());
-		const QDate dateTwo (listOfArguments.at(3), listOfArguments.at(2), currentDay.day());
-		
-		return compareRange(dateOne, dateTwo, currentDay);
+		return compareRange(QDate(arguments.at(1), arguments.at(0), currentDay.day()), QDate(arguments.at(3), arguments.at(2), currentDay.day()), currentDay);
 	}
 
-	if (numberOfArguments == 4)
+	if (amount == 4)
 	{
-		const QDate dateOne (currentDay.year(), listOfArguments.at(1), listOfArguments.at(0));
-		const QDate dateTwo (currentDay.year(), listOfArguments.at(3), listOfArguments.at(2));
-
-		return compareRange(dateOne, dateTwo, currentDay);
+		return compareRange(QDate(currentDay.year(), arguments.at(1), arguments.at(0)), QDate(currentDay.year(), arguments.at(3), arguments.at(2)), currentDay);
 	}
 
-	if (numberOfArguments == 6)
+	if (amount == 6)
 	{
-		const QDate dateOne (listOfArguments.at(2), listOfArguments.at(1), listOfArguments.at(0));
-		const QDate dateTwo (listOfArguments.at(5), listOfArguments.at(4), listOfArguments.at(3));
-
-		return compareRange(dateOne, dateTwo, currentDay);
+		return compareRange(QDate(arguments.at(2), arguments.at(1), arguments.at(0)), QDate(arguments.at(5), arguments.at(4), arguments.at(3)), currentDay);
 	}
 
 	return false;
@@ -475,54 +391,38 @@ QScriptValue NetworkAutomaticProxy::timeRange(QScriptContext *context, QScriptEn
 		return context->throwError(QLatin1String("Function timeRange takes 1 to 7 arguments!"));
 	}
 
-	int numberOfArguments = 0;
-	QList<int> listOfArguments;
-	const QTime currentTime = getDateTime(context, &numberOfArguments).time();
+	QList<int> arguments;
+	int amount = 0;
+	const QTime currentTime = getDateTime(context, &amount).time();
 
-	for (int i = 0; i < numberOfArguments; ++i)
+	for (int i = 0; i < amount; ++i)
 	{
 		if (!context->argument(i).isNumber())
 		{
 			return false;
 		}
 
-		listOfArguments.append(context->argument(i).toInt32());
+		arguments.append(context->argument(i).toInt32());
 	}
 
-	if (numberOfArguments == 1)
+	if (amount == 1)
 	{
-		return compareRange(listOfArguments.at(0), listOfArguments.at(0), currentTime.hour());
+		return compareRange(arguments.at(0), arguments.at(0), currentTime.hour());
 	}
 
-	if (numberOfArguments == 2)
+	if (amount == 2)
 	{
-		return compareRange(listOfArguments.at(0), listOfArguments.at(1), currentTime.hour());
+		return compareRange(arguments.at(0), arguments.at(1), currentTime.hour());
 	}
 
-	if (numberOfArguments == 4)
+	if (amount == 4)
 	{
-		const QTime timeOne (listOfArguments.at(0), listOfArguments.at(1));
-		const QTime timeTwo (listOfArguments.at(2), listOfArguments.at(3));
-
-		return compareRange(timeOne, timeTwo, currentTime);
+		return compareRange(QTime(arguments.at(0), arguments.at(1)), QTime(arguments.at(2), arguments.at(3)), currentTime);
 	}
 
-	if (numberOfArguments == 6)
+	if (amount == 6)
 	{
-		const QTime timeOne (listOfArguments.at(0), listOfArguments.at(1), listOfArguments.at(2));
-		const QTime timeTwo (listOfArguments.at(3), listOfArguments.at(4), listOfArguments.at(5));
-
-		return compareRange(timeOne, timeTwo, currentTime);
-	}
-
-	return false;
-}
-
-bool NetworkAutomaticProxy::compareRange(QVariant valueOne, QVariant valueTwo, QVariant actualValue)
-{
-	if (actualValue >= valueOne && actualValue <= valueTwo)
-	{
-		return true;
+		return compareRange(QTime(arguments.at(0), arguments.at(1), arguments.at(2)), QTime(arguments.at(3), arguments.at(4), arguments.at(5)), currentTime);
 	}
 
 	return false;
@@ -534,20 +434,35 @@ QDateTime NetworkAutomaticProxy::getDateTime(QScriptContext *context, int *numbe
 	{
 		if (numberOfArguments != NULL)
 		{
-			*numberOfArguments = context->argumentCount() - 1;
+			*numberOfArguments = (context->argumentCount() - 1);
 		}
 
 		return QDateTime::currentDateTimeUtc();
 	}
-	else
-	{
-		if (numberOfArguments != NULL)
-		{
-			*numberOfArguments = context->argumentCount();
-		}
 
-		return QDateTime::currentDateTime();
+	if (numberOfArguments != NULL)
+	{
+		*numberOfArguments = context->argumentCount();
 	}
+
+	return QDateTime::currentDateTime();
+}
+
+bool NetworkAutomaticProxy::setup(const QString &script)
+{
+	if (!m_engine.canEvaluate(script) || m_engine.evaluate(script).isError())
+	{
+		return false;
+	}
+
+	m_findProxy = m_engine.globalObject().property(QLatin1String("FindProxyForURL"));
+
+	return m_findProxy.isFunction();
+}
+
+bool NetworkAutomaticProxy::compareRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue)
+{
+	return (actualValue >= valueOne && actualValue <= valueTwo);
 }
 
 }

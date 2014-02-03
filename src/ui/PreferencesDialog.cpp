@@ -306,7 +306,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
-	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(autoProxyFileSelect()));
+	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(browseAutomaticProxyPath()));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
@@ -625,12 +625,13 @@ void PreferencesDialog::proxyModeChanged(int index)
 	}
 }
 
-void PreferencesDialog::autoProxyFileSelect()
+void PreferencesDialog::browseAutomaticProxyPath()
 {
-	const QString fileName = QFileDialog::getOpenFileName(this, QLatin1String("Select Proxy Automatic Configuration file"), "", QLatin1String("PAC files (*.pac)"));
-	if (!fileName.isEmpty())
+	const QString path = QFileDialog::getOpenFileName(this, tr("Select Proxy Automatic Configuration File"), QString(), tr("PAC files (*.pac)"));
+
+	if (!path.isEmpty())
 	{
-		m_ui->automaticProxyConfigurationLineEdit->setText(fileName);
+		m_ui->automaticProxyConfigurationLineEdit->setText(path);
 	}
 }
 
