@@ -233,7 +233,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->proxyModeComboBox->setCurrentIndex(proxyIndex);
 
-	if (proxyIndex == 2)
+	if (proxyIndex == 2 || proxyIndex == 3)
 	{
 		proxyModeChanged(proxyIndex);
 	}
@@ -253,6 +253,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpsPort")).toInt());
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
+	m_ui->automaticProxyConfigurationLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
@@ -305,6 +306,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
+	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(autoProxyFileSelect()));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
@@ -607,6 +609,28 @@ void PreferencesDialog::proxyModeChanged(int index)
 		m_ui->httpsProxyCheckBox->setChecked(false);
 		m_ui->ftpProxyCheckBox->setChecked(false);
 		m_ui->socksProxyCheckBox->setChecked(false);
+	}
+
+	if (index == 3)
+	{
+		m_ui->automaticProxyConfigurationWidget->setEnabled(true);
+		m_ui->automaticProxyConfigurationLineEdit->setEnabled(true);
+		m_ui->automaticProxyConfigurationButton->setEnabled(true);
+	}
+	else
+	{
+		m_ui->automaticProxyConfigurationWidget->setEnabled(false);
+		m_ui->automaticProxyConfigurationLineEdit->setEnabled(false);
+		m_ui->automaticProxyConfigurationButton->setEnabled(false);
+	}
+}
+
+void PreferencesDialog::autoProxyFileSelect()
+{
+	const QString fileName = QFileDialog::getOpenFileName(this, QLatin1String("Select Proxy Automatic Configuration file"), "", QLatin1String("PAC files (*.pac)"));
+	if (!fileName.isEmpty())
+	{
+		m_ui->automaticProxyConfigurationLineEdit->setText(fileName);
 	}
 }
 
@@ -1067,6 +1091,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/HttpsPort"), m_ui->httpsProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
+	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationLineEdit->text());
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 

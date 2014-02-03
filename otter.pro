@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network printsupport sql webkitwidgets widgets
+QT += core gui network printsupport script sql webkitwidgets widgets
 
 win32 {
     QT += winextras
@@ -25,6 +25,7 @@ SOURCES += src/main.cpp \
     src/core/NetworkAccessManager.cpp \
     src/core/NetworkCache.cpp \
     src/core/NetworkProxyFactory.cpp \
+    src/core/NetworkAutomaticProxy.cpp \
     src/core/SearchesManager.cpp \
     src/core/SearchSuggester.cpp \
     src/core/SessionsManager.cpp \
@@ -87,6 +88,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/NetworkAccessManager.h \
     src/core/NetworkCache.h \
     src/core/NetworkProxyFactory.h \
+    src/core/NetworkAutomaticProxy.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \
     src/core/SessionsManager.h \
