@@ -872,15 +872,26 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
-	if (position.isNull() && m_webView->selectedText().isEmpty())
+	if (position.isNull() && (m_webView->selectedText().isEmpty() || m_hotclickPosition.isNull()))
+	{
+		m_hotclickPosition = QPoint();
+
+		return;
+	}
+
+	const QPoint hitPosition = (position.isNull() ? m_hotclickPosition : position);
+	QWebFrame *frame = m_webView->page()->frameAt(hitPosition);
+
+	m_hotclickPosition = QPoint();
+
+	if (!frame)
 	{
 		return;
 	}
 
-	const QPoint hitPosition = (position.isNull() ? m_webView->mapFromGlobal(QCursor::pos()) : position);
 	MenuFlags flags = NoMenu;
 
-	m_hitResult = m_webView->page()->frameAt(hitPosition)->hitTestContent(hitPosition);
+	m_hitResult = frame->hitTestContent(hitPosition);
 
 	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text"))))
 	{
@@ -1587,6 +1598,8 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 			{
+				m_hotclickPosition = mouseEvent->pos();
+
 				QTimer::singleShot(250, this, SLOT(showContextMenu()));
 			}
 		}

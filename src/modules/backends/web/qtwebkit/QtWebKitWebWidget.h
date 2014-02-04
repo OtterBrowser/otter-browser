@@ -107,6 +107,7 @@ private:
 	QSplitter *m_splitter;
 	QString m_searchEngine;
 	QPixmap m_thumbnail;
+	QPoint m_hotclickPosition;
 	QWebHitTestResult m_hitResult;
 	QHash<WindowAction, QAction*> m_actions;
 	qint64 m_historyEntry;

@@ -276,12 +276,12 @@ QScriptValue NetworkAutomaticProxy::weekdayRange(QScriptContext *context, QScrip
 
 	for (int i = 0; i < m_days.count(); ++i)
 	{
-		if (beginDay.compare(m_days.at(i)) == 0)
+		if (beginDay == m_days.at(i))
 		{
 			beginDayNumber = (i + 1);
 		}
 
-		if (endDay.compare(m_days.at(i)) == 0)
+		if (endDay == m_days.at(i))
 		{
 			endDayNumber = (i + 1);
 		}
