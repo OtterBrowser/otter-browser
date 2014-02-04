@@ -71,7 +71,7 @@ void StatusBarWidget::setZoomEnabled(bool enabled)
 
 bool StatusBarWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (m_zoomSlider && object == m_zoomSlider && event->type() == QEvent::MouseButtonPress)
+	if (m_zoomSlider && object == m_zoomSlider && m_zoomSlider->isEnabled() && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
 		QStyleOptionSlider option;
