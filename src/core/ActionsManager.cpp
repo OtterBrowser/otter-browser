@@ -29,7 +29,6 @@ namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QHash<QAction*, QList<QShortcut*> > ActionsManager::m_actionShortcuts;
 QHash<QAction*, QStringList> ActionsManager::m_applicationMacros;
 QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
 QHash<QString, QAction*> ActionsManager::m_applicationActions;
@@ -115,26 +114,7 @@ void ActionsManager::loadProfiles()
 	{
 		if (m_profileShortcuts.contains(actionsIterator.key()))
 		{
-			const QList<QKeySequence> keySequences = m_profileShortcuts[actionsIterator.key()];
-			QList<QShortcut*> shortcuts;
-
-			actionsIterator.value()->setShortcut(keySequences.value(0));
-
-			for (int i = 1; i < keySequences.count(); ++i)
-			{
-				QShortcut *shortcut = new QShortcut(keySequences.at(i), NULL);
-				shortcut->setParent(m_instance);
-				shortcut->setContext(Qt::ApplicationShortcut);
-
-				connect(shortcut, SIGNAL(activated()), actionsIterator.value(), SLOT(trigger()));
-
-				shortcuts.append(shortcut);
-			}
-
-			if (!shortcuts.isEmpty())
-			{
-				m_actionShortcuts[actionsIterator.value()] = shortcuts;
-			}
+			actionsIterator.value()->setShortcuts(m_profileShortcuts[actionsIterator.key()]);
 		}
 		else
 		{
@@ -183,28 +163,10 @@ void ActionsManager::loadProfiles()
 
 			if (!actionShortcuts.isEmpty())
 			{
-				QList<QShortcut*> shortcuts;
-
 				m_profileShortcuts[macros.at(j)] = actionShortcuts;
 
-				action->setShortcut(actionShortcuts.value(0));
+				action->setShortcuts(actionShortcuts);
 				action->setShortcutContext(Qt::ApplicationShortcut);
-
-				for (int i = 1; i < actionShortcuts.count(); ++i)
-				{
-					QShortcut *shortcut = new QShortcut(actionShortcuts.at(i), NULL);
-					shortcut->setParent(m_instance);
-					shortcut->setContext(Qt::ApplicationShortcut);
-
-					connect(shortcut, SIGNAL(activated()), action, SLOT(trigger()));
-
-					shortcuts.append(shortcut);
-				}
-
-				if (!shortcuts.isEmpty())
-				{
-					m_actionShortcuts[action] = shortcuts;
-				}
 			}
 		}
 	}
@@ -227,25 +189,10 @@ void ActionsManager::optionChanged(const QString &option)
 
 void ActionsManager::removeWindow(QObject *window)
 {
-	if (!m_windowActions.contains(window))
+	if (m_windowActions.contains(window))
 	{
-		return;
+		m_windowActions.remove(qobject_cast<QWidget*>(window));
 	}
-
-	const QHash<QString, QAction*> actions = m_windowActions[window];
-	QHash<QString, QAction*>::const_iterator iterator;
-
-	for (iterator = actions.constBegin(); iterator != actions.constEnd(); ++iterator)
-	{
-		if (m_actionShortcuts.contains(iterator.value()))
-		{
-			qDeleteAll(m_actionShortcuts[iterator.value()]);
-
-			m_actionShortcuts.remove(iterator.value());
-		}
-	}
-
-	m_windowActions.remove(qobject_cast<QWidget*>(window));
 }
 
 void ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon)
@@ -416,24 +363,7 @@ void ActionsManager::setupWindowActions(QObject *window)
 	{
 		if (m_profileShortcuts.contains(windowActionsIterator.key()))
 		{
-			const QList<QKeySequence> keySequences = m_profileShortcuts[windowActionsIterator.key()];
-			QList<QShortcut*> shortcuts;
-
-			windowActionsIterator.value()->setShortcut(keySequences.value(0));
-
-			for (int i = 1; i < keySequences.count(); ++i)
-			{
-				QShortcut *shortcut = new QShortcut(keySequences.at(i), widget);
-
-				connect(shortcut, SIGNAL(activated()), windowActionsIterator.value(), SLOT(trigger()));
-
-				shortcuts.append(shortcut);
-			}
-
-			if (!shortcuts.isEmpty())
-			{
-				m_actionShortcuts[windowActionsIterator.value()] = shortcuts;
-			}
+			windowActionsIterator.value()->setShortcuts(m_profileShortcuts[windowActionsIterator.key()]);
 		}
 		else
 		{

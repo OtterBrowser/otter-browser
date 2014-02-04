@@ -57,7 +57,6 @@ private:
 	int m_reloadTimer;
 
 	static ActionsManager *m_instance;
-	static QHash<QAction*, QList<QShortcut*> > m_actionShortcuts;
 	static QHash<QAction*, QStringList> m_applicationMacros;
 	static QHash<QObject*, QHash<QString, QAction*> > m_windowActions;
 	static QHash<QString, QAction*> m_applicationActions;
