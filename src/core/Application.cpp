@@ -83,13 +83,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	cachePath = QFileInfo(cachePath).absoluteFilePath();
 
+	delete parser;
+
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());
 
-	const QString identifier = hash.result().toBase64();
-
-	delete parser;
-
+	const QString identifier(hash.result().toHex());
 	const QString server = applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier));
 	QLocalSocket socket;
 	socket.connectToServer(server);
