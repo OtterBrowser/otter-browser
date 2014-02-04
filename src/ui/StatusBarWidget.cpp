@@ -76,23 +76,31 @@ bool StatusBarWidget::eventFilter(QObject *object, QEvent *event)
 		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
 		QStyleOptionSlider option;
 		option.initFrom(m_zoomSlider);
+		option.minimum = m_zoomSlider->minimum();
+		option.maximum = m_zoomSlider->maximum();
+		option.sliderPosition = m_zoomSlider->value();
+		option.sliderValue = m_zoomSlider->value();
 
-		const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
-		const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this);
-		int value = 0;
+		const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, m_zoomSlider);
 
-		if (m_zoomSlider->orientation() == Qt::Horizontal)
+		if (!handle.contains(mouseEvent->pos()))
 		{
-			value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
-		}
-		else
-		{
-			value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
-		}
+			const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, m_zoomSlider);
+			int value = 0;
 
-		m_zoomSlider->setValue(value);
+			if (m_zoomSlider->orientation() == Qt::Horizontal)
+			{
+				value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
+			}
+			else
+			{
+				value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
+			}
 
-		return true;
+			m_zoomSlider->setValue(value);
+
+			return true;
+		}
 	}
 
 	return QWidget::eventFilter(object, event);
