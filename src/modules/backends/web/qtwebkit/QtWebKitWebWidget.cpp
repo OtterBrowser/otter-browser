@@ -1598,9 +1598,14 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 			{
-				m_hotclickPosition = mouseEvent->pos();
+				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				QTimer::singleShot(250, this, SLOT(showContextMenu()));
+				if (result.element().tagName().toLower() != QLatin1String("textarea") && result.element().tagName().toLower() != QLatin1String("select") && result.element().tagName().toLower() != QLatin1String("input"))
+				{
+					m_hotclickPosition = mouseEvent->pos();
+
+					QTimer::singleShot(250, this, SLOT(showContextMenu()));
+				}
 			}
 		}
 		else if (event->type() == QEvent::Wheel)
