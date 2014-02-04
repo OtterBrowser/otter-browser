@@ -299,6 +299,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchActions()));
+	connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
 	connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearch()));
 	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearch()));
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(removeRow()));
@@ -310,6 +311,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
+	connect(m_ui->actionShortcutsViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
 	connect(m_ui->actionShortcutsAddButton, SIGNAL(clicked()), this, SLOT(addKeyboardProfile()));
 	connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
 	connect(m_ui->actionShortcutsCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
@@ -319,6 +321,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionMacrosMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionMacrosMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionMacrosViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosProfleActions()));
+	connect(m_ui->actionMacrosViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
 	connect(m_ui->actionMacrosAddButton, SIGNAL(clicked()), this, SLOT(addMacrosProfile()));
 	connect(m_ui->actionMacrosEditButton, SIGNAL(clicked()), this, SLOT(editMacrosProfile()));
 	connect(m_ui->actionMacrosCloneButton, SIGNAL(clicked()), this, SLOT(cloneMacrosProfile()));

@@ -66,6 +66,7 @@ signals:
 	void canMoveUpChanged(bool available);
 	void canMoveDownChanged(bool available);
 	void needsActionsUpdate();
+	void modified();
 };
 
 }

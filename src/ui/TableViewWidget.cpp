@@ -45,6 +45,8 @@ void TableViewWidget::dropEvent(QDropEvent *event)
 			++m_dropRow;
 		}
 
+		emit modified();
+
 		QTimer::singleShot(50, this, SLOT(updateDropSelection()));
 	}
 }
@@ -65,38 +67,48 @@ void TableViewWidget::moveRow(bool up)
 
 		setCurrentIndex(getIndex(destinationRow, 0));
 		notifySelectionChanged();
+
+		emit modified();
 	}
 }
 
 void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
 {
-	if (m_model)
+	if (!m_model)
 	{
-		const int row = (currentIndex().row() + 1);
-
-		if (items.count() > 0)
-		{
-			m_model->insertRow(row, items);
-		}
-		else
-		{
-			m_model->insertRow(row);
-		}
-
-		setCurrentIndex(getIndex(row, 0));
+		return;
 	}
+
+	const int row = (currentIndex().row() + 1);
+
+	if (items.count() > 0)
+	{
+		m_model->insertRow(row, items);
+	}
+	else
+	{
+		m_model->insertRow(row);
+	}
+
+	setCurrentIndex(getIndex(row, 0));
+
+	emit modified();
 }
 
 void TableViewWidget::removeRow()
 {
-	if (m_model)
+	if (!m_model)
 	{
-		const int row = currentIndex().row();
+		return;
+	}
 
-		if (row >= 0)
-		{
-			m_model->removeRow(row);
-		}
+	const int row = currentIndex().row();
+
+	if (row >= 0)
+	{
+		m_model->removeRow(row);
+
+		emit modified();
 	}
 }
 
@@ -169,6 +181,11 @@ void TableViewWidget::setModel(QAbstractItemModel *model)
 {
 	QTableView::setModel(model);
 
+	if (!model)
+	{
+		return;
+	}
+
 	model->setParent(this);
 
 	if (model->inherits(QStringLiteral("QStandardItemModel").toLatin1()))
@@ -177,6 +194,7 @@ void TableViewWidget::setModel(QAbstractItemModel *model)
 	}
 
 	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
+	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(modified()));
 }
 
 QStandardItemModel* TableViewWidget::getModel()
