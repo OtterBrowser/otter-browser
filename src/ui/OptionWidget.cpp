@@ -29,22 +29,22 @@ namespace Otter
 {
 
 OptionWidget::OptionWidget(bool simple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
-	m_option(option),
-	m_index(index),
-	m_resetButton(NULL),
-	m_saveButton(NULL),
+	m_widget(NULL),
 	m_colorButton(NULL),
 	m_comboBox(NULL),
 	m_fontComboBox(NULL),
 	m_lineEdit(NULL),
-	m_spinBox(NULL)
+	m_spinBox(NULL),
+	m_resetButton(NULL),
+	m_saveButton(NULL),
+	m_option(option),
+	m_index(index)
 {
 	const QVariant currentValue = (value.isNull() ? SettingsManager::getValue(option) : value);
-	QWidget *widget = NULL;
 
 	if (type == QLatin1String("color"))
 	{
-		widget = m_colorButton = new QPushButton(this);
+		m_widget = m_colorButton = new QPushButton(this);
 
 		QPalette palette = m_colorButton->palette();
 		palette.setColor(QPalette::Button, currentValue.value<QColor>());
@@ -55,7 +55,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	}
 	else if (type == QLatin1String("font"))
 	{
-		widget = m_fontComboBox = new QFontComboBox(this);
+		m_widget = m_fontComboBox = new QFontComboBox(this);
 
 		m_fontComboBox->setCurrentFont(QFont(currentValue.toString()));
 		m_fontComboBox->lineEdit()->selectAll();
@@ -64,7 +64,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	}
 	else if (type == QLatin1String("integer"))
 	{
-		widget = m_spinBox = new QSpinBox(this);
+		m_widget = m_spinBox = new QSpinBox(this);
 
 		m_spinBox->setMinimum(-99999);
 		m_spinBox->setMaximum(99999);
@@ -77,7 +77,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	{
 		if (type != QLatin1String("bool") && choices.isEmpty())
 		{
-			widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
+			m_widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
 
 			if (type == QLatin1String("path"))
 			{
@@ -90,7 +90,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 		}
 		else
 		{
-			widget = m_comboBox = new QComboBox(this);
+			m_widget = m_comboBox = new QComboBox(this);
 
 			if (type == QLatin1String("bool"))
 			{
@@ -112,11 +112,10 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	}
 
 	setAutoFillBackground(false);
-	setFocus();
 
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->setMargin(0);
-	layout->addWidget(widget);
+	layout->addWidget(m_widget);
 
 	if (!simple)
 	{
@@ -134,10 +133,19 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 
 	setLayout(layout);
 
-	widget->setAutoFillBackground(false);
-	widget->setFocusPolicy(Qt::StrongFocus);
-	widget->setFocus();
-	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_widget->setAutoFillBackground(false);
+	m_widget->setFocusPolicy(Qt::StrongFocus);
+	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+}
+
+void OptionWidget::focusInEvent(QFocusEvent *event)
+{
+	QWidget::focusInEvent(event);
+
+	if (m_widget)
+	{
+		m_widget->setFocus();
+	}
 }
 
 void OptionWidget::selectColor()

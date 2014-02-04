@@ -39,6 +39,9 @@ public:
 	QVariant getValue() const;
 	QModelIndex getIndex() const;
 
+protected:
+	void focusInEvent(QFocusEvent *event);
+
 protected slots:
 	void selectColor();
 	void modified();
@@ -46,15 +49,16 @@ protected slots:
 	void save();
 
 private:
-	QString m_option;
-	QModelIndex m_index;
-	QPushButton *m_resetButton;
-	QPushButton *m_saveButton;
+	QWidget *m_widget;
 	QPushButton *m_colorButton;
 	QComboBox *m_comboBox;
 	QFontComboBox *m_fontComboBox;
 	QLineEdit *m_lineEdit;
 	QSpinBox *m_spinBox;
+	QPushButton *m_resetButton;
+	QPushButton *m_saveButton;
+	QString m_option;
+	QModelIndex m_index;
 
 signals:
 	void commitData(QWidget *editor);
