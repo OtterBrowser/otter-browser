@@ -148,6 +148,8 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 	QComboBox::wheelEvent(event);
 
+	lineEdit()->setText(m_query);
+
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
@@ -233,8 +235,10 @@ void SearchWidget::queryChanged(const QString &query)
 
 		m_sendRequest = false;
 	}
-
-	m_query = query;
+	else
+	{
+		m_query = query;
+	}
 }
 
 void SearchWidget::sendRequest(const QString &query)
@@ -248,10 +252,6 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString());
 	}
-
-	m_query = QString();
-
-	lineEdit()->clear();
 }
 
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
