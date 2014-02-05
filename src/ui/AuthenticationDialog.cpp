@@ -30,7 +30,7 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 {
 	m_ui->setupUi(this);
 	m_ui->serverValueLabel->setText(url.host());
-	m_ui->messageValueLabel->setText(authenticator->realm().toHtmlEscaped());
+	m_ui->messageValueLabel->setText(authenticator->realm());
 	m_ui->userLineEdit->setText(authenticator->user());
 	m_ui->passwordLineEdit->setText(authenticator->password());
 

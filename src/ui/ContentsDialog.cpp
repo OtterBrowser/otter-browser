@@ -76,7 +76,10 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 	if (!text.isEmpty())
 	{
-		mainLayout->addWidget(new QLabel(text, this));
+		QLabel *label = new QLabel(text, this);
+		label->setTextFormat(Qt::PlainText);
+
+		mainLayout->addWidget(label);
 	}
 
 	if (payload || !details.isEmpty())

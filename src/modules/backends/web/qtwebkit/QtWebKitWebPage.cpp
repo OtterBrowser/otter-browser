@@ -81,7 +81,7 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 		return;
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message.toHtmlEscaped(), QString(), QDialogButtonBox::Ok, NULL, m_webWidget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_webWidget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	QEventLoop eventLoop;
@@ -216,7 +216,7 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 		return QWebPage::javaScriptConfirm(frame, message);
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message.toHtmlEscaped(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_webWidget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_webWidget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	QEventLoop eventLoop;
@@ -252,8 +252,11 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 
 	QWidget *widget = new QWidget(m_webWidget);
 	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
+	QLabel *label = new QLabel(message, widget);
+	label->setTextFormat(Qt::PlainText);
+
 	QHBoxLayout *layout = new QHBoxLayout(widget);
-	layout->addWidget(new QLabel(message.toHtmlEscaped(), widget));
+	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_webWidget);

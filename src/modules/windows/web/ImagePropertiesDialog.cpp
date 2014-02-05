@@ -33,8 +33,8 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 {
 	m_ui->setupUi(this);
 	m_ui->addressLabelWidget->setText(url.toString());
-	m_ui->alternativeTextLabelWidget->setText(alternativeText.toHtmlEscaped());
-	m_ui->longDescriptionLabelWidget->setText(longDescription.toHtmlEscaped());
+	m_ui->alternativeTextLabelWidget->setText(alternativeText);
+	m_ui->longDescriptionLabelWidget->setText(longDescription);
 
 	QByteArray array;
 	QImage image;

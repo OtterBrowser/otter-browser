@@ -336,7 +336,7 @@ void TabBarWidget::showPreview(int index)
 		QRect rectangle = tabRect(index);
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
-		m_previewWidget->setPreview(getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString().toHtmlEscaped(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
+		m_previewWidget->setPreview(getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, "thumbnail", QPixmap()).value<QPixmap>()));
 
 		switch (shape())
 		{
