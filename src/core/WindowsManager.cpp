@@ -321,6 +321,8 @@ void WindowsManager::addWindow(Window *window, bool background)
 	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), m_tabBar, SLOT(updateTabs()));
 	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
+	m_tabBar->updateTabs(index);
+
 	emit windowAdded(index);
 }
 
