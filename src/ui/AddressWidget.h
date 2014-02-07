@@ -47,6 +47,7 @@ public slots:
 protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void focusInEvent(QFocusEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);

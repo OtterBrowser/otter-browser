@@ -27,6 +27,7 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
@@ -102,6 +103,16 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 	if (m_urlIconLabel)
 	{
 		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
+	}
+}
+
+void AddressWidget::focusInEvent(QFocusEvent *event)
+{
+	QLineEdit::focusInEvent(event);
+
+	if (SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	{
+		QTimer::singleShot(0, this, SLOT(selectAll()));
 	}
 }
 
