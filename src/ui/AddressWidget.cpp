@@ -110,7 +110,10 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 {
 	QLineEdit::focusInEvent(event);
 
-	QTimer::singleShot(0, this, SLOT(selectAll()));
+	if (SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	{
+		QTimer::singleShot(0, this, SLOT(selectAll()));
+	}
 }
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
