@@ -141,6 +141,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
 	connect(page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
+	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
 	connect(page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(page->mainFrame(), SIGNAL(loadStarted()), this, SIGNAL(progressBarGeometryChanged()));
@@ -348,6 +349,11 @@ void QtWebKitWebWidget::searchMenuAboutToShow()
 void QtWebKitWebWidget::hideInspector()
 {
 	triggerAction(InspectPageAction, false);
+}
+
+void QtWebKitWebWidget::linkHovered(const QString &link)
+{
+	emit statusMessageChanged(link, 0);
 }
 
 void QtWebKitWebWidget::markPageRealoded()

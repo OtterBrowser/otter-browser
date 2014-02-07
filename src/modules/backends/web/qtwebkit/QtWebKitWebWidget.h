@@ -92,6 +92,7 @@ protected slots:
 	void restoreState(QWebFrame *frame);
 	void searchMenuAboutToShow();
 	void hideInspector();
+	void linkHovered(const QString &link);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
