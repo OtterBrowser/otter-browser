@@ -355,6 +355,15 @@ QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 		}
 	}
 
+	if (SettingsManager::getValue(QLatin1String("Network/CustomUserAgent")).toBool())
+	{
+		QString ua = SettingsManager::getValue(QLatin1String("Network/CustomUserAgentValue")).toString();
+		if (!ua.length()){
+			ua = " ";
+		}
+		mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, QVariant(ua));
+	}
+
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
 	if (!m_mainReply)

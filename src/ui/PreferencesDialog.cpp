@@ -257,6 +257,9 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
+	m_ui->customUserAgentCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/CustomUserAgent")).toBool());
+	m_ui->customUserAgentEdit->setText(SettingsManager::getValue(QLatin1String("Network/CustomUserAgentValue")).toString());
+
 	loadProfiles(QLatin1String("keyboard"), QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), m_ui->actionShortcutsViewWidget);
 	loadProfiles(QLatin1String("macros"), QLatin1String("Browser/ActionMacrosProfilesOrder"), m_ui->actionMacrosViewWidget);
 
@@ -328,6 +331,10 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), this, SLOT(removeMacrosProfile()));
 	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
+
+	m_ui->customUserAgentEdit->setEnabled(SettingsManager::getValue(QLatin1String("Network/CustomUserAgent")).toBool());
+	connect(m_ui->customUserAgentCheckBox, SIGNAL(toggled(bool)), m_ui->customUserAgentEdit, SLOT(setEnabled(bool)));
+
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -1098,6 +1105,8 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationLineEdit->text());
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Network/CustomUserAgent"), m_ui->customUserAgentCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Network/CustomUserAgentValue"), m_ui->customUserAgentEdit->text());
 
 	for (int i = 0; i < m_removedProfiles.count(); ++i)
 	{
