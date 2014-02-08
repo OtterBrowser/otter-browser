@@ -20,6 +20,7 @@
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
+#include "MdiWidget.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
@@ -131,7 +132,11 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->tabsDockWidget->adjustSize();
 	m_ui->tabsDockWidget->setFloating(false);
 
-	m_windowsManager = new WindowsManager(m_ui->mdiArea, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	MdiWidget *mdiWidget = new MdiWidget(this);
+
+	setCentralWidget(mdiWidget);
+
+	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(m_windowsManager);
 

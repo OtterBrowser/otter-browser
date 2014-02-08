@@ -19,42 +19,7 @@
   <property name="dockOptions">
    <set>QMainWindow::AnimatedDocks</set>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QMdiArea" name="mdiArea">
-      <property name="background">
-       <brush brushstyle="SolidPattern">
-        <color alpha="0">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
-        </color>
-       </brush>
-      </property>
-      <property name="activationOrder">
-       <enum>QMdiArea::StackingOrder</enum>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="Otter::StatusBarWidget" name="statusBar"/>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QDockWidget" name="panelDockWidget">
    <property name="features">
     <set>QDockWidget::DockWidgetMovable</set>
@@ -219,6 +184,7 @@
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
+  <widget class="Otter::StatusBarWidget" name="statusBar"/>
   <action name="actionNewTab">
    <property name="text">
     <string>New Tab</string>

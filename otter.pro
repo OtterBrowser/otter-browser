@@ -43,6 +43,7 @@ SOURCES += src/main.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/MainWindow.cpp \
+    src/ui/MdiWidget.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
     src/ui/PreferencesDialog.cpp \
@@ -106,6 +107,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ContentsWidget.h \
     src/ui/ItemDelegate.h \
     src/ui/MainWindow.h \
+    src/ui/MdiWidget.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \
     src/ui/PreferencesDialog.h \

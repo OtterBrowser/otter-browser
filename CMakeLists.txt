@@ -73,6 +73,7 @@ set(otter_src
 	src/ui/ContentsWidget.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/MainWindow.cpp
+	src/ui/MdiWidget.cpp
 	src/ui/OptionDelegate.cpp
 	src/ui/OptionWidget.cpp
 	src/ui/PreferencesDialog.cpp
