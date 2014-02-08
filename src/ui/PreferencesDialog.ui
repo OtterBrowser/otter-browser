@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -1253,7 +1253,7 @@
       <attribute name="title">
        <string>Advanced</string>
       </attribute>
-      <layout class="QHBoxLayout" name="advancedLayout" stretch="1,3">
+      <layout class="QHBoxLayout" name="advancedLayout" stretch="1,0">
        <item>
         <widget class="QListWidget" name="advancedListWidget">
          <property name="minimumSize">
@@ -1290,7 +1290,7 @@
        <item>
         <widget class="QStackedWidget" name="advancedStackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="addressFieldPage">
           <layout class="QVBoxLayout" name="addressFieldLayout" stretch="0,0,1">
@@ -1354,7 +1354,7 @@
           </layout>
          </widget>
          <widget class="QWidget" name="networkPage">
-          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,1">
+          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,0,1">
            <item>
             <widget class="QLabel" name="advancedGeneralHeader">
              <property name="font">
@@ -1372,6 +1372,42 @@
             <widget class="QCheckBox" name="sendReferrerCheckBox">
              <property name="text">
               <string>Send referrer information</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="customUserAgent">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>User-Agent</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="customUserAgentCheckBox">
+             <property name="text">
+              <string>Custom User-Agent</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="customUserAgentEdit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
