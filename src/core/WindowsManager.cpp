@@ -77,9 +77,10 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 	}
 
 	window = new Window(privateWindow, NULL, m_area);
-	window->setUrl(url, false);
 
 	addWindow(window, background);
+
+	window->setUrl(url, false);
 }
 
 void WindowsManager::search(const QString &query, const QString &engine)
@@ -89,9 +90,10 @@ void WindowsManager::search(const QString &query, const QString &engine)
 	if (window && window->canClone())
 	{
 		window = window->clone(m_area);
-		window->getContentsWidget()->setHistory(WindowHistoryInformation());
 
 		addWindow(window);
+
+		window->getContentsWidget()->setHistory(WindowHistoryInformation());
 	}
 	else
 	{
@@ -285,6 +287,11 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	window->setParent(m_area);
 
+	const int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
+
+	m_tabBar->insertTab(index, window->getTitle());
+	m_tabBar->setTabData(index, QVariant::fromValue(window));
+
 	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
 
 	if (background || !m_isRestored)
@@ -295,11 +302,6 @@ void WindowsManager::addWindow(Window *window, bool background)
 	{
 		mdiWindow->showMaximized();
 	}
-
-	const int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
-
-	m_tabBar->insertTab(index, window->getTitle());
-	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
 	if (!background)
 	{

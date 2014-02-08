@@ -129,17 +129,14 @@ void Window::search(const QString &query, const QString &engine)
 {
 	WebContentsWidget *widget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
-	if (widget)
-	{
-		widget->search(query, engine);
-	}
-	else
+	if (!widget)
 	{
 		widget = new WebContentsWidget(isPrivate(), NULL, this);
-		widget->search(query, engine);
 
 		setContentsWidget(widget);
 	}
+
+	widget->search(query, engine);
 }
 
 void Window::goToHistoryIndex(QAction *action)
