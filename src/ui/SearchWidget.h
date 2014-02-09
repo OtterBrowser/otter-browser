@@ -54,11 +54,14 @@ protected slots:
 	void searchEngineSelected(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
+	void storeCurrentSearchEngine();
+	void restoreCurrentSearchEngine();
 
 private:
 	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;
+	QString m_storedSearchEngine;
 	QRect m_selectButtonIconRectangle;
 	QRect m_selectButtonArrowRectangle;
 	QRect m_lineEditRectangle;

@@ -83,6 +83,7 @@ private:
 
 signals:
 	void searchEnginesModified();
+	void searchEnginesModelModified();
 };
 
 }

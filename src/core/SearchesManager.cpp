@@ -97,6 +97,8 @@ void SearchesManager::updateSearchEnginesModel()
 		m_searchEnginesModel->appendRow(separatorItem);
 		m_searchEnginesModel->appendRow(manageItem);
 	}
+
+	emit m_instance->searchEnginesModelModified();
 }
 
 void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
@@ -486,6 +488,8 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 
 			if (QFile::exists(path) && !QFile::remove(path))
 			{
+				emit m_instance->searchEnginesModified();
+
 				m_instance->updateSearchEnginesModel();
 
 				return false;
@@ -520,9 +524,9 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 
 			SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
 
-			m_instance->updateSearchEnginesModel();
-
 			emit m_instance->searchEnginesModified();
+
+			m_instance->updateSearchEnginesModel();
 
 			return false;
 		}
@@ -536,9 +540,9 @@ bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
 
 	SettingsManager::setValue(QLatin1String("Browser/SearchEnginesOrder"), m_searchEnginesOrder);
 
-	m_instance->updateSearchEnginesModel();
-
 	emit m_instance->searchEnginesModified();
+
+	m_instance->updateSearchEnginesModel();
 
 	return true;
 }

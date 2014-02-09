@@ -54,7 +54,8 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	lineEdit()->setCompleter(m_completer);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(setCurrentSearchEngine()));
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(storeCurrentSearchEngine()));
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 	connect(this, SIGNAL(activated(int)), this, SLOT(searchEngineSelected(int)));
@@ -203,6 +204,11 @@ void SearchWidget::currentSearchEngineChanged(int index)
 
 void SearchWidget::searchEngineSelected(int index)
 {
+	if (!m_storedSearchEngine.isEmpty())
+	{
+		return;
+	}
+
 	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
 		m_index = index;
@@ -254,6 +260,23 @@ void SearchWidget::sendRequest(const QString &query)
 	}
 }
 
+void SearchWidget::storeCurrentSearchEngine()
+{
+	m_storedSearchEngine = getCurrentSearchEngine();
+
+	hidePopup();
+}
+
+void SearchWidget::restoreCurrentSearchEngine()
+{
+	if (!m_storedSearchEngine.isEmpty())
+	{
+		setCurrentSearchEngine(m_storedSearchEngine);
+
+		m_storedSearchEngine = QString();
+	}
+}
+
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
 {
 	const QStringList engines = SearchesManager::getSearchEngines();
@@ -268,20 +291,12 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 		return;
 	}
 
-	setEnabled(true);
-
-	if (sender() == SearchesManager::getInstance() && engines.contains(getCurrentSearchEngine()))
-	{
-		currentSearchEngineChanged(currentIndex());
-
-		return;
-	}
-
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : engine));
 
 	setCurrentIndex(index);
 	currentSearchEngineChanged(index);
 	searchEngineSelected(index);
+	setEnabled(true);
 
 	if (m_suggester)
 	{
