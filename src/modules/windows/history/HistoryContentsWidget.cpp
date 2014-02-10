@@ -211,7 +211,7 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	}
 
 	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem((entry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry.icon), entry.url.toString()));
+	entryItems.append(new QStandardItem((entry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry.icon), entry.url.toString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
 	entryItems.append(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
 	entryItems.append(new QStandardItem(entry.time.toString()));
 	entryItems[0]->setData(entry.identifier, Qt::UserRole);

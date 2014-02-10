@@ -314,12 +314,13 @@ qint64 HistoryManager::getLocation(const QUrl &url)
 	hostsRecord[QLatin1String("host")] = url.host();
 
 	QUrl simplifiedUrl(url);
+	simplifiedUrl.setScheme(QString());
 	simplifiedUrl.setHost(QString());
 
 	QVariantHash locationsRecord;
 	locationsRecord[QLatin1String("host")] = getRecord(QLatin1String("hosts"), hostsRecord);
 	locationsRecord[QLatin1String("scheme")] = url.scheme();
-	locationsRecord[QLatin1String("path")] = simplifiedUrl.toString(QUrl::RemovePassword | QUrl::RemoveScheme | QUrl::NormalizePathSegments | QUrl::PreferLocalFile | QUrl::FullyDecoded);
+	locationsRecord[QLatin1String("path")] = simplifiedUrl.toString(QUrl::RemovePassword | QUrl::NormalizePathSegments);
 
 	return getRecord(QLatin1String("locations"), locationsRecord);
 }
