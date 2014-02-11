@@ -22,6 +22,7 @@
 #include "SettingsManager.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
+#include "../ui/MdiWidget.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 
@@ -34,11 +35,10 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession) : QObject(area),
-	m_area(area),
+WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession) : QObject(mdi),
+	m_mdi(mdi),
 	m_tabBar(tabBar),
 	m_statusBar(statusBar),
-	m_currentWindow(-1),
 	m_printedWindow(-1),
 	m_isPrivate(privateSession),
 	m_isRestored(false)
@@ -60,7 +60,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 	if (!url.isEmpty())
 	{
-		window = getWindow(getCurrentWindow());
+		window = m_mdi->getActiveWindow();
 
 		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && (window->getUrl().path() == QLatin1String("blank") || window->getUrl().path() == QLatin1String("start") || window->getUrl().path().isEmpty()))
 		{
@@ -72,11 +72,11 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 				return;
 			}
 
-			closeWindow(getCurrentWindow());
+			closeWindow(m_tabBar->currentIndex());
 		}
 	}
 
-	window = new Window(privateWindow, NULL, m_area);
+	window = new Window(privateWindow, NULL, m_mdi);
 
 	addWindow(window, background);
 
@@ -85,11 +85,11 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 void WindowsManager::search(const QString &query, const QString &engine)
 {
-	Window *window = getWindow();
+	Window *window = m_mdi->getActiveWindow();
 
 	if (window && window->canClone())
 	{
-		window = window->clone(m_area);
+		window = window->clone(m_mdi);
 
 		addWindow(window);
 
@@ -99,7 +99,7 @@ void WindowsManager::search(const QString &query, const QString &engine)
 	{
 		open();
 
-		window = getWindow();
+		window = m_mdi->getActiveWindow();
 	}
 
 	if (window)
@@ -112,7 +112,7 @@ void WindowsManager::close(int index)
 {
 	if (index < 0)
 	{
-		index = getCurrentWindow();
+		index = m_tabBar->currentIndex();
 	}
 
 	closeWindow(index);
@@ -135,7 +135,7 @@ void WindowsManager::closeOther(int index)
 {
 	if (index < 0)
 	{
-		index = getCurrentWindow();
+		index = m_tabBar->currentIndex();
 	}
 
 	if (index < 0 || index >= m_tabBar->count())
@@ -173,14 +173,14 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	m_isRestored = true;
 
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
-	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setCurrentWindow(int)));
+	connect(m_tabBar, SIGNAL(currentChanged(int)), this, SLOT(setActiveWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_tabBar, SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_tabBar, SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
-	setCurrentWindow(session.index);
+	setActiveWindow(session.index);
 }
 
 void WindowsManager::restore(int index)
@@ -190,7 +190,7 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
-	Window *window = new Window(m_isPrivate, NULL, m_area);
+	Window *window = new Window(m_isPrivate, NULL, m_mdi);
 	window->restore(m_closedWindows.at(index));
 
 	m_closedWindows.removeAt(index);
@@ -213,7 +213,7 @@ void WindowsManager::print(int index)
 	}
 
 	QPrinter printer;
-	QPrintDialog printDialog(&printer, m_area);
+	QPrintDialog printDialog(&printer, m_mdi);
 	printDialog.setWindowTitle(tr("Print Page"));
 
 	if (printDialog.exec() != QDialog::Accepted)
@@ -228,7 +228,7 @@ void WindowsManager::printPreview(int index)
 {
 	if (index < 0)
 	{
-		index = getCurrentWindow();
+		index = m_tabBar->currentIndex();
 	}
 
 	if (index < 0 || index >= m_tabBar->count())
@@ -238,12 +238,12 @@ void WindowsManager::printPreview(int index)
 
 	m_printedWindow = index;
 
-	QPrintPreviewDialog prinPreviewtDialog(m_area);
-	prinPreviewtDialog.setWindowTitle(tr("Print Preview"));
+	QPrintPreviewDialog printPreviewtDialog(m_mdi);
+	printPreviewtDialog.setWindowTitle(tr("Print Preview"));
 
-	connect(&prinPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printPreview(QPrinter*)));
+	connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printPreview(QPrinter*)));
 
-	prinPreviewtDialog.exec();
+	printPreviewtDialog.exec();
 
 	m_printedWindow = -1;
 }
@@ -260,7 +260,7 @@ void WindowsManager::printPreview(QPrinter *printer)
 
 void WindowsManager::triggerAction(WindowAction action, bool checked)
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	if (window)
 	{
@@ -285,23 +285,12 @@ void WindowsManager::addWindow(Window *window, bool background)
 		return;
 	}
 
-	window->setParent(m_area);
-
 	const int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
 
 	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
 
-	QMdiSubWindow *mdiWindow = m_area->addSubWindow(window, (Qt::SubWindow | Qt::CustomizeWindowHint));
-
-	if (background || !m_isRestored)
-	{
-		mdiWindow->hide();
-	}
-	else
-	{
-		mdiWindow->showMaximized();
-	}
+	m_mdi->addWindow(window);
 
 	if (!background)
 	{
@@ -309,7 +298,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 		if (m_isRestored)
 		{
-			setCurrentWindow(index);
+			setActiveWindow(index);
 		}
 	}
 
@@ -332,7 +321,7 @@ void WindowsManager::addWindow(ContentsWidget *widget, bool detached)
 {
 	if (widget)
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_area));
+		addWindow(new Window(widget->isPrivate(), widget, m_mdi));
 
 		if (detached)
 		{
@@ -347,7 +336,7 @@ void WindowsManager::cloneWindow(int index)
 
 	if (window && window->canClone())
 	{
-		addWindow(window->clone(m_area));
+		addWindow(window->clone(m_mdi));
 	}
 }
 
@@ -464,11 +453,6 @@ void WindowsManager::closeWindow(Window *window)
 		}
 	}
 
-	if (index < m_currentWindow)
-	{
-		--m_currentWindow;
-	}
-
 	m_tabBar->removeTab(index);
 
 	emit windowRemoved(index);
@@ -499,7 +483,7 @@ void WindowsManager::removeStoredUrl(const QString &url)
 
 void WindowsManager::setDefaultTextEncoding(const QString &encoding)
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	if (window)
 	{
@@ -509,7 +493,7 @@ void WindowsManager::setDefaultTextEncoding(const QString &encoding)
 
 void WindowsManager::setZoom(int zoom)
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	if (window)
 	{
@@ -517,7 +501,7 @@ void WindowsManager::setZoom(int zoom)
 	}
 }
 
-void WindowsManager::setCurrentWindow(int index)
+void WindowsManager::setActiveWindow(int index)
 {
 	if (index < 0 || index >= m_tabBar->count())
 	{
@@ -531,16 +515,10 @@ void WindowsManager::setCurrentWindow(int index)
 		return;
 	}
 
-	Window *window = getWindow(m_currentWindow);
+	Window *window = m_mdi->getActiveWindow();
 
 	if (window)
 	{
-		if (window->parentWidget())
-		{
-			window->parentWidget()->showMinimized();
-			window->parentWidget()->hide();
-		}
-
 		if (window->getContentsWidget()->getUndoStack())
 		{
 			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
@@ -558,18 +536,11 @@ void WindowsManager::setCurrentWindow(int index)
 
 	m_statusBar->clearMessage();
 
-	m_currentWindow = index;
-
 	window = getWindow(index);
 
 	if (window)
 	{
-		if (window->parentWidget())
-		{
-			window->parentWidget()->showMaximized();
-
-			m_area->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
-		}
+		m_mdi->setActiveWindow(window);
 
 		m_statusBar->setZoom(window->getContentsWidget()->getZoom());
 		m_statusBar->setZoomEnabled(window->getContentsWidget()->canZoom());
@@ -605,31 +576,21 @@ void WindowsManager::setTitle(const QString &title)
 		m_tabBar->setTabText(index, text);
 	}
 
-	if (index == getCurrentWindow())
+	if (index == m_tabBar->currentIndex())
 	{
 		emit windowTitleChanged(QStringLiteral("%1 - Otter").arg(text));
 	}
 }
 
-QAction *WindowsManager::getAction(WindowAction action)
+QAction* WindowsManager::getAction(WindowAction action)
 {
-	Window *window = getWindow();
+	Window *window = m_mdi->getActiveWindow();
 
-	if (window)
-	{
-		return window->getContentsWidget()->getAction(action);
-	}
-
-	return NULL;
+	return (window ? window->getContentsWidget()->getAction(action) : NULL);
 }
 
 Window* WindowsManager::getWindow(int index) const
 {
-	if (index < 0)
-	{
-		index = getCurrentWindow();
-	}
-
 	if (index < 0 || index >= m_tabBar->count())
 	{
 		return NULL;
@@ -640,21 +601,21 @@ Window* WindowsManager::getWindow(int index) const
 
 QString WindowsManager::getDefaultTextEncoding() const
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	return (window ? window->getDefaultTextEncoding() : QString());
 }
 
 QString WindowsManager::getTitle() const
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	return (window ? window->getUrl() : QUrl());
 }
@@ -662,7 +623,7 @@ QUrl WindowsManager::getUrl() const
 SessionMainWindow WindowsManager::getSession() const
 {
 	SessionMainWindow session;
-	session.index = getCurrentWindow();
+	session.index = m_tabBar->currentIndex();
 
 	for (int i = 0; i < m_tabBar->count(); ++i)
 	{
@@ -712,21 +673,16 @@ int WindowsManager::getWindowCount() const
 	return m_tabBar->count();
 }
 
-int WindowsManager::getCurrentWindow() const
-{
-	return m_tabBar->currentIndex();
-}
-
 int WindowsManager::getZoom() const
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	return (window ? window->getContentsWidget()->getZoom() : 100);
 }
 
 bool WindowsManager::canZoom() const
 {
-	Window *window = getWindow(getCurrentWindow());
+	Window *window = m_mdi->getActiveWindow();
 
 	return (window ? window->getContentsWidget()->canZoom() : false);
 }
@@ -741,7 +697,7 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 		{
 			if (activate)
 			{
-				setCurrentWindow(i);
+				setActiveWindow(i);
 			}
 
 			return true;
