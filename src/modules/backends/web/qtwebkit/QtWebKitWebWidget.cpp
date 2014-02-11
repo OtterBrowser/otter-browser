@@ -226,8 +226,8 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 	ActionsManager::setupLocalAction(action, QLatin1String("Stop"));
 
-	action->setShortcut(QKeySequence());
 	action->setEnabled(true);
+	action->setShortcut(QKeySequence());
 
 	if (!isPrivate())
 	{
@@ -266,6 +266,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	ActionsManager::setupLocalAction(action, QLatin1String("Reload"));
 
+	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
 
 	if (!isPrivate())
