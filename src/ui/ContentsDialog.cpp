@@ -247,13 +247,13 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *key = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
-		if ((key->key() == Qt::Key_Enter || key->key() == Qt::Key_Return))
+		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
 			close(QDialogButtonBox::Ok);
 		}
-		else if (key->key() == Qt::Key_Escape)
+		else if (keyEvent->key() == Qt::Key_Escape)
 		{
 			close(QDialogButtonBox::Cancel);
 		}

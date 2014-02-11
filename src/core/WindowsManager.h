@@ -30,6 +30,7 @@
 namespace Otter
 {
 
+class MdiWidget;
 class StatusBarWidget;
 class TabBarWidget;
 class Window;
@@ -39,17 +40,16 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(QMdiArea *area, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
+	explicit WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
 
 	QAction* getAction(WindowAction action);
-	Window* getWindow(int index = -1) const;
+	Window* getWindow(int index) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QList<SessionWindow> getClosedWindows() const;
 	int getWindowCount() const;
-	int getCurrentWindow() const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool hasUrl(const QUrl &url, bool activate = false);
@@ -66,7 +66,7 @@ public slots:
 	void printPreview(int index = -1);
 	void triggerAction(WindowAction action, bool checked = false);
 	void clearClosedWindows();
-	void setCurrentWindow(int index);
+	void setActiveWindow(int index);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setZoom(int zoom);
 
@@ -86,11 +86,10 @@ protected slots:
 	void setTitle(const QString &title);
 
 private:
-	QMdiArea *m_area;
+	MdiWidget *m_mdi;
 	TabBarWidget *m_tabBar;
 	StatusBarWidget *m_statusBar;
 	QList<SessionWindow> m_closedWindows;
-	int m_currentWindow;
 	int m_printedWindow;
 	bool m_isPrivate;
 	bool m_isRestored;

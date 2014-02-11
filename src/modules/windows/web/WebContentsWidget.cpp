@@ -54,7 +54,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	m_ui->findWidget->installEventFilter(this);
 	m_ui->verticalLayout->addWidget(m_webWidget);
 
-	optionChanged("Browser/ShowDetailedProgressBar", SettingsManager::getValue("Browser/ShowDetailedProgressBar"));
+	optionChanged(QLatin1String("Browser/ShowDetailedProgressBar"), SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
