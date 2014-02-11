@@ -26,6 +26,8 @@
 
 #include "ui_WebContentsWidget.h"
 
+#include <QtGui/QMouseEvent>
+
 namespace Otter
 {
 
@@ -49,6 +51,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 
 	m_ui->setupUi(this);
 	m_ui->findWidget->hide();
+	m_ui->findWidget->installEventFilter(this);
 	m_ui->verticalLayout->addWidget(m_webWidget);
 
 	optionChanged("Browser/ShowDetailedProgressBar", SettingsManager::getValue("Browser/ShowDetailedProgressBar"));
@@ -394,6 +397,21 @@ bool WebContentsWidget::isLoading() const
 bool WebContentsWidget::isPrivate() const
 {
 	return m_webWidget->isPrivate();
+}
+
+bool WebContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->findWidget && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->findWidget->hide();
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }
