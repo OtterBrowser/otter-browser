@@ -103,6 +103,8 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		if (payload)
 		{
 			scrollLayout->addWidget(payload);
+
+			payload->installEventFilter(this);
 		}
 
 		scrollWidget->setLayout(scrollLayout);
@@ -126,6 +128,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	setWindowFlags(Qt::Widget);
 	setWindowTitle(title);
 	setLayout(mainLayout);
+	installEventFilter(this);
 }
 
 void ContentsDialog::resizeEvent(QResizeEvent *event)
@@ -240,6 +243,19 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
 			close();
+		}
+	}
+	else if (event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *key = static_cast<QKeyEvent*>(event);
+
+		if ((key->key() == Qt::Key_Enter || key->key() == Qt::Key_Return))
+		{
+			close(QDialogButtonBox::Ok);
+		}
+		else if (key->key() == Qt::Key_Escape)
+		{
+			close(QDialogButtonBox::Cancel);
 		}
 	}
 
