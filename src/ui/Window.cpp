@@ -351,7 +351,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	m_ui->navigationWidget->setVisible(m_contentsWidget->getType() == QLatin1String("web"));
+	const bool showNavigationBar = (m_contentsWidget->getType() == QLatin1String("web"));
+
+	m_ui->navigationWidget->setVisible(showNavigationBar);
+	m_ui->navigationWidget->setEnabled(showNavigationBar);
 	m_ui->backButton->setDefaultAction(m_contentsWidget->getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(m_contentsWidget->getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));

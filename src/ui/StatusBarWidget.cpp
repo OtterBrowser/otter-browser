@@ -73,7 +73,7 @@ bool StatusBarWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (m_zoomSlider && object == m_zoomSlider && m_zoomSlider->isEnabled() && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		QStyleOptionSlider option;
 		option.initFrom(m_zoomSlider);
 		option.minimum = m_zoomSlider->minimum();

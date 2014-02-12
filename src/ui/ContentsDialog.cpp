@@ -191,7 +191,7 @@ void ContentsDialog::setCheckBox(const QString &text, bool state)
 {
 	if (!m_checkBox)
 	{
-		QBoxLayout *mainLayout = dynamic_cast<QBoxLayout*>(layout());
+		QBoxLayout *mainLayout = static_cast<QBoxLayout*>(layout());
 
 		if (!mainLayout)
 		{
