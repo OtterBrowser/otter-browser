@@ -139,7 +139,7 @@ bool SearchPropertiesDialog::eventFilter(QObject *object, QEvent *event)
 
 			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
 
-			contextMenu->exec(dynamic_cast<QContextMenuEvent*>(event)->globalPos());
+			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();
 
 			m_currentLineEdit = NULL;

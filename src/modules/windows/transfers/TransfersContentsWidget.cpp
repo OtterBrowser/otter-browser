@@ -31,6 +31,7 @@
 #include <QtCore/QQueue>
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
+#include <QtGui/QKeyEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
@@ -46,7 +47,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->setupUi(this);
 
 	QStringList labels;
-	labels << tr("Status") << tr("Filename") << tr("Size") << tr("Progress") << tr("Time") << tr("Speed") << tr("Started") << tr("Finished");
+	labels << QString() << tr("Filename") << tr("Size") << tr("Progress") << tr("Time") << tr("Speed") << tr("Started") << tr("Finished");
 
 	m_model->setHorizontalHeaderLabels(labels);
 
@@ -57,6 +58,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	m_ui->transfersView->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
+	m_ui->transfersView->installEventFilter(this);
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 
@@ -528,6 +530,23 @@ int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 bool TransfersContentsWidget::isLoading() const
 {
 	return m_isLoading;
+}
+
+bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->transfersView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		{
+			openTransfer();
+
+			return true;
+		}
+	}
+
+	return QWidget::eventFilter(object, event);
 }
 
 }
