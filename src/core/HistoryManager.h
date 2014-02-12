@@ -58,6 +58,8 @@ public:
 	static bool removeEntries(const QList<qint64> &entries);
 
 protected:
+	explicit HistoryManager(QObject *parent = NULL);
+
 	void timerEvent(QTimerEvent *event);
 	void scheduleCleanup();
 	void removeOldEntries(const QDateTime &date = QDateTime());
@@ -70,8 +72,6 @@ protected slots:
 	void optionChanged(const QString &option);
 
 private:
-	explicit HistoryManager(QObject *parent = NULL);
-
 	int m_cleanupTimer;
 	int m_dayTimer;
 

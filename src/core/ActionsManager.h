@@ -42,6 +42,8 @@ public:
 	static QStringList getIdentifiers();
 
 protected:
+	explicit ActionsManager(QObject *parent = NULL);
+
 	void timerEvent(QTimerEvent *event);
 	static void registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
 	static void setupWindowActions(QObject *window);
@@ -52,8 +54,6 @@ protected slots:
 	void triggerMacro();
 
 private:
-	explicit ActionsManager(QObject *parent = NULL);
-
 	int m_reloadTimer;
 
 	static ActionsManager *m_instance;

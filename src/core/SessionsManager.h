@@ -137,12 +137,12 @@ public:
 	static bool hasUrl(const QUrl &url, bool activate = false);
 
 protected:
+	explicit SessionsManager(QObject *parent = NULL);
+
 	void timerEvent(QTimerEvent *event);
 	void scheduleAutoSave();
 
 private:
-	explicit SessionsManager(QObject *parent = NULL);
-
 	int m_autoSaveTimer;
 
 	static SessionsManager *m_instance;

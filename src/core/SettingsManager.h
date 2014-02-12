@@ -39,9 +39,10 @@ public:
 	static QVariant getDefaultValue(const QString &key);
 	static QVariant getValue(const QString &key);
 
-private:
+protected:
 	explicit SettingsManager(const QString &path, QObject *parent = NULL);
 
+private:
 	static SettingsManager *m_instance;
 	static QString m_path;
 	static QHash<QString, QVariant> m_defaults;

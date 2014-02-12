@@ -149,7 +149,7 @@ void BookmarksManager::createInstance(QObject *parent)
 	m_instance = new BookmarksManager(parent);
 }
 
-BookmarksManager *BookmarksManager::getInstance()
+BookmarksManager* BookmarksManager::getInstance()
 {
 	return m_instance;
 }

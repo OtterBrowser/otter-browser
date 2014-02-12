@@ -77,6 +77,8 @@ public:
 	static bool isDownloading(const QString &source, const QString &target = QString());
 
 protected:
+	explicit TransfersManager(QObject *parent = NULL);
+
 	void timerEvent(QTimerEvent *event);
 	void startUpdates();
 
@@ -88,8 +90,6 @@ protected slots:
 	void save();
 
 private:
-	explicit TransfersManager(QObject *parent = NULL);
-
 	int m_updateTimer;
 
 	static TransfersManager *m_instance;
