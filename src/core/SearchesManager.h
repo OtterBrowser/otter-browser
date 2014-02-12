@@ -70,11 +70,11 @@ public:
 	static bool setSearchEngines(const QList<SearchInformation*> &engines);
 
 protected:
+	explicit SearchesManager(QObject *parent = NULL);
+
 	void updateSearchEnginesModel();
 
 private:
-	explicit SearchesManager(QObject *parent = NULL);
-
 	static SearchesManager *m_instance;
 	static QStandardItemModel *m_searchEnginesModel;
 	static QStringList m_searchEnginesOrder;

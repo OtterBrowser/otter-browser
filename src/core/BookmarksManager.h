@@ -23,6 +23,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
@@ -66,23 +67,25 @@ public:
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());
-
-private:
 	explicit BookmarksManager(QObject *parent = NULL);
+
+protected:
+	explicit BookmarksManager();
 
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
 	static void updateUrls();
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
+protected slots:
+	void load();
+
+private:
 	static BookmarksManager *m_instance;
 	static QHash<int, BookmarkInformation*> m_pointers;
 	static QList<BookmarkInformation*> m_bookmarks;
 	static QList<BookmarkInformation*> m_allBookmarks;
 	static QSet<QString> m_urls;
 	static int m_identifier;
-
-private slots:
-	void load();
 
 signals:
 	void folderModified(int folder);
