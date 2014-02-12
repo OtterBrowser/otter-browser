@@ -859,18 +859,18 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 		QUrl httpUrl = url;
 		httpUrl.setScheme(QLatin1String("http"));
 
-		m_webView->setUrl(httpUrl);
+		m_webView->load(httpUrl);
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
 	{
 		QUrl localUrl = url;
 		localUrl.setScheme(QLatin1String("file"));
 
-		m_webView->setUrl(localUrl);
+		m_webView->load(localUrl);
 	}
 	else
 	{
-		m_webView->setUrl(url);
+		m_webView->load(url);
 	}
 
 	notifyTitleChanged();
