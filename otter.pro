@@ -4,6 +4,10 @@
 #
 #-------------------------------------------------
 
+!greaterThan(QT_MAJOR_VERSION, 4) | !greaterThan(QT_MINOR_VERSION, 1) {
+    error("Qt 5.2.0 or newer is required.")
+}
+
 QT += core gui network printsupport script sql webkitwidgets widgets
 
 win32 {
