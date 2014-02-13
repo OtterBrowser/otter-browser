@@ -128,7 +128,7 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 		if (m_webWidget)
 		{
 			widget->setDefaultTextEncoding(m_webWidget->getDefaultTextEncoding());
-			widget->setQuickSearchEngine(m_webWidget->getSearchEngine());
+			widget->setQuickSearchEngine(m_webWidget->getQuickSearchEngine());
 			widget->setZoom(m_webWidget->getZoom());
 		}
 

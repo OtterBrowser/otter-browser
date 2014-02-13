@@ -19,6 +19,8 @@
 
 #include "WebWidget.h"
 #include "ContentsWidget.h"
+#include "../core/SearchesManager.h"
+#include "../core/SettingsManager.h"
 
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
@@ -28,9 +30,60 @@ namespace Otter
 {
 
 WebWidget::WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
-	m_backend(backend)
+	m_backend(backend),
+	m_quickSearchMenu(NULL)
 {
 	Q_UNUSED(privateWindow)
+
+	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
+}
+
+void WebWidget::search(const QString &query, const QString &engine)
+{
+	Q_UNUSED(query)
+	Q_UNUSED(engine)
+}
+
+void WebWidget::quickSearch(QAction *action)
+{
+	const QString engine = ((!action || action->data().type() != QVariant::String) ? m_quickSearchEngine : action->data().toString());
+
+	if (SearchesManager::getSearchEngines().contains(engine))
+	{
+		if (engine != m_quickSearchEngine)
+		{
+			m_quickSearchEngine = engine;
+
+			if (m_quickSearchMenu)
+			{
+				m_quickSearchMenu->clear();
+			}
+
+			emit quickSearchEngineChanged();
+		}
+
+		emit requestedSearch(getSelectedText(), m_quickSearchEngine);
+	}
+}
+
+void WebWidget::quickSearchMenuAboutToShow()
+{
+	if (m_quickSearchMenu && m_quickSearchMenu->isEmpty())
+	{
+		const QStringList engines = SearchesManager::getSearchEngines();
+
+		for (int i = 0; i < engines.count(); ++i)
+		{
+			SearchInformation *engine = SearchesManager::getSearchEngine(engines.at(i));
+
+			if (engine)
+			{
+				QAction *action = m_quickSearchMenu->addAction(engine->icon, engine->title);
+				action->setData(engine->identifier);
+				action->setToolTip(engine->description);
+			}
+		}
+	}
 }
 
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
@@ -186,9 +239,64 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	menu.exec(mapToGlobal(position));
 }
 
+void WebWidget::updateQuickSearch()
+{
+	if (m_quickSearchMenu && sender() == SearchesManager::getInstance())
+	{
+		m_quickSearchMenu->clear();
+	}
+
+	if (!SearchesManager::getSearchEngines().contains(m_quickSearchEngine))
+	{
+		const QString engine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
+
+		if (engine != m_quickSearchEngine)
+		{
+			m_quickSearchEngine = engine;
+
+			emit quickSearchEngineChanged();
+		}
+	}
+}
+
+void WebWidget::setQuickSearchEngine(const QString &engine)
+{
+	if (engine != m_quickSearchEngine)
+	{
+		m_quickSearchEngine = engine;
+
+		updateQuickSearch();
+
+		emit quickSearchEngineChanged();
+	}
+}
+
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
+}
+
+QMenu* WebWidget::getQuickSearchMenu()
+{
+	if (!m_quickSearchMenu)
+	{
+		m_quickSearchMenu = new QMenu(this);
+
+		connect(m_quickSearchMenu, SIGNAL(aboutToShow()), this, SLOT(quickSearchMenuAboutToShow()));
+		connect(m_quickSearchMenu, SIGNAL(triggered(QAction*)), this, SLOT(quickSearch(QAction*)));
+	}
+
+	return m_quickSearchMenu;
+}
+
+QString WebWidget::getQuickSearchEngine() const
+{
+	return (m_quickSearchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : m_quickSearchEngine);
+}
+
+QString WebWidget::getSelectedText() const
+{
+	return QString();
 }
 
 }

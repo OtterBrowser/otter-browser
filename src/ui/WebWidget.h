@@ -24,8 +24,8 @@
 #include "Window.h"
 
 #include <QtPrintSupport/QPrinter>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QUndoStack>
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
@@ -62,20 +62,24 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
-	virtual void search(const QString &query, const QString &engine) = 0;
+	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
+	void setQuickSearchEngine(const QString &engine);
 	virtual WebWidget* clone(ContentsWidget *parent = NULL) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
+	WebBackend* getBackend();
+	QMenu* getQuickSearchMenu();
+	QString getQuickSearchEngine() const;
 	virtual QString getDefaultTextEncoding() const = 0;
 	virtual QString getTitle() const = 0;
+	virtual QString getSelectedText() const;
 	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
-	WebBackend* getBackend();
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -93,8 +97,15 @@ public slots:
 protected:
 	explicit WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent = NULL);
 
+protected slots:
+	void quickSearch(QAction *action);
+	void quickSearchMenuAboutToShow();
+	void updateQuickSearch();
+
 private:
 	WebBackend *m_backend;
+	QMenu *m_quickSearchMenu;
+	QString m_quickSearchEngine;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
@@ -103,6 +114,10 @@ signals:
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void progressBarGeometryChanged();
+
+///TODO
+
+	void quickSearchEngineChanged();
 	void statusMessageChanged(const QString &message, int timeout = 5);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
