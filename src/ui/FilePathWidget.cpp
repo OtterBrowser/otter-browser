@@ -32,7 +32,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_completer(NULL),
 	m_selectFile(true)
 {
-	QPushButton *button = new QPushButton(tr("Browse"), this);
+	QPushButton *button = new QPushButton(tr("Browse..."), this);
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->addWidget(m_lineEdit);
 	layout->addWidget(button);
@@ -43,6 +43,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	connect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
+	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged()));
 	connect(button, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 

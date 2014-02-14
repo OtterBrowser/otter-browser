@@ -48,6 +48,9 @@ private:
 	QLineEdit *m_lineEdit;
 	QCompleter *m_completer;
 	bool m_selectFile;
+
+signals:
+	void pathChanged();
 };
 
 }
