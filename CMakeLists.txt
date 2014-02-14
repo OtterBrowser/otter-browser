@@ -72,6 +72,7 @@ set(otter_src
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
+	src/ui/FilePathWidget.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/MainWindow.cpp
 	src/ui/MdiWidget.cpp

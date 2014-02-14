@@ -46,6 +46,7 @@ SOURCES += src/main.cpp \
     src/ui/ClearHistoryDialog.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
+    src/ui/FilePathWidget.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/MainWindow.cpp \
     src/ui/MdiWidget.cpp \
@@ -111,6 +112,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ClearHistoryDialog.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
+    src/ui/FilePathWidget.h \
     src/ui/ItemDelegate.h \
     src/ui/MainWindow.h \
     src/ui/MdiWidget.h \
