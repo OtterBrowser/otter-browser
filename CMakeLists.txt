@@ -51,6 +51,7 @@ set(otter_src
 	src/core/CookieJar.cpp
 	src/core/FileSystemCompleterModel.cpp
 	src/core/HistoryManager.cpp
+	src/core/Importer.cpp
 	src/core/LocalListingNetworkReply.cpp
 	src/core/NetworkAccessManager.cpp
 	src/core/NetworkAutomaticProxy.cpp
@@ -141,11 +142,9 @@ add_executable(otter-browser
 	${otter_src}
 )
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-qt5_use_modules(otter-browser
-	WinExtras
-)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	qt5_use_modules(otter-browser WinExtras)
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 target_link_libraries(otter-browser
 	Qt5::Core

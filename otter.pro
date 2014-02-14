@@ -25,6 +25,7 @@ SOURCES += src/main.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
     src/core/HistoryManager.cpp \
+    src/core/Importer.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/NetworkAccessManager.cpp \
     src/core/NetworkAutomaticProxy.cpp \
@@ -89,6 +90,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
     src/core/HistoryManager.h \
+    src/core/Importer.h \
     src/core/LocalListingNetworkReply.h \
     src/core/NetworkAccessManager.h \
     src/core/NetworkAutomaticProxy.h \
