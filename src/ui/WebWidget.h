@@ -74,6 +74,7 @@ public:
 	virtual QString getDefaultTextEncoding() const = 0;
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
+	QString getStatusMessage() const;
 	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
@@ -101,11 +102,14 @@ protected slots:
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void updateQuickSearch();
+	void setStatusMessage(const QString &message, bool override = false);
 
 private:
 	WebBackend *m_backend;
 	QMenu *m_quickSearchMenu;
 	QString m_quickSearchEngine;
+	QString m_javaScriptStatusMessage;
+	QString m_overridingStatusMessage;
 
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
@@ -114,11 +118,8 @@ signals:
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void progressBarGeometryChanged();
-
-///TODO
-
 	void quickSearchEngineChanged();
-	void statusMessageChanged(const QString &message, int timeout = 5);
+	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);

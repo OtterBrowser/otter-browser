@@ -67,10 +67,9 @@ public:
 	static bool hasBookmark(const QString &url);
 	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());
-	explicit BookmarksManager(QObject *parent = NULL);
 
 protected:
-	explicit BookmarksManager();
+	explicit BookmarksManager(QObject *parent = NULL);
 
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
 	static void updateUrls();

@@ -69,7 +69,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*)), this, SLOT(notifyRequestedNewWindow(WebWidget*)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 	connect(m_webWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_webWidget, SIGNAL(statusMessageChanged(QString,int)), this, SIGNAL(statusMessageChanged(QString,int)));
+	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
@@ -348,6 +348,11 @@ QString WebContentsWidget::getDefaultTextEncoding() const
 QString WebContentsWidget::getTitle() const
 {
 	return m_webWidget->getTitle();
+}
+
+QString WebContentsWidget::getStatusMessage() const
+{
+	return m_webWidget->getStatusMessage();
 }
 
 QLatin1String WebContentsWidget::getType() const

@@ -51,7 +51,8 @@ public:
 	virtual QAction* getAction(WindowAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
-	virtual QString getVersion();
+	virtual QString getVersion() const;
+	virtual QString getStatusMessage() const;
 	virtual QLatin1String getType() const = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
@@ -90,7 +91,7 @@ signals:
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void canZoomChanged(bool can);
-	void statusMessageChanged(const QString &message, int timeout);
+	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);

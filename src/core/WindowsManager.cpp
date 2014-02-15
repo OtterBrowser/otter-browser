@@ -528,7 +528,7 @@ void WindowsManager::setActiveWindow(int index)
 		}
 
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
-		disconnect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
+		disconnect(window, SIGNAL(statusMessageChanged(QString)), m_statusBar, SLOT(showMessage(QString)));
 		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		disconnect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
 		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
@@ -542,6 +542,7 @@ void WindowsManager::setActiveWindow(int index)
 	{
 		m_mdi->setActiveWindow(window);
 
+		m_statusBar->showMessage(window->getContentsWidget()->getStatusMessage());
 		m_statusBar->setZoom(window->getContentsWidget()->getZoom());
 		m_statusBar->setZoomEnabled(window->getContentsWidget()->canZoom());
 
@@ -556,7 +557,7 @@ void WindowsManager::setActiveWindow(int index)
 		}
 
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
-		connect(window, SIGNAL(statusMessageChanged(QString,int)), m_statusBar, SLOT(showMessage(QString,int)));
+		connect(window, SIGNAL(statusMessageChanged(QString)), m_statusBar, SLOT(showMessage(QString)));
 		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
 		connect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
 		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));

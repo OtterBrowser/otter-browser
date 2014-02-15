@@ -135,7 +135,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
-	connect(page, SIGNAL(statusBarMessage(QString)), this, SIGNAL(statusMessageChanged(QString)));
+	connect(page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -222,8 +222,10 @@ void QtWebKitWebWidget::pageLoadStarted()
 		m_isTyped = false;
 	}
 
+	setStatusMessage(QString());
+	setStatusMessage(QString(), true);
+
 	emit loadingChanged(true);
-	emit statusMessageChanged(QString());
 }
 
 void QtWebKitWebWidget::pageLoadFinished(bool ok)
@@ -309,7 +311,7 @@ void QtWebKitWebWidget::hideInspector()
 
 void QtWebKitWebWidget::linkHovered(const QString &link)
 {
-	emit statusMessageChanged(link, 0);
+	setStatusMessage(link, true);
 }
 
 void QtWebKitWebWidget::markPageRealoded()
@@ -1468,7 +1470,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				text = result.title();
 			}
 
-			emit statusMessageChanged(link, 0);
+			setStatusMessage(link, true);
 
 			QToolTip::showText(position, text, m_webView);
 

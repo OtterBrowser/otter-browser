@@ -188,7 +188,7 @@ signals:
 	void requestedSearch(QString query, QString engine);
 	void actionsChanged();
 	void canZoomChanged(bool can);
-	void statusMessageChanged(const QString &message, int timeout);
+	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);

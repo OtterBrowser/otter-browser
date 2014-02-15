@@ -259,6 +259,27 @@ void WebWidget::updateQuickSearch()
 	}
 }
 
+void WebWidget::setStatusMessage(const QString &message, bool override)
+{
+	const QString oldMessage = getStatusMessage();
+
+	if (override)
+	{
+		m_overridingStatusMessage = message;
+	}
+	else
+	{
+		m_javaScriptStatusMessage = message;
+	}
+
+	const QString newMessage = getStatusMessage();
+
+	if (newMessage != oldMessage)
+	{
+		emit statusMessageChanged(newMessage);
+	}
+}
+
 void WebWidget::setQuickSearchEngine(const QString &engine)
 {
 	if (engine != m_quickSearchEngine)
@@ -297,6 +318,11 @@ QString WebWidget::getQuickSearchEngine() const
 QString WebWidget::getSelectedText() const
 {
 	return QString();
+}
+
+QString WebWidget::getStatusMessage() const
+{
+	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
 }
 
 }
