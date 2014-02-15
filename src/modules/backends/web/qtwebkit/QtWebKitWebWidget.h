@@ -44,13 +44,12 @@ class QtWebKitWebWidget : public WebWidget
 public:
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
-	void setQuickSearchEngine(const QString &searchEngine);
 	WebWidget* clone(ContentsWidget *parent = NULL);
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
-	QString getSearchEngine() const;
+	QString getSelectedText() const;
 	QVariant evaluateJavaScript(const QString &script);
 	QUrl getUrl() const;
 	QIcon getIcon() const;
@@ -81,7 +80,6 @@ protected:
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
-	void search(QAction *action);
 	void triggerAction();
 	void optionChanged(const QString &option, const QVariant &value);
 	void pageLoadStarted();
@@ -90,13 +88,12 @@ protected slots:
 	void downloadFile(QNetworkReply *reply);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
 	void restoreState(QWebFrame *frame);
-	void searchMenuAboutToShow();
 	void hideInspector();
 	void linkHovered(const QString &link);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
-	void updateSearchActions(const QString &engine = QString());
+	void updateQuickSearchAction();
 	void showContextMenu(const QPoint &position = QPoint());
 
 private:
@@ -106,7 +103,6 @@ private:
 	QToolButton *m_inspectorCloseButton;
 	NetworkAccessManager *m_networkAccessManager;
 	QSplitter *m_splitter;
-	QString m_searchEngine;
 	QPixmap m_thumbnail;
 	QPoint m_hotclickPosition;
 	QWebHitTestResult m_hitResult;

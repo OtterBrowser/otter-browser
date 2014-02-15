@@ -4,6 +4,10 @@
 #
 #-------------------------------------------------
 
+!greaterThan(QT_MAJOR_VERSION, 4) | !greaterThan(QT_MINOR_VERSION, 1) {
+    error("Qt 5.2.0 or newer is required.")
+}
+
 QT += core gui network printsupport script sql webkitwidgets widgets
 
 win32 {
@@ -21,6 +25,7 @@ SOURCES += src/main.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
     src/core/HistoryManager.cpp \
+    src/core/Importer.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/NetworkAccessManager.cpp \
     src/core/NetworkAutomaticProxy.cpp \
@@ -41,6 +46,7 @@ SOURCES += src/main.cpp \
     src/ui/ClearHistoryDialog.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
+    src/ui/FilePathWidget.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/MainWindow.cpp \
     src/ui/MdiWidget.cpp \
@@ -85,6 +91,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
     src/core/HistoryManager.h \
+    src/core/Importer.h \
     src/core/LocalListingNetworkReply.h \
     src/core/NetworkAccessManager.h \
     src/core/NetworkAutomaticProxy.h \
@@ -105,6 +112,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ClearHistoryDialog.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
+    src/ui/FilePathWidget.h \
     src/ui/ItemDelegate.h \
     src/ui/MainWindow.h \
     src/ui/MdiWidget.h \

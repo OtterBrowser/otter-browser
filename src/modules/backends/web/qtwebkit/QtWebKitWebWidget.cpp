@@ -59,7 +59,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	m_inspectorCloseButton(NULL),
 	m_networkAccessManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
-	m_searchEngine(SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString()),
 	m_historyEntry(-1),
 	m_isLoading(false),
 	m_isReloading(false),
@@ -129,8 +128,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateSearchActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
 	connect(page, SIGNAL(requestedNewWindow(WebWidget*)), this, SIGNAL(requestedNewWindow(WebWidget*)));
 	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
@@ -161,18 +160,6 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	m_webView->setFocus();
 }
 
-void QtWebKitWebWidget::search(QAction *action)
-{
-	const QString engine = ((!action || action->data().type() != QVariant::String) ? m_searchEngine : action->data().toString());
-
-	if (SearchesManager::getSearchEngines().contains(engine))
-	{
-		updateSearchActions(engine);
-
-		emit requestedSearch(m_webView->selectedText(), m_searchEngine);
-	}
-}
-
 void QtWebKitWebWidget::search(const QString &query, const QString &engine)
 {
 	QNetworkRequest request;
@@ -188,16 +175,6 @@ void QtWebKitWebWidget::search(const QString &query, const QString &engine)
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_webView->print(printer);
-}
-
-void QtWebKitWebWidget::setQuickSearchEngine(const QString &searchEngine)
-{
-	if (searchEngine != m_searchEngine)
-	{
-		m_searchEngine = searchEngine;
-
-		updateSearchActions();
-	}
 }
 
 void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
@@ -325,28 +302,6 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 	}
 }
 
-void QtWebKitWebWidget::searchMenuAboutToShow()
-{
-	QAction *searchMenuAction = getAction(SearchMenuAction);
-
-	if (searchMenuAction->isEnabled() && searchMenuAction->menu()->actions().isEmpty())
-	{
-		const QStringList engines = SearchesManager::getSearchEngines();
-
-		for (int i = 0; i < engines.count(); ++i)
-		{
-			SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
-
-			if (search)
-			{
-				QAction *searchAction = searchMenuAction->menu()->addAction(search->icon, search->title);
-				searchAction->setData(search->identifier);
-				searchAction->setToolTip(search->description);
-			}
-		}
-	}
-}
-
 void QtWebKitWebWidget::hideInspector()
 {
 	triggerAction(InspectPageAction, false);
@@ -380,29 +335,17 @@ void QtWebKitWebWidget::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
-void QtWebKitWebWidget::updateSearchActions(const QString &engine)
+void QtWebKitWebWidget::updateQuickSearchAction()
 {
-	if (sender() == SearchesManager::getInstance())
-	{
-		getAction(SearchMenuAction)->menu()->clear();
-	}
-
 	QAction *defaultSearchAction = getAction(SearchAction);
-	SearchInformation *search = SearchesManager::getSearchEngine(engine.isEmpty() ? m_searchEngine : engine);
+	SearchInformation *engine = SearchesManager::getSearchEngine(getQuickSearchEngine());
 
-	if (!search)
-	{
-		search = SearchesManager::getSearchEngine(SearchesManager::getSearchEngines().value(0, QString()));
-	}
-
-	if (search)
+	if (engine)
 	{
 		defaultSearchAction->setEnabled(true);
-		defaultSearchAction->setIcon(search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon);
-		defaultSearchAction->setText(search->title);
-		defaultSearchAction->setToolTip(search->description);
-
-		m_searchEngine = search->identifier;
+		defaultSearchAction->setIcon(engine->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
+		defaultSearchAction->setText(engine->title);
+		defaultSearchAction->setToolTip(engine->description);
 	}
 	else
 	{
@@ -622,7 +565,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 			break;
 		case SearchAction:
-			search(getAction(SearchAction));
+			quickSearch(getAction(SearchAction));
 
 			break;
 		case CreateSearchAction:
@@ -917,7 +860,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
 	{
-		updateSearchActions(m_searchEngine);
+		updateQuickSearchAction();
 
 		flags |= SelectionMenu;
 	}
@@ -979,8 +922,7 @@ WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
 {
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), parent);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
-	widget->setQuickSearchEngine(m_searchEngine);
-	widget->setUrl(getUrl());
+	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setHistory(getHistory());
 	widget->setZoom(getZoom());
 
@@ -1140,10 +1082,7 @@ QAction* QtWebKitWebWidget::getAction(WindowAction action)
 		case SearchMenuAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("SearchMenu"), true);
 
-			actionObject->setMenu(new QMenu(this));
-
-			connect(actionObject->menu(), SIGNAL(aboutToShow()), this, SLOT(searchMenuAboutToShow()));
-			connect(actionObject->menu(), SIGNAL(triggered(QAction*)), this, SLOT(search(QAction*)));
+			actionObject->setMenu(getQuickSearchMenu());
 
 			break;
 		case OpenSelectionAsLinkAction:
@@ -1249,9 +1188,9 @@ QString QtWebKitWebWidget::getTitle() const
 	return title;
 }
 
-QString QtWebKitWebWidget::getSearchEngine() const
+QString QtWebKitWebWidget::getSelectedText() const
 {
-	return m_searchEngine;
+	return m_webView->selectedText();
 }
 
 QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)
@@ -1566,8 +1505,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					}
 				}
 			}
-
-			if (mouseEvent->button() == Qt::MiddleButton)
+			else if (mouseEvent->button() == Qt::MiddleButton)
 			{
 				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
@@ -1580,8 +1518,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
-
-			if (mouseEvent->button() == Qt::BackButton)
+			else if (mouseEvent->button() == Qt::BackButton)
 			{
 				triggerAction(GoBackAction);
 
@@ -1589,8 +1526,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
-
-			if (mouseEvent->button() == Qt::ForwardButton)
+			else if (mouseEvent->button() == Qt::ForwardButton)
 			{
 				triggerAction(GoForwardAction);
 

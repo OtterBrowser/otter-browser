@@ -160,23 +160,12 @@
             <string>Save files to:</string>
            </property>
            <property name="buddy">
-            <cstring>downloadsLineEdit</cstring>
+            <cstring>downloadsFilePathWidget</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <layout class="QHBoxLayout" name="browseDownloadsLayout">
-           <item>
-            <widget class="QLineEdit" name="downloadsLineEdit"/>
-           </item>
-           <item>
-            <widget class="QToolButton" name="downloadsBrowseButton">
-             <property name="text">
-              <string>Browse...</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="Otter::FilePathWidget" name="downloadsFilePathWidget" native="true"/>
          </item>
         </layout>
        </item>
@@ -1627,9 +1616,6 @@
                     <property name="text">
                      <string>Path to PAC file:</string>
                     </property>
-                    <property name="buddy">
-                     <cstring>downloadsLineEdit</cstring>
-                    </property>
                    </widget>
                   </item>
                   <item>
@@ -1984,6 +1970,12 @@
    <extends>QTableView</extends>
    <header>src/ui/TableViewWidget.h</header>
   </customwidget>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
@@ -1992,8 +1984,6 @@
   <tabstop>currentAsStartPageButton</tabstop>
   <tabstop>bookmarkAsStartPageButton</tabstop>
   <tabstop>restoreStartPagehButton</tabstop>
-  <tabstop>downloadsLineEdit</tabstop>
-  <tabstop>downloadsBrowseButton</tabstop>
   <tabstop>alwaysAskCheckBox</tabstop>
   <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>
   <tabstop>delayTabsLoadingCheckBox</tabstop>

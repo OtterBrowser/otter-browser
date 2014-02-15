@@ -51,7 +51,6 @@ protected:
 
 protected slots:
 	void restoreStartPage();
-	void browseDownloadsPath();
 	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void fontChanged(QWidget *editor);
 	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
