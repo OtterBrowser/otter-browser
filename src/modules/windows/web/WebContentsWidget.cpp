@@ -62,6 +62,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
 	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->findPreviousButton, SIGNAL(clicked()), this, SLOT(updateFind()));
+	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findLineEdit, SLOT(clear()));
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool)), this, SLOT(notifyRequestedOpenUrl(QUrl,bool,bool)));
@@ -407,6 +408,7 @@ bool WebContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
+			m_ui->findLineEdit->clear();
 			m_ui->findWidget->hide();
 		}
 	}
