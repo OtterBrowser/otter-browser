@@ -126,6 +126,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
+	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -135,7 +136,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
-	connect(page, SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -182,6 +182,19 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 	if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
 	{
 		m_webView->page()->history()->setMaximumItemCount(value.toInt());
+	}
+	else if (option == QLatin1String("Browser/JavaScriptCanShowStatusMessages"))
+	{
+		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+
+		if (value.toBool())
+		{
+			connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		}
+		else
+		{
+			setStatusMessage(QString());
+		}
 	}
 }
 
