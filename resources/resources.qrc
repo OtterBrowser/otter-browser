@@ -88,5 +88,6 @@
         <file>macros/platform.ini</file>
         <file>files/start.html</file>
         <file>schemas/bookmarks.sql</file>
+        <file>other/userAgents.ini</file>
     </qresource>
 </RCC>
