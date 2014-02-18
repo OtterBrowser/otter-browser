@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "BookmarksContentsWidget.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
@@ -332,6 +333,26 @@ void BookmarksContentsWidget::gatherBookmarks(int folder)
 	}
 }
 
+void BookmarksContentsWidget::triggerAction(WindowAction action, bool checked)
+{
+	Q_UNUSED(checked)
+
+	if (action == DeleteAction)
+	{
+		removeBookmark();
+	}
+}
+
+void BookmarksContentsWidget::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+	}
+}
+
 void BookmarksContentsWidget::updateFolder(int folder)
 {
 	QStandardItem *item = findFolder(folder);
@@ -415,6 +436,31 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 	}
 
 	return NULL;
+}
+
+QAction* BookmarksContentsWidget::getAction(WindowAction action)
+{
+	if (m_actions.contains(action))
+	{
+		return m_actions[action];
+	}
+
+	if (action != DeleteAction)
+	{
+		return NULL;
+	}
+
+	QAction *actionObject = new QAction(this);
+	actionObject->setData(action);
+
+	ActionsManager::setupLocalAction(actionObject, QLatin1String("Delete"));
+
+	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	m_actions[action] = actionObject;
+
+	return actionObject;
+
 }
 
 QString BookmarksContentsWidget::getTitle() const
