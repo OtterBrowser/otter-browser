@@ -32,7 +32,7 @@ namespace Otter
 {
 
 SessionsManager* SessionsManager::m_instance = NULL;
-QPointer<QWidget> SessionsManager::m_activeWindow = NULL;
+QPointer<MainWindow> SessionsManager::m_activeWindow = NULL;
 QString SessionsManager::m_session;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
@@ -123,17 +123,22 @@ void SessionsManager::removeStoredUrl(const QString &url)
 	emit m_instance->requestedRemoveStoredUrl(url);
 }
 
-void SessionsManager::setActiveWindow(QWidget *window)
+void SessionsManager::setActiveWindow(MainWindow *window)
 {
 	m_activeWindow = window;
 }
 
-SessionsManager *SessionsManager::getInstance()
+SessionsManager* SessionsManager::getInstance()
 {
 	return m_instance;
 }
 
-QWidget *SessionsManager::getActiveWindow()
+WindowsManager* SessionsManager::getWindowsManager()
+{
+	return (m_activeWindow ? m_activeWindow->getWindowsManager() : NULL);
+}
+
+QWidget* SessionsManager::getActiveWindow()
 {
 	return m_activeWindow;
 }

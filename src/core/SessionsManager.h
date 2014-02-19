@@ -118,8 +118,9 @@ public:
 	static void storeClosedWindow(WindowsManager *manager);
 	static void markSessionModified();
 	static void removeStoredUrl(const QString &url);
-	static void setActiveWindow(QWidget *window);
+	static void setActiveWindow(MainWindow *window);
 	static SessionsManager* getInstance();
+	static WindowsManager* getWindowsManager();
 	static QWidget* getActiveWindow();
 	static QString getCurrentSession();
 	static QString getCachePath();
@@ -146,7 +147,7 @@ private:
 	int m_autoSaveTimer;
 
 	static SessionsManager *m_instance;
-	static QPointer<QWidget> m_activeWindow;
+	static QPointer<MainWindow> m_activeWindow;
 	static QString m_session;
 	static QString m_cachePath;
 	static QString m_profilePath;
