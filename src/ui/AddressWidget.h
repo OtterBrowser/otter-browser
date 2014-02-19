@@ -51,6 +51,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
+	bool isAddress(const QString &text);
 
 protected slots:
 	void removeIcon();

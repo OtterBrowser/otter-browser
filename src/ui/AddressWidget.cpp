@@ -136,13 +136,9 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		const QString text = QApplication::clipboard()->text().trimmed();
 
-		if (QRegularExpression(QLatin1String("^[\\S]+\\.[\\S]+$")).match(text).hasMatch())
+		if (isAddress(text))
 		{
 			emit requestedLoadUrl(QUrl(text));
-		}
-		else
-		{
-			emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
 		}
 
 		event->accept();
@@ -165,6 +161,36 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	{
 		QLineEdit::mouseDoubleClickEvent(event);
 	}
+}
+
+bool AddressWidget::isAddress(const QString &text)
+{
+	const QUrl url = QUrl::fromUserInput(text);
+
+	if ((!QRegularExpression(QLatin1String("^[\\S]+\\.[\\S]+$")).match(text).hasMatch() && !(QRegularExpression(QLatin1String("^https?://")).match(text).hasMatch() && url.isValid())) || !url.isValid())
+	{
+		const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
+		const QStringList engines = SearchesManager::getSearchEngines();
+		SearchInformation *engine = NULL;
+
+		for (int i = 0; i < engines.count(); ++i)
+		{
+			engine = SearchesManager::getSearchEngine(engines.at(i));
+
+			if (engine && shortcut == engine->shortcut)
+			{
+				emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
+
+				return false;
+			}
+		}
+
+		emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+
+		return false;
+	}
+
+	return true;
 }
 
 void AddressWidget::removeIcon()
@@ -235,27 +261,10 @@ void AddressWidget::notifyRequestedLoadUrl()
 {
 	const QString url = text().trimmed();
 
-	if (QRegularExpression(QStringLiteral("^(%1) .+$").arg(SearchesManager::getSearchShortcuts().join(QLatin1Char('|')))).match(url).hasMatch())
+	if (isAddress(url))
 	{
-		const QStringList engines = SearchesManager::getSearchEngines();
-		const QString shortcut = url.section(QLatin1Char(' '), 0, 0);
-
-		for (int i = 0; i < engines.count(); ++i)
-		{
-			SearchInformation *search = SearchesManager::getSearchEngine(engines.at(i));
-
-			if (search && shortcut == search->shortcut)
-			{
-				emit requestedSearch(url.section(QLatin1Char(' '), 1), search->identifier);
-
-				return;
-			}
-		}
-
-		return;
+		emit requestedLoadUrl(getUrl());
 	}
-
-	emit requestedLoadUrl(getUrl());
 }
 
 void AddressWidget::updateBookmark()
