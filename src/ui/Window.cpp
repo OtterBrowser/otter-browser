@@ -188,9 +188,9 @@ void Window::updateGoBackMenu()
 
 	for (int i = (history.index - 1); i >= 0; --i)
 	{
-		const QString title = history.entries.at(i).title;
+		QString title = history.entries.at(i).title;
 
-		m_ui->backButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title))->setData(i);
+		m_ui->backButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))))->setData(i);
 	}
 }
 
@@ -208,9 +208,9 @@ void Window::updateGoForwardMenu()
 
 	for (int i = (history.index + 1); i < history.entries.count(); ++i)
 	{
-		const QString title = history.entries.at(i).title;
+		QString title = history.entries.at(i).title;
 
-		m_ui->forwardButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title))->setData(i);
+		m_ui->forwardButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))))->setData(i);
 	}
 }
 

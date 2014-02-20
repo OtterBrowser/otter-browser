@@ -620,7 +620,7 @@ void MainWindow::menuSessionsAboutToShow()
 			windows += sorted.at(i).windows.at(j).windows.count();
 		}
 
-		QAction *action = m_ui->menuSessions->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title));
+		QAction *action = m_ui->menuSessions->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
 
@@ -754,7 +754,7 @@ void MainWindow::menuBookmarksAboutToShow()
 		{
 			if (bookmarks.at(i)->type == FolderBookmark || bookmarks.at(i)->type == UrlBookmark)
 			{
-				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon(QLatin1String("inode-directory")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title));
+				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon(QLatin1String("inode-directory")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : QString(bookmarks.at(i)->title).replace(QLatin1Char('&'), QLatin1String("&&"))));
 				action->setToolTip(bookmarks.at(i)->description);
 
 				if (bookmarks.at(i)->type == FolderBookmark)
