@@ -122,7 +122,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 
 	for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 	{
-		urlString = urlString.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), valuesIterator.value());
+		urlString = urlString.replace(QStringLiteral("{%1}").arg(valuesIterator.key()), QUrl::toPercentEncoding(valuesIterator.value()));
 	}
 
 	*method = ((searchUrl.method == QLatin1String("post")) ? QNetworkAccessManager::PostOperation : QNetworkAccessManager::GetOperation);
