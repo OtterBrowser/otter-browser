@@ -77,6 +77,7 @@ private:
 
 	static HistoryManager *m_instance;
 	static bool m_enabled;
+	static bool m_storeFavicons;
 
 signals:
 	void cleared();

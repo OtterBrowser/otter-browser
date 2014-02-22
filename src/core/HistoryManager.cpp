@@ -34,6 +34,7 @@ namespace Otter
 
 HistoryManager* HistoryManager::m_instance = NULL;
 bool HistoryManager::m_enabled = false;
+bool HistoryManager::m_storeFavicons = true;
 
 HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	m_cleanupTimer(0)
@@ -41,6 +42,7 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
 
 	optionChanged(QLatin1String("History/RememberBrowsing"));
+	optionChanged(QLatin1String("History/StoreFavicons"));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
@@ -209,6 +211,10 @@ void HistoryManager::optionChanged(const QString &option)
 
 		m_enabled = enabled;
 	}
+	else if (option == QLatin1String("History/StoreFavicons"))
+	{
+		m_storeFavicons = SettingsManager::getValue(option).toBool();
+	}
 }
 
 HistoryManager* HistoryManager::getInstance()
@@ -327,6 +333,11 @@ qint64 HistoryManager::getLocation(const QUrl &url)
 
 qint64 HistoryManager::getIcon(const QIcon &icon)
 {
+	if (!m_storeFavicons)
+	{
+		return 0;
+	}
+
 	QByteArray data;
 	QBuffer buffer(&data);
 	buffer.open(QIODevice::WriteOnly);
