@@ -46,7 +46,7 @@ void WebWidget::search(const QString &query, const QString &engine)
 
 void WebWidget::quickSearch(QAction *action)
 {
-	const QString engine = ((!action || action->data().type() != QVariant::String) ? m_quickSearchEngine : action->data().toString());
+	const QString engine = ((!action || action->data().type() != QVariant::String) ? getQuickSearchEngine() : action->data().toString());
 
 	if (SearchesManager::getSearchEngines().contains(engine))
 	{
