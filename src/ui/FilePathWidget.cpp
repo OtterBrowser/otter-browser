@@ -68,8 +68,11 @@ void FilePathWidget::updateCompleter()
 {
 	if (!m_completer)
 	{
+		FileSystemCompleterModel *model = new FileSystemCompleterModel(m_completer);
+		model->setFilter(m_selectFile ? QDir::Files : QDir::AllDirs);
+
 		m_completer = new QCompleter(this);
-		m_completer->setModel(new FileSystemCompleterModel(m_completer));
+		m_completer->setModel(model);
 
 		m_lineEdit->setCompleter(m_completer);
 
