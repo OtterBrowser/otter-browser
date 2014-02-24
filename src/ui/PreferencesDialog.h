@@ -50,6 +50,7 @@ protected:
 	QHash<QString, QList<QKeySequence> > getShortcuts() const;
 
 protected slots:
+	void useCurrentAsStartPage();
 	void restoreStartPage();
 	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void fontChanged(QWidget *editor);

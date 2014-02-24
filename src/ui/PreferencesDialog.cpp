@@ -30,6 +30,7 @@
 #include "../core/SearchesManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/Utils.h"
+#include "../core/WindowsManager.h"
 
 #include "ui_PreferencesDialog.h"
 
@@ -284,7 +285,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
-	connect(m_ui->restoreStartPagehButton, SIGNAL(clicked()), this, SLOT(restoreStartPage()));
+	connect(m_ui->useCurrentAsStartPageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsStartPage()));
+	connect(m_ui->restoreStartPageButton, SIGNAL(clicked()), this, SLOT(restoreStartPage()));
 	connect(m_ui->fontsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentFontChanged(int,int,int,int)));
 	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
 	connect(m_ui->colorsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentColorChanged(int,int,int,int)));
@@ -344,6 +346,16 @@ void PreferencesDialog::changeEvent(QEvent *event)
 			break;
 		default:
 			break;
+	}
+}
+
+void PreferencesDialog::useCurrentAsStartPage()
+{
+	WindowsManager *manager = SessionsManager::getWindowsManager();
+
+	if (manager)
+	{
+		m_ui->startPageLineEdit->setText(manager->getUrl().toString(QUrl::RemovePassword));
 	}
 }
 

@@ -106,10 +106,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="currentAsStartPageButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <widget class="QPushButton" name="useCurrentAsStartPageButton">
              <property name="text">
               <string>Use Current Page</string>
              </property>
@@ -126,7 +123,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="restoreStartPagehButton">
+            <widget class="QPushButton" name="restoreStartPageButton">
              <property name="text">
               <string>Restore to Default</string>
              </property>
@@ -1981,9 +1978,9 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>startupComboBox</tabstop>
   <tabstop>startPageLineEdit</tabstop>
-  <tabstop>currentAsStartPageButton</tabstop>
+  <tabstop>useCurrentAsStartPageButton</tabstop>
   <tabstop>bookmarkAsStartPageButton</tabstop>
-  <tabstop>restoreStartPagehButton</tabstop>
+  <tabstop>restoreStartPageButton</tabstop>
   <tabstop>alwaysAskCheckBox</tabstop>
   <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>
   <tabstop>delayTabsLoadingCheckBox</tabstop>
