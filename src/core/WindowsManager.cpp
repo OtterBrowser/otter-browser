@@ -80,7 +80,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 	addWindow(window, background);
 
-	window->setUrl(url, false);
+	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
 }
 
 void WindowsManager::search(const QString &query, const QString &engine)

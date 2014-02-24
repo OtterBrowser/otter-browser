@@ -281,11 +281,6 @@ void Window::setUrl(const QUrl &url, bool typed)
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
 		newWidget = new WebContentsWidget(m_isPrivate, NULL, this);
-
-		if (!isRestoring)
-		{
-			newWidget->setUrl(QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()), false);
-		}
 	}
 
 	if (newWidget)
