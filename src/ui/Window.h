@@ -184,7 +184,7 @@ signals:
 	void requestedCloseWindow(Window *window);
 	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(ContentsWidget *widget);
+	void requestedNewWindow(ContentsWidget *widget, bool background, bool newWindow);
 	void requestedSearch(QString query, QString engine);
 	void actionsChanged();
 	void canZoomChanged(bool can);

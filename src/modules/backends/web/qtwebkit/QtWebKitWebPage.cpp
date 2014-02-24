@@ -132,7 +132,7 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 			widget->setZoom(m_webWidget->getZoom());
 		}
 
-		emit requestedNewWindow(widget);
+		emit requestedNewWindow(widget, false, false);
 
 		return page;
 	}

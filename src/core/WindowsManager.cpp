@@ -303,7 +303,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
 	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
-	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*)), this, SLOT(addWindow(ContentsWidget*)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,bool,bool)), this, SLOT(openWindow(ContentsWidget*,bool,bool)));
 	connect(window, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
@@ -315,16 +315,26 @@ void WindowsManager::addWindow(Window *window, bool background)
 	emit windowAdded(index);
 }
 
-void WindowsManager::addWindow(ContentsWidget *widget, bool detached)
+void WindowsManager::openWindow(ContentsWidget *widget, bool background, bool newWindow)
 {
-	if (widget)
+	if (!widget)
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_mdi));
+		return;
+	}
 
-		if (detached)
+	if (newWindow)
+	{
+		MainWindow *mainWindow = Application::getInstance()->createWindow(widget->isPrivate(), background);
+
+		if (mainWindow)
 		{
-			closeOther();
+			mainWindow->getWindowsManager()->openWindow(widget);
+			mainWindow->getWindowsManager()->closeOther();
 		}
+	}
+	else
+	{
+		addWindow(new Window(widget->isPrivate(), widget, m_mdi), background);
 	}
 }
 
@@ -347,13 +357,14 @@ void WindowsManager::detachWindow(int index)
 		return;
 	}
 
-	MainWindow *mainWindow = Application::getInstance()->createWindow(m_isPrivate, false);
+	MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), false);
 
 	if (mainWindow)
 	{
 		window->getContentsWidget()->setParent(NULL);
 
-		mainWindow->getWindowsManager()->addWindow(window->getContentsWidget(), true);
+		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget(), true);
+		mainWindow->getWindowsManager()->closeOther();
 
 		m_tabBar->removeTab(index);
 

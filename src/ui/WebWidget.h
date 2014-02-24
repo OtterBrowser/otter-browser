@@ -114,7 +114,7 @@ private:
 signals:
 	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(WebWidget *widget);
+	void requestedNewWindow(WebWidget *widget, bool background, bool newWindow);
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void progressBarGeometryChanged();

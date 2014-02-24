@@ -66,7 +66,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool)), this, SLOT(notifyRequestedOpenUrl(QUrl,bool,bool)));
-	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*)), this, SLOT(notifyRequestedNewWindow(WebWidget*)));
+	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)), this, SLOT(notifyRequestedNewWindow(WebWidget*,bool,bool)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 	connect(m_webWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
@@ -232,9 +232,9 @@ void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, bool background,
 	emit requestedOpenUrl(url, isPrivate(), background, newWindow);
 }
 
-void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget)
+void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, bool background, bool newWindow)
 {
-	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL));
+	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL), background, newWindow);
 }
 
 void WebContentsWidget::updateFind(bool backwards)

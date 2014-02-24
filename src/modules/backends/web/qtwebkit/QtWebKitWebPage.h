@@ -57,7 +57,7 @@ private:
 	bool m_ignoreJavaScriptPopups;
 
 signals:
-	void requestedNewWindow(WebWidget *widget);
+	void requestedNewWindow(WebWidget *widget, bool background, bool newWindow);
 };
 
 }

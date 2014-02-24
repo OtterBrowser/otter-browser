@@ -77,6 +77,7 @@ protected:
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
+	void openUrl(QUrl url, bool background, bool newWindow);
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:
