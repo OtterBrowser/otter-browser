@@ -797,6 +797,8 @@ void QtWebKitWebWidget::setZoom(int zoom)
 	{
 		m_webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
 
+		SessionsManager::markSessionModified();
+
 		emit zoomChanged(zoom);
 		emit progressBarGeometryChanged();
 	}
