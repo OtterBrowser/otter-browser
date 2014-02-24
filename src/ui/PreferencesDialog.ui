@@ -202,9 +202,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="reuseCurrentTabCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Reuse current tab</string>
          </property>

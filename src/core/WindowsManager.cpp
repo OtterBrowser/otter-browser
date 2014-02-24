@@ -87,6 +87,13 @@ void WindowsManager::search(const QString &query, const QString &engine)
 {
 	Window *window = m_mdi->getActiveWindow();
 
+	if (window && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	{
+		window->search(query, engine);
+
+		return;
+	}
+
 	if (window && window->canClone())
 	{
 		window = window->clone(false, m_mdi);
