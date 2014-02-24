@@ -933,12 +933,17 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	WebWidget::showContextMenu(hitPosition, flags);
 }
 
-WebWidget* QtWebKitWebWidget::clone(ContentsWidget *parent)
+WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), parent);
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
 	widget->setQuickSearchEngine(getQuickSearchEngine());
-	widget->setHistory(getHistory());
+
+	if (cloneHistory)
+	{
+		widget->setHistory(getHistory());
+	}
+
 	widget->setZoom(getZoom());
 
 	return widget;

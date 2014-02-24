@@ -89,11 +89,9 @@ void WindowsManager::search(const QString &query, const QString &engine)
 
 	if (window && window->canClone())
 	{
-		window = window->clone(m_mdi);
+		window = window->clone(false, m_mdi);
 
 		addWindow(window);
-
-		window->getContentsWidget()->setHistory(WindowHistoryInformation());
 	}
 	else
 	{
@@ -336,7 +334,7 @@ void WindowsManager::cloneWindow(int index)
 
 	if (window && window->canClone())
 	{
-		addWindow(window->clone(m_mdi));
+		addWindow(window->clone(true, m_mdi));
 	}
 }
 

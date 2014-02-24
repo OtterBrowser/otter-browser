@@ -65,7 +65,7 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void setQuickSearchEngine(const QString &engine);
-	virtual WebWidget* clone(ContentsWidget *parent = NULL) = 0;
+	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();

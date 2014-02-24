@@ -44,7 +44,7 @@ class QtWebKitWebWidget : public WebWidget
 public:
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
-	WebWidget* clone(ContentsWidget *parent = NULL);
+	WebWidget* clone(bool cloneHistory = true);
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;

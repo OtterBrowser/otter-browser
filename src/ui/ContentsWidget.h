@@ -47,7 +47,7 @@ public:
 
 	virtual void print(QPrinter *printer) = 0;
 	void setParent(Window *window);
-	virtual ContentsWidget* clone(Window *window = NULL);
+	virtual ContentsWidget* clone(bool cloneHistory = true);
 	virtual QAction* getAction(WindowAction action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;

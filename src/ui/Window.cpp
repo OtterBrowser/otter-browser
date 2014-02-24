@@ -393,14 +393,14 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 }
 
-Window* Window::clone(QWidget *parent)
+Window* Window::clone(bool cloneHistory, QWidget *parent)
 {
 	if (!m_contentsWidget || !canClone())
 	{
 		return NULL;
 	}
 
-	Window *window = new Window(false, m_contentsWidget->clone(), parent);
+	Window *window = new Window(false, m_contentsWidget->clone(cloneHistory), parent);
 	window->setSearchEngine(getSearchEngine());
 	window->setPinned(isPinned());
 

@@ -160,9 +160,9 @@ void ContentsWidget::setParent(Window *window)
 	QWidget::setParent(window);
 }
 
-ContentsWidget* ContentsWidget::clone(Window *window)
+ContentsWidget* ContentsWidget::clone(bool cloneHistory)
 {
-	Q_UNUSED(window)
+	Q_UNUSED(cloneHistory)
 
 	return NULL;
 }

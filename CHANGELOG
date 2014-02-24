@@ -1,5 +1,6 @@
 0.3.01 (--.--.2014):
-- added support for proxy auto-config (PAC).
+- added support for proxy auto-config (PAC);
+- various small fixes.
 
 0.2.01 (01.02.2014):
 - added support for profiles defining keyboard shortcuts and action macros;

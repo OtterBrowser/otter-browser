@@ -135,7 +135,7 @@ public:
 
 	void restore(SessionWindow session);
 	void close();
-	Window* clone(QWidget *parent = NULL);
+	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
 	QString getDefaultTextEncoding() const;
 	QString getSearchEngine() const;

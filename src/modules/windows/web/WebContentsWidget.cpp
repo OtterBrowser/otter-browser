@@ -320,14 +320,14 @@ void WebContentsWidget::setLoading(bool loading)
 	scheduleGeometryUpdate();
 }
 
-WebContentsWidget* WebContentsWidget::clone(Window *parent)
+WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 {
 	if (!canClone())
 	{
 		return NULL;
 	}
 
-	return new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(), parent);
+	return new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), NULL);
 }
 
 QAction* WebContentsWidget::getAction(WindowAction action)

@@ -43,7 +43,7 @@ public:
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
-	WebContentsWidget* clone(Window *parent = NULL);
+	WebContentsWidget* clone(bool cloneHistory = true);
 	QAction* getAction(WindowAction action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
