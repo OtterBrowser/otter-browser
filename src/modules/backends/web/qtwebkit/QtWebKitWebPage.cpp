@@ -26,6 +26,7 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
+#include <QtGui/QDesktopServices>
 #include <QtNetwork/QNetworkReply>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
@@ -146,7 +147,14 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 	{
 		frame->evaluateJavaScript(request.url().path());
 
-		return true;
+		return false;
+	}
+
+	if (request.url().scheme() == QLatin1String("mailto"))
+	{
+		QDesktopServices::openUrl(request.url());
+
+		return false;
 	}
 
 	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
