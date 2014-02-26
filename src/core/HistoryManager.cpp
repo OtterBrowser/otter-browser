@@ -150,6 +150,7 @@ void HistoryManager::clearHistory(int period)
 		database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
 		database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
 		database.open();
+		database.exec(QStringLiteral("PRAGMA journal_mode = %1;").arg(SettingsManager::getValue(QLatin1String("Browser/SqliteJournalMode")).toString()));
 	}
 
 	const QString path = SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite");
@@ -190,6 +191,7 @@ void HistoryManager::optionChanged(const QString &option)
 			QSqlDatabase database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
 			database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
 			database.open();
+			database.exec(QStringLiteral("PRAGMA journal_mode = %1;").arg(SettingsManager::getValue(QLatin1String("Browser/SqliteJournalMode")).toString()));
 
 			if (!database.tables().contains(QLatin1String("visits")))
 			{
