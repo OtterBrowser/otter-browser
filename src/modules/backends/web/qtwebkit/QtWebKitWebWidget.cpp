@@ -864,11 +864,13 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		return;
 	}
 
-	MenuFlags flags = NoMenu;
-
 	m_hitResult = frame->hitTestContent(hitPosition);
 
-	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text") || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("search"))))
+	MenuFlags flags = NoMenu;
+	const QString tagName = m_hitResult.element().tagName().toLower();
+	const QString tagType = m_hitResult.element().attribute(QLatin1String("type")).toLower();
+
+	if (tagName == QLatin1String("textarea") || tagName == QLatin1String("select") || (tagName == QLatin1String("input") && (tagType.isEmpty() || tagType == QLatin1String("text") || tagType == QLatin1String("search"))))
 	{
 		QWebElement parentElement = m_hitResult.element().parent();
 
@@ -909,7 +911,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	{
 		flags |= MediaMenu;
 
-		const bool isVideo = (m_hitResult.element().tagName().toLower() == QLatin1String("video"));
+		const bool isVideo = (tagName == QLatin1String("video"));
 		const bool isPaused = m_hitResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool();
 		const bool isMuted = m_hitResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool();
 
