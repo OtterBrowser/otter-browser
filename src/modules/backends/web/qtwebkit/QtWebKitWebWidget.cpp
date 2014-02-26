@@ -868,7 +868,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	m_hitResult = frame->hitTestContent(hitPosition);
 
-	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text"))))
+	if (m_hitResult.element().tagName().toLower() == QLatin1String("textarea") || m_hitResult.element().tagName().toLower() == QLatin1String("select") || (m_hitResult.element().tagName().toLower() == QLatin1String("input") && (m_hitResult.element().attribute(QLatin1String("type")).isEmpty() || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("text") || m_hitResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("search"))))
 	{
 		QWebElement parentElement = m_hitResult.element().parent();
 
