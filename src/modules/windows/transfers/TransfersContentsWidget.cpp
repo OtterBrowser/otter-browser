@@ -289,7 +289,7 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 
 	if (transfer)
 	{
-		QDesktopServices::openUrl(QUrl(transfer->target, QUrl::TolerantMode));
+		QDesktopServices::openUrl(QUrl::fromLocalFile(transfer->target));
 	}
 }
 
@@ -299,7 +299,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 	if (transfer)
 	{
-		QDesktopServices::openUrl(QUrl(QFileInfo(transfer->target).dir().canonicalPath(), QUrl::TolerantMode));
+		QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(transfer->target).dir().canonicalPath()));
 	}
 }
 
