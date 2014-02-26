@@ -169,8 +169,9 @@ void CookiesContentsWidget::removeCookies()
 	}
 
 	QNetworkCookieJar *cookieJar = NetworkAccessManager::getCookieJar();
+	QList<QNetworkCookie> cookies;
 
-	for (int i = (indexes.count() - 1); i >= 0; --i)
+	for (int i = 0; i < indexes.count(); ++i)
 	{
 		if (!indexes.at(i).isValid())
 		{
@@ -186,13 +187,13 @@ void CookiesContentsWidget::removeCookies()
 				continue;
 			}
 
-			for (int j = (domainItem->rowCount() - 1); j >= 0; --j)
+			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
 				QStandardItem *cookieItem = domainItem->child(j, 0);
 
 				if (cookieItem)
 				{
-					cookieJar->deleteCookie(getCookie((cookieItem->index())));
+					cookies.append(getCookie((cookieItem->index())));
 				}
 			}
 		}
@@ -202,16 +203,21 @@ void CookiesContentsWidget::removeCookies()
 
 			if (cookieItem)
 			{
-				cookieJar->deleteCookie(getCookie(cookieItem->index()));
+				cookies.append(getCookie(cookieItem->index()));
 			}
 		}
+	}
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		cookieJar->deleteCookie(cookies.at(i));
 	}
 }
 
 void CookiesContentsWidget::removeDomainCookies()
 {
 	const QModelIndex index = m_ui->cookiesView->currentIndex();
-	QStandardItem *domainItem = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::DisplayRole).toString()) : m_model->itemFromIndex(index.parent()));
+	QStandardItem *domainItem = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(index.parent()));
 
 	if (!domainItem)
 	{
@@ -219,15 +225,21 @@ void CookiesContentsWidget::removeDomainCookies()
 	}
 
 	QNetworkCookieJar *cookieJar = NetworkAccessManager::getCookieJar();
+	QList<QNetworkCookie> cookies;
 
-	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
+	for (int i = 0; i < domainItem->rowCount(); ++i)
 	{
 		QStandardItem *cookieItem = domainItem->child(i, 0);
 
 		if (cookieItem)
 		{
-			cookieJar->deleteCookie(getCookie(cookieItem->index()));
+			cookies.append(getCookie(cookieItem->index()));
 		}
+	}
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		cookieJar->deleteCookie(cookies.at(i));
 	}
 }
 
