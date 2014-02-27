@@ -534,7 +534,7 @@ void PreferencesDialog::editSearch()
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
-		const QString shortcut = m_ui->searchViewWidget->getIndex(i, 0).data(Qt::DisplayRole).toString();
+		const QString shortcut = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
 
 		if (m_ui->searchViewWidget->getCurrentRow() != i && !shortcut.isEmpty())
 		{
