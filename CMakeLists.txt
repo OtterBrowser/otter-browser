@@ -147,14 +147,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	qt5_use_modules(otter-browser WinExtras)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-target_link_libraries(otter-browser
-	Qt5::Core
-	Qt5::Network
-	Qt5::PrintSupport
-	Qt5::Script
-	Qt5::Sql
-	Qt5::Widgets
-	Qt5::WebKitWidgets
-)
+qt5_use_modules(otter-browser WebKitWidgets Script)
 
 install(TARGETS otter-browser DESTINATION bin)
