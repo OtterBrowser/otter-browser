@@ -20,7 +20,7 @@
 #ifndef OTTER_BOOKMARKSMANAGER_H
 #define OTTER_BOOKMARKSMANAGER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QDateTime>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
 #include <QtGui/QStandardItemModel>
