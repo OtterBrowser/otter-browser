@@ -40,12 +40,15 @@ struct BookmarkInformation
 	QString url;
 	QString title;
 	QString description;
+	QDateTime created;
+	QDateTime visited;
 	QList<BookmarkInformation*> children;
 	BookmarkType type;
 	int identifier;
 	int parent;
+	int visits;
 
-	BookmarkInformation() : type(FolderBookmark), identifier(-1), parent(-1) {}
+	BookmarkInformation() : type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
 };
 
 class BookmarksManager : public QObject
