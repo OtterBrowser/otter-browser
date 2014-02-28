@@ -167,7 +167,7 @@ bool AddressWidget::isAddress(const QString &text)
 {
 	const QUrl url = QUrl::fromUserInput(text);
 
-	if ((!QRegularExpression(QLatin1String("^[\\S]+\\.[\\S]+$")).match(text).hasMatch() && !(QRegularExpression(QLatin1String("^https?://")).match(text).hasMatch() && url.isValid())) || !url.isValid())
+	if (!QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch() || !url.isValid())
 	{
 		const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
 		const QStringList engines = SearchesManager::getSearchEngines();
