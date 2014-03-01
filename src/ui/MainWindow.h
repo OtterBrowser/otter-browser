@@ -71,6 +71,7 @@ protected slots:
 	void actionManageSessions();
 	void actionSession(QAction *action);
 	void actionWorkOffline(bool enabled);
+	void actionUserAgent(QAction *action);
 	void actionTextEncoding(QAction *action);
 	void actionClearClosedWindows();
 	void actionRestoreClosedWindow();
@@ -86,6 +87,7 @@ protected slots:
 	void actionAboutApplication();
 	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();
+	void menuUserAgentAboutToShow();
 	void menuTextEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
 	void menuBookmarksAboutToShow();
@@ -102,6 +104,7 @@ private:
 	WindowsManager *m_windowsManager;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_textEncodingGroup;
+	QActionGroup *m_userAgentGroup;
 	QMenu *m_closedWindowsMenu;
 #ifdef Q_OS_WIN
 	QWinTaskbarButton *m_taskbarButton;

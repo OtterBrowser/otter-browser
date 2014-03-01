@@ -48,6 +48,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
+	QPair<QString, QString> getUserAgent() const;
 	QList<SessionWindow> getClosedWindows() const;
 	int getWindowCount() const;
 	int getZoom() const;
@@ -68,6 +69,7 @@ public slots:
 	void clearClosedWindows();
 	void setActiveWindow(int index);
 	void setDefaultTextEncoding(const QString &encoding);
+	void setUserAgent(const QString &identifier);
 	void setZoom(int zoom);
 
 protected:

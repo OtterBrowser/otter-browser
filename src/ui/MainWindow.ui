@@ -114,6 +114,11 @@
       <string>Text Encoding</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menuUserAgent">
+     <property name="title">
+      <string>User Agent</string>
+     </property>
+    </widget>
     <addaction name="actionReload"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
@@ -125,6 +130,7 @@
     <addaction name="separator"/>
     <addaction name="actionViewSource"/>
     <addaction name="actionInspectPage"/>
+    <addaction name="menuUserAgent"/>
     <addaction name="separator"/>
     <addaction name="menuTextEncoding"/>
    </widget>
@@ -474,6 +480,11 @@
    </property>
    <property name="text">
     <string>Blocked Content...</string>
+   </property>
+  </action>
+  <action name="actionA">
+   <property name="text">
+    <string>a</string>
    </property>
   </action>
  </widget>

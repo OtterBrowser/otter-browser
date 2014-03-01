@@ -505,6 +505,21 @@ WindowHistoryInformation Window::getHistory() const
 	return m_contentsWidget->getHistory();
 }
 
+QPair<QString, QString> Window::getUserAgent() const
+{
+	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
+	{
+		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+		if (webWidget)
+		{
+			return webWidget->getUserAgent();
+		}
+	}
+
+	return qMakePair(QString(), QString());
+}
+
 WindowLoadingState Window::getLoadingState() const
 {
 	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);

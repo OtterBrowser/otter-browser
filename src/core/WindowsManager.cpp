@@ -507,6 +507,16 @@ void WindowsManager::setDefaultTextEncoding(const QString &encoding)
 	}
 }
 
+void WindowsManager::setUserAgent(const QString &identifier)
+{
+	Window *window = m_mdi->getActiveWindow();
+
+	if (window)
+	{
+		window->setUserAgent(identifier);
+	}
+}
+
 void WindowsManager::setZoom(int zoom)
 {
 	Window *window = m_mdi->getActiveWindow();
@@ -665,6 +675,13 @@ SessionMainWindow WindowsManager::getSession() const
 	}
 
 	return session;
+}
+
+QPair<QString, QString> WindowsManager::getUserAgent() const
+{
+	Window *window = m_mdi->getActiveWindow();
+
+	return (window ? window->getUserAgent() : qMakePair(QString(), QString()));
 }
 
 QList<SessionWindow> WindowsManager::getClosedWindows() const

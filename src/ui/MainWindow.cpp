@@ -51,6 +51,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_windowsManager(NULL),
 	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
+	m_userAgentGroup(NULL),
 	m_closedWindowsMenu(new QMenu(this)),
 	m_ui(new Ui::MainWindow)
 {
@@ -140,6 +141,14 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 
 	SessionsManager::registerWindow(m_windowsManager);
 
+#ifdef Q_OS_WIN
+	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+#endif
+
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
@@ -194,6 +203,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	connect(m_ui->menuFile, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
 	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
+	connect(m_ui->menuUserAgent, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
@@ -211,14 +221,6 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	setWindowTitle(QStringLiteral("%1 - Otter").arg(m_windowsManager->getTitle()));
 
 	m_ui->panelDockWidget->hide();
-
-#ifdef Q_OS_WIN
-	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-#endif
 }
 
 MainWindow::~MainWindow()
@@ -399,6 +401,14 @@ void MainWindow::actionSession(QAction *action)
 void MainWindow::actionWorkOffline(bool enabled)
 {
 	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enabled);
+}
+
+void MainWindow::actionUserAgent(QAction *action)
+{
+	if (action)
+	{
+		m_windowsManager->setUserAgent(action->data().toString());
+	}
 }
 
 void MainWindow::actionTextEncoding(QAction *action)
@@ -630,6 +640,65 @@ void MainWindow::menuSessionsAboutToShow()
 		}
 
 		m_sessionsGroup->addAction(action);
+	}
+}
+
+void MainWindow::menuUserAgentAboutToShow()
+{
+	if (!m_userAgentGroup)
+	{
+		const QStringList userAgents = NetworkAccessManager::getUserAgents();
+
+		m_userAgentGroup = new QActionGroup(this);
+		m_userAgentGroup->setExclusive(true);
+
+		QAction *defaultAction = m_ui->menuUserAgent->addAction(tr("Default"));
+		defaultAction->setData(QLatin1String("default"));
+		defaultAction->setCheckable(true);
+
+		m_userAgentGroup->addAction(defaultAction);
+
+		m_ui->menuUserAgent->addSeparator();
+
+		for (int i = 0; i < userAgents.count(); ++i)
+		{
+			const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
+
+			QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
+			userAgentAction->setData(userAgents.at(i));
+			userAgentAction->setCheckable(true);
+
+			m_userAgentGroup->addAction(userAgentAction);
+		}
+
+		m_ui->menuUserAgent->addSeparator();
+
+		QAction *customAction = m_ui->menuUserAgent->addAction(tr("Custom"));
+		customAction->setData(QLatin1String("custom"));
+		customAction->setCheckable(true);
+
+		m_userAgentGroup->addAction(customAction);
+
+		connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
+	}
+
+	const QString userAgent = m_windowsManager->getUserAgent().first.toLower();
+
+	for (int i = 0; i < m_ui->menuUserAgent->actions().count(); ++i)
+	{
+		QAction *action = m_ui->menuUserAgent->actions().at(i);
+
+		if (action && userAgent == action->text().toLower())
+		{
+			action->setChecked(true);
+
+			break;
+		}
+	}
+
+	if (!m_userAgentGroup->checkedAction())
+	{
+		m_ui->menuUserAgent->actions().first()->setChecked(true);
 	}
 }
 

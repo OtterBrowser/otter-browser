@@ -145,6 +145,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
+	QPair<QString, QString> getUserAgent() const;
 	WindowLoadingState getLoadingState() const;
 	bool canClone() const;
 	bool isPinned() const;
