@@ -39,6 +39,8 @@ namespace Otter
 CookieJar* NetworkAccessManager::m_cookieJar = NULL;
 QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
 NetworkCache* NetworkAccessManager::m_cache = NULL;
+QStringList NetworkAccessManager::m_userAgentsOrder;
+QHash<QString, UserAgentInformation> NetworkAccessManager::m_userAgents;
 
 NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
@@ -324,6 +326,12 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 	}
 }
 
+void NetworkAccessManager::setUserAgent(const QString &identifier, const QString &value)
+{
+	m_userAgentIdentifier = identifier;
+	m_userAgentValue = value;
+}
+
 QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
 	if (!m_simpleMode)
@@ -341,6 +349,11 @@ QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	if (m_disableReferrer)
 	{
 		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
+
+	if (!m_userAgentIdentifier.isEmpty())
+	{
+		mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgentValue);
 	}
 
 	if (SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool())
@@ -398,6 +411,31 @@ NetworkCache* NetworkAccessManager::getCache()
 	}
 
 	return m_cache;
+}
+
+UserAgentInformation NetworkAccessManager::getUserAgent(const QString &identifier)
+{
+	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = QLatin1String("default");
+		userAgent.title = tr("Default");
+		userAgent.description = tr("Default User Agent");
+
+		return userAgent;
+	}
+
+	return m_userAgents[identifier];
+}
+
+QPair<QString, QString> NetworkAccessManager::getUserAgent() const
+{
+	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
+}
+
+QStringList NetworkAccessManager::getUserAgents()
+{
+	return m_userAgentsOrder;
 }
 
 }

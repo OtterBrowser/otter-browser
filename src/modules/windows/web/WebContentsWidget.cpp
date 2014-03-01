@@ -202,6 +202,11 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	}
 }
 
+void WebContentsWidget::setUserAgent(const QString &identifier, const QString &value)
+{
+	m_webWidget->setUserAgent(identifier, value);
+}
+
 void WebContentsWidget::setDefaultTextEncoding(const QString &encoding)
 {
 	m_webWidget->setDefaultTextEncoding(encoding);
@@ -378,6 +383,11 @@ QPixmap WebContentsWidget::getThumbnail() const
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
+}
+
+QPair<QString, QString> WebContentsWidget::getUserAgent() const
+{
+	return m_webWidget->getUserAgent();
 }
 
 int WebContentsWidget::getZoom() const

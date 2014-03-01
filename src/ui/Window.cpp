@@ -32,6 +32,7 @@
 #include "ui_Window.h"
 
 #include <QtCore/QTimer>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -225,6 +226,34 @@ void Window::setDefaultTextEncoding(const QString &encoding)
 			return webWidget->setDefaultTextEncoding(encoding);
 		}
 	}
+}
+
+void Window::setUserAgent(const QString &identifier)
+{
+	WebContentsWidget *webWidget = NULL;
+
+	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
+	{
+		webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+		if (!webWidget)
+		{
+			return;
+		}
+	}
+
+	QString value;
+
+	if (identifier == QLatin1String("custom"))
+	{
+		value = QInputDialog::getText(this, tr("Select User Agent"), tr("Input User Agent:"), QLineEdit::Normal, webWidget->getUserAgent().second);
+	}
+	else
+	{
+		value = NetworkAccessManager::getUserAgent(identifier).value;
+	}
+
+	webWidget->setUserAgent(identifier, value);
 }
 
 void Window::setSearchEngine(const QString &engine)

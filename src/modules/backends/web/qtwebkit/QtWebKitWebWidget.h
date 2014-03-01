@@ -56,6 +56,7 @@ public:
 	QPixmap getThumbnail();
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	QPair<QString, QString> getUserAgent() const;
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
@@ -68,16 +69,18 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(WindowAction action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
+	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
-	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL, QtWebKitWebPage *page = NULL);
+	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(QUrl url, bool background, bool newWindow);
+	QWebPage* getPage();
 	QWebPage::WebAction mapAction(WindowAction action) const;
 
 protected slots:

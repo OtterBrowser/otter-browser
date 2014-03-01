@@ -26,6 +26,14 @@
 namespace Otter
 {
 
+struct UserAgentInformation
+{
+	QString identifier;
+	QString title;
+	QString description;
+	QString value;
+};
+
 class ContentsWidget;
 class CookieJar;
 class NetworkCache;
@@ -46,10 +54,15 @@ public:
 	};
 
 	void resetStatistics();
+	void setUserAgent(const QString &identifier, const QString &value);
+	QPair<QString, QString> getUserAgent() const;
+
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
 	static NetworkCache* getCache();
+	static UserAgentInformation getUserAgent(const QString &identifier);
+	static QStringList getUserAgents();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -67,6 +80,8 @@ protected slots:
 private:
 	ContentsWidget *m_widget;
 	QNetworkReply *m_mainReply;
+	QString m_userAgentIdentifier;
+	QString m_userAgentValue;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
@@ -82,6 +97,8 @@ private:
 	static CookieJar *m_cookieJar;
 	static QNetworkCookieJar *m_privateCookieJar;
 	static NetworkCache *m_cache;
+	static QStringList m_userAgentsOrder;
+	static QHash<QString, UserAgentInformation> m_userAgents;
 
 signals:
 	void messageChanged(const QString &message = QString());

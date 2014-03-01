@@ -81,6 +81,7 @@ public:
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	virtual QPair<QString, QString> getUserAgent() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -90,6 +91,7 @@ public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
+	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;

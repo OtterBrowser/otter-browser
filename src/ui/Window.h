@@ -153,6 +153,7 @@ public:
 public slots:
 	void search(const QString &query, const QString &engine);
 	void setDefaultTextEncoding(const QString &encoding);
+	void setUserAgent(const QString &identifier);
 	void setSearchEngine(const QString &engine);
 	void setUrl(const QUrl &url, bool typed = true);
 	void setPinned(bool pinned);

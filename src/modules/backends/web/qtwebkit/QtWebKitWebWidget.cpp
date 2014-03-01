@@ -52,7 +52,7 @@
 namespace Otter
 {
 
-QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent, QtWebKitWebPage *page) : WebWidget(privateWindow, backend, parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : WebWidget(privateWindow, backend, parent),
 	m_parent(parent),
 	m_webView(new QWebView(this)),
 	m_inspector(NULL),
@@ -75,14 +75,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
 
-	if (page)
-	{
-		page->setParent(this);
-	}
-	else
-	{
-		page = new QtWebKitWebPage(this);
-	}
+	QtWebKitWebPage *page = new QtWebKitWebPage(this);
 
 	m_networkAccessManager = new NetworkAccessManager(privateWindow, false, parent);
 	m_networkAccessManager->setParent(page);
@@ -749,6 +742,11 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 	m_webView->reload();
 }
 
+void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
+{
+	m_networkAccessManager->setUserAgent(identifier, value);
+}
+
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
@@ -947,8 +945,10 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
+	const QPair<QString, QString> userAgent = getUserAgent();
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
+	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 
 	if (cloneHistory)
@@ -1191,6 +1191,11 @@ QUndoStack* QtWebKitWebWidget::getUndoStack()
 	return m_webView->page()->undoStack();
 }
 
+QWebPage* QtWebKitWebWidget::getPage()
+{
+	return m_webView->page();
+}
+
 QString QtWebKitWebWidget::getDefaultTextEncoding() const
 {
 	return m_webView->settings()->defaultTextEncoding();
@@ -1223,6 +1228,11 @@ QString QtWebKitWebWidget::getTitle() const
 QString QtWebKitWebWidget::getSelectedText() const
 {
 	return m_webView->selectedText();
+}
+
+QPair<QString, QString> QtWebKitWebWidget::getUserAgent() const
+{
+	return m_networkAccessManager->getUserAgent();
 }
 
 QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)
