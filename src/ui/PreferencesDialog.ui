@@ -1337,7 +1337,7 @@
           </layout>
          </widget>
          <widget class="QWidget" name="networkPage">
-          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,1">
+          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,1">
            <item>
             <widget class="QLabel" name="advancedGeneralHeader">
              <property name="font">
@@ -1357,6 +1357,33 @@
               <string>Send referrer information</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="userAgentLayout">
+             <item>
+              <widget class="QLabel" name="userAgentLabel">
+               <property name="text">
+                <string>User Agent:</string>
+               </property>
+               <property name="buddy">
+                <cstring>userAgentComboBox</cstring>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="userAgentComboBox"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="userAgentButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Manage...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QLabel" name="proxyHeader">
@@ -1592,7 +1619,7 @@
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
                   <property name="leftMargin">
                    <number>0</number>
                   </property>
