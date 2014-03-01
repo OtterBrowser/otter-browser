@@ -119,6 +119,12 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 	QWebPage::setParent(parent);
 }
 
+void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value)
+{
+	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
+	m_userAgentValue = value;
+}
+
 QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
@@ -140,6 +146,21 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 	}
 
 	return QWebPage::createWindow(type);
+}
+
+QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
+{
+	if (!m_userAgentIdentifier.isEmpty())
+	{
+		return m_userAgentValue;
+	}
+
+	return QWebPage::userAgentForUrl(url);
+}
+
+QPair<QString, QString> QtWebKitWebPage::getUserAgent() const
+{
+	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
 }
 
 bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)

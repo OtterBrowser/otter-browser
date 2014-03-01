@@ -328,7 +328,7 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 
 void NetworkAccessManager::setUserAgent(const QString &identifier, const QString &value)
 {
-	m_userAgentIdentifier = identifier;
+	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
 	m_userAgentValue = value;
 }
 

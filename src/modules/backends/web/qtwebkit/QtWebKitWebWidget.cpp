@@ -55,6 +55,7 @@ namespace Otter
 QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : WebWidget(privateWindow, backend, parent),
 	m_parent(parent),
 	m_webView(new QWebView(this)),
+	m_page(new QtWebKitWebPage(this)),
 	m_inspector(NULL),
 	m_inspectorCloseButton(NULL),
 	m_networkAccessManager(NULL),
@@ -75,15 +76,13 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
 
-	QtWebKitWebPage *page = new QtWebKitWebPage(this);
-
 	m_networkAccessManager = new NetworkAccessManager(privateWindow, false, parent);
-	m_networkAccessManager->setParent(page);
+	m_networkAccessManager->setParent(m_page);
 
-	page->setNetworkAccessManager(m_networkAccessManager);
-	page->setForwardUnsupportedContent(true);
+	m_page->setNetworkAccessManager(m_networkAccessManager);
+	m_page->setForwardUnsupportedContent(true);
 
-	m_webView->setPage(page);
+	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
@@ -124,19 +123,19 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
-	connect(page, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)), this, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)));
-	connect(page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
-	connect(page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
-	connect(page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
-	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
-	connect(page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
-	connect(page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
-	connect(page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
-	connect(page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
-	connect(page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
-	connect(page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
-	connect(page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
-	connect(page->mainFrame(), SIGNAL(loadStarted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)), this, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)));
+	connect(m_page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
+	connect(m_page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
+	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
+	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
+	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
+	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
+	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
+	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
+	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
@@ -744,7 +743,7 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 
 void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
 {
-	m_networkAccessManager->setUserAgent(identifier, value);
+	m_page->setUserAgent(identifier, value);
 }
 
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
@@ -1232,7 +1231,7 @@ QString QtWebKitWebWidget::getSelectedText() const
 
 QPair<QString, QString> QtWebKitWebWidget::getUserAgent() const
 {
-	return m_networkAccessManager->getUserAgent();
+	return m_page->getUserAgent();
 }
 
 QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)

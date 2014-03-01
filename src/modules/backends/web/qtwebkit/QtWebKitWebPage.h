@@ -37,6 +37,8 @@ public:
 
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
+	void setUserAgent(const QString &identifier, const QString &value);
+	QPair<QString, QString> getUserAgent() const;
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
@@ -44,6 +46,7 @@ public:
 protected:
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	QWebPage* createWindow(WebWindowType type);
+	QString userAgentForUrl(const QUrl &url) const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message);
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
@@ -54,6 +57,8 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_webWidget;
+	QString m_userAgentIdentifier;
+	QString m_userAgentValue;
 	bool m_ignoreJavaScriptPopups;
 
 signals:

@@ -103,6 +103,7 @@ protected slots:
 private:
 	ContentsWidget *m_parent;
 	QWebView *m_webView;
+	QtWebKitWebPage *m_page;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
 	NetworkAccessManager *m_networkAccessManager;
