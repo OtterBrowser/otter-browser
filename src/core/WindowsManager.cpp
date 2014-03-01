@@ -196,7 +196,7 @@ void WindowsManager::restore(int index)
 	}
 
 	Window *window = new Window(m_isPrivate, NULL, m_mdi);
-	window->restore(m_closedWindows.at(index));
+	window->setSession(m_closedWindows.at(index));
 
 	m_closedWindows.removeAt(index);
 
@@ -439,14 +439,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (!history.entries.isEmpty())
 		{
-			const QPair<QString, QString> userAgent = window->getUserAgent();
-			SessionWindow information;
-			information.searchEngine = window->getSearchEngine();
-			information.userAgent = userAgent.first + ((userAgent.first == QLatin1String("custom")) ? QLatin1Char(';') + userAgent.second : QString());
-			information.history = history.entries;
-			information.group = 0;
-			information.index = history.index;
-			information.pinned = window->isPinned();
+			const SessionWindow information = window->getSession();
 
 			if (window->getType() != QLatin1String("web"))
 			{
@@ -465,7 +458,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (window)
 		{
-			window->restore(SessionWindow());
+			window->setSession(SessionWindow());
 
 			return;
 		}
@@ -660,17 +653,7 @@ SessionMainWindow WindowsManager::getSession() const
 
 		if (window && !window->isPrivate())
 		{
-			const WindowHistoryInformation history = window->getHistory();
-			const QPair<QString, QString> userAgent = window->getUserAgent();
-			SessionWindow information;
-			information.searchEngine = window->getSearchEngine();
-			information.userAgent = userAgent.first + ((userAgent.first == QLatin1String("custom")) ? QLatin1Char(';') + userAgent.second : QString());
-			information.history = history.entries;
-			information.group = 0;
-			information.index = history.index;
-			information.pinned = window->isPinned();
-
-			session.windows.append(information);
+			session.windows.append(window->getSession());
 		}
 		else if (i < session.index)
 		{

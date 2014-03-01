@@ -133,8 +133,8 @@ public:
 	explicit Window(bool privateWindow, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
-	void restore(SessionWindow session);
 	void close();
+	void setSession(SessionWindow session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
 	QString getDefaultTextEncoding() const;
@@ -145,6 +145,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
+	SessionWindow getSession() const;
 	QPair<QString, QString> getUserAgent() const;
 	WindowLoadingState getLoadingState() const;
 	bool canClone() const;

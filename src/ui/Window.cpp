@@ -106,19 +106,6 @@ void Window::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void Window::restore(SessionWindow session)
-{
-	m_session = session;
-
-	setSearchEngine(session.searchEngine);
-	setPinned(session.pinned);
-
-	if (!SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
-	{
-		setUrl(session.getUrl(), false);
-	}
-}
-
 void Window::close()
 {
 	emit aboutToClose();
@@ -212,6 +199,19 @@ void Window::updateGoForwardMenu()
 		QString title = history.entries.at(i).title;
 
 		m_ui->forwardButton->menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))))->setData(i);
+	}
+}
+
+void Window::setSession(SessionWindow session)
+{
+	m_session = session;
+
+	setSearchEngine(session.searchEngine);
+	setPinned(session.pinned);
+
+	if (!SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
+	{
+		setUrl(session.getUrl(), false);
 	}
 }
 
@@ -508,18 +508,24 @@ QPixmap Window::getThumbnail() const
 	return (m_contentsWidget ? m_contentsWidget->getThumbnail() : QPixmap());
 }
 
-WindowHistoryInformation Window::getHistory() const
+SessionWindow Window::getSession() const
 {
 	if (!m_contentsWidget)
 	{
-		WindowHistoryInformation history;
-		history.index = m_session.index;
-		history.entries = m_session.history;
-
-		return history;
+		return m_session;
 	}
 
-	return m_contentsWidget->getHistory();
+	const WindowHistoryInformation history = m_contentsWidget->getHistory();
+	const QPair<QString, QString> userAgent = getUserAgent();
+	SessionWindow session;
+	session.searchEngine = getSearchEngine();
+	session.userAgent = userAgent.first + ((userAgent.first == QLatin1String("custom")) ? QLatin1Char(';') + userAgent.second : QString());
+	session.history = history.entries;
+	session.group = 0;
+	session.index = history.index;
+	session.pinned = isPinned();
+
+	return session;
 }
 
 QPair<QString, QString> Window::getUserAgent() const
