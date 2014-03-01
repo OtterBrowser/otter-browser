@@ -37,7 +37,7 @@ public:
 
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
-	void setUserAgent(const QString &identifier, const QString &value, bool global = false);
+	void setUserAgent(const QString &identifier, const QString &value, bool manual = true);
 	QPair<QString, QString> getUserAgent() const;
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();

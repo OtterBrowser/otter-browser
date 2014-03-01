@@ -60,7 +60,7 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	{
 		if (m_isGlobalUserAgent)
 		{
-			setUserAgent(value.toString(), NetworkAccessManager::getUserAgent(value.toString()).value, true);
+			setUserAgent(value.toString(), NetworkAccessManager::getUserAgent(value.toString()).value, false);
 		}
 	}
 	else if (option == QLatin1String("Content/ZoomTextOnly"))
@@ -129,11 +129,11 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 	QWebPage::setParent(parent);
 }
 
-void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool global)
+void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool manual)
 {
 	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
 	m_userAgentValue = value;
-	m_isGlobalUserAgent = global;
+	m_isGlobalUserAgent = !manual;
 }
 
 QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
