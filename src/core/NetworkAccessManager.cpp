@@ -30,6 +30,7 @@
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
+#include <QtCore/QSettings>
 #include <QtWidgets/QMessageBox>
 #include <QtNetwork/QNetworkProxy>
 
@@ -41,6 +42,7 @@ QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
 NetworkCache* NetworkAccessManager::m_cache = NULL;
 QStringList NetworkAccessManager::m_userAgentsOrder;
 QHash<QString, UserAgentInformation> NetworkAccessManager::m_userAgents;
+bool NetworkAccessManager::m_userAgentsInitialized = false;
 
 NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
@@ -79,6 +81,13 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
+}
+
+void NetworkAccessManager::timerEvent(QTimerEvent *event)
+{
+	Q_UNUSED(event)
+
+	updateStatus();
 }
 
 void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
@@ -137,11 +146,26 @@ void NetworkAccessManager::clearCache(int period)
 	getCache()->clearCache(period);
 }
 
-void NetworkAccessManager::timerEvent(QTimerEvent *event)
+void NetworkAccessManager::loadUserAgents()
 {
-	Q_UNUSED(event)
+	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"));
+	const QSettings settings((QFile::exists(path) ? path : QLatin1String(":/other/userAgents.ini")), QSettings::IniFormat);
+	const QStringList userAgentsOrder = settings.childGroups();
+	QHash<QString, UserAgentInformation> userAgents;
 
-	updateStatus();
+	for (int i = 0; i < userAgentsOrder.count(); ++i)
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = userAgentsOrder.at(i);
+		userAgent.title = settings.value(QString("%1/title").arg(userAgentsOrder.at(i))).toString();
+		userAgent.description = settings.value(QString("%1/description").arg(userAgentsOrder.at(i))).toString();
+		userAgent.value = settings.value(QString("%1/value").arg(userAgentsOrder.at(i))).toString();
+
+		userAgents[userAgentsOrder.at(i)] = userAgent;
+	}
+
+	m_userAgentsOrder = userAgentsOrder;
+	m_userAgents = userAgents;
 }
 
 void NetworkAccessManager::updateStatus()
@@ -415,6 +439,13 @@ NetworkCache* NetworkAccessManager::getCache()
 
 UserAgentInformation NetworkAccessManager::getUserAgent(const QString &identifier)
 {
+	if (!m_userAgentsInitialized)
+	{
+		m_userAgentsInitialized = true;
+
+		loadUserAgents();
+	}
+
 	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
 	{
 		UserAgentInformation userAgent;
@@ -435,6 +466,13 @@ QPair<QString, QString> NetworkAccessManager::getUserAgent() const
 
 QStringList NetworkAccessManager::getUserAgents()
 {
+	if (!m_userAgentsInitialized)
+	{
+		m_userAgentsInitialized = true;
+
+		loadUserAgents();
+	}
+
 	return m_userAgentsOrder;
 }
 

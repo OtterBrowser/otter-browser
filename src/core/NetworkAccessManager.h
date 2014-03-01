@@ -59,6 +59,7 @@ public:
 
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
+	static void loadUserAgents();
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
@@ -99,6 +100,7 @@ private:
 	static NetworkCache *m_cache;
 	static QStringList m_userAgentsOrder;
 	static QHash<QString, UserAgentInformation> m_userAgents;
+	static bool m_userAgentsInitialized;
 
 signals:
 	void messageChanged(const QString &message = QString());
