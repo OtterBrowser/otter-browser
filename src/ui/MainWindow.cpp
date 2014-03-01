@@ -633,11 +633,7 @@ void MainWindow::menuSessionsAboutToShow()
 		QAction *action = m_ui->menuSessions->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
-
-		if (sorted.at(i).path == currentSession)
-		{
-			action->setChecked(true);
-		}
+		action->setChecked(sorted.at(i).path == currentSession);
 
 		m_sessionsGroup->addAction(action);
 	}
@@ -663,7 +659,6 @@ void MainWindow::menuUserAgentAboutToShow()
 		for (int i = 0; i < userAgents.count(); ++i)
 		{
 			const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
-
 			QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
 			userAgentAction->setData(userAgents.at(i));
 			userAgentAction->setCheckable(true);
@@ -688,10 +683,15 @@ void MainWindow::menuUserAgentAboutToShow()
 	{
 		QAction *action = m_ui->menuUserAgent->actions().at(i);
 
-		if (action && userAgent == action->text().toLower())
+		if (!action)
 		{
-			action->setChecked(true);
+			continue;
+		}
 
+		action->setChecked(userAgent == action->data().toString().toLower());
+
+		if (action->isChecked())
+		{
 			break;
 		}
 	}
@@ -745,10 +745,15 @@ void MainWindow::menuTextEncodingAboutToShow()
 	{
 		QAction *action = m_ui->menuTextEncoding->actions().at(i);
 
-		if (action && encoding == action->text().toLower())
+		if (!action)
 		{
-			action->setChecked(true);
+			continue;
+		}
 
+		action->setChecked(encoding == action->text().toLower());
+
+		if (action->isChecked())
+		{
 			break;
 		}
 	}
