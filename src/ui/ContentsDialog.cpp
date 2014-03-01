@@ -78,6 +78,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	{
 		QLabel *label = new QLabel(text, this);
 		label->setTextFormat(Qt::PlainText);
+		label->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
 		mainLayout->addWidget(label);
 	}
@@ -97,7 +98,11 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 		if (!details.isEmpty())
 		{
-			scrollLayout->addWidget(new QLabel(details, scrollWidget));
+			QLabel *label = new QLabel(details, scrollWidget);
+			label->setTextFormat(Qt::PlainText);
+			label->setTextInteractionFlags(Qt::TextBrowserInteraction);
+
+			scrollLayout->addWidget(label);
 		}
 
 		if (payload)
