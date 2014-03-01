@@ -37,7 +37,7 @@ public:
 
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
-	void setUserAgent(const QString &identifier, const QString &value);
+	void setUserAgent(const QString &identifier, const QString &value, bool global = false);
 	QPair<QString, QString> getUserAgent() const;
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
@@ -52,14 +52,15 @@ protected:
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
 
 protected slots:
-	void clearIgnoreJavaScriptPopups();
 	void optionChanged(const QString &option, const QVariant &value);
+	void clearIgnoreJavaScriptPopups();
 
 private:
 	QtWebKitWebWidget *m_webWidget;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
 	bool m_ignoreJavaScriptPopups;
+	bool m_isGlobalUserAgent;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, bool background, bool newWindow);

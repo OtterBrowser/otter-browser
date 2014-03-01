@@ -19,6 +19,7 @@
 
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -42,8 +43,10 @@ namespace Otter
 
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent),
-	m_ignoreJavaScriptPopups(false)
+	m_ignoreJavaScriptPopups(false),
+	m_isGlobalUserAgent(true)
 {
+	optionChanged(QLatin1String("Network/UserAgent"), SettingsManager::getValue(QLatin1String("Network/UserAgent")));
 	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
 
@@ -51,14 +54,16 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
-void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
-{
-	m_ignoreJavaScriptPopups = false;
-}
-
 void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Content/ZoomTextOnly"))
+	if (option == QLatin1String("Network/UserAgent"))
+	{
+		if (m_isGlobalUserAgent)
+		{
+			setUserAgent(value.toString(), NetworkAccessManager::getUserAgent(value.toString()).value, true);
+		}
+	}
+	else if (option == QLatin1String("Content/ZoomTextOnly"))
 	{
 		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
 	}
@@ -66,6 +71,11 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	{
 		settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + QString(QStringLiteral("html {background: %1; color: %2;} a {color: %3;} a:visited {color: %4;}").arg(SettingsManager::getValue(QLatin1String("Content/BackgroundColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8().toBase64())));
 	}
+}
+
+void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
+{
+	m_ignoreJavaScriptPopups = false;
 }
 
 void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
@@ -119,10 +129,11 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 	QWebPage::setParent(parent);
 }
 
-void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value)
+void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool global)
 {
 	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
 	m_userAgentValue = value;
+	m_isGlobalUserAgent = global;
 }
 
 QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
