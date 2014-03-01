@@ -386,6 +386,23 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (m_session.index >= 0)
 	{
+		if (!m_session.userAgent.isEmpty() && m_contentsWidget->getType() == QLatin1String("web"))
+		{
+			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+			if (webWidget)
+			{
+				if (m_session.userAgent.contains(QLatin1Char(';')))
+				{
+					webWidget->setUserAgent(m_session.userAgent.section(QLatin1Char(';'), 0, 0), m_session.userAgent.section(QLatin1Char(';'), 1));
+				}
+				else
+				{
+					webWidget->setUserAgent(m_session.userAgent, NetworkAccessManager::getUserAgent(m_session.userAgent).value);
+				}
+			}
+		}
+
 		WindowHistoryInformation history;
 		history.index = m_session.index;
 		history.entries = m_session.history;

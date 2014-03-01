@@ -224,6 +224,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			const int history = sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
 			SessionWindow sessionWindow;
 			sessionWindow.searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
+			sessionWindow.userAgent = sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString();
 			sessionWindow.group = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
 			sessionWindow.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
 			sessionWindow.pinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
@@ -367,6 +368,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	int tabs = 0;
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
+	const QString defaultUserAgent = SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString();
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
@@ -388,7 +390,8 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
 			stream << QStringLiteral("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
-			stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), ((defaultSearchEngine == sessionEntry.windows.at(j).searchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine));
+			stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), ((sessionEntry.windows.at(j).searchEngine == defaultSearchEngine) ? QString() : sessionEntry.windows.at(j).searchEngine));
+			stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), ((sessionEntry.windows.at(j).userAgent == defaultUserAgent) ? QString() : sessionEntry.windows.at(j).userAgent));
 			stream << QLatin1String("pinned=") << sessionEntry.windows.at(j).pinned << QLatin1Char('\n');
 			stream << QLatin1String("group=0\n");
 			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');

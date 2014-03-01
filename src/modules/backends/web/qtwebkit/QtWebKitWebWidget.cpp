@@ -744,6 +744,8 @@ void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
 void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
 {
 	m_page->setUserAgent(identifier, value);
+
+	SessionsManager::markSessionModified();
 }
 
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
