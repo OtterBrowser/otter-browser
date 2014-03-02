@@ -59,6 +59,7 @@ private:
 	QtWebKitWebWidget *m_webWidget;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
+	QString m_userAgentParsed;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isGlobalUserAgent;
 
