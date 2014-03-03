@@ -613,12 +613,12 @@ QAction* WindowsManager::getAction(WindowAction action)
 
 Window* WindowsManager::getWindow(int index) const
 {
-	if (index < 0 || index >= m_tabBar->count())
+	if (index < 0)
 	{
-		return NULL;
+		return m_mdi->getActiveWindow();
 	}
 
-	return qvariant_cast<Window*>(m_tabBar->tabData(index));
+	return ((index >= m_tabBar->count()) ? NULL : qvariant_cast<Window*>(m_tabBar->tabData(index)));
 }
 
 QString WindowsManager::getDefaultTextEncoding() const
