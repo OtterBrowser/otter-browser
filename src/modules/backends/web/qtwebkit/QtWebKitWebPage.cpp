@@ -85,7 +85,7 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 		return;
 	}
 
-	if (!m_webWidget)
+	if (!m_webWidget || !m_webWidget->parentWidget())
 	{
 		QWebPage::javaScriptAlert(frame, message);
 
@@ -253,7 +253,7 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 		return false;
 	}
 
-	if (!m_webWidget)
+	if (!m_webWidget || !m_webWidget->parentWidget())
 	{
 		return QWebPage::javaScriptConfirm(frame, message);
 	}
@@ -287,7 +287,7 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 		return false;
 	}
 
-	if (!m_webWidget)
+	if (!m_webWidget || !m_webWidget->parentWidget())
 	{
 		return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
 	}

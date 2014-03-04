@@ -53,7 +53,6 @@ namespace Otter
 {
 
 QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : WebWidget(privateWindow, backend, parent),
-	m_parent(parent),
 	m_webView(new QWebView(this)),
 	m_page(new QtWebKitWebPage(this)),
 	m_inspector(NULL),
@@ -375,12 +374,22 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
 {
-	m_parent->showDialog(dialog);
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->showDialog(dialog);
+	}
 }
 
 void QtWebKitWebWidget::hideDialog(ContentsDialog *dialog)
 {
-	m_parent->hideDialog(dialog);
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->hideDialog(dialog);
+	}
 }
 
 void QtWebKitWebWidget::goToHistoryIndex(int index)
@@ -487,20 +496,24 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			break;
 		case ImagePropertiesAction:
 			{
+				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
 				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
 				imagePropertiesDialog->setButtonsVisible(false);
 
-				ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
-				QEventLoop eventLoop;
+				if (parent)
+				{
+					ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
+					QEventLoop eventLoop;
 
-				m_parent->showDialog(&dialog);
+					parent->showDialog(&dialog);
 
-				connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+					connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
-				eventLoop.exec();
+					eventLoop.exec();
 
-				m_parent->hideDialog(&dialog);
+					parent->hideDialog(&dialog);
+				}
 			}
 
 			break;

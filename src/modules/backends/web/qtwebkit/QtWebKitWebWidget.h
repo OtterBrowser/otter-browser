@@ -101,7 +101,6 @@ protected slots:
 	void showContextMenu(const QPoint &position = QPoint());
 
 private:
-	ContentsWidget *m_parent;
 	QWebView *m_webView;
 	QtWebKitWebPage *m_page;
 	QWebInspector *m_inspector;
