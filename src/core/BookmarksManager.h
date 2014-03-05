@@ -40,6 +40,7 @@ struct BookmarkInformation
 	QString url;
 	QString title;
 	QString description;
+	QString keyword;
 	QDateTime created;
 	QDateTime visited;
 	QList<BookmarkInformation*> children;
