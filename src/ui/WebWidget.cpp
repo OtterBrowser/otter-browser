@@ -185,7 +185,20 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			menu.addSeparator();
 		}
 
-		if (flags & LinkMenu)
+		if (flags & MailMenu)
+		{
+			menu.addAction(getAction(OpenLinkInThisTabAction));
+			menu.addSeparator();
+			menu.addAction(getAction(CopyLinkToClipboardAction));
+
+			if (!(flags & ImageMenu))
+			{
+				menu.addAction(getAction(InspectElementAction));
+			}
+
+			menu.addSeparator();
+		}
+		else if (flags & LinkMenu)
 		{
 			menu.addAction(getAction(OpenLinkInThisTabAction));
 			menu.addAction(getAction(OpenLinkInNewTabAction));

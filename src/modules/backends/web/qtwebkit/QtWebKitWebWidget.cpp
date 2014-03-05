@@ -906,7 +906,14 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	if (m_hitResult.linkUrl().isValid())
 	{
-		flags |= LinkMenu;
+		if (m_hitResult.linkUrl().scheme() == QLatin1String("mailto"))
+		{
+			flags |= MailMenu;
+		}
+		else
+		{
+			flags |= LinkMenu;
+		}
 	}
 
 	if (!m_hitResult.pixmap().isNull())

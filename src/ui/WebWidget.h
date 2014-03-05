@@ -35,12 +35,13 @@ enum MenuFlag
 	NoMenu = 0,
 	StandardMenu = 1,
 	LinkMenu = 2,
-	ImageMenu = 4,
-	MediaMenu = 8,
-	SelectionMenu = 16,
-	EditMenu = 32,
-	FrameMenu = 64,
-	FormMenu = 128
+	MailMenu = 4,
+	ImageMenu = 8,
+	MediaMenu = 16,
+	SelectionMenu = 32,
+	EditMenu = 64,
+	FrameMenu = 128,
+	FormMenu = 256
 };
 
 Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
