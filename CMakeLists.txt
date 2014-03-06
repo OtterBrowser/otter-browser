@@ -90,6 +90,7 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/TableViewWidget.cpp
 	src/ui/TextLabelWidget.cpp
+	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
@@ -124,6 +125,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchPropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui
+	src/ui/UserAgentsManagerDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/BlockedContentDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui

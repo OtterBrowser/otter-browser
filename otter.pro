@@ -65,6 +65,7 @@ SOURCES += src/main.cpp \
     src/ui/TableViewWidget.cpp \
     src/ui/TextLabelWidget.cpp \
     src/ui/WebWidget.cpp \
+    src/ui/UserAgentsManagerDialog.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
@@ -130,6 +131,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/TabBarWidget.h \
     src/ui/TableViewWidget.h \
     src/ui/TextLabelWidget.h \
+    src/ui/UserAgentsManagerDialog.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
@@ -158,6 +160,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
+    src/ui/UserAgentsManagerDialog.ui \
     src/ui/Window.ui \
     src/ui/preferences/BlockedContentDialog.ui \
     src/ui/preferences/ShortcutsProfileDialog.ui \

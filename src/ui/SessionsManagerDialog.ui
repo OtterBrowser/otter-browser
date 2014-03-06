@@ -81,20 +81,12 @@
          <property name="text">
           <string>Open</string>
          </property>
-         <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
-           <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
-         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="deleteButton">
          <property name="text">
           <string>Delete</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
-           <normaloff>:/icons/edit-delete.png</normaloff>:/icons/edit-delete.png</iconset>
          </property>
         </widget>
        </item>
@@ -134,9 +126,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
