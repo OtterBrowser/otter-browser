@@ -30,7 +30,6 @@ struct UserAgentInformation
 {
 	QString identifier;
 	QString title;
-	QString description;
 	QString value;
 };
 

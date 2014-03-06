@@ -158,7 +158,6 @@ void NetworkAccessManager::loadUserAgents()
 		UserAgentInformation userAgent;
 		userAgent.identifier = userAgentsOrder.at(i);
 		userAgent.title = settings.value(QString("%1/title").arg(userAgentsOrder.at(i))).toString();
-		userAgent.description = settings.value(QString("%1/description").arg(userAgentsOrder.at(i))).toString();
 		userAgent.value = settings.value(QString("%1/value").arg(userAgentsOrder.at(i))).toString();
 
 		userAgents[userAgentsOrder.at(i)] = userAgent;
@@ -451,7 +450,6 @@ UserAgentInformation NetworkAccessManager::getUserAgent(const QString &identifie
 		UserAgentInformation userAgent;
 		userAgent.identifier = QLatin1String("default");
 		userAgent.title = tr("Default");
-		userAgent.description = tr("Default User Agent");
 
 		return userAgent;
 	}
