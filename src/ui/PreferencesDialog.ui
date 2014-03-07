@@ -1375,9 +1375,6 @@
              </item>
              <item>
               <widget class="QPushButton" name="userAgentButton">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="text">
                 <string>Manage...</string>
                </property>

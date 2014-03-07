@@ -60,6 +60,7 @@ protected slots:
 	void addSearch();
 	void editSearch();
 	void updateSearchActions();
+	void manageUserAgents();
 	void proxyModeChanged(int index);
 	void browseAutomaticProxyPath();
 	void addKeyboardProfile();

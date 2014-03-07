@@ -23,6 +23,7 @@
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
+#include "UserAgentsManagerDialog.h"
 #include "preferences/SearchShortcutDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/ActionsManager.h"
@@ -320,6 +321,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
+	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(browseAutomaticProxyPath()));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
@@ -591,6 +593,12 @@ void PreferencesDialog::updateSearchActions()
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);
+}
+
+void PreferencesDialog::manageUserAgents()
+{
+	UserAgentsManagerDialog dialog(this);
+	dialog.exec();
 }
 
 void PreferencesDialog::proxyModeChanged(int index)
