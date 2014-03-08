@@ -93,7 +93,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	fonts << QLatin1String("StandardFont") << QLatin1String("FixedFont") << QLatin1String("SerifFont") << QLatin1String("SansSerifFont") << QLatin1String("CursiveFont") << QLatin1String("FantasyFont");
 
 	QStringList fontCategories;
-	fontCategories << tr("Standard Font") << tr("Fixed Font") << tr("Serif Font") << tr("Sans Serif Font") << tr("Cursive Font") << tr("Fantasy Font");
+	fontCategories << tr("Standard font") << tr("Fixed-width font") << tr("Serif font") << tr("Sans-serif font") << tr("Cursive font") << tr("Fantasy font");
 
 	OptionDelegate *fontsDelegate = new OptionDelegate(true, this);
 
