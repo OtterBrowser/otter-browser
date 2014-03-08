@@ -48,7 +48,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="startupLabel">
            <property name="text">
-            <string>Startup behaviour:</string>
+            <string>Startup behavior:</string>
            </property>
            <property name="buddy">
             <cstring>startupComboBox</cstring>
@@ -67,7 +67,7 @@
            </item>
            <item>
             <property name="text">
-             <string>Show Home Page</string>
+             <string>Show home page</string>
             </property>
            </item>
            <item>
@@ -238,7 +238,7 @@
            </item>
            <item>
             <property name="text">
-             <string>Activate next tab</string>
+             <string>Activate the next tab</string>
             </property>
            </item>
            <item>
@@ -459,12 +459,12 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Category</string>
+           <string>Style</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Family</string>
+           <string>Font</string>
           </property>
          </column>
          <column>
@@ -505,7 +505,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="fixedFontSizeLabel">
            <property name="text">
-            <string>Default fixed font size:</string>
+            <string>Default fixed-width font size:</string>
            </property>
            <property name="buddy">
             <cstring>fixedFontSizeSpinBox</cstring>
@@ -661,21 +661,21 @@
          <item row="0" column="1">
           <widget class="QComboBox" name="doNotTrackComboBox">
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <item>
             <property name="text">
-             <string>Inform websites that user does not want to be tracked</string>
+             <string>Inform websites that I do not want to be tracked</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Inform websites that user allows to be tracked</string>
+             <string>Inform websites that I allow tracking</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Do not inform websites about user preference</string>
+             <string>Do not inform websites about my preference</string>
             </property>
            </item>
           </widget>
@@ -1226,7 +1226,7 @@
        <item>
         <widget class="QCheckBox" name="searchSuggestionsCheckBox">
          <property name="text">
-          <string>Enable  Search Suggestions</string>
+          <string>Enable search suggestions</string>
          </property>
         </widget>
        </item>
@@ -1414,22 +1414,22 @@
                </property>
                <item>
                 <property name="text">
-                 <string>No Proxy</string>
+                 <string>No proxy</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>System Configuration</string>
+                 <string>System configuration</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Manual Configuration</string>
+                 <string>Manual configuration</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Automatic Configuration (PAC)</string>
+                 <string>Automatic configuration (PAC)</string>
                 </property>
                </item>
               </widget>
