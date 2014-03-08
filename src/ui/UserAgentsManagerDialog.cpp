@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "UserAgentsManagerDialog.h"
+#include "../core/Utils.h"
 
 #include "ui_UserAgentsManagerDialog.h"
 
@@ -28,6 +29,17 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QWidget *parent) : QDialog(pare
 	m_ui(new Ui::UserAgentsManagerDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+
+	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
+	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addUserAgent()));
+	connect(m_ui->editButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
+	connect(m_ui->removeButton, SIGNAL(clicked()), this, SLOT(removeUserAgent()));
+	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->userAgentsView, SLOT(moveDownRow()));
+	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->userAgentsView, SLOT(moveUpRow()));
 }
 
 UserAgentsManagerDialog::~UserAgentsManagerDialog()
@@ -48,6 +60,21 @@ void UserAgentsManagerDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
+}
+
+void UserAgentsManagerDialog::addUserAgent()
+{
+
+}
+
+void UserAgentsManagerDialog::editUserAgent()
+{
+
+}
+
+void UserAgentsManagerDialog::removeUserAgent()
+{
+
 }
 
 }

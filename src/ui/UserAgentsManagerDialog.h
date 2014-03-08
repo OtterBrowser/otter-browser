@@ -41,6 +41,11 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void addUserAgent();
+	void editUserAgent();
+	void removeUserAgent();
+
 private:
 	Ui::UserAgentsManagerDialog *m_ui;
 };
