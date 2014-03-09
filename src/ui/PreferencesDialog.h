@@ -84,6 +84,7 @@ private:
 	QHash<QString, QHash<QString, QString> > m_macrosProfilesInformation;
 	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;
 	QHash<QString, QHash<QString, QVariantHash> > m_macrosProfilesData;
+	bool m_userAgentsModified;
 	Ui::PreferencesDialog *m_ui;
 };
 

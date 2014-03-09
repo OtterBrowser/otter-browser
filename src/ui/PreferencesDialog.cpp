@@ -48,6 +48,7 @@ namespace Otter
 PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
 	m_defaultSearch(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
 	m_clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
+	m_userAgentsModified(false),
 	m_ui(new Ui::PreferencesDialog)
 {
 	m_ui->setupUi(this);
@@ -220,9 +221,11 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
+		const UserAgentInformation userAgent = NetworkAccessManager::getUserAgent(userAgents.at(i));
+		const QString title = userAgent.title;
 
 		m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i));
+		m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
 	}
 
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
@@ -597,7 +600,19 @@ void PreferencesDialog::updateSearchActions()
 
 void PreferencesDialog::manageUserAgents()
 {
-	UserAgentsManagerDialog dialog(this);
+	QList<UserAgentInformation> userAgents;
+
+	for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString();
+		userAgent.title = m_ui->userAgentComboBox->itemText(i);
+		userAgent.value = m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString();
+
+		userAgents.append(userAgent);
+	}
+
+	UserAgentsManagerDialog dialog(userAgents, this);
 	dialog.exec();
 }
 

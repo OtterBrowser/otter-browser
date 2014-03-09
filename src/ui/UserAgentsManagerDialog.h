@@ -30,12 +30,14 @@ namespace Ui
 	class UserAgentsManagerDialog;
 }
 
+struct UserAgentInformation;
+
 class UserAgentsManagerDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit UserAgentsManagerDialog(QWidget *parent = NULL);
+	explicit UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent = NULL);
 	~UserAgentsManagerDialog();
 
 protected:
@@ -45,6 +47,7 @@ protected slots:
 	void addUserAgent();
 	void editUserAgent();
 	void removeUserAgent();
+	void updateUserAgentActions();
 
 private:
 	Ui::UserAgentsManagerDialog *m_ui;

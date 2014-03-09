@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "UserAgentsManagerDialog.h"
+#include "../core/NetworkAccessManager.h"
 #include "../core/Utils.h"
 
 #include "ui_UserAgentsManagerDialog.h"
@@ -25,16 +26,37 @@
 namespace Otter
 {
 
-UserAgentsManagerDialog::UserAgentsManagerDialog(QWidget *parent) : QDialog(parent),
+UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::UserAgentsManagerDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
+	QStringList labels;
+	labels << tr("Title") << tr("Value");
+
+	QStandardItemModel *model = new QStandardItemModel(this);
+	model->setHorizontalHeaderLabels(labels);
+
+	for (int i = 0; i < userAgents.count(); ++i)
+	{
+		const QString title = userAgents.at(i).title;
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items.append(new QStandardItem(userAgents.at(i).value));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		model->appendRow(items);
+	}
+
+	m_ui->userAgentsView->setModel(model);
+	m_ui->userAgentsView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+
 	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
+	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentActions()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addUserAgent()));
 	connect(m_ui->editButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), this, SLOT(removeUserAgent()));
@@ -73,6 +95,11 @@ void UserAgentsManagerDialog::editUserAgent()
 }
 
 void UserAgentsManagerDialog::removeUserAgent()
+{
+
+}
+
+void UserAgentsManagerDialog::updateUserAgentActions()
 {
 
 }
