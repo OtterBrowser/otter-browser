@@ -40,6 +40,8 @@ public:
 	explicit UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent = NULL);
 	~UserAgentsManagerDialog();
 
+	QList<UserAgentInformation> getUserAgents() const;
+
 protected:
 	void changeEvent(QEvent *event);
 

@@ -44,6 +44,7 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 		const QString title = userAgents.at(i).title;
 		QList<QStandardItem*> items;
 		items.append(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
+		items[0]->setData(userAgents.at(i).identifier, Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 		items.append(new QStandardItem(userAgents.at(i).value));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -102,6 +103,23 @@ void UserAgentsManagerDialog::removeUserAgent()
 void UserAgentsManagerDialog::updateUserAgentActions()
 {
 
+}
+
+QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
+{
+	QList<UserAgentInformation> userAgents;
+
+	for (int i = 0; i < m_ui->userAgentsView->getRowCount(); ++i)
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = m_ui->userAgentsView->getIndex(i, 0).data(Qt::UserRole).toString();
+		userAgent.title = m_ui->userAgentsView->getIndex(i, 0).data(Qt::DisplayRole).toString();
+		userAgent.value = m_ui->userAgentsView->getIndex(i, 1).data(Qt::DisplayRole).toString();
+
+		userAgents.append(userAgent);
+	}
+
+	return userAgents;
 }
 
 }

@@ -612,8 +612,30 @@ void PreferencesDialog::manageUserAgents()
 		userAgents.append(userAgent);
 	}
 
+	const QString selectedUserAgent = m_ui->userAgentComboBox->currentData().toString();
+
 	UserAgentsManagerDialog dialog(userAgents, this);
-	dialog.exec();
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_userAgentsModified = true;
+
+		m_ui->userAgentComboBox->clear();
+
+		userAgents = dialog.getUserAgents();
+
+		m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
+
+		for (int i = 0; i < userAgents.count(); ++i)
+		{
+			const QString title = userAgents.at(i).title;
+
+			m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i).identifier);
+			m_ui->userAgentComboBox->setItemData((i + 1), userAgents.at(i).value, (Qt::UserRole + 1));
+		}
+
+		m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(selectedUserAgent));
+	}
 }
 
 void PreferencesDialog::proxyModeChanged(int index)
