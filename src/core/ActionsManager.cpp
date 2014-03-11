@@ -211,6 +211,8 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		return;
 	}
 
+	window->addActions(actions);
+
 	if (m_profileShortcuts.isEmpty())
 	{
 		m_nativeShortcuts[QLatin1String("NewWindow")] = QKeySequence(QKeySequence::New);
@@ -291,6 +293,8 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		if (actions.at(i) && !actions.at(i)->isSeparator() && !actions.at(i)->objectName().isEmpty())
 		{
 			m_windowActions[window][actions.at(i)->objectName().startsWith(QLatin1String("action")) ? actions.at(i)->objectName().mid(6) : actions.at(i)->objectName()] = actions.at(i);
+
+			actions.at(i)->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 		}
 	}
 
