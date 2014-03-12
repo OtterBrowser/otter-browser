@@ -53,9 +53,10 @@ protected:
 	void leaveEvent(QEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void tabLayoutChange();
 	void tabInserted(int index);
 	void tabRemoved(int index);
-	void tabLayoutChange();
+	void tabHovered(int index);
 	void showPreview(int index);
 	QSize tabSizeHint(int index) const;
 

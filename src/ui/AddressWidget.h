@@ -58,8 +58,8 @@ protected:
 protected slots:
 	void removeIcon();
 	void optionChanged(const QString &option, const QVariant &value);
-	void notifyRequestedLoadUrl();
 	void verifyLookup(const QHostInfo &host);
+	void notifyRequestedLoadUrl();
 	void updateBookmark();
 	void setIcon(const QIcon &icon);
 

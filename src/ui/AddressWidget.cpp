@@ -44,8 +44,8 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
 	m_urlIconLabel(NULL),
-	m_lookupTimer(0),
-	m_lookupID(0)
+	m_lookupID(0),
+	m_lookupTimer(0)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);

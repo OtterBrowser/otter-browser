@@ -190,27 +190,9 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QTabBar::mouseMoveEvent(event);
 
-	const int tab = tabAt(event->pos());
-
-	if (tab == m_hoveredTab)
+	if (event->buttons() == Qt::NoButton)
 	{
-		return;
-	}
-
-	m_hoveredTab = tab;
-
-	if (m_previewWidget && !m_previewWidget->isVisible() && m_previewTimer == 0)
-	{
-		m_previewWidget->show();
-	}
-
-	QStatusTipEvent statusTipEvent((tab >= 0) ? getTabProperty(tab, QLatin1String("url"), QUrl()).toString() : QString());
-
-	QApplication::sendEvent(this, &statusTipEvent);
-
-	if (m_previewWidget && m_previewWidget->isVisible())
-	{
-		showPreview(tab);
+		tabHovered(tabAt(event->pos()));
 	}
 }
 
@@ -280,24 +262,6 @@ void TabBarWidget::resizeEvent(QResizeEvent *event)
 	QTimer::singleShot(100, this, SLOT(updateTabs()));
 }
 
-void TabBarWidget::tabInserted(int index)
-{
-	QTabBar::tabInserted(index);
-
-	QLabel *label = new QLabel();
-	label->setFixedSize(QSize(16, 16));
-
-	setTabButton(index, m_iconButtonPosition, label);
-	updateTabs();
-}
-
-void TabBarWidget::tabRemoved(int index)
-{
-	QTabBar::tabRemoved(index);
-
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
-}
-
 void TabBarWidget::tabLayoutChange()
 {
 	QTabBar::tabLayoutChange();
@@ -320,6 +284,48 @@ void TabBarWidget::tabLayoutChange()
 	emit moveNewTabButton(offset);
 
 	updateButtons();
+}
+
+void TabBarWidget::tabInserted(int index)
+{
+	QTabBar::tabInserted(index);
+
+	QLabel *label = new QLabel();
+	label->setFixedSize(QSize(16, 16));
+
+	setTabButton(index, m_iconButtonPosition, label);
+	updateTabs();
+}
+
+void TabBarWidget::tabRemoved(int index)
+{
+	QTabBar::tabRemoved(index);
+
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
+}
+
+void TabBarWidget::tabHovered(int index)
+{
+	if (index == m_hoveredTab)
+	{
+		return;
+	}
+
+	m_hoveredTab = index;
+
+	if (m_previewWidget && !m_previewWidget->isVisible() && m_previewTimer == 0)
+	{
+		m_previewWidget->show();
+	}
+
+	QStatusTipEvent statusTipEvent((index >= 0) ? getTabProperty(index, QLatin1String("url"), QUrl()).toString() : QString());
+
+	QApplication::sendEvent(this, &statusTipEvent);
+
+	if (m_previewWidget && m_previewWidget->isVisible())
+	{
+		showPreview(index);
+	}
 }
 
 void TabBarWidget::removeTab(int index)
@@ -526,10 +532,9 @@ void TabBarWidget::updateTabs(int index)
 		}
 	}
 
-	if (m_previewWidget && m_previewWidget->isVisible())
-	{
-		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
-	}
+	m_hoveredTab = -1;
+
+	tabHovered(tabAt(mapFromGlobal(QCursor::pos())));
 }
 
 void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
