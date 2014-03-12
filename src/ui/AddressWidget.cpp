@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +43,9 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
-	m_urlIconLabel(NULL)
+	m_urlIconLabel(NULL),
+	m_lookupTimer(0),
+	m_lookupID(0)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
@@ -57,6 +60,22 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+}
+
+void AddressWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_lookupTimer)
+	{
+		QHostInfo::abortHostLookup(m_lookupID);
+
+		killTimer(m_lookupTimer);
+
+		m_lookupTimer = 0;
+
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+
+		m_lookupQuery.clear();
+	}
 }
 
 void AddressWidget::paintEvent(QPaintEvent *event)
@@ -136,10 +155,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		const QString text = QApplication::clipboard()->text().trimmed();
 
-		if (isAddress(text))
-		{
-			emit requestedLoadUrl(QUrl(text));
-		}
+		handleUserInput(text);
 
 		event->accept();
 	}
@@ -163,7 +179,7 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
-bool AddressWidget::isAddress(const QString &text)
+void AddressWidget::handleUserInput(const QString &text)
 {
 	const QUrl url = QUrl::fromUserInput(text);
 
@@ -181,16 +197,43 @@ bool AddressWidget::isAddress(const QString &text)
 			{
 				emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
 
-				return false;
+				return;
 			}
+		}
+
+		const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
+
+		if (url.isValid() && lookupTimeout > 0)
+		{
+			if (text == m_lookupQuery)
+			{
+				return;
+			}
+
+			m_lookupQuery = text;
+
+			if (m_lookupTimer != 0)
+			{
+				QHostInfo::abortHostLookup(m_lookupID);
+
+				killTimer(m_lookupTimer);
+
+				m_lookupTimer = 0;
+			}
+
+			m_lookupID = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
+
+			m_lookupTimer = startTimer(lookupTimeout);
+
+			return;
 		}
 
 		emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
 
-		return false;
+		return;
 	}
 
-	return true;
+	emit requestedLoadUrl(getUrl());
 }
 
 void AddressWidget::removeIcon()
@@ -257,14 +300,27 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
-void AddressWidget::notifyRequestedLoadUrl()
+void AddressWidget::verifyLookup(const QHostInfo &host)
 {
-	const QString url = text().trimmed();
+	killTimer(m_lookupTimer);
 
-	if (isAddress(url))
+	m_lookupTimer = 0;
+
+	if (host.error() == QHostInfo::NoError)
 	{
 		emit requestedLoadUrl(getUrl());
 	}
+	else
+	{
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+	}
+
+	m_lookupQuery.clear();
+}
+
+void AddressWidget::notifyRequestedLoadUrl()
+{
+	handleUserInput(text().trimmed());
 }
 
 void AddressWidget::updateBookmark()

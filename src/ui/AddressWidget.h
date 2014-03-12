@@ -21,6 +21,7 @@
 #define OTTER_ADDRESSWIDGET_H
 
 #include <QtCore/QUrl>
+#include <QtNetwork/QHostInfo>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -45,18 +46,20 @@ public slots:
 	void setUrl(const QUrl &url);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
-	bool isAddress(const QString &text);
+	void handleUserInput(const QString &text);
 
 protected slots:
 	void removeIcon();
 	void optionChanged(const QString &option, const QVariant &value);
 	void notifyRequestedLoadUrl();
+	void verifyLookup(const QHostInfo &host);
 	void updateBookmark();
 	void setIcon(const QIcon &icon);
 
@@ -66,6 +69,9 @@ private:
 	QLabel *m_bookmarkLabel;
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;
+	QString m_lookupQuery;
+	int m_lookupID;
+	int m_lookupTimer;
 
 signals:
 	void requestedLoadUrl(QUrl url);
