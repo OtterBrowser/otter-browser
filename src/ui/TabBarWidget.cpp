@@ -28,6 +28,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
+#include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
@@ -43,6 +44,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
 	m_tabSize(0),
 	m_clickedTab(-1),
+	m_hoveredTab(-1),
 	m_previewTimer(0)
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
@@ -188,14 +190,27 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QTabBar::mouseMoveEvent(event);
 
+	const int tab = tabAt(event->pos());
+
+	if (tab == m_hoveredTab)
+	{
+		return;
+	}
+
+	m_hoveredTab = tab;
+
 	if (m_previewWidget && !m_previewWidget->isVisible() && m_previewTimer == 0)
 	{
 		m_previewWidget->show();
 	}
 
+	QStatusTipEvent statusTipEvent((tab >= 0) ? getTabProperty(tab, QLatin1String("url"), QUrl()).toString() : QString());
+
+	QApplication::sendEvent(this, &statusTipEvent);
+
 	if (m_previewWidget && m_previewWidget->isVisible())
 	{
-		showPreview(tabAt(event->pos()));
+		showPreview(tab);
 	}
 }
 
@@ -223,6 +238,11 @@ void TabBarWidget::leaveEvent(QEvent *event)
 	}
 
 	m_tabSize = 0;
+	m_hoveredTab = -1;
+
+	QStatusTipEvent statusTipEvent((QString()));
+
+	QApplication::sendEvent(this, &statusTipEvent);
 
 	updateGeometry();
 	adjustSize();

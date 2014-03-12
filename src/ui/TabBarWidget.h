@@ -74,6 +74,7 @@ private:
 	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
 	int m_clickedTab;
+	int m_hoveredTab;
 	int m_previewTimer;
 
 signals:
