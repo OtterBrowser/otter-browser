@@ -359,6 +359,7 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 			html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
 		}
 
+		errorOutput->baseUrl = errorOption->url;
 		errorOutput->content = html.toUtf8();
 
 		return true;
