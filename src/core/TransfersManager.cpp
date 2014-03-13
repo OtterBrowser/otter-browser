@@ -226,11 +226,12 @@ void TransfersManager::save()
 		return;
 	}
 
+	const int limit = SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt();
 	int entry = 1;
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt()))
+		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->state == FinishedTransfer && m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > limit))
 		{
 			continue;
 		}
