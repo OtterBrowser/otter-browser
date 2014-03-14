@@ -334,6 +334,8 @@ void QtWebKitWebWidget::openUrl(QUrl url, bool background, bool newWindow)
 void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
+
+	SessionsManager::markSessionModified();
 }
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
@@ -342,6 +344,8 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 	emit urlChanged(url);
+
+	SessionsManager::markSessionModified();
 }
 
 void QtWebKitWebWidget::notifyIconChanged()
