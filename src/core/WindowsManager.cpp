@@ -167,11 +167,12 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	}
 	else
 	{
-		m_closedWindows = session.windows;
-
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			restore(0);
+			Window *window = new Window(m_isPrivate, NULL, m_mdi);
+			window->setSession(session.windows.at(i));
+
+			addWindow(window);
 		}
 	}
 
@@ -290,7 +291,27 @@ void WindowsManager::addWindow(Window *window, bool background)
 		return;
 	}
 
-	const int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
+	int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
+
+	if (!window->isPinned())
+	{
+		int offset = 0;
+
+		for (int i = 0; i < m_tabBar->count(); ++i)
+		{
+			if (!m_tabBar->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
+			{
+				break;
+			}
+
+			++offset;
+		}
+
+		if (index <= offset)
+		{
+			index = offset;
+		}
+	}
 
 	m_tabBar->insertTab(index, window->getTitle());
 	m_tabBar->setTabData(index, QVariant::fromValue(window));
