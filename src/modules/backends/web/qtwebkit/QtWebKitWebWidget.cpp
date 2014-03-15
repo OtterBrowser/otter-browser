@@ -432,6 +432,11 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
 
 			break;
+		case ReloadAction:
+			m_webView->page()->triggerAction(QWebPage::Stop);
+			m_webView->page()->triggerAction(QWebPage::Reload);
+
+			break;
 		case CopyAddressAction:
 			QApplication::clipboard()->setText(getUrl().toString());
 
@@ -1066,6 +1071,10 @@ QAction* QtWebKitWebWidget::getAction(WindowAction action)
 			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 			break;
+		case ReloadAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("Reload"), true);
+
+			break;
 		case ReloadTimeAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadTime"), true);
 
@@ -1409,8 +1418,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 			return QWebPage::Stop;
 		case StopScheduledPageRefreshAction:
 			return QWebPage::StopScheduledPageRefresh;
-		case ReloadAction:
-			return QWebPage::Reload;
 		case ReloadAndBypassCacheAction:
 			return QWebPage::ReloadAndBypassCache;
 		case CutAction:
