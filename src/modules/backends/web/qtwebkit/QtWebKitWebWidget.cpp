@@ -1251,6 +1251,11 @@ QString QtWebKitWebWidget::getTitle() const
 			return QFileInfo(url.toLocalFile()).canonicalFilePath();
 		}
 
+		if (!url.isEmpty())
+		{
+			return url.toString();
+		}
+
 		return tr("(Untitled)");
 	}
 
