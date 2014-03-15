@@ -26,6 +26,7 @@ namespace Otter
 {
 
 class PreviewWidget;
+class Window;
 
 class TabBarWidget : public QTabBar
 {
@@ -34,11 +35,12 @@ class TabBarWidget : public QTabBar
 public:
 	explicit TabBarWidget(QWidget *parent = NULL);
 
+	void addTab(int index, Window *window);
 	void removeTab(int index);
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
+	int getPinnedTabsAmount() const;
 
 public slots:
-	void updateTabs(int index = -1);
 	void setOrientation(Qt::DockWidgetArea orientation);
 	void setShape(QTabBar::Shape shape);
 	void setTabProperty(int index, const QString &key, const QVariant &value);
@@ -67,13 +69,16 @@ protected slots:
 	void cloneTab();
 	void detachTab();
 	void pinTab();
+	void updatePinnedTabsAmount();
 	void updateButtons();
+	void updateTabs(int index = -1);
 
 private:
 	PreviewWidget *m_previewWidget;
 	QTabBar::ButtonPosition m_closeButtonPosition;
 	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
+	int m_pinnedTabsAmount;
 	int m_clickedTab;
 	int m_hoveredTab;
 	int m_previewTimer;

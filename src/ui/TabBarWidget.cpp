@@ -43,6 +43,7 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
 	m_tabSize(0),
+	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0)
@@ -101,17 +102,6 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_clickedTab >= 0)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
-		int amount = 0;
-
-		for (int i = 0; i < count(); ++i)
-		{
-			if (getTabProperty(i, QLatin1String("isPinned"), false).toBool() || i == m_clickedTab)
-			{
-				continue;
-			}
-
-			++amount;
-		}
 
 		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
@@ -132,7 +122,9 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab")));
 		}
 
-		menu.addAction(Utils::getIcon(QLatin1String("tab-close-other")), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0);
+		const int amount = (count() - getPinnedTabsAmount());
+
+		menu.addAction(Utils::getIcon(QLatin1String("tab-close-other")), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 	}
 
 	menu.exec(event->globalPos());
@@ -328,6 +320,24 @@ void TabBarWidget::tabHovered(int index)
 	}
 }
 
+void TabBarWidget::addTab(int index, Window *window)
+{
+	insertTab(index, window->getTitle());
+	setTabData(index, QVariant::fromValue(window));
+
+	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
+	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateTabs()));
+	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(updatePinnedTabsAmount()));
+	connect(tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
+
+	if (window->isPinned())
+	{
+		updatePinnedTabsAmount();
+	}
+
+	updateTabs(index);
+}
+
 void TabBarWidget::removeTab(int index)
 {
 	if (underMouse())
@@ -465,6 +475,25 @@ void TabBarWidget::pinTab()
 	{
 		emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool());
 	}
+}
+
+void TabBarWidget::updatePinnedTabsAmount()
+{
+	int amount = 0;
+
+	for (int i = 0; i < count(); ++i)
+	{
+		if (!getTabProperty(i, QLatin1String("isPinned"), false).toBool())
+		{
+			break;
+		}
+
+		++amount;
+	}
+
+	m_pinnedTabsAmount = amount;
+
+	updateTabs();
 }
 
 void TabBarWidget::updateButtons()
@@ -667,6 +696,11 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	}
 
 	return QSize(QTabBar::tabSizeHint(0).width(), size);
+}
+
+int TabBarWidget::getPinnedTabsAmount() const
+{
+	return m_pinnedTabsAmount;
 }
 
 }

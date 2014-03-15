@@ -295,26 +295,15 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	if (!window->isPinned())
 	{
-		int offset = 0;
+		const int offset = m_tabBar->getPinnedTabsAmount();
 
-		for (int i = 0; i < m_tabBar->count(); ++i)
-		{
-			if (!m_tabBar->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
-			{
-				break;
-			}
-
-			++offset;
-		}
-
-		if (index <= offset)
+		if (index < offset)
 		{
 			index = offset;
 		}
 	}
 
-	m_tabBar->insertTab(index, window->getTitle());
-	m_tabBar->setTabData(index, QVariant::fromValue(window));
+	m_tabBar->addTab(index, window);
 
 	m_mdi->addWindow(window);
 
@@ -334,11 +323,6 @@ void WindowsManager::addWindow(Window *window, bool background)
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,bool,bool)), this, SLOT(openWindow(ContentsWidget*,bool,bool)));
 	connect(window, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
-	connect(window, SIGNAL(iconChanged(QIcon)), m_tabBar, SLOT(updateTabs()));
-	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), m_tabBar, SLOT(updateTabs()));
-	connect(m_tabBar->tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
-
-	m_tabBar->updateTabs(index);
 
 	emit windowAdded(index);
 }
@@ -402,24 +386,13 @@ void WindowsManager::detachWindow(int index)
 
 void WindowsManager::pinWindow(int index, bool pin)
 {
-	int offset = 0;
-
-	for (int i = 0; i < m_tabBar->count(); ++i)
-	{
-		if (!m_tabBar->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
-		{
-			break;
-		}
-
-		++offset;
-	}
+	const int offset = m_tabBar->getPinnedTabsAmount();
 
 	if (!pin)
 	{
 		m_tabBar->setTabProperty(index, QLatin1String("isPinned"), false);
 		m_tabBar->setTabText(index, m_tabBar->getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString());
 		m_tabBar->moveTab(index, offset);
-		m_tabBar->updateTabs();
 
 		return;
 	}
@@ -427,7 +400,6 @@ void WindowsManager::pinWindow(int index, bool pin)
 	m_tabBar->setTabProperty(index, QLatin1String("isPinned"), true);
 	m_tabBar->setTabText(index, QString());
 	m_tabBar->moveTab(index, offset);
-	m_tabBar->updateTabs();
 }
 
 void WindowsManager::closeWindow(int index)
