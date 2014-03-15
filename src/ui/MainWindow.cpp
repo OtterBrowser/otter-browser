@@ -106,6 +106,8 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->actionZoomOut->setData(ZoomOutAction);
 	m_ui->actionZoomOriginal->setIcon(Utils::getIcon(QLatin1String("zoom-original")));
 	m_ui->actionZoomOriginal->setData(ZoomOriginalAction);
+	m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+	m_ui->actionFullScreen->setData(FullScreenAction);
 	m_ui->actionViewSource->setData(ViewSourceAction);
 	m_ui->actionInspectPage->setData(InspectPageAction);
 	m_ui->actionGoBack->setIcon(Utils::getIcon(QLatin1String("go-previous")));
@@ -183,6 +185,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	connect(m_ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(actionFullScreen()));
 	connect(m_ui->actionViewSource, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionInspectPage, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionReload, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -401,6 +404,18 @@ void MainWindow::actionSession(QAction *action)
 void MainWindow::actionWorkOffline(bool enabled)
 {
 	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enabled);
+}
+
+void MainWindow::actionFullScreen()
+{
+	if (isFullScreen())
+	{
+		showNormal();
+	}
+	else
+	{
+		showFullScreen();
+	}
 }
 
 void MainWindow::actionUserAgent(QAction *action)
@@ -1029,6 +1044,26 @@ WindowsManager* MainWindow::getWindowsManager()
 
 bool MainWindow::event(QEvent *event)
 {
+	if (event->type() == QEvent::WindowStateChange)
+	{
+		const bool result = QMainWindow::event(event);
+
+		if (isFullScreen())
+		{
+			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+			m_ui->menuBar->hide();
+			m_ui->statusBar->hide();
+		}
+		else
+		{
+			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+			m_ui->menuBar->show();
+			m_ui->statusBar->show();
+		}
+
+		return result;
+	}
+
 	if (event->type() == QEvent::WindowActivate)
 	{
 		SessionsManager::setActiveWindow(this);

@@ -1117,11 +1117,9 @@ QAction* QtWebKitWebWidget::getAction(WindowAction action)
 		case FullScreenAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("FullScreen"), true);
 
-			actionObject->setEnabled(false);
-
 			break;
 		case ZoomInAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ZoomIn"));
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("ZoomIn"), true);
 
 			break;
 		case ZoomOutAction:

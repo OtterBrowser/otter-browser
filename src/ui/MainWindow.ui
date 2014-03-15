@@ -416,9 +416,6 @@
    </property>
   </action>
   <action name="actionFullScreen">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Full Screen</string>
    </property>

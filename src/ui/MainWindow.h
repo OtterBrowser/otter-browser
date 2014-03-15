@@ -71,6 +71,7 @@ protected slots:
 	void actionManageSessions();
 	void actionSession(QAction *action);
 	void actionWorkOffline(bool enabled);
+	void actionFullScreen();
 	void actionUserAgent(QAction *action);
 	void actionTextEncoding(QAction *action);
 	void actionClearClosedWindows();

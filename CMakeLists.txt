@@ -149,6 +149,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	qt5_use_modules(otter-browser WinExtras)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-qt5_use_modules(otter-browser WebKitWidgets Script Sql)
+qt5_use_modules(otter-browser PrintSupport Script Sql WebKitWidgets)
 
 install(TARGETS otter-browser DESTINATION bin)
