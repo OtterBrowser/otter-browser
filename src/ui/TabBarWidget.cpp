@@ -688,7 +688,8 @@ QSize TabBarWidget::tabSizeHint(int index) const
 		return QSize(QTabBar::tabSizeHint(0).width(), 40);
 	}
 
-	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(40, qFloor((isHorizontal ? geometry().width() : geometry().height()) / qMax(1, count())), 250));
+	const int amount = getPinnedTabsAmount();
+	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(40, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * 40)) / qMax(1, (count() - amount))), 250));
 
 	if (isHorizontal)
 	{
