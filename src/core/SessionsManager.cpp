@@ -55,7 +55,7 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 
 		m_autoSaveTimer = 0;
 
-		saveSession();
+		saveSession(QString(), QString(), NULL, false);
 	}
 }
 
@@ -331,7 +331,7 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window)
+bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window, bool clean)
 {
 	QList<MainWindow*> windows;
 
@@ -373,6 +373,12 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
 	stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionTitle, true);
+
+	if (!clean)
+	{
+		stream << QLatin1String("clean=false\n");
+	}
+
 	stream << QLatin1String("windows=") << windows.count() << QLatin1Char('\n');
 	stream << QLatin1String("index=1\n\n");
 
