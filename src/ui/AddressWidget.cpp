@@ -153,9 +153,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty())
 	{
-		const QString text = QApplication::clipboard()->text().trimmed();
-
-		handleUserInput(text);
+		handleUserInput(QApplication::clipboard()->text().trimmed());
 
 		event->accept();
 	}
@@ -183,57 +181,55 @@ void AddressWidget::handleUserInput(const QString &text)
 {
 	const QUrl url = QUrl::fromUserInput(text);
 
-	if (!QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch() || !url.isValid())
+	if (url.isValid() && QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())
 	{
-		const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
-		const QStringList engines = SearchesManager::getSearchEngines();
-		SearchInformation *engine = NULL;
+		emit requestedLoadUrl(url);
+	}
 
-		for (int i = 0; i < engines.count(); ++i)
+	const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
+	const QStringList engines = SearchesManager::getSearchEngines();
+	SearchInformation *engine = NULL;
+
+	for (int i = 0; i < engines.count(); ++i)
+	{
+		engine = SearchesManager::getSearchEngine(engines.at(i));
+
+		if (engine && shortcut == engine->shortcut)
 		{
-			engine = SearchesManager::getSearchEngine(engines.at(i));
-
-			if (engine && shortcut == engine->shortcut)
-			{
-				emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
-
-				return;
-			}
-		}
-
-		const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
-
-		if (url.isValid() && lookupTimeout > 0)
-		{
-			if (text == m_lookupQuery)
-			{
-				return;
-			}
-
-			m_lookupQuery = text;
-
-			if (m_lookupTimer != 0)
-			{
-				QHostInfo::abortHostLookup(m_lookupID);
-
-				killTimer(m_lookupTimer);
-
-				m_lookupTimer = 0;
-			}
-
-			m_lookupID = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
-
-			m_lookupTimer = startTimer(lookupTimeout);
+			emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
 
 			return;
 		}
+	}
 
-		emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+	const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
+
+	if (url.isValid() && lookupTimeout > 0)
+	{
+		if (text == m_lookupQuery)
+		{
+			return;
+		}
+
+		m_lookupQuery = text;
+
+		if (m_lookupTimer != 0)
+		{
+			QHostInfo::abortHostLookup(m_lookupID);
+
+			killTimer(m_lookupTimer);
+
+			m_lookupTimer = 0;
+		}
+
+		m_lookupID = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
+
+		m_lookupTimer = startTimer(lookupTimeout);
 
 		return;
 	}
 
-	emit requestedLoadUrl(getUrl());
+	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
 }
 
 void AddressWidget::removeIcon()
