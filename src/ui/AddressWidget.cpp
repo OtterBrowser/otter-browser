@@ -27,6 +27,7 @@
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
@@ -183,7 +184,15 @@ void AddressWidget::handleUserInput(const QString &text)
 {
 	const QUrl url = QUrl::fromUserInput(text);
 
-	if (!QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch() || !url.isValid())
+	if (url.isLocalFile())
+	{
+		emit requestedLoadUrl(url);
+	}
+	else if (text == QLatin1String("~") || text.startsWith(QLatin1String("~/")))
+	{
+		emit requestedLoadUrl(QDir::homePath()+text.right(text.size()-1));
+	}
+	else if (!QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch() || !url.isValid())
 	{
 		const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
 		const QStringList engines = SearchesManager::getSearchEngines();
@@ -229,11 +238,11 @@ void AddressWidget::handleUserInput(const QString &text)
 		}
 
 		emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
-
-		return;
 	}
-
-	emit requestedLoadUrl(getUrl());
+	else
+	{
+		emit requestedLoadUrl(url);
+	}
 }
 
 void AddressWidget::removeIcon()
@@ -382,7 +391,7 @@ void AddressWidget::setWindow(Window *window)
 
 QUrl AddressWidget::getUrl() const
 {
-	return QUrl(text().isEmpty() ? QLatin1String("about:blank") : text());
+	return QUrl(text().isEmpty() ? QLatin1String("about:blank") : text() );
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
