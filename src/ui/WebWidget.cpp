@@ -19,6 +19,7 @@
 
 #include "WebWidget.h"
 #include "ContentsWidget.h"
+#include "../core/ActionsManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 
@@ -135,7 +136,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		menu.addAction(getAction(ContentBlockingAction));
 		menu.addAction(getAction(WebsitePreferencesAction));
 		menu.addSeparator();
-		menu.addAction(getAction(FullScreenAction));
+		menu.addAction(ActionsManager::getAction(QLatin1String("FullScreen")));
 	}
 	else
 	{

@@ -107,7 +107,6 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->actionZoomOriginal->setIcon(Utils::getIcon(QLatin1String("zoom-original")));
 	m_ui->actionZoomOriginal->setData(ZoomOriginalAction);
 	m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-	m_ui->actionFullScreen->setData(FullScreenAction);
 	m_ui->actionViewSource->setData(ViewSourceAction);
 	m_ui->actionInspectPage->setData(InspectPageAction);
 	m_ui->actionGoBack->setIcon(Utils::getIcon(QLatin1String("go-previous")));

@@ -88,7 +88,6 @@ enum WindowAction
 	ValidateAction,
 	ContentBlockingAction,
 	WebsitePreferencesAction,
-	FullScreenAction,
 	ZoomInAction,
 	ZoomOutAction,
 	ZoomOriginalAction,
