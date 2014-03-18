@@ -1,18 +1,36 @@
 <RCC>
     <qresource prefix="/">
+        <file>files/error.html</file>
+        <file>files/listing.html</file>
+        <file>files/start.html</file>
         <file>icons/application-exit.png</file>
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-left.png</file>
         <file>icons/arrow-right.png</file>
         <file>icons/arrow-up.png</file>
+        <file>icons/audio-volume-medium.png</file>
+        <file>icons/audio-volume-muted.png</file>
+        <file>icons/bookmark-new.png</file>
+        <file>icons/bookmarks-organize.png</file>
+        <file>icons/bookmarks.png</file>
+        <file>icons/cache.png</file>
+        <file>icons/configuration.png</file>
         <file>icons/configure-shortcuts.png</file>
         <file>icons/configure-toolbars.png</file>
         <file>icons/configure.png</file>
+        <file>icons/cookies.png</file>
+        <file>icons/dialog-error.png</file>
+        <file>icons/dialog-information.png</file>
+        <file>icons/dialog-password.png</file>
+        <file>icons/dialog-warning.png</file>
         <file>icons/document-new.png</file>
+        <file>icons/document-open-folder.png</file>
         <file>icons/document-open.png</file>
         <file>icons/document-print-preview.png</file>
         <file>icons/document-print.png</file>
         <file>icons/document-save.png</file>
+        <file>icons/edit-clear-history.png</file>
+        <file>icons/edit-clear.png</file>
         <file>icons/edit-copy.png</file>
         <file>icons/edit-cut.png</file>
         <file>icons/edit-delete.png</file>
@@ -22,72 +40,54 @@
         <file>icons/edit-select-all.png</file>
         <file>icons/edit-undo.png</file>
         <file>icons/go-down.png</file>
+        <file>icons/go-first.png</file>
+        <file>icons/go-last.png</file>
         <file>icons/go-next.png</file>
         <file>icons/go-previous.png</file>
         <file>icons/go-up.png</file>
         <file>icons/help-contents.png</file>
+        <file>icons/inode-directory.png</file>
+        <file>icons/loading.gif</file>
+        <file>icons/media-playback-pause.png</file>
+        <file>icons/media-playback-start.png</file>
+        <file>icons/process-stop.png</file>
         <file>icons/qt.png</file>
         <file>icons/tab-close-other.png</file>
         <file>icons/tab-close.png</file>
-        <file>icons/tab-new.png</file>
-        <file>icons/view-history.png</file>
-        <file>icons/window-close.png</file>
-        <file>icons/zoom-in.png</file>
-        <file>icons/zoom-original.png</file>
-        <file>icons/zoom-out.png</file>
-        <file>icons/tab.png</file>
-        <file>icons/window-new.png</file>
         <file>icons/tab-new-private.png</file>
-        <file>icons/window-new-private.png</file>
-        <file>icons/go-first.png</file>
-        <file>icons/go-last.png</file>
-        <file>icons/process-stop.png</file>
-        <file>icons/view-refresh.png</file>
-        <file>icons/edit-clear-history.png</file>
+        <file>icons/tab-new.png</file>
         <file>icons/tab-private.png</file>
-        <file>files/listing.html</file>
-        <file>icons/inode-directory.png</file>
-        <file>icons/unknown.png</file>
-        <file>icons/loading.gif</file>
-        <file>icons/view-fullscreen.png</file>
-        <file>icons/view-restore.png</file>
-        <file>files/error.html</file>
-        <file>icons/user-trash.png</file>
-        <file>icons/edit-clear.png</file>
-        <file>icons/bookmark-new.png</file>
-        <file>icons/bookmarks-organize.png</file>
-        <file>icons/text-html.png</file>
-        <file>icons/document-open-folder.png</file>
-        <file>icons/cookies.png</file>
-        <file>icons/bookmarks.png</file>
-        <file>icons/transfers.png</file>
+        <file>icons/tab.png</file>
         <file>icons/task-complete.png</file>
         <file>icons/task-ongoing.png</file>
         <file>icons/task-reject.png</file>
-        <file>icons/configuration.png</file>
-        <file>searches/google.xml</file>
-        <file>searches/bing.xml</file>
-        <file>searches/duckduckgo.xml</file>
-        <file>searches/wikipedia.xml</file>
-        <file>searches/yahoo.xml</file>
-        <file>searches/youtube.xml</file>
-        <file>icons/audio-volume-medium.png</file>
-        <file>icons/audio-volume-muted.png</file>
-        <file>icons/media-playback-pause.png</file>
-        <file>icons/media-playback-start.png</file>
-        <file>schemas/browsingHistory.sql</file>
-        <file>schemas/options.ini</file>
-        <file>icons/cache.png</file>
-        <file>icons/dialog-error.png</file>
-        <file>icons/dialog-password.png</file>
-        <file>icons/dialog-warning.png</file>
-        <file>icons/dialog-information.png</file>
+        <file>icons/text-html.png</file>
+        <file>icons/transfers.png</file>
+        <file>icons/unknown.png</file>
+        <file>icons/user-trash.png</file>
+        <file>icons/view-fullscreen.png</file>
+        <file>icons/view-history.png</file>
+        <file>icons/view-refresh.png</file>
+        <file>icons/view-restore.png</file>
+        <file>icons/window-close.png</file>
+        <file>icons/window-new-private.png</file>
+        <file>icons/window-new.png</file>
+        <file>icons/zoom-in.png</file>
+        <file>icons/zoom-original.png</file>
+        <file>icons/zoom-out.png</file>
         <file>keyboard/default.ini</file>
         <file>keyboard/platform.ini</file>
         <file>macros/default.ini</file>
         <file>macros/platform.ini</file>
-        <file>files/start.html</file>
-        <file>schemas/bookmarks.sql</file>
         <file>other/userAgents.ini</file>
+        <file>schemas/bookmarks.sql</file>
+        <file>schemas/browsingHistory.sql</file>
+        <file>schemas/options.ini</file>
+        <file>searches/bing.xml</file>
+        <file>searches/duckduckgo.xml</file>
+        <file>searches/google.xml</file>
+        <file>searches/wikipedia.xml</file>
+        <file>searches/yahoo.xml</file>
+        <file>searches/youtube.xml</file>
     </qresource>
 </RCC>
