@@ -184,6 +184,8 @@ void AddressWidget::handleUserInput(const QString &text)
 	if (url.isValid() && QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())
 	{
 		emit requestedLoadUrl(url);
+
+		return;
 	}
 
 	const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
