@@ -184,7 +184,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		return false;
 	}
 
-	if (request.url().scheme() == QLatin1String("mailto"))
+	if (request.url().scheme() == QLatin1String("mailto") || request.url().scheme() == QLatin1String("magnet"))
 	{
 		QDesktopServices::openUrl(request.url());
 
