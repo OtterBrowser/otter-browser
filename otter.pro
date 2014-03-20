@@ -174,3 +174,17 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui
 
 RESOURCES += resources/resources.qrc
+
+TRANSLATIONS += resources/translations/cs_CZ.ts \
+    resources/translations/de_DE.ts \
+    resources/translations/en_GB.ts \
+    resources/translations/en_US.ts \
+    resources/translations/es_ES.ts \
+    resources/translations/fr_FR.ts \
+    resources/translations/id_ID.ts \
+    resources/translations/it_IT.ts \
+    resources/translations/pl_PL.ts \
+    resources/translations/pt_PT.ts \
+    resources/translations/ru_RU.ts \
+    resources/translations/tr_TR.ts \
+    reouurces/translations/uk_UA.ts
