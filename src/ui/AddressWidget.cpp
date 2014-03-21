@@ -181,7 +181,7 @@ void AddressWidget::handleUserInput(const QString &text)
 {
 	const QUrl url = QUrl::fromUserInput(text);
 
-	if (url.isValid() && QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())
+	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
 	{
 		emit requestedLoadUrl(url);
 
