@@ -97,12 +97,14 @@ void UserAgentsManagerDialog::editUserAgent()
 
 void UserAgentsManagerDialog::removeUserAgent()
 {
-
+	m_ui->userAgentsView->removeRow();
 }
 
 void UserAgentsManagerDialog::updateUserAgentActions()
 {
+	const int currentRow = m_ui->userAgentsView->getCurrentRow();
 
+	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->userAgentsView->getRowCount());
 }
 
 QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const

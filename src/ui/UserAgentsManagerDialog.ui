@@ -59,7 +59,7 @@
      <item>
       <layout class="QVBoxLayout" name="buttonsLayout" stretch="0,0,0,1,0">
        <item>
-        <widget class="QPushButton" name="removeButton">
+        <widget class="QPushButton" name="addButton">
          <property name="text">
           <string>Add</string>
          </property>
@@ -76,7 +76,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="addButton">
+        <widget class="QPushButton" name="removeButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
