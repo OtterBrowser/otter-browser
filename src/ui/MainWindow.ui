@@ -479,11 +479,6 @@
     <string>Blocked Content...</string>
    </property>
   </action>
-  <action name="actionA">
-   <property name="text">
-    <string>a</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
