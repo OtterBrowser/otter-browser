@@ -304,12 +304,12 @@ QCommandLineParser* Application::getParser() const
 	QCommandLineParser *parser = new QCommandLineParser();
 	parser->addHelpOption();
 	parser->addVersionOption();
-	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open."), QLatin1String("[url]"));
-	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory."), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory."), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists."), QLatin1String("session"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session.")));
-	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary.")));
+	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
+	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
+	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
 
 	return parser;
 }
