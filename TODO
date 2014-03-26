@@ -6,21 +6,22 @@ High priority / ASAP:
 
 Medium priority / soon:
 - content blocking
-- spell checking
 - feeds reader (as module)
 - panels (page informations, notes, transfers, bookmarks etc.)
 - greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
+- import of existing settings, bookmarks etc.
 - system tray icon
+- spell checking
 
 Low priority / later:
 - mail client (as module)
 - shared contacts database
 - fine-tune UI (sizes, margins and other details)
-- form auto completion
 - exposing MDI features
 - mouse gestures
+- support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
-- import of existing settings, bookmarks etc.
+- form auto completion
 - extensions (Firefox and Chrome APIs support)
 - Opera Link like solution
 - improved integration with different platforms (Windows taskbar integration etc.)
@@ -30,6 +31,5 @@ Low priority / maybe:
 - support for Opera skins (through custom QStyle)
 - IM client module (libpurple based, including support for IRC)
 - BitTorrent module
-- support for tab thumbnails embedded in tab bar
 
 And lots of smaller or obvious things. ;-)
