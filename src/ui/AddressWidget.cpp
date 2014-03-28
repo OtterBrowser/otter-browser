@@ -27,7 +27,9 @@
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
@@ -179,6 +181,18 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void AddressWidget::handleUserInput(const QString &text)
 {
+	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
+	{
+		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+
+		if (!locations.isEmpty())
+		{
+			emit requestedLoadUrl(QUrl(locations.first() + text.mid(1)));
+
+			return;
+		}
+	}
+
 	const QUrl url = QUrl::fromUserInput(text);
 
 	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
