@@ -792,7 +792,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			m_ui->menuClosedWindows->addAction(tr("Window - %1").arg(windows.at(i)), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
+			m_ui->menuClosedWindows->addAction(m_ui->menuClosedWindows->fontMetrics().elidedText(tr("Window - %1").arg(windows.at(i)), Qt::ElideRight, 300), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
 		m_ui->menuClosedWindows->addSeparator();
@@ -803,7 +803,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), tabs.at(i).getTitle(), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
+		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), m_ui->menuClosedWindows->fontMetrics().elidedText(tabs.at(i).getTitle(), Qt::ElideRight, 300), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
 	m_closedWindowsMenu->addActions(m_ui->menuClosedWindows->actions());
