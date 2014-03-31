@@ -251,11 +251,13 @@ void TransfersManager::save()
 
 void TransfersManager::clearTransfers(int period)
 {
-	for (int i = 0; i < m_transfers.count(); ++i)
+	const QList<TransferInformation*> transfers = m_transfers;
+
+	for (int i = 0; i < transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->state == FinishedTransfer && (period == 0 || (m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.secsTo(QDateTime::currentDateTime()) > (period * 3600))))
+		if (transfers.at(i)->state == FinishedTransfer && (period == 0 || (transfers.at(i)->finished.isValid() && transfers.at(i)->finished.secsTo(QDateTime::currentDateTime()) > (period * 3600))))
 		{
-			TransfersManager::removeTransfer(m_transfers.at(i));
+			TransfersManager::removeTransfer(transfers.at(i));
 		}
 	}
 }
