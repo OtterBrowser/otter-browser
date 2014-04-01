@@ -47,7 +47,6 @@ protected:
 
 protected slots:
 	void addUserAgent();
-	void editUserAgent();
 	void removeUserAgent();
 	void updateUserAgentActions();
 

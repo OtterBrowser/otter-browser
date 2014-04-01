@@ -19,7 +19,7 @@
      <item>
       <widget class="Otter::TableViewWidget" name="userAgentsView">
        <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
+        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
        </property>
        <property name="dragEnabled">
         <bool>true</bool>
@@ -57,21 +57,11 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="buttonsLayout" stretch="0,0,0,1,0">
+      <layout class="QVBoxLayout" name="buttonsLayout" stretch="0,0,1,0">
        <item>
         <widget class="QPushButton" name="addButton">
          <property name="text">
           <string>Add</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="editButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Edit</string>
          </property>
         </widget>
        </item>

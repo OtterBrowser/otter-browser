@@ -45,9 +45,9 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 		QList<QStandardItem*> items;
 		items.append(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
 		items[0]->setData(userAgents.at(i).identifier, Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 		items.append(new QStandardItem(userAgents.at(i).value));
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 
 		model->appendRow(items);
 	}
@@ -59,7 +59,6 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentActions()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addUserAgent()));
-	connect(m_ui->editButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), this, SLOT(removeUserAgent()));
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->userAgentsView, SLOT(moveDownRow()));
 	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->userAgentsView, SLOT(moveUpRow()));
@@ -87,12 +86,13 @@ void UserAgentsManagerDialog::changeEvent(QEvent *event)
 
 void UserAgentsManagerDialog::addUserAgent()
 {
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem());
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
+	items.append(new QStandardItem());
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 
-}
-
-void UserAgentsManagerDialog::editUserAgent()
-{
-
+	m_ui->userAgentsView->insertRow(items);
 }
 
 void UserAgentsManagerDialog::removeUserAgent()
@@ -110,11 +110,26 @@ void UserAgentsManagerDialog::updateUserAgentActions()
 QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
 {
 	QList<UserAgentInformation> userAgents;
+	QStringList identifiers;
 
 	for (int i = 0; i < m_ui->userAgentsView->getRowCount(); ++i)
 	{
+		QString identifier = m_ui->userAgentsView->getIndex(i, 0).data(Qt::UserRole).toString();
+
+		if (identifier.isEmpty() || identifiers.contains(identifier))
+		{
+			int number = 1;
+
+			while (identifiers.contains(QLatin1String("custom_") + identifier))
+			{
+				++number;
+			}
+
+			identifier = QLatin1String("custom_") + identifier;
+		}
+
 		UserAgentInformation userAgent;
-		userAgent.identifier = m_ui->userAgentsView->getIndex(i, 0).data(Qt::UserRole).toString();
+		userAgent.identifier = identifier;
 		userAgent.title = m_ui->userAgentsView->getIndex(i, 0).data(Qt::DisplayRole).toString();
 		userAgent.value = m_ui->userAgentsView->getIndex(i, 1).data(Qt::DisplayRole).toString();
 
