@@ -77,6 +77,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	}
 
 	m_ui->startPageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
+	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
 	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
