@@ -49,7 +49,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
 	setApplicationName(QLatin1String("Otter"));
-	setApplicationVersion(QLatin1String("0.4.01"));
+	setApplicationVersion(QLatin1String("0.5.01-dev"));
 
 	m_instance = this;
 
