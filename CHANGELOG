@@ -1,8 +1,8 @@
-0.4.01 (--.--.2014):
+0.4.01 (01.04.2014):
 - added basic full screen mode support;
-- initial work on User Agents configuration;
+- User Agents configuration;
 - various tab bar related fixes;
-- some other fixes.
+- some other fixes and changes.
 
 0.3.01 (01.03.2014):
 - added option to set custom User Agent (for single tab or whole application);

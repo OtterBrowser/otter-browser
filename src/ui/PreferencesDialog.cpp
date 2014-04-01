@@ -1173,6 +1173,8 @@ void PreferencesDialog::save()
 		}
 
 		userAgents.sync();
+
+		NetworkAccessManager::loadUserAgents();
 	}
 
 	for (int i = 0; i < m_removedProfiles.count(); ++i)

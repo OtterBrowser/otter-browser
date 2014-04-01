@@ -655,62 +655,51 @@ void MainWindow::menuSessionsAboutToShow()
 
 void MainWindow::menuUserAgentAboutToShow()
 {
-	if (!m_userAgentGroup)
+	if (m_userAgentGroup)
 	{
-		const QStringList userAgents = NetworkAccessManager::getUserAgents();
+		m_userAgentGroup->deleteLater();
 
-		m_userAgentGroup = new QActionGroup(this);
-		m_userAgentGroup->setExclusive(true);
-
-		QAction *defaultAction = m_ui->menuUserAgent->addAction(tr("Default"));
-		defaultAction->setData(QLatin1String("default"));
-		defaultAction->setCheckable(true);
-
-		m_userAgentGroup->addAction(defaultAction);
-
-		m_ui->menuUserAgent->addSeparator();
-
-		for (int i = 0; i < userAgents.count(); ++i)
-		{
-			const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
-			QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
-			userAgentAction->setData(userAgents.at(i));
-			userAgentAction->setCheckable(true);
-
-			m_userAgentGroup->addAction(userAgentAction);
-		}
-
-		m_ui->menuUserAgent->addSeparator();
-
-		QAction *customAction = m_ui->menuUserAgent->addAction(tr("Custom"));
-		customAction->setData(QLatin1String("custom"));
-		customAction->setCheckable(true);
-
-		m_userAgentGroup->addAction(customAction);
-
-		connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
+		m_ui->menuUserAgent->clear();
 	}
 
+	const QStringList userAgents = NetworkAccessManager::getUserAgents();
 	const QString userAgent = m_windowsManager->getUserAgent().first.toLower();
 
-	for (int i = 0; i < m_ui->menuUserAgent->actions().count(); ++i)
+	m_userAgentGroup = new QActionGroup(this);
+	m_userAgentGroup->setExclusive(true);
+
+	QAction *defaultAction = m_ui->menuUserAgent->addAction(tr("Default"));
+	defaultAction->setData(QLatin1String("default"));
+	defaultAction->setCheckable(true);
+	defaultAction->setChecked(userAgent == QLatin1String("default"));
+
+	m_userAgentGroup->addAction(defaultAction);
+
+	m_ui->menuUserAgent->addSeparator();
+
+	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		QAction *action = m_ui->menuUserAgent->actions().at(i);
+		const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
+		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
+		userAgentAction->setData(userAgents.at(i));
+		userAgentAction->setCheckable(true);
+		userAgentAction->setChecked(userAgent == userAgents.at(i));
 
-		if (!action)
-		{
-			continue;
-		}
-
-		action->setChecked(userAgent == action->data().toString().toLower());
-
-		if (action->isChecked())
-		{
-			break;
-		}
+		m_userAgentGroup->addAction(userAgentAction);
 	}
 
-	if (!m_userAgentGroup->checkedAction())
+	m_ui->menuUserAgent->addSeparator();
+
+	QAction *customAction = m_ui->menuUserAgent->addAction(tr("Custom"));
+	customAction->setData(QLatin1String("custom"));
+	customAction->setCheckable(true);
+	customAction->setChecked(userAgent == QLatin1String("custom"));
+
+	m_userAgentGroup->addAction(customAction);
+
+	connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
+
+	if (!m_userAgentGroup->checkedAction() && m_ui->menuUserAgent->actions().count() > 2)
 	{
 		m_ui->menuUserAgent->actions().first()->setChecked(true);
 	}
