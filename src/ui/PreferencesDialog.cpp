@@ -1161,6 +1161,20 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationLineEdit->text());
 
+	if (m_userAgentsModified)
+	{
+		QSettings userAgents(SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"), QSettings::IniFormat);
+		userAgents.clear();
+
+		for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
+		{
+			userAgents.setValue(m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString() + "/title", m_ui->userAgentComboBox->itemText(i));
+			userAgents.setValue(m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString() + "/value", m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
+		}
+
+		userAgents.sync();
+	}
+
 	for (int i = 0; i < m_removedProfiles.count(); ++i)
 	{
 		QFile::remove(m_removedProfiles.at(i));

@@ -120,13 +120,16 @@ QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
 		{
 			int number = 1;
 
-			while (identifiers.contains(QLatin1String("custom_") + identifier))
+			do
 			{
+				identifier = QString("custom_%1").arg(number);
+
 				++number;
 			}
-
-			identifier = QLatin1String("custom_") + identifier;
+			while (identifiers.contains(identifier));
 		}
+
+		identifiers.append(identifier);
 
 		UserAgentInformation userAgent;
 		userAgent.identifier = identifier;
