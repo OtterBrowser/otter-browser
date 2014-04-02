@@ -85,6 +85,7 @@ set(otter_src
 	src/ui/SearchPropertiesDialog.cpp
 	src/ui/SearchWidget.cpp
 	src/ui/SessionsManagerDialog.cpp
+	src/ui/StartupDialog.cpp
 	src/ui/StatusBarWidget.cpp
 	src/ui/TabBarDockWidget.cpp
 	src/ui/TabBarWidget.cpp
@@ -125,6 +126,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchPropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui
+	src/ui/StartupDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/BlockedContentDialog.ui

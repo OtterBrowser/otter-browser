@@ -59,6 +59,7 @@ SOURCES += src/main.cpp \
     src/ui/SearchPropertiesDialog.cpp \
     src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
+    src/ui/StartupDialog.cpp \
     src/ui/StatusBarWidget.cpp \
     src/ui/TabBarDockWidget.cpp \
     src/ui/TabBarWidget.cpp \
@@ -126,6 +127,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/SearchPropertiesDialog.h \
     src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
+    src/ui/StartupDialog.h \
     src/ui/StatusBarWidget.h \
     src/ui/TabBarDockWidget.h \
     src/ui/TabBarWidget.h \
@@ -160,6 +162,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
+    src/ui/StartupDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/Window.ui \
     src/ui/preferences/BlockedContentDialog.ui \
