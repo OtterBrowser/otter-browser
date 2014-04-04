@@ -118,6 +118,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
+	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -186,6 +187,13 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 		{
 			setStatusMessage(QString());
 		}
+	}
+	else if (option == QLatin1String("Content/BackgroundColor"))
+	{
+		QPalette palette = m_page->palette();
+		palette.setColor(QPalette::Base, QColor(value.toString()));
+
+		m_page->setPalette(palette);
 	}
 }
 
