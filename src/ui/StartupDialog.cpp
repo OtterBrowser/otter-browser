@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "StartupDialog.h"
+#include "../core/SessionsManager.h"
 
 #include "ui_StartupDialog.h"
 
@@ -28,6 +29,23 @@ StartupDialog::StartupDialog(QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::StartupDialog)
 {
 	m_ui->setupUi(this);
+
+	const QStringList sessions = SessionsManager::getSessions();
+	QMultiHash<QString, SessionInformation> information;
+
+	for (int i = 0; i < sessions.count(); ++i)
+	{
+		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
+
+		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
+	}
+
+	const QList<SessionInformation> sorted = information.values();
+
+	for (int i = 0; i < sorted.count(); ++i)
+	{
+		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
+	}
 }
 
 StartupDialog::~StartupDialog()
