@@ -80,7 +80,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="startPageLabel">
            <property name="text">
-            <string>Start Page:</string>
+            <string>Start page:</string>
            </property>
            <property name="buddy">
             <cstring>startPageLineEdit</cstring>
