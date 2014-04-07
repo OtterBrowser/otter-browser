@@ -71,11 +71,18 @@ void StartupDialog::setSession(int index)
 
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
-			windowItem->appendRow(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
+			QStandardItem *tabItem = new QStandardItem(session.windows.at(i).windows.at(j).getTitle());
+			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
+			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
+
+			windowItem->appendRow(tabItem);
 		}
 
 		if (windowItem != m_windowsModel->invisibleRootItem())
 		{
+			windowItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
+			windowItem->setData(Qt::Checked, Qt::CheckStateRole);
+
 			m_windowsModel->invisibleRootItem()->appendRow(windowItem);
 		}
 	}
