@@ -26,9 +26,11 @@ namespace Otter
 {
 
 StartupDialog::StartupDialog(QWidget *parent) : QDialog(parent),
+	m_windowsModel(new QStandardItemModel(this)),
 	m_ui(new Ui::StartupDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->windowsTreeView->setModel(m_windowsModel);
 
 	const QStringList sessions = SessionsManager::getSessions();
 	QMultiHash<QString, SessionInformation> information;
@@ -46,11 +48,37 @@ StartupDialog::StartupDialog(QWidget *parent) : QDialog(parent),
 	{
 		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
 	}
+
+	setSession(0);
+
+	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
 }
 
 StartupDialog::~StartupDialog()
 {
 	delete m_ui;
+}
+
+void StartupDialog::setSession(int index)
+{
+	m_windowsModel->clear();
+
+	const SessionInformation session = SessionsManager::getSession(m_ui->sessionComboBox->itemData(index).toString());
+
+	for (int i = 0; i < session.windows.count(); ++i)
+	{
+		QStandardItem *windowItem =  ((session.windows.count() == 1) ? m_windowsModel->invisibleRootItem() : new QStandardItem(tr("Window %1").arg(i + 1)));
+
+		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
+		{
+			windowItem->appendRow(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
+		}
+
+		if (windowItem != m_windowsModel->invisibleRootItem())
+		{
+			m_windowsModel->invisibleRootItem()->appendRow(windowItem);
+		}
+	}
 }
 
 }

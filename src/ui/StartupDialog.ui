@@ -78,7 +78,7 @@
          <widget class="QComboBox" name="sessionComboBox"/>
         </item>
         <item>
-         <widget class="QTreeView" name="tabsTreeView"/>
+         <widget class="QTreeView" name="windowsTreeView"/>
         </item>
        </layout>
       </widget>

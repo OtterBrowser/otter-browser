@@ -20,6 +20,7 @@
 #ifndef OTTER_STARTUPDIALOG_H
 #define OTTER_STARTUPDIALOG_H
 
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -38,7 +39,11 @@ public:
 	explicit StartupDialog(QWidget *parent = NULL);
 	~StartupDialog();
 
+protected slots:
+	void setSession(int index);
+
 private:
+	QStandardItemModel *m_windowsModel;
 	Ui::StartupDialog *m_ui;
 };
 
