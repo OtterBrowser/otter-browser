@@ -42,6 +42,12 @@ void StatusBarWidget::setup()
 	m_zoomSlider->setMaximumWidth(100);
 	m_zoomSlider->installEventFilter(this);
 
+	m_zoomOriginalButton = new QToolButton(this);
+	m_zoomOriginalButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomOriginal")));
+	m_zoomOriginalButton->setAutoRaise(true);
+	m_zoomOriginalButton->setCheckable(true);
+	m_zoomOriginalButton->setToolTip("Zoom 100%");
+
 	QToolButton *zoomOutButton = new QToolButton(this);
 	zoomOutButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomOut")));
 	zoomOutButton->setAutoRaise(true);
@@ -50,6 +56,7 @@ void StatusBarWidget::setup()
 	zoomInButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomIn")));
 	zoomInButton->setAutoRaise(true);
 
+	addPermanentWidget(m_zoomOriginalButton);
 	addPermanentWidget(zoomOutButton);
 	addPermanentWidget(m_zoomSlider);
 	addPermanentWidget(zoomInButton);
@@ -62,6 +69,7 @@ void StatusBarWidget::setZoom(int zoom)
 {
 	m_zoomSlider->setValue(zoom);
 	m_zoomSlider->setToolTip(tr("Zoom %1%").arg(zoom));
+	m_zoomOriginalButton->setChecked(zoom==100);
 }
 
 void StatusBarWidget::setZoomEnabled(bool enabled)
