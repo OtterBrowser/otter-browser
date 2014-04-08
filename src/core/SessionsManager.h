@@ -101,8 +101,9 @@ struct SessionInformation
 	QString title;
 	QList<SessionMainWindow> windows;
 	int index;
+	bool clean;
 
-	SessionInformation() : index(-1) {}
+	SessionInformation() : index(-1), clean(true) {}
 };
 
 class MainWindow;
