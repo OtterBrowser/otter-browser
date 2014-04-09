@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-StartupDialog::StartupDialog(QWidget *parent) : QDialog(parent),
+StartupDialog::StartupDialog(const QString &session, QWidget *parent) : QDialog(parent),
 	m_windowsModel(new QStandardItemModel(this)),
 	m_ui(new Ui::StartupDialog)
 {
@@ -49,9 +49,9 @@ StartupDialog::StartupDialog(QWidget *parent) : QDialog(parent),
 		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
 	}
 
-	setSession(0);
-
 	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
+
+	m_ui->sessionComboBox->setCurrentIndex(qMax(0, m_ui->sessionComboBox->findData(session)));
 }
 
 StartupDialog::~StartupDialog()
@@ -64,16 +64,23 @@ void StartupDialog::setSession(int index)
 	m_windowsModel->clear();
 
 	const SessionInformation session = SessionsManager::getSession(m_ui->sessionComboBox->itemData(index).toString());
+	QFont font(m_ui->windowsTreeView->font());
+	font.setBold(true);
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		QStandardItem *windowItem =  ((session.windows.count() == 1) ? m_windowsModel->invisibleRootItem() : new QStandardItem(tr("Window %1").arg(i + 1)));
+		QStandardItem *windowItem = ((session.windows.count() == 1) ? m_windowsModel->invisibleRootItem() : new QStandardItem(tr("Window %1").arg(i + 1)));
 
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
 			QStandardItem *tabItem = new QStandardItem(session.windows.at(i).windows.at(j).getTitle());
 			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
+
+			if (j == session.windows.at(i).index)
+			{
+				tabItem->setData(font, Qt::FontRole);
+			}
 
 			windowItem->appendRow(tabItem);
 		}
