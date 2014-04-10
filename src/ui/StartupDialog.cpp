@@ -49,9 +49,13 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : QDialog(
 		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
 	}
 
-	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
+	const int index = qMax(0, m_ui->sessionComboBox->findData(session));
 
-	m_ui->sessionComboBox->setCurrentIndex(qMax(0, m_ui->sessionComboBox->findData(session)));
+	m_ui->sessionComboBox->setCurrentIndex(index);
+
+	setSession(index);
+
+	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
 }
 
 StartupDialog::~StartupDialog()

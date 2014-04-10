@@ -19,7 +19,9 @@
 
 #include "core/Application.h"
 #include "core/SessionsManager.h"
+#include "core/SettingsManager.h"
 #include "ui/MainWindow.h"
+#include "ui/StartupDialog.h"
 
 #include <QtCore/QUrl>
 
@@ -38,13 +40,27 @@ int main(int argc, char *argv[])
 	Otter::MainWindow *window = NULL;
 	const QString session = ((Otter::SessionsManager::getCurrentSession().isEmpty() || !parser->value(QLatin1String("session")).isEmpty()) ? (parser->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : parser->value(QLatin1String("session"))) : QString());
 
-	if (session.isEmpty() || !Otter::SessionsManager::restoreSession(session))
+	if (Otter::SessionsManager::getCurrentSession().isEmpty() && (Otter::SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString() == QLatin1String("showDialog") || !Otter::SessionsManager::getSession(session.isEmpty() ? QLatin1String("default") : session).clean))
 	{
-		 window = application.createWindow(parser->isSet(QLatin1String("privatesession")));
+		Otter::StartupDialog dialog(session.isEmpty() ? QLatin1String("default") : session);
+
+		if (dialog.exec() == QDialog::Rejected)
+		{
+			delete parser;
+
+			return 0;
+		}
 	}
 	else
 	{
-		window = application.getWindow();
+		if (session.isEmpty() || !Otter::SessionsManager::restoreSession(session))
+		{
+			 window = application.createWindow(parser->isSet(QLatin1String("privatesession")));
+		}
+		else
+		{
+			window = application.getWindow();
+		}
 	}
 
 	if (window && !parser->positionalArguments().isEmpty())
