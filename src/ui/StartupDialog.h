@@ -31,6 +31,8 @@ namespace Ui
 	class StartupDialog;
 }
 
+struct SessionInformation;
+
 class StartupDialog : public QDialog
 {
 	Q_OBJECT
@@ -38,6 +40,8 @@ class StartupDialog : public QDialog
 public:
 	explicit StartupDialog(const QString &session, QWidget *parent = NULL);
 	~StartupDialog();
+
+	SessionInformation getSession() const;
 
 protected slots:
 	void setSession(int index);

@@ -99,4 +99,13 @@ void StartupDialog::setSession(int index)
 	}
 }
 
+SessionInformation StartupDialog::getSession() const
+{
+	SessionInformation session;
+
+///TODO
+
+	return session;
+}
+
 }

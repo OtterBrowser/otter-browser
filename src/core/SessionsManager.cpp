@@ -290,13 +290,11 @@ bool SessionsManager::restoreClosedWindow(int index)
 	return true;
 }
 
-bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
+bool SessionsManager::restoreSession(const SessionInformation &session, MainWindow *window)
 {
-	const SessionInformation session = getSession(path);
-
 	if (session.windows.isEmpty())
 	{
-		if (m_session.isEmpty() && path == QLatin1String("default"))
+		if (m_session.isEmpty() && session.path == QLatin1String("default"))
 		{
 			m_session = QLatin1String("default");
 		}
@@ -308,7 +306,7 @@ bool SessionsManager::restoreSession(const QString &path, MainWindow *window)
 
 	if (m_session.isEmpty())
 	{
-		m_session = path;
+		m_session = session.path;
 	}
 
 	m_closedWindows = session.windows;

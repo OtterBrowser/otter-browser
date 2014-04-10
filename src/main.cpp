@@ -50,10 +50,12 @@ int main(int argc, char *argv[])
 
 			return 0;
 		}
+
+		Otter::SessionsManager::restoreSession(dialog.getSession());
 	}
 	else
 	{
-		if (session.isEmpty() || !Otter::SessionsManager::restoreSession(session))
+		if (session.isEmpty() || !Otter::SessionsManager::restoreSession(Otter::SessionsManager::getSession(session)))
 		{
 			 window = application.createWindow(parser->isSet(QLatin1String("privatesession")));
 		}

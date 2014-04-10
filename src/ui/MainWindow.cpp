@@ -396,7 +396,7 @@ void MainWindow::actionSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(action->data().toString());
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()));
 	}
 }
 

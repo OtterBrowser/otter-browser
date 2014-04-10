@@ -98,7 +98,7 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 
 void SessionsManagerDialog::openSession()
 {
-	SessionsManager::restoreSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString(), (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
+	SessionsManager::restoreSession(SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString()), (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
 
 	close();
 }
