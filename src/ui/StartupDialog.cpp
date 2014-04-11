@@ -19,6 +19,7 @@
 
 #include "StartupDialog.h"
 #include "../core/SessionsManager.h"
+#include "../core/SettingsManager.h"
 
 #include "ui_StartupDialog.h"
 
@@ -79,7 +80,7 @@ void StartupDialog::setSession(int index)
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		QStandardItem *windowItem = ((session.windows.count() == 1) ? m_windowsModel->invisibleRootItem() : new QStandardItem(tr("Window %1").arg(i + 1)));
+		QStandardItem *windowItem = new QStandardItem(tr("Window %1").arg(i + 1));
 
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
@@ -95,21 +96,84 @@ void StartupDialog::setSession(int index)
 			windowItem->appendRow(tabItem);
 		}
 
-		if (windowItem != m_windowsModel->invisibleRootItem())
+		if (session.windows.count() > 1)
 		{
 			windowItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
 			windowItem->setData(Qt::Checked, Qt::CheckStateRole);
-
-			m_windowsModel->invisibleRootItem()->appendRow(windowItem);
 		}
+
+		m_windowsModel->invisibleRootItem()->appendRow(windowItem);
 	}
+
+	m_ui->windowsTreeView->expandAll();
 }
 
 SessionInformation StartupDialog::getSession() const
 {
 	SessionInformation session;
 
-///TODO
+	if (m_ui->continueSessionButton->isChecked())
+	{
+		QList<SessionMainWindow> windows;
+
+		session = SessionsManager::getSession(m_ui->sessionComboBox->currentData().toString());
+
+		for (int i = 0; i < m_windowsModel->rowCount(); ++i)
+		{
+			QStandardItem *windowItem = m_windowsModel->item(i, 0);
+
+			if (!windowItem || (windowItem->flags() & Qt::ItemIsUserCheckable && windowItem->data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
+			{
+				continue;
+			}
+
+			const int index = (session.windows.value(i, SessionMainWindow()).index - 1);
+			SessionMainWindow window;
+			window.index = (index + 1);
+
+			for (int j = 0; j < windowItem->rowCount(); ++j)
+			{
+				QStandardItem *tabItem = windowItem->child(j, 0);
+
+				if (tabItem && tabItem->data(Qt::CheckStateRole).toInt() == Qt::Checked)
+				{
+					window.windows.append(session.windows.value(i, SessionMainWindow()).windows.value(j, SessionWindow()));
+				}
+				else
+				{
+					if (j == index)
+					{
+						window.index = 1;
+					}
+					else if (j > 0 && j < index)
+					{
+						--window.index;
+					}
+				}
+			}
+
+			windows.append(window);
+		}
+
+		session.windows = windows;
+	}
+	else
+	{
+		WindowHistoryEntry entry;
+		entry.url = (m_ui->homePageButton->isChecked() ? SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString() : QString());
+
+		SessionWindow tab;
+		tab.history.append(entry);
+		tab.index = 0;
+
+		SessionMainWindow window;
+		window.windows.append(tab);
+
+		session.path = QLatin1String("default");
+		session.title = tr("Default");
+		session.windows.append(window);
+		session.index = 0;
+	}
 
 	return session;
 }

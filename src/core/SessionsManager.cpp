@@ -302,30 +302,22 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		return false;
 	}
 
-	const QList<SessionMainWindow> closedWindows = m_closedWindows;
-
 	if (m_session.isEmpty())
 	{
 		m_session = session.path;
 	}
 
-	m_closedWindows = session.windows;
-
-	if (window && m_closedWindows.count() > 0)
+	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		window->getWindowsManager()->restore(m_closedWindows.first());
-
-		m_closedWindows.removeAt(0);
+		if (window && i == 0)
+		{
+			window->getWindowsManager()->restore(session.windows.first());
+		}
+		else
+		{
+			Application::getInstance()->createWindow(false, false, session.windows.at(i));
+		}
 	}
-
-	const int windows = m_closedWindows.count();
-
-	for (int i = 0; i < windows; ++i)
-	{
-		restoreClosedWindow();
-	}
-
-	m_closedWindows = closedWindows;
 
 	return true;
 }
