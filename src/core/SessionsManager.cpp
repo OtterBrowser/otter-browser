@@ -351,11 +351,14 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
 
 	const QString sessionPath = getSessionPath(path);
-	QString sessionTitle = QSettings(sessionPath, QSettings::IniFormat).value(QLatin1String("Session/title")).toString();
+	QString sessionTitle = title;
 
-	if (!title.isEmpty())
+	if (title.isEmpty())
 	{
-		sessionTitle = title;
+		QSettings sessionData(sessionPath, QSettings::IniFormat);
+		sessionData.setIniCodec("UTF-8");
+
+		sessionTitle = sessionData.value(QLatin1String("Session/title")).toString();;
 	}
 
 	QSaveFile file(sessionPath);
