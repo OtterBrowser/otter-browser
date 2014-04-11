@@ -44,6 +44,7 @@ public:
 	SessionInformation getSession() const;
 
 protected slots:
+	void modeChanged();
 	void setSession(int index);
 
 private:

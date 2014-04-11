@@ -55,12 +55,18 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : QDialog(
 
 	setSession(index);
 
+	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(modeChanged()));
 	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
 }
 
 StartupDialog::~StartupDialog()
 {
 	delete m_ui;
+}
+
+void StartupDialog::modeChanged()
+{
+	m_ui->continueSessionWidget->setEnabled(m_ui->continueSessionButton->isChecked());
 }
 
 void StartupDialog::setSession(int index)
