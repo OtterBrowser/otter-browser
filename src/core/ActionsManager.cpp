@@ -249,6 +249,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("OpenFrameInNewTabBackground"), tr("Open in New Background Tab"));
 		registerAction(QLatin1String("CopyFrameLinkToClipboard"), tr("Copy Frame Link to Clipboard"));
 		registerAction(QLatin1String("ReloadFrame"), tr("Reload"));
+		registerAction(QLatin1String("ReloadImage"), tr("Reload Image"));
 		registerAction(QLatin1String("ViewSourceFrame"), tr("View Source"));
 		registerAction(QLatin1String("SaveLinkToDisk"), tr("Save Link Target As..."));
 		registerAction(QLatin1String("SaveLinkToDownloads"), tr("Save to Downloads"));

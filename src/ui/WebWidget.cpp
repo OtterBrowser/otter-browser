@@ -225,6 +225,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		if (flags & ImageMenu)
 		{
 			menu.addAction(getAction(OpenImageInNewTabAction));
+			menu.addAction(getAction(ReloadImageAction));
 			menu.addAction(getAction(CopyImageUrlToClipboardAction));
 			menu.addSeparator();
 			menu.addAction(getAction(SaveImageToDiskAction));

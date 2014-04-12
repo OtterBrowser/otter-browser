@@ -23,6 +23,7 @@
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkAccessManager.h"
+#include "../../../../core/NetworkCache.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
@@ -443,6 +444,26 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case ReloadAction:
 			m_webView->page()->triggerAction(QWebPage::Stop);
 			m_webView->page()->triggerAction(QWebPage::Reload);
+
+			break;
+		case ReloadImageAction:
+			if (!m_hitResult.imageUrl().isEmpty() && !m_hitResult.element().isNull())
+			{
+				const QUrl url(m_hitResult.imageUrl());
+				const QString src = m_hitResult.element().attribute(QLatin1String("src"));
+				NetworkCache *cache = m_networkAccessManager->getCache();
+
+				m_hitResult.element().setAttribute(QLatin1String("src"), QString());
+
+				if (cache)
+				{
+					cache->remove(url);
+				}
+
+				m_hitResult.element().setAttribute(QLatin1String("src"), src);
+
+				evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+			}
 
 			break;
 		case CopyAddressAction:
@@ -1061,6 +1082,10 @@ QAction* QtWebKitWebWidget::getAction(WindowAction action)
 			break;
 		case ReloadFrameAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadFrame"), true);
+
+			break;
+		case ReloadImageAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadImage"), true);
 
 			break;
 		case SaveLinkToDownloadsAction:

@@ -66,6 +66,7 @@ enum WindowAction
 	ReloadAction,
 	ReloadOrStopAction,
 	ReloadFrameAction,
+	ReloadImageAction,
 	ReloadAndBypassCacheAction,
 	ReloadTimeAction,
 	CutAction,

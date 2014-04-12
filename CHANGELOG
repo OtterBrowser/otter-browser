@@ -1,3 +1,8 @@
+0.5.01 (--.--.2014):
+- added startup / crash recovery dialog;
+- implemented "Reload Image" action;
+- some other fixes and minor improvements.
+
 0.4.01 (01.04.2014):
 - added basic full screen mode support;
 - User Agents configuration;
