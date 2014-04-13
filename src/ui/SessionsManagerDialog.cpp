@@ -98,9 +98,14 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 
 void SessionsManagerDialog::openSession()
 {
-	SessionsManager::restoreSession(SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString()), (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
+	const SessionInformation session = SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString());
 
-	close();
+	if (session.clean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+	{
+		SessionsManager::restoreSession(session, (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
+
+		close();
+	}
 }
 
 void SessionsManagerDialog::deleteSession()
