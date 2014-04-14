@@ -304,6 +304,7 @@ bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 		updateUrls();
 
 		emit m_instance->folderModified(bookmark->parent);
+		save();
 
 		return true;
 	}
