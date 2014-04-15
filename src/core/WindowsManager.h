@@ -30,6 +30,16 @@
 namespace Otter
 {
 
+enum OpenMode
+{
+	DefaultOpen = 0,
+	CurrentTabOpen = 1,
+	NewTabOpen = 2,
+	NewWindowOpen = 4,
+	BackgroundOpen = 8,
+	PrivateOpen = 16
+};
+
 class MdiWidget;
 class StatusBarWidget;
 class TabBarWidget;
