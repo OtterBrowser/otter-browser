@@ -45,18 +45,18 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 {
 }
 
-void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, bool newWindow)
+void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
-	if (newWindow)
+	const bool privateWindow = (m_isPrivate || (hints & PrivateOpen));
+
+	if (hints & NewWindowOpen)
 	{
-		requestedNewWindow(privateWindow, background, url);
+		emit requestedNewWindow(privateWindow, (hints & BackgroundOpen), url);
 
 		return;
 	}
 
 	Window *window = NULL;
-
-	privateWindow = (m_isPrivate || privateWindow);
 
 	if (!url.isEmpty())
 	{
@@ -78,7 +78,7 @@ void WindowsManager::open(const QUrl &url, bool privateWindow, bool background, 
 
 	window = new Window(privateWindow, NULL, m_mdi);
 
-	addWindow(window, background);
+	addWindow(window, (hints & BackgroundOpen));
 
 	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
 }
@@ -319,24 +319,24 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
 	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
-	connect(window, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SLOT(open(QUrl,bool,bool,bool)));
-	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,bool,bool)), this, SLOT(openWindow(ContentsWidget*,bool,bool)));
+	connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(open(QUrl,OpenHints)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
 	connect(window, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 
 	emit windowAdded(index);
 }
 
-void WindowsManager::openWindow(ContentsWidget *widget, bool background, bool newWindow)
+void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 {
 	if (!widget)
 	{
 		return;
 	}
 
-	if (newWindow)
+	if (hints & NewWindowOpen)
 	{
-		MainWindow *mainWindow = Application::getInstance()->createWindow(widget->isPrivate(), background);
+		MainWindow *mainWindow = Application::getInstance()->createWindow(widget->isPrivate(), (hints & BackgroundOpen));
 
 		if (mainWindow)
 		{
@@ -346,7 +346,7 @@ void WindowsManager::openWindow(ContentsWidget *widget, bool background, bool ne
 	}
 	else
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_mdi), background);
+		addWindow(new Window(widget->isPrivate(), widget, m_mdi), (hints & BackgroundOpen));
 	}
 }
 
@@ -375,7 +375,7 @@ void WindowsManager::detachWindow(int index)
 	{
 		window->getContentsWidget()->setParent(NULL);
 
-		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget(), true);
+		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget(), BackgroundOpen);
 		mainWindow->getWindowsManager()->closeOther();
 
 		m_tabBar->removeTab(index);

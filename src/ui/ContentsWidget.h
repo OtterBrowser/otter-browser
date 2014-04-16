@@ -85,9 +85,9 @@ private:
 	QWidget *m_layer;
 
 signals:
-	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(ContentsWidget *widget, bool background, bool newWindow);
+	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void canZoomChanged(bool can);

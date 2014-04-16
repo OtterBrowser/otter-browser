@@ -353,8 +353,19 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 	if (url.isValid())
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
+		OpenHints hints = DefaultOpen;
 
-		emit requestedOpenUrl(url, false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
+		if (action && action->objectName().contains(QLatin1String("background")))
+		{
+			hints |= BackgroundOpen;
+		}
+
+		if (action && action->objectName().contains(QLatin1String("window")))
+		{
+			hints |= NewWindowOpen;
+		}
+
+		emit requestedOpenUrl(url, hints);
 	}
 }
 

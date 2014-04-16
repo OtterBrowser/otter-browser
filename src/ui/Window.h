@@ -21,6 +21,7 @@
 #define OTTER_WINDOW_H
 
 #include "../core/SessionsManager.h"
+#include "../core/WindowsManager.h"
 
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
@@ -35,77 +36,6 @@ namespace Ui
 {
 	class Window;
 }
-
-enum WindowAction
-{
-	NoAction = 0,
-	OpenLinkAction,
-	OpenLinkInThisTabAction,
-	OpenLinkInNewTabAction,
-	OpenLinkInNewTabBackgroundAction,
-	OpenLinkInNewWindowAction,
-	OpenLinkInNewWindowBackgroundAction,
-	CopyLinkToClipboardAction,
-	SaveLinkToDiskAction,
-	SaveLinkToDownloadsAction,
-	OpenFrameInThisTabAction,
-	OpenFrameInNewTabAction,
-	OpenFrameInNewTabBackgroundAction,
-	CopyFrameLinkToClipboardAction,
-	OpenImageInNewTabAction,
-	SaveImageToDiskAction,
-	CopyImageToClipboardAction,
-	CopyImageUrlToClipboardAction,
-	ImagePropertiesAction,
-	GoBackAction,
-	GoForwardAction,
-	RewindBackAction,
-	RewindForwardAction,
-	StopAction,
-	StopScheduledPageRefreshAction,
-	ReloadAction,
-	ReloadOrStopAction,
-	ReloadFrameAction,
-	ReloadImageAction,
-	ReloadAndBypassCacheAction,
-	ReloadTimeAction,
-	CutAction,
-	CopyAction,
-	PasteAction,
-	DeleteAction,
-	SelectAllAction,
-	ClearAllAction,
-	SpellCheckAction,
-	UndoAction,
-	RedoAction,
-	InspectPageAction,
-	InspectElementAction,
-	PrintAction,
-	BookmarkAction,
-	BookmarkLinkAction,
-	CopyAddressAction,
-	ViewSourceAction,
-	ViewSourceFrameAction,
-	ValidateAction,
-	ContentBlockingAction,
-	WebsitePreferencesAction,
-	ZoomInAction,
-	ZoomOutAction,
-	ZoomOriginalAction,
-	SearchAction,
-	SearchMenuAction,
-	OpenSelectionAsLinkAction,
-	CreateSearchAction,
-	FindAction,
-	FindNextAction,
-	FindPreviousAction,
-	SaveMediaToDiskAction,
-	CopyMediaUrlToClipboardAction,
-	ToggleMediaControlsAction,
-	ToggleMediaLoopAction,
-	ToggleMediaPlayPauseAction,
-	ToggleMediaMuteAction
-};
 
 enum WindowLoadingState
 {
@@ -171,7 +101,7 @@ protected slots:
 	void handleSearchRequest(const QString &query, const QString &engine);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
-	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
+	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
 	void updateGoBackMenu();
 	void updateGoForwardMenu();
 
@@ -185,9 +115,9 @@ private:
 signals:
 	void aboutToClose();
 	void requestedCloseWindow(Window *window);
-	void requestedOpenUrl(QUrl url, bool privateWindow = false, bool background = false, bool newWindow = false);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(ContentsWidget *widget, bool background, bool newWindow);
+	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString engine);
 	void actionsChanged();
 	void canZoomChanged(bool can);

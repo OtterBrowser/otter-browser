@@ -124,7 +124,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
-	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)), this, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)));
+	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)));
 	connect(m_page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
@@ -332,12 +332,12 @@ void QtWebKitWebWidget::markPageRealoded()
 	m_isReloading = true;
 }
 
-void QtWebKitWebWidget::openUrl(QUrl url, bool background, bool newWindow)
+void QtWebKitWebWidget::openUrl(QUrl url, OpenHints hints)
 {
 	WebWidget *widget = clone(false);
 	widget->setUrl(url);
 
-	emit requestedNewWindow(widget, background, newWindow);
+	emit requestedNewWindow(widget, hints);
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()
@@ -496,28 +496,28 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), false, false);
+				openUrl(m_hitResult.linkUrl(), NewTabOpen);
 			}
 
 			break;
 		case OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), true, false);
+				openUrl(m_hitResult.linkUrl(), NewTabBackgroundOpen);
 			}
 
 			break;
 		case OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), false, true);
+				openUrl(m_hitResult.linkUrl(), NewWindowOpen);
 			}
 
 			break;
 		case OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), true, true);
+				openUrl(m_hitResult.linkUrl(), NewWindowBackgroundOpen);
 			}
 
 			break;
@@ -529,7 +529,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 			break;
 		case OpenSelectionAsLinkAction:
-			openUrl(QUrl(m_webView->selectedText()), false, false);
+			openUrl(QUrl(m_webView->selectedText()));
 
 			break;
 		case ImagePropertiesAction:
@@ -609,7 +609,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frame())
 			{
-				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), true, false);
+				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewTabBackgroundOpen);
 			}
 
 			break;
@@ -1617,7 +1617,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (result.linkUrl().isValid())
 				{
-					openUrl(result.linkUrl(), true, false);
+					openUrl(result.linkUrl(), NewTabBackgroundOpen);
 
 					event->accept();
 

@@ -65,8 +65,8 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findLineEdit, SLOT(clear()));
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
-	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool)), this, SLOT(notifyRequestedOpenUrl(QUrl,bool,bool)));
-	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,bool,bool)), this, SLOT(notifyRequestedNewWindow(WebWidget*,bool,bool)));
+	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 	connect(m_webWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
@@ -232,14 +232,19 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 	}
 }
 
-void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)
+void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
 {
-	emit requestedOpenUrl(url, isPrivate(), background, newWindow);
+	if (isPrivate())
+	{
+		hints |= PrivateOpen;
+	}
+
+	emit requestedOpenUrl(url, hints);
 }
 
-void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, bool background, bool newWindow)
+void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, OpenHints hints)
 {
-	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL), background, newWindow);
+	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL), hints);
 }
 
 void WebContentsWidget::updateFind(bool backwards)

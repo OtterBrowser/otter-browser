@@ -79,7 +79,7 @@ protected:
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
-	void openUrl(QUrl url, bool background, bool newWindow);
+	void openUrl(QUrl url, OpenHints hints = DefaultOpen);
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(WindowAction action) const;
 

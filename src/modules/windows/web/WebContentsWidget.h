@@ -80,8 +80,8 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void scheduleGeometryUpdate();
-	void notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow);
-	void notifyRequestedNewWindow(WebWidget *widget, bool background, bool newWindow);
+	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
+	void notifyRequestedNewWindow(WebWidget *widget, OpenHints hints);
 	void updateFind(bool backwards = false);
 	void updateFindHighlight();
 	void setLoading(bool loading);

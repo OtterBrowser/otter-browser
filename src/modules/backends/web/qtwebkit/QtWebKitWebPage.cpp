@@ -152,7 +152,7 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, NULL);
 		}
 
-		emit requestedNewWindow(widget, false, false);
+		emit requestedNewWindow(widget, DefaultOpen);
 
 		return widget->getPage();
 	}

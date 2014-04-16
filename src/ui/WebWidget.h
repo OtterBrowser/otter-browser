@@ -115,9 +115,9 @@ private:
 	QString m_overridingStatusMessage;
 
 signals:
-	void requestedOpenUrl(QUrl url, bool background, bool newWindow);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(WebWidget *widget, bool background, bool newWindow);
+	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search);
 	void actionsChanged();
 	void progressBarGeometryChanged();

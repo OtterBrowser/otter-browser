@@ -205,8 +205,19 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	if (bookmark->type == UrlBookmark)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
+		OpenHints hints = DefaultOpen;
 
-		emit requestedOpenUrl(QUrl(bookmark->url), false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
+		if (action && action->objectName().contains(QLatin1String("background")))
+		{
+			hints |= BackgroundOpen;
+		}
+
+		if (action && action->objectName().contains(QLatin1String("window")))
+		{
+			hints |= NewWindowOpen;
+		}
+
+		emit requestedOpenUrl(QUrl(bookmark->url), hints);
 
 		return;
 	}
@@ -238,12 +249,21 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	}
 
 	QAction *action = qobject_cast<QAction*>(sender());
-	const bool background = (action && action->objectName().contains(QLatin1String("background")));
-	const bool newWindow = (action && action->objectName().contains(QLatin1String("window")));
+	OpenHints hints = DefaultOpen;
+
+	if (action && action->objectName().contains(QLatin1String("background")))
+	{
+		hints |= BackgroundOpen;
+	}
+
+	if (action && action->objectName().contains(QLatin1String("window")))
+	{
+		hints |= NewWindowOpen;
+	}
 
 	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
 	{
-		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)), false, background, newWindow);
+		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)), hints);
 	}
 
 	m_bookmarksToOpen.clear();

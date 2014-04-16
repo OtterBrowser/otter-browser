@@ -20,6 +20,8 @@
 #ifndef OTTER_QTWEBKITWEBPAGE_H
 #define OTTER_QTWEBKITWEBPAGE_H
 
+#include "../../../../core/WindowsManager.h"
+
 #include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
@@ -64,7 +66,7 @@ private:
 	bool m_isGlobalUserAgent;
 
 signals:
-	void requestedNewWindow(WebWidget *widget, bool background, bool newWindow);
+	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 };
 
 }

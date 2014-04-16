@@ -21,7 +21,6 @@
 #define OTTER_WINDOWSMANAGER_H
 
 #include "SessionsManager.h"
-#include "../ui/Window.h"
 
 #include <QtCore/QUrl>
 #include <QtPrintSupport/QPrinter>
@@ -30,16 +29,92 @@
 namespace Otter
 {
 
-enum OpenMode
+enum WindowAction
 {
-	DefaultOpen = 0,
-	CurrentTabOpen = 1,
-	NewTabOpen = 2,
-	NewWindowOpen = 4,
-	BackgroundOpen = 8,
-	PrivateOpen = 16
+	NoAction = 0,
+	OpenLinkAction,
+	OpenLinkInThisTabAction,
+	OpenLinkInNewTabAction,
+	OpenLinkInNewTabBackgroundAction,
+	OpenLinkInNewWindowAction,
+	OpenLinkInNewWindowBackgroundAction,
+	CopyLinkToClipboardAction,
+	SaveLinkToDiskAction,
+	SaveLinkToDownloadsAction,
+	OpenFrameInThisTabAction,
+	OpenFrameInNewTabAction,
+	OpenFrameInNewTabBackgroundAction,
+	CopyFrameLinkToClipboardAction,
+	OpenImageInNewTabAction,
+	SaveImageToDiskAction,
+	CopyImageToClipboardAction,
+	CopyImageUrlToClipboardAction,
+	ImagePropertiesAction,
+	GoBackAction,
+	GoForwardAction,
+	RewindBackAction,
+	RewindForwardAction,
+	StopAction,
+	StopScheduledPageRefreshAction,
+	ReloadAction,
+	ReloadOrStopAction,
+	ReloadFrameAction,
+	ReloadImageAction,
+	ReloadAndBypassCacheAction,
+	ReloadTimeAction,
+	CutAction,
+	CopyAction,
+	PasteAction,
+	DeleteAction,
+	SelectAllAction,
+	ClearAllAction,
+	SpellCheckAction,
+	UndoAction,
+	RedoAction,
+	InspectPageAction,
+	InspectElementAction,
+	PrintAction,
+	BookmarkAction,
+	BookmarkLinkAction,
+	CopyAddressAction,
+	ViewSourceAction,
+	ViewSourceFrameAction,
+	ValidateAction,
+	ContentBlockingAction,
+	WebsitePreferencesAction,
+	ZoomInAction,
+	ZoomOutAction,
+	ZoomOriginalAction,
+	SearchAction,
+	SearchMenuAction,
+	OpenSelectionAsLinkAction,
+	CreateSearchAction,
+	FindAction,
+	FindNextAction,
+	FindPreviousAction,
+	SaveMediaToDiskAction,
+	CopyMediaUrlToClipboardAction,
+	ToggleMediaControlsAction,
+	ToggleMediaLoopAction,
+	ToggleMediaPlayPauseAction,
+	ToggleMediaMuteAction
 };
 
+enum OpenHint
+{
+	DefaultOpen = 0,
+	PrivateOpen = 1,
+	CurrentTabOpen = 2,
+	NewTabOpen = 4,
+	NewWindowOpen = 8,
+	BackgroundOpen = 16,
+	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
+	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
+};
+
+Q_DECLARE_FLAGS(OpenHints, OpenHint)
+
+class ContentsWidget;
 class MdiWidget;
 class StatusBarWidget;
 class TabBarWidget;
@@ -66,7 +141,7 @@ public:
 	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:
-	void open(const QUrl &url = QUrl(), bool privateWindow = false, bool background = false, bool newWindow = false);
+	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine);
 	void close(int index = -1);
 	void closeAll();
@@ -88,7 +163,7 @@ protected:
 protected slots:
 	void printPreview(QPrinter *printer);
 	void addWindow(Window *window, bool background = false);
-	void openWindow(ContentsWidget *widget, bool background = false, bool newWindow = false);
+	void openWindow(ContentsWidget *widget, OpenHints hints = false);
 	void cloneWindow(int index);
 	void detachWindow(int index);
 	void pinWindow(int index, bool pin);

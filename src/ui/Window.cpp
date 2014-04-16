@@ -157,9 +157,14 @@ void Window::notifyRequestedCloseWindow()
 	emit requestedCloseWindow(this);
 }
 
-void Window::notifyRequestedOpenUrl(const QUrl &url, bool background, bool newWindow)
+void Window::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
 {
-	emit requestedOpenUrl(url, isPrivate(), background, newWindow);
+	if (isPrivate())
+	{
+		hints |= PrivateOpen;
+	}
+
+	emit requestedOpenUrl(url, hints);
 }
 
 void Window::updateGoBackMenu()
@@ -425,8 +430,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
-	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)), this, SIGNAL(requestedOpenUrl(QUrl,bool,bool,bool)));
-	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,bool,bool)), this, SIGNAL(requestedNewWindow(ContentsWidget*,bool,bool)));
+	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString)), this, SIGNAL(requestedSearch(QString,QString)));
 	connect(m_contentsWidget, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));

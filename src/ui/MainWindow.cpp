@@ -362,7 +362,7 @@ void MainWindow::openUrl(const QUrl &url)
 
 void MainWindow::actionNewTabPrivate()
 {
-	m_windowsManager->open(QUrl(), true);
+	m_windowsManager->open(QUrl(), PrivateOpen);
 }
 
 void MainWindow::actionNewWindowPrivate()
@@ -867,8 +867,19 @@ void MainWindow::openBookmark()
 	if (url.isValid())
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
+		OpenHints hints = DefaultOpen;
 
-		m_windowsManager->open(url, false, (action && action->objectName().contains(QLatin1String("background"))), (action && action->objectName().contains(QLatin1String("window"))));
+		if (action && action->objectName().contains(QLatin1String("background")))
+		{
+			hints |= BackgroundOpen;
+		}
+
+		if (action && action->objectName().contains(QLatin1String("window")))
+		{
+			hints |= NewWindowOpen;
+		}
+
+		m_windowsManager->open(url, hints);
 
 		m_ui->menuBookmarks->close();
 	}
