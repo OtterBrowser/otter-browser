@@ -334,19 +334,8 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 	if (url.isValid())
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
-		OpenHints hints = DefaultOpen;
 
-		if (action && action->objectName().contains(QLatin1String("background")))
-		{
-			hints |= BackgroundOpen;
-		}
-
-		if (action && action->objectName().contains(QLatin1String("window")))
-		{
-			hints |= NewWindowOpen;
-		}
-
-		emit requestedOpenUrl(url, hints);
+		emit requestedOpenUrl(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 	}
 }
 
@@ -378,11 +367,11 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	if (entry >= 0)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-tab"));
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-tab"));
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(NewTabOpen);
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(NewTabBackgroundOpen);
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-window"));
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setObjectName(QLatin1String("new-background-window"));
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(NewWindowOpen);
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(NewWindowBackgroundOpen);
 		menu.addSeparator();
 		menu.addAction(tr("Add to Bookmarks..."), this, SLOT(bookmarkEntry()));
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));

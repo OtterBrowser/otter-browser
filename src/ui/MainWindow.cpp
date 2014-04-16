@@ -867,19 +867,8 @@ void MainWindow::openBookmark()
 	if (url.isValid())
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
-		OpenHints hints = DefaultOpen;
 
-		if (action && action->objectName().contains(QLatin1String("background")))
-		{
-			hints |= BackgroundOpen;
-		}
-
-		if (action && action->objectName().contains(QLatin1String("window")))
-		{
-			hints |= NewWindowOpen;
-		}
-
-		m_windowsManager->open(url, hints);
+		m_windowsManager->open(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 
 		m_ui->menuBookmarks->close();
 	}
@@ -1088,11 +1077,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 				QMenu contextMenu(this);
 				contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-tab"));
-				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-tab"));
+				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
+				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(NewTabBackgroundOpen);
 				contextMenu.addSeparator();
-				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-window"));
-				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setObjectName(QLatin1String("new-background-window"));
+				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(NewWindowOpen);
+				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(NewWindowBackgroundOpen);
 				contextMenu.exec(contextMenuEvent->globalPos());
 
 				return true;
