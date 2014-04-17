@@ -76,7 +76,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->tabWidget->setCurrentIndex(0);
 	}
 
-	m_ui->startPageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
@@ -376,13 +376,13 @@ void PreferencesDialog::useCurrentAsStartPage()
 
 	if (manager)
 	{
-		m_ui->startPageLineEdit->setText(manager->getUrl().toString(QUrl::RemovePassword));
+		m_ui->homePageLineEdit->setText(manager->getUrl().toString(QUrl::RemovePassword));
 	}
 }
 
 void PreferencesDialog::restoreStartPage()
 {
-	m_ui->startPageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/StartPage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/StartPage")).toString());
 }
 
 void PreferencesDialog::currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1019,7 +1019,7 @@ void PreferencesDialog::markModified()
 
 void PreferencesDialog::save()
 {
-	SettingsManager::setValue(QLatin1String("Browser/StartPage"), m_ui->startPageLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Browser/StartPage"), m_ui->homePageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());

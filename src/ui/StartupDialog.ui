@@ -101,7 +101,7 @@
    <item>
     <widget class="QRadioButton" name="homePageButton">
      <property name="text">
-      <string>Begin with start page</string>
+      <string>Begin with home page</string>
      </property>
      <attribute name="buttonGroup">
       <string notr="true">buttonGroup</string>
