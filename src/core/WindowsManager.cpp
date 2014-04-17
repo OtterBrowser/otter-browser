@@ -701,6 +701,11 @@ bool WindowsManager::canZoom() const
 	return (window ? window->getContentsWidget()->canZoom() : false);
 }
 
+bool WindowsManager::isPrivate() const
+{
+	return m_isPrivate;
+}
+
 bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 {
 	for (int i = 0; i < m_tabBar->count(); ++i)

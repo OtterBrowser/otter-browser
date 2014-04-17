@@ -138,6 +138,7 @@ public:
 	int getWindowCount() const;
 	int getZoom() const;
 	bool canZoom() const;
+	bool isPrivate() const;
 	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:

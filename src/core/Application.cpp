@@ -200,7 +200,7 @@ void Application::newConnection()
 
 	socket->waitForReadyRead(1000);
 
-	MainWindow *window = NULL;
+	MainWindow *window = (getWindows().isEmpty() ? NULL : getWindow());
 	QString data;
 	QStringList arguments;
 	QTextStream stream(socket);
@@ -213,13 +213,9 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (!SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() && !parser->isSet(QLatin1String("privatesession")))
+	if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (parser->isSet(QLatin1String("privatesession")) && !window->getWindowsManager()->isPrivate()))
 	{
 		window = createWindow(parser->isSet(QLatin1String("privatesession")));
-	}
-	else
-	{
-		window = getWindow();
 	}
 
 	if (window)
