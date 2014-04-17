@@ -76,6 +76,23 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->tabWidget->setCurrentIndex(0);
 	}
 
+	const QString startupBehaviorString = SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString();
+	int startupBehaviorIndex = 0;
+
+	if (startupBehaviorString == QLatin1String("showDialog"))
+	{
+		startupBehaviorIndex = 1;
+	}
+	else if (startupBehaviorString == QLatin1String("startHomePage"))
+	{
+		startupBehaviorIndex = 2;
+	}
+	else if (startupBehaviorString == QLatin1String("startEmpty"))
+	{
+		startupBehaviorIndex = 3;
+	}
+
+	m_ui->startupBehaviorComboBox->setCurrentIndex(startupBehaviorIndex);
 	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
@@ -1019,6 +1036,23 @@ void PreferencesDialog::markModified()
 
 void PreferencesDialog::save()
 {
+	const int startupBehaviorIndex = m_ui->startupBehaviorComboBox->currentIndex();
+	QLatin1String startupBehaviorString = QLatin1String("continuePrevious");
+
+	if (startupBehaviorIndex == 1)
+	{
+		startupBehaviorString = QLatin1String("showDialog");
+	}
+	else if (startupBehaviorIndex == 2)
+	{
+		startupBehaviorString = QLatin1String("startHomePage");
+	}
+	else if (startupBehaviorIndex == 3)
+	{
+		startupBehaviorString = QLatin1String("startEmpty");
+	}
+
+	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), startupBehaviorString);
 	SettingsManager::setValue(QLatin1String("Browser/StartPage"), m_ui->homePageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());

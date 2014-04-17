@@ -51,15 +51,12 @@
             <string>Startup behavior:</string>
            </property>
            <property name="buddy">
-            <cstring>startupComboBox</cstring>
+            <cstring>startupBehaviorComboBox</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="startupComboBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+          <widget class="QComboBox" name="startupBehaviorComboBox">
            <item>
             <property name="text">
              <string>Continue previous session</string>
@@ -2002,7 +1999,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>startupComboBox</tabstop>
+  <tabstop>startupBehaviorComboBox</tabstop>
   <tabstop>homePageLineEdit</tabstop>
   <tabstop>useCurrentAsStartPageButton</tabstop>
   <tabstop>bookmarkAsStartPageButton</tabstop>
