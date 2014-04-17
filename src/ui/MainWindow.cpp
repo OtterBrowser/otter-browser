@@ -96,6 +96,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->actionFind->setIcon(Utils::getIcon(QLatin1String("edit-find")));
 	m_ui->actionFind->setData(FindAction);
 	m_ui->actionFindNext->setData(FindNextAction);
+	m_ui->actionFindPrevious->setData(FindPreviousAction);
 	m_ui->actionReload->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
 	m_ui->actionReload->setData(ReloadAction);
 	m_ui->actionStop->setIcon(Utils::getIcon(QLatin1String("process-stop")));
@@ -181,6 +182,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	connect(m_ui->actionSelectAll, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionFind, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionFindNext, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionFindPrevious, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -970,6 +972,7 @@ void MainWindow::updateActions()
 	updateAction(m_windowsManager->getAction(SelectAllAction), m_ui->actionSelectAll);
 	updateAction(m_windowsManager->getAction(FindAction), m_ui->actionFind);
 	updateAction(m_windowsManager->getAction(FindNextAction), m_ui->actionFindNext);
+	updateAction(m_windowsManager->getAction(FindPreviousAction), m_ui->actionFindPrevious);
 	updateAction(m_windowsManager->getAction(ReloadAction), m_ui->actionReload);
 	updateAction(m_windowsManager->getAction(StopAction), m_ui->actionStop);
 	updateAction(m_windowsManager->getAction(ViewSourceAction), m_ui->actionViewSource);

@@ -104,6 +104,7 @@
     <addaction name="separator"/>
     <addaction name="actionFind"/>
     <addaction name="actionFindNext"/>
+    <addaction name="actionFindPrevious"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -319,6 +320,11 @@
   <action name="actionFindNext">
    <property name="text">
     <string>Find Next</string>
+   </property>
+  </action>
+  <action name="actionFindPrevious">
+   <property name="text">
+    <string>Find Previous</string>
    </property>
   </action>
   <action name="actionAddBookmark">
