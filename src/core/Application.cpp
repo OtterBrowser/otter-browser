@@ -38,6 +38,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
+#include <QtWidgets/QMessageBox>
 #include <QtNetwork/QLocalSocket>
 
 namespace Otter
@@ -213,25 +214,42 @@ void Application::newConnection()
 	QCommandLineParser *parser = getParser();
 	parser->parse(arguments);
 
-	if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (parser->isSet(QLatin1String("privatesession")) && !window->getWindowsManager()->isPrivate()))
+	const QString session = parser->value(QLatin1String("session"));
+	const bool privateSession = parser->isSet(QLatin1String("privatesession"));
+
+	if (session.isEmpty())
 	{
-		window = createWindow(parser->isSet(QLatin1String("privatesession")));
+		if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (privateSession && !window->getWindowsManager()->isPrivate()))
+		{
+			window = createWindow(privateSession);
+		}
+	}
+	else
+	{
+		const SessionInformation sessionData = SessionsManager::getSession(session);
+
+		if (sessionData.clean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+		{
+			window = createWindow(privateSession);
+
+			SessionsManager::restoreSession(sessionData, window);
+		}
 	}
 
 	if (window)
 	{
-		if (parser->positionalArguments().isEmpty())
+		if (!parser->positionalArguments().isEmpty())
 		{
-			window->openUrl();
-		}
-		else
-		{
-			QStringList urls = parser->positionalArguments();
+			const QStringList urls = parser->positionalArguments();
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
 				window->openUrl(QUrl(urls.at(i)));
 			}
+		}
+		else if (session.isEmpty())
+		{
+			window->openUrl();
 		}
 	}
 
