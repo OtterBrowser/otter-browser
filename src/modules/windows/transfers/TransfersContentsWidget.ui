@@ -194,7 +194,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../../resources/resources.qrc">
-            <normaloff>:/icons/media-playback-start.png</normaloff>:/icons/media-playback-start.png</iconset>
+            <normaloff>:/icons/task-reject.png</normaloff>:/icons/task-reject.png</iconset>
           </property>
          </widget>
         </item>
