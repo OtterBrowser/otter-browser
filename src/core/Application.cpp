@@ -96,13 +96,16 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (socket.waitForConnected(500))
 	{
-		QByteArray byteArray;
-		QBuffer buffer(&byteArray);
-		QDataStream out(&buffer);
-		out << arguments();
+		const QStringList decodedArguments = arguments();
+		QStringList encodedArguments;
+
+		for (int i = 0; i < decodedArguments.count(); ++i)
+		{
+			encodedArguments.append(decodedArguments.at(i).toUtf8().toBase64());
+		}
 
 		QTextStream stream(&socket);
-		stream << byteArray.toBase64();
+		stream << encodedArguments.join(QLatin1Char(' ')).toUtf8().toBase64();
 		stream.flush();
 
 		socket.waitForBytesWritten();
@@ -203,16 +206,19 @@ void Application::newConnection()
 
 	MainWindow *window = (getWindows().isEmpty() ? NULL : getWindow());
 	QString data;
-	QStringList arguments;
 	QTextStream stream(socket);
 	stream >> data;
 
-	QByteArray byteArray = QByteArray::fromBase64(data.toUtf8());
-	QDataStream in(&byteArray, QIODevice::ReadOnly);
-	in >> arguments;
+	const QStringList encodedArguments = QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' '));
+	QStringList decodedArguments;
+
+	for (int i = 0; i < encodedArguments.count(); ++i)
+	{
+		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
+	}
 
 	QCommandLineParser *parser = getParser();
-	parser->parse(arguments);
+	parser->parse(decodedArguments);
 
 	const QString session = parser->value(QLatin1String("session"));
 	const bool privateSession = parser->isSet(QLatin1String("privatesession"));
