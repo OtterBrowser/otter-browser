@@ -236,9 +236,10 @@ void Application::newConnection()
 
 		if (sessionData.clean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 		{
-			window = createWindow(privateSession);
-
-			SessionsManager::restoreSession(sessionData, window);
+			for (int i = 0; i < sessionData.windows.count(); ++i)
+			{
+				createWindow(privateSession, false, sessionData.windows.at(i));
+			}
 		}
 	}
 
