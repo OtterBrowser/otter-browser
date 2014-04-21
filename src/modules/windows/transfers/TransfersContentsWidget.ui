@@ -15,7 +15,7 @@
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -78,6 +78,9 @@
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>15</number>
      </attribute>
     </widget>
    </item>
@@ -192,6 +195,10 @@
           <property name="text">
            <string>Stop</string>
           </property>
+          <property name="icon">
+           <iconset resource="../../../../resources/resources.qrc">
+            <normaloff>:/icons/task-reject.png</normaloff>:/icons/task-reject.png</iconset>
+          </property>
          </widget>
         </item>
         <item>
@@ -201,6 +208,10 @@
           </property>
           <property name="text">
            <string>Redownload</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../../resources/resources.qrc">
+            <normaloff>:/icons/view-refresh.png</normaloff>:/icons/view-refresh.png</iconset>
           </property>
          </widget>
         </item>
@@ -236,6 +247,8 @@
   <tabstop>downloadLineEdit</tabstop>
   <tabstop>transfersView</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

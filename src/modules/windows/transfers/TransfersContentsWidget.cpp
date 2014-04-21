@@ -219,9 +219,9 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		case FinishedTransfer:
 			icon = Utils::getIcon(QLatin1String("task-complete"));
 
-			break;
+            break;
 		case ErrorTransfer:
-			icon = Utils::getIcon(QLatin1String("task-reject"));
+            icon = Utils::getIcon(QLatin1String("task-reject"));
 
 			break;
 		default:
@@ -391,8 +391,17 @@ void TransfersContentsWidget::updateActions()
 {
 	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
 
+    if (transfer && transfer->state == ErrorTransfer)
+    {
+        m_ui->stopResumeButton->setText(tr("Resume"));
+        m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
+    }
+    else
+    {
+        m_ui->stopResumeButton->setText(tr("Stop"));
+        m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-reject")));
+    }
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
-	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
 	m_ui->redownloadButton->setEnabled(transfer);
 
 	getAction(CopyAction)->setEnabled(transfer);
