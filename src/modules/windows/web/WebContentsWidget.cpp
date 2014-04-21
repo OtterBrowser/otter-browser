@@ -282,6 +282,8 @@ void WebContentsWidget::updateFind(bool backwards)
 	}
 
 	m_ui->findLineEdit->setPalette(palette);
+	m_ui->findNextButton->setEnabled(found);
+	m_ui->findPreviousButton->setEnabled(found);
 
 	if (sender() && sender()->objectName() == QLatin1String("caseSensitiveButton"))
 	{
