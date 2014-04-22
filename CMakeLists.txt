@@ -153,4 +153,7 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 qt5_use_modules(otter-browser PrintSupport Script Sql WebKitWidgets)
 
+set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
+
+install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(TARGETS otter-browser DESTINATION bin)
