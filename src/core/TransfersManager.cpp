@@ -331,21 +331,21 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	if (target.isEmpty())
 	{
-		QFileInfo fileInfo;
+		QUrl url;
 		QString fileName;
 
 		if (reply->rawHeaderList().contains(QStringLiteral("Content-Disposition").toLatin1()))
 		{
-			fileInfo = QFileInfo(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
+			url = QUrl(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
 
-			fileName = fileInfo.fileName();
+			fileName = url.fileName();
 		}
 
 		if (fileName.isEmpty())
 		{
-			fileInfo = QFileInfo(transfer->source);
+			url = QUrl(transfer->source);
 
-			fileName = fileInfo.fileName();
+			fileName = url.fileName();
 		}
 
 		if (fileName.isEmpty())
@@ -353,7 +353,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			fileName = tr("file");
 		}
 
-		if (fileInfo.suffix().isEmpty())
+		if (QFileInfo(fileName).suffix().isEmpty())
 		{
 			QString suffix;
 
