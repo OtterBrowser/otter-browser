@@ -56,6 +56,8 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanCloseWindows")).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows")).toBool());
 	globalSettings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage")).toBool());
+	globalSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineStorageDatabase")).toBool());
+	globalSettings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineWebApplicationCache")).toBool());
 	globalSettings->setFontSize(QWebSettings::DefaultFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());
 	globalSettings->setFontSize(QWebSettings::DefaultFixedFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
 	globalSettings->setFontSize(QWebSettings::MinimumFontSize, SettingsManager::getValue(QLatin1String("Content/MinimumFontSize")).toInt());
@@ -84,7 +86,9 @@ WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *
 			QDir().mkpath(cachePath);
 
 			globalSettings->setIconDatabasePath(cachePath);
-			globalSettings->setOfflineStoragePath(cachePath);
+			globalSettings->setLocalStoragePath(cachePath + QLatin1String("/localStorage/"));
+			globalSettings->setOfflineStoragePath(cachePath + QLatin1String("/offlineStorage/"));
+			globalSettings->setOfflineWebApplicationCachePath(cachePath + QLatin1String("/offlineWebApplicationCache/"));
 		}
 
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
