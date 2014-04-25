@@ -81,6 +81,7 @@ public:
 	bool canClone() const;
 	bool isPinned() const;
 	bool isPrivate() const;
+	bool isUrlEmpty() const;
 
 public slots:
 	void search(const QString &query, const QString &engine);

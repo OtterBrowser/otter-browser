@@ -370,11 +370,11 @@ void AddressWidget::setIcon(const QIcon &icon)
 
 void AddressWidget::setUrl(const QUrl &url)
 {
-	setText((url.scheme() == QLatin1String("about") && (url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))) ? QString() : url.toString());
 	updateBookmark();
 
 	if (m_window)
 	{
+		setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
 		setIcon(m_window->getIcon());
 	}
 }

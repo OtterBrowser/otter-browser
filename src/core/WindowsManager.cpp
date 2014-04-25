@@ -62,7 +62,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	{
 		window = m_mdi->getActiveWindow();
 
-		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && (window->getUrl().path() == QLatin1String("blank") || window->getUrl().path() == QLatin1String("start") || window->getUrl().path().isEmpty()))
+		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty())
 		{
 			if (window->isPrivate() == privateWindow)
 			{
@@ -555,6 +555,8 @@ void WindowsManager::setActiveWindow(int index)
 	if (window)
 	{
 		m_mdi->setActiveWindow(window);
+
+		window->setFocus();
 
 		m_statusBar->showMessage(window->getContentsWidget()->getStatusMessage());
 		m_statusBar->setZoom(window->getContentsWidget()->getZoom());

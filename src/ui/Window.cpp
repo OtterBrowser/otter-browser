@@ -44,8 +44,6 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	m_isPrivate(privateWindow),
 	m_ui(new Ui::Window)
 {
-	setFocusPolicy(Qt::StrongFocus);
-
 	m_ui->setupUi(this);
 
 	if (widget)
@@ -96,7 +94,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (getUrl().isEmpty())
+	if (isUrlEmpty())
 	{
 		m_ui->addressWidget->setFocus();
 	}
@@ -137,7 +135,7 @@ void Window::goToHistoryIndex(QAction *action)
 
 void Window::handleSearchRequest(const QString &query, const QString &engine)
 {
-	if (getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && (getUrl().path() == QLatin1String("blank") || getUrl().path() == QLatin1String("start") || getUrl().path().isEmpty()))
+	if (getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && isUrlEmpty())
 	{
 		search(query, engine);
 	}
@@ -272,7 +270,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (m_session.index < 0 && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && SessionsManager::hasUrl(url, true))
+		if (m_session.index < 0 && !isUrlEmpty() && SessionsManager::hasUrl(url, true))
 		{
 			m_ui->addressWidget->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
 
@@ -568,4 +566,15 @@ bool Window::isPrivate() const
 	return (m_contentsWidget ? m_contentsWidget->isPrivate() : m_isPrivate);
 }
 
+bool Window::isUrlEmpty() const
+{
+	const QString url = getUrl().path();
+
+	if (url == QLatin1String("blank") || url == QLatin1String("start") || url.isEmpty())
+	{
+		return true;
+	}
+
+	return false;
+}
 }
