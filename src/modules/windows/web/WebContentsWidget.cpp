@@ -180,17 +180,13 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 {
 	if (action == FindAction)
 	{
-		m_ui->findWidget->setVisible(!m_ui->findWidget->isVisible());
+		if (!m_ui->findWidget->isVisible())
+		{
+			m_ui->findWidget->setVisible(true);
+		}
 
-		if (m_ui->findWidget->isVisible())
-		{
-			m_ui->findLineEdit->clear();
-			m_ui->findLineEdit->setFocus();
-		}
-		else
-		{
-			updateFindHighlight();
-		}
+		m_ui->findLineEdit->setFocus();
+		m_ui->findLineEdit->selectAll();
 	}
 	else if (action == FindNextAction || action == FindPreviousAction)
 	{
