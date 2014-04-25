@@ -59,7 +59,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersView->installEventFilter(this);
-	m_ui->transfersView->verticalHeader()->setDefaultSectionSize(15);
+	m_ui->transfersView->verticalHeader()->setDefaultSectionSize(20);
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 
