@@ -254,7 +254,7 @@
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Диалог</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="22"/>
@@ -392,7 +392,7 @@
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="224"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -947,7 +947,7 @@
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation>%1 байт</translation>
+        <translation>%1 &lt;numerusform&gt;байт&lt;/numerusform&gt;&lt;numerusform&gt;байта&lt;/numerusform&gt;&lt;numerusform&gt;байтов&lt;/numerusform&gt;</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
@@ -994,7 +994,7 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="17"/>
         <source>Otter</source>
-        <translation type="unfinished"/>
+        <translation>Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="52"/>
@@ -1191,7 +1191,7 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="362"/>
         <source>Zoom In</source>
-        <translation>Увеличит</translation>
+        <translation>Увеличить</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="367"/>
@@ -1308,7 +1308,7 @@
         <location filename="../../src/ui/MainWindow.cpp" line="266"/>
         <location filename="../../src/ui/MainWindow.cpp" line="544"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="267"/>
@@ -1363,7 +1363,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="665"/>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="685"/>
@@ -1440,7 +1440,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkAccessManager.cpp" line="452"/>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
 </context>
 <context>
@@ -1512,7 +1512,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="128"/>
         <source>Restore to Default</source>
-        <translation>Восстановить по-умолчанию</translation>
+        <translation>Восстановить по умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="145"/>
@@ -1622,7 +1622,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="380"/>
         <source>Default zoom:</source>
-        <translation>Масштаб по-умолчанию:</translation>
+        <translation>Масштаб по умолчанию:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="390"/>
@@ -1899,7 +1899,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1253"/>
         <source>Address Field</source>
-        <translation>Строка адреса</translation>
+        <translation>Адресная строка</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1258"/>
@@ -1919,7 +1919,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1289"/>
         <source>Suggestions</source>
-        <translation>Подсказк</translation>
+        <translation>Подсказки</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1298"/>
@@ -1994,22 +1994,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1555"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1562"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1569"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1583"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1597"/>
@@ -2118,7 +2118,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="220"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="627"/>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="227"/>
@@ -2167,7 +2167,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="799"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="800"/>
@@ -2241,7 +2241,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="261"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="304"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="96"/>
@@ -2255,7 +2255,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="221"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="375"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="201"/>
@@ -2416,7 +2416,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
@@ -2466,7 +2466,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
         <source>Set as Default Search Engine</source>
-        <translation>Использовать как службу поиска по-умолчанию</translation>
+        <translation>Использовать как службу поиска по умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="107"/>
@@ -2567,7 +2567,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="213"/>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
 </context>
 <context>
@@ -2800,7 +2800,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="160"/>
         <source>Progress:</source>
-        <translation>Загружено:</translation>
+        <translation>Прогресс:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="193"/>
@@ -2868,7 +2868,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/pre&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;pre style=&apos;font-family:auto;&apos;&gt;Источник: %1
+Сохранён в: %2
+Размер: %3
+Загружено: %4
+Прогресс: %5&lt;/pre</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="239"/>
@@ -2925,7 +2929,7 @@ Progress: %5&lt;/pre&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="394"/>
         <location filename="../../src/core/TransfersManager.cpp" line="448"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="394"/>
@@ -2957,7 +2961,10 @@ Select another one.</source>
 Do you want to overwrite it?
 
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Файл с таким именем уже существует.
+Вы хотите заменить его?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -3097,12 +3104,12 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/Application.cpp" line="308"/>
         <source>Uses &lt;path&gt; as cache directory.</source>
-        <translation type="unfinished"/>
+        <translation>Использовать путь как каталог кэша</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="309"/>
         <source>Uses &lt;path&gt; as profile directory.</source>
-        <translation type="unfinished"/>
+        <translation>Использовать путь как каталог профиля</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="310"/>
