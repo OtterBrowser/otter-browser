@@ -59,6 +59,8 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersView->installEventFilter(this);
+	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
+	m_ui->redownloadButton->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 
@@ -391,8 +393,18 @@ void TransfersContentsWidget::updateActions()
 {
 	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
 
+	if (transfer && transfer->state == ErrorTransfer)
+	{
+		m_ui->stopResumeButton->setText(tr("Resume"));
+		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
+	}
+	else
+	{
+		m_ui->stopResumeButton->setText(tr("Stop"));
+		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-reject")));
+	}
+
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
-	m_ui->stopResumeButton->setText((transfer && transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop"));
 	m_ui->redownloadButton->setEnabled(transfer);
 
 	getAction(CopyAction)->setEnabled(transfer);
