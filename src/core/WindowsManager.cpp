@@ -59,7 +59,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	{
 		openTab(url, privateWindow, (hints & BackgroundOpen));
 	}
-	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty())))
+	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && ((window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty()) || url.scheme() == QLatin1String("javascript")))))
 	{
 		if (window->isPrivate() == privateWindow)
 		{
