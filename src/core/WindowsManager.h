@@ -159,6 +159,7 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
+	void openTab(QUrl url, bool privateWindow = false, bool background = false);
 	int getWindowIndex(Window *window) const;
 
 protected slots:

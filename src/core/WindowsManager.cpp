@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -48,37 +49,40 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
 	const bool privateWindow = (m_isPrivate || (hints & PrivateOpen));
+	Window *window = m_mdi->getActiveWindow();
 
 	if (hints & NewWindowOpen)
 	{
 		emit requestedNewWindow(privateWindow, (hints & BackgroundOpen), url);
-
-		return;
 	}
-
-	Window *window = NULL;
-
-	if (!url.isEmpty())
+	else if (url.isEmpty() || (hints & NewTabOpen))
 	{
-		window = m_mdi->getActiveWindow();
-
-		if (window && window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty())
+		openTab(url, privateWindow, (hints & BackgroundOpen));
+	}
+	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty())))
+	{
+		if (window->isPrivate() == privateWindow)
 		{
-			if (window->isPrivate() == privateWindow)
-			{
-				window->getContentsWidget()->setHistory(WindowHistoryInformation());
-				window->setUrl(url, false);
-
-				return;
-			}
-
+			window->getContentsWidget()->setHistory(WindowHistoryInformation());
+			window->setUrl(url, false);
+		}
+		else
+		{
 			closeWindow(m_tabBar->currentIndex());
+			openTab(url, privateWindow, (hints & BackgroundOpen));
 		}
 	}
+	else
+	{
+		openTab(url, privateWindow, (hints & BackgroundOpen));
+	}
+}
 
-	window = new Window(privateWindow, NULL, m_mdi);
+void WindowsManager::openTab(QUrl url, bool privateWindow, bool background)
+{
+	Window *window = new Window(privateWindow, NULL, m_mdi);
 
-	addWindow(window, (hints & BackgroundOpen));
+	addWindow(window, background);
 
 	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
 }
