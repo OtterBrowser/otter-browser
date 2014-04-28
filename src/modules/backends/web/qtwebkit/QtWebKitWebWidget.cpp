@@ -278,7 +278,6 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		}
 	}
 
-
 	emit loadingChanged(false);
 }
 
