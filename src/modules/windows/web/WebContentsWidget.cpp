@@ -55,9 +55,9 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	m_ui->verticalLayout->addWidget(m_webWidget);
 
 	optionChanged(QLatin1String("Browser/ShowDetailedProgressBar"), SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")));
+	optionChanged(QLatin1String("Search/EnableFindInPageAsYouType"), SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
 	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
 	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
@@ -149,6 +149,19 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 		else
 		{
 			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
+		}
+	}
+	else if (option == QLatin1String("Search/EnableFindInPageAsYouType"))
+	{
+		if (value.toBool())
+		{
+			disconnect(m_ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(updateFind()));
+			connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
+		}
+		else
+		{
+			connect(m_ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(updateFind()));
+			disconnect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
 		}
 	}
 }
