@@ -74,7 +74,7 @@ void AddressWidget::timerEvent(QTimerEvent *event)
 
 		m_lookupTimer = 0;
 
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
 
 		m_lookupQuery.clear();
 	}
@@ -245,7 +245,7 @@ void AddressWidget::handleUserInput(const QString &text)
 		return;
 	}
 
-	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
 }
 
 void AddressWidget::removeIcon()
@@ -324,7 +324,7 @@ void AddressWidget::verifyLookup(const QHostInfo &host)
 	}
 	else
 	{
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString());
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
 	}
 
 	m_lookupQuery.clear();

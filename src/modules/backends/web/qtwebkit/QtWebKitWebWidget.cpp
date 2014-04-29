@@ -769,7 +769,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 
 					if (SearchesManager::setSearchEngines(engines) && engineData[QLatin1String("isDefault")].toBool())
 					{
-						SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), engineData[QLatin1String("identifier")].toString());
+						SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), engineData[QLatin1String("identifier")].toString());
 					}
 				}
 			}

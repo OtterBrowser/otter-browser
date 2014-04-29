@@ -46,7 +46,7 @@ namespace Otter
 {
 
 PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
-	m_defaultSearch(SettingsManager::getValue("Browser/DefaultSearchEngine").toString()),
+	m_defaultSearch(SettingsManager::getValue("Search/DefaultSearchEngine").toString()),
 	m_clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
 	m_userAgentsModified(false),
 	m_ui(new Ui::PreferencesDialog)
@@ -225,7 +225,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->searchViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchShortcutDelegate(this));
-	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")).toBool());
+	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 	m_ui->moveDownSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
@@ -1130,10 +1130,10 @@ void PreferencesDialog::save()
 
 	if (SearchesManager::setSearchEngines(searchEngines))
 	{
-		SettingsManager::setValue(QLatin1String("Browser/DefaultSearchEngine"), m_defaultSearch);
+		SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), m_defaultSearch);
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Search/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
 
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
 

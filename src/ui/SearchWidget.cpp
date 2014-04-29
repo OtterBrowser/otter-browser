@@ -49,7 +49,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	setModel(SearchesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
 	setCurrentSearchEngine();
-	optionChanged(QLatin1String("Browser/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Browser/SearchEnginesSuggestions")));
+	optionChanged(QLatin1String("Search/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")));
 
 	lineEdit()->setCompleter(m_completer);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
@@ -166,7 +166,7 @@ void SearchWidget::hidePopup()
 
 void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/SearchEnginesSuggestions"))
+	if (option == QLatin1String("Search/SearchEnginesSuggestions"))
 	{
 		if (value.toBool() && !m_suggester)
 		{
@@ -291,7 +291,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 		return;
 	}
 
-	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : engine));
+	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : engine));
 
 	setCurrentIndex(index);
 	currentSearchEngineChanged(index);

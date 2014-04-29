@@ -361,7 +361,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	}
 
 	int tabs = 0;
-	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
+	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString();
 	const QString defaultUserAgent = SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString();
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");

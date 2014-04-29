@@ -263,7 +263,7 @@ void WebWidget::updateQuickSearch()
 
 	if (!SearchesManager::getSearchEngines().contains(m_quickSearchEngine))
 	{
-		const QString engine = SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString();
+		const QString engine = SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString();
 
 		if (engine != m_quickSearchEngine)
 		{
@@ -327,7 +327,7 @@ QMenu* WebWidget::getQuickSearchMenu()
 
 QString WebWidget::getQuickSearchEngine() const
 {
-	return (m_quickSearchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Browser/DefaultSearchEngine")).toString() : m_quickSearchEngine);
+	return (m_quickSearchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : m_quickSearchEngine);
 }
 
 QString WebWidget::getSelectedText() const
