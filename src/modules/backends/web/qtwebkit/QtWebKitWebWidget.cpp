@@ -278,7 +278,6 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		}
 	}
 
-
 	emit loadingChanged(false);
 }
 
@@ -858,7 +857,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == QLatin1String("javascript"))
 	{
-		evaluateJavaScript(url.path());
+		evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
 
 		return;
 	}

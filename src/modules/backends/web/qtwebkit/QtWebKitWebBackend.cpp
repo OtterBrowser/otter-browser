@@ -67,6 +67,8 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 	globalSettings->setFontFamily(QWebSettings::SansSerifFont, SettingsManager::getValue(QLatin1String("Content/SansSerifFont")).toString());
 	globalSettings->setFontFamily(QWebSettings::CursiveFont, SettingsManager::getValue(QLatin1String("Content/CursiveFont")).toString());
 	globalSettings->setFontFamily(QWebSettings::FantasyFont, SettingsManager::getValue(QLatin1String("Content/FantasyFont")).toString());
+	globalSettings->setOfflineStorageDefaultQuota(SettingsManager::getValue(QLatin1String("Browser/OfflineStorageLimit")).toInt() * 1024);
+	globalSettings->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(QLatin1String("Content/OfflineWebApplicationCacheLimit")).toInt() * 1024);
 }
 
 WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *parent)

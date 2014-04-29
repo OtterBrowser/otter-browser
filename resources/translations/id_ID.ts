@@ -17,7 +17,7 @@
         <location filename="../../src/core/ActionsManager.cpp" line="243"/>
         <location filename="../../src/core/ActionsManager.cpp" line="249"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Belakang</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="244"/>
@@ -27,17 +27,17 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="245"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Belakang</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="246"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan Frame ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="251"/>
@@ -47,27 +47,27 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Lihat Sumber</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="253"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Simpan Target Tautan Sebaga...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Simpan ke Unduhan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark Tautan...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Ulang Setiap</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="257"/>
@@ -87,12 +87,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Preferensi Website...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Properti Gambar...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="262"/>
@@ -107,12 +107,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="264"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Gambar ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan Gambar ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
@@ -122,12 +122,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Cari Menggunakan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungi Alamat Ini</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="269"/>
@@ -137,42 +137,42 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Ejaan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Buat Pencarian...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Simpan Media...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan Media ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Kontrol</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Perulangan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Mainkan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Matikan Suara</translation>
     </message>
 </context>
 <context>
@@ -180,17 +180,17 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="346"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="346"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="429"/>
         <source>Remove This Icon</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Icon Ini</translation>
     </message>
 </context>
 <context>
@@ -198,27 +198,27 @@
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation type="unfinished"/>
+        <translation>Diperlukan Otentifikasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
         <source>Server:</source>
-        <translation type="unfinished"/>
+        <translation>Server:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="29"/>
         <source>Message:</source>
-        <translation type="unfinished"/>
+        <translation>Pesan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="36"/>
         <source>User:</source>
-        <translation type="unfinished"/>
+        <translation>User:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="46"/>
         <source>Password:</source>
-        <translation type="unfinished"/>
+        <translation>Kata Sandi:</translation>
     </message>
 </context>
 <context>
@@ -226,27 +226,27 @@
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="14"/>
         <source>Blocked Content</source>
-        <translation type="unfinished"/>
+        <translation>Konten Terblokir</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="24"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="41"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="51"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="61"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
 </context>
 <context>
@@ -254,73 +254,73 @@
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Judul:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="32"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="42"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Alamat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="52"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Folder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="74"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>Baru</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Edit Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Sunting Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="99"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Tidak Berjudul)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="125"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="127"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="165"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Galat</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="165"/>
         <source>Failed to save bookmark.</source>
-        <translation type="unfinished"/>
+        <translation>Gagal Menyimpan Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="178"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama Folder</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="178"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Pilih nama folder baru:</translation>
     </message>
 </context>
 <context>
@@ -328,44 +328,44 @@
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="76"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Alamat:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="83"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Judul:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="90"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="114"/>
         <source>Properties</source>
-        <translation type="unfinished"/>
+        <translation>Properti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="124"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="131"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="300"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="311"/>
         <source>Add Folder</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Folder</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
@@ -373,36 +373,36 @@
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="301"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="312"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="302"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="313"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Separator</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="127"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="136"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Tidak Berjudul)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="224"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pertanyaan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all its children?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda yakin ingin menghapus folder ini dan semua anaknya?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this bookmark?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda yakin ingin menghapus bookmark ini?</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
@@ -412,52 +412,52 @@
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="230"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Jangan perlihatkan pesan ini lagi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="280"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="281"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="282"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="284"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="285"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="296"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="305"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="307"/>
         <source>Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Properti...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="468"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Bookmark</translation>
     </message>
 </context>
 <context>
@@ -465,122 +465,122 @@
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Alamat:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="110"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipe:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="120"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="130"/>
         <source>Last Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Terakhir Diubah:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="140"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Berakhir:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
         <source>Location:</source>
-        <translation type="unfinished"/>
+        <translation>Lokasi:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="171"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Pratinjau</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="210"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Alamat</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipe</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Terakhir Diubah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Berakhir</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="379"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="380"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="381"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="383"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="384"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="386"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="388"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Masukkan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Semua Catatan dari Domain Ini</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="455"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tak Diketahui</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="591"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Cache</translation>
     </message>
 </context>
 <context>
@@ -588,67 +588,67 @@
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation type="unfinished"/>
+        <translation>Hapus History</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to Clear:</source>
-        <translation type="unfinished"/>
+        <translation>Periode Penghapusan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Semua</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation type="unfinished"/>
+        <translation>h</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Hapus History Penjelajahan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation type="unfinished"/>
+        <translation>Hapus cookie</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation type="unfinished"/>
+        <translation>Hapus History form</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Hapus history unduhan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation type="unfinished"/>
+        <translation>Hapus pencarian history</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation type="unfinished"/>
+        <translation>Hapus cache</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation type="unfinished"/>
+        <translation>Hapus data penyimpanan website</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation type="unfinished"/>
+        <translation>Hapus kata sandi</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
         <source>Clear Now</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Sekarang</translation>
     </message>
 </context>
 <context>
@@ -656,27 +656,27 @@
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipe</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Nilai</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="201"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Konfigurasi</translation>
     </message>
 </context>
 <context>
@@ -684,7 +684,7 @@
     <message>
         <location filename="../../src/ui/ContentsDialog.cpp" line="59"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Tutup</translation>
     </message>
 </context>
 <context>
@@ -692,52 +692,52 @@
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domain:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="112"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nama:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="125"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Nilai:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="138"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Berakhir:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>dd.MM.yyyy HH:mm:ss</source>
-        <translation type="unfinished"/>
+        <translation>dd.MM.yyyy HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Aman</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
         <source>HTTP only</source>
-        <translation type="unfinished"/>
+        <translation>Hanya HTTP</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="205"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="228"/>
@@ -747,17 +747,17 @@
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="255"/>
         <source>Remove Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Cookie</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="258"/>
         <source>Remove All Cookies from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Semua Cookies dari Domain Ini</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="407"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Cookies</translation>
     </message>
 </context>
 <context>
@@ -770,12 +770,12 @@
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Berkas</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select Directory</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Direktori</translation>
     </message>
 </context>
 <context>
@@ -783,17 +783,17 @@
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Today</source>
-        <translation type="unfinished"/>
+        <translation>Hari Ini</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Yesterday</source>
-        <translation type="unfinished"/>
+        <translation>Kemarin</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
@@ -823,73 +823,73 @@
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Alamat</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Judul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Tanggal</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="215"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="249"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Tidak Berjudul)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Belakang</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="376"/>
         <source>Add to Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Tambahkan ke Bookmark...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="377"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Salin Tautan ke Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="379"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Masukkan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Hapus Semua Masukkan dari Domain Ini</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>History</translation>
     </message>
 </context>
 <context>
@@ -897,57 +897,57 @@
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation type="unfinished"/>
+        <translation>Properti Gambar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="22"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipe:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="36"/>
         <source>File Size:</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran Berkas:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="43"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Alamat:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative Text:</source>
-        <translation type="unfinished"/>
+        <translation>Teks Alternatif:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="57"/>
         <source>Long Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi Panjang:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="62"/>
         <source>%1 GB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 GB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 MB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 MB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="71"/>
         <source>%1 KB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 KB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation type="unfinished"/>
+        <translation>%1 B</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
@@ -958,7 +958,7 @@
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixel @ %3 bit per pixel</translation>
     </message>
 </context>
 <context>
@@ -966,27 +966,27 @@
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="59"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Konten Direktori</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="62"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="63"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipe</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="64"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Ukuran</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Tanggal</translation>
     </message>
 </context>
 <context>
@@ -994,27 +994,27 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="17"/>
         <source>Otter</source>
-        <translation type="unfinished"/>
+        <translation>Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="52"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Berkas</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="56"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Session</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="67"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Impor dan Ekspor</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="110"/>
@@ -1029,37 +1029,37 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="119"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>User Agent</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="139"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="147"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Alat</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="157"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Help</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="164"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>History</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="171"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Tutup Tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="196"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="201"/>
@@ -1069,7 +1069,7 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="206"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="211"/>
@@ -1079,22 +1079,22 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="216"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Buka...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="224"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Simpan...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="229"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Cetak...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="234"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Cetak Pratinjau</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="242"/>
@@ -1104,17 +1104,17 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="253"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Menubar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="258"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="266"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tutup Tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="274"/>
@@ -1131,62 +1131,62 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="290"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Potong</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="298"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Salin</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="306"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Tempel</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="311"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Seleksi Semua</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="316"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Cari...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="321"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Cari Selanjutnya</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="326"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Tambah Bookmark...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="331"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Bookmark...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="336"/>
         <source>Read Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Baca Feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="341"/>
         <source>Manage Feeds...</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Feed...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="346"/>
         <source>About Application...</source>
-        <translation type="unfinished"/>
+        <translation>Tentang Aplikasi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="354"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Tentang Qt...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="362"/>
@@ -1206,12 +1206,12 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="380"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="385"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Kembali</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="390"/>
@@ -1221,22 +1221,22 @@
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="395"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan History</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="400"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Hapus History</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="405"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Muat Ulang</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="410"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Hentikan</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="415"/>
