@@ -49,6 +49,7 @@ public:
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
 	QString getStatusMessage() const;
+	QString getQuickFindValue() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
@@ -70,6 +71,7 @@ public slots:
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
+	void setQuickFindValue();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -92,6 +94,7 @@ private:
 	int m_progressBarTimer;
 	bool m_showProgressBar;
 	Ui::WebContentsWidget *m_ui;
+	static QString m_quickFindValue;
 };
 
 }

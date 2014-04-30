@@ -31,6 +31,8 @@
 namespace Otter
 {
 
+QString WebContentsWidget::m_quickFindValue = NULL;
+
 WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
 	m_progressBarWidget(NULL),
@@ -62,8 +64,8 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
 	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
 	connect(m_ui->findPreviousButton, SIGNAL(clicked()), this, SLOT(updateFind()));
-	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findLineEdit, SLOT(clear()));
 	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
+	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findLineEdit, SLOT(clear()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
@@ -195,7 +197,9 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
+			m_ui->findLineEdit->setText(getQuickFindValue());
 			m_ui->findWidget->setVisible(true);
+			updateFind();
 		}
 
 		m_ui->findLineEdit->setFocus();
@@ -203,6 +207,14 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	}
 	else if (action == FindNextAction || action == FindPreviousAction)
 	{
+		if (!m_ui->findWidget->isVisible() && !getQuickFindValue().isEmpty())
+		{
+			m_ui->findLineEdit->setText(getQuickFindValue());
+			m_ui->findWidget->setVisible(true);
+			m_ui->findLineEdit->setFocus();
+			m_ui->findLineEdit->selectAll();
+		}
+
 		updateFind(action == FindPreviousAction);
 	}
 	else
@@ -239,6 +251,11 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 	{
 		m_webWidget->setFocus();
 	}
+}
+
+void WebContentsWidget::setQuickFindValue()
+{
+	m_quickFindValue = m_ui->findLineEdit->text();
 }
 
 void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
@@ -297,6 +314,11 @@ void WebContentsWidget::updateFind(bool backwards)
 	if (sender() && sender()->objectName() == QLatin1String("caseSensitiveButton"))
 	{
 		m_webWidget->find(m_ui->findLineEdit->text(), (flags | BackwardFind));
+	}
+
+	if (m_ui->findWidget->isVisible())
+	{
+		setQuickFindValue();
 	}
 
 	updateFindHighlight();
@@ -376,6 +398,11 @@ QString WebContentsWidget::getStatusMessage() const
 	return m_webWidget->getStatusMessage();
 }
 
+QString WebContentsWidget::getQuickFindValue() const
+{
+	return m_quickFindValue;
+}
+
 QLatin1String WebContentsWidget::getType() const
 {
 	return QLatin1String("web");
@@ -439,8 +466,8 @@ bool WebContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			m_ui->findLineEdit->clear();
 			m_ui->findWidget->hide();
+			m_ui->findLineEdit->clear();
 		}
 	}
 
