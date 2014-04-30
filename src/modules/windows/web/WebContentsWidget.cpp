@@ -91,9 +91,22 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		m_progressBarTimer = 0;
 
-		if (m_progressBarWidget)
+		if (!m_progressBarWidget)
 		{
-			m_progressBarWidget->setGeometry(m_webWidget->getProgressBarGeometry());
+			return;
+		}
+
+		const QRect geometry = m_webWidget->getProgressBarGeometry();
+
+		if (m_webWidget->isLoading() && geometry.width() > (width() / 2))
+		{
+			m_progressBarWidget->show();
+			m_progressBarWidget->raise();
+			m_progressBarWidget->setGeometry(geometry);
+		}
+		else
+		{
+			m_progressBarWidget->hide();
 		}
 	}
 }
@@ -334,8 +347,6 @@ void WebContentsWidget::setLoading(bool loading)
 	if (loading && !m_progressBarWidget)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
-		m_progressBarWidget->show();
-		m_progressBarWidget->raise();
 	}
 
 	scheduleGeometryUpdate();

@@ -113,7 +113,11 @@ void ProgressBarWidget::setLoading(bool loading)
 		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
 
 		updateLoadStatus(0, 0, 0, 0, 0);
-		show();
+
+		if (geometry().width() > (parentWidget()->geometry().width() / 2))
+		{
+			show();
+		}
 
 		m_time = new QTime();
 		m_time->start();
