@@ -1,6 +1,7 @@
-0.5.01 (--.--.2014):
+0.5.01 (01.05.2014):
 - added startup / crash recovery dialog;
 - implemented "Reload Image" action;
+- improved handling of bookmarklets;
 - some other fixes and minor improvements.
 
 0.4.01 (01.04.2014):
