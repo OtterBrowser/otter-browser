@@ -301,7 +301,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	transfer->device = &temporaryFile;
 	transfer->started = QDateTime::currentDateTime();
 	transfer->isPrivate = privateTransfer;
-	transfer->bytesTotal = reply->header(QNetworkRequest::ContentLengthHeader);
+	transfer->bytesTotal = reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
 
 	if (!transfer->device->open(QIODevice::ReadWrite))
 	{
@@ -545,7 +545,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	{
 		return false;
 	}
-	
+
 	if (transfer->bytesTotal == 0)
 	{
 		return restartTransfer(transfer);
