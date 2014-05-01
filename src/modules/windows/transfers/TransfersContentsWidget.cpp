@@ -51,7 +51,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 
 	m_model->setHorizontalHeaderLabels(labels);
 
-	QFontMetrics fontMatrics(m_ui->transfersView->verticalHeader()->font());
+	QFontMetrics fontMatrics(m_ui->transfersView->font());
 
 	m_ui->transfersView->verticalHeader()->setDefaultSectionSize(fontMatrics.height() + 2);
 	m_ui->transfersView->setModel(m_model);
