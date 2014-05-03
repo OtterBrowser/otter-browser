@@ -59,7 +59,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QCommandLineParser *parser = getParser();
 	parser->process(arguments());
 
-	if (parser->isSet(QLatin1String("portable")))
+	const bool isPortable = parser->isSet(QLatin1String("portable"));
+
+	if (isPortable)
 	{
 		profilePath = applicationDirPath() + QLatin1String("/profile");
 		cachePath = applicationDirPath() + QLatin1String("/cache");
@@ -170,8 +172,15 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QTranslator qtTranslator;
 	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
+	QString localePath;
+
+	if (isPortable)
+	{
+		localePath = applicationDirPath() + QLatin1String("/locale/");
+	}
+
 	QTranslator applicationTranslator;
-	applicationTranslator.load(QLatin1String(":/translations/otter-browser_") + QLocale::system().name());
+	applicationTranslator.load(QLatin1String("otter-browser_") + QLocale::system().name(), localePath);
 
 	installTranslator(&qtTranslator);
 	installTranslator(&applicationTranslator);
