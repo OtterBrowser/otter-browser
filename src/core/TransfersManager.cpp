@@ -407,15 +407,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
 			}
 
-			if (isDownloading(QString(), path))
-			{
-				if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is already used by another transfer.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
-				{
-					path = QString();
-
-					break;
-				}
-			}
+            if (isDownloading(QString(), path))
+            {
+                path = QString();
+                if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is already used by another transfer.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+                {
+                    break;
+                }
+            }
 			else
 			{
 				break;
