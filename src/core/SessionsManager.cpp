@@ -232,11 +232,11 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 			for (int k = 1; k <= history; ++k)
 			{
+				const QStringList position = sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toStringList();
 				WindowHistoryEntry historyEntry;
 				historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
 				historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
-				QStringList pos = sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toStringList();
-                		historyEntry.position = QPoint(pos.at(0).toInt(), pos.at(1).toInt());
+				historyEntry.position = QPoint(position.value(0, QString::number(0)).toInt(), position.value(1, QString::number(0)).toInt());
 				historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(i).arg(j).arg(k), 100).toInt();
 
 				sessionWindow.history.append(historyEntry);

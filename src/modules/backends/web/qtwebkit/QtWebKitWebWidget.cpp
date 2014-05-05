@@ -1331,11 +1331,11 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 
 	const QSize thumbnailSize = QSize(260, 170);
 	const QSize oldViewportSize = m_webView->page()->viewportSize();
+	const QPoint position = m_webView->page()->mainFrame()->scrollPosition();
 	const qreal zoom = m_webView->page()->mainFrame()->zoomFactor();
 	QSize contentsSize = m_webView->page()->mainFrame()->contentsSize();
 	QWidget *newView = new QWidget();
 	QWidget *oldView = m_webView->page()->view();
-    QPoint scrollPosition = m_webView->page()->mainFrame()->scrollPosition();
 
 	m_webView->page()->setView(newView);
 	m_webView->page()->setViewportSize(contentsSize);
@@ -1357,7 +1357,7 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 	m_webView->page()->mainFrame()->setZoomFactor(zoom);
 	m_webView->page()->setView(oldView);
 	m_webView->page()->setViewportSize(oldViewportSize);
-    m_webView->page()->mainFrame()->setScrollPosition(scrollPosition);
+	m_webView->page()->mainFrame()->setScrollPosition(position);
 
 	painter.end();
 
