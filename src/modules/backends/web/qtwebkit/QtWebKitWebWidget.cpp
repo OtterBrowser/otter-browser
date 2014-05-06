@@ -958,6 +958,16 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		flags |= ImageMenu;
 
 		const bool isImageOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+		const QString fileName = m_hitResult.imageUrl().fileName();
+
+		if (!fileName.isEmpty())
+		{
+			getAction(OpenImageInNewTabAction)->setText(tr("Open Image") + QLatin1String(" (") + fileName + QLatin1Char(')'));
+		}
+		else
+		{
+			getAction(OpenImageInNewTabAction)->setText(tr("Open Image") + QLatin1Char(' ') + tr("(Untitled)"));
+		}
 
 		getAction(OpenImageInNewTabAction)->setEnabled(!isImageOpened);
 		getAction(InspectElementAction)->setEnabled(!isImageOpened);
@@ -999,6 +1009,11 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 
 	WebWidget::showContextMenu(hitPosition, flags);
+
+	if (flags & ImageMenu)
+	{
+		getAction(OpenImageInNewTabAction)->setText(tr("Open Image"));
+	}
 }
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
