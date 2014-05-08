@@ -107,6 +107,21 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 				writer->writeAttribute(QLatin1String("href"), bookmark->url);
 			}
 
+			if (bookmark->added.isValid())
+			{
+				writer->writeAttribute(QLatin1String("added"), bookmark->added.toString(Qt::ISODate));
+			}
+
+			if (bookmark->modified.isValid())
+			{
+				writer->writeAttribute(QLatin1String("modified"), bookmark->modified.toString(Qt::ISODate));
+			}
+
+			if (bookmark->visited.isValid())
+			{
+				writer->writeAttribute(QLatin1String("visited"), bookmark->visited.toString(Qt::ISODate));
+			}
+
 			writer->writeTextElement(QLatin1String("title"), bookmark->title);
 
 			if (!bookmark->description.isEmpty())
@@ -202,6 +217,9 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 	{
 		bookmark->type = UrlBookmark;
 		bookmark->url = reader->attributes().value(QLatin1String("href")).toString();
+		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
+		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
+		bookmark->visited = QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate);
 
 		while (reader->readNext())
 		{

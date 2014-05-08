@@ -80,7 +80,6 @@
         <file>macros/default.ini</file>
         <file>macros/platform.ini</file>
         <file>other/userAgents.ini</file>
-        <file>schemas/bookmarks.sql</file>
         <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>
         <file>searches/bing.xml</file>

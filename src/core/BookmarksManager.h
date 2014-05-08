@@ -41,7 +41,8 @@ struct BookmarkInformation
 	QString title;
 	QString description;
 	QString keyword;
-	QDateTime created;
+	QDateTime added;
+	QDateTime modified;
 	QDateTime visited;
 	QList<BookmarkInformation*> children;
 	BookmarkType type;
