@@ -36,7 +36,8 @@ QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
 QSet<QString> BookmarksManager::m_urls;
 int BookmarksManager::m_identifier;
 
-BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent)
+BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
+	 m_saveTimer(0)
 {
 	QTimer::singleShot(250, this, SLOT(load()));
 }
@@ -46,6 +47,26 @@ BookmarksManager::~BookmarksManager()
 	for (int i = 0; i < m_bookmarks.count(); ++i)
 	{
 		delete m_bookmarks.at(i);
+	}
+}
+
+void BookmarksManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_saveTimer)
+	{
+		killTimer(m_saveTimer);
+
+		m_saveTimer = 0;
+
+		save();
+	}
+}
+
+void BookmarksManager::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(1000);
 	}
 }
 
@@ -360,7 +381,8 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 
 	if (notify)
 	{
-		save();
+		m_instance->scheduleSave();
+
 		updateUrls();
 
 		emit m_instance->folderModified(folder);

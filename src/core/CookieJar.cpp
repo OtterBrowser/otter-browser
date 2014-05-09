@@ -28,7 +28,7 @@ namespace Otter
 {
 
 CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
-	m_autoSaveTimer(0),
+	m_saveTimer(0),
 	m_enableCookies(true)
 {
 	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
@@ -71,11 +71,11 @@ CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
 
 void CookieJar::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_autoSaveTimer)
+	if (event->timerId() == m_saveTimer)
 	{
-		killTimer(m_autoSaveTimer);
+		killTimer(m_saveTimer);
 
-		m_autoSaveTimer = 0;
+		m_saveTimer = 0;
 
 		save();
 	}
@@ -146,9 +146,9 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 
 	if (result)
 	{
-		if (m_autoSaveTimer == 0)
+		if (m_saveTimer == 0)
 		{
-			m_autoSaveTimer = startTimer(1000);
+			m_saveTimer = startTimer(1000);
 		}
 
 		emit cookieAdded(cookie);
@@ -163,9 +163,9 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 	if (result)
 	{
-		if (m_autoSaveTimer == 0)
+		if (m_saveTimer == 0)
 		{
-			m_autoSaveTimer = startTimer(1000);
+			m_saveTimer = startTimer(1000);
 		}
 
 		emit cookieRemoved(cookie);
@@ -183,9 +183,9 @@ bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 
 	const bool result = QNetworkCookieJar::updateCookie(cookie);
 
-	if (result && m_autoSaveTimer == 0)
+	if (result && m_saveTimer == 0)
 	{
-		m_autoSaveTimer = startTimer(1000);
+		m_saveTimer = startTimer(1000);
 	}
 
 	return result;

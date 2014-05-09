@@ -143,10 +143,10 @@ protected:
 	explicit SessionsManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	void scheduleAutoSave();
+	void scheduleSave();
 
 private:
-	int m_autoSaveTimer;
+	int m_saveTimer;
 
 	static SessionsManager *m_instance;
 	static QPointer<MainWindow> m_activeWindow;

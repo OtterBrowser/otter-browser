@@ -63,7 +63,7 @@ protected slots:
 	void save();
 
 private:
-	int m_autoSaveTimer;
+	int m_saveTimer;
 	bool m_enableCookies;
 
 signals:

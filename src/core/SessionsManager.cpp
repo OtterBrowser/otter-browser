@@ -41,19 +41,19 @@ QList<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_dirty = false;
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
-	m_autoSaveTimer(0)
+	m_saveTimer(0)
 {
 }
 
 void SessionsManager::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_autoSaveTimer)
+	if (event->timerId() == m_saveTimer)
 	{
 		m_dirty = false;
 
-		killTimer(m_autoSaveTimer);
+		killTimer(m_saveTimer);
 
-		m_autoSaveTimer = 0;
+		m_saveTimer = 0;
 
 		saveSession(QString(), QString(), NULL, false);
 	}
@@ -66,11 +66,11 @@ void SessionsManager::createInstance(const QString &profilePath, const QString &
 	m_profilePath = profilePath;
 }
 
-void SessionsManager::scheduleAutoSave()
+void SessionsManager::scheduleSave()
 {
-	if (m_autoSaveTimer == 0)
+	if (m_saveTimer == 0)
 	{
-		m_autoSaveTimer = startTimer(1000);
+		m_saveTimer = startTimer(1000);
 	}
 }
 
@@ -114,7 +114,7 @@ void SessionsManager::markSessionModified()
 	{
 		m_dirty = true;
 
-		m_instance->scheduleAutoSave();
+		m_instance->scheduleSave();
 	}
 }
 

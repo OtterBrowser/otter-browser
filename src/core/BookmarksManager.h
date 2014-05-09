@@ -76,6 +76,8 @@ public:
 protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
+	void scheduleSave();
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
 	static void updateUrls();
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
@@ -84,6 +86,8 @@ protected slots:
 	void load();
 
 private:
+	int m_saveTimer;
+
 	static BookmarksManager *m_instance;
 	static QHash<int, BookmarkInformation*> m_pointers;
 	static QList<BookmarkInformation*> m_bookmarks;
