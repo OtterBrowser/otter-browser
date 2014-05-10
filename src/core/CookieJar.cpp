@@ -71,13 +71,39 @@ CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
 
 void CookieJar::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_saveTimer)
+	if (event->timerId() != m_saveTimer)
 	{
-		killTimer(m_saveTimer);
+		return;
+	}
 
-		m_saveTimer = 0;
+	killTimer(m_saveTimer);
 
-		save();
+	m_saveTimer = 0;
+
+	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QList<QNetworkCookie> cookies = allCookies();
+	QDataStream stream(&file);
+	stream << quint32(cookies.size());
+
+	for (int i = 0; i < cookies.size(); ++i)
+	{
+		stream << cookies.at(i).toRawForm();
+	}
+
+	file.close();
+}
+
+void CookieJar::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(500);
 	}
 }
 
@@ -98,26 +124,7 @@ void CookieJar::clearCookies(int period)
 	Q_UNUSED(period)
 
 	setAllCookies(QList<QNetworkCookie>());
-	save();
-}
-
-void CookieJar::save()
-{
-	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return;
-	}
-
-	QList<QNetworkCookie> cookies = allCookies();
-	QDataStream stream(&file);
-	stream << quint32(cookies.size());
-
-	for (int i = 0; i < cookies.size(); ++i)
-	{
-		stream << cookies.at(i).toRawForm();
-	}
+	scheduleSave();
 }
 
 QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
@@ -146,10 +153,7 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 
 	if (result)
 	{
-		if (m_saveTimer == 0)
-		{
-			m_saveTimer = startTimer(1000);
-		}
+		scheduleSave();
 
 		emit cookieAdded(cookie);
 	}
@@ -163,10 +167,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 	if (result)
 	{
-		if (m_saveTimer == 0)
-		{
-			m_saveTimer = startTimer(1000);
-		}
+		scheduleSave();
 
 		emit cookieRemoved(cookie);
 	}
@@ -183,9 +184,9 @@ bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 
 	const bool result = QNetworkCookieJar::updateCookie(cookie);
 
-	if (result && m_saveTimer == 0)
+	if (result)
 	{
-		m_saveTimer = startTimer(1000);
+		scheduleSave();
 	}
 
 	return result;
