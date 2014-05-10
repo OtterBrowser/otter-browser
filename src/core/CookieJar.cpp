@@ -22,6 +22,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QSaveFile>
 #include <QtCore/QTimerEvent>
 
 namespace Otter
@@ -80,7 +81,7 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 	m_saveTimer = 0;
 
-	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
+	QSaveFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -96,7 +97,7 @@ void CookieJar::timerEvent(QTimerEvent *event)
 		stream << cookies.at(i).toRawForm();
 	}
 
-	file.close();
+	file.commit();
 }
 
 void CookieJar::scheduleSave()
