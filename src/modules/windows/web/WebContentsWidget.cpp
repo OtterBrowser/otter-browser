@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-QString WebContentsWidget::m_quickFindValue = NULL;
+QString WebContentsWidget::m_quickFindQuery = NULL;
 
 WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
@@ -210,8 +210,9 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			m_ui->findLineEdit->setText(getQuickFindValue());
+			m_ui->findLineEdit->setText(m_quickFindQuery);
 			m_ui->findWidget->setVisible(true);
+
 			updateFind();
 		}
 
@@ -220,9 +221,9 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	}
 	else if (action == FindNextAction || action == FindPreviousAction)
 	{
-		if (!m_ui->findWidget->isVisible() && !getQuickFindValue().isEmpty())
+		if (!m_ui->findWidget->isVisible() && !m_quickFindQuery.isEmpty())
 		{
-			m_ui->findLineEdit->setText(getQuickFindValue());
+			m_ui->findLineEdit->setText(m_quickFindQuery);
 			m_ui->findWidget->setVisible(true);
 			m_ui->findLineEdit->setFocus();
 			m_ui->findLineEdit->selectAll();
@@ -264,11 +265,6 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 	{
 		m_webWidget->setFocus();
 	}
-}
-
-void WebContentsWidget::setQuickFindValue()
-{
-	m_quickFindValue = m_ui->findLineEdit->text();
 }
 
 void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
@@ -331,7 +327,7 @@ void WebContentsWidget::updateFind(bool backwards)
 
 	if (m_ui->findWidget->isVisible())
 	{
-		setQuickFindValue();
+		m_quickFindQuery = m_ui->findLineEdit->text();
 	}
 
 	updateFindHighlight();
@@ -407,11 +403,6 @@ QString WebContentsWidget::getTitle() const
 QString WebContentsWidget::getStatusMessage() const
 {
 	return m_webWidget->getStatusMessage();
-}
-
-QString WebContentsWidget::getQuickFindValue() const
-{
-	return m_quickFindValue;
 }
 
 QLatin1String WebContentsWidget::getType() const

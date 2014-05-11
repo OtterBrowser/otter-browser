@@ -71,7 +71,6 @@ public slots:
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
-	void setQuickFindValue();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -94,7 +93,8 @@ private:
 	int m_progressBarTimer;
 	bool m_showProgressBar;
 	Ui::WebContentsWidget *m_ui;
-	static QString m_quickFindValue;
+
+	static QString m_quickFindQuery;
 };
 
 }
