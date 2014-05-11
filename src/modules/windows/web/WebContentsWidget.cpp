@@ -206,32 +206,20 @@ void WebContentsWidget::goToHistoryIndex(int index)
 
 void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 {
-	if (action == FindAction)
+	if (action == FindAction || action == FindNextAction || action == FindPreviousAction)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+			if (action != FindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 			{
 				m_ui->findLineEdit->setText(m_quickFindQuery);
 			}
 
 			m_ui->findWidget->setVisible(true);
-
-			updateFind();
 		}
 
 		m_ui->findLineEdit->setFocus();
 		m_ui->findLineEdit->selectAll();
-	}
-	else if (action == FindNextAction || action == FindPreviousAction)
-	{
-		if (!m_ui->findWidget->isVisible() && !m_quickFindQuery.isEmpty())
-		{
-			m_ui->findLineEdit->setText(m_quickFindQuery);
-			m_ui->findWidget->setVisible(true);
-			m_ui->findLineEdit->setFocus();
-			m_ui->findLineEdit->selectAll();
-		}
 
 		updateFind(action == FindPreviousAction);
 	}
