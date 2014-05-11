@@ -325,7 +325,7 @@ void WebContentsWidget::updateFind(bool backwards)
 		m_webWidget->find(m_ui->findLineEdit->text(), (flags | BackwardFind));
 	}
 
-	if (m_ui->findWidget->isVisible())
+	if (m_ui->findWidget->isVisible() && !isPrivate())
 	{
 		m_quickFindQuery = m_ui->findLineEdit->text();
 	}
