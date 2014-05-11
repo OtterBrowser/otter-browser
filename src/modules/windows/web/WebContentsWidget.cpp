@@ -210,7 +210,11 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			m_ui->findLineEdit->setText(m_quickFindQuery);
+			if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+			{
+				m_ui->findLineEdit->setText(m_quickFindQuery);
+			}
+
 			m_ui->findWidget->setVisible(true);
 
 			updateFind();
