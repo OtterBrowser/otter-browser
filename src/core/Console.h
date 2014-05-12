@@ -20,6 +20,7 @@
 #ifndef OTTER_CONSOLE_H
 #define OTTER_CONSOLE_H
 
+#include <QtCore/QDateTime>
 #include <QtCore/QObject>
 
 namespace Otter
@@ -30,6 +31,7 @@ enum MessageCategory
 	AnyCategory = 0,
 	InternalCategory = 1,
 	NetworkCategory = 2,
+	JavaScriptCategory = 3,
 	OtherCategory = 4
 };
 
@@ -43,6 +45,7 @@ enum MessageLevel
 
 struct ConsoleMessage
 {
+	QDateTime time;
 	QString note;
 	QString source;
 	MessageCategory category;

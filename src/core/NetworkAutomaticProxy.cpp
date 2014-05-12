@@ -18,13 +18,13 @@
 *
 **************************************************************************/
 
+#include "Console.h"
 #include "NetworkAutomaticProxy.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDate>
 #include <QtNetwork/QHostInfo>
 #include <QtNetwork/QNetworkInterface>
-#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -102,7 +102,8 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 			continue;
 		}
 
-//TODO something is not valid here (show error to debug console)
+		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC):\n%1").arg(proxies.at(i)), NetworkCategory, ErrorLevel);
+
 		return m_proxies[QLatin1String("ERROR")];
 	}
 
@@ -115,9 +116,7 @@ QScriptValue NetworkAutomaticProxy::alert(QScriptContext *context, QScriptEngine
 {
 	Q_UNUSED(engine);
 
-//TODO replace with debug console in future
-	QMessageBox* messageBox = new QMessageBox(QMessageBox::Warning, QCoreApplication::translate("main", "Proxy Alert"), context->argument(0).toString(), QMessageBox::Close);
-	messageBox->setAttribute(Qt::WA_DeleteOnClose);
+	Console::addMessage(context->argument(0).toString(), NetworkCategory, WarningLevel);
 
 	return engine->undefinedValue();
 }

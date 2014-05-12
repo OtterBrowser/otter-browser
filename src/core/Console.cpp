@@ -45,6 +45,7 @@ void Console::createInstance(QObject *parent)
 void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line)
 {
 	ConsoleMessage *message = new ConsoleMessage();
+	message->time = QDateTime::currentDateTime();
 	message->note = note;
 	message->source = source;
 	message->category = category;

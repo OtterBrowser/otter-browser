@@ -18,6 +18,7 @@
 *
 **************************************************************************/
 
+#include "Console.h"
 #include "NetworkProxyFactory.h"
 #include "SettingsManager.h"
 
@@ -55,11 +56,13 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			m_automaticProxy = new NetworkAutomaticProxy();
 		}
 
-		QFile file(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+		const QString path = SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString();
+		QFile file(path);
 
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
 		{
-//TODO: there was an error during opening or parsing the file (send message to debug console)
+			Console::addMessage(tr("Failed to setup proxy auto-config (PAC)"), NetworkCategory, ErrorLevel, path);
+
 			m_proxyMode = SystemProxy;
 		}
 

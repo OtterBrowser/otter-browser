@@ -47,6 +47,7 @@ public:
 
 protected:
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
+	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 	QWebPage* createWindow(WebWindowType type);
 	QString userAgentForUrl(const QUrl &url) const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);

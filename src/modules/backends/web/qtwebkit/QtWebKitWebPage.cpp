@@ -19,6 +19,7 @@
 
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/Console.h"
 #include "../../../../core/NetworkAccessManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
@@ -110,6 +111,11 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	{
 		m_ignoreJavaScriptPopups = true;
 	}
+}
+
+void QtWebKitWebPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
+{
+	Console::addMessage(note, JavaScriptCategory, ErrorLevel, source, line);
 }
 
 void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
