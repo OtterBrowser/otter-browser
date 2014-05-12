@@ -51,6 +51,9 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 
 	m_model->setHorizontalHeaderLabels(labels);
 
+	QFontMetrics fontMatrics(m_ui->transfersView->font());
+
+	m_ui->transfersView->verticalHeader()->setDefaultSectionSize(fontMatrics.height() + 2);
 	m_ui->transfersView->setModel(m_model);
 	m_ui->transfersView->horizontalHeader()->setTextElideMode(Qt::ElideRight);
 	m_ui->transfersView->horizontalHeader()->resizeSection(0, 30);
@@ -59,6 +62,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersView->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersView->installEventFilter(this);
+
 	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
 	m_ui->redownloadButton->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
 
