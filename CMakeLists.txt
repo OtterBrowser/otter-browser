@@ -48,6 +48,7 @@ set(otter_src
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
 	src/core/BookmarksManager.cpp
+	src/core/Console.cpp
 	src/core/CookieJar.cpp
 	src/core/FileSystemCompleterModel.cpp
 	src/core/HistoryManager.cpp

@@ -22,6 +22,7 @@ SOURCES += src/main.cpp \
     src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
     src/core/BookmarksManager.cpp \
+    src/core/Console.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
     src/core/HistoryManager.cpp \
@@ -90,6 +91,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/AddressCompletionModel.h \
     src/core/Application.h \
     src/core/BookmarksManager.h \
+    src/core/Console.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
     src/core/HistoryManager.h \

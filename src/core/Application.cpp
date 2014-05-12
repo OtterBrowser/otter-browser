@@ -20,6 +20,7 @@
 #include "Application.h"
 #include "ActionsManager.h"
 #include "BookmarksManager.h"
+#include "Console.h"
 #include "HistoryManager.h"
 #include "NetworkProxyFactory.h"
 #include "SearchesManager.h"
@@ -130,6 +131,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	{
 		QDir().mkpath(profilePath);
 	}
+
+	Console::createInstance(this);
 
 	SettingsManager::createInstance(profilePath + QLatin1String("/otter.conf"), this);
 
