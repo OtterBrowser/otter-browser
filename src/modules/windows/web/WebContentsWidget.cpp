@@ -213,6 +213,11 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 			if (action != FindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 			{
 				m_ui->findLineEdit->setText(m_quickFindQuery);
+
+				if (action == FindAction)
+				{
+					updateFind();
+				}
 			}
 
 			m_ui->findWidget->setVisible(true);
@@ -221,7 +226,10 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 		m_ui->findLineEdit->setFocus();
 		m_ui->findLineEdit->selectAll();
 
-		updateFind(action == FindPreviousAction);
+		if (action != FindAction)
+		{
+			updateFind(action == FindPreviousAction);
+		}
 	}
 	else
 	{
