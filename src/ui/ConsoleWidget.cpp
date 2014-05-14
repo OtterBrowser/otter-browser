@@ -32,6 +32,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_ui->setupUi(this);
 
 	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
 }
 
 ConsoleWidget::~ConsoleWidget()
@@ -63,6 +64,11 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 
 void ConsoleWidget::addMessage(ConsoleMessage *message)
 {
+	if (!m_model || !message)
+	{
+		return;
+	}
+
 	QIcon icon;
 	QString category;
 
@@ -102,16 +108,18 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 			break;
 	}
 
+	const QString source = message->source + ((message->line > 0) ? QStringLiteral(":%1").arg(message->line) : QString());
 	QString entry = QStringLiteral("[%1] %2").arg(message->time.toString()).arg(category);
 
 	if (!message->source.isEmpty())
 	{
-		entry.append(QStringLiteral(" - %1").arg(message->source + ((message->line > 0) ? QStringLiteral(":%1").arg(message->line) : QString())));
+		entry.append(QStringLiteral(" - %1").arg(source));
 	}
 
 	QStandardItem *parentItem = new QStandardItem(icon, entry);
 	parentItem->setData(message->time.toTime_t(), Qt::UserRole);
 	parentItem->setData(message->category, (Qt::UserRole + 1));
+	parentItem->setData(source, (Qt::UserRole + 2));
 
 	if (!message->note.isEmpty())
 	{
@@ -124,7 +132,10 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 
 void ConsoleWidget::clear()
 {
-	m_model->clear();
+	if (m_model)
+	{
+		m_model->clear();
+	}
 }
 
 void ConsoleWidget::toggleCategory()
@@ -134,7 +145,20 @@ void ConsoleWidget::toggleCategory()
 
 void ConsoleWidget::filterMessages(const QString &filter)
 {
-	Q_UNUSED(filter)
+	if (!m_model)
+	{
+		return;
+	}
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *item = m_model->item(i, 0);
+
+		if (item)
+		{
+			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive)))));
+		}
+	}
 }
 
 }
