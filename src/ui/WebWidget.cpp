@@ -309,9 +309,9 @@ void WebWidget::setQuickSearchEngine(const QString &engine)
 
 void WebWidget::setSearchInPageQuery(const QString &query)
 {
-    if (query != m_quickSearchQuery)
+    if (query != m_searchInPageQuery)
     {
-        m_quickSearchQuery = query;
+        m_searchInPageQuery = query;
     }
 }
 
