@@ -66,12 +66,14 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void setQuickSearchEngine(const QString &engine);
+	void setSearchInPageQuery(const QString &query);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual QAction* getAction(WindowAction action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();
 	QMenu* getQuickSearchMenu();
 	QString getQuickSearchEngine() const;
+	QString getSearchInPageQuery() const;
 	virtual QString getDefaultTextEncoding() const = 0;
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
@@ -111,6 +113,7 @@ private:
 	WebBackend *m_backend;
 	QMenu *m_quickSearchMenu;
 	QString m_quickSearchEngine;
+	QString m_searchInPageQuery;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
 
