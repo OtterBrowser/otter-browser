@@ -336,6 +336,7 @@ void WebContentsWidget::updateFind(bool backwards)
 	if (m_ui->findWidget->isVisible() && !isPrivate())
 	{
 		m_quickFindQuery = m_ui->findLineEdit->text();
+		m_webWidget->setQuickSearchQuery(m_ui->findLineEdit->text());
 	}
 
 	updateFindHighlight();
