@@ -205,13 +205,13 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		if (m_webWidget)
 		{
 			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_webWidget);
-			dialog.setCheckBox(tr("Do not show this message again"), true);
+			dialog.setCheckBox(tr("Do not show this message again"), false);
 
 			QEventLoop eventLoop;
 
 			m_webWidget->showDialog(&dialog);
 
-			connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+			connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
 			connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 			eventLoop.exec();
