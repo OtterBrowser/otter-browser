@@ -161,6 +161,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionErrorConsole, SLOT(setChecked(bool)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -201,6 +202,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
+	connect(m_ui->actionErrorConsole, SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
 	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
@@ -214,6 +216,9 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 
 	m_windowsManager->restore(windows);
 
+	m_ui->panelDockWidget->hide();
+	m_ui->consoleDockWidget->hide();
+
 	SettingsManager::setDefaultValue(QLatin1String("Window/Size"), size());
 	SettingsManager::setDefaultValue(QLatin1String("Window/Position"), pos());
 	SettingsManager::setDefaultValue(QLatin1String("Window/State"), QByteArray());
@@ -223,8 +228,6 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	move(SettingsManager::getValue(QLatin1String("Window/Position")).toPoint());
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
 	setWindowTitle(QStringLiteral("%1 - Otter").arg(m_windowsManager->getTitle()));
-
-	m_ui->panelDockWidget->hide();
 }
 
 MainWindow::~MainWindow()
@@ -585,6 +588,11 @@ void MainWindow::actionTransfers()
 	{
 		m_windowsManager->open(url);
 	}
+}
+
+void MainWindow::actionErrorConsole(bool enabled)
+{
+	m_ui->consoleDockWidget->setVisible(enabled);
 }
 
 void MainWindow::actionPreferences()

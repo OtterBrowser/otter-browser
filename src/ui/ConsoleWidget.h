@@ -17,64 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_CONSOLE_H
-#define OTTER_CONSOLE_H
+#ifndef OTTER_CONSOLEWIDGET_H
+#define OTTER_CONSOLEWIDGET_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QObject>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
-enum MessageCategory
+namespace Ui
 {
-	AnyCategory = 0,
-	InternalCategory = 1,
-	NetworkCategory = 2,
-	SecurityCategory = 3,
-	JavaScriptCategory = 4,
-	OtherCategory = 5
-};
+	class ConsoleWidget;
+}
 
-enum MessageLevel
-{
-	UnknownLevel = 0,
-	LogLevel = 1,
-	WarningLevel = 2,
-	ErrorLevel = 3
-};
-
-struct ConsoleMessage
-{
-	QDateTime time;
-	QString note;
-	QString source;
-	MessageCategory category;
-	MessageLevel level;
-	int line;
-};
-
-class Console : public QObject
+class ConsoleWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	~Console();
-
-	static void createInstance(QObject *parent = NULL);
-	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = 0);
-	static Console* getInstance();
-	static QList<ConsoleMessage*> getMessages();
-
-protected:
-	explicit Console(QObject *parent = NULL);
+	explicit ConsoleWidget(QWidget *parent = NULL);
+	~ConsoleWidget();
 
 private:
-	static Console *m_instance;
-	static QList<ConsoleMessage*> m_messages;
-
-signals:
-	void messageAdded(ConsoleMessage *message);
+	Ui::ConsoleWidget *m_ui;
 };
 
 }

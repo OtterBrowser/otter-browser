@@ -71,6 +71,7 @@ set(otter_src
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
 	src/ui/ClearHistoryDialog.cpp
+	src/ui/ConsoleWidget.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/FilePathWidget.cpp
@@ -122,6 +123,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/AuthenticationDialog.ui
 	src/ui/BookmarkPropertiesDialog.ui
 	src/ui/ClearHistoryDialog.ui
+	src/ui/ConsoleWidget.ui
 	src/ui/MainWindow.ui
 	src/ui/PreferencesDialog.ui
 	src/ui/SaveSessionDialog.ui
