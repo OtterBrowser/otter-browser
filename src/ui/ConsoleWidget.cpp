@@ -31,6 +31,10 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 {
 	m_ui->setupUi(this);
 
+	connect(m_ui->networkButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
+	connect(m_ui->securityButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
+	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
+	connect(m_ui->otherButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
 }
@@ -138,9 +142,50 @@ void ConsoleWidget::clear()
 	}
 }
 
-void ConsoleWidget::toggleCategory()
+void ConsoleWidget::filterCategories()
 {
+	QList<MessageCategory> categories;
 
+	if (m_ui->networkButton->isChecked())
+	{
+		categories.append(NetworkCategory);
+	}
+
+	if (m_ui->securityButton->isChecked())
+	{
+		categories.append(SecurityCategory);
+	}
+
+	if (m_ui->javaScriptButton->isChecked())
+	{
+		categories.append(JavaScriptCategory);
+	}
+
+	if (m_ui->otherButton->isChecked())
+	{
+		categories.append(OtherCategory);
+	}
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *item = m_model->item(i, 0);
+
+		if (item)
+		{
+			if (categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())))
+			{
+				item->setFlags(item->flags() | Qt::ItemIsEnabled);
+			}
+			else
+			{
+				item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+
+				m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), true);
+			}
+		}
+	}
+
+	filterMessages(m_ui->filterLineEdit->text());
 }
 
 void ConsoleWidget::filterMessages(const QString &filter)
@@ -156,7 +201,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 
 		if (item)
 		{
-			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive)))));
+			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!(item->flags() & Qt::ItemIsEnabled) || (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))));
 		}
 	}
 }

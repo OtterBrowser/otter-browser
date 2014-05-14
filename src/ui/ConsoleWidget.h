@@ -47,7 +47,7 @@ protected:
 protected slots:
 	void addMessage(ConsoleMessage *message);
 	void clear();
-	void toggleCategory();
+	void filterCategories();
 	void filterMessages(const QString &filter);
 
 private:
