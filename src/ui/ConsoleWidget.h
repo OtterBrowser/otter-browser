@@ -20,7 +20,10 @@
 #ifndef OTTER_CONSOLEWIDGET_H
 #define OTTER_CONSOLEWIDGET_H
 
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QWidget>
+
+#include "../core/Console.h"
 
 namespace Otter
 {
@@ -38,7 +41,17 @@ public:
 	explicit ConsoleWidget(QWidget *parent = NULL);
 	~ConsoleWidget();
 
+protected:
+	void showEvent(QShowEvent *event);
+
+protected slots:
+	void addMessage(ConsoleMessage *message);
+	void clear();
+	void toggleCategory();
+	void filterMessages(const QString &filter);
+
 private:
+	QStandardItemModel *m_model;
 	Ui::ConsoleWidget *m_ui;
 };
 

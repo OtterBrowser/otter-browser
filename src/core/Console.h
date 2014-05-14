@@ -28,12 +28,10 @@ namespace Otter
 
 enum MessageCategory
 {
-	AnyCategory = 0,
-	InternalCategory = 1,
-	NetworkCategory = 2,
-	SecurityCategory = 3,
-	JavaScriptCategory = 4,
-	OtherCategory = 5
+	OtherCategory = 0,
+	NetworkCategory = 1,
+	SecurityCategory = 2,
+	JavaScriptCategory = 3
 };
 
 enum MessageLevel
@@ -62,7 +60,7 @@ public:
 	~Console();
 
 	static void createInstance(QObject *parent = NULL);
-	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = 0);
+	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1);
 	static Console* getInstance();
 	static QList<ConsoleMessage*> getMessages();
 

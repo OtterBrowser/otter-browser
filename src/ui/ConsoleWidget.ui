@@ -129,7 +129,17 @@
     </layout>
    </item>
    <item>
-    <widget class="QTreeView" name="consoleView"/>
+    <widget class="QTreeView" name="consoleView">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
    </item>
   </layout>
  </widget>
