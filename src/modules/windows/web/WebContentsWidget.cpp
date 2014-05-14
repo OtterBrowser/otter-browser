@@ -216,7 +216,7 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	                    	m_ui->findLineEdit->setText(m_quickFindQuery);
 	                    	break;
 	                case 1:
-	                    	m_ui->findLineEdit->setText(m_webWidget->getQuickSearchQuery());
+	                    	m_ui->findLineEdit->setText(m_webWidget->getSearchInPageQuery());
 	                    	break;
 	                case 2:
 	                default:
@@ -336,7 +336,7 @@ void WebContentsWidget::updateFind(bool backwards)
 	if (m_ui->findWidget->isVisible() && !isPrivate())
 	{
 		m_quickFindQuery = m_ui->findLineEdit->text();
-		m_webWidget->setQuickSearchQuery(m_ui->findLineEdit->text());
+		m_webWidget->setSearchInPageQuery(m_ui->findLineEdit->text());
 	}
 
 	updateFindHighlight();
