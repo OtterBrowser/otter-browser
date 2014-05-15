@@ -115,7 +115,7 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 
 void QtWebKitWebPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
 {
-	Console::addMessage(note, JavaScriptCategory, ErrorLevel, source, line);
+	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line);
 }
 
 void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)

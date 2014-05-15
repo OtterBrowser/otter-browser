@@ -28,18 +28,18 @@ namespace Otter
 
 enum MessageCategory
 {
-	OtherCategory = 0,
-	NetworkCategory = 1,
-	SecurityCategory = 2,
-	JavaScriptCategory = 3
+	OtherMessageCategory = 0,
+	NetworkMessageCategory = 1,
+	SecurityMessageCategory = 2,
+	JavaScriptMessageCategory = 3
 };
 
 enum MessageLevel
 {
-	UnknownLevel = 0,
-	LogLevel = 1,
-	WarningLevel = 2,
-	ErrorLevel = 3
+	UnknownMessageLevel = 0,
+	LogMessageLevel = 1,
+	WarningMessageLevel = 2,
+	ErrorMessageLevel = 3
 };
 
 struct ConsoleMessage

@@ -29,11 +29,11 @@ namespace Otter
 
 enum SecurityLevel
 {
-	UnknownLevel = 0,
-	LocalLevel = 1,
-	SecureLevel = 2,
-	InsecureLevel = 4,
-	FraudLevel = 8
+	UnknownSecurityLevel = 0,
+	LocalSecurityLevel = 1,
+	SecureSecurityLevel = 2,
+	InsecureSecurityLevel = 4,
+	FraudSecurityLevel = 8
 };
 
 class ContentsDialog;

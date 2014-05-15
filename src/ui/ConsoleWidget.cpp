@@ -78,11 +78,11 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 
 	switch (message->level)
 	{
-		case ErrorLevel:
+		case ErrorMessageLevel:
 			icon = Utils::getIcon(QLatin1String("dialog-error"));
 
 			break;
-		case WarningLevel:
+		case WarningMessageLevel:
 			icon = Utils::getIcon(QLatin1String("dialog-warning"));
 
 			break;
@@ -94,15 +94,15 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 
 	switch (message->category)
 	{
-		case NetworkCategory:
+		case NetworkMessageCategory:
 			category = tr("Network");
 
 			break;
-		case SecurityCategory:
+		case SecurityMessageCategory:
 			category = tr("Security");
 
 			break;
-		case JavaScriptCategory:
+		case JavaScriptMessageCategory:
 			category = tr("JS");
 
 			break;
@@ -148,22 +148,22 @@ void ConsoleWidget::filterCategories()
 
 	if (m_ui->networkButton->isChecked())
 	{
-		categories.append(NetworkCategory);
+		categories.append(NetworkMessageCategory);
 	}
 
 	if (m_ui->securityButton->isChecked())
 	{
-		categories.append(SecurityCategory);
+		categories.append(SecurityMessageCategory);
 	}
 
 	if (m_ui->javaScriptButton->isChecked())
 	{
-		categories.append(JavaScriptCategory);
+		categories.append(JavaScriptMessageCategory);
 	}
 
 	if (m_ui->otherButton->isChecked())
 	{
-		categories.append(OtherCategory);
+		categories.append(OtherMessageCategory);
 	}
 
 	for (int i = 0; i < m_model->rowCount(); ++i)

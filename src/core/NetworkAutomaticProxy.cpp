@@ -102,7 +102,7 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 			continue;
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC):\n%1").arg(proxies.at(i)), NetworkCategory, ErrorLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC):\n%1").arg(proxies.at(i)), NetworkMessageCategory, ErrorMessageLevel);
 
 		return m_proxies[QLatin1String("ERROR")];
 	}
@@ -116,7 +116,7 @@ QScriptValue NetworkAutomaticProxy::alert(QScriptContext *context, QScriptEngine
 {
 	Q_UNUSED(engine);
 
-	Console::addMessage(context->argument(0).toString(), NetworkCategory, WarningLevel);
+	Console::addMessage(context->argument(0).toString(), NetworkMessageCategory, WarningMessageLevel);
 
 	return engine->undefinedValue();
 }
