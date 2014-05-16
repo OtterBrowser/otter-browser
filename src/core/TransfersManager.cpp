@@ -416,6 +416,15 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 					break;
 				}
 			}
+			else if (!QFileInfo(path).isWritable())
+			{
+				path = QString();
+
+				if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+				{
+					break;
+				}
+			}
 			else
 			{
 				break;
