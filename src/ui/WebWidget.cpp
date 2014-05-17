@@ -307,6 +307,14 @@ void WebWidget::setQuickSearchEngine(const QString &engine)
 	}
 }
 
+void WebWidget::setSearchInPageQuery(const QString &query)
+{
+    if (query != m_searchInPageQuery)
+    {
+        m_searchInPageQuery = query;
+    }
+}
+
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
@@ -328,6 +336,11 @@ QMenu* WebWidget::getQuickSearchMenu()
 QString WebWidget::getQuickSearchEngine() const
 {
 	return (m_quickSearchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : m_quickSearchEngine);
+}
+
+QString WebWidget::getSearchInPageQuery() const
+{
+    return m_searchInPageQuery;
 }
 
 QString WebWidget::getSelectedText() const

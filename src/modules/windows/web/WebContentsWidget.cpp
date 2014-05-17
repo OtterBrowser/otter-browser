@@ -209,14 +209,22 @@ void WebContentsWidget::triggerAction(WindowAction action, bool checked)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			if (action != FindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+			switch(SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toInt())
 			{
-				m_ui->findLineEdit->setText(m_quickFindQuery);
-
-				if (action == FindAction)
-				{
-					updateFind();
-				}
+	                case 0:
+	                    	m_ui->findLineEdit->setText(m_quickFindQuery);
+	                    	break;
+	                case 1:
+	                    	m_ui->findLineEdit->setText(m_webWidget->getSearchInPageQuery());
+	                    	break;
+	                case 2:
+	                default:
+	                	break;
+			}
+			
+			if(action == FindAction)
+			{
+				updateFind();
 			}
 
 			m_ui->findWidget->setVisible(true);
@@ -327,6 +335,7 @@ void WebContentsWidget::updateFind(bool backwards)
 	if (m_ui->findWidget->isVisible() && !isPrivate())
 	{
 		m_quickFindQuery = m_ui->findLineEdit->text();
+		m_webWidget->setSearchInPageQuery(m_ui->findLineEdit->text());
 	}
 
 	updateFindHighlight();
