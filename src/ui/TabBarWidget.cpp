@@ -160,11 +160,15 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	QTabBar::mouseReleaseEvent(event);
 
-	if (event->button() == Qt::MidButton && SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
+	if (event->button() == Qt::MidButton)
 	{
 		const int tab = tabAt(event->pos());
 
-		if (tab >= 0)
+		if (tab < 0)
+		{
+			ActionsManager::triggerAction(QLatin1String("NewTab"));
+		}
+		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 		{
 			emit requestedClose(tab);
 		}
