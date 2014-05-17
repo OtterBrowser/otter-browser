@@ -139,6 +139,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
+	if (event->button() != Qt::LeftButton)
+	{
+		return;
+	}
+
 	const int tab = tabAt(event->pos());
 
 	if (tab < 0)
