@@ -42,6 +42,7 @@ public:
 	int getColumnCount() const;
 	bool canMoveUp() const;
 	bool canMoveDown() const;
+	bool isModified() const;
 
 public slots:
 	void insertRow(const QList<QStandardItem*> &items = QList<QStandardItem*>());
@@ -61,6 +62,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	int m_dropRow;
+	bool m_isModified;
 
 signals:
 	void canMoveUpChanged(bool available);

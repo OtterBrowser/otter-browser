@@ -27,7 +27,8 @@ namespace Otter
 
 TableViewWidget::TableViewWidget(QWidget *parent) : QTableView(parent),
 	m_model(NULL),
-	m_dropRow(-1)
+	m_dropRow(-1),
+	m_isModified(false)
 {
 	viewport()->setAcceptDrops(true);
 }
@@ -44,6 +45,8 @@ void TableViewWidget::dropEvent(QDropEvent *event)
 		{
 			++m_dropRow;
 		}
+
+		m_isModified = true;
 
 		emit modified();
 
@@ -67,6 +70,8 @@ void TableViewWidget::moveRow(bool up)
 
 		setCurrentIndex(getIndex(destinationRow, 0));
 		notifySelectionChanged();
+
+		m_isModified = true;
 
 		emit modified();
 	}
@@ -92,6 +97,8 @@ void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
 
 	setCurrentIndex(getIndex(row, 0));
 
+	m_isModified = true;
+
 	emit modified();
 }
 
@@ -107,6 +114,8 @@ void TableViewWidget::removeRow()
 	if (row >= 0)
 	{
 		m_model->removeRow(row);
+
+		m_isModified = true;
 
 		emit modified();
 	}
@@ -232,6 +241,11 @@ bool TableViewWidget::canMoveDown() const
 	const int currentRow = currentIndex().row();
 
 	return (currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
+}
+
+bool TableViewWidget::isModified() const
+{
+	return m_isModified;
 }
 
 }
