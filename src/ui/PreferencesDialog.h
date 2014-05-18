@@ -63,7 +63,7 @@ protected slots:
 	void manageUserAgents();
 	void proxyModeChanged(int index);
 	void browseAutomaticProxyPath();
-	void updateCiphers();
+	void updateCiphersActions();
 	void addKeyboardProfile();
 	void editKeyboardProfile();
 	void cloneKeyboardProfile();

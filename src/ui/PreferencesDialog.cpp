@@ -372,6 +372,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(browseAutomaticProxyPath()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
+	connect(m_ui->ciphersViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
 	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(removeRow()));
