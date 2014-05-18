@@ -405,7 +405,14 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			if (path.isEmpty())
 			{
 				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
+
+				if (path.isEmpty())
+				{
+					break;
+				}
 			}
+
+			const bool exists = QFile::exists(path);
 
 			if (isDownloading(QString(), path))
 			{
@@ -416,7 +423,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 					break;
 				}
 			}
-			else if (!QFileInfo(path).isWritable())
+			else if ((exists && !QFileInfo(path).isWritable()) || (!exists && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
 			{
 				path = QString();
 
