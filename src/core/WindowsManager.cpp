@@ -57,7 +57,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 	else if (url.isEmpty() || (hints & NewTabOpen))
 	{
-		openTab(url, privateWindow, (hints & BackgroundOpen));
+		openTab(url, privateWindow, hints);
 	}
 	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && ((window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty()) || url.scheme() == QLatin1String("javascript")))))
 	{
@@ -69,20 +69,20 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 		else
 		{
 			closeWindow(m_tabBar->currentIndex());
-			openTab(url, privateWindow, (hints & BackgroundOpen));
+			openTab(url, privateWindow, hints);
 		}
 	}
 	else
 	{
-		openTab(url, privateWindow, (hints & BackgroundOpen));
+		openTab(url, privateWindow, hints);
 	}
 }
 
-void WindowsManager::openTab(QUrl url, bool privateWindow, bool background)
+void WindowsManager::openTab(QUrl url, bool privateWindow, OpenHints hints)
 {
 	Window *window = new Window(privateWindow, NULL, m_mdi);
 
-	addWindow(window, background);
+	addWindow(window, hints);
 
 	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
 }
@@ -288,14 +288,14 @@ void WindowsManager::clearClosedWindows()
 	}
 }
 
-void WindowsManager::addWindow(Window *window, bool background)
+void WindowsManager::addWindow(Window *window, OpenHints hints)
 {
 	if (!window)
 	{
 		return;
 	}
 
-	int index = (SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool() ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
+	int index = ((!(hints & EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_tabBar->currentIndex() + 1) : m_tabBar->count());
 
 	if (!window->isPinned())
 	{
@@ -311,7 +311,7 @@ void WindowsManager::addWindow(Window *window, bool background)
 
 	m_mdi->addWindow(window);
 
-	if (!background)
+	if (!(hints & BackgroundOpen))
 	{
 		m_tabBar->setCurrentIndex(index);
 
@@ -350,7 +350,7 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 	}
 	else
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_mdi), (hints & BackgroundOpen));
+		addWindow(new Window(widget->isPrivate(), widget, m_mdi), hints);
 	}
 }
 

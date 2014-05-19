@@ -1626,7 +1626,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (result.linkUrl().isValid())
 				{
-					openUrl(result.linkUrl(), NewTabBackgroundOpen);
+					openUrl(result.linkUrl(), ((mouseEvent->modifiers() & Qt::AltModifier) ? NewTabBackgroundEndOpen : NewTabBackgroundOpen));
 
 					event->accept();
 
