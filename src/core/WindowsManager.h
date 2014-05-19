@@ -108,7 +108,9 @@ enum OpenHint
 	NewTabOpen = 4,
 	NewWindowOpen = 8,
 	BackgroundOpen = 16,
+	EndOpen = 32,
 	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
+	NewTabBackgroundEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
 	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
 };
 
@@ -159,12 +161,12 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
-	void openTab(QUrl url, bool privateWindow = false, bool background = false);
+	void openTab(QUrl url, bool privateWindow = false, OpenHints hints = DefaultOpen);
 	int getWindowIndex(Window *window) const;
 
 protected slots:
 	void printPreview(QPrinter *printer);
-	void addWindow(Window *window, bool background = false);
+	void addWindow(Window *window, OpenHints hints = DefaultOpen);
 	void openWindow(ContentsWidget *widget, OpenHints hints = false);
 	void cloneWindow(int index);
 	void detachWindow(int index);
