@@ -253,7 +253,7 @@ void Window::setUserAgent(const QString &identifier)
 	}
 	else
 	{
-		value = NetworkAccessManager::getUserAgent(identifier).value;
+		value = NetworkManager::getUserAgent(identifier).value;
 	}
 
 	webWidget->setUserAgent(identifier, value);
@@ -401,7 +401,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 				}
 				else
 				{
-					webWidget->setUserAgent(m_session.userAgent, NetworkAccessManager::getUserAgent(m_session.userAgent).value);
+					webWidget->setUserAgent(m_session.userAgent, NetworkManager::getUserAgent(m_session.userAgent).value);
 				}
 			}
 		}

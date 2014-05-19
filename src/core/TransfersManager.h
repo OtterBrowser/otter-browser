@@ -20,7 +20,7 @@
 #ifndef OTTER_TRANSFERSMANAGER_H
 #define OTTER_TRANSFERSMANAGER_H
 
-#include "NetworkAccessManager.h"
+#include "NetworkManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QFile>
@@ -93,7 +93,7 @@ private:
 	int m_updateTimer;
 
 	static TransfersManager *m_instance;
-	static NetworkAccessManager *m_networkAccessManager;
+	static NetworkManager *m_networkManager;
 	static QHash<QNetworkReply*, TransferInformation*> m_replies;
 	static QList<TransferInformation*> m_transfers;
 

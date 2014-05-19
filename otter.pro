@@ -28,7 +28,7 @@ SOURCES += src/main.cpp \
     src/core/HistoryManager.cpp \
     src/core/Importer.cpp \
     src/core/LocalListingNetworkReply.cpp \
-    src/core/NetworkAccessManager.cpp \
+    src/core/NetworkManager.cpp \
     src/core/NetworkAutomaticProxy.cpp \
     src/core/NetworkCache.cpp \
     src/core/NetworkProxyFactory.cpp \
@@ -98,9 +98,9 @@ HEADERS += src/core/ActionsManager.h \
     src/core/HistoryManager.h \
     src/core/Importer.h \
     src/core/LocalListingNetworkReply.h \
-    src/core/NetworkAccessManager.h \
     src/core/NetworkAutomaticProxy.h \
     src/core/NetworkCache.h \
+    src/core/NetworkManager.h \
     src/core/NetworkProxyFactory.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \

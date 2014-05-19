@@ -34,7 +34,7 @@ struct SearchSuggestion
 	QString url;
 };
 
-class NetworkAccessManager;
+class NetworkManager;
 
 class SearchSuggester : public QObject
 {
@@ -53,7 +53,7 @@ protected slots:
 	void replyFinished(QNetworkReply *reply);
 
 private:
-	NetworkAccessManager *m_networkAccessManager;
+	NetworkManager *m_networkManager;
 	QNetworkReply *m_currentReply;
 	QStandardItemModel *m_model;
 	QString m_engine;

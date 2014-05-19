@@ -22,7 +22,7 @@
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/HistoryManager.h"
-#include "../../../../core/NetworkAccessManager.h"
+#include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
@@ -58,7 +58,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	m_page(new QtWebKitWebPage(this)),
 	m_inspector(NULL),
 	m_inspectorCloseButton(NULL),
-	m_networkAccessManager(NULL),
+	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
 	m_isLoading(false),
@@ -76,10 +76,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
 
-	m_networkAccessManager = new NetworkAccessManager(privateWindow, false, parent);
-	m_networkAccessManager->setParent(m_page);
+	m_networkManager = new NetworkManager(privateWindow, false, parent);
+	m_networkManager->setParent(m_page);
 
-	m_page->setNetworkAccessManager(m_networkAccessManager);
+	m_page->setNetworkAccessManager(m_networkManager);
 	m_page->setForwardUnsupportedContent(true);
 
 	m_webView->setPage(m_page);
@@ -141,8 +141,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_networkAccessManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
-	connect(m_networkAccessManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
+	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
+	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 }
 
@@ -252,7 +252,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	m_thumbnail = QPixmap();
 
-	m_networkAccessManager->resetStatistics();
+	m_networkManager->resetStatistics();
 
 	QAction *action = getAction(ReloadOrStopAction);
 
@@ -450,7 +450,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			{
 				const QUrl url(m_hitResult.imageUrl());
 				const QString src = m_hitResult.element().attribute(QLatin1String("src"));
-				NetworkCache *cache = m_networkAccessManager->getCache();
+				NetworkCache *cache = m_networkManager->getCache();
 
 				m_hitResult.element().setAttribute(QLatin1String("src"), QString());
 
@@ -534,7 +534,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 		case ImagePropertiesAction:
 			{
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkAccessManager->cache() ? m_networkAccessManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
+				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkManager->cache() ? m_networkManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)

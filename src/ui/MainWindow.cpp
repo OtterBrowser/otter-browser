@@ -303,7 +303,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 			if (clearSettings.contains(QLatin1String("cookies")))
 			{
-				NetworkAccessManager::clearCookies();
+				NetworkManager::clearCookies();
 			}
 
 			if (clearSettings.contains(QLatin1String("downloads")))
@@ -313,7 +313,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 			if (clearSettings.contains(QLatin1String("cache")))
 			{
-				NetworkAccessManager::clearCache();
+				NetworkManager::clearCache();
 			}
 		}
 	}
@@ -672,7 +672,7 @@ void MainWindow::menuUserAgentAboutToShow()
 		m_ui->menuUserAgent->clear();
 	}
 
-	const QStringList userAgents = NetworkAccessManager::getUserAgents();
+	const QStringList userAgents = NetworkManager::getUserAgents();
 	const QString userAgent = m_windowsManager->getUserAgent().first.toLower();
 
 	m_userAgentGroup = new QActionGroup(this);
@@ -689,7 +689,7 @@ void MainWindow::menuUserAgentAboutToShow()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title = NetworkAccessManager::getUserAgent(userAgents.at(i)).title;
+		const QString title = NetworkManager::getUserAgent(userAgents.at(i)).title;
 		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);

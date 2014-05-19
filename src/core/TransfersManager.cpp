@@ -33,7 +33,7 @@ namespace Otter
 {
 
 TransfersManager* TransfersManager::m_instance = NULL;
-NetworkAccessManager* TransfersManager::m_networkAccessManager = NULL;
+NetworkManager* TransfersManager::m_networkManager = NULL;
 QHash<QNetworkReply*, TransferInformation*> TransfersManager::m_replies;
 QList<TransferInformation*> TransfersManager::m_transfers;
 
@@ -278,13 +278,13 @@ TransferInformation* TransfersManager::startTransfer(const QString &source, cons
 
 TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer, bool quickTransfer)
 {
-	if (!m_networkAccessManager)
+	if (!m_networkManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
-		m_networkAccessManager->setParent(m_instance);
+		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager->setParent(m_instance);
 	}
 
-	return startTransfer(m_networkAccessManager->get(request), target, privateTransfer, quickTransfer);
+	return startTransfer(m_networkManager->get(request), target, privateTransfer, quickTransfer);
 }
 
 TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer, bool quickTransfer)
@@ -583,13 +583,13 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 	request.setUrl(QUrl(transfer->source));
 	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 
-	if (!m_networkAccessManager)
+	if (!m_networkManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
-		m_networkAccessManager->setParent(m_instance);
+		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager->setParent(m_instance);
 	}
 
-	QNetworkReply *reply = m_networkAccessManager->get(request);
+	QNetworkReply *reply = m_networkManager->get(request);
 
 	m_replies[reply] = transfer;
 
@@ -629,13 +629,13 @@ bool TransfersManager::restartTransfer(TransferInformation *transfer)
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(transfer->source));
 
-	if (!m_networkAccessManager)
+	if (!m_networkManager)
 	{
-		m_networkAccessManager = new NetworkAccessManager(true, true, NULL);
-		m_networkAccessManager->setParent(m_instance);
+		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager->setParent(m_instance);
 	}
 
-	QNetworkReply *reply = m_networkAccessManager->get(request);
+	QNetworkReply *reply = m_networkManager->get(request);
 
 	m_replies[reply] = transfer;
 

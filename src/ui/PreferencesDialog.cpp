@@ -27,7 +27,7 @@
 #include "preferences/SearchShortcutDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/ActionsManager.h"
-#include "../core/NetworkAccessManager.h"
+#include "../core/NetworkManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SessionsManager.h"
@@ -235,13 +235,13 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
-	const QStringList userAgents = NetworkAccessManager::getUserAgents();
+	const QStringList userAgents = NetworkManager::getUserAgents();
 
 	m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const UserAgentInformation userAgent = NetworkAccessManager::getUserAgent(userAgents.at(i));
+		const UserAgentInformation userAgent = NetworkManager::getUserAgent(userAgents.at(i));
 		const QString title = userAgent.title;
 
 		m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i));
@@ -1249,7 +1249,7 @@ void PreferencesDialog::save()
 
 		userAgents.sync();
 
-		NetworkAccessManager::loadUserAgents();
+		NetworkManager::loadUserAgents();
 	}
 
 	if (m_ui->ciphersViewWidget->isModified())

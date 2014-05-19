@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "SearchSuggester.h"
-#include "NetworkAccessManager.h"
+#include "NetworkManager.h"
 #include "SearchesManager.h"
 
 #include <QtCore/QJsonArray>
@@ -30,12 +30,12 @@ namespace Otter
 {
 
 SearchSuggester::SearchSuggester(const QString &engine, QObject *parent) : QObject(parent),
-	m_networkAccessManager(new NetworkAccessManager(true, true, NULL)),
+	m_networkManager(new NetworkManager(true, true, NULL)),
 	m_currentReply(NULL),
 	m_model(NULL),
 	m_engine(engine)
 {
-	connect(m_networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 void SearchSuggester::setEngine(const QString &engine)
@@ -78,11 +78,11 @@ void SearchSuggester::setQuery(const QString &query)
 
 		if (method == QNetworkAccessManager::PostOperation)
 		{
-			m_currentReply = m_networkAccessManager->post(request, body);
+			m_currentReply = m_networkManager->post(request, body);
 		}
 		else
 		{
-			m_currentReply = m_networkAccessManager->get(request);
+			m_currentReply = m_networkManager->get(request);
 		}
 	}
 }

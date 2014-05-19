@@ -19,7 +19,7 @@
 
 #include "CacheContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/NetworkAccessManager.h"
+#include "../../../core/NetworkManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
@@ -99,7 +99,7 @@ void CacheContentsWidget::triggerAction()
 
 void CacheContentsWidget::populateCache()
 {
-	NetworkCache *cache = NetworkAccessManager::getCache();
+	NetworkCache *cache = NetworkManager::getCache();
 	QStringList labels;
 	labels << tr("Address") << tr("Type") << tr("Size") << tr("Last Modified") << tr("Expires");
 
@@ -206,7 +206,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		}
 	}
 
-	NetworkCache *cache = NetworkAccessManager::getCache();
+	NetworkCache *cache = NetworkManager::getCache();
 	QIODevice *device = cache->data(entry);
 	const QNetworkCacheMetaData metaData = cache->metaData(entry);
 	const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();
@@ -298,7 +298,7 @@ void CacheContentsWidget::removeEntry()
 
 	if (entry.isValid())
 	{
-		NetworkAccessManager::getCache()->remove(entry);
+		NetworkManager::getCache()->remove(entry);
 	}
 }
 
@@ -312,7 +312,7 @@ void CacheContentsWidget::removeDomainEntries()
 		return;
 	}
 
-	NetworkCache *cache = NetworkAccessManager::getCache();
+	NetworkCache *cache = NetworkManager::getCache();
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
@@ -331,7 +331,7 @@ void CacheContentsWidget::removeDomainEntriesOrEntry()
 
 	if (entry.isValid())
 	{
-		NetworkAccessManager::getCache()->remove(entry);
+		NetworkManager::getCache()->remove(entry);
 	}
 	else
 	{
@@ -411,7 +411,7 @@ void CacheContentsWidget::updateActions()
 
 	if (entry.isValid())
 	{
-		NetworkCache *cache = NetworkAccessManager::getCache();
+		NetworkCache *cache = NetworkManager::getCache();
 		QIODevice *device = cache->data(entry);
 		const QNetworkCacheMetaData metaData = cache->metaData(entry);
 		const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();

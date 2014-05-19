@@ -33,7 +33,7 @@ namespace Otter
 {
 
 class ContentsDialog;
-class NetworkAccessManager;
+class NetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitWebPage;
 
@@ -105,7 +105,7 @@ private:
 	QtWebKitWebPage *m_page;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
-	NetworkAccessManager *m_networkAccessManager;
+	NetworkManager *m_networkManager;
 	QSplitter *m_splitter;
 	QPixmap m_thumbnail;
 	QPoint m_hotclickPosition;

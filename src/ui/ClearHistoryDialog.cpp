@@ -19,7 +19,7 @@
 
 #include "ClearHistoryDialog.h"
 #include "../core/HistoryManager.h"
-#include "../core/NetworkAccessManager.h"
+#include "../core/NetworkManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 
@@ -94,7 +94,7 @@ void ClearHistoryDialog::clearHistory()
 
 	if (m_ui->clearCookiesCheckBox->isChecked())
 	{
-		NetworkAccessManager::clearCookies(m_ui->periodSpinBox->value());
+		NetworkManager::clearCookies(m_ui->periodSpinBox->value());
 	}
 
 	if (m_ui->clearDownloadsHistoryCheckBox->isChecked())
@@ -104,7 +104,7 @@ void ClearHistoryDialog::clearHistory()
 
 	if (m_ui->clearCachesCheckBox->isChecked())
 	{
-		NetworkAccessManager::clearCache(m_ui->periodSpinBox->value());
+		NetworkManager::clearCache(m_ui->periodSpinBox->value());
 	}
 }
 
