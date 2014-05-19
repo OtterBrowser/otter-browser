@@ -48,20 +48,24 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
-	const bool privateWindow = (m_isPrivate || (hints & PrivateOpen));
 	Window *window = m_mdi->getActiveWindow();
+
+	if (m_isPrivate)
+	{
+		hints |= PrivateOpen;
+	}
 
 	if (hints & NewWindowOpen)
 	{
-		emit requestedNewWindow(privateWindow, (hints & BackgroundOpen), url);
+		emit requestedNewWindow((hints & PrivateOpen), (hints & BackgroundOpen), url);
 	}
 	else if (url.isEmpty() || (hints & NewTabOpen))
 	{
-		openTab(url, privateWindow, hints);
+		openTab(url, hints);
 	}
 	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && ((window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty()) || url.scheme() == QLatin1String("javascript")))))
 	{
-		if (window->isPrivate() == privateWindow)
+		if (window->isPrivate() == (hints & PrivateOpen))
 		{
 			window->getContentsWidget()->setHistory(WindowHistoryInformation());
 			window->setUrl(url, false);
@@ -69,18 +73,18 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 		else
 		{
 			closeWindow(m_tabBar->currentIndex());
-			openTab(url, privateWindow, hints);
+			openTab(url, hints);
 		}
 	}
 	else
 	{
-		openTab(url, privateWindow, hints);
+		openTab(url, hints);
 	}
 }
 
-void WindowsManager::openTab(QUrl url, bool privateWindow, OpenHints hints)
+void WindowsManager::openTab(QUrl url, OpenHints hints)
 {
-	Window *window = new Window(privateWindow, NULL, m_mdi);
+	Window *window = new Window((hints & PrivateOpen), NULL, m_mdi);
 
 	addWindow(window, hints);
 
