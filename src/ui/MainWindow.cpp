@@ -1052,12 +1052,16 @@ bool MainWindow::event(QEvent *event)
 			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-restore")));
 			m_ui->menuBar->hide();
 			m_ui->statusBar->hide();
+
+			centralWidget()->installEventFilter(this);
 		}
 		else
 		{
 			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
 			m_ui->menuBar->show();
 			m_ui->statusBar->show();
+
+			centralWidget()->removeEventFilter(this);
 		}
 
 		return result;
@@ -1097,6 +1101,16 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+
+	if (event->type() == QEvent::KeyPress && isFullScreen())
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			actionFullScreen();
 		}
 	}
 
