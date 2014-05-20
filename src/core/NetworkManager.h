@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_NETWORKACCESSMANAGER_H
-#define OTTER_NETWORKACCESSMANAGER_H
+#ifndef OTTER_NETWORKMANAGER_H
+#define OTTER_NETWORKMANAGER_H
 
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkDiskCache>
@@ -37,13 +37,13 @@ class ContentsWidget;
 class CookieJar;
 class NetworkCache;
 
-class NetworkAccessManager : public QNetworkAccessManager
+class NetworkManager : public QNetworkAccessManager
 {
 	Q_OBJECT
 	Q_ENUMS(DoNotTrackPolicy)
 
 public:
-	explicit NetworkAccessManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
+	explicit NetworkManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
 
 	enum DoNotTrackPolicy
 	{
