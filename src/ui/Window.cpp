@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Window.h"
+#include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/WebBackend.h"
 #include "../core/WebBackendsManager.h"
@@ -253,7 +254,7 @@ void Window::setUserAgent(const QString &identifier)
 	}
 	else
 	{
-		value = NetworkManager::getUserAgent(identifier).value;
+		value = NetworkManagerFactory::getUserAgent(identifier).value;
 	}
 
 	webWidget->setUserAgent(identifier, value);
@@ -401,7 +402,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 				}
 				else
 				{
-					webWidget->setUserAgent(m_session.userAgent, NetworkManager::getUserAgent(m_session.userAgent).value);
+					webWidget->setUserAgent(m_session.userAgent, NetworkManagerFactory::getUserAgent(m_session.userAgent).value);
 				}
 			}
 		}

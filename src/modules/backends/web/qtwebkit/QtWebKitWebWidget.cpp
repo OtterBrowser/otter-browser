@@ -22,7 +22,7 @@
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/HistoryManager.h"
-#include "../../../../core/NetworkManager.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
@@ -450,7 +450,7 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			{
 				const QUrl url(m_hitResult.imageUrl());
 				const QString src = m_hitResult.element().attribute(QLatin1String("src"));
-				NetworkCache *cache = m_networkManager->getCache();
+				NetworkCache *cache = NetworkManagerFactory::getCache();
 
 				m_hitResult.element().setAttribute(QLatin1String("src"), QString());
 

@@ -20,7 +20,7 @@
 #include "CookiesContentsWidget.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/CookieJar.h"
-#include "../../../core/NetworkManager.h"
+#include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
@@ -69,7 +69,7 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 
 void CookiesContentsWidget::populateCookies()
 {
-	CookieJar *cookieJar = qobject_cast<CookieJar*>(NetworkManager::getCookieJar());
+	CookieJar *cookieJar = qobject_cast<CookieJar*>(NetworkManagerFactory::getCookieJar());
 
 	const QList<QNetworkCookie> cookies = cookieJar->getCookies();
 
@@ -168,7 +168,7 @@ void CookiesContentsWidget::removeCookies()
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar = NetworkManager::getCookieJar();
+	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -224,7 +224,7 @@ void CookiesContentsWidget::removeDomainCookies()
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar = NetworkManager::getCookieJar();
+	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < domainItem->rowCount(); ++i)
@@ -325,7 +325,7 @@ void CookiesContentsWidget::updateActions()
 		url.setHost(index.parent().data(Qt::DisplayRole).toString());
 		url.setPath(index.data(Qt::UserRole).toString());
 
-		const QList<QNetworkCookie> cookies = NetworkManager::getCookieJar()->cookiesForUrl(url);
+		const QList<QNetworkCookie> cookies = NetworkManagerFactory::getCookieJar()->cookiesForUrl(url);
 
 		for (int i = 0; i < cookies.count(); ++i)
 		{

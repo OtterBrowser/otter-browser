@@ -54,9 +54,10 @@ set(otter_src
 	src/core/HistoryManager.cpp
 	src/core/Importer.cpp
 	src/core/LocalListingNetworkReply.cpp
-	src/core/NetworkManager.cpp
 	src/core/NetworkAutomaticProxy.cpp
 	src/core/NetworkCache.cpp
+	src/core/NetworkManager.cpp
+	src/core/NetworkManagerFactory.cpp
 	src/core/NetworkProxyFactory.cpp
 	src/core/SearchesManager.cpp
 	src/core/SearchSuggester.cpp

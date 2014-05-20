@@ -21,6 +21,7 @@
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "NetworkCache.h"
+#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
@@ -30,19 +31,11 @@
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
-#include <QtCore/QSettings>
 #include <QtWidgets/QMessageBox>
 #include <QtNetwork/QNetworkProxy>
 
 namespace Otter
 {
-
-CookieJar* NetworkManager::m_cookieJar = NULL;
-QNetworkCookieJar* NetworkManager::m_privateCookieJar = NULL;
-NetworkCache* NetworkManager::m_cache = NULL;
-QStringList NetworkManager::m_userAgentsOrder;
-QHash<QString, UserAgentInformation> NetworkManager::m_userAgents;
-bool NetworkManager::m_userAgentsInitialized = false;
 
 NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
@@ -58,7 +51,7 @@ NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidg
 	m_simpleMode(simpleMode),
 	m_disableReferrer(false)
 {
-	QNetworkCookieJar *cookieJar = getCookieJar(privateWindow);
+	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar(privateWindow);
 
 	setCookieJar(cookieJar);
 
@@ -66,7 +59,7 @@ NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidg
 
 	if (!privateWindow)
 	{
-		QNetworkDiskCache *cache = getCache();
+		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
 
 		setCache(cache);
 
@@ -129,42 +122,6 @@ void NetworkManager::resetStatistics()
 	m_bytesTotal = 0;
 	m_finishedRequests = 0;
 	m_startedRequests = 0;
-}
-
-void NetworkManager::clearCookies(int period)
-{
-	if (!m_cookieJar)
-	{
-		m_cookieJar = new CookieJar(QCoreApplication::instance());
-	}
-
-	m_cookieJar->clearCookies(period);
-}
-
-void NetworkManager::clearCache(int period)
-{
-	getCache()->clearCache(period);
-}
-
-void NetworkManager::loadUserAgents()
-{
-	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"));
-	const QSettings settings((QFile::exists(path) ? path : QLatin1String(":/other/userAgents.ini")), QSettings::IniFormat);
-	const QStringList userAgentsOrder = settings.childGroups();
-	QHash<QString, UserAgentInformation> userAgents;
-
-	for (int i = 0; i < userAgentsOrder.count(); ++i)
-	{
-		UserAgentInformation userAgent;
-		userAgent.identifier = userAgentsOrder.at(i);
-		userAgent.title = settings.value(QString("%1/title").arg(userAgentsOrder.at(i))).toString();
-		userAgent.value = settings.value(QString("%1/value").arg(userAgentsOrder.at(i))).toString();
-
-		userAgents[userAgentsOrder.at(i)] = userAgent;
-	}
-
-	m_userAgentsOrder = userAgentsOrder;
-	m_userAgents = userAgents;
 }
 
 void NetworkManager::updateStatus()
@@ -411,67 +368,9 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 	return reply;
 }
 
-QNetworkCookieJar* NetworkManager::getCookieJar(bool privateCookieJar)
-{
-	if (!m_cookieJar && !privateCookieJar)
-	{
-		m_cookieJar = new CookieJar(QCoreApplication::instance());
-	}
-
-	if (!m_privateCookieJar && privateCookieJar)
-	{
-		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
-	}
-
-	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
-}
-
-NetworkCache* NetworkManager::getCache()
-{
-	if (!m_cache)
-	{
-		m_cache = new NetworkCache(QCoreApplication::instance());
-	}
-
-	return m_cache;
-}
-
-UserAgentInformation NetworkManager::getUserAgent(const QString &identifier)
-{
-	if (!m_userAgentsInitialized)
-	{
-		m_userAgentsInitialized = true;
-
-		loadUserAgents();
-	}
-
-	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
-	{
-		UserAgentInformation userAgent;
-		userAgent.identifier = QLatin1String("default");
-		userAgent.title = tr("Default");
-
-		return userAgent;
-	}
-
-	return m_userAgents[identifier];
-}
-
 QPair<QString, QString> NetworkManager::getUserAgent() const
 {
 	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
-}
-
-QStringList NetworkManager::getUserAgents()
-{
-	if (!m_userAgentsInitialized)
-	{
-		m_userAgentsInitialized = true;
-
-		loadUserAgents();
-	}
-
-	return m_userAgentsOrder;
 }
 
 }

@@ -19,8 +19,8 @@
 
 #include "CacheContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/NetworkManager.h"
 #include "../../../core/NetworkCache.h"
+#include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
@@ -28,6 +28,7 @@
 
 #include "ui_CacheContentsWidget.h"
 
+#include <QtCore/QDateTime>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
@@ -99,7 +100,7 @@ void CacheContentsWidget::triggerAction()
 
 void CacheContentsWidget::populateCache()
 {
-	NetworkCache *cache = NetworkManager::getCache();
+	NetworkCache *cache = NetworkManagerFactory::getCache();
 	QStringList labels;
 	labels << tr("Address") << tr("Type") << tr("Size") << tr("Last Modified") << tr("Expires");
 
@@ -206,7 +207,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		}
 	}
 
-	NetworkCache *cache = NetworkManager::getCache();
+	NetworkCache *cache = NetworkManagerFactory::getCache();
 	QIODevice *device = cache->data(entry);
 	const QNetworkCacheMetaData metaData = cache->metaData(entry);
 	const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();
@@ -298,7 +299,7 @@ void CacheContentsWidget::removeEntry()
 
 	if (entry.isValid())
 	{
-		NetworkManager::getCache()->remove(entry);
+		NetworkManagerFactory::getCache()->remove(entry);
 	}
 }
 
@@ -312,7 +313,7 @@ void CacheContentsWidget::removeDomainEntries()
 		return;
 	}
 
-	NetworkCache *cache = NetworkManager::getCache();
+	NetworkCache *cache = NetworkManagerFactory::getCache();
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
@@ -331,7 +332,7 @@ void CacheContentsWidget::removeDomainEntriesOrEntry()
 
 	if (entry.isValid())
 	{
-		NetworkManager::getCache()->remove(entry);
+		NetworkManagerFactory::getCache()->remove(entry);
 	}
 	else
 	{
@@ -411,7 +412,7 @@ void CacheContentsWidget::updateActions()
 
 	if (entry.isValid())
 	{
-		NetworkCache *cache = NetworkManager::getCache();
+		NetworkCache *cache = NetworkManagerFactory::getCache();
 		QIODevice *device = cache->data(entry);
 		const QNetworkCacheMetaData metaData = cache->metaData(entry);
 		const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();

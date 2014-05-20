@@ -22,7 +22,7 @@
 #include "BookmarksManager.h"
 #include "Console.h"
 #include "HistoryManager.h"
-#include "NetworkProxyFactory.h"
+#include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
@@ -160,6 +160,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	ActionsManager::createInstance(this);
 
+	NetworkManagerFactory::createInstance(this);
+
 	BookmarksManager::createInstance(this);
 
 	HistoryManager::createInstance(this);
@@ -169,8 +171,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SearchesManager::createInstance(this);
 
 	TransfersManager::createInstance(this);
-
-	QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
 	QTranslator qtTranslator;
 	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

@@ -20,7 +20,7 @@
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
-#include "../../../../core/NetworkManager.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -61,7 +61,7 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	{
 		if (m_isGlobalUserAgent)
 		{
-			setUserAgent(value.toString(), NetworkManager::getUserAgent(value.toString()).value, false);
+			setUserAgent(value.toString(), NetworkManagerFactory::getUserAgent(value.toString()).value, false);
 		}
 	}
 	else if (option == QLatin1String("Content/ZoomTextOnly"))

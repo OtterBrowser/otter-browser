@@ -28,6 +28,7 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HistoryManager.h"
+#include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -303,7 +304,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 			if (clearSettings.contains(QLatin1String("cookies")))
 			{
-				NetworkManager::clearCookies();
+				NetworkManagerFactory::clearCookies();
 			}
 
 			if (clearSettings.contains(QLatin1String("downloads")))
@@ -313,7 +314,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 			if (clearSettings.contains(QLatin1String("cache")))
 			{
-				NetworkManager::clearCache();
+				NetworkManagerFactory::clearCache();
 			}
 		}
 	}
@@ -672,7 +673,7 @@ void MainWindow::menuUserAgentAboutToShow()
 		m_ui->menuUserAgent->clear();
 	}
 
-	const QStringList userAgents = NetworkManager::getUserAgents();
+	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
 	const QString userAgent = m_windowsManager->getUserAgent().first.toLower();
 
 	m_userAgentGroup = new QActionGroup(this);
@@ -689,7 +690,7 @@ void MainWindow::menuUserAgentAboutToShow()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title = NetworkManager::getUserAgent(userAgents.at(i)).title;
+		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
 		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);

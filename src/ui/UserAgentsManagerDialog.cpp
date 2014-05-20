@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "UserAgentsManagerDialog.h"
-#include "../core/NetworkManager.h"
+#include "../core/NetworkManagerFactory.h"
 #include "../core/Utils.h"
 
 #include "ui_UserAgentsManagerDialog.h"

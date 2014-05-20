@@ -21,21 +21,11 @@
 #define OTTER_NETWORKMANAGER_H
 
 #include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkDiskCache>
 
 namespace Otter
 {
 
-struct UserAgentInformation
-{
-	QString identifier;
-	QString title;
-	QString value;
-};
-
 class ContentsWidget;
-class CookieJar;
-class NetworkCache;
 
 class NetworkManager : public QNetworkAccessManager
 {
@@ -55,14 +45,6 @@ public:
 	void resetStatistics();
 	void setUserAgent(const QString &identifier, const QString &value);
 	QPair<QString, QString> getUserAgent() const;
-
-	static void clearCookies(int period = 0);
-	static void clearCache(int period = 0);
-	static void loadUserAgents();
-	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
-	static NetworkCache* getCache();
-	static UserAgentInformation getUserAgent(const QString &identifier);
-	static QStringList getUserAgents();
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -93,13 +75,6 @@ private:
 	int m_updateTimer;
 	bool m_simpleMode;
 	bool m_disableReferrer;
-
-	static CookieJar *m_cookieJar;
-	static QNetworkCookieJar *m_privateCookieJar;
-	static NetworkCache *m_cache;
-	static QStringList m_userAgentsOrder;
-	static QHash<QString, UserAgentInformation> m_userAgents;
-	static bool m_userAgentsInitialized;
 
 signals:
 	void messageChanged(const QString &message = QString());
