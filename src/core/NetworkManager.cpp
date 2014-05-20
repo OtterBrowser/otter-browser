@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "NetworkAccessManager.h"
+#include "NetworkManager.h"
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "NetworkCache.h"
@@ -37,14 +37,14 @@
 namespace Otter
 {
 
-CookieJar* NetworkAccessManager::m_cookieJar = NULL;
-QNetworkCookieJar* NetworkAccessManager::m_privateCookieJar = NULL;
-NetworkCache* NetworkAccessManager::m_cache = NULL;
-QStringList NetworkAccessManager::m_userAgentsOrder;
-QHash<QString, UserAgentInformation> NetworkAccessManager::m_userAgents;
-bool NetworkAccessManager::m_userAgentsInitialized = false;
+CookieJar* NetworkManager::m_cookieJar = NULL;
+QNetworkCookieJar* NetworkManager::m_privateCookieJar = NULL;
+NetworkCache* NetworkManager::m_cache = NULL;
+QStringList NetworkManager::m_userAgentsOrder;
+QHash<QString, UserAgentInformation> NetworkManager::m_userAgents;
+bool NetworkManager::m_userAgentsInitialized = false;
 
-NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
+NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
 	m_mainReply(NULL),
 	m_speed(0),
@@ -83,14 +83,14 @@ NetworkAccessManager::NetworkAccessManager(bool privateWindow, bool simpleMode, 
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
-void NetworkAccessManager::timerEvent(QTimerEvent *event)
+void NetworkManager::timerEvent(QTimerEvent *event)
 {
 	Q_UNUSED(event)
 
 	updateStatus();
 }
 
-void NetworkAccessManager::optionChanged(const QString &option, const QVariant &value)
+void NetworkManager::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Network/DoNotTrackPolicy"))
 	{
@@ -115,7 +115,7 @@ void NetworkAccessManager::optionChanged(const QString &option, const QVariant &
 	}
 }
 
-void NetworkAccessManager::resetStatistics()
+void NetworkManager::resetStatistics()
 {
 	killTimer(m_updateTimer);
 	updateStatus();
@@ -131,7 +131,7 @@ void NetworkAccessManager::resetStatistics()
 	m_startedRequests = 0;
 }
 
-void NetworkAccessManager::clearCookies(int period)
+void NetworkManager::clearCookies(int period)
 {
 	if (!m_cookieJar)
 	{
@@ -141,12 +141,12 @@ void NetworkAccessManager::clearCookies(int period)
 	m_cookieJar->clearCookies(period);
 }
 
-void NetworkAccessManager::clearCache(int period)
+void NetworkManager::clearCache(int period)
 {
 	getCache()->clearCache(period);
 }
 
-void NetworkAccessManager::loadUserAgents()
+void NetworkManager::loadUserAgents()
 {
 	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"));
 	const QSettings settings((QFile::exists(path) ? path : QLatin1String(":/other/userAgents.ini")), QSettings::IniFormat);
@@ -167,7 +167,7 @@ void NetworkAccessManager::loadUserAgents()
 	m_userAgents = userAgents;
 }
 
-void NetworkAccessManager::updateStatus()
+void NetworkManager::updateStatus()
 {
 	m_speed = (m_bytesReceivedDifference * 2);
 	m_bytesReceivedDifference = 0;
@@ -175,7 +175,7 @@ void NetworkAccessManager::updateStatus()
 	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
 }
 
-void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
 
@@ -223,7 +223,7 @@ void NetworkAccessManager::downloadProgress(qint64 bytesReceived, qint64 bytesTo
 	m_bytesReceivedDifference += difference;
 }
 
-void NetworkAccessManager::requestFinished(QNetworkReply *reply)
+void NetworkManager::requestFinished(QNetworkReply *reply)
 {
 	if (!m_simpleMode)
 	{
@@ -247,7 +247,7 @@ void NetworkAccessManager::requestFinished(QNetworkReply *reply)
 	}
 }
 
-void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
+void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
 	if (m_widget)
 	{
@@ -276,7 +276,7 @@ void NetworkAccessManager::handleAuthenticationRequired(QNetworkReply *reply, QA
 	}
 }
 
-void NetworkAccessManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
+void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
 {
 	if (m_widget)
 	{
@@ -305,7 +305,7 @@ void NetworkAccessManager::handleProxyAuthenticationRequired(const QNetworkProxy
 	}
 }
 
-void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
+void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
 	QStringList messages;
 
@@ -349,13 +349,13 @@ void NetworkAccessManager::handleSslErrors(QNetworkReply *reply, const QList<QSs
 	}
 }
 
-void NetworkAccessManager::setUserAgent(const QString &identifier, const QString &value)
+void NetworkManager::setUserAgent(const QString &identifier, const QString &value)
 {
 	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
 	m_userAgentValue = value;
 }
 
-QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
+QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
 	if (!m_simpleMode)
 	{
@@ -411,7 +411,7 @@ QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
 	return reply;
 }
 
-QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
+QNetworkCookieJar* NetworkManager::getCookieJar(bool privateCookieJar)
 {
 	if (!m_cookieJar && !privateCookieJar)
 	{
@@ -426,7 +426,7 @@ QNetworkCookieJar* NetworkAccessManager::getCookieJar(bool privateCookieJar)
 	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
 }
 
-NetworkCache* NetworkAccessManager::getCache()
+NetworkCache* NetworkManager::getCache()
 {
 	if (!m_cache)
 	{
@@ -436,7 +436,7 @@ NetworkCache* NetworkAccessManager::getCache()
 	return m_cache;
 }
 
-UserAgentInformation NetworkAccessManager::getUserAgent(const QString &identifier)
+UserAgentInformation NetworkManager::getUserAgent(const QString &identifier)
 {
 	if (!m_userAgentsInitialized)
 	{
@@ -457,12 +457,12 @@ UserAgentInformation NetworkAccessManager::getUserAgent(const QString &identifie
 	return m_userAgents[identifier];
 }
 
-QPair<QString, QString> NetworkAccessManager::getUserAgent() const
+QPair<QString, QString> NetworkManager::getUserAgent() const
 {
 	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
 }
 
-QStringList NetworkAccessManager::getUserAgents()
+QStringList NetworkManager::getUserAgents()
 {
 	if (!m_userAgentsInitialized)
 	{
