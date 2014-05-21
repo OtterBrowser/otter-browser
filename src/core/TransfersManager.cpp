@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "TransfersManager.h"
+#include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
@@ -280,7 +282,7 @@ TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &requ
 {
 	if (!m_networkManager)
 	{
-		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager = NetworkManagerFactory::createManager(true, true, NULL);
 		m_networkManager->setParent(m_instance);
 	}
 

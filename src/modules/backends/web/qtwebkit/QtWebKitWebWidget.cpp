@@ -22,8 +22,9 @@
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/HistoryManager.h"
-#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NetworkCache.h"
+#include "../../../../core/NetworkManager.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
@@ -76,7 +77,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
 
-	m_networkManager = new NetworkManager(privateWindow, false, parent);
+	m_networkManager = NetworkManagerFactory::createManager(privateWindow, false, parent);
 	m_networkManager->setParent(m_page);
 
 	m_page->setNetworkAccessManager(m_networkManager);

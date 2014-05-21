@@ -20,8 +20,6 @@
 #ifndef OTTER_TRANSFERSMANAGER_H
 #define OTTER_TRANSFERSMANAGER_H
 
-#include "NetworkManager.h"
-
 #include <QtCore/QDateTime>
 #include <QtCore/QFile>
 #include <QtNetwork/QNetworkReply>
@@ -55,6 +53,8 @@ struct TransferInformation
 
 	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false) {}
 };
+
+class NetworkManager;
 
 class TransfersManager : public QObject
 {

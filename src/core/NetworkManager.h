@@ -30,17 +30,9 @@ class ContentsWidget;
 class NetworkManager : public QNetworkAccessManager
 {
 	Q_OBJECT
-	Q_ENUMS(DoNotTrackPolicy)
 
 public:
 	explicit NetworkManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
-
-	enum DoNotTrackPolicy
-	{
-		SkipTrackPolicy = 0,
-		AllowToTrackPolicy = 1,
-		DoNotAllowToTrackPolicy = 2
-	};
 
 	void resetStatistics();
 	void setUserAgent(const QString &identifier, const QString &value);
@@ -52,7 +44,6 @@ protected:
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void requestFinished(QNetworkReply *reply);
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
@@ -69,12 +60,10 @@ private:
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
 	qint64 m_bytesTotal;
-	DoNotTrackPolicy m_doNotTrackPolicy;
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
 	bool m_simpleMode;
-	bool m_disableReferrer;
 
 signals:
 	void messageChanged(const QString &message = QString());

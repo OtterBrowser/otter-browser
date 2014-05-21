@@ -34,26 +34,43 @@ struct UserAgentInformation
 	QString value;
 };
 
+class ContentsWidget;
 class CookieJar;
 class NetworkCache;
+class NetworkManager;
 
 class NetworkManagerFactory : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(DoNotTrackPolicy)
 
 public:
+	enum DoNotTrackPolicy
+	{
+		SkipTrackPolicy = 0,
+		AllowToTrackPolicy = 1,
+		DoNotAllowToTrackPolicy = 2
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static void loadUserAgents();
+	static NetworkManager* createManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
 	static NetworkManagerFactory* getInstance();
 	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
 	static QStringList getUserAgents();
+	static DoNotTrackPolicy getDoNotTrackPolicy();
+	static bool canSendReferrer();
+	static bool isWorkingOffline();
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
+
+protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 
 private:
 	static NetworkManagerFactory *m_instance;
@@ -62,7 +79,10 @@ private:
 	static NetworkCache *m_cache;
 	static QStringList m_userAgentsOrder;
 	static QHash<QString, UserAgentInformation> m_userAgents;
-	static bool m_userAgentsInitialized;
+	static DoNotTrackPolicy m_doNotTrackPolicy;
+	static bool m_canSendReferrer;
+	static bool m_isWorkingOffline;
+	static bool m_areUserAgentsInitialized;
 };
 
 }

@@ -19,6 +19,7 @@
 
 #include "SearchSuggester.h"
 #include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 
 #include <QtCore/QJsonArray>
@@ -30,7 +31,7 @@ namespace Otter
 {
 
 SearchSuggester::SearchSuggester(const QString &engine, QObject *parent) : QObject(parent),
-	m_networkManager(new NetworkManager(true, true, NULL)),
+	m_networkManager(NetworkManagerFactory::createManager(true, true, NULL)),
 	m_currentReply(NULL),
 	m_model(NULL),
 	m_engine(engine)

@@ -20,6 +20,7 @@
 #include "NetworkManagerFactory.h"
 #include "CookieJar.h"
 #include "NetworkCache.h"
+#include "NetworkManager.h"
 #include "NetworkProxyFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
@@ -37,10 +38,18 @@ QNetworkCookieJar* NetworkManagerFactory::m_privateCookieJar = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
 QStringList NetworkManagerFactory::m_userAgentsOrder;
 QHash<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
-bool NetworkManagerFactory::m_userAgentsInitialized = false;
+NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
+bool NetworkManagerFactory::m_canSendReferrer = false;
+bool NetworkManagerFactory::m_isWorkingOffline = false;
+bool NetworkManagerFactory::m_areUserAgentsInitialized = false;
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
+	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
+	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
+	optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void NetworkManagerFactory::createInstance(QObject *parent)
@@ -48,6 +57,35 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 	QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
 	m_instance = new NetworkManagerFactory(parent);
+}
+
+void NetworkManagerFactory::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Network/DoNotTrackPolicy"))
+	{
+		const QString policyValue = value.toString();
+
+		if (policyValue == QLatin1String("allow"))
+		{
+			m_doNotTrackPolicy = AllowToTrackPolicy;
+		}
+		else if (policyValue == QLatin1String("doNotAllow"))
+		{
+			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
+		}
+		else
+		{
+			m_doNotTrackPolicy = SkipTrackPolicy;
+		}
+	}
+	else if (option == QLatin1String("Network/EnableReferrer"))
+	{
+		m_canSendReferrer = value.toBool();
+	}
+	else if (option == QLatin1String("Network/WorkOffline"))
+	{
+		m_isWorkingOffline = value.toBool();
+	}
 }
 
 void NetworkManagerFactory::clearCookies(int period)
@@ -86,6 +124,11 @@ void NetworkManagerFactory::loadUserAgents()
 	m_userAgents = userAgents;
 }
 
+NetworkManager* NetworkManagerFactory::createManager(bool privateWindow, bool simpleMode, ContentsWidget *widget)
+{
+	return new NetworkManager(privateWindow, simpleMode, widget);
+}
+
 NetworkManagerFactory *NetworkManagerFactory::getInstance()
 {
 	return m_instance;
@@ -118,9 +161,9 @@ NetworkCache* NetworkManagerFactory::getCache()
 
 UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
 {
-	if (!m_userAgentsInitialized)
+	if (!m_areUserAgentsInitialized)
 	{
-		m_userAgentsInitialized = true;
+		m_areUserAgentsInitialized = true;
 
 		loadUserAgents();
 	}
@@ -139,14 +182,29 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 
 QStringList NetworkManagerFactory::getUserAgents()
 {
-	if (!m_userAgentsInitialized)
+	if (!m_areUserAgentsInitialized)
 	{
-		m_userAgentsInitialized = true;
+		m_areUserAgentsInitialized = true;
 
 		loadUserAgents();
 	}
 
 	return m_userAgentsOrder;
+}
+
+NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::getDoNotTrackPolicy()
+{
+	return m_doNotTrackPolicy;
+}
+
+bool NetworkManagerFactory::canSendReferrer()
+{
+	return m_canSendReferrer;
+}
+
+bool NetworkManagerFactory::isWorkingOffline()
+{
+	return m_isWorkingOffline;
 }
 
 }

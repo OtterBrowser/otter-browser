@@ -23,7 +23,6 @@
 #include "NetworkCache.h"
 #include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
-#include "SettingsManager.h"
 #include "Utils.h"
 #include "../ui/AuthenticationDialog.h"
 #include "../ui/ContentsDialog.h"
@@ -44,12 +43,10 @@ NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidg
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
-	m_doNotTrackPolicy(SkipTrackPolicy),
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
-	m_simpleMode(simpleMode),
-	m_disableReferrer(false)
+	m_simpleMode(simpleMode)
 {
 	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar(privateWindow);
 
@@ -66,10 +63,6 @@ NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidg
 		cache->setParent(QCoreApplication::instance());
 	}
 
-	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
-	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
@@ -81,31 +74,6 @@ void NetworkManager::timerEvent(QTimerEvent *event)
 	Q_UNUSED(event)
 
 	updateStatus();
-}
-
-void NetworkManager::optionChanged(const QString &option, const QVariant &value)
-{
-	if (option == QLatin1String("Network/DoNotTrackPolicy"))
-	{
-		const QString policyValue = value.toString();
-
-		if (policyValue == QLatin1String("allow"))
-		{
-			m_doNotTrackPolicy = AllowToTrackPolicy;
-		}
-		else if (policyValue == QLatin1String("doNotAllow"))
-		{
-			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
-		}
-		else
-		{
-			m_doNotTrackPolicy = SkipTrackPolicy;
-		}
-	}
-	else if (option == QLatin1String("Network/EnableReferrer"))
-	{
-		m_disableReferrer = !value.toBool();
-	}
 }
 
 void NetworkManager::resetStatistics()
@@ -326,24 +294,23 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	QNetworkRequest mutableRequest(request);
 
-	if (m_disableReferrer)
-	{
-		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
-	}
-
 	if (!m_userAgentIdentifier.isEmpty())
 	{
 		mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgentValue);
 	}
 
-	if (SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool())
+	if (!NetworkManagerFactory::canSendReferrer())
+	{
+		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
+
+	if (NetworkManagerFactory::isWorkingOffline())
 	{
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
-
-		if (m_doNotTrackPolicy != SkipTrackPolicy)
-		{
-			mutableRequest.setRawHeader(QByteArray("DNT"), QByteArray((m_doNotTrackPolicy == DoNotAllowToTrackPolicy) ? "1" : "0"));
-		}
+	}
+	else if (NetworkManagerFactory::getDoNotTrackPolicy() != NetworkManagerFactory::SkipTrackPolicy)
+	{
+		mutableRequest.setRawHeader(QByteArray("DNT"), QByteArray((NetworkManagerFactory::getDoNotTrackPolicy() == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? "1" : "0"));
 	}
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
