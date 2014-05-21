@@ -131,7 +131,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 {
 	QLineEdit::focusInEvent(event);
 
-	if (SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
 	{
 		QTimer::singleShot(0, this, SLOT(selectAll()));
 	}
