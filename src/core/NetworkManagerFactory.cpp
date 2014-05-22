@@ -60,7 +60,7 @@ void NetworkManagerFactory::initialize()
 {
 	m_isInitialized = true;
 
-///FIXME workaound, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
+///FIXME workaround, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
 	QSslSocket* tmpSocket = new QSslSocket();
 	tmpSocket->deleteLater();
 

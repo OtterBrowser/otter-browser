@@ -109,12 +109,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), QLatin1String("SaveImageToDisk"));
 	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), QLatin1String("CopyImageToClipboard"));
 	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), QLatin1String("CopyImageUrlToClipboard"));
+#if QTWEBKIT_VERSION >= 0x050200
 	ActionsManager::setupLocalAction(getAction(SaveMediaToDiskAction), QLatin1String("SaveMediaToDisk"));
 	ActionsManager::setupLocalAction(getAction(CopyMediaUrlToClipboardAction), QLatin1String("CopyMediaUrlToClipboard"));
 	ActionsManager::setupLocalAction(getAction(ToggleMediaControlsAction), QLatin1String("ToggleMediaControls"));
 	ActionsManager::setupLocalAction(getAction(ToggleMediaLoopAction), QLatin1String("ToggleMediaLoop"));
 	ActionsManager::setupLocalAction(getAction(ToggleMediaPlayPauseAction), QLatin1String("ToggleMediaPlayPause"));
 	ActionsManager::setupLocalAction(getAction(ToggleMediaMuteAction), QLatin1String("ToggleMediaMute"));
+#endif
 
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
@@ -967,6 +969,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		getAction(InspectElementAction)->setEnabled(!isImageOpened);
 	}
 
+#if QTWEBKIT_VERSION >= 0x050200
 	if (m_hitResult.mediaUrl().isValid())
 	{
 		flags |= MediaMenu;
@@ -984,6 +987,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		getAction(ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		getAction(ToggleMediaMuteAction)->setText(isMuted ? tr("Unmute") : tr("Mute"));
 	}
+#endif
 
 	if (m_hitResult.isContentEditable())
 	{
@@ -1480,6 +1484,7 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 			return QWebPage::Redo;
 		case InspectElementAction:
 			return QWebPage::InspectElement;
+#if QTWEBKIT_VERSION >= 0x050200
 		case SaveMediaToDiskAction:
 			return QWebPage::DownloadMediaToDisk;
 		case CopyMediaUrlToClipboardAction:
@@ -1492,6 +1497,7 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 			return QWebPage::ToggleMediaPlayPause;
 		case ToggleMediaMuteAction:
 			return QWebPage::ToggleMediaMute;
+#endif
 		default:
 			return QWebPage::NoWebAction;
 	}
@@ -1516,7 +1522,11 @@ bool QtWebKitWebWidget::isPrivate() const
 
 bool QtWebKitWebWidget::find(const QString &text, FindFlags flags)
 {
+#if QTWEBKIT_VERSION >= 0x050200
 	QWebPage::FindFlags nativeFlags = (QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
+#else
+	QWebPage::FindFlags nativeFlags = QWebPage::FindWrapsAroundDocument;
+#endif
 
 	if (flags & BackwardFind)
 	{
