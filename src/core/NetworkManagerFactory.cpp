@@ -59,6 +59,11 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 void NetworkManagerFactory::initialize()
 {
 	m_isInitialized = true;
+
+///FIXME workaound, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
+	QSslSocket* tmpSocket = new QSslSocket();
+	tmpSocket->deleteLater();
+
 	m_defaultCiphers = QSslSocket::defaultCiphers();
 
 	loadUserAgents();
@@ -202,9 +207,7 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 {
 	if (!m_isInitialized)
 	{
-		m_isInitialized = true;
-
-		loadUserAgents();
+		m_instance->initialize();
 	}
 
 	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
