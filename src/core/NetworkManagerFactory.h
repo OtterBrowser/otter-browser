@@ -23,6 +23,7 @@
 #include <QtCore/QObject>
 #include <QtNetwork/QNetworkCookieJar>
 #include <QtNetwork/QNetworkDiskCache>
+#include <QtNetwork/QSslCipher>
 
 namespace Otter
 {
@@ -62,12 +63,15 @@ public:
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
 	static QStringList getUserAgents();
+	static QList<QSslCipher> getDefaultCiphers();
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
+
+	void initialize();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -79,10 +83,11 @@ private:
 	static NetworkCache *m_cache;
 	static QStringList m_userAgentsOrder;
 	static QHash<QString, UserAgentInformation> m_userAgents;
+	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
 	static bool m_canSendReferrer;
 	static bool m_isWorkingOffline;
-	static bool m_areUserAgentsInitialized;
+	static bool m_isInitialized;
 };
 
 }

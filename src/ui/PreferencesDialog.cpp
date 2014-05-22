@@ -291,14 +291,14 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->automaticProxyConfigurationLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
 
 	QStandardItemModel *ciphersModel = new QStandardItemModel(this);
-	const bool useDefaultCiphers =(SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString()== QLatin1String("default"));
-	const QStringList ciphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
-	const QList<QSslCipher> defaultCiphers = QSslSocket::defaultCiphers();
+	const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
+	const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
+	const QList<QSslCipher> defaultCiphers = NetworkManagerFactory::getDefaultCiphers();
 	const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
 
 	for (int i = 0; i < supportedCiphers.count(); ++i)
 	{
-		if  ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (ciphers.isEmpty() || ciphers.contains(supportedCiphers.at(i).name()))))
+		if ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (selectedCiphers.isEmpty() || selectedCiphers.contains(supportedCiphers.at(i).name()))))
 		{
 			QList<QStandardItem*> items;
 			items.append(new QStandardItem(supportedCiphers.at(i).name()));
@@ -1256,12 +1256,12 @@ void PreferencesDialog::save()
 	{
 		QStringList ciphers;
 
-		for (int i = 0; i < m_ui->ciphersViewWidget->getRowCount();++i)
+		for (int i = 0; i < m_ui->ciphersViewWidget->getRowCount(); ++i)
 		{
-			ciphers.append(m_ui->ciphersViewWidget->getIndex(i,0).data(Qt::DisplayRole).toString());
+			ciphers.append(m_ui->ciphersViewWidget->getIndex(i, 0).data(Qt::DisplayRole).toString());
 		}
 
-		SettingsManager::setValue(QLatin1String("Security/Ciphers"),ciphers);
+		SettingsManager::setValue(QLatin1String("Security/Ciphers"), ciphers);
 	}
 
 	for (int i = 0; i < m_removedProfiles.count(); ++i)
