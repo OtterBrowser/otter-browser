@@ -53,8 +53,11 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 
 		setContentsWidget(widget);
 	}
-
-	m_ui->addressWidget->setWindow(this);
+	else
+	{
+		m_ui->addressWidget->setWindow(this);
+	}
+	
 
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
@@ -95,7 +98,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (isUrlEmpty())
+	if (isUrlEmpty() && !m_contentsWidget->isLoading())
 	{
 		m_ui->addressWidget->setFocus();
 	}
@@ -321,11 +324,14 @@ void Window::setUrl(const QUrl &url, bool typed)
 		setContentsWidget(newWidget);
 	}
 
-	if (!isRestoring && m_contentsWidget && url.isValid())
+	if (m_contentsWidget && url.isValid())
 	{
 		m_ui->addressWidget->setUrl(url);
 
-		m_contentsWidget->setUrl(url, typed);
+		if (!isRestoring)
+		{
+			m_contentsWidget->setUrl(url, typed);
+		}
 	}
 }
 
@@ -386,6 +392,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	m_ui->backButton->setDefaultAction(m_contentsWidget->getAction(GoBackAction));
 	m_ui->forwardButton->setDefaultAction(m_contentsWidget->getAction(GoForwardAction));
 	m_ui->reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));
+	m_ui->addressWidget->setWindow(this);
 	m_ui->addressWidget->setUrl(m_contentsWidget->getUrl());
 
 	if (m_session.index >= 0)
@@ -419,7 +426,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 	else
 	{
-		m_ui->addressWidget->setFocus();
+		if (isUrlEmpty())
+		{
+			m_ui->addressWidget->setFocus();
+		}
 	}
 
 	emit actionsChanged();

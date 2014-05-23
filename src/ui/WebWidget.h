@@ -78,6 +78,7 @@ public:
 	QString getStatusMessage() const;
 	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
+	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
@@ -97,6 +98,7 @@ public slots:
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
+	void setRequestedUrl(const QUrl &url, bool typed = true);
 
 protected:
 	explicit WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent = NULL);
@@ -110,6 +112,7 @@ protected slots:
 private:
 	WebBackend *m_backend;
 	QMenu *m_quickSearchMenu;
+	QUrl m_requestedUrl;
 	QString m_quickSearchEngine;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;

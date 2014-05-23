@@ -258,7 +258,7 @@ void WebContentsWidget::setZoom(int zoom)
 
 void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 {
-	m_webWidget->setUrl(url, typed);
+	m_webWidget->setRequestedUrl(url, typed);
 
 	if (typed)
 	{
@@ -411,7 +411,7 @@ QLatin1String WebContentsWidget::getType() const
 
 QUrl WebContentsWidget::getUrl() const
 {
-	return m_webWidget->getUrl();
+	return m_webWidget->getRequestedUrl();
 }
 
 QIcon WebContentsWidget::getIcon() const

@@ -337,7 +337,7 @@ void QtWebKitWebWidget::markPageRealoded()
 void QtWebKitWebWidget::openUrl(QUrl url, OpenHints hints)
 {
 	WebWidget *widget = clone(false);
-	widget->setUrl(url);
+	widget->setRequestedUrl(url);
 
 	emit requestedNewWindow(widget, hints);
 }

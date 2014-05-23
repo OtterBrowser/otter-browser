@@ -254,6 +254,13 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	menu.exec(mapToGlobal(position));
 }
 
+void WebWidget::setRequestedUrl(const QUrl &url, bool typed)
+{
+	m_requestedUrl = url;
+
+	setUrl(url, typed);
+}
+
 void WebWidget::updateQuickSearch()
 {
 	if (m_quickSearchMenu && sender() == SearchesManager::getInstance())
@@ -338,6 +345,11 @@ QString WebWidget::getSelectedText() const
 QString WebWidget::getStatusMessage() const
 {
 	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
+}
+
+QUrl WebWidget::getRequestedUrl() const
+{
+	return (getUrl().isEmpty() ? m_requestedUrl : getUrl());
 }
 
 }
