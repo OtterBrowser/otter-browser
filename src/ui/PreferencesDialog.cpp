@@ -42,6 +42,7 @@
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -290,6 +291,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 	m_ui->automaticProxyConfigurationLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
 
+	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
+
 	QStandardItemModel *ciphersModel = new QStandardItemModel(this);
 	const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
 	const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
@@ -306,11 +309,16 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 			ciphersModel->appendRow(items);
 		}
+		else
+		{
+			m_ui->ciphersAddButton->menu()->addAction(supportedCiphers.at(i).name());
+		}
 	}
 
 	m_ui->ciphersViewWidget->setModel(ciphersModel);
 	m_ui->ciphersViewWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
 	m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
@@ -371,13 +379,14 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(browseAutomaticProxyPath()));
-	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
-	connect(m_ui->ciphersViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
-	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(removeRow()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
+	connect(m_ui->ciphersViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
+	connect(m_ui->ciphersAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addCipher(QAction*)));
+	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), this, SLOT(removeCipher()));
+	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
@@ -748,12 +757,40 @@ void PreferencesDialog::browseAutomaticProxyPath()
 	}
 }
 
+void PreferencesDialog::addCipher(QAction *action)
+{
+	if (!action)
+	{
+		return;
+	}
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(action->text()));
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->ciphersViewWidget->insertRow(items);
+	m_ui->ciphersAddButton->menu()->removeAction(action);
+	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
+}
+
+void PreferencesDialog::removeCipher()
+{
+	const int currentRow = m_ui->ciphersViewWidget->getCurrentRow();
+
+	if (currentRow >= 0)
+	{
+		m_ui->ciphersAddButton->menu()->addAction(m_ui->ciphersViewWidget->getIndex(currentRow, 0).data(Qt::DisplayRole).toString());
+		m_ui->ciphersAddButton->setEnabled(true);
+
+		m_ui->ciphersViewWidget->removeRow();
+	}
+}
+
 void PreferencesDialog::updateCiphersActions()
 {
 	const int currentRow = m_ui->ciphersViewWidget->getCurrentRow();
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->ciphersViewWidget->getRowCount());
 
-	m_ui->ciphersRemoveButton->setEnabled(isSelected);
+	m_ui->ciphersRemoveButton->setEnabled(currentRow >= 0 && currentRow < m_ui->ciphersViewWidget->getRowCount());
 }
 
 void PreferencesDialog::addKeyboardProfile()
