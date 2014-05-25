@@ -1,3 +1,9 @@
+0.9.01 (--.--2014):
+- allow to configure SSL ciphers priorities;
+- allow to compile using Qt stack available in Ubuntu (outdated QtWebKit);
+- added error console;
+- various minor fixes and improvements.
+
 0.5.01 (01.05.2014):
 - added startup / crash recovery dialog;
 - implemented "Reload Image" action;
