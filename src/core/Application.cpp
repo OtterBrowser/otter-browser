@@ -172,21 +172,21 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	TransfersManager::createInstance(this);
 
-	QTranslator qtTranslator;
-	qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	QTranslator *qtTranslator = new QTranslator(this);
+	qtTranslator->load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
 	QString localePath;
 
-	if (isPortable)
+	if (isPortable || QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
 	{
 		localePath = applicationDirPath() + QLatin1String("/locale/");
 	}
 
-	QTranslator applicationTranslator;
-	applicationTranslator.load(QLatin1String("otter-browser_") + QLocale::system().name(), localePath);
+	QTranslator *applicationTranslator = new QTranslator(this);
+	applicationTranslator->load(QLatin1String("otter-browser_") + QLocale::system().name(), localePath);
 
-	installTranslator(&qtTranslator);
-	installTranslator(&applicationTranslator);
+	installTranslator(qtTranslator);
+	installTranslator(applicationTranslator);
 	setQuitOnLastWindowClosed(true);
 }
 

@@ -201,5 +201,9 @@ TRANSLATIONS += resources/translations/cs_CZ.ts \
     resources/translations/pt_PT.ts \
     resources/translations/ro.ts \
     resources/translations/ru_RU.ts \
+    resources/translations/sr.ts \
+    resources/translations/sr@Ijekavian.ts \
+    resources/translations/sr@ijekavianlatin.ts \
+    resources/translations/sr@latin.ts \
     resources/translations/tr_TR.ts \
-    reouurces/translations/uk_UA.ts
+    resources/translations/uk_UA.ts
