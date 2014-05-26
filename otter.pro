@@ -190,11 +190,16 @@ TRANSLATIONS += resources/translations/cs_CZ.ts \
     resources/translations/en_GB.ts \
     resources/translations/en_US.ts \
     resources/translations/es_ES.ts \
+    resources/translations/et.ts \
     resources/translations/fr_FR.ts \
     resources/translations/id_ID.ts \
     resources/translations/it_IT.ts \
+    resources/translations/lt.ts \
+    resources/translations/nl.ts \
     resources/translations/pl_PL.ts \
+    resources/translations/pt_BR.ts \
     resources/translations/pt_PT.ts \
+    resources/translations/ro.ts \
     resources/translations/ru_RU.ts \
     resources/translations/tr_TR.ts \
     reouurces/translations/uk_UA.ts

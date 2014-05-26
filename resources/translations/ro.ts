@@ -495,7 +495,7 @@
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
         <source>Location:</source>
-        <translation type="unfinished"/>
+        <translation>Locaţie:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="171"/>
@@ -530,7 +530,7 @@
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="104"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Expiră</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="379"/>
@@ -575,7 +575,7 @@
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="455"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Necunoscut(ă)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="591"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Ștergeți istoricul de navigare</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
@@ -697,7 +697,7 @@
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domeniu:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="112"/>
