@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -110,6 +111,17 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 	{
 		case FolderBookmark:
 			writer->writeStartElement(QLatin1String("folder"));
+
+			if (bookmark->added.isValid())
+			{
+				writer->writeAttribute(QLatin1String("added"), bookmark->added.toString(Qt::ISODate));
+			}
+
+			if (bookmark->modified.isValid())
+			{
+				writer->writeAttribute(QLatin1String("modified"), bookmark->modified.toString(Qt::ISODate));
+			}
+
 			writer->writeTextElement(QLatin1String("title"), bookmark->title);
 
 			for (int i = 0; i < bookmark->children.count(); ++i)
@@ -148,6 +160,26 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 			if (!bookmark->description.isEmpty())
 			{
 				writer->writeTextElement(QLatin1String("desc"), bookmark->description);
+			}
+
+			if (!bookmark->keyword.isEmpty() || bookmark->visits > 0)
+			{
+				writer->writeStartElement(QLatin1String("info"));
+				writer->writeStartElement(QLatin1String("metadata"));
+				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
+
+				if (!bookmark->keyword.isEmpty())
+				{
+					writer->writeTextElement(QLatin1String("keyword"), bookmark->keyword);
+				}
+
+				if (bookmark->visits > 0)
+				{
+					writer->writeTextElement(QLatin1String("visits"), QString().setNum(bookmark->visits));
+				}
+
+				writer->writeEndElement();
+				writer->writeEndElement();
 			}
 
 			writer->writeEndElement();
@@ -204,6 +236,8 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 	{
 		bookmark->type = FolderBookmark;
 		bookmark->identifier = ++m_identifier;
+		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
+		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
 
 		while (reader->readNext())
 		{
@@ -253,6 +287,48 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 				else if (reader->name() == QLatin1String("desc"))
 				{
 					bookmark->description = reader->readElementText().trimmed();
+				}
+				else if (reader->name() == QLatin1String("info"))
+				{
+					while (reader->readNext())
+					{
+						if (reader->isStartElement())
+						{
+							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith("http://otter-browser.org/"))
+							{
+								while (reader->readNext())
+								{
+									if (reader->isStartElement())
+									{
+										if (reader->name() == QLatin1String("keyword"))
+										{
+											bookmark->keyword = reader->readElementText().trimmed();
+										}
+										else if (reader->name() == QLatin1String("visits"))
+										{
+											bookmark->visits = reader->readElementText().toInt();
+										}
+										else
+										{
+											reader->skipCurrentElement();
+										}
+									}
+									else if (reader->isEndElement() && reader->name() == QLatin1String("metadata"))
+									{
+										break;
+									}
+								}
+							}
+							else
+							{
+								reader->skipCurrentElement();
+							}
+						}
+						else if (reader->isEndElement() && reader->name() == QLatin1String("info"))
+						{
+							break;
+						}
+					}
 				}
 				else
 				{
