@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -181,6 +182,15 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void AddressWidget::handleUserInput(const QString &text)
 {
+	const QUrl keywordUrl = BookmarksManager::getUrlByKeyword(text);
+
+	if (!keywordUrl.isEmpty())
+	{
+		emit requestedLoadUrl(keywordUrl);
+
+		return;
+	}
+
 	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
 	{
 		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);

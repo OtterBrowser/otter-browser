@@ -35,6 +35,7 @@ QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
 QList<BookmarkInformation*> BookmarksManager::m_allBookmarks;
 QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
 QSet<QString> BookmarksManager::m_urls;
+QHash<QString, BookmarkInformation*> BookmarksManager::m_keywords;
 int BookmarksManager::m_identifier;
 
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
@@ -100,7 +101,7 @@ void BookmarksManager::load()
 		}
 	}
 
-	updateUrls();
+	updateIndex();
 
 	emit folderModified(0);
 }
@@ -192,6 +193,12 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 	}
 }
 
+void BookmarksManager::updateIndex()
+{
+	updateUrls();
+	updateKeywords();
+}
+
 void BookmarksManager::updateUrls()
 {
 	QStringList urls;
@@ -212,6 +219,19 @@ void BookmarksManager::updateUrls()
 	m_urls = urls.toSet();
 }
 
+void BookmarksManager::updateKeywords()
+{
+	m_keywords.clear();
+
+	for (int i = 0; i < m_allBookmarks.count(); ++i)
+	{
+		if (m_allBookmarks.at(i) && !m_allBookmarks.at(i)->keyword.isEmpty())
+		{
+			m_keywords.insert(m_allBookmarks.at(i)->keyword, m_allBookmarks.at(i));
+		}
+	}
+}
+
 void BookmarksManager::createInstance(QObject *parent)
 {
 	m_instance = new BookmarksManager(parent);
@@ -225,6 +245,11 @@ BookmarksManager* BookmarksManager::getInstance()
 QStringList BookmarksManager::getUrls()
 {
 	return m_urls.toList();
+}
+
+QUrl BookmarksManager::getUrlByKeyword(const QString &keyword)
+{
+	return m_keywords.contains(keyword)? QUrl(m_keywords.value(keyword)->url): QUrl();
 }
 
 BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
@@ -387,6 +412,11 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 		m_urls.insert(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
 	}
 
+	if (!bookmark->keyword.isEmpty())
+	{
+		m_keywords.insert(bookmark->keyword, bookmark);
+	}
+
 	if (bookmark->type == FolderBookmark)
 	{
 		bookmark->identifier = ++m_identifier;
@@ -416,7 +446,7 @@ bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 {
 	if (bookmark && m_allBookmarks.contains(bookmark))
 	{
-		updateUrls();
+		updateIndex();
 
 		emit m_instance->folderModified(bookmark->parent);
 
@@ -459,7 +489,7 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 	{
 		m_instance->scheduleSave();
 
-		updateUrls();
+		updateIndex();
 
 		emit m_instance->folderModified(folder);
 	}

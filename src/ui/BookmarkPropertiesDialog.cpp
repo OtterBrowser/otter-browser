@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,6 +42,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 	m_ui->addressLineEdit->setVisible(m_bookmark->type == UrlBookmark);
 	m_ui->addressLabel->setVisible(m_bookmark->type == UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
+	m_ui->keywordLineEdit->setText(m_bookmark->keyword);
 
 	if (bookmark->parent < 0)
 	{
@@ -148,9 +150,19 @@ void BookmarkPropertiesDialog::reloadFolders()
 
 void BookmarkPropertiesDialog::saveBookmark()
 {
+	const QString newKeyword = m_ui->keywordLineEdit->text();
+
+	if (m_bookmark->keyword != newKeyword && !BookmarksManager::getUrlByKeyword(newKeyword).isEmpty())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
+
+		return;
+	}
+
 	m_bookmark->url = m_ui->addressLineEdit->text();
 	m_bookmark->title = m_ui->titleLineEdit->text();
 	m_bookmark->description = m_ui->descriptionTextEdit->toPlainText();
+	m_bookmark->keyword = newKeyword;
 
 	if (m_bookmark->parent >= 0)
 	{
