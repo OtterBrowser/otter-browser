@@ -220,13 +220,11 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->panelDockWidget->hide();
 	m_ui->consoleDockWidget->hide();
 
-	SettingsManager::setDefaultValue(QLatin1String("Window/Size"), size());
-	SettingsManager::setDefaultValue(QLatin1String("Window/Position"), pos());
+	SettingsManager::setDefaultValue(QLatin1String("Window/Geometry"), QByteArray());
 	SettingsManager::setDefaultValue(QLatin1String("Window/State"), QByteArray());
 
 	updateActions();
-	resize(SettingsManager::getValue(QLatin1String("Window/Size")).toSize());
-	move(SettingsManager::getValue(QLatin1String("Window/Position")).toPoint());
+	restoreGeometry(SettingsManager::getValue(QLatin1String("Window/Geometry")).toByteArray());
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
 	setWindowTitle(QStringLiteral("%1 - Otter").arg(m_windowsManager->getTitle()));
 }
@@ -335,8 +333,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	m_windowsManager->closeAll();
 
-	SettingsManager::setValue(QLatin1String("Window/Size"), size());
-	SettingsManager::setValue(QLatin1String("Window/Position"), pos());
+	SettingsManager::setValue(QLatin1String("Window/Geometry"), saveGeometry());
 	SettingsManager::setValue(QLatin1String("Window/State"), saveState());
 
 	application->removeWindow(this);
