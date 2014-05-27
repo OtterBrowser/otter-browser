@@ -82,7 +82,9 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
+	static void updateIndex();
 	static void updateUrls();
+	static void updateKeywords();
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
 
 protected slots:
