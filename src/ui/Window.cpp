@@ -331,6 +331,11 @@ void Window::setUrl(const QUrl &url, bool typed)
 		if (!isRestoring)
 		{
 			m_contentsWidget->setUrl(url, typed);
+
+			if (!isUrlEmpty())
+			{
+				m_ui->addressWidget->clearFocus();
+			}
 		}
 	}
 }
