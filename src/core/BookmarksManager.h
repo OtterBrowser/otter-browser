@@ -62,6 +62,7 @@ public:
 	~BookmarksManager();
 
 	static void createInstance(QObject *parent = NULL);
+	static void updateVisit(const QUrl &url);
 	static BookmarksManager* getInstance();
 	static QStringList getUrls();
 	static QUrl getUrlByKeyword(const QString &keyword);

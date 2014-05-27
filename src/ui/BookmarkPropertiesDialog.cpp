@@ -43,6 +43,21 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 	m_ui->addressLabel->setVisible(m_bookmark->type == UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
 	m_ui->keywordLineEdit->setText(m_bookmark->keyword);
+	m_ui->addedLabelWidget->setText(m_bookmark->added.isValid()? m_bookmark->added.toString(): tr("Unknown"));
+	m_ui->modifiedLabelWidget->setText(m_bookmark->modified.isValid()? m_bookmark->modified.toString(): tr("Unknown"));
+
+	if (m_bookmark->type == UrlBookmark)
+	{
+		m_ui->lastVisitLabelWidget->setText(m_bookmark->visited.isValid()? m_bookmark->visited.toString(): tr("Unknown"));
+		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->visits));
+	}
+	else
+	{
+		m_ui->visitsLabel->hide();
+		m_ui->visitsLabelWidget->hide();
+		m_ui->lastVisitLabel->hide();
+		m_ui->lastVisitLabelWidget->hide();
+	}
 
 	if (bookmark->parent < 0)
 	{

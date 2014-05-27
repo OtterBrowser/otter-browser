@@ -21,6 +21,7 @@
 #include "QtWebKitWebPage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
+#include "../../../../core/BookmarksManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -273,6 +274,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 			if (m_historyEntry >= 0)
 			{
 				HistoryManager::updateEntry(m_historyEntry, getUrl(), m_webView->title(), m_webView->icon());
+				BookmarksManager::updateVisit(getUrl());
 			}
 		}
 		else if (m_historyEntry >= 0)

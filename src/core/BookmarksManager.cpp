@@ -237,6 +237,24 @@ void BookmarksManager::createInstance(QObject *parent)
 	m_instance = new BookmarksManager(parent);
 }
 
+void BookmarksManager::updateVisit(const QUrl &url)
+{
+	if (hasBookmark(url))
+	{
+		const QString address = url.toString();
+
+		for (int i = 0; i < m_allBookmarks.count(); ++i)
+		{
+			if (m_allBookmarks.at(i) && address == m_allBookmarks.at(i)->url)
+			{
+				m_allBookmarks.at(i)->visited = QDateTime::currentDateTime();
+
+				++m_allBookmarks.at(i)->visits;
+			}
+		}
+	}
+}
+
 BookmarksManager* BookmarksManager::getInstance()
 {
 	return m_instance;
@@ -425,6 +443,8 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	}
 
 	bookmark->parent = folder;
+	bookmark->added = QDateTime::currentDateTime();
+	bookmark->modified = bookmark->added;
 
 	if (folder == 0)
 	{
@@ -446,6 +466,8 @@ bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 {
 	if (bookmark && m_allBookmarks.contains(bookmark))
 	{
+		bookmark->modified = QDateTime::currentDateTime();
+
 		updateIndex();
 
 		emit m_instance->folderModified(bookmark->parent);
