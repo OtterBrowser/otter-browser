@@ -374,7 +374,11 @@ void AddressWidget::setUrl(const QUrl &url)
 
 	if (m_window && url.scheme() != QLatin1String("javascript"))
 	{
-		setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
+		if (!hasFocus())
+		{
+			setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
+		}
+
 		setIcon(m_window->getIcon());
 	}
 }
