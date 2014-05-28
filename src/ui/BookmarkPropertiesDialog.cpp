@@ -43,12 +43,12 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 	m_ui->addressLabel->setVisible(m_bookmark->type == UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
 	m_ui->keywordLineEdit->setText(m_bookmark->keyword);
-	m_ui->addedLabelWidget->setText(m_bookmark->added.isValid()? m_bookmark->added.toString(): tr("Unknown"));
-	m_ui->modifiedLabelWidget->setText(m_bookmark->modified.isValid()? m_bookmark->modified.toString(): tr("Unknown"));
+	m_ui->addedLabelWidget->setText(m_bookmark->added.isValid() ? m_bookmark->added.toString() : tr("Unknown"));
+	m_ui->modifiedLabelWidget->setText(m_bookmark->modified.isValid() ? m_bookmark->modified.toString() : tr("Unknown"));
 
 	if (m_bookmark->type == UrlBookmark)
 	{
-		m_ui->lastVisitLabelWidget->setText(m_bookmark->visited.isValid()? m_bookmark->visited.toString(): tr("Unknown"));
+		m_ui->lastVisitLabelWidget->setText(m_bookmark->visited.isValid() ? m_bookmark->visited.toString() : tr("Unknown"));
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->visits));
 	}
 	else
@@ -62,6 +62,15 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 	if (bookmark->parent < 0)
 	{
 		setWindowTitle(tr("Add Bookmark"));
+
+		m_ui->visitsLabel->hide();
+		m_ui->visitsLabelWidget->hide();
+		m_ui->lastVisitLabel->hide();
+		m_ui->lastVisitLabelWidget->hide();
+		m_ui->addedLabel->hide();
+		m_ui->addedLabelWidget->hide();
+		m_ui->modifiedLabel->hide();
+		m_ui->modifiedLabelWidget->hide();
 	}
 	else
 	{

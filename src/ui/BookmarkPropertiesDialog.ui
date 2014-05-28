@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>330</height>
+    <height>357</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -91,70 +91,73 @@
       </widget>
      </item>
      <item row="8" column="0">
-      <widget class="QLabel" name="keywordLabel">
-       <property name="text">
-        <string>Keyword:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QLineEdit" name="keywordLineEdit"/>
-     </item>
-     <item row="7" column="0">
       <widget class="QLabel" name="visitsLabel">
        <property name="text">
         <string>Visits:</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="lastVisitLabel">
        <property name="text">
         <string>Last Visit:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="addedLabel">
        <property name="text">
         <string>Created:</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="Otter::TextLabelWidget" name="visitsLabelWidget" native="true">
        <property name="text" stdset="0">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="Otter::TextLabelWidget" name="lastVisitLabelWidget" native="true">
        <property name="text" stdset="0">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="Otter::TextLabelWidget" name="addedLabelWidget" native="true">
        <property name="text" stdset="0">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label">
+     <item row="6" column="0">
+      <widget class="QLabel" name="modifiedLabel">
        <property name="text">
         <string>Modified:</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="Otter::TextLabelWidget" name="modifiedLabelWidget" native="true">
        <property name="text" stdset="0">
         <string/>
        </property>
       </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="keywordLabel">
+       <property name="text">
+        <string>Keyword:</string>
+       </property>
+       <property name="buddy">
+        <cstring>keywordLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="keywordLineEdit"/>
      </item>
     </layout>
    </item>
@@ -175,6 +178,15 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>folderComboBox</tabstop>
+  <tabstop>newFolderButton</tabstop>
+  <tabstop>addressLineEdit</tabstop>
+  <tabstop>titleLineEdit</tabstop>
+  <tabstop>descriptionTextEdit</tabstop>
+  <tabstop>keywordLineEdit</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
