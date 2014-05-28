@@ -326,17 +326,17 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (m_contentsWidget && url.isValid())
 	{
-		m_ui->addressWidget->setUrl(url);
-
 		if (!isRestoring)
 		{
 			m_contentsWidget->setUrl(url, typed);
-
-			if (!isUrlEmpty())
-			{
-				m_ui->addressWidget->clearFocus();
-			}
 		}
+
+		if (!isUrlEmpty() || m_contentsWidget->isLoading())
+		{
+			m_ui->addressWidget->clearFocus();
+		}
+
+		m_ui->addressWidget->setUrl(url);
 	}
 }
 
