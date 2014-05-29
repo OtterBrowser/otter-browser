@@ -105,7 +105,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	ActionsManager::setupLocalAction(getAction(OpenLinkInNewWindowAction), QLatin1String("OpenLinkInNewWindow"));
 	ActionsManager::setupLocalAction(getAction(OpenFrameInNewTabAction), QLatin1String("OpenFrameInNewTab"));
 	ActionsManager::setupLocalAction(getAction(SaveLinkToDiskAction), QLatin1String("SaveLinkToDisk"));
-	ActionsManager::setupLocalAction(getAction(CopyLinkToClipboardAction), QLatin1String("CopyLinkToClipboard"));
 	ActionsManager::setupLocalAction(getAction(OpenImageInNewTabAction), QLatin1String("OpenImageInNewTab"));
 	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), QLatin1String("SaveImageToDisk"));
 	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), QLatin1String("CopyImageToClipboard"));
@@ -617,6 +616,13 @@ void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
 			}
 
 			break;
+		case CopyLinkToClipboardAction:
+			if (!m_hitResult.linkUrl().isEmpty())
+			{
+				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl().toString());
+			}
+
+			break;
 		case CopyFrameLinkToClipboardAction:
 			if (m_hitResult.frame())
 			{
@@ -1084,6 +1090,10 @@ QAction* QtWebKitWebWidget::getAction(WindowAction action)
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenFrameInNewTabBackground"), true);
 
 			break;
+		case CopyLinkToClipboardAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyLinkToClipboard"), true);
+
+			break;
 		case CopyFrameLinkToClipboardAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyFrameLinkToClipboard"), true);
 
@@ -1450,8 +1460,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
 			return QWebPage::OpenFrameInNewWindow;
 		case SaveLinkToDiskAction:
 			return QWebPage::DownloadLinkToDisk;
-		case CopyLinkToClipboardAction:
-			return QWebPage::CopyLinkToClipboard;
 		case OpenImageInNewTabAction:
 			return QWebPage::OpenImageInNewWindow;
 		case SaveImageToDiskAction:
