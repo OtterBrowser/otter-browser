@@ -377,13 +377,13 @@ void WindowsManager::detachWindow(int index)
 		return;
 	}
 
-	MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), false);
+	MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), true);
 
 	if (mainWindow)
 	{
 		window->getContentsWidget()->setParent(NULL);
 
-		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget(), BackgroundOpen);
+		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget());
 		mainWindow->getWindowsManager()->closeOther();
 
 		m_tabBar->removeTab(index);
