@@ -38,7 +38,7 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer(new QCompleter(this)),
 	m_suggester(NULL),
 	m_index(0),
-	m_sendRequest(false)
+	m_popupUpdated(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -158,7 +158,7 @@ void SearchWidget::hidePopup()
 {
 	if (!m_query.isEmpty())
 	{
-		m_sendRequest = true;
+		m_popupUpdated = true;
 	}
 
 	QComboBox::hidePopup();
@@ -200,6 +200,11 @@ void SearchWidget::currentSearchEngineChanged(int index)
 	}
 
 	lineEdit()->setText(m_query);
+
+	if (!m_query.isEmpty())
+	{
+		sendRequest();
+	}
 }
 
 void SearchWidget::searchEngineSelected(int index)
@@ -235,11 +240,9 @@ void SearchWidget::searchEngineSelected(int index)
 
 void SearchWidget::queryChanged(const QString &query)
 {
-	if (m_sendRequest)
+	if (m_popupUpdated)
 	{
-		sendRequest();
-
-		m_sendRequest = false;
+		m_popupUpdated = false;
 	}
 	else
 	{

@@ -67,7 +67,7 @@ private:
 	QRect m_lineEditRectangle;
 	QRect m_searchButtonRectangle;
 	int m_index;
-	bool m_sendRequest;
+	bool m_popupUpdated;
 
 signals:
 	void requestedSearch(QString query, QString engine);
