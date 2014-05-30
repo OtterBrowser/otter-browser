@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -521,7 +522,7 @@ void MainWindow::actionOpenBookmark()
 
 	if (action && !action->data().toString().isEmpty())
 	{
-		m_windowsManager->open(QUrl(action->data().toString()));
+		m_windowsManager->open(QUrl(action->data().toString()), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
 	}
 }
 
@@ -560,9 +561,11 @@ void MainWindow::actionOpenBookmarkFolder()
 		SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
 	}
 
-	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
+	m_windowsManager->open(QUrl(m_bookmarksToOpen.at(0)), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
+
+	for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
 	{
-		m_windowsManager->open(QUrl(m_bookmarksToOpen.at(i)));
+		m_windowsManager->open(QUrl(m_bookmarksToOpen.at(i)), NewTabOpen);
 	}
 
 	m_bookmarksToOpen.clear();
@@ -876,7 +879,7 @@ void MainWindow::openBookmark()
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		m_windowsManager->open(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
+		m_windowsManager->open(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen) | (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
 
 		m_ui->menuBookmarks->close();
 	}
