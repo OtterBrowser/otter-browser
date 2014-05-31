@@ -20,6 +20,7 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
+#include "BookmarksManager.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QUrl>
@@ -145,6 +146,7 @@ public:
 
 public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
+	void openBookmark(const BookmarkInformation *bookmark);
 	void search(const QString &query, const QString &engine);
 	void close(int index = -1);
 	void closeAll();
@@ -162,6 +164,7 @@ public slots:
 
 protected:
 	void openTab(QUrl url, OpenHints hints = DefaultOpen);
+	void gatherBookmarks(int folder);
 	int getWindowIndex(Window *window) const;
 
 protected slots:
@@ -181,6 +184,7 @@ private:
 	TabBarWidget *m_tabBar;
 	StatusBarWidget *m_statusBar;
 	QList<SessionWindow> m_closedWindows;
+	QList<QString> m_bookmarksToOpen;
 	int m_printedWindow;
 	bool m_isPrivate;
 	bool m_isRestored;

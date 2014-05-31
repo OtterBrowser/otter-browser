@@ -64,8 +64,9 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisit(const QUrl &url);
 	static BookmarksManager* getInstance();
+	static BookmarkInformation* getBookmark(const int identifier);
+	static BookmarkInformation* getBookmarkByKeyword(const QString &keyword);
 	static QStringList getUrls();
-	static QUrl getUrlByKeyword(const QString &keyword);
 	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);

@@ -59,7 +59,6 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
-	void gatherBookmarks(int folder);
 	void updateAction(QAction *source, QAction *target);
 	bool event(QEvent *event);
 
@@ -112,7 +111,6 @@ private:
 	QWinTaskbarButton *m_taskbarButton;
 #endif
 	QString m_currentBookmark;
-	QList<QString> m_bookmarksToOpen;
 	Ui::MainWindow *m_ui;
 
 signals:

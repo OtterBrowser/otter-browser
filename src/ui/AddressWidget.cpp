@@ -182,13 +182,17 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void AddressWidget::handleUserInput(const QString &text)
 {
-	const QUrl keywordUrl = BookmarksManager::getUrlByKeyword(text);
+	const BookmarkInformation *bookmark = BookmarksManager::getBookmarkByKeyword(text);
 
-	if (!keywordUrl.isEmpty())
+	if (bookmark)
 	{
-		emit requestedLoadUrl(keywordUrl);
+		WindowsManager *windowsManager = SessionsManager::getWindowsManager();
 
-		return;
+		if (windowsManager)
+		{
+			windowsManager->openBookmark(bookmark);
+			return;
+		}
 	}
 
 	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))

@@ -125,6 +125,23 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 
 			writer->writeTextElement(QLatin1String("title"), bookmark->title);
 
+			if (!bookmark->description.isEmpty())
+			{
+				writer->writeTextElement(QLatin1String("desc"), bookmark->description);
+			}
+
+			if (!bookmark->keyword.isEmpty())
+			{
+				writer->writeStartElement(QLatin1String("info"));
+				writer->writeStartElement(QLatin1String("metadata"));
+				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
+
+				writer->writeTextElement(QLatin1String("keyword"), bookmark->keyword);
+
+				writer->writeEndElement();
+				writer->writeEndElement();
+			}
+
 			for (int i = 0; i < bookmark->children.count(); ++i)
 			{
 				writeBookmark(writer, bookmark->children.at(i));
@@ -265,9 +282,14 @@ QStringList BookmarksManager::getUrls()
 	return m_urls.toList();
 }
 
-QUrl BookmarksManager::getUrlByKeyword(const QString &keyword)
+BookmarkInformation *BookmarksManager::getBookmark(const int identifier)
 {
-	return m_keywords.contains(keyword)? QUrl(m_keywords.value(keyword)->url): QUrl();
+	return m_pointers[identifier];
+}
+
+BookmarkInformation* BookmarksManager::getBookmarkByKeyword(const QString &keyword)
+{
+	return m_keywords.value(keyword);
 }
 
 BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)

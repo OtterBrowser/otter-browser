@@ -342,23 +342,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
-void MainWindow::gatherBookmarks(int folder)
-{
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		if (bookmarks.at(i)->type == FolderBookmark)
-		{
-			gatherBookmarks(bookmarks.at(i)->identifier);
-		}
-		else if (bookmarks.at(i)->type == UrlBookmark)
-		{
-			m_bookmarksToOpen.append(bookmarks.at(i)->url);
-		}
-	}
-}
-
 void MainWindow::openUrl(const QUrl &url)
 {
 	m_windowsManager->open(url);
@@ -535,40 +518,7 @@ void MainWindow::actionOpenBookmarkFolder()
 		return;
 	}
 
-	gatherBookmarks(action->data().toInt());
-
-	if (m_bookmarksToOpen.isEmpty())
-	{
-		return;
-	}
-
-	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
-	{
-		QMessageBox messageBox;
-		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
-		messageBox.setInformativeText("Do you want to continue?");
-		messageBox.setIcon(QMessageBox::Question);
-		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-		messageBox.setDefaultButton(QMessageBox::Yes);
-		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
-		if (messageBox.exec() == QMessageBox::Cancel)
-		{
-			m_bookmarksToOpen.clear();
-		}
-
-		SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
-	}
-
-	m_windowsManager->open(QUrl(m_bookmarksToOpen.at(0)), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
-
-	for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
-	{
-		m_windowsManager->open(QUrl(m_bookmarksToOpen.at(i)), NewTabOpen);
-	}
-
-	m_bookmarksToOpen.clear();
+	m_windowsManager->openBookmark(BookmarksManager::getBookmark(action->data().toInt()));
 }
 
 void MainWindow::actionCookies()

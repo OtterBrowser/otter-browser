@@ -31,7 +31,9 @@
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMdiSubWindow>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -89,6 +91,75 @@ void WindowsManager::openTab(QUrl url, OpenHints hints)
 	addWindow(window, hints);
 
 	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
+}
+
+void WindowsManager::openBookmark(const BookmarkInformation *bookmark)
+{
+	switch (bookmark->type)
+	{
+		case UrlBookmark:
+			open(QUrl(bookmark->url), CurrentTabOpen);
+
+			break;
+		case FolderBookmark:
+			{
+				gatherBookmarks(bookmark->identifier);
+
+				if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
+				{
+					QMessageBox messageBox;
+					messageBox.setWindowTitle(tr("Question"));
+					messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
+					messageBox.setInformativeText("Do you want to continue?");
+					messageBox.setIcon(QMessageBox::Question);
+					messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+					messageBox.setDefaultButton(QMessageBox::Yes);
+					messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+					if (messageBox.exec() == QMessageBox::Cancel)
+					{
+						m_bookmarksToOpen.clear();
+					}
+
+					SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
+				}
+
+				if (m_bookmarksToOpen.isEmpty())
+				{
+					return;
+				}
+
+				open(QUrl(m_bookmarksToOpen.at(0)), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
+
+				for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
+				{
+					open(QUrl(m_bookmarksToOpen.at(i)), NewTabOpen);
+				}
+
+				m_bookmarksToOpen.clear();
+			}
+
+			break;
+		default:
+			break;
+	}
+}
+
+void WindowsManager::gatherBookmarks(int folder)
+{
+	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
+
+	for (int i = 0; i < bookmarks.count(); ++i)
+	{
+		if (bookmarks.at(i)->type == FolderBookmark)
+		{
+			gatherBookmarks(bookmarks.at(i)->identifier);
+		}
+		else if (bookmarks.at(i)->type == UrlBookmark)
+		{
+			m_bookmarksToOpen.append(bookmarks.at(i)->url);
+		}
+	}
 }
 
 void WindowsManager::search(const QString &query, const QString &engine)
