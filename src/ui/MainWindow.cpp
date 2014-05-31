@@ -513,12 +513,10 @@ void MainWindow::actionOpenBookmarkFolder()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
 
-	if (!action)
+	if (action)
 	{
-		return;
+		m_windowsManager->open(BookmarksManager::getBookmark(action->data().toInt()));
 	}
-
-	m_windowsManager->openBookmark(BookmarksManager::getBookmark(action->data().toInt()));
 }
 
 void MainWindow::actionCookies()

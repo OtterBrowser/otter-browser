@@ -190,7 +190,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 		if (windowsManager)
 		{
-			windowsManager->openBookmark(bookmark);
+			windowsManager->open(bookmark);
 
 			return;
 		}

@@ -56,7 +56,6 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	void gatherBookmarks(int folder);
 	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
 	int findFolder(const QModelIndex &index);
 
@@ -78,7 +77,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QList<QString> m_bookmarksToOpen;
 	QHash<WindowAction, QAction*> m_actions;
 	bool m_isLoading;
 	Ui::BookmarksContentsWidget *m_ui;

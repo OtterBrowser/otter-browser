@@ -93,12 +93,17 @@ void WindowsManager::openTab(QUrl url, OpenHints hints)
 	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
 }
 
-void WindowsManager::openBookmark(const BookmarkInformation *bookmark)
+void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 {
+	if (hints == DefaultOpen && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	{
+		hints = CurrentTabOpen;
+	}
+
 	switch (bookmark->type)
 	{
 		case UrlBookmark:
-			open(QUrl(bookmark->url), CurrentTabOpen);
+			open(QUrl(bookmark->url), hints);
 
 			break;
 		case FolderBookmark:
@@ -129,11 +134,11 @@ void WindowsManager::openBookmark(const BookmarkInformation *bookmark)
 					return;
 				}
 
-				open(QUrl(m_bookmarksToOpen.at(0)), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
+				open(QUrl(m_bookmarksToOpen.at(0)), hints);
 
 				for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
 				{
-					open(QUrl(m_bookmarksToOpen.at(i)), NewTabOpen);
+					open(QUrl(m_bookmarksToOpen.at(i)), ((hints == DefaultOpen || hints == CurrentTabOpen) ? NewTabOpen : hints));
 				}
 
 				m_bookmarksToOpen.clear();

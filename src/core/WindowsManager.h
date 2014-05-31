@@ -146,7 +146,7 @@ public:
 
 public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
-	void openBookmark(const BookmarkInformation *bookmark);
+	void open(const BookmarkInformation *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine);
 	void close(int index = -1);
 	void closeAll();

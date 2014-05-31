@@ -196,56 +196,13 @@ void BookmarksContentsWidget::removeBookmark()
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
 	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(Qt::UserRole).value<void*>());
-
-	if (!bookmark || bookmark->type == SeparatorBookmark)
-	{
-		return;
-	}
-
-	if (bookmark->type == UrlBookmark)
-	{
-		QAction *action = qobject_cast<QAction*>(sender());
-
-		emit requestedOpenUrl(QUrl(bookmark->url), (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
-
-		return;
-	}
-
-	gatherBookmarks(bookmark->identifier);
-
-	if (m_bookmarksToOpen.isEmpty())
-	{
-		return;
-	}
-
-	if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
-	{
-		QMessageBox messageBox;
-		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
-		messageBox.setInformativeText("Do you want to continue?");
-		messageBox.setIcon(QMessageBox::Question);
-		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-		messageBox.setDefaultButton(QMessageBox::Yes);
-		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
-
-		if (messageBox.exec() == QMessageBox::Cancel)
-		{
-			m_bookmarksToOpen.clear();
-		}
-
-		SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
-	}
-
+	WindowsManager *manager = SessionsManager::getWindowsManager();
 	QAction *action = qobject_cast<QAction*>(sender());
-	const OpenHints hints = (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen);
 
-	for (int i = 0; i < m_bookmarksToOpen.count(); ++i)
+	if (bookmark && manager)
 	{
-		emit requestedOpenUrl(QUrl(m_bookmarksToOpen.at(i)), hints);
+		manager->open(bookmark, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 	}
-
-	m_bookmarksToOpen.clear();
 }
 
 void BookmarksContentsWidget::copyBookmarkLink()
@@ -313,23 +270,6 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
-}
-
-void BookmarksContentsWidget::gatherBookmarks(int folder)
-{
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		if (bookmarks.at(i)->type == FolderBookmark)
-		{
-			gatherBookmarks(bookmarks.at(i)->identifier);
-		}
-		else if (bookmarks.at(i)->type == UrlBookmark)
-		{
-			m_bookmarksToOpen.append(bookmarks.at(i)->url);
-		}
-	}
 }
 
 void BookmarksContentsWidget::triggerAction(WindowAction action, bool checked)
