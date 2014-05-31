@@ -7,7 +7,6 @@
 AppId={{A0517512-5271-465D-AE59-D08F487B5CAF}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
@@ -81,6 +80,7 @@ Source: "Z:\otter-browser-inno\input\Qt5Xml.dll"; DestDir: "{app}"; Flags: ignor
 Source: "Z:\otter-browser-inno\input\ssleay32.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\iconengines\*.*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\imageformats\*.*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs
+Source: "Z:\otter-browser-inno\input\locale\*.*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\platforms\*.*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\printsupport\*.*"; DestDir: "{app}\printsupport"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\sqldrivers\*.*"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion recursesubdirs
