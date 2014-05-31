@@ -284,7 +284,7 @@ QStringList BookmarksManager::getUrls()
 
 BookmarkInformation *BookmarksManager::getBookmark(const int identifier)
 {
-	return m_pointers[identifier];
+	return (m_pointers.contains(identifier) ? m_pointers[identifier] : NULL);
 }
 
 BookmarkInformation* BookmarksManager::getBookmarkByKeyword(const QString &keyword)
