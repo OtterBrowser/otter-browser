@@ -126,6 +126,8 @@ void Window::search(const QString &query, const QString &engine)
 		setContentsWidget(widget);
 	}
 
+	m_ui->addressWidget->clearFocus();
+
 	widget->search(query, engine);
 }
 
