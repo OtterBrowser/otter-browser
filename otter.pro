@@ -207,3 +207,5 @@ TRANSLATIONS += resources/translations/cs_CZ.ts \
     resources/translations/sr@latin.ts \
     resources/translations/tr_TR.ts \
     resources/translations/uk_UA.ts
+
+RC_FILE = otter-browser.rc

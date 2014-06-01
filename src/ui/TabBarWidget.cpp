@@ -345,7 +345,7 @@ void TabBarWidget::removeTab(int index)
 
 void TabBarWidget::showPreview(int index)
 {
-	if (!m_enablePreviews || parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse())
+	if (!m_enablePreviews || (parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse()))
 	{
 		hidePreview();
 
