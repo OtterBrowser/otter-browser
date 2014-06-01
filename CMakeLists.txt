@@ -159,5 +159,17 @@ qt5_use_modules(otter-browser PrintSupport Script Sql WebKitWidgets)
 
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
+file(GLOB _qm_files resources/translations/*.qm)
+
+foreach(_current_QM_FILE ${_qm_files})
+	install(FILES ${_current_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
+endforeach(_current_QM_FILE)
+
+install(FILES resources/icons/otter-browser-16.png DESTINATION /usr/share/icons/hicolor/16x16/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-32.png DESTINATION /usr/share/icons/hicolor/32x32/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-48.png DESTINATION /usr/share/icons/hicolor/48x48/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-64.png DESTINATION /usr/share/icons/hicolor/64x64/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-128.png DESTINATION /usr/share/icons/hicolor/128x128/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-256.png DESTINATION /usr/share/icons/hicolor/256x256/apps/ RENAME otter-browser.png)
 install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(TARGETS otter-browser DESTINATION bin)

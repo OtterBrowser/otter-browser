@@ -185,27 +185,27 @@ FORMS += src/ui/AuthenticationDialog.ui \
 
 RESOURCES += resources/resources.qrc
 
-TRANSLATIONS += resources/translations/cs_CZ.ts \
-    resources/translations/de_DE.ts \
-    resources/translations/en_GB.ts \
-    resources/translations/en_US.ts \
-    resources/translations/es_ES.ts \
-    resources/translations/et.ts \
-    resources/translations/fr_FR.ts \
-    resources/translations/id_ID.ts \
-    resources/translations/it_IT.ts \
-    resources/translations/lt.ts \
-    resources/translations/nl.ts \
-    resources/translations/pl_PL.ts \
-    resources/translations/pt_BR.ts \
-    resources/translations/pt_PT.ts \
-    resources/translations/ro.ts \
-    resources/translations/ru_RU.ts \
-    resources/translations/sr.ts \
-    resources/translations/sr@Ijekavian.ts \
-    resources/translations/sr@ijekavianlatin.ts \
-    resources/translations/sr@latin.ts \
-    resources/translations/tr_TR.ts \
-    resources/translations/uk_UA.ts
+TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
+    resources/translations/otter-browser_de_DE.ts \
+    resources/translations/otter-browser_en_GB.ts \
+    resources/translations/otter-browser_en_US.ts \
+    resources/translations/otter-browser_es_ES.ts \
+    resources/translations/otter-browser_et.ts \
+    resources/translations/otter-browser_fr_FR.ts \
+    resources/translations/otter-browser_id_ID.ts \
+    resources/translations/otter-browser_it_IT.ts \
+    resources/translations/otter-browser_lt.ts \
+    resources/translations/otter-browser_nl.ts \
+    resources/translations/otter-browser_pl_PL.ts \
+    resources/translations/otter-browser_pt_BR.ts \
+    resources/translations/otter-browser_pt_PT.ts \
+    resources/translations/otter-browser_ro.ts \
+    resources/translations/otter-browser_ru_RU.ts \
+    resources/translations/otter-browser_sr.ts \
+    resources/translations/otter-browser_sr@Ijekavian.ts \
+    resources/translations/otter-browser_sr@ijekavianlatin.ts \
+    resources/translations/otter-browser_sr@latin.ts \
+    resources/translations/otter-browser_tr_TR.ts \
+    resources/translations/otter-browser_uk_UA.ts
 
 RC_FILE = otter-browser.rc
