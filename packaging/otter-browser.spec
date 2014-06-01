@@ -1,6 +1,6 @@
 Name:          otter-browser
 Summary:       Otter Browser
-Version:       0.9.01-dev
+Version:       0.9.02-dev
 Release:       0%{dist}
 Group:         Applications/Internet
 License:       GPLv3
