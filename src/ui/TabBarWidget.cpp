@@ -49,7 +49,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
-	m_previewTimer(0)
+	m_previewTimer(0),
+	m_enablePreviews(true)
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
 	setDrawBase(false);
@@ -64,6 +65,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
 
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
+	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
@@ -343,7 +345,7 @@ void TabBarWidget::removeTab(int index)
 
 void TabBarWidget::showPreview(int index)
 {
-	if (parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse())
+	if (!m_enablePreviews || parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse())
 	{
 		hidePreview();
 
@@ -431,6 +433,10 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	if (option == QLatin1String("TabBar/ShowCloseButton"))
 	{
 		setTabsClosable(value.toBool());
+	}
+	else if (option == QLatin1String("TabBar/EnablePreviews"))
+	{
+		m_enablePreviews = value.toBool();
 	}
 }
 

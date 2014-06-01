@@ -83,6 +83,7 @@ private:
 	int m_clickedTab;
 	int m_hoveredTab;
 	int m_previewTimer;
+	bool m_enablePreviews;
 
 signals:
 	void requestedClone(int index);
