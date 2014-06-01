@@ -37,6 +37,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
+
+#include <QDebug>
+
 namespace Otter
 {
 
@@ -83,17 +86,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	m_clickedTab = tabAt(event->pos());
 
-	if (m_previewWidget && m_previewWidget->isVisible())
-	{
-		m_previewWidget->hide();
-	}
-
-	if (m_previewTimer > 0)
-	{
-		killTimer(m_previewTimer);
-
-		m_previewTimer = 0;
-	}
+	hidePreview();
 
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction(QLatin1String("NewTab")));
@@ -174,17 +167,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
-	if (m_previewWidget && m_previewWidget->isVisible())
-	{
-		m_previewWidget->hide();
-	}
-
-	if (m_previewTimer > 0)
-	{
-		killTimer(m_previewTimer);
-
-		m_previewTimer = 0;
-	}
+	hidePreview();
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
@@ -208,17 +191,7 @@ void TabBarWidget::leaveEvent(QEvent *event)
 {
 	QTabBar::leaveEvent(event);
 
-	if (m_previewTimer != 0)
-	{
-		killTimer(m_previewTimer);
-
-		m_previewTimer = 0;
-	}
-
-	if (m_previewWidget)
-	{
-		m_previewWidget->hide();
-	}
+	hidePreview();
 
 	m_tabSize = 0;
 	m_hoveredTab = -1;
@@ -370,6 +343,13 @@ void TabBarWidget::removeTab(int index)
 
 void TabBarWidget::showPreview(int index)
 {
+	if (parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse())
+	{
+		hidePreview();
+
+		return;
+	}
+
 	if (index >= 0 && m_clickedTab < 0)
 	{
 		if (!m_previewWidget)
@@ -428,6 +408,21 @@ void TabBarWidget::showPreview(int index)
 	else if (m_previewWidget)
 	{
 		m_previewWidget->hide();
+	}
+}
+
+void TabBarWidget::hidePreview()
+{
+	if (m_previewWidget)
+	{
+		m_previewWidget->hide();
+	}
+
+	if (m_previewTimer > 0)
+	{
+		killTimer(m_previewTimer);
+
+		m_previewTimer = 0;
 	}
 }
 

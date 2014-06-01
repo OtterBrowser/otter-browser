@@ -60,6 +60,7 @@ protected:
 	void tabRemoved(int index);
 	void tabHovered(int index);
 	void showPreview(int index);
+	void hidePreview();
 	QSize tabSizeHint(int index) const;
 
 protected slots:
