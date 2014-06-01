@@ -52,6 +52,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationVersion(QLatin1String("0.9.01-dev"));
+	setWindowIcon(QIcon::fromTheme(QLatin1String("otter-browser"), QIcon(QLatin1String(":/icons/otter-browser.png"))));
 
 	m_instance = this;
 
