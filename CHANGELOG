@@ -1,7 +1,11 @@
-0.9.01 (--.--2014):
+0.9.01 (01.06.2014):
+- added application icon by Walerian Walawski;
+- added error console;
+- added support for additional attributes for bookmarks;
+- added support for bookmark keyword;
+- allow to load translations (18 languages available);
 - allow to configure SSL ciphers priorities;
 - allow to compile using Qt stack available in Ubuntu (outdated QtWebKit);
-- added error console;
 - various minor fixes and improvements.
 
 0.5.01 (01.05.2014):
