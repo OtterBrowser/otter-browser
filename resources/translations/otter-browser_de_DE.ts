@@ -47,7 +47,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Bild neu laden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="253"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Reload Each</source>
-        <translation>Alle neuladen</translation>
+        <translation>Alle neu laden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="258"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Bild kopieren</translation>
+        <translation>Bild-Adresse kopieren</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
@@ -203,7 +203,7 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
@@ -237,7 +237,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="46"/>
         <source>Password:</source>
-        <translation>Passwort</translation>
+        <translation>Passwort:</translation>
     </message>
 </context>
 <context>
@@ -298,12 +298,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Aufrufe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Letzter Aufruf:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -325,7 +325,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
@@ -340,7 +340,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="125"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
@@ -367,7 +367,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
         <source>Folder Name</source>
-        <translation>Ordner Name</translation>
+        <translation>Ordner-Name</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
@@ -438,7 +438,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="127"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="136"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -928,7 +928,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="215"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="249"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
@@ -1453,7 +1453,7 @@ Wollen sie fortfahren?</translation>
         <location filename="../../src/ui/MainWindow.cpp" line="691"/>
         <location filename="../../src/ui/MainWindow.cpp" line="842"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="655"/>
@@ -2256,7 +2256,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1323"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1357"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="538"/>
@@ -2512,7 +2512,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1302"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1587"/>
@@ -2696,7 +2696,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/core/SessionsManager.cpp" line="198"/>
         <location filename="../../src/core/SessionsManager.cpp" line="213"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="213"/>
@@ -2745,12 +2745,12 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="44"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="67"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
@@ -2843,7 +2843,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="50"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="67"/>
@@ -2893,12 +2893,12 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Fenster %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
@@ -2932,12 +2932,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tab lösen</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tab anheften</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="109"/>
@@ -2947,12 +2947,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="127"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Andere Tabs schließen</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="384"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
 </context>
 <context>
@@ -3103,7 +3103,7 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="356"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="399"/>
@@ -3115,7 +3115,7 @@ Progress: %5&lt;/pre&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="399"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
-        <translation>Eine Datei mit dem selben Namen existiert bereits.
+        <translation>Eine Datei mit demselben Namen existiert bereits.
 Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
@@ -3147,7 +3147,7 @@ Select another one.</source>
 Do you want to overwrite it?
 
 %1</source>
-        <translation>Eine Datei mit dem selben Namen existiert bereits.
+        <translation>Eine Datei mit demselben Namen existiert bereits.
 Wollen Sie die Datei überschreiben?
 %1</translation>
     </message>
@@ -3157,7 +3157,7 @@ Wollen Sie die Datei überschreiben?
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="14"/>
         <source>Manage User Agents</source>
-        <translation type="unfinished"/>
+        <translation>Browser-Identifikationen verwalten</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="64"/>
@@ -3182,7 +3182,7 @@ Wollen Sie die Datei überschreiben?
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
 </context>
 <context>
@@ -3205,12 +3205,12 @@ Wollen Sie die Datei überschreiben?
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>Hervorheben</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="126"/>
         <source>Case Sensitive</source>
-        <translation>Groß-/Kleinschreibung Beachten</translation>
+        <translation>Groß-/Kleinschreibung beachten</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="139"/>
@@ -3237,17 +3237,17 @@ Wollen Sie die Datei überschreiben?
         <location filename="../../src/ui/Window.cpp" line="188"/>
         <location filename="../../src/ui/Window.cpp" line="208"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="256"/>
         <source>Select User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Browser-Identifikation auswählen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="256"/>
         <source>Input User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Browser-Identifikation eingeben:</translation>
     </message>
 </context>
 <context>
@@ -3260,12 +3260,12 @@ Wollen Sie die Datei überschreiben?
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="256"/>
         <source>Print Preview</source>
-        <translation>Druck Vorschau</translation>
+        <translation>Druckvorschau</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="402"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="596"/>
@@ -3316,7 +3316,7 @@ Wollen Sie die Datei überschreiben?
         <location filename="../../src/core/SessionsManager.h" line="73"/>
         <location filename="../../src/core/SessionsManager.h" line="76"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="77"/>
