@@ -22,12 +22,26 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
 
 namespace Otter
 {
 
 namespace Utils
 {
+
+QString elideText(const QString &text, QWidget *widget, int width)
+{
+	if (width < 0)
+	{
+		width = (QApplication::desktop()->screenGeometry().width() / 4);
+	}
+
+	const QFontMetrics fontMetrics = (widget ? widget->fontMetrics() : QApplication::fontMetrics());
+
+	return fontMetrics.elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), qMax(100, width));
+}
 
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote)
 {

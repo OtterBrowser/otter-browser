@@ -639,7 +639,7 @@ void MainWindow::menuUserAgentAboutToShow()
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
 		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
-		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : title));
+		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, m_ui->menuUserAgent)));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);
 		userAgentAction->setChecked(userAgent == userAgents.at(i));
@@ -691,7 +691,7 @@ void MainWindow::menuTextEncodingAboutToShow()
 				continue;
 			}
 
-			QAction *textCodecAction = m_ui->menuTextEncoding->addAction(codec->name());
+			QAction *textCodecAction = m_ui->menuTextEncoding->addAction(Utils::elideText(codec->name(), m_ui->menuTextEncoding));
 			textCodecAction->setData(textCodecs.at(i));
 			textCodecAction->setCheckable(true);
 
@@ -740,7 +740,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			m_ui->menuClosedWindows->addAction(m_ui->menuClosedWindows->fontMetrics().elidedText(tr("Window - %1").arg(windows.at(i)), Qt::ElideRight, 300), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
+			m_ui->menuClosedWindows->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), m_ui->menuClosedWindows), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
 		m_ui->menuClosedWindows->addSeparator();
@@ -751,7 +751,7 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), m_ui->menuClosedWindows->fontMetrics().elidedText(tabs.at(i).getTitle(), Qt::ElideRight, 300), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
+		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), m_ui->menuClosedWindows), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
 	m_closedWindowsMenu->addActions(m_ui->menuClosedWindows->actions());
@@ -790,7 +790,7 @@ void MainWindow::menuBookmarksAboutToShow()
 		{
 			if (bookmarks.at(i)->type == FolderBookmark || bookmarks.at(i)->type == UrlBookmark)
 			{
-				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon(QLatin1String("inode-directory")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : QString(bookmarks.at(i)->title).replace(QLatin1Char('&'), QLatin1String("&&"))));
+				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon(QLatin1String("inode-directory")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(bookmarks.at(i)->title).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
 				action->setToolTip(bookmarks.at(i)->description);
 
 				if (bookmarks.at(i)->type == FolderBookmark)
