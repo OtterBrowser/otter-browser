@@ -10,9 +10,9 @@
 
 QT += core gui network printsupport script sql webkitwidgets widgets
 
-win32 {
-    QT += winextras
-}
+win32: QT += winextras
+win32: INCLUDEPATH += .\
+unix: INCLUDEPATH += ./
 
 TARGET = otter-browser
 TEMPLATE = app
