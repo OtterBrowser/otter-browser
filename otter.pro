@@ -14,8 +14,16 @@ win32: QT += winextras
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
+isEmpty(PREFIX): PREFIX = /usr/local
+
 TARGET = otter-browser
+TARGET.path = $$PREFIX/
+
 TEMPLATE = app
+
+configHeader.input = config.h.qmake
+configHeader.output = config.h
+QMAKE_SUBSTITUTES += configHeader
 
 SOURCES += src/main.cpp \
     src/core/ActionsManager.cpp \

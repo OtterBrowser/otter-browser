@@ -27,6 +27,7 @@
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
+#include "./config.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QBuffer>
@@ -176,8 +177,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QTranslator *qtTranslator = new QTranslator(this);
 	qtTranslator->load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
-///FIXME set at compile time
-	QString localePath = QLatin1String("/usr/local/share/otter-browser/locale/");
+	QString localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
 
 	if (isPortable || QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
 	{
