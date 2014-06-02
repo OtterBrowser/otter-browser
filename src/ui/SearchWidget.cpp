@@ -197,6 +197,8 @@ void SearchWidget::currentSearchEngineChanged(int index)
 	else
 	{
 		lineEdit()->setPlaceholderText(QString());
+
+		return;
 	}
 
 	lineEdit()->setText(m_query);
@@ -228,7 +230,14 @@ void SearchWidget::searchEngineSelected(int index)
 	}
 	else
 	{
+		const QString query = m_query;
+
 		setCurrentIndex(m_index);
+
+		if (query != itemText(index))
+		{
+			lineEdit()->setText(query);
+		}
 
 		if (itemData(index, Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
 		{
