@@ -126,7 +126,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 	m_ui->actionClearHistory->setIcon(Utils::getIcon(QLatin1String("edit-clear-history")));
 	m_ui->actionAddBookmark->setIcon(Utils::getIcon(QLatin1String("bookmark-new")));
 	m_ui->actionManageBookmarks->setIcon(Utils::getIcon(QLatin1String("bookmarks-organize")));
-	m_ui->actionAboutApplication->setIcon(Utils::getIcon(QLatin1String("otter"), false));
+	m_ui->actionAboutApplication->setIcon(windowIcon());
 	m_ui->actionAboutQt->setIcon(Utils::getIcon(QLatin1String("qt"), false));
 	m_ui->statusBar->setup();
 

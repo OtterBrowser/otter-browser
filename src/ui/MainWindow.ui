@@ -360,7 +360,7 @@
   </action>
   <action name="actionAboutApplication">
    <property name="text">
-    <string>About Application...</string>
+    <string>About Otter...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
