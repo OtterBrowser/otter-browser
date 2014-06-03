@@ -67,6 +67,7 @@ public:
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
+	static bool isUsingSystemProxyAuthentication();
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
@@ -88,6 +89,7 @@ private:
 	static bool m_canSendReferrer;
 	static bool m_isWorkingOffline;
 	static bool m_isInitialized;
+	static bool m_isUsingSystemProxyAuthentication;
 };
 
 }

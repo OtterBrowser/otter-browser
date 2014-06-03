@@ -44,6 +44,7 @@ QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
 bool NetworkManagerFactory::m_canSendReferrer = false;
 bool NetworkManagerFactory::m_isWorkingOffline = false;
 bool NetworkManagerFactory::m_isInitialized = false;
+bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication = false;
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
@@ -73,6 +74,7 @@ void NetworkManagerFactory::initialize()
 	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
 	optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
 	optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
+	optionChanged(QLatin1String("Proxy/UseSystemAuthentication"), SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
@@ -126,6 +128,10 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 		}
 
 		QSslSocket::setDefaultCiphers(ciphers);
+	}
+	else if (option == QLatin1String("Proxy/UseSystemAuthentication"))
+	{
+		m_isUsingSystemProxyAuthentication = value.toBool();
 	}
 }
 
@@ -252,6 +258,11 @@ bool NetworkManagerFactory::canSendReferrer()
 bool NetworkManagerFactory::isWorkingOffline()
 {
 	return m_isWorkingOffline;
+}
+
+bool NetworkManagerFactory::isUsingSystemProxyAuthentication()
+{
+	return m_isUsingSystemProxyAuthentication;
 }
 
 }

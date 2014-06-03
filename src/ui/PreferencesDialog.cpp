@@ -290,6 +290,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 	m_ui->automaticProxyConfigurationLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")).toBool());
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
@@ -744,6 +745,16 @@ void PreferencesDialog::proxyModeChanged(int index)
 		m_ui->automaticProxyConfigurationWidget->setEnabled(false);
 		m_ui->automaticProxyConfigurationLineEdit->setEnabled(false);
 		m_ui->automaticProxyConfigurationButton->setEnabled(false);
+	}
+
+	if (index == 0)
+	{
+		m_ui->proxySystemAuthentication->setEnabled(false);
+		m_ui->proxySystemAuthentication->setChecked(false);
+	}
+	else
+	{
+		m_ui->proxySystemAuthentication->setEnabled(true);
 	}
 }
 
@@ -1272,6 +1283,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
 
 	if (m_userAgentsModified)
 	{

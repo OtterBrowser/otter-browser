@@ -203,6 +203,13 @@ void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthent
 
 void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
 {
+	if (NetworkManagerFactory::isUsingSystemProxyAuthentication())
+	{
+		authenticator->setUser(QString());
+
+		return;
+	}
+
 	if (m_widget)
 	{
 		AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);

@@ -1339,7 +1339,7 @@
           </layout>
          </widget>
          <widget class="QWidget" name="networkPage">
-          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,1">
+          <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,1">
            <item>
             <widget class="QLabel" name="advancedGeneralHeader">
              <property name="font">
@@ -1658,6 +1658,13 @@
               </layout>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="proxySystemAuthentication">
+             <property name="text">
+              <string>Use system authentication</string>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="networkPageSpacer">
