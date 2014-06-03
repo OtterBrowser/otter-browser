@@ -37,9 +37,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
-
-#include <QDebug>
-
 namespace Otter
 {
 

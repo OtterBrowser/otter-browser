@@ -86,7 +86,10 @@ void TransfersManager::timerEvent(QTimerEvent *event)
 		iterator.value()->speed = (iterator.value()->bytesReceivedDifference * 2);
 		iterator.value()->bytesReceivedDifference = 0;
 
-		emit m_instance->transferUpdated(iterator.value());
+		if (!iterator.value()->isHidden)
+		{
+			emit m_instance->transferUpdated(iterator.value());
+		}
 	}
 
 	save();
@@ -185,8 +188,11 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 		transfer->state = ErrorTransfer;
 	}
 
-	emit m_instance->transferFinished(transfer);
-	emit m_instance->transferUpdated(transfer);
+	if (!transfer->isHidden)
+	{
+		emit m_instance->transferFinished(transfer);
+		emit m_instance->transferUpdated(transfer);
+	}
 
 	if (transfer->device && !transfer->device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
 	{
@@ -233,7 +239,7 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->isPrivate || (m_transfers.at(i)->state == FinishedTransfer && m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > limit))
+		if (m_transfers.at(i)->isPrivate || m_transfers.at(i)->isHidden || (m_transfers.at(i)->state == FinishedTransfer && m_transfers.at(i)->finished.isValid() && m_transfers.at(i)->finished.daysTo(QDateTime::currentDateTime()) > limit))
 		{
 			continue;
 		}
@@ -269,16 +275,16 @@ TransfersManager* TransfersManager::getInstance()
 	return m_instance;
 }
 
-TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer, bool quickTransfer)
+TransferInformation* TransfersManager::startTransfer(const QString &source, const QString &target, bool privateTransfer, bool quickTransfer, bool skipTransfers)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setUrl(QUrl(source));
 
-	return startTransfer(request, target, privateTransfer, quickTransfer);
+	return startTransfer(request, target, privateTransfer, quickTransfer, skipTransfers);
 }
 
-TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer, bool quickTransfer)
+TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool privateTransfer, bool quickTransfer, bool skipTransfers)
 {
 	if (!m_networkManager)
 	{
@@ -286,10 +292,10 @@ TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &requ
 		m_networkManager->setParent(m_instance);
 	}
 
-	return startTransfer(m_networkManager->get(request), target, privateTransfer, quickTransfer);
+	return startTransfer(m_networkManager->get(request), target, privateTransfer, quickTransfer, skipTransfers);
 }
 
-TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer, bool quickTransfer)
+TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool privateTransfer, bool quickTransfer, bool skipTransfers)
 {
 	if (!reply)
 	{
@@ -302,8 +308,9 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
 	transfer->started = QDateTime::currentDateTime();
-	transfer->isPrivate = privateTransfer;
 	transfer->bytesTotal = reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
+	transfer->isPrivate = privateTransfer;
+	transfer->isHidden = skipTransfers;
 
 	if (!transfer->device->open(QIODevice::ReadWrite))
 	{
@@ -402,44 +409,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			}
 		}
 
-		do
-		{
-			if (path.isEmpty())
-			{
-				path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
-
-				if (path.isEmpty())
-				{
-					break;
-				}
-			}
-
-			const bool exists = QFile::exists(path);
-
-			if (isDownloading(QString(), path))
-			{
-				path = QString();
-
-				if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is already used by another transfer.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
-				{
-					break;
-				}
-			}
-			else if ((exists && !QFileInfo(path).isWritable()) || (!exists && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
-			{
-				path = QString();
-
-				if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
-				{
-					break;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-		while (true);
+		path = getSavePath(fileName, path);
 
 		if (path.isEmpty())
 		{
@@ -456,8 +426,6 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 			return NULL;
 		}
-
-		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
 
 		transfer->target = path;
 	}
@@ -535,7 +503,10 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		}
 	}
 
-	emit m_instance->transferStarted(transfer);
+	if (!transfer->isHidden)
+	{
+		emit m_instance->transferStarted(transfer);
+	}
 
 	if (m_replies.contains(reply) && replyPointer)
 	{
@@ -546,10 +517,62 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		file->close();
 		file->deleteLater();
 
-		emit m_instance->transferFinished(transfer);
+		if (!transfer->isHidden)
+		{
+			emit m_instance->transferFinished(transfer);
+		}
 	}
 
 	return transfer;
+}
+
+QString TransfersManager::getSavePath(const QString &fileName, QString path)
+{
+	do
+	{
+		if (path.isEmpty())
+		{
+			path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
+
+			if (path.isEmpty())
+			{
+				break;
+			}
+		}
+
+		const bool exists = QFile::exists(path);
+
+		if (isDownloading(QString(), path))
+		{
+			path = QString();
+
+			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is already used by another transfer.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			{
+				break;
+			}
+		}
+		else if ((exists && !QFileInfo(path).isWritable()) || (!exists && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
+		{
+			path = QString();
+
+			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			{
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	while (true);
+
+	if (!path.isEmpty())
+	{
+		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
+	}
+
+	return path;
 }
 
 QList<TransferInformation*> TransfersManager::getTransfers()
@@ -669,7 +692,10 @@ bool TransfersManager::removeTransfer(TransferInformation *transfer, bool keepFi
 
 	m_transfers.removeAll(transfer);
 
-	emit m_instance->transferRemoved(transfer);
+	if (!transfer->isHidden)
+	{
+		emit m_instance->transferRemoved(transfer);
+	}
 
 	delete transfer;
 
@@ -699,8 +725,11 @@ bool TransfersManager::stopTransfer(TransferInformation *transfer)
 	transfer->state = ErrorTransfer;
 	transfer->finished = QDateTime::currentDateTime();
 
-	emit m_instance->transferStopped(transfer);
-	emit m_instance->transferUpdated(transfer);
+	if (!transfer->isHidden)
+	{
+		emit m_instance->transferStopped(transfer);
+		emit m_instance->transferUpdated(transfer);
+	}
 
 	return true;
 }

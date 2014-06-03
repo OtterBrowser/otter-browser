@@ -49,6 +49,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
@@ -287,7 +288,43 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 {
-	TransfersManager::startTransfer(request, QString(), isPrivate());
+	if (!m_hitResult.imageUrl().isEmpty() && request.url() == m_hitResult.imageUrl())
+	{
+		NetworkCache *cache = NetworkManagerFactory::getCache();
+
+		if (cache && cache->metaData(request.url()).isValid())
+		{
+			const QString path = TransfersManager::getSavePath(request.url().fileName());
+
+			if (!path.isEmpty())
+			{
+				QFile file(path);
+
+				if (!file.open(QFile::WriteOnly))
+				{
+					QMessageBox::critical(SessionsManager::getActiveWindow(), tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
+				}
+
+				QIODevice* device = cache->data(request.url());
+
+				file.write(device->readAll());
+				file.close();
+
+				device->deleteLater();
+			}
+
+			return;
+		}
+
+		QNetworkRequest mutableRequest(request);
+		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+		TransfersManager::startTransfer(mutableRequest, QString(), isPrivate(), false, true);
+	}
+	else
+	{
+		TransfersManager::startTransfer(request, QString(), isPrivate());
+	}
 }
 
 void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)

@@ -113,6 +113,11 @@ void TransfersContentsWidget::triggerAction()
 
 void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 {
+	if (!transfer || transfer->isHidden)
+	{
+		return;
+	}
+
 	QList<QStandardItem*> items;
 	QStandardItem *item = new QStandardItem();
 	item->setData(qVariantFromValue((void*) transfer), Qt::UserRole);

@@ -50,8 +50,9 @@ struct TransferInformation
 	qint64 bytesTotal;
 	TransferState state;
 	bool isPrivate;
+	bool isHidden;
 
-	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false) {}
+	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false), isHidden(false) {}
 };
 
 class NetworkManager;
@@ -66,9 +67,10 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
-	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
-	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
-	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false);
+	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
+	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
+	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
+	static QString getSavePath(const QString &fileName, QString path = QString());
 	static QList<TransferInformation*> getTransfers();
 	static bool resumeTransfer(TransferInformation *transfer);
 	static bool restartTransfer(TransferInformation *transfer);
