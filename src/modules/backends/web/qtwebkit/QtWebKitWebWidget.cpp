@@ -289,16 +289,29 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 {
+#if QTWEBKIT_VERSION >= 0x050200
+	if ((!m_hitResult.imageUrl().isEmpty() && request.url() == m_hitResult.imageUrl()) || (!m_hitResult.mediaUrl().isEmpty() && request.url() == m_hitResult.mediaUrl()))
+#else
 	if (!m_hitResult.imageUrl().isEmpty() && request.url() == m_hitResult.imageUrl())
+#endif
 	{
 		NetworkCache *cache = NetworkManagerFactory::getCache();
 
 		if (cache && cache->metaData(request.url()).isValid())
 		{
-			const QString path = TransfersManager::getSavePath(request.url().fileName());
+			QIODevice* device = cache->data(request.url());
 
-			if (!path.isEmpty())
+			if (device && device->size() > 0)
 			{
+				const QString path = TransfersManager::getSavePath(request.url().fileName());
+
+				if (path.isEmpty())
+				{
+					device->deleteLater();
+
+					return;
+				}
+
 				QFile file(path);
 
 				if (!file.open(QFile::WriteOnly))
@@ -306,15 +319,15 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 					QMessageBox::critical(SessionsManager::getActiveWindow(), tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
 				}
 
-				QIODevice* device = cache->data(request.url());
-
 				file.write(device->readAll());
 				file.close();
 
 				device->deleteLater();
+
+				return;
 			}
 
-			return;
+			device->deleteLater();
 		}
 
 		QNetworkRequest mutableRequest(request);
