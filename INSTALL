@@ -1,15 +1,15 @@
-To install Otter Browser from source you need to have Qt SDK installed (http://qt-project.org/), at least version 5.2 of framework.
+To install Otter Browser from source you need to have Qt SDK (5.2.0 or newer) installed (http://qt-project.org/).
 
-You can use either Qt Creator IDE to compile sources or execute following commands in directory containing otter.pro file:
-mkdir build
-cd build
-qmake ../otter.pro
-make
-make install
-
-Alternatively you can use CMake build system:
+You can use CMake (2.8.10.2 or newer) build system (preferred):
 mkdir build
 cd build
 cmake ../
+make
+make install
+
+Alternatively you can use either Qt Creator IDE to compile sources or execute following commands in directory containing otter.pro file:
+mkdir build
+cd build
+qmake ../otter.pro
 make
 make install
