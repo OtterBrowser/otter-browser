@@ -376,7 +376,10 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 		return NULL;
 	}
 
-	return new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), NULL);
+	WebContentsWidget* webWidget = new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), NULL);
+	webWidget->m_webWidget->setRequestedUrl(m_webWidget->getUrl(), false, true);
+
+	return webWidget;
 }
 
 QAction* WebContentsWidget::getAction(WindowAction action)

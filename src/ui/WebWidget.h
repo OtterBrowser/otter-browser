@@ -98,7 +98,7 @@ public slots:
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
-	void setRequestedUrl(const QUrl &url, bool typed = true);
+	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
 
 protected:
 	explicit WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent = NULL);

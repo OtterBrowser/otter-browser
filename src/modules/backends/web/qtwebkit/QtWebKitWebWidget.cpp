@@ -166,6 +166,8 @@ void QtWebKitWebWidget::search(const QString &query, const QString &engine)
 
 	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
 	{
+		setRequestedUrl(request.url(), false, true);
+
 		m_webView->page()->mainFrame()->load(request, method, body);
 	}
 }

@@ -129,6 +129,8 @@ void Window::search(const QString &query, const QString &engine)
 	m_ui->addressWidget->clearFocus();
 
 	widget->search(query, engine);
+
+	m_ui->addressWidget->setUrl(getUrl());
 }
 
 void Window::goToHistoryIndex(QAction *action)
