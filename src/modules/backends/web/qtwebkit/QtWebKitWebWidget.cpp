@@ -79,12 +79,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
-
-	m_networkManager = NetworkManagerFactory::createManager(privateWindow, false, parent);
-	m_networkManager->setParent(m_page);
-
-	m_page->setNetworkAccessManager(m_networkManager);
-	m_page->setForwardUnsupportedContent(true);
+	setNetworkManager(NetworkManagerFactory::createManager(privateWindow, false, parent));
 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -146,8 +141,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
-	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 }
 
@@ -394,6 +387,23 @@ void QtWebKitWebWidget::openUrl(QUrl url, OpenHints hints)
 	widget->setRequestedUrl(url);
 
 	emit requestedNewWindow(widget, hints);
+}
+
+void QtWebKitWebWidget::setNetworkManager(NetworkManager *manager)
+{
+	if (m_networkManager)
+	{
+		m_networkManager->deleteLater();
+	}
+
+	m_networkManager = manager;
+	m_networkManager->setParent(m_page);
+
+	m_page->setNetworkAccessManager(m_networkManager);
+	m_page->setForwardUnsupportedContent(true);
+
+	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
+	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()
@@ -1079,6 +1089,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
 	const QPair<QString, QString> userAgent = getUserAgent();
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
+	widget->setNetworkManager(m_networkManager->clone(NULL));
 	widget->setDefaultTextEncoding(getDefaultTextEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
@@ -1500,7 +1511,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 		information.entries.append(entry);
 	}
-	
+
 	if (isLoading() && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
 	{
 		WindowHistoryEntry entry;
@@ -1508,7 +1519,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		entry.title = getTitle();
 		entry.position = data.value(QLatin1String("position"), QPoint(0, 0)).toPoint();
 		entry.zoom = data.value(QLatin1String("zoom")).toInt();
-		
+
 		information.index = historyCount;
 		information.entries.append(entry);
 	}

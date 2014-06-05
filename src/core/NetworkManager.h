@@ -32,10 +32,11 @@ class NetworkManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
-	explicit NetworkManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
+	explicit NetworkManager(bool isPrivate = false, bool useSimpleMode = false, ContentsWidget *widget = NULL);
 
 	void resetStatistics();
 	void setUserAgent(const QString &identifier, const QString &value);
+	NetworkManager* clone(ContentsWidget *parent);
 	QPair<QString, QString> getUserAgent() const;
 
 protected:
@@ -63,7 +64,7 @@ private:
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
-	bool m_simpleMode;
+	bool m_useSimpleMode;
 
 signals:
 	void messageChanged(const QString &message = QString());

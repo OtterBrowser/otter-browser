@@ -80,6 +80,7 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(QUrl url, OpenHints hints = DefaultOpen);
+	void setNetworkManager(NetworkManager *manager);
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(WindowAction action) const;
 

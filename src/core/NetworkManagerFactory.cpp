@@ -35,7 +35,6 @@ namespace Otter
 
 NetworkManagerFactory* NetworkManagerFactory::m_instance = NULL;
 CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
-QNetworkCookieJar* NetworkManagerFactory::m_privateCookieJar = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
 QStringList NetworkManagerFactory::m_userAgentsOrder;
 QHash<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
@@ -186,19 +185,14 @@ NetworkManagerFactory *NetworkManagerFactory::getInstance()
 	return m_instance;
 }
 
-QNetworkCookieJar* NetworkManagerFactory::getCookieJar(bool privateCookieJar)
+QNetworkCookieJar* NetworkManagerFactory::getCookieJar()
 {
-	if (!m_cookieJar && !privateCookieJar)
+	if (!m_cookieJar)
 	{
-		m_cookieJar = new CookieJar(QCoreApplication::instance());
+		m_cookieJar = new CookieJar(false, QCoreApplication::instance());
 	}
 
-	if (!m_privateCookieJar && privateCookieJar)
-	{
-		m_privateCookieJar = new QNetworkCookieJar(QCoreApplication::instance());
-	}
-
-	return (privateCookieJar ? m_privateCookieJar : m_cookieJar);
+	return m_cookieJar;
 }
 
 NetworkCache* NetworkManagerFactory::getCache()

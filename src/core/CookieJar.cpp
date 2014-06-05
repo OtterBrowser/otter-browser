@@ -28,10 +28,16 @@
 namespace Otter
 {
 
-CookieJar::CookieJar(QObject *parent) : QNetworkCookieJar(parent),
+CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent),
 	m_saveTimer(0),
-	m_enableCookies(true)
+	m_enableCookies(true),
+	m_isPrivate(isPrivate)
 {
+	if (isPrivate)
+	{
+		return;
+	}
+
 	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
 
 	if (!file.open(QIODevice::ReadOnly))
@@ -102,7 +108,7 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 void CookieJar::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (!m_isPrivate && m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(500);
 	}
@@ -126,6 +132,14 @@ void CookieJar::clearCookies(int period)
 
 	setAllCookies(QList<QNetworkCookie>());
 	scheduleSave();
+}
+
+CookieJar* CookieJar::clone(QObject *parent)
+{
+	CookieJar *cookieJar = new CookieJar(m_isPrivate, parent);
+	cookieJar->setAllCookies(allCookies());
+
+	return cookieJar;
 }
 
 QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const

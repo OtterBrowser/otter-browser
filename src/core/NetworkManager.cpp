@@ -36,7 +36,7 @@
 namespace Otter
 {
 
-NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
+NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
 	m_mainReply(NULL),
 	m_speed(0),
@@ -46,21 +46,25 @@ NetworkManager::NetworkManager(bool privateWindow, bool simpleMode, ContentsWidg
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
-	m_simpleMode(simpleMode)
+	m_useSimpleMode(useSimpleMode)
 {
-	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar(privateWindow);
-
-	setCookieJar(cookieJar);
-
-	cookieJar->setParent(QCoreApplication::instance());
-
-	if (!privateWindow)
+	if (!isPrivate)
 	{
+		QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
+
+		setCookieJar(cookieJar);
+
+		cookieJar->setParent(QCoreApplication::instance());
+
 		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
 
 		setCache(cache);
 
 		cache->setParent(QCoreApplication::instance());
+	}
+	else
+	{
+		setCookieJar(new CookieJar(true, this));
 	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
@@ -150,7 +154,7 @@ void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
 void NetworkManager::requestFinished(QNetworkReply *reply)
 {
-	if (!m_simpleMode)
+	if (!m_useSimpleMode)
 	{
 		m_replies.remove(reply);
 
@@ -166,7 +170,7 @@ void NetworkManager::requestFinished(QNetworkReply *reply)
 		++m_finishedRequests;
 	}
 
-	if (!m_simpleMode && reply)
+	if (!m_useSimpleMode && reply)
 	{
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 	}
@@ -287,9 +291,17 @@ void NetworkManager::setUserAgent(const QString &identifier, const QString &valu
 	m_userAgentValue = value;
 }
 
+NetworkManager* NetworkManager::clone(ContentsWidget *parent)
+{
+	NetworkManager *manager = NetworkManagerFactory::createManager((cache() == NULL), m_useSimpleMode, parent);
+	manager->setCookieJar(qobject_cast<CookieJar*>(cookieJar())->clone(manager));
+
+	return manager;
+}
+
 QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-	if (!m_simpleMode)
+	if (!m_useSimpleMode)
 	{
 		++m_startedRequests;
 	}
@@ -327,7 +339,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		m_mainReply = reply;
 	}
 
-	if (!m_simpleMode)
+	if (!m_useSimpleMode)
 	{
 		m_replies[reply] = qMakePair(0, false);
 

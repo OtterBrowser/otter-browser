@@ -59,7 +59,7 @@ public:
 	static void loadUserAgents();
 	static NetworkManager* createManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
 	static NetworkManagerFactory* getInstance();
-	static QNetworkCookieJar* getCookieJar(bool privateCookieJar = false);
+	static QNetworkCookieJar* getCookieJar();
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
 	static QStringList getUserAgents();
@@ -80,7 +80,6 @@ protected slots:
 private:
 	static NetworkManagerFactory *m_instance;
 	static CookieJar *m_cookieJar;
-	static QNetworkCookieJar *m_privateCookieJar;
 	static NetworkCache *m_cache;
 	static QStringList m_userAgentsOrder;
 	static QHash<QString, UserAgentInformation> m_userAgents;

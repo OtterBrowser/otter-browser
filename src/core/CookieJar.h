@@ -32,7 +32,7 @@ class CookieJar : public QNetworkCookieJar
 	Q_ENUMS(KeepCookiesPolicy ThirdPartyCookiesAcceptPolicy)
 
 public:
-	explicit CookieJar(QObject *parent = NULL);
+	explicit CookieJar(bool isPrivate, QObject *parent = NULL);
 
 	enum KeepCookiesPolicy
 	{
@@ -49,6 +49,7 @@ public:
 	};
 
 	void clearCookies(int period = 0);
+	CookieJar* clone(QObject *parent = NULL);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies() const;
 
@@ -65,6 +66,7 @@ protected slots:
 private:
 	int m_saveTimer;
 	bool m_enableCookies;
+	bool m_isPrivate;
 
 signals:
 	void cookieAdded(QNetworkCookie cookie);
