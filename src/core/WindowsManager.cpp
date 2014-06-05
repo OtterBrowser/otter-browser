@@ -514,7 +514,7 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
 
-		if (!history.entries.isEmpty())
+		if (!window->isUrlEmpty() || history.entries.count() > 1)
 		{
 			const SessionWindow information = window->getSession();
 
