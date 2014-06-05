@@ -60,7 +60,7 @@ class Window : public QWidget
 	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
-	explicit Window(bool privateWindow, ContentsWidget *widget, QWidget *parent = NULL);
+	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
 	void close();

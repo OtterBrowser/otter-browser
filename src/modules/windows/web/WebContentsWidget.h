@@ -38,7 +38,7 @@ class WebContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	explicit WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window);
+	explicit WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window);
 	~WebContentsWidget();
 
 	void search(const QString &search, const QString &query);

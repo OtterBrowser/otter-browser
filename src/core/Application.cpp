@@ -235,13 +235,13 @@ void Application::newConnection()
 	parser->parse(decodedArguments);
 
 	const QString session = parser->value(QLatin1String("session"));
-	const bool privateSession = parser->isSet(QLatin1String("privatesession"));
+	const bool isPrivate = parser->isSet(QLatin1String("privatesession"));
 
 	if (session.isEmpty())
 	{
-		if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (privateSession && !window->getWindowsManager()->isPrivate()))
+		if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
-			window = createWindow(privateSession);
+			window = createWindow(isPrivate);
 		}
 	}
 	else
@@ -252,7 +252,7 @@ void Application::newConnection()
 		{
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
-				createWindow(privateSession, false, sessionData.windows.at(i));
+				createWindow(isPrivate, false, sessionData.windows.at(i));
 			}
 		}
 	}
@@ -285,9 +285,9 @@ void Application::newConnection()
 	delete parser;
 }
 
-void Application::newWindow(bool privateSession, bool background, const QUrl &url)
+void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 {
-	MainWindow *window = createWindow(privateSession, background);
+	MainWindow *window = createWindow(isPrivate, inBackground);
 
 	if (url.isValid() && window)
 	{
@@ -300,20 +300,20 @@ Application* Application::getInstance()
 	return m_instance;
 }
 
-MainWindow* Application::createWindow(bool privateSession, bool background, const SessionMainWindow &windows)
+MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const SessionMainWindow &windows)
 {
-	MainWindow *window = new MainWindow(privateSession, windows);
+	MainWindow *window = new MainWindow(isPrivate, windows);
 
 	m_windows.prepend(window);
 
-	if (background)
+	if (inBackground)
 	{
 		window->setAttribute(Qt::WA_ShowWithoutActivating, true);
 	}
 
 	window->show();
 
-	if (background)
+	if (inBackground)
 	{
 		window->lower();
 		window->setAttribute(Qt::WA_ShowWithoutActivating, false);

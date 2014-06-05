@@ -32,7 +32,7 @@ class QtWebKitWebBackend : public WebBackend
 public:
 	explicit QtWebKitWebBackend(QObject *parent = NULL);
 
-	WebWidget* createWidget(bool privateWindow = false, ContentsWidget *parent = NULL);
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL);
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;

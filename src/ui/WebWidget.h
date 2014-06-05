@@ -101,7 +101,7 @@ public slots:
 	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
 
 protected:
-	explicit WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent = NULL);
+	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
 protected slots:
 	void quickSearch(QAction *action);

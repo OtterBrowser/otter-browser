@@ -42,14 +42,14 @@ public:
 
 	void removeWindow(MainWindow* window);
 	static Application* getInstance();
-	MainWindow* createWindow(bool privateSession = false, bool background = false, const SessionMainWindow &windows = SessionMainWindow());
+	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	MainWindow* getWindow();
 	QCommandLineParser* getParser() const;
 	QList<MainWindow*> getWindows();
 	bool isRunning() const;
 
 public slots:
-	void newWindow(bool privateSession = false, bool background = false, const QUrl &url = QUrl());
+	void newWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 
 protected slots:
 	void newConnection();

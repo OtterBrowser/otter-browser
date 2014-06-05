@@ -49,7 +49,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_sessionsGroup(NULL),
 	m_textEncodingGroup(NULL),
@@ -141,7 +141,7 @@ MainWindow::MainWindow(bool privateSession, const SessionMainWindow &windows, QW
 
 	setCentralWidget(mdiWidget);
 
-	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (privateSession || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(m_windowsManager);
 

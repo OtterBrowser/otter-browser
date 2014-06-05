@@ -30,11 +30,11 @@
 namespace Otter
 {
 
-WebWidget::WebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
+WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
 	m_quickSearchMenu(NULL)
 {
-	Q_UNUSED(privateWindow)
+	Q_UNUSED(isPrivate)
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }

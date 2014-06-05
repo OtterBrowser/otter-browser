@@ -37,7 +37,7 @@ class WebBackend : public QObject
 public:
 	explicit WebBackend(QObject *parent = NULL);
 
-	virtual WebWidget* createWidget(bool privateWindow = false, ContentsWidget *parent = NULL) = 0;
+	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL) = 0;
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const = 0;
 	virtual QString getVersion() const = 0;

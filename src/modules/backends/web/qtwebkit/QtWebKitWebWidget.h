@@ -75,7 +75,7 @@ public slots:
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
-	explicit QtWebKitWebWidget(bool privateWindow = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
+	explicit QtWebKitWebWidget(bool isPrivate = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();

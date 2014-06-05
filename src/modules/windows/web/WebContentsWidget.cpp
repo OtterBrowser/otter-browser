@@ -33,7 +33,7 @@ namespace Otter
 
 QString WebContentsWidget::m_quickFindQuery = NULL;
 
-WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Window *window) : ContentsWidget(window),
+WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
 	m_progressBarWidget(NULL),
 	m_progressBarTimer(0),
@@ -46,7 +46,7 @@ WebContentsWidget::WebContentsWidget(bool privateWindow, WebWidget *widget, Wind
 	}
 	else
 	{
-		m_webWidget = WebBackendsManager::getBackend()->createWidget(privateWindow, this);
+		m_webWidget = WebBackendsManager::getBackend()->createWidget(isPrivate, this);
 	}
 
 	setFocusPolicy(Qt::StrongFocus);

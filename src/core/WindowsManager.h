@@ -128,7 +128,7 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession = false);
+	explicit WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool isPrivate = false);
 
 	QAction* getAction(WindowAction action);
 	Window* getWindow(int index) const;
@@ -191,7 +191,7 @@ private:
 
 signals:
 	void requestedAddBookmark(QUrl url, QString title);
-	void requestedNewWindow(bool privateSession, bool background, QUrl url);
+	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void windowAdded(int index);

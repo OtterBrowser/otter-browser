@@ -39,10 +39,10 @@
 namespace Otter
 {
 
-Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
+Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_contentsWidget(NULL),
 	m_isPinned(false),
-	m_isPrivate(privateWindow),
+	m_isPrivate(isPrivate),
 	m_ui(new Ui::Window)
 {
 	m_ui->setupUi(this);
@@ -57,7 +57,7 @@ Window::Window(bool privateWindow, ContentsWidget *widget, QWidget *parent) : QW
 	{
 		m_ui->addressWidget->setWindow(this);
 	}
-	
+
 
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));

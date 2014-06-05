@@ -57,7 +57,7 @@
 namespace Otter
 {
 
-QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, ContentsWidget *parent) : WebWidget(privateWindow, backend, parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(new QtWebKitWebPage(this)),
 	m_inspector(NULL),
@@ -79,12 +79,12 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool privateWindow, WebBackend *backend, Co
 
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
-	setNetworkManager(NetworkManagerFactory::createManager(privateWindow, false, parent));
+	setNetworkManager(NetworkManagerFactory::createManager(isPrivate, false, parent));
 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, privateWindow);
+	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
 	ActionsManager::setupLocalAction(getAction(CutAction), QLatin1String("Cut"));

@@ -38,12 +38,12 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool privateSession) : QObject(mdi),
+WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool isPrivate) : QObject(mdi),
 	m_mdi(mdi),
 	m_tabBar(tabBar),
 	m_statusBar(statusBar),
 	m_printedWindow(-1),
-	m_isPrivate(privateSession),
+	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
 }

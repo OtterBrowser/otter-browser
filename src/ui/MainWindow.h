@@ -47,7 +47,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(bool privateSession = false, const SessionMainWindow &windows = SessionMainWindow(), QWidget *parent = NULL);
+	explicit MainWindow(bool isPrivate = false, const SessionMainWindow &windows = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
 	WindowsManager* getWindowsManager();
@@ -114,7 +114,7 @@ private:
 	Ui::MainWindow *m_ui;
 
 signals:
-	void requestedNewWindow(bool privateSession = false, bool background = false, QUrl url = QUrl());
+	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, QUrl url = QUrl());
 };
 
 }

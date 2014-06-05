@@ -57,7 +57,7 @@ public:
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static void loadUserAgents();
-	static NetworkManager* createManager(bool privateWindow = false, bool simpleMode = false, ContentsWidget *widget = NULL);
+	static NetworkManager* createManager(bool isPrivate = false, bool useSimpleMode = false, ContentsWidget *widget = NULL);
 	static NetworkManagerFactory* getInstance();
 	static QNetworkCookieJar* getCookieJar();
 	static NetworkCache* getCache();

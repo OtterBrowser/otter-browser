@@ -71,7 +71,7 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 	globalSettings->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(QLatin1String("Content/OfflineWebApplicationCacheLimit")).toInt() * 1024);
 }
 
-WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *parent)
+WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
 	{
@@ -100,7 +100,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool privateWindow, ContentsWidget *
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
 
-	return new QtWebKitWebWidget(privateWindow, this, parent);
+	return new QtWebKitWebWidget(isPrivate, this, parent);
 }
 
 QString QtWebKitWebBackend::getTitle() const

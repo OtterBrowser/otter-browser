@@ -291,7 +291,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 	return true;
 }
 
-bool SessionsManager::restoreSession(const SessionInformation &session, MainWindow *window, bool privateSession)
+bool SessionsManager::restoreSession(const SessionInformation &session, MainWindow *window, bool isPrivate)
 {
 	if (session.windows.isEmpty())
 	{
@@ -316,7 +316,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		}
 		else
 		{
-			Application::getInstance()->createWindow(privateSession, false, session.windows.at(i));
+			Application::getInstance()->createWindow(isPrivate, false, session.windows.at(i));
 		}
 	}
 

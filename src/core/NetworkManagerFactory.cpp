@@ -170,14 +170,14 @@ void NetworkManagerFactory::loadUserAgents()
 	m_userAgents = userAgents;
 }
 
-NetworkManager* NetworkManagerFactory::createManager(bool privateWindow, bool simpleMode, ContentsWidget *widget)
+NetworkManager* NetworkManagerFactory::createManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget)
 {
 	if (!m_isInitialized)
 	{
 		m_instance->initialize();
 	}
 
-	return new NetworkManager(privateWindow, simpleMode, widget);
+	return new NetworkManager(isPrivate, useSimpleMode, widget);
 }
 
 NetworkManagerFactory *NetworkManagerFactory::getInstance()
