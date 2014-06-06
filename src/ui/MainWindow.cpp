@@ -552,7 +552,20 @@ void MainWindow::actionPreferences()
 
 void MainWindow::actionAboutApplication()
 {
-	QMessageBox::about(this, QLatin1String("Otter"), QString(tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(QApplication::applicationVersion())));
+	WebBackend *backend = WebBackendsManager::getBackend();
+	QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(QApplication::applicationVersion());
+	about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(backend->getTitle()).arg(backend->getEngineVersion()) + QLatin1String("<br><br>"));
+
+	if (QSslSocket::supportsSsl())
+	{
+		 about.append(tr("SSL library version: %1.").arg(QSslSocket::sslLibraryVersionString()));
+	}
+	else
+	{
+		about.append(tr("SSL library not available."));
+	}
+
+	QMessageBox::about(this, QLatin1String("Otter"), about);
 }
 
 void MainWindow::menuFileAboutToShow()
