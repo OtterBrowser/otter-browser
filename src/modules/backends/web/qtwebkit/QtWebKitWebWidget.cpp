@@ -106,6 +106,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), QLatin1String("SaveImageToDisk"));
 	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), QLatin1String("CopyImageToClipboard"));
 	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), QLatin1String("CopyImageUrlToClipboard"));
+	ActionsManager::setupLocalAction(getAction(InspectElementAction), QLatin1String("InspectElement"));
 #if QTWEBKIT_VERSION >= 0x050200
 	ActionsManager::setupLocalAction(getAction(SaveMediaToDiskAction), QLatin1String("SaveMediaToDisk"));
 	ActionsManager::setupLocalAction(getAction(CopyMediaUrlToClipboardAction), QLatin1String("CopyMediaUrlToClipboard"));

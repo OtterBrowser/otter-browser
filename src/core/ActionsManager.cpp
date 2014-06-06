@@ -270,6 +270,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ClearAll"), tr("Clear All"));
 		registerAction(QLatin1String("SpellCheck"), tr("Check Spelling"));
 		registerAction(QLatin1String("CreateSearch"), tr("Create Search..."));
+		registerAction(QLatin1String("InspectElement"), tr("Inspect Element..."));
 		registerAction(QLatin1String("SaveMediaToDisk"), tr("Save Media..."));
 		registerAction(QLatin1String("CopyMediaUrlToClipboard"), tr("Copy Media Link to Clipboard"));
 		registerAction(QLatin1String("ToggleMediaControls"), tr("Show Controls"));
