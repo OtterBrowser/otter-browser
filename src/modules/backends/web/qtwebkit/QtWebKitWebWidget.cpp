@@ -1759,7 +1759,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (result.element().tagName().toLower() != QLatin1String("textarea") && result.element().tagName().toLower() != QLatin1String("select") && result.element().tagName().toLower() != QLatin1String("input"))
+				if (!result.isContentEditable() && result.element().tagName().toLower() != QLatin1String("textarea") && result.element().tagName().toLower() != QLatin1String("select") && result.element().tagName().toLower() != QLatin1String("input"))
 				{
 					m_hotclickPosition = mouseEvent->pos();
 
