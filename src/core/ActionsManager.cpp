@@ -277,8 +277,11 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaLoop"), tr("Looping"));
 		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
+		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"));
 
 		loadProfiles();
+
+		SessionsManager::connectActions();
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
 	}

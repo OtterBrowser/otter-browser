@@ -120,6 +120,7 @@ public:
 	static void storeClosedWindow(WindowsManager *manager);
 	static void markSessionModified();
 	static void removeStoredUrl(const QString &url);
+	static void connectActions();
 	static void setActiveWindow(MainWindow *window);
 	static SessionsManager* getInstance();
 	static WindowsManager* getWindowsManager();
@@ -144,6 +145,9 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
+
+protected slots:
+	void actionTriggered();
 
 private:
 	int m_saveTimer;

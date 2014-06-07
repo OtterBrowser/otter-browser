@@ -454,6 +454,11 @@ void TransfersContentsWidget::triggerAction(WindowAction action, bool checked)
 			removeTransfer();
 
 			break;
+		case ActivateAddressFieldAction:
+			m_ui->downloadLineEdit->setFocus();
+			m_ui->downloadLineEdit->selectAll();
+
+			break;
 		default:
 			break;
 	}

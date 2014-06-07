@@ -133,6 +133,16 @@ void Window::search(const QString &query, const QString &engine)
 	m_ui->addressWidget->setUrl(getUrl());
 }
 
+void Window::triggerAction(WindowAction action, bool checked)
+{
+	if (action == ActivateAddressFieldAction)
+	{
+		m_ui->addressWidget->setFocus();
+
+		getContentsWidget()->triggerAction(action, checked);
+	}
+}
+
 void Window::goToHistoryIndex(QAction *action)
 {
 	if (action && action->data().type() == QVariant::Int)

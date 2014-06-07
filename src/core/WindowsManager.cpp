@@ -354,7 +354,7 @@ void WindowsManager::triggerAction(WindowAction action, bool checked)
 
 	if (window)
 	{
-		window->getContentsWidget()->triggerAction(action, checked);
+		window->triggerAction(action, checked);
 	}
 }
 

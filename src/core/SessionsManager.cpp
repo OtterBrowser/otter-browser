@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SessionsManager.h"
+#include "ActionsManager.h"
 #include "Application.h"
 #include "SettingsManager.h"
 #include "Utils.h"
@@ -71,6 +72,26 @@ void SessionsManager::scheduleSave()
 	if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
+	}
+}
+
+void SessionsManager::connectActions()
+{
+	connect(ActionsManager::getAction(QLatin1String("ActivateAddressField")), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
+}
+
+void SessionsManager::actionTriggered()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (!action || !m_activeWindow)
+	{
+		return;
+	}
+
+	if (action->objectName() == QLatin1String("ActivateAddressField"))
+	{
+		m_activeWindow->getWindowsManager()->triggerAction(ActivateAddressFieldAction);
 	}
 }
 

@@ -98,7 +98,8 @@ enum WindowAction
 	ToggleMediaControlsAction,
 	ToggleMediaLoopAction,
 	ToggleMediaPlayPauseAction,
-	ToggleMediaMuteAction
+	ToggleMediaMuteAction,
+	ActivateAddressFieldAction
 };
 
 enum OpenHint
