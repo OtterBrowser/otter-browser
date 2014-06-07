@@ -61,7 +61,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
-	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(clearEntries()));
+	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(populateEntries()));
 	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(qint64)), this, SLOT(addEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(qint64)), this, SLOT(updateEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(qint64)), this, SLOT(removeEntry(qint64)));
@@ -172,11 +172,6 @@ void HistoryContentsWidget::populateEntries()
 	m_isLoading = false;
 
 	emit loadingChanged(false);
-}
-
-void HistoryContentsWidget::clearEntries()
-{
-	m_model->clear();
 }
 
 void HistoryContentsWidget::addEntry(qint64 entry)

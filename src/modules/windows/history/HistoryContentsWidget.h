@@ -59,7 +59,6 @@ protected:
 protected slots:
 	void filterHistory(const QString &filter);
 	void populateEntries();
-	void clearEntries();
 	void addEntry(qint64 entry);
 	void addEntry(const HistoryEntry &entry);
 	void updateEntry(qint64 entry);
