@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
+#include "LocaleDialog.h"
 #include "MdiWidget.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
@@ -126,6 +127,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_ui->actionClearHistory->setIcon(Utils::getIcon(QLatin1String("edit-clear-history")));
 	m_ui->actionAddBookmark->setIcon(Utils::getIcon(QLatin1String("bookmark-new")));
 	m_ui->actionManageBookmarks->setIcon(Utils::getIcon(QLatin1String("bookmarks-organize")));
+	m_ui->actionSwitchApplicationLanguage->setIcon(Utils::getIcon(QLatin1String("preferences-desktop-locale"), false));
 	m_ui->actionAboutApplication->setIcon(windowIcon());
 	m_ui->actionAboutQt->setIcon(Utils::getIcon(QLatin1String("qt"), false));
 	m_ui->statusBar->setup();
@@ -206,6 +208,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionErrorConsole, SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
 	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
+	connect(m_ui->actionSwitchApplicationLanguage, SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_ui->menuFile, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
@@ -547,6 +550,12 @@ void MainWindow::actionErrorConsole(bool enabled)
 void MainWindow::actionPreferences()
 {
 	PreferencesDialog dialog(QLatin1String("general"), this);
+	dialog.exec();
+}
+
+void MainWindow::actionSwitchApplicationLanguage()
+{
+	LocaleDialog dialog(this);
 	dialog.exec();
 }
 

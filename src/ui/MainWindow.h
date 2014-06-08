@@ -85,6 +85,7 @@ protected slots:
 	void actionTransfers();
 	void actionErrorConsole(bool enabled);
 	void actionPreferences();
+	void actionSwitchApplicationLanguage();
 	void actionAboutApplication();
 	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();

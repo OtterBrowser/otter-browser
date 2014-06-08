@@ -49,6 +49,8 @@ namespace Otter
 Application* Application::m_instance = NULL;
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
+	m_qtTranslator(NULL),
+	m_applicationTranslator(NULL),
 	m_localServer(NULL)
 {
 	setApplicationName(QLatin1String("Otter"));
@@ -174,21 +176,14 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	TransfersManager::createInstance(this);
 
-	QTranslator *qtTranslator = new QTranslator(this);
-	qtTranslator->load(QLatin1String("qt_") + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-
-	QString localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
+	m_localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
 
 	if (isPortable || QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
 	{
-		localePath = applicationDirPath() + QLatin1String("/locale/");
+		m_localePath = applicationDirPath() + QLatin1String("/locale/");
 	}
 
-	QTranslator *applicationTranslator = new QTranslator(this);
-	applicationTranslator->load(QLatin1String("otter-browser_") + QLocale::system().name(), localePath);
-
-	installTranslator(qtTranslator);
-	installTranslator(applicationTranslator);
+	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 	setQuitOnLastWindowClosed(true);
 }
 
@@ -295,6 +290,25 @@ void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 	}
 }
 
+void Application::setLocale(const QString &locale)
+{
+	if (!m_qtTranslator)
+	{
+		m_qtTranslator = new QTranslator(this);
+		m_applicationTranslator = new QTranslator(this);
+
+		installTranslator(m_qtTranslator);
+		installTranslator(m_applicationTranslator);
+	}
+
+	const QString identifier = (locale.endsWith(QLatin1String(".qm")) ? QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_")) : locale);
+
+	m_qtTranslator->load(QLatin1String("qt_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : locale)), m_localePath);
+
+	QLocale::setDefault(QLocale(identifier));
+}
+
 Application* Application::getInstance()
 {
 	return m_instance;
@@ -349,7 +363,12 @@ QCommandLineParser* Application::getParser() const
 	return parser;
 }
 
-QList<MainWindow*> Application::getWindows()
+QString Application::getLocalePath() const
+{
+	return m_localePath;
+}
+
+QList<MainWindow*> Application::getWindows() const
 {
 	return m_windows;
 }

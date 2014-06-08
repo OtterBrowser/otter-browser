@@ -41,11 +41,13 @@ public:
 	~Application();
 
 	void removeWindow(MainWindow* window);
+	void setLocale(const QString &locale);
 	static Application* getInstance();
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	MainWindow* getWindow();
 	QCommandLineParser* getParser() const;
-	QList<MainWindow*> getWindows();
+	QString getLocalePath() const;
+	QList<MainWindow*> getWindows() const;
 	bool isRunning() const;
 
 public slots:
@@ -55,9 +57,13 @@ protected slots:
 	void newConnection();
 
 private:
-	static Application *m_instance;
+	QTranslator *m_qtTranslator;
+	QTranslator *m_applicationTranslator;
 	QLocalServer *m_localServer;
+	QString m_localePath;
 	QList<MainWindow*> m_windows;
+
+	static Application *m_instance;
 };
 
 }

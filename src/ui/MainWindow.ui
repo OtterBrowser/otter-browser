@@ -159,6 +159,8 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionSwitchApplicationLanguage"/>
+    <addaction name="separator"/>
     <addaction name="actionAboutApplication"/>
     <addaction name="actionAboutQt"/>
    </widget>
@@ -502,6 +504,11 @@
    </property>
    <property name="text">
     <string>Error Console</string>
+   </property>
+  </action>
+  <action name="actionSwitchApplicationLanguage">
+   <property name="text">
+    <string>Switch Application Language...</string>
    </property>
   </action>
  </widget>

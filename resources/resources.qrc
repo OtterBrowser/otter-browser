@@ -50,7 +50,16 @@
         <file>icons/loading.gif</file>
         <file>icons/media-playback-pause.png</file>
         <file>icons/media-playback-start.png</file>
+        <file>icons/otter-browser-16.png</file>
+        <file>icons/otter-browser-32.png</file>
+        <file>icons/otter-browser-48.png</file>
+        <file>icons/otter-browser-64.png</file>
+        <file>icons/otter-browser-128.png</file>
+        <file>icons/otter-browser-256.png</file>
+        <file>icons/otter-browser.ico</file>
         <file>icons/otter-browser.png</file>
+        <file>icons/otter-browser.svg</file>
+        <file>icons/preferences-desktop-locale.png</file>
         <file>icons/process-stop.png</file>
         <file>icons/qt.png</file>
         <file>icons/tab-close-other.png</file>
