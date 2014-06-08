@@ -60,6 +60,8 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	setMinimumWidth(100);
 	setMouseTracking(true);
 
+	installEventFilter(this);
+
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -452,7 +454,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (object && event->type() == QEvent::ContextMenu)
+	if (object != this && event->type() == QEvent::ContextMenu)
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
@@ -467,6 +469,30 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			contextMenuEvent->accept();
 
 			return true;
+		}
+	}
+
+	if (object == this && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			const QUrl url = m_window->getUrl();
+
+			if (text().trimmed().isEmpty() || text().trimmed() != url.toString())
+			{
+				setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
+
+				if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+				{
+					QTimer::singleShot(0, this, SLOT(selectAll()));
+				}
+			}
+			else
+			{
+				m_window->setFocus();
+			}
 		}
 	}
 
