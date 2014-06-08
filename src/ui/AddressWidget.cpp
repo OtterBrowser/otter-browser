@@ -472,7 +472,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (object == this && event->type() == QEvent::KeyPress)
+	if (object == this && event->type() == QEvent::KeyPress && m_window)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 

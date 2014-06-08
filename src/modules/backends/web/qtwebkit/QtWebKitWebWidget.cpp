@@ -1781,6 +1781,21 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 		}
+		else if (event->type() == QEvent::KeyPress)
+		{
+			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+			if (keyEvent->key() == Qt::Key_Escape && isLoading())
+			{
+				triggerAction(StopAction);
+
+				ActionsManager::triggerAction(QLatin1String("ActivateAddressField"));
+
+				event->accept();
+
+				return true;
+			}
+		}
 	}
 	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
 	{
