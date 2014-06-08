@@ -138,9 +138,9 @@ void Window::triggerAction(WindowAction action, bool checked)
 	if (action == ActivateAddressFieldAction)
 	{
 		m_ui->addressWidget->setFocus();
-
-		getContentsWidget()->triggerAction(action, checked);
 	}
+
+	getContentsWidget()->triggerAction(action, checked);
 }
 
 void Window::goToHistoryIndex(QAction *action)
