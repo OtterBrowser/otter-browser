@@ -47,7 +47,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Atsiųsti piešinį iš naujo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="253"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti valdiklius</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
@@ -203,13 +203,14 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Perspėjimas</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Seansas buvo blogai išsaugotas.
+Ar tikrai norite jį atstatyti?</translation>
     </message>
 </context>
 <context>
@@ -298,34 +299,34 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Apsilankymai:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Paskutinį kartą lankytai:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>Sukurta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Keista:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Raktažodis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
@@ -357,7 +358,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Žyma tokiu pačiu raktažodžiu jau yra.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
@@ -655,7 +656,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation type="unfinished"/>
+        <translation> h</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
@@ -737,35 +738,35 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="98"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Tinklas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="44"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="102"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Saugumas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="57"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="106"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="70"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="110"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Kita</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="99"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Valyti</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="125"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Filtras...</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1149,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="199"/>
         <source>Console</source>
-        <translation type="unfinished"/>
+        <translation>Konsolė</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="208"/>
@@ -1255,7 +1256,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Rasti ankstesnį</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="343"/>
@@ -1335,7 +1336,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="427"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Stabdyti</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="432"/>
@@ -1401,7 +1402,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="504"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Klaidų pultas</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="270"/>
@@ -1468,7 +1469,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="701"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Susikurtas</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="726"/>
@@ -1517,12 +1518,12 @@ Ar norite tęsti?</translation>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Perspėjimas</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Įvyko SSL klaida, ar norite tęsti darbą?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
@@ -1531,7 +1532,11 @@ Ar norite tęsti?</translation>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Įvyko SSL klaida:
+
+%1
+
+Ar norite tęsti?</translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1544,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="219"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Įprastas</translation>
     </message>
 </context>
 <context>
@@ -1547,7 +1552,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko automatiškai sukonfigūruoti įgaliotojo serverio (PAC)</translation>
     </message>
 </context>
 <context>
@@ -1604,12 +1609,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti tuščią puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="85"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>Pagrindinis tinklapis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
@@ -1649,12 +1654,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>Vietoje naujų langų atverti naujas korteles</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Turinį įkelti tik atidarius kortelę</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
@@ -1664,27 +1669,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="215"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Naujq kortelę atverti šalia aktyvios</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Uždarant kortelę:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Suaktyvinti paskutinę aktyvią kortelę</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Suaktyvinti šalia esančią kortelę</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Suaktyvinti pirmą kortelę atidarytą iš aktyvios kortelės</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
@@ -1787,12 +1792,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="520"/>
         <source>Minimum font size:</source>
-        <translation type="unfinished"/>
+        <translation>Mažiausias šrifto dydis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="546"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nenurodytas</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
@@ -1877,7 +1882,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="832"/>
         <source>Exceptions...</source>
-        <translation type="unfinished"/>
+        <translation>Išimtys...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
@@ -2004,17 +2009,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1231"/>
         <source>Enable search suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Įgalinti paieškos pasiūlymus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Kitos</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Adreso laukelis</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
@@ -2034,22 +2039,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Pasiūlymai</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Siūlyti adresyno įrašus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
         <source>Suggest history</source>
-        <translation type="unfinished"/>
+        <translation>Siūlyti žurnalo įrašus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>Siūlyti pieškos rezultatus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
@@ -2064,32 +2069,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Įgaliotasis serveris</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1405"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>Konfigūracija:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1419"/>
         <source>No proxy</source>
-        <translation type="unfinished"/>
+        <translation>Nenaudoti įgaliotojo serverio</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1424"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti sistemos įgaliotojo serverio konfigūraciją</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1429"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti rankiniu būdu įvestą įgaliotojo serverio konfigūraciją</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1434"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Automatinė konfigūracija (PAC)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1536"/>
@@ -2104,7 +2109,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1550"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Serveris</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1557"/>
@@ -2129,22 +2134,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1599"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Visi</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1637"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>PAC failas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1649"/>
         <source>Browse...</source>
-        <translation type="unfinished"/>
+        <translation>Pasirinkti....</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1688"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>SSL šifravimo algoritmai</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1739"/>
@@ -2212,17 +2217,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>Teksto spalva</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Nuorodos spalva</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Visited Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Lankytų nuorodų spalva</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
@@ -2294,7 +2299,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="896"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1035"/>
         <source>Do you really want to remove this profile?</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite pašalinti šį profilį?</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="903"/>
@@ -2394,7 +2399,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="208"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="233"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Daugiau neberodyti šios žinutės</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="356"/>
@@ -2442,22 +2447,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą (Be pavadinimo)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="983"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Įrašyti video...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="983"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Išsaugoti audio...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="984"/>
@@ -2472,12 +2477,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="985"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti valdiklius</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="986"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Kartoti</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="988"/>
@@ -2492,22 +2497,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="990"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Įjungti garsą</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="990"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Nutildyti</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1015"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1289"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>Tuščias puslapis</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1302"/>
@@ -2537,7 +2542,7 @@ Adresas: %2</translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation type="unfinished"/>
+        <translation>Seanso pavadinimas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
@@ -2587,12 +2592,12 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="58"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Antraštė:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="68"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Aprašas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
@@ -2613,13 +2618,13 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="115"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="223"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="128"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="239"/>
         <source>Query:</source>
-        <translation type="unfinished"/>
+        <translation>Užklausa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="143"/>
@@ -2631,19 +2636,19 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="292"/>
         <source>Enctype:</source>
-        <translation type="unfinished"/>
+        <translation>Formatas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="303"/>
         <source>application/x-www-form-urlencoded</source>
-        <translation type="unfinished"/>
+        <translation>application/x-www-form-urlencoded</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="200"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="308"/>
         <source>multipart/form-data</source>
-        <translation type="unfinished"/>
+        <translation>multipart/form-data</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
@@ -2658,7 +2663,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="95"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Paveikslėliai (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="136"/>
@@ -2673,7 +2678,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="138"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Kalba</translation>
     </message>
 </context>
 <context>
@@ -2752,13 +2757,14 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Perspėjimas</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Seansas buvo blogai išsaugotas.
+Ar tikrai norite jį atstatyti?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
@@ -2786,7 +2792,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Profilio tvarkymas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
@@ -2797,44 +2803,44 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="167"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="101"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="177"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="205"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Informacija</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="211"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Antraštė:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="221"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Aprašas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="231"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Versija:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="241"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>Autorius:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="43"/>
@@ -2845,7 +2851,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="50"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Be pavadinimo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="67"/>
@@ -2874,38 +2880,38 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation type="unfinished"/>
+        <translation>Otter sveikina Jus</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation type="unfinished"/>
+        <translation>Tęsti seansą</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation type="unfinished"/>
+        <translation>Atverti pagrindinį tinklapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with empty page</source>
-        <translation type="unfinished"/>
+        <translation>Atverti tuščią puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Be pavadinimo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Langas %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Įprastas</translation>
     </message>
 </context>
 <context>
@@ -3142,13 +3148,14 @@ Ar vistiek tęsti?</translation>
         <source>Target path is already used by another transfer.
 Select another one.</source>
         <translation>Yra kitas aktyvus siuntimo procesas, duomenis rašantis į pasirinktą rinkmeną.
-Pasirinktite kitą.</translation>
+Pasirinkite kitą.</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="432"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Į pasirinktą rinkmeną duomenų rašyti negalima.
+Pasirinkite kitą.</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="469"/>
@@ -3290,27 +3297,27 @@ Ar vistiek tęsti?
     <message>
         <location filename="../../src/core/Application.cpp" line="340"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>atverti URL</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="341"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Podėliui naudoti &lt;path&gt; aplanką</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="342"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation type="unfinished"/>
+        <translation>Profiliui naudoti &lt;path&gt; aplanką</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="343"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation type="unfinished"/>
+        <translation>Atidaryti seansą &lt;session&gt; (jeigu toks egzistuoja)</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="344"/>
         <source>Starts private session</source>
-        <translation type="unfinished"/>
+        <translation>Pradėti privatų seansą</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
@@ -3321,7 +3328,8 @@ Ar vistiek tęsti?
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
         <source>Failed to parse entry of proxy auto-config (PAC):
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko apdoroti automatinio įgaliotojo serverio konfigūracijos (PAC) įrašo:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>
@@ -3332,7 +3340,7 @@ Ar vistiek tęsti?
     <message>
         <location filename="../../src/main.cpp" line="77"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Įprastas</translation>
     </message>
 </context>
 </TS>

@@ -67,12 +67,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta URL järgedesse...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Lae kõik uuesti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="258"/>
@@ -87,7 +87,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Blokeeri sisu...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="261"/>
@@ -137,12 +137,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Puhasta kõik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Õigekirjakontroll</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
@@ -152,17 +152,17 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta meedia...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopeeri meedia URL</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Näita juhtriistu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
@@ -185,17 +185,17 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="370"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda järg</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="370"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Lisa järg</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="457"/>
         <source>Remove This Icon</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda ikoon</translation>
     </message>
 </context>
 <context>
@@ -340,7 +340,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="125"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(pealkirjata)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
@@ -474,12 +474,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="280"/>
         <source>Open in New Tab</source>
-        <translation>Ava uuel vahelehel</translation>
+        <translation>Ava uuel kaardil</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="281"/>
         <source>Open in New Background Tab</source>
-        <translation>Ava uuel taustlehel</translation>
+        <translation>Ava uuel taustakaardil</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="283"/>
@@ -542,7 +542,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="140"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Aegub:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
@@ -582,7 +582,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Aegub</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="380"/>
@@ -660,7 +660,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation>Kustuta brauseri ajalugu</translation>
+        <translation>Kustuta sirvimise ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
@@ -786,7 +786,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domeen:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="112"/>
@@ -801,7 +801,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="138"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Aegub:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
@@ -816,7 +816,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
         <source>HTTP only</source>
-        <translation type="unfinished"/>
+        <translation>Ainult HTTP</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
@@ -854,7 +854,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="35"/>
         <source>Browse...</source>
-        <translation>Brausi...</translation>
+        <translation>Sirvi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
@@ -1021,22 +1021,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="62"/>
         <source>%1 GB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 GB (%2 baiti)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 MB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 MB (%2 baiti)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="71"/>
         <source>%1 KB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 KB (%2 baiti)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation type="unfinished"/>
+        <translation>%1 B</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
@@ -1047,7 +1047,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pikslit @ %3 bitti piksli kohta</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1143,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="174"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Suletud kaardid</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="199"/>
@@ -1153,104 +1153,104 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="208"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uus kaart</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="213"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uus privaatkaart</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="218"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Uus aken</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="223"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Uus privaataken</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="228"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Ava...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="236"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="241"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Prindi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="246"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Printimise eelvaade</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Tööta võrguühenduseta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="265"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Näita menüüriba</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="270"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Välju</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="278"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sule kaart</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="286"/>
         <location filename="../../src/ui/MainWindow.cpp" line="958"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Võta tagasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="294"/>
         <location filename="../../src/ui/MainWindow.cpp" line="971"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Tee uuesti</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="302"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Lõika</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="310"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopeeri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="318"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Aseta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="323"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Vali kõik</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="328"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Otsi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="333"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Järgmine</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
@@ -1280,88 +1280,88 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="363"/>
         <source>About Application...</source>
-        <translation type="unfinished"/>
+        <translation>Rakendusest...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="371"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Qt kohta...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="379"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Suuremaks</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="384"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Väiksemaks</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="389"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Algsuurus</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="397"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="402"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Tagasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="407"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Edasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="412"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Vaata ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="417"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Kustuta ajalugu...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="422"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Lae uuesti</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="427"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Peata</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="432"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Vaata koodi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="437"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Täisekraan</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="442"/>
         <location filename="../../src/ui/MainWindow.cpp" line="783"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Puhasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="447"/>
         <source>Rewind Back</source>
-        <translation type="unfinished"/>
+        <translation>Keri tagasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="452"/>
         <source>Rewind Forward</source>
-        <translation type="unfinished"/>
+        <translation>Keri edasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="457"/>
@@ -1376,27 +1376,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="470"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Uuri lehte</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="475"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Küpsised...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="480"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Allalaadimised...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="485"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Eelistused...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="496"/>
         <source>Blocked Content...</source>
-        <translation type="unfinished"/>
+        <translation>Blokeeritud sisu...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="504"/>
@@ -1407,7 +1407,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="270"/>
         <location filename="../../src/ui/MainWindow.cpp" line="547"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Küsimus</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="271"/>
@@ -1418,17 +1418,17 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="276"/>
         <location filename="../../src/ui/MainWindow.cpp" line="553"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Ära seda sõnumit enam näita</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="378"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Ava fail</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="490"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Hoiatus</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="490"/>
@@ -1452,7 +1452,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="691"/>
         <location filename="../../src/ui/MainWindow.cpp" line="842"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(pealkirjata)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="655"/>
@@ -1462,52 +1462,52 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="679"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Algseadistus</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="701"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Muudetud</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="726"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Automaattuvastus</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="792"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Aken - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="830"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Ava kõik</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1092"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Ava</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1093"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ava uuel kaardil</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1094"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ava taustakaardil</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1096"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Ava uues aknas</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1097"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Ava uues taustaaknas</translation>
     </message>
 </context>
 <context>
@@ -1554,12 +1554,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="122"/>
         <source>Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Algseadistused</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="125"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta</translation>
     </message>
 </context>
 <context>
@@ -1567,23 +1567,23 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Eelistused...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1352"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Üldine</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Käivitus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>Käitumine käivitamisel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
@@ -1598,7 +1598,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>Näita alglehte</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
@@ -1613,7 +1613,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>Kasuta praegust lehte</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="123"/>
@@ -1623,148 +1623,148 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>Taasta algseadistus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Allalaadimised</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="159"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta fail:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="174"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>Alati küsi, kuhu salvestada</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Kaardid</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>Ava uued aknad pigem kaartidena</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Ära lae kaarti enne sellele lülitumist</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>Kasuta praegust kaarti</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="215"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Ava uus kaart praeguse kõrvale</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Kaardi sulgemisel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Mine viimati kasutatud kaardile</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Mine järgmisele kaardile</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Mine esimesele praegusest kaardist lähtunud kaardile</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Keel</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
         <source>Preferred language:</source>
-        <translation type="unfinished"/>
+        <translation>Eelistatud keel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Sisu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blokeering</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
         <source>Pop-ups:</source>
-        <translation type="unfinished"/>
+        <translation>Hüpikaknad:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Blokeeri kõik hüpikaknad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
         <source>Open all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Luba kõik hüpikaknad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
         <source>Open all pop-ups in background</source>
-        <translation type="unfinished"/>
+        <translation>Ava hüpikaknad taustal</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Suurendus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>Algsuurendus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
         <source>Zoom text only</source>
-        <translation type="unfinished"/>
+        <translation>Suurenda ainult teksti</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Fondid</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="464"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Stiil</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="469"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Font</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="474"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="613"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Eelvaade</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
@@ -1796,185 +1796,185 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>Värvid</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="608"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Liik</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="635"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privaatsus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="647"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Jälitamine</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>Ära jälita</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="670"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Teata veebilehtedele, et ei soovi jälitamist</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="675"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Teata veebilehtedele, et lubad jälitamist</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="680"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Ära teata veebilehtedele minu eelistust</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="703"/>
         <source>Private mode</source>
-        <translation type="unfinished"/>
+        <translation>Privaatlaad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="746"/>
         <source>Remember browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta sirvimise ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="753"/>
         <source>Remember downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta allalaadimiste ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="763"/>
         <source>Remember search history</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta otsingute ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="775"/>
         <source>Remember form history</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta lahtrite ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="798"/>
         <source>Template...</source>
-        <translation type="unfinished"/>
+        <translation>Mall...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="809"/>
         <source>Accept cookies</source>
-        <translation type="unfinished"/>
+        <translation>Luba küpsiseid</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="832"/>
         <source>Exceptions...</source>
-        <translation type="unfinished"/>
+        <translation>Erandid...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
         <source>Accept third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Luba kõrvalised küpsised:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
         <source>Keep until:</source>
-        <translation type="unfinished"/>
+        <translation>Jäta alles:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="904"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Alati</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Praegused</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="914"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mitte kunagi</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="926"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Aegumiseni</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="931"/>
         <source>Current session is closed</source>
-        <translation type="unfinished"/>
+        <translation>Sessiooni lõpuni</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Küsi alati</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="951"/>
         <source>Clear history when application closes</source>
-        <translation type="unfinished"/>
+        <translation>Puhasta ajalugu rakenduse sulgemisel</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="971"/>
         <source>Settings...</source>
-        <translation type="unfinished"/>
+        <translation>Valikud...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="991"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Salasõnad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1003"/>
         <source>Remember passwords</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta salasõnu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1026"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1381"/>
         <source>Manage...</source>
-        <translation type="unfinished"/>
+        <translation>Halda...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1040"/>
         <source>Use a master password</source>
-        <translation type="unfinished"/>
+        <translation>Kasuta peasalasõna</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1063"/>
         <source>Change...</source>
-        <translation type="unfinished"/>
+        <translation>Muuda...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Otsi</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1096"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Otsing...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1147"/>
         <source>Add...</source>
-        <translation type="unfinished"/>
+        <translation>Lisa...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1157"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1878"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2023"/>
         <source>Edit...</source>
-        <translation type="unfinished"/>
+        <translation>Muuda...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1167"/>
@@ -1982,7 +1982,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1898"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2043"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1192"/>
@@ -1990,7 +1990,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1923"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2068"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Ülespoole</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1218"/>
@@ -1998,42 +1998,42 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1949"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2094"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Allapoole</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1231"/>
         <source>Enable search suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Võimalda otsingusoovitused</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Täpsemad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Aadressiväli</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Võrk</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1265"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Turvalisus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1270"/>
         <source>Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Klahvistik</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Soovitused</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
@@ -2063,47 +2063,47 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Proksi</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1405"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>Laad:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1419"/>
         <source>No proxy</source>
-        <translation type="unfinished"/>
+        <translation>Ilma proksita</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1424"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>Süsteemi seadistus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1429"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>Käsitsi seadistus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1434"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Automaatseadistus (PAC)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1536"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>Port</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1543"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>Protokoll</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1550"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Serverid</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1557"/>
@@ -2892,17 +2892,17 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(pealkirjata)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Aken - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Algseadistus</translation>
     </message>
 </context>
 <context>
@@ -3275,7 +3275,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/Application.cpp" line="340"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>Ava URL</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="341"/>
@@ -3317,7 +3317,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/main.cpp" line="77"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Algseadistus</translation>
     </message>
 </context>
 </TS>

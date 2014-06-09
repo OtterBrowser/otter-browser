@@ -117,7 +117,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Copiar o LInk da Imagem pra Área de Transferência</translation>
+        <translation>Copiar o Link da Imagem pra Área de Transferência</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Check Spelling</source>
-        <translation>Verificar a Ortografia</translation>
+        <translation>Verificar Ortografia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
@@ -319,7 +319,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation>Teclado:</translation>
+        <translation>Palavra-chave:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
@@ -450,7 +450,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all its children?</source>
-        <translation>Você realmente quer apagar esta pasta e todos os filhos dela?</translation>
+        <translation>Você realmente quer apagar esta pasta e todos as crianças dela?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -1291,12 +1291,12 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="379"/>
         <source>Zoom In</source>
-        <translation>Aumentar o Zoom</translation>
+        <translation>Aproximar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="384"/>
         <source>Zoom Out</source>
-        <translation>Diminuir o Zoom</translation>
+        <translation>Distanciar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="389"/>
@@ -1629,7 +1629,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation>Restaurar para o Padrão</translation>
+        <translation>Restaurar ao Padrão</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
@@ -2393,7 +2393,7 @@ Você quer continuar?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="207"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="229"/>
         <source>Do you want to resend data?</source>
-        <translation>Você quer re-enviar os dados?</translation>
+        <translation>Você quer enviar os dados de novo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="208"/>

@@ -47,7 +47,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Nahrát obrázek znovu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="253"/>
@@ -203,13 +203,14 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Toto sezení nebylo uloženo správně.
+Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     </message>
 </context>
 <context>
@@ -298,34 +299,34 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Návštěv:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Poslední návštěva:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>Vytvořeno:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Změněno:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Klíčové slovo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
@@ -357,7 +358,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Záložka s tímto klíčovým slovem již existuje.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
@@ -737,35 +738,35 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="98"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Síť</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="44"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="102"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Bezpečnost</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="57"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="106"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="70"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="110"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Jiné</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="99"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Smazat</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="125"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Filtr...</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1149,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="199"/>
         <source>Console</source>
-        <translation type="unfinished"/>
+        <translation>Konzole</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="208"/>
@@ -1193,7 +1194,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Work Offline</source>
-        <translation>Pracovat nepřipojen k internetu</translation>
+        <translation>Pracovat bez připojení</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="265"/>
@@ -1255,7 +1256,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Najít předchozí</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="343"/>
@@ -1300,7 +1301,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="389"/>
         <source>Zoom Original</source>
-        <translation>Původní přiblížení</translation>
+        <translation>Původní velikost</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="397"/>
@@ -1356,12 +1357,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="447"/>
         <source>Rewind Back</source>
-        <translation>Přetočit zpět</translation>
+        <translation>Skočit zpět</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="452"/>
         <source>Rewind Forward</source>
-        <translation>Přetočit vpřed</translation>
+        <translation>Skočit vpřed</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="457"/>
@@ -1381,12 +1382,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="475"/>
         <source>Cookies...</source>
-        <translation>Koláčky...</translation>
+        <translation>Koláčky (cookies)...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="480"/>
         <source>Transfers...</source>
-        <translation>Přesuny...</translation>
+        <translation>Přenosy...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="485"/>
@@ -1401,7 +1402,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="504"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Chybová konzole</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="270"/>
@@ -1445,7 +1446,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="604"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Prohlížeč ovládaný uživatelem a ne naopak.</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Prohlížeč ovládaný uživatelem; nikoli uživatel prohlížečem.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="640"/>
@@ -1517,12 +1518,12 @@ Chcete pokračovat?</translation>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vyskytly se chyby SSL. Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
@@ -1531,7 +1532,11 @@ Chcete pokračovat?</translation>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vyskytly se chyby SSL:
+
+%1
+
+Chcete pokračovat?</translation>
     </message>
 </context>
 <context>
@@ -1539,7 +1544,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="219"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Výchozí</translation>
     </message>
 </context>
 <context>
@@ -1547,7 +1552,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se nastavit proxy automatické nastavení (PAC)</translation>
     </message>
 </context>
 <context>
@@ -1604,12 +1609,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>Ukázat prázdnou stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="85"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>Domovská stránka:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
@@ -1649,12 +1654,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Otevřít nové okno raději v nové kartě</translation>
+        <translation>Otevírat nová okna v kartách</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation>Zpozdit nahrávání karet, dokud není vybráno</translation>
+        <translation>Nahrávat karty v okamžiku jejich výběru</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
@@ -1674,17 +1679,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation>Zapnout poslední činnou kartu</translation>
+        <translation>Jít na poslední činnou kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation>Zapnout další kartu</translation>
+        <translation>Jít na další kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation>Zapnout první kartu otevřenou z nynější karty</translation>
+        <translation>Jít na první kartu otevřenou z nynější karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
@@ -1694,7 +1699,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
         <source>Preferred language:</source>
-        <translation>Upřednostňovaný azyk:</translation>
+        <translation>Upřednostňovaný jazyk:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
@@ -1709,7 +1714,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
         <source>Pop-ups:</source>
-        <translation>Vyskakování:</translation>
+        <translation>Vyskakovací okna:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
@@ -1744,7 +1749,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
         <source>Zoom text only</source>
-        <translation>Přibližovat pouze text</translation>
+        <translation>Zvětšovat pouze text</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
@@ -1770,7 +1775,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
         <source>Default proportional font size:</source>
-        <translation>Výchozí proporční velikost písma:</translation>
+        <translation>Výchozí velikost proporcionálního písma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="494"/>
@@ -1872,7 +1877,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="809"/>
         <source>Accept cookies</source>
-        <translation>Přijmout koláčky</translation>
+        <translation>Přijímat koláčky</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="832"/>
@@ -1882,7 +1887,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
         <source>Accept third-party cookies:</source>
-        <translation>Přijmout koláčky třetích stran:</translation>
+        <translation>Přijímat koláčky třetích stran:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
@@ -1958,7 +1963,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
         <source>Search</source>
-        <translation>Hledat</translation>
+        <translation>Hledání</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1096"/>
@@ -2054,7 +2059,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Send referrer information</source>
-        <translation>Poslat informace o odkazování</translation>
+        <translation>Poslat informace o odkazu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1368"/>
@@ -2144,7 +2149,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1688"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Šifrovací klíče SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1739"/>
@@ -2267,12 +2272,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="538"/>
         <source>Input Unique Search Engine Identifier:</source>
-        <translation>Zadejte jedinečný identifikátor vyhledávacího stroje:</translation>
+        <translation>Zadejte jedinečný identifikátor pro vyhledávač:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="561"/>
         <source>New Search Engine</source>
-        <translation>Nový vyhledávací stroj</translation>
+        <translation>Nový vyhledávač</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="752"/>
@@ -2422,7 +2427,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="386"/>
         <source>No search engines defined</source>
-        <translation>Nestanoven žádný vyhledávací stroj</translation>
+        <translation>Nestanoven žádný vyhledávač</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="577"/>
@@ -2437,17 +2442,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="718"/>
         <source>Input Unique Search Engine Identifier:</source>
-        <translation>Zadejte jedinečný identifikátor vyhledávacího stroje:</translation>
+        <translation>Zadejte jedinečný identifikátor pro vyhledávač:</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek (bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="983"/>
@@ -2502,7 +2507,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1015"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1289"/>
@@ -2537,7 +2542,7 @@ Adresa: %2</translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation type="unfinished"/>
+        <translation>Název sezení:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
@@ -2577,7 +2582,7 @@ Chcete je přepsat?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation>Upravit vyhledávací stroj</translation>
+        <translation>Upravit vyhledávač</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="39"/>
@@ -2602,7 +2607,7 @@ Chcete je přepsat?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
         <source>Set as Default Search Engine</source>
-        <translation>Nastavit jako výchozí vyhledávací stroj</translation>
+        <translation>Nastavit jako výchozí vyhledávač</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="107"/>
@@ -2689,7 +2694,7 @@ Chcete je přepsat?</translation>
     <message>
         <location filename="../../src/core/SearchesManager.cpp" line="93"/>
         <source>Manage Search Engines...</source>
-        <translation>Spravovat vyhledávací stroje...</translation>
+        <translation>Spravovat vyhledávače...</translation>
     </message>
 </context>
 <context>
@@ -2752,13 +2757,14 @@ Chcete je přepsat?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Toto sezení nebylo uloženo správně.
+Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
@@ -2874,38 +2880,38 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation type="unfinished"/>
+        <translation>Vítejte v Otteru</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation type="unfinished"/>
+        <translation>Pokračovat v sezení</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation type="unfinished"/>
+        <translation>Začít s domovskou stránkou</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with empty page</source>
-        <translation type="unfinished"/>
+        <translation>Začít s prázdnou stránkou</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Okno %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Výchozí</translation>
     </message>
 </context>
 <context>
@@ -2994,7 +3000,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
         <source>Stop</source>
-        <translation>Zastavit</translation>
+        <translation>Zastavit/Pozastavit</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="203"/>
@@ -3045,7 +3051,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="159"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
-        <translation>Tento přesun stále ještě běží.
+        <translation>Tento přenos stále ještě běží.
 Opravdu jej chcete odstranit?</translation>
     </message>
     <message>
@@ -3087,7 +3093,7 @@ Postup: %5&lt;/pre&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="372"/>
         <source>Copy Transfer Information</source>
-        <translation>Kopírovat informace o přesunu</translation>
+        <translation>Kopírovat informace o přenosu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
@@ -3097,12 +3103,12 @@ Postup: %5&lt;/pre&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="388"/>
         <source>Clear Finished Transfers</source>
-        <translation>Smazat dokončené přesuny</translation>
+        <translation>Smazat dokončené přenosy</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="506"/>
         <source>Transfers Manager</source>
-        <translation>Správce přesunů</translation>
+        <translation>Správce přenosů</translation>
     </message>
 </context>
 <context>
@@ -3140,14 +3146,15 @@ Chcete jej přepsat?</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="423"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
-        <translation>Cílová cesta je již používána jiným přesunem.
+        <translation>Cílová cesta je již používána jiným přenosem.
 Vyberte jinou.</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="432"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Cílová cesta není zapisovatelná.
+Vyberte jinou.</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="469"/>
@@ -3288,38 +3295,39 @@ Chcete jej přepsat?
     <message>
         <location filename="../../src/core/Application.cpp" line="340"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>Adresa (URL) k otevření</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="341"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Používá &lt;path&gt; jako adresář pro vyrovnávací paměť</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="342"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation type="unfinished"/>
+        <translation>Používá &lt;path&gt; jako adresář s profilem</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="343"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation type="unfinished"/>
+        <translation>Obnoví sezení &lt;session&gt;, pokud existuje</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="344"/>
         <source>Starts private session</source>
-        <translation type="unfinished"/>
+        <translation>Spustí soukromé sezení</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation type="unfinished"/>
+        <translation>Nastaví cesty pro dočasné soubory (vyrovnávací paměť) a soubory profilu na adresář se spustitelným souborem programu</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
         <source>Failed to parse entry of proxy auto-config (PAC):
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se načíst automatické nastavení proxy (PAC):
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>
@@ -3330,7 +3338,7 @@ Chcete jej přepsat?
     <message>
         <location filename="../../src/main.cpp" line="77"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Výchozí</translation>
     </message>
 </context>
 </TS>

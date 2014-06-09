@@ -157,7 +157,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiază adresa în clipboard</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Redare </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
@@ -195,7 +195,7 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="457"/>
         <source>Remove This Icon</source>
-        <translation type="unfinished"/>
+        <translation>Elimina această pictogramă </translation>
     </message>
 </context>
 <context>
@@ -362,7 +362,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
         <source>Failed to save bookmark.</source>
-        <translation type="unfinished"/>
+        <translation>Salvarea marcajului nu a eşuată</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
@@ -372,7 +372,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Selectați numele noului dosar:</translation>
     </message>
 </context>
 <context>
@@ -449,12 +449,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all its children?</source>
-        <translation type="unfinished"/>
+        <translation>Într-adevăr doriţi să ştergeţi acest folder şi toate sub-folderele </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this bookmark?</source>
-        <translation type="unfinished"/>
+        <translation>Într-adevăr doriţi să ştergeţi acest marcaj? </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
@@ -464,7 +464,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="230"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Nu mai afișa acest mesaj </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="279"/>
@@ -509,7 +509,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="467"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Manager marcaje </translation>
     </message>
 </context>
 <context>
@@ -542,7 +542,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="140"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Expiră</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
@@ -617,12 +617,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Şterge voce</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate intrările din acest domeniu </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="456"/>
@@ -640,17 +640,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation type="unfinished"/>
+        <translation>Şterge cronologia </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to Clear:</source>
-        <translation type="unfinished"/>
+        <translation>Perioada de şters</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Toate</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
@@ -665,42 +665,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation type="unfinished"/>
+        <translation>Elimină cookie </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation type="unfinished"/>
+        <translation>Şterge cronologia formulare</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Şterge cronologia descărcări</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation type="unfinished"/>
+        <translation>Șterge cronologia căutări</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation type="unfinished"/>
+        <translation>Elimină cache</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation type="unfinished"/>
+        <translation>Şterge datele stocate ale paginilor web</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation type="unfinished"/>
+        <translation>Şterge  parole</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
         <source>Clear Now</source>
-        <translation type="unfinished"/>
+        <translation>Elimină acum</translation>
     </message>
 </context>
 <context>
@@ -723,12 +723,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valoare</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="201"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestionare configurări </translation>
     </message>
 </context>
 <context>
@@ -796,12 +796,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="125"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Valoare:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="138"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Expiră:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
@@ -811,12 +811,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Protejează </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
         <source>HTTP only</source>
-        <translation type="unfinished"/>
+        <translation>Doar HTTP </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
@@ -831,17 +831,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="228"/>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Aplică</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="255"/>
         <source>Remove Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Şterge Cookie </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="258"/>
         <source>Remove All Cookies from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate cookie-urile din acest domeniu </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="407"/>
@@ -854,17 +854,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="35"/>
         <source>Browse...</source>
-        <translation type="unfinished"/>
+        <translation>Răsfoire... </translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Alege Fişier </translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select Directory</source>
-        <translation type="unfinished"/>
+        <translation>Alege Director</translation>
     </message>
 </context>
 <context>
@@ -877,37 +877,37 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Today</source>
-        <translation type="unfinished"/>
+        <translation>Astăzi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Yesterday</source>
-        <translation type="unfinished"/>
+        <translation>Ieri</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Week</source>
-        <translation type="unfinished"/>
+        <translation>La Începutul Săptămânii </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Previous Week</source>
-        <translation type="unfinished"/>
+        <translation>Săptămâna Trecută</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Month</source>
-        <translation type="unfinished"/>
+        <translation>La Începutul Lunii </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Year</source>
-        <translation type="unfinished"/>
+        <translation>La Începutul Anului </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Older</source>
-        <translation type="unfinished"/>
+        <translation>Mai Vechi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
@@ -922,7 +922,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Data</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="215"/>
@@ -968,12 +968,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="379"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Şterge voce</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate intrările din acest domeniu </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
@@ -1011,7 +1011,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative Text:</source>
-        <translation type="unfinished"/>
+        <translation>Textul Alternativ:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="57"/>
@@ -1055,7 +1055,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="59"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Conţinutul Directorului</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="62"/>
@@ -1075,7 +1075,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Data</translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1083,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="17"/>
         <source>Otter</source>
-        <translation type="unfinished"/>
+        <translation>Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="52"/>
@@ -1098,7 +1098,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="67"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Import și Export </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="93"/>
@@ -1108,17 +1108,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="111"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Vizionează</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="115"/>
         <source>Text Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Codificare Text</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="120"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Agent Utilizator</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="141"/>
@@ -1138,7 +1138,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="167"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Istoric</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="174"/>
@@ -1193,7 +1193,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Lucrează Deconectat </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="265"/>
@@ -1214,43 +1214,43 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/MainWindow.ui" line="286"/>
         <location filename="../../src/ui/MainWindow.cpp" line="958"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Anulează</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="294"/>
         <location filename="../../src/ui/MainWindow.cpp" line="971"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Refaceți </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="302"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Taie</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="310"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Copiază</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="318"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Lipeşte</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="323"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Selectați Tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="328"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Gaseşte...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="333"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Găseşte Urmatorul</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
@@ -1265,27 +1265,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="348"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Gestionează Semne de Carte</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="353"/>
         <source>Read Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Citeşte </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="358"/>
         <source>Manage Feeds...</source>
-        <translation type="unfinished"/>
+        <translation>Gestionează Feed-uri </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="363"/>
         <source>About Application...</source>
-        <translation type="unfinished"/>
+        <translation>Despre aplicație ... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="371"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Despre Qt</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="379"/>

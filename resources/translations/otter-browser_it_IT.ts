@@ -11,33 +11,33 @@
         <location filename="../../src/core/ActionsManager.cpp" line="242"/>
         <location filename="../../src/core/ActionsManager.cpp" line="248"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="243"/>
         <location filename="../../src/core/ActionsManager.cpp" line="249"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="244"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="245"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="246"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia l&apos;indirizzo del link negli Appunti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia l&apos;iframe del collegamento negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="251"/>
@@ -47,7 +47,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Ricarica Immagine</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="253"/>
@@ -57,47 +57,47 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Salva l&apos;oggetto collegato...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Salva nella cartella dei trasferimenti </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi il link ai segnalibri...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Ricarica ciascuno </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="258"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Copia l&apos;indirizzo del link </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Validate</source>
-        <translation>Valida</translation>
+        <translation>Convalidare</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Blocco dei contenuti...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Preferenze per il sito web...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="262"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Proprietà immagine...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia immagine negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia l&apos;indirizzo dell&apos;immagine negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
@@ -142,22 +142,22 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Controllo ortografico </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Crea ricerca...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Salva file multimediali...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia i file multimediali negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Riavvolgimento </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Disattiva audio </translation>
     </message>
 </context>
 <context>
@@ -203,13 +203,14 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="249"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Questa sessione non è stata salvata correttamente
+Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     </message>
 </context>
 <context>
@@ -245,7 +246,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="14"/>
         <source>Blocked Content</source>
-        <translation type="unfinished"/>
+        <translation>Contenuto bloccato </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="24"/>
@@ -298,34 +299,34 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Visite: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Ultima visita: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>Creato: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Modificato: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Parola chiave: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Sconosciuto</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
@@ -357,7 +358,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibro con questa parola chiave già esistente</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
@@ -449,12 +450,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all its children?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi davvero eliminare questa cartella e tutte le sottocartelle?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this bookmark?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi davvero eliminare questo segnalibro? </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
@@ -464,7 +465,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="230"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Non mostrare più questo messaggio </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="279"/>
@@ -474,27 +475,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="280"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="281"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda in secondo piano </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="283"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="284"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="295"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia collegamento negli appunti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="304"/>
@@ -537,17 +538,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="130"/>
         <source>Last Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Ultima modifica: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="140"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Scade: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
         <source>Location:</source>
-        <translation type="unfinished"/>
+        <translation>Posizione:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="171"/>
@@ -577,12 +578,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Ultima modifica </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Scade</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="380"/>
@@ -592,37 +593,37 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="381"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="382"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="384"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="385"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia collegamento negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Cancella Voce</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere tutte le voci da questo dominio </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="456"/>
@@ -640,12 +641,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cronologia </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to Clear:</source>
-        <translation type="unfinished"/>
+        <translation>Periodo da cancellare </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -665,37 +666,37 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cookie  </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation type="unfinished"/>
+        <translation>Elimina i dati personali</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cronologia transferimenti</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cronologia ricerche</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cache </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation type="unfinished"/>
+        <translation>Cancella dati di archiviazione siti web </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation type="unfinished"/>
+        <translation>Cancella password </translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
@@ -728,7 +729,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="201"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione configurazione </translation>
     </message>
 </context>
 <context>
@@ -737,35 +738,35 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="98"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Rete</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="44"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="102"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Sicurezza</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="57"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="106"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS </translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="70"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="110"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Altro </translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="99"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Pulisci </translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="125"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Filtrare...</translation>
     </message>
 </context>
 <context>
@@ -801,7 +802,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="138"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Scade: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
@@ -811,7 +812,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Proteggi </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
@@ -841,12 +842,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="258"/>
         <source>Remove All Cookies from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi tutti i cookie da questo dominio </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="407"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione dei cookie</translation>
     </message>
 </context>
 <context>
@@ -887,32 +888,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Week</source>
-        <translation type="unfinished"/>
+        <translation>All&apos;inizio di questa settimana </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Previous Week</source>
-        <translation type="unfinished"/>
+        <translation>Settimana precedente </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Month</source>
-        <translation type="unfinished"/>
+        <translation>All&apos;inizio di questo mese </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Year</source>
-        <translation type="unfinished"/>
+        <translation>All&apos;inizio di quest&apos;anno </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Older</source>
-        <translation type="unfinished"/>
+        <translation>Precedenti </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
@@ -928,7 +929,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="215"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="249"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo) </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
@@ -938,42 +939,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda in secondo piano </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova fineastra </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="376"/>
         <source>Add to Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi ai preferiti... </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="377"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copia collegamento negli appunti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="379"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere voce </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="380"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere tutte le voci da questo dominio </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
@@ -986,37 +987,37 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation type="unfinished"/>
+        <translation>Proprietà dell&apos;immagine </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="22"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="36"/>
         <source>File Size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensioni del file: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="43"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative Text:</source>
-        <translation type="unfinished"/>
+        <translation>Testo alternativo: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="57"/>
         <source>Long Description:</source>
-        <translation type="unfinished"/>
+        <translation>Descrizione estesa: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="62"/>
@@ -1047,7 +1048,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixels @ %3 bits per pixel </translation>
     </message>
 </context>
 <context>
@@ -1055,7 +1056,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="59"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Contenuto della cartella</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="62"/>
@@ -1070,7 +1071,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="64"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione </translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
@@ -1083,7 +1084,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="17"/>
         <source>Otter</source>
-        <translation type="unfinished"/>
+        <translation>Otter </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="52"/>
@@ -1098,7 +1099,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="67"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Importazione ed Esportazione </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="93"/>
@@ -1113,22 +1114,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="115"/>
         <source>Text Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Codifica testo </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="120"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Agente utente </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="141"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="149"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Strumenti </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="160"/>
@@ -1143,32 +1144,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="174"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Schede chiuse </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="199"/>
         <source>Console</source>
-        <translation type="unfinished"/>
+        <translation>Console </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="208"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="213"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nuova scheda Privato </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="218"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Nuova finestra </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="223"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Nuova finestra Privato </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="228"/>
@@ -1193,12 +1194,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Non in linea </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="265"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Mostra barra dei menu </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="270"/>
@@ -1208,19 +1209,19 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="278"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Chiudi scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="286"/>
         <location filename="../../src/ui/MainWindow.cpp" line="958"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Annulla </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="294"/>
         <location filename="../../src/ui/MainWindow.cpp" line="971"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Rifare </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="302"/>
@@ -1245,62 +1246,62 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="328"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Trova...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="333"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Trova successivo </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Trova precedente </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="343"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi segnalibro...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="348"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Gestione segnalibri...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="353"/>
         <source>Read Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Leggere i feed </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="358"/>
         <source>Manage Feeds...</source>
-        <translation type="unfinished"/>
+        <translation>Gestione feed...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="363"/>
         <source>About Application...</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni su l&apos;applicazione...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="371"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni su Qt ... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="379"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Zoomare </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="384"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Zoom indietro </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="389"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Zoom originale </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="397"/>
@@ -1320,12 +1321,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="412"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza cronologia </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="417"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cronologia... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="422"/>
@@ -1340,43 +1341,43 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="432"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza sorgente </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="437"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Schermo intero </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="442"/>
         <location filename="../../src/ui/MainWindow.cpp" line="783"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Pulisci </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="447"/>
         <source>Rewind Back</source>
-        <translation type="unfinished"/>
+        <translation>Riavvolgere </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="452"/>
         <source>Rewind Forward</source>
-        <translation type="unfinished"/>
+        <translation>Riavvolgere avanti</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="457"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Salva sessione corrente ... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="462"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Gestione delle sessioni... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="470"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Ispezionare la pagina </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="475"/>
@@ -1386,28 +1387,28 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="480"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Trasferimenti... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="485"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Preferenze... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="496"/>
         <source>Blocked Content...</source>
-        <translation type="unfinished"/>
+        <translation>Contenuto bloccato... </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="504"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Console Errori</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="270"/>
         <location filename="../../src/ui/MainWindow.cpp" line="547"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Argomento</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="271"/>
@@ -1418,23 +1419,24 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="276"/>
         <location filename="../../src/ui/MainWindow.cpp" line="553"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Non mostrare nuovamente questo messaggio</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="378"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Aprire il File </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="490"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="490"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Hai già questo indirizzo nei segnalibri.
+</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="548"/>
@@ -1444,7 +1446,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="604"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Browser Web controllato dall&apos;utente, non viceversa. </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="640"/>
@@ -1452,7 +1454,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="691"/>
         <location filename="../../src/ui/MainWindow.cpp" line="842"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo) </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="655"/>
@@ -1462,52 +1464,52 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="679"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="701"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Personalizzato</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="726"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Rilevamento automatico</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="792"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Finestra </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="830"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Aprire tutto</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1092"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Apri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1093"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1094"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova scheda in secondo piano </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1096"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova fineastra </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1097"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
 </context>
 <context>
@@ -1516,12 +1518,12 @@ Do you want to continue?</source>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="254"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Si sono verificati errori SSL, si desidera continuare?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="271"/>
@@ -1530,7 +1532,11 @@ Do you want to continue?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>errore SSl verificato:
+
+%1
+
+Si desidera continuare?</translation>
     </message>
 </context>
 <context>
@@ -1538,7 +1544,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="219"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1552,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile impostare la configurazione automatica proxy (PAC) </translation>
     </message>
 </context>
 <context>
@@ -1554,7 +1560,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="122"/>
         <source>Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni predefinite </translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="125"/>
@@ -1578,52 +1584,52 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Avvio </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>Comportamento all&apos;avvio:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>Continue previous session</source>
-        <translation type="unfinished"/>
+        <translation>Continua sessione precedente </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="67"/>
         <source>Show startup dialog</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza la finestra di dialogo all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza la pagina iniziale </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza la pagina vuota </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="85"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>Home page: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>Utilizzare la pagina corrente </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="123"/>
         <source>Use Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Utilizzare il segnalibro... </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina predefinite </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
@@ -1633,57 +1639,57 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="159"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>Salvare il file in:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="174"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>Chiedere sempre dove salvare i file</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Schede </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>Aprire nuove finestre in una nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Ritardare il caricamento delle schede finché selezionate </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>Riutilizzare scheda corrente </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="215"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Apri nuova scheda accanto a quella attiva</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Quando si chiude la scheda: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Attivare l&apos;ultima scheda attiva </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Attivare la scheda successiva </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Attivare la scheda prima aperta dalla scheda corrente </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
@@ -1693,17 +1699,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
         <source>Preferred language:</source>
-        <translation type="unfinished"/>
+        <translation>Lingua preferita: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Contenuto </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blocco </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
@@ -1713,17 +1719,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Blocca tutti i pop-up </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
         <source>Open all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Aprire tutti i pop-up</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
         <source>Open all pop-ups in background</source>
-        <translation type="unfinished"/>
+        <translation>Aprire tutti i pop-up in secondo piano</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
@@ -1733,7 +1739,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>Zoom predefinito: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
@@ -1743,22 +1749,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
         <source>Zoom text only</source>
-        <translation type="unfinished"/>
+        <translation>Zoomare solo testo</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Tipi di carattere</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="464"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Stile </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="469"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Tipo di carattere </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="474"/>
@@ -1769,7 +1775,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione predefinita del carattere proporzionale: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="494"/>
@@ -1781,12 +1787,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="510"/>
         <source>Default fixed-width font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione predefinita del carattere a larghezza fissa: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="520"/>
         <source>Minimum font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione minima dei caratteri: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="546"/>
@@ -1811,82 +1817,82 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="647"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Rilevamento </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>Non rilevare: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="670"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Informare i siti Web che non si desidera tenere traccia </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="675"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Informare i siti web che acconsento di essere tracciato </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="680"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Non informare i siti Web delle mie preferenze </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="703"/>
         <source>Private mode</source>
-        <translation type="unfinished"/>
+        <translation>Modalità privata </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="746"/>
         <source>Remember browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Ricorda la cronologia di navigazione </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="753"/>
         <source>Remember downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Ricorda la cronologia degli scaricamenti</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="763"/>
         <source>Remember search history</source>
-        <translation type="unfinished"/>
+        <translation>Ricordate la cronologia della ricerca</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="775"/>
         <source>Remember form history</source>
-        <translation type="unfinished"/>
+        <translation>Ricorda il modulo cronologia</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="798"/>
         <source>Template...</source>
-        <translation type="unfinished"/>
+        <translation>Modello... </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="809"/>
         <source>Accept cookies</source>
-        <translation type="unfinished"/>
+        <translation>Accetta i cookie </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="832"/>
         <source>Exceptions...</source>
-        <translation type="unfinished"/>
+        <translation>Eccezioni ... </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
         <source>Accept third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Accetta i cookie di terze parti: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
         <source>Keep until:</source>
-        <translation type="unfinished"/>
+        <translation>Mantenere fino al: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="904"/>
@@ -1896,7 +1902,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Solo esistenti </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="914"/>
@@ -1906,53 +1912,53 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="926"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Scade </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="931"/>
         <source>Current session is closed</source>
-        <translation type="unfinished"/>
+        <translation>Sessione corrente e chiusa</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Chiedi sempre </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="951"/>
         <source>Clear history when application closes</source>
-        <translation type="unfinished"/>
+        <translation>Cancella la cronologia alla chiusura dell&apos;applicazione </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="971"/>
         <source>Settings...</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni... </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="991"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Password </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1003"/>
         <source>Remember passwords</source>
-        <translation type="unfinished"/>
+        <translation>Ricorda password </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1026"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1381"/>
         <source>Manage...</source>
-        <translation type="unfinished"/>
+        <translation>Gestione...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1040"/>
         <source>Use a master password</source>
-        <translation type="unfinished"/>
+        <translation>Utilizzare una password principale </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1063"/>
         <source>Change...</source>
-        <translation type="unfinished"/>
+        <translation>Cambia...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
@@ -1990,7 +1996,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1923"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2068"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Sposta verso l&apos;alto</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1218"/>
@@ -1998,22 +2004,22 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1949"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2094"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Sposta giù </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1231"/>
         <source>Enable search suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Attivare i suggerimenti di ricerca </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Avanzata </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Campo del indirizzo</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
@@ -2033,32 +2039,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Suggerimenti </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri consigliati </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
         <source>Suggest history</source>
-        <translation type="unfinished"/>
+        <translation>Cronologia </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>Risultati della ricerca suggeriti</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Inviare informazioni referente </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1368"/>
         <source>User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Agente utente: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2068,7 +2074,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1405"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>Modalità: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1419"/>
@@ -2078,17 +2084,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1424"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurazione di sistema </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1429"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurazione manuale </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1434"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Configurazione automatica (PAC) </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1536"/>
@@ -2133,29 +2139,29 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1637"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Percorso file PAC: </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1649"/>
         <source>Browse...</source>
-        <translation type="unfinished"/>
+        <translation>Sfoglia...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1688"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Cifratura </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1739"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1868"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2013"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1823"/>
         <source>Action Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Tasti di scelta rapida delle azioni</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1888"/>
@@ -2166,62 +2172,62 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1968"/>
         <source>Action Macros</source>
-        <translation type="unfinished"/>
+        <translation>Le macro delle azioni </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Standard font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere standard </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Fixed-width font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere a larghezza fissa </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Serif font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere Serif</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Sans-serif font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere Sans-serif  </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Cursive font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere Cursive </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Fantasy font</source>
-        <translation type="unfinished"/>
+        <translation>Carattere Fantasy</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="132"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation type="unfinished"/>
+        <translation>Ma La Volpe Col Suo Balzo Ha Raggiunto Il Quieto Fido </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Background Color</source>
-        <translation type="unfinished"/>
+        <translation>Colore di sfondo </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>Colore del testo </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Colore collegamento</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Visited Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Colore collegamento visitato</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
@@ -2232,13 +2238,13 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
         <source>Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Scelta rapida </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="687"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="248"/>
@@ -2255,61 +2261,61 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1323"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1357"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="538"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1440"/>
         <source>Select Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare l&apos;identificatore </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="538"/>
         <source>Input Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Inserire Identificatore del motore di ricerca unico</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="561"/>
         <source>New Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Nuovo motore di ricerca </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="752"/>
         <source>Select Proxy Automatic Configuration File</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare il File di configurazione automatica del Proxy </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="752"/>
         <source>PAC files (*.pac)</source>
-        <translation type="unfinished"/>
+        <translation>PAC files (*.pac) </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="895"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1034"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Argomento</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="896"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1035"/>
         <source>Do you really want to remove this profile?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi davvero eliminare questo profilo? </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="903"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1042"/>
         <source>Delete profile permanently</source>
-        <translation type="unfinished"/>
+        <translation>Cancellare definitivamente il profilo </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1077"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore </translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1440"/>
         <source>Input Unique Profile Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore univoco del profilo in ingresso: </translation>
     </message>
 </context>
 <context>
@@ -2317,28 +2323,28 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="59"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Documento: %p% </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="86"/>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="113"/>
         <source>Time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tempo: %1 </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="103"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Elementi:%1/%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="104"/>
         <source>Total: %1</source>
-        <translation type="unfinished"/>
+        <translation>Totale:  %1 </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="105"/>
         <source>Speed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Velocità: %1</translation>
     </message>
 </context>
 <context>
@@ -2346,12 +2352,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="108"/>
         <source>WebKit Backend</source>
-        <translation type="unfinished"/>
+        <translation>WebKit Backend</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="113"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Modulo di back-end che utilizza QtWebKit</translation>
     </message>
 </context>
 <context>
@@ -2368,47 +2374,47 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="268"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="311"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>Disattivare pop-up JavaScript </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="207"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="227"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="381"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="207"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="228"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Sie sicuri di voler inviare nuovamente i dati del modulo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="207"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="229"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>Si desidera inviare nuovamente i dati? </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="208"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="233"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Non mostrare più questo messaggio </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="356"/>
         <source>Error %1</source>
-        <translation type="unfinished"/>
+        <translation>Errore %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="381"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation type="unfinished"/>
+        <translation>Lo script in questa pagina sembra di avere un problema. </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="381"/>
         <source>Do you want to stop the script?</source>
-        <translation type="unfinished"/>
+        <translation>Si desidera interrompere lo script? </translation>
     </message>
 </context>
 <context>
@@ -2421,7 +2427,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="386"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nessun motore di ricerca definito</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="577"/>
@@ -2431,98 +2437,99 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="718"/>
         <source>Select Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare l&apos;identificatore </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="718"/>
         <source>Input Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Inserire Identificatore del motore di ricerca unico</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Apri immagine (Senza titolo) </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="968"/>
         <source>Open Image (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Apri immagine (%1) </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="983"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Salvare il Video... </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="983"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Salvare Audio... </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="984"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiare il Link del Video negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="984"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiare il Link del Audio negli Appunti </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="985"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza i controlli </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="986"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Riavvolgimento </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="988"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Play</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="988"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Pausa </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="990"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Attivare l&apos;audio </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="990"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Disattiva audio </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1015"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Apri immagine</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1289"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>Pagina vuota </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1302"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1587"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo: %1 </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1587"/>
         <source>Title: %1
 Address: %2</source>
-        <translation type="unfinished"/>
+        <translation>Titolo: %1
+Indirizzo: %2</translation>
     </message>
 </context>
 <context>
@@ -2530,33 +2537,34 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="14"/>
         <source>Save Session</source>
-        <translation type="unfinished"/>
+        <translation>Salva la sessione </translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation type="unfinished"/>
+        <translation>Titolo della sessione: </translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore della sessione:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
         <source>Store only current window</source>
-        <translation type="unfinished"/>
+        <translation>Conservare solo la finestra corrente </translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Sessione con identificatore specificato già esistente.
+Si desidera sovrascriverlo? </translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="86"/>
@@ -2566,7 +2574,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="86"/>
         <source>Failed to save session.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile salvare la sessione. </translation>
     </message>
 </context>
 <context>
@@ -2574,12 +2582,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Modificare il motore di ricerca </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="39"/>
         <source>Change Icon...</source>
-        <translation type="unfinished"/>
+        <translation>Cambia icona... </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="58"/>
@@ -2594,41 +2602,41 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Shortcut:</source>
-        <translation type="unfinished"/>
+        <translation>Scelta rapida: </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
         <source>Set as Default Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Imposta come motore di ricerca predefinito</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="107"/>
         <source>Results Query</source>
-        <translation type="unfinished"/>
+        <translation>Cerca nei Risultati </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="115"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="223"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="128"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="239"/>
         <source>Query:</source>
-        <translation type="unfinished"/>
+        <translation>Interrogare:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="143"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="251"/>
         <source>POST  Method</source>
-        <translation type="unfinished"/>
+        <translation>Metodo POST</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="292"/>
         <source>Enctype:</source>
-        <translation type="unfinished"/>
+        <translation>Enctype: </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
@@ -2645,32 +2653,32 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
         <source>Suggestions Query</source>
-        <translation type="unfinished"/>
+        <translation>Cerca nei suggerimenti </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="95"/>
         <source>Select Icon</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare l&apos;icona </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="95"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Immagini (*.png *.jpg *.bmp *.gif *.ico) </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="136"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Segnaposto </translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="137"/>
         <source>Search Terms</source>
-        <translation type="unfinished"/>
+        <translation>Termini di Ricerca</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="138"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Lingua</translation>
     </message>
 </context>
 <context>
@@ -2678,7 +2686,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchWidget.cpp" line="195"/>
         <source>Search Using %1</source>
-        <translation type="unfinished"/>
+        <translation>Cerca usando %1 </translation>
     </message>
 </context>
 <context>
@@ -2686,7 +2694,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchesManager.cpp" line="93"/>
         <source>Manage Search Engines...</source>
-        <translation type="unfinished"/>
+        <translation>Gestione motori di ricerca...</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2703,12 @@ Do you want to overwrite it?</source>
         <location filename="../../src/core/SessionsManager.cpp" line="198"/>
         <location filename="../../src/core/SessionsManager.cpp" line="213"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="213"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
 </context>
 <context>
@@ -2708,7 +2716,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="14"/>
         <source>Sessions Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione Sessioni</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
@@ -2718,54 +2726,55 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore </translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
         <source>Windows</source>
-        <translation type="unfinished"/>
+        <translation>Finestra </translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="82"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Apri</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="89"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Elimina</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="113"/>
         <source>Open session in current window</source>
-        <translation type="unfinished"/>
+        <translation>Apri sessione nella finestra corrente</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="44"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="67"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Questa sessione non è stata salvata correttamente
+Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Confermare </translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
         <source>Are you sure that you want to delete session %1?</source>
-        <translation type="unfinished"/>
+        <translation>Sie sicuri di voler cancellare sessione %1? </translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="128"/>
@@ -2775,7 +2784,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="128"/>
         <source>Failed to delete session.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile eliminare la sessione. </translation>
     </message>
 </context>
 <context>
@@ -2783,7 +2792,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurazione del profilo </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
@@ -2794,34 +2803,34 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Ricerca...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="167"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="101"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="177"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="205"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Informazione</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="211"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Titolo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="221"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Descrizione:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="231"/>
@@ -2831,38 +2840,38 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="241"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>Autore: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="43"/>
         <source>Macro</source>
-        <translation type="unfinished"/>
+        <translation>Macro </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="50"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="67"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Azione</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Select Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare l&apos;identificatore </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Input Unique Macro Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore univoco delle macro: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
         <source>Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Scelta rapida </translation>
     </message>
 </context>
 <context>
@@ -2871,38 +2880,38 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation type="unfinished"/>
+        <translation>Benvenuto In Otter </translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation type="unfinished"/>
+        <translation>Continua sessione </translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation type="unfinished"/>
+        <translation>Inizia con la home page</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with empty page</source>
-        <translation type="unfinished"/>
+        <translation>Inizia con una pagina vuota</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Finestra  %1 </translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
 </context>
 <context>
@@ -2910,7 +2919,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/StatusBarWidget.cpp" line="64"/>
         <source>Zoom %1%</source>
-        <translation type="unfinished"/>
+        <translation>Zoomare %1%</translation>
     </message>
 </context>
 <context>
@@ -2918,7 +2927,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarDockWidget.cpp" line="48"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Schede chiuse </translation>
     </message>
 </context>
 <context>
@@ -2926,32 +2935,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="106"/>
         <source>Clone Tab</source>
-        <translation type="unfinished"/>
+        <translation>Clonare scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sbloccare la scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Blocca la scheda con PIN</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="109"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>Stacca scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="127"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Chiudere le altre schede </translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="384"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
 </context>
 <context>
@@ -2959,64 +2968,64 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download...</source>
-        <translation type="unfinished"/>
+        <translation>Scaricamento veloce</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="123"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Fonte: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="133"/>
         <source>Target:</source>
-        <translation type="unfinished"/>
+        <translation>Destinazione: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="143"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="153"/>
         <source>Downloaded:</source>
-        <translation type="unfinished"/>
+        <translation>Scaricato: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="160"/>
         <source>Progress:</source>
-        <translation type="unfinished"/>
+        <translation>Avanzamento: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="193"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Ferma </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="203"/>
         <source>Redownload</source>
-        <translation type="unfinished"/>
+        <translation>Riscaricare </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Filename</source>
-        <translation type="unfinished"/>
+        <translation>Nome del file </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Progress</source>
-        <translation type="unfinished"/>
+        <translation>Avanzamento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>Tempo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
@@ -3026,23 +3035,24 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Started</source>
-        <translation type="unfinished"/>
+        <translation>Avviato </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Finished</source>
-        <translation type="unfinished"/>
+        <translation>Finito </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="159"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="159"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
-        <translation type="unfinished"/>
+        <translation>Questo trasferimento è ancora in esecuzione.
+Procedo con la rimozione?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="241"/>
@@ -3051,7 +3061,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/pre&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;pre style=&apos;font-family:auto;&apos;&gt;Fonte: %1
+Destinazione: %2
+Dimensione %3
+Scaricato: %4
+Avanzamento: %5&lt;/pre&gt;</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="241"/>
@@ -3063,38 +3077,38 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="366"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Apri</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="367"/>
         <source>Open Folder</source>
-        <translation type="unfinished"/>
+        <translation>Aprire Cartella</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="398"/>
         <source>Resume</source>
-        <translation type="unfinished"/>
+        <translation>Riprendere </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="372"/>
         <source>Copy Transfer Information</source>
-        <translation type="unfinished"/>
+        <translation>Copiare le informazioni di Trasferimento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="388"/>
         <source>Clear Finished Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi i trasferimenti completati </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="506"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione Trasferimenti </translation>
     </message>
 </context>
 <context>
@@ -3108,36 +3122,39 @@ Progress: %5&lt;/pre&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="399"/>
         <location filename="../../src/core/TransfersManager.cpp" line="469"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="399"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
-        <translation type="unfinished"/>
+        <translation>Esiste un file con stesso nome.
+Si desidera sovrascriverlo?</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="409"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>Salvare il file</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="423"/>
         <location filename="../../src/core/TransfersManager.cpp" line="432"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avviso</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="423"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Percorso di destinazione in uzo da un altro trasferimento.
+Selezionare un altro. </translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="432"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Percorso di destinazione non è scrivibile.
+ Selezionare un altro. </translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="469"/>
@@ -3145,7 +3162,10 @@ Select another one.</source>
 Do you want to overwrite it?
 
 %1</source>
-        <translation type="unfinished"/>
+        <translation>File with that name already exists.
+ Do you want to overwite it?
+
+%1 </translation>
     </message>
 </context>
 <context>
@@ -3153,17 +3173,17 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="14"/>
         <source>Manage User Agents</source>
-        <translation type="unfinished"/>
+        <translation>Gestione Agenti Utente</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="64"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="74"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
@@ -3173,12 +3193,12 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valore</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
 </context>
 <context>
@@ -3186,27 +3206,27 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="56"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Trova...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
         <source>Find Next Occurence</source>
-        <translation type="unfinished"/>
+        <translation>Trova Prossimo Avvenimento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
         <source>Find Previous Occurence</source>
-        <translation type="unfinished"/>
+        <translation>Trova Avvenimento Precedente </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>Evidenziare </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="126"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Usare Maiuscole e minuscole </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="139"/>
@@ -3219,7 +3239,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="123"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Cornice </translation>
     </message>
 </context>
 <context>
@@ -3227,23 +3247,23 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/Window.ui" line="68"/>
         <source>Enter Address...</source>
-        <translation type="unfinished"/>
+        <translation>Inserire l&apos;indirizzo...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="188"/>
         <location filename="../../src/ui/Window.cpp" line="208"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="256"/>
         <source>Select User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Selezionare Agente Utente </translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="256"/>
         <source>Input User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Inserire Agente Utente: </translation>
     </message>
 </context>
 <context>
@@ -3251,17 +3271,17 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="231"/>
         <source>Print Page</source>
-        <translation type="unfinished"/>
+        <translation>Stampa pagina </translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="256"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Anteprima di stampa </translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="402"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="596"/>
@@ -3275,49 +3295,50 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/Application.cpp" line="340"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>URL da aprire</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="341"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Utilizza &lt;path&gt; come directory di cache</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="342"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation type="unfinished"/>
+        <translation>Utilizza &lt;path&gt; come directory di profilo</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="343"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina la sessione &lt;session&gt;  se esiste</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="344"/>
         <source>Starts private session</source>
-        <translation type="unfinished"/>
+        <translation>Inizia sessione privata </translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="345"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation type="unfinished"/>
+        <translation>Imposta percorsi cache e profilo all&apos;interno delle directory come eseguibile dell&apos;applicazione </translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
         <source>Failed to parse entry of proxy auto-config (PAC):
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare la voce di configurazione automatica proxy (PAC):
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>
         <location filename="../../src/core/SessionsManager.h" line="76"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="77"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito </translation>
     </message>
 </context>
 </TS>

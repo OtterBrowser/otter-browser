@@ -32,12 +32,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="246"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Kopiuj link do schowka</translation>
+        <translation>Kopiuj adres do schowka</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Kopiuj link ramki do schowka</translation>
+        <translation>Kopiuj adres ramki do schowka</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="251"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Save Link Target As...</source>
-        <translation>Zapisz link docelowy jako...</translation>
+        <translation>Zapisz adres docelowy jako...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="255"/>
@@ -67,12 +67,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Bookmark Link...</source>
-        <translation>Link zakładki...</translation>
+        <translation>Adres zakładki...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Reload Each</source>
-        <translation>Odśwież każdy</translation>
+        <translation>Odświeżaj co</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="258"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Validate</source>
-        <translation>Poprawny</translation>
+        <translation>Sprawdź poprawność</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="260"/>
@@ -92,12 +92,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Website Preferences...</source>
-        <translation>Preferencje strony...</translation>
+        <translation>Preferencje dla witryny...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="262"/>
         <source>Image Properties...</source>
-        <translation>Preferencje obrazu...</translation>
+        <translation>Właściwości obrazu...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Kopiuj link obrazu do schowka</translation>
+        <translation>Kopiuj adres obrazu do schowka</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
@@ -157,7 +157,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation>Kopiuj link multimediów do schowka</translation>
+        <translation>Kopiuj adres multimediów do schowka</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
@@ -195,7 +195,7 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="457"/>
         <source>Remove This Icon</source>
-        <translation>Usuń tą ikonę</translation>
+        <translation>Usuń tę ikonę</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,7 @@
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ta sesja nie została zapisana poprawnie.
-Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translation>
+Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation>
     </message>
 </context>
 <context>
@@ -319,7 +319,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Słowo kluczowe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
@@ -358,7 +358,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Zakładka z tym słowem kluczowym już istnieje.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
@@ -450,12 +450,12 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all its children?</source>
-        <translation>Czy naprawdę chcesz usunąć ten folder i wszystkie jego dzieci?</translation>
+        <translation>Czy naprawdę chcesz usunąć ten folder i całą jego zawartość?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this bookmark?</source>
-        <translation>Czy naprawdę chcesz usunąć tą zakładkę?</translation>
+        <translation>Czy naprawdę chcesz usunąć tę zakładkę?</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
@@ -495,7 +495,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="295"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Kopiuj link do schowka</translation>
+        <translation>Kopiuj adres do schowka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="304"/>
@@ -505,7 +505,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="306"/>
         <source>Properties...</source>
-        <translation>Preferencje...</translation>
+        <translation>Właściwości...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="467"/>
@@ -613,7 +613,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Kopiuj link do schowka</translation>
+        <translation>Kopiuj adres do schowka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
@@ -676,7 +676,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation>Wyczyść historię pobierań</translation>
+        <translation>Wyczyść historię pobranych plików</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
@@ -750,23 +750,23 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
         <location filename="../../src/ui/ConsoleWidget.ui" line="57"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="106"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="70"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="110"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Inne</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="99"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Wyczyść</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="125"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Filtr...</translation>
     </message>
 </context>
 <context>
@@ -964,7 +964,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="377"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Kopiuj link do schowka</translation>
+        <translation>Kopiuj adres do schowka</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="379"/>
@@ -987,7 +987,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation>Preferencje obrazu</translation>
+        <translation>Właściwości obrazu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="22"/>
@@ -1084,7 +1084,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="17"/>
         <source>Otter</source>
-        <translation>Wydra</translation>
+        <translation>Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="52"/>
@@ -1149,7 +1149,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="199"/>
         <source>Console</source>
-        <translation type="unfinished"/>
+        <translation>Konsola</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="208"/>
@@ -1159,7 +1159,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="213"/>
         <source>New Private Tab</source>
-        <translation>Nowa prywatna karta</translation>
+        <translation>Nowa karta prywatna</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="218"/>
@@ -1169,7 +1169,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="223"/>
         <source>New Private Window</source>
-        <translation>Nowe prywatne okno</translation>
+        <translation>Nowe okno prywatne</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="228"/>
@@ -1256,7 +1256,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="338"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź poprzedni</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="343"/>
@@ -1357,7 +1357,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="447"/>
         <source>Rewind Back</source>
-        <translation>Przewiń do tyłu</translation>
+        <translation>Przewiń wstecz</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="452"/>
@@ -1387,7 +1387,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="480"/>
         <source>Transfers...</source>
-        <translation>Pobierania...</translation>
+        <translation>Pobieranie...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="485"/>
@@ -1402,7 +1402,7 @@ Czy, pomimo tego, jesteś pewien, że chcesz przywrócić tą sesję?</translati
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="504"/>
         <source>Error Console</source>
-        <translation>Błąd konsoli</translation>
+        <translation>Konsola błędów</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="270"/>
@@ -1446,7 +1446,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="604"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>Przeglądarka &lt;b&gt;Wydra %1&lt;/b&gt;&lt;br&gt; kontrolowana przez użytkownika, nie odwrotnie.</translation>
+        <translation>Przeglądarka &lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt; kontrolowana przez użytkownika, nie odwrotnie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="640"/>
@@ -1552,7 +1552,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Konfiguracja automatycznego proxy (PAC) nie powiodła się</translation>
     </message>
 </context>
 <context>
@@ -1589,7 +1589,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Startup behavior:</source>
-        <translation>Zachowanie po uruchomieniu</translation>
+        <translation>Zachowanie po uruchomieniu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
@@ -1724,12 +1724,12 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
         <source>Open all pop-ups</source>
-        <translation>Otwórz wszystkie wyskakujące okna</translation>
+        <translation>Otwieraj wszystkie wyskakujące okna</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
         <source>Open all pop-ups in background</source>
-        <translation>Otwórz wszystkie wyskakujące okna w tle</translation>
+        <translation>Otwieraj wszystkie wyskakujące okna w tle</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
@@ -2149,7 +2149,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1688"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Szyfry SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1739"/>
@@ -2222,12 +2222,12 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Link Color</source>
-        <translation>Kolor linku</translation>
+        <translation>Kolor odnośnika</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Visited Link Color</source>
-        <translation>Kolor odwiedzonego linku</translation>
+        <translation>Kolor odwiedzonego odnośnika</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
@@ -2374,7 +2374,7 @@ Czy chcesz kontynuować?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="268"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="311"/>
         <source>Disable JavaScript popups</source>
-        <translation>Zablokuj okna pop-up JavaScirptów</translation>
+        <translation>Blokuj wyskakujące okna JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="207"/>
@@ -2427,7 +2427,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="386"/>
         <source>No search engines defined</source>
-        <translation>Brak zdefiniowanych silników wyszukiwania</translation>
+        <translation>Brak zdefiniowanych silników wyszukiwarek</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="577"/>
@@ -2467,12 +2467,12 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="984"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation>Kopiuj link filmu do schowka</translation>
+        <translation>Kopiuj adres filmu do schowka</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="984"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation>Kopiuj link audio do schowka</translation>
+        <translation>Kopiuj adres audio do schowka</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="985"/>
@@ -2763,7 +2763,8 @@ Czy chcesz ją nadpisać?</translation>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Ta sesja nie została zapisana poprawnie.
+Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
@@ -2879,7 +2880,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation>Witamy w Przeglądarce Wydra</translation>
+        <translation>Witamy w Przeglądarce Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
@@ -3152,7 +3153,8 @@ Wybierz inną lokalizację.</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="432"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Docelowa lokalizacja nie ma praw zapisu.
+Wybierz inną lokalizację.</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="469"/>
