@@ -65,7 +65,7 @@
       <item>
        <widget class="Otter::AddressWidget" name="addressWidget">
         <property name="placeholderText">
-         <string>Enter Address...</string>
+         <string>Enter address or search...</string>
         </property>
        </widget>
       </item>
