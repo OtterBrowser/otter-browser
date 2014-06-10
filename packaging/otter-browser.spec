@@ -1,6 +1,6 @@
 Name:          otter-browser
 Summary:       Otter Browser
-Version:       0.9.02-dev
+Version: 0.9.02.dev
 Release:       0%{dist}
 Group:         Applications/Internet
 License:       GPLv3
@@ -37,7 +37,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_bindir}/*
 %{_datadir}/applications/*.desktop
+%{_datadir}/icons/hicolor/*/apps/otter-browser.png
+%{_datadir}/otter-browser/locale/*.qm
 
 %changelog
+* Tue Jun 10 2014 David Eder <david@eder.us> - Updated %files for icons and locale
 * Sat Mar 22 2014 George Machitidze <giomac@gmail.com> - 0.3.01
 - Initial RPM build
