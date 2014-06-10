@@ -32,8 +32,12 @@ TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent)
 
 void TextLabelWidget::setText(const QString &text)
 {
-	QLineEdit::setText(text);
-	setCursorPosition(0);
+	if (text != this->text())
+	{
+		QLineEdit::setText(text);
+		setCursorPosition(0);
+	}
+
 	setReadOnly(true);
 }
 
