@@ -77,7 +77,7 @@ void SessionsManager::scheduleSave()
 
 void SessionsManager::connectActions()
 {
-	connect(ActionsManager::getAction(QLatin1String("ActivateAddressField")), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
+	connect(ActionsManager::getAction(ActivateAddressFieldAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 }
 
 void SessionsManager::actionTriggered()
@@ -89,7 +89,9 @@ void SessionsManager::actionTriggered()
 		return;
 	}
 
-	if (action->objectName() == QLatin1String("ActivateAddressField"))
+	const WindowAction windowAction = static_cast<WindowAction>(action->data().toInt());
+
+	if (windowAction == ActivateAddressFieldAction)
 	{
 		m_activeWindow->getWindowsManager()->triggerAction(ActivateAddressFieldAction);
 	}

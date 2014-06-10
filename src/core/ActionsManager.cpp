@@ -30,10 +30,11 @@ namespace Otter
 
 ActionsManager* ActionsManager::m_instance = NULL;
 QHash<QAction*, QStringList> ActionsManager::m_applicationMacros;
-QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_windowActions;
+QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_mainWindowActions;
 QHash<QString, QAction*> ActionsManager::m_applicationActions;
 QHash<QString, QList<QKeySequence> > ActionsManager::m_profileShortcuts;
 QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
+QHash<WindowAction, QAction*> ActionsManager::m_windowActions;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
@@ -171,7 +172,7 @@ void ActionsManager::loadProfiles()
 		}
 	}
 
-	QList<QObject*> windows = m_windowActions.keys();
+	QList<QObject*> windows = m_mainWindowActions.keys();
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
@@ -189,19 +190,26 @@ void ActionsManager::optionChanged(const QString &option)
 
 void ActionsManager::removeWindow(QObject *window)
 {
-	if (m_windowActions.contains(window))
+	if (m_mainWindowActions.contains(window))
 	{
-		m_windowActions.remove(qobject_cast<QWidget*>(window));
+		m_mainWindowActions.remove(qobject_cast<QWidget*>(window));
 	}
 }
 
-void ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon)
+void ActionsManager::registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon, WindowAction windowAction)
 {
 	QAction *action = new QAction(icon, text, m_instance);
-	action->setObjectName(name);
+	action->setObjectName(identifier);
 	action->setShortcutContext(Qt::ApplicationShortcut);
 
-	m_applicationActions[name] = action;
+	m_applicationActions[identifier] = action;
+
+	if (windowAction != NoAction)
+	{
+		action->setData(windowAction);
+
+		m_windowActions[windowAction] = action;
+	}
 }
 
 void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
@@ -277,7 +285,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaLoop"), tr("Looping"));
 		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
-		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"));
+		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
 
 		loadProfiles();
 
@@ -286,9 +294,9 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
 	}
 
-	if (!m_windowActions.contains(window))
+	if (!m_mainWindowActions.contains(window))
 	{
-		m_windowActions[window] = QHash<QString, QAction*>();
+		m_mainWindowActions[window] = QHash<QString, QAction*>();
 
 		connect(window, SIGNAL(destroyed(QObject*)), m_instance, SLOT(removeWindow(QObject*)));
 	}
@@ -297,7 +305,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 	{
 		if (actions.at(i) && !actions.at(i)->isSeparator() && !actions.at(i)->objectName().isEmpty())
 		{
-			m_windowActions[window][actions.at(i)->objectName().startsWith(QLatin1String("action")) ? actions.at(i)->objectName().mid(6) : actions.at(i)->objectName()] = actions.at(i);
+			m_mainWindowActions[window][actions.at(i)->objectName().startsWith(QLatin1String("action")) ? actions.at(i)->objectName().mid(6) : actions.at(i)->objectName()] = actions.at(i);
 
 			actions.at(i)->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 		}
@@ -307,6 +315,16 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 }
 
 void ActionsManager::triggerAction(const QString &action)
+{
+	QAction *object = getAction(action);
+
+	if (object)
+	{
+		object->trigger();
+	}
+}
+
+void ActionsManager::triggerAction(WindowAction action)
 {
 	QAction *object = getAction(action);
 
@@ -359,12 +377,12 @@ void ActionsManager::setupLocalAction(QAction *localAction, const QLatin1String 
 
 void ActionsManager::setupWindowActions(QObject *window)
 {
-	if (!m_windowActions.contains(window))
+	if (!m_mainWindowActions.contains(window))
 	{
 		return;
 	}
 
-	const QHash<QString, QAction*> actions = m_windowActions[window];
+	const QHash<QString, QAction*> actions = m_mainWindowActions[window];
 	QHash<QString, QAction*>::const_iterator windowActionsIterator;
 	QWidget *widget = qobject_cast<QWidget*>(window);
 
@@ -392,12 +410,17 @@ QAction* ActionsManager::getAction(const QString &action)
 
 	QWidget *window = SessionsManager::getActiveWindow();
 
-	if (m_windowActions.contains(window) && m_windowActions[window].contains(action))
+	if (m_mainWindowActions.contains(window) && m_mainWindowActions[window].contains(action))
 	{
-		return m_windowActions[window][action];
+		return m_mainWindowActions[window][action];
 	}
 
 	return NULL;
+}
+
+QAction *ActionsManager::getAction(WindowAction action)
+{
+	return (m_windowActions.contains(action) ? m_windowActions[action] : NULL);
 }
 
 QKeySequence ActionsManager::getNativeShortcut(const QString &action)
@@ -407,12 +430,12 @@ QKeySequence ActionsManager::getNativeShortcut(const QString &action)
 
 QStringList ActionsManager::getIdentifiers()
 {
-	if (!m_windowActions.contains(SessionsManager::getActiveWindow()))
+	if (!m_mainWindowActions.contains(SessionsManager::getActiveWindow()))
 	{
 		return m_profileShortcuts.keys();
 	}
 
-	return m_windowActions[SessionsManager::getActiveWindow()].keys();
+	return m_mainWindowActions[SessionsManager::getActiveWindow()].keys();
 }
 
 }

@@ -27,6 +27,78 @@
 namespace Otter
 {
 
+enum WindowAction
+{
+	NoAction = 0,
+	OpenLinkAction,
+	OpenLinkInThisTabAction,
+	OpenLinkInNewTabAction,
+	OpenLinkInNewTabBackgroundAction,
+	OpenLinkInNewWindowAction,
+	OpenLinkInNewWindowBackgroundAction,
+	CopyLinkToClipboardAction,
+	SaveLinkToDiskAction,
+	SaveLinkToDownloadsAction,
+	OpenFrameInThisTabAction,
+	OpenFrameInNewTabAction,
+	OpenFrameInNewTabBackgroundAction,
+	CopyFrameLinkToClipboardAction,
+	OpenImageInNewTabAction,
+	SaveImageToDiskAction,
+	CopyImageToClipboardAction,
+	CopyImageUrlToClipboardAction,
+	ImagePropertiesAction,
+	GoBackAction,
+	GoForwardAction,
+	RewindBackAction,
+	RewindForwardAction,
+	StopAction,
+	StopScheduledPageRefreshAction,
+	ReloadAction,
+	ReloadOrStopAction,
+	ReloadFrameAction,
+	ReloadImageAction,
+	ReloadAndBypassCacheAction,
+	ReloadTimeAction,
+	CutAction,
+	CopyAction,
+	PasteAction,
+	DeleteAction,
+	SelectAllAction,
+	ClearAllAction,
+	SpellCheckAction,
+	UndoAction,
+	RedoAction,
+	InspectPageAction,
+	InspectElementAction,
+	PrintAction,
+	BookmarkAction,
+	BookmarkLinkAction,
+	CopyAddressAction,
+	ViewSourceAction,
+	ViewSourceFrameAction,
+	ValidateAction,
+	ContentBlockingAction,
+	WebsitePreferencesAction,
+	ZoomInAction,
+	ZoomOutAction,
+	ZoomOriginalAction,
+	SearchAction,
+	SearchMenuAction,
+	OpenSelectionAsLinkAction,
+	CreateSearchAction,
+	FindAction,
+	FindNextAction,
+	FindPreviousAction,
+	SaveMediaToDiskAction,
+	CopyMediaUrlToClipboardAction,
+	ToggleMediaControlsAction,
+	ToggleMediaLoopAction,
+	ToggleMediaPlayPauseAction,
+	ToggleMediaMuteAction,
+	ActivateAddressFieldAction
+};
+
 class ActionsManager : public QObject
 {
 	Q_OBJECT
@@ -34,10 +106,13 @@ class ActionsManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
+	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), WindowAction windowAction = NoAction);
 	static void registerWindow(QWidget *window, QList<QAction*> actions);
 	static void triggerAction(const QString &action);
+	static void triggerAction(WindowAction action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
 	static QAction* getAction(const QString &action);
+	static QAction* getAction(WindowAction action);
 	static QKeySequence getNativeShortcut(const QString &action);
 	static QStringList getIdentifiers();
 
@@ -45,7 +120,6 @@ protected:
 	explicit ActionsManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	static void registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon());
 	static void setupWindowActions(QObject *window);
 
 protected slots:
@@ -58,10 +132,11 @@ private:
 
 	static ActionsManager *m_instance;
 	static QHash<QAction*, QStringList> m_applicationMacros;
-	static QHash<QObject*, QHash<QString, QAction*> > m_windowActions;
+	static QHash<QObject*, QHash<QString, QAction*> > m_mainWindowActions;
 	static QHash<QString, QAction*> m_applicationActions;
 	static QHash<QString, QList<QKeySequence> > m_profileShortcuts;
 	static QHash<QString, QKeySequence> m_nativeShortcuts;
+	static QHash<WindowAction, QAction*> m_windowActions;
 };
 
 }

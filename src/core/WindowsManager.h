@@ -20,6 +20,7 @@
 #ifndef OTTER_WINDOWSMANAGER_H
 #define OTTER_WINDOWSMANAGER_H
 
+#include "ActionsManager.h"
 #include "BookmarksManager.h"
 #include "SessionsManager.h"
 
@@ -29,78 +30,6 @@
 
 namespace Otter
 {
-
-enum WindowAction
-{
-	NoAction = 0,
-	OpenLinkAction,
-	OpenLinkInThisTabAction,
-	OpenLinkInNewTabAction,
-	OpenLinkInNewTabBackgroundAction,
-	OpenLinkInNewWindowAction,
-	OpenLinkInNewWindowBackgroundAction,
-	CopyLinkToClipboardAction,
-	SaveLinkToDiskAction,
-	SaveLinkToDownloadsAction,
-	OpenFrameInThisTabAction,
-	OpenFrameInNewTabAction,
-	OpenFrameInNewTabBackgroundAction,
-	CopyFrameLinkToClipboardAction,
-	OpenImageInNewTabAction,
-	SaveImageToDiskAction,
-	CopyImageToClipboardAction,
-	CopyImageUrlToClipboardAction,
-	ImagePropertiesAction,
-	GoBackAction,
-	GoForwardAction,
-	RewindBackAction,
-	RewindForwardAction,
-	StopAction,
-	StopScheduledPageRefreshAction,
-	ReloadAction,
-	ReloadOrStopAction,
-	ReloadFrameAction,
-	ReloadImageAction,
-	ReloadAndBypassCacheAction,
-	ReloadTimeAction,
-	CutAction,
-	CopyAction,
-	PasteAction,
-	DeleteAction,
-	SelectAllAction,
-	ClearAllAction,
-	SpellCheckAction,
-	UndoAction,
-	RedoAction,
-	InspectPageAction,
-	InspectElementAction,
-	PrintAction,
-	BookmarkAction,
-	BookmarkLinkAction,
-	CopyAddressAction,
-	ViewSourceAction,
-	ViewSourceFrameAction,
-	ValidateAction,
-	ContentBlockingAction,
-	WebsitePreferencesAction,
-	ZoomInAction,
-	ZoomOutAction,
-	ZoomOriginalAction,
-	SearchAction,
-	SearchMenuAction,
-	OpenSelectionAsLinkAction,
-	CreateSearchAction,
-	FindAction,
-	FindNextAction,
-	FindPreviousAction,
-	SaveMediaToDiskAction,
-	CopyMediaUrlToClipboardAction,
-	ToggleMediaControlsAction,
-	ToggleMediaLoopAction,
-	ToggleMediaPlayPauseAction,
-	ToggleMediaMuteAction,
-	ActivateAddressFieldAction
-};
 
 enum OpenHint
 {

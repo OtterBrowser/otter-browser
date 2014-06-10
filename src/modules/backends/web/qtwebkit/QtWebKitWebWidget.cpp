@@ -1789,7 +1789,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				triggerAction(StopAction);
 
-				ActionsManager::triggerAction(QLatin1String("ActivateAddressField"));
+				ActionsManager::triggerAction(ActivateAddressFieldAction);
 
 				event->accept();
 
