@@ -399,10 +399,12 @@ void MainWindow::actionFullScreen()
 {
 	if (isFullScreen())
 	{
-		showNormal();
+		setWindowState(m_previousState);
 	}
 	else
 	{
+		m_previousState = windowState();
+
 		showFullScreen();
 	}
 }

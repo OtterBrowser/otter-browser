@@ -112,6 +112,7 @@ private:
 	QWinTaskbarButton *m_taskbarButton;
 #endif
 	QString m_currentBookmark;
+	Qt::WindowStates m_previousState;
 	Ui::MainWindow *m_ui;
 
 signals:
