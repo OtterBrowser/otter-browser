@@ -98,6 +98,7 @@ protected slots:
 	void updateClosedWindows();
 	void updateBookmarks(int folder);
 	void updateActions();
+	void updateWindowTitle(const QString &title);
 #ifdef Q_OS_WIN
 	void updateWindowsTaskbarProgress();
 #endif

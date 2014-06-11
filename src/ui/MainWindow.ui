@@ -13,9 +13,6 @@
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
-  <property name="windowTitle">
-   <string>Otter</string>
-  </property>
   <property name="dockOptions">
    <set>QMainWindow::AnimatedDocks</set>
   </property>

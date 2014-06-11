@@ -160,7 +160,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
-	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(setWindowTitle(QString)));
+	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->tabsDockWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
@@ -228,9 +228,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	SettingsManager::setDefaultValue(QLatin1String("Window/State"), QByteArray());
 
 	updateActions();
+	updateWindowTitle(m_windowsManager->getTitle());
 	restoreGeometry(SettingsManager::getValue(QLatin1String("Window/Geometry")).toByteArray());
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
-	setWindowTitle(QStringLiteral("%1 - Otter").arg(m_windowsManager->getTitle()));
 }
 
 MainWindow::~MainWindow()
@@ -970,6 +970,11 @@ void MainWindow::updateActions()
 	m_ui->actionZoomOriginal->setEnabled(canZoom);
 }
 
+void MainWindow::updateWindowTitle(const QString &title)
+{
+	setWindowTitle(QStringLiteral("%1 - Otter").arg(title));
+}
+
 #ifdef Q_OS_WIN
 void MainWindow::updateWindowsTaskbarProgress()
 {
@@ -1039,10 +1044,13 @@ bool MainWindow::event(QEvent *event)
 
 		return result;
 	}
-
-	if (event->type() == QEvent::WindowActivate)
+	else if (event->type() == QEvent::WindowActivate)
 	{
 		SessionsManager::setActiveWindow(this);
+	}
+	else if (event->type() == QEvent::LanguageChange)
+	{
+		updateWindowTitle(m_windowsManager->getTitle());
 	}
 
 	return QMainWindow::event(event);
