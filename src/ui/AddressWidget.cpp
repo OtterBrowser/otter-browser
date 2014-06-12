@@ -140,6 +140,36 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 	}
 }
 
+void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	const QString shortcut = QKeySequence(QKeySequence::Paste).toString(QKeySequence::NativeText);
+	QMenu *menu = createStandardContextMenu();
+	bool found = false;
+
+	if (!shortcut.isEmpty())
+	{
+		for (int i = 0; i < menu->actions().count(); ++i)
+		{
+			if (menu->actions().at(i)->text().endsWith(shortcut))
+			{
+				menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(PasteAndGoAction));
+
+				found = true;
+
+				break;
+			}
+		}
+	}
+
+	if (!found)
+	{
+		menu->insertAction(menu->actions().at(6), ActionsManager::getAction(PasteAndGoAction));
+	}
+
+	menu->exec(event->globalPos());
+	menu->deleteLater();
+}
+
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QLineEdit::mouseMoveEvent(event);
