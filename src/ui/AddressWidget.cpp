@@ -379,7 +379,12 @@ void AddressWidget::verifyLookup(const QHostInfo &host)
 
 void AddressWidget::notifyRequestedLoadUrl()
 {
-	handleUserInput(text().trimmed());
+	const QString input = text().trimmed();
+
+	if (!input.isEmpty())
+	{
+		handleUserInput(input);
+	}
 }
 
 void AddressWidget::updateBookmark()
