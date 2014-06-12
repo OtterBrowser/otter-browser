@@ -273,7 +273,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			QMessageBox messageBox;
 			messageBox.setWindowTitle(tr("Question"));
 			messageBox.setText(tr("You are about to quit while %n files are still being downloaded.", "", runningTransfers));
-			messageBox.setInformativeText("Do you want to continue?");
+			messageBox.setInformativeText(tr("Do you want to continue?"));
 			messageBox.setIcon(QMessageBox::Question);
 			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 			messageBox.setDefaultButton(QMessageBox::Cancel);
