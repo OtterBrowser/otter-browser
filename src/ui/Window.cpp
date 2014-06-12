@@ -33,6 +33,7 @@
 #include "ui_Window.h"
 
 #include <QtCore/QTimer>
+#include <QtGui/QClipboard>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 
@@ -143,6 +144,15 @@ void Window::triggerAction(WindowAction action, bool checked)
 	if (action == ActivateAddressFieldAction)
 	{
 		m_ui->addressWidget->setFocus();
+	}
+	else if (action == PasteAndGoAction)
+	{
+		if (!QApplication::clipboard()->text().isEmpty())
+		{
+			m_ui->addressWidget->handleUserInput(QApplication::clipboard()->text().trimmed());
+		}
+
+		return;
 	}
 
 	getContentsWidget()->triggerAction(action, checked);

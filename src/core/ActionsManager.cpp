@@ -286,6 +286,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
 		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
+		registerAction(QLatin1String("PasteAndGo"), tr("Paste and Go"), QIcon(), PasteAndGoAction);
 
 		loadProfiles();
 

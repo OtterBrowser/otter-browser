@@ -38,6 +38,7 @@ class AddressWidget : public QLineEdit
 public:
 	explicit AddressWidget(QWidget *parent = NULL);
 
+	void handleUserInput(const QString &text);
 	void setWindow(Window *window);
 	QUrl getUrl() const;
 	bool eventFilter(QObject *object, QEvent *event);
@@ -53,7 +54,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
-	void handleUserInput(const QString &text);
 
 protected slots:
 	void removeIcon();

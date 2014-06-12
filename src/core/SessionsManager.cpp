@@ -78,6 +78,7 @@ void SessionsManager::scheduleSave()
 void SessionsManager::connectActions()
 {
 	connect(ActionsManager::getAction(ActivateAddressFieldAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
+	connect(ActionsManager::getAction(PasteAndGoAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 }
 
 void SessionsManager::actionTriggered()
@@ -94,6 +95,10 @@ void SessionsManager::actionTriggered()
 	if (windowAction == ActivateAddressFieldAction)
 	{
 		m_activeWindow->getWindowsManager()->triggerAction(ActivateAddressFieldAction);
+	}
+	else if (windowAction == PasteAndGoAction)
+	{
+		m_activeWindow->getWindowsManager()->triggerAction(PasteAndGoAction);
 	}
 }
 

@@ -96,7 +96,8 @@ enum WindowAction
 	ToggleMediaLoopAction,
 	ToggleMediaPlayPauseAction,
 	ToggleMediaMuteAction,
-	ActivateAddressFieldAction
+	ActivateAddressFieldAction,
+	PasteAndGoAction
 };
 
 class ActionsManager : public QObject
