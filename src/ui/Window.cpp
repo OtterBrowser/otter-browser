@@ -108,6 +108,11 @@ void Window::focusInEvent(QFocusEvent *event)
 	}
 }
 
+void Window::clear()
+{
+	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
+}
+
 void Window::close()
 {
 	emit aboutToClose();

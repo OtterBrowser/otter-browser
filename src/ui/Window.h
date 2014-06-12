@@ -63,6 +63,7 @@ public:
 	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
 	~Window();
 
+	void clear();
 	void close();
 	void setSession(SessionWindow session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);

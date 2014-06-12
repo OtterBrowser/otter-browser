@@ -535,7 +535,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (window)
 		{
-			window->setSession(SessionWindow());
+			window->clear();
 
 			return;
 		}
