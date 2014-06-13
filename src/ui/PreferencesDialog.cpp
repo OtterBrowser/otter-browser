@@ -955,8 +955,8 @@ void PreferencesDialog::addMacrosProfile()
 	QHash<QString, QString> hash;
 	hash[QLatin1String("Title")] = tr("(Untitled)");
 
-	m_keyboardProfilesInformation[identifier] = hash;
-	m_keyboardProfilesData[identifier] = QHash<QString, QVariantHash>();
+	m_macrosProfilesInformation[identifier] = hash;
+	m_macrosProfilesData[identifier] = QHash<QString, QVariantHash>();
 
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(tr("(Untitled)")));
@@ -1318,11 +1318,12 @@ void PreferencesDialog::save()
 		QFile::remove(m_removedProfiles.at(i));
 	}
 
+	QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/keyboard/"));
+
 	const QStringList modifiedKeyboardProfiles = m_keyboardProfilesInformation.keys();
 
 	for (int i = 0; i < modifiedKeyboardProfiles.count(); ++i)
 	{
-		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/keyboard/"));
 		QFile file(SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + modifiedKeyboardProfiles.at(i) + QLatin1String(".ini"));
 
 		if (!file.open(QIODevice::WriteOnly))
@@ -1352,11 +1353,12 @@ void PreferencesDialog::save()
 		file.close();
 	}
 
+	QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/macros/"));
+
 	const QStringList modifiedMacrosProfiles = m_macrosProfilesInformation.keys();
 
 	for (int i = 0; i < modifiedMacrosProfiles.count(); ++i)
 	{
-		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/macros/"));
 		QFile file(SessionsManager::getProfilePath() + QLatin1String("/macros/") + modifiedMacrosProfiles.at(i) + QLatin1String(".ini"));
 
 		if (!file.open(QIODevice::WriteOnly))
