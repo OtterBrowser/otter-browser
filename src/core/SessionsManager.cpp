@@ -238,7 +238,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
 	SessionInformation session;
 	session.path = path;
-	session.title = sessionData.value(QLatin1String("Session/title"), ((path == "default") ? tr("Default") : tr("(Untitled)"))).toString();
+	session.title = sessionData.value(QLatin1String("Session/title"), ((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"))).toString();
 	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
 	session.clean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
