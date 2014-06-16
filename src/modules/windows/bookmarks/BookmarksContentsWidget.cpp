@@ -272,7 +272,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
 }
 
-void BookmarksContentsWidget::triggerAction(WindowAction action, bool checked)
+void BookmarksContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	Q_UNUSED(checked)
 
@@ -288,7 +288,7 @@ void BookmarksContentsWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
 	}
 }
 
@@ -377,7 +377,7 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 	return NULL;
 }
 
-QAction* BookmarksContentsWidget::getAction(WindowAction action)
+QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
 {
 	if (m_actions.contains(action))
 	{

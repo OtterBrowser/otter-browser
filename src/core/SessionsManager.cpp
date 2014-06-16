@@ -93,7 +93,7 @@ void SessionsManager::actionTriggered()
 		return;
 	}
 
-	const WindowAction windowAction = static_cast<WindowAction>(action->data().toInt());
+	const ActionIdentifier windowAction = static_cast<ActionIdentifier>(action->data().toInt());
 
 	if (windowAction == ActivateAddressFieldAction)
 	{

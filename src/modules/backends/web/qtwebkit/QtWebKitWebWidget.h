@@ -45,7 +45,7 @@ public:
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);
-	QAction* getAction(WindowAction action);
+	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -67,7 +67,7 @@ public slots:
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
-	void triggerAction(WindowAction action, bool checked = false);
+	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
@@ -82,7 +82,7 @@ protected:
 	void openUrl(QUrl url, OpenHints hints = DefaultOpen);
 	void setNetworkManager(NetworkManager *manager);
 	QWebPage* getPage();
-	QWebPage::WebAction mapAction(WindowAction action) const;
+	QWebPage::WebAction mapAction(ActionIdentifier action) const;
 
 protected slots:
 	void triggerAction();
@@ -111,7 +111,7 @@ private:
 	QPixmap m_thumbnail;
 	QPoint m_hotclickPosition;
 	QWebHitTestResult m_hitResult;
-	QHash<WindowAction, QAction*> m_actions;
+	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
 	bool m_isLoading;
 	bool m_isReloading;

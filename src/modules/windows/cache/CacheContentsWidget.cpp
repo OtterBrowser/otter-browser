@@ -78,7 +78,7 @@ void CacheContentsWidget::print(QPrinter *printer)
 	m_ui->cacheView->render(printer);
 }
 
-void CacheContentsWidget::triggerAction(WindowAction action, bool checked)
+void CacheContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	Q_UNUSED(checked)
 
@@ -94,7 +94,7 @@ void CacheContentsWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
 	}
 }
 
@@ -563,7 +563,7 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	return NULL;
 }
 
-QAction* CacheContentsWidget::getAction(WindowAction action)
+QAction* CacheContentsWidget::getAction(ActionIdentifier action)
 {
 	if (m_actions.contains(action))
 	{

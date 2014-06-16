@@ -139,7 +139,7 @@ void Window::search(const QString &query, const QString &engine)
 	m_ui->addressWidget->setUrl(getUrl());
 }
 
-void Window::triggerAction(WindowAction action, bool checked)
+void Window::triggerAction(ActionIdentifier action, bool checked)
 {
 	if (action == ActivateAddressFieldAction)
 	{

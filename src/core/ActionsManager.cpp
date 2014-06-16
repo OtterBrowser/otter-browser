@@ -35,7 +35,7 @@ QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_mainWindowActions;
 QHash<QString, QAction*> ActionsManager::m_applicationActions;
 QHash<QString, QList<QKeySequence> > ActionsManager::m_profileShortcuts;
 QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
-QHash<WindowAction, QAction*> ActionsManager::m_windowActions;
+QHash<ActionIdentifier, QAction*> ActionsManager::m_windowActions;
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
@@ -197,7 +197,7 @@ void ActionsManager::removeWindow(QObject *window)
 	}
 }
 
-void ActionsManager::registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon, WindowAction windowAction)
+void ActionsManager::registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon, ActionIdentifier windowAction)
 {
 	QAction *action = new QAction(icon, text, m_instance);
 	action->setObjectName(identifier);
@@ -328,7 +328,7 @@ void ActionsManager::triggerAction(const QString &action)
 	}
 }
 
-void ActionsManager::triggerAction(WindowAction action)
+void ActionsManager::triggerAction(ActionIdentifier action)
 {
 	QAction *object = getAction(action);
 
@@ -422,7 +422,7 @@ QAction* ActionsManager::getAction(const QString &action)
 	return NULL;
 }
 
-QAction *ActionsManager::getAction(WindowAction action)
+QAction *ActionsManager::getAction(ActionIdentifier action)
 {
 	return (m_windowActions.contains(action) ? m_windowActions[action] : NULL);
 }

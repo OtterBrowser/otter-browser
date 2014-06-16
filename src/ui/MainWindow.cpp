@@ -865,7 +865,7 @@ void MainWindow::triggerWindowAction()
 
 	if (action)
 	{
-		m_windowsManager->triggerAction(static_cast<WindowAction>(action->data().toInt()), action->isChecked());
+		m_windowsManager->triggerAction(static_cast<ActionIdentifier>(action->data().toInt()), action->isChecked());
 	}
 }
 

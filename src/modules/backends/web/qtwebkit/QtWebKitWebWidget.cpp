@@ -483,11 +483,11 @@ void QtWebKitWebWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
 	}
 }
 
-void QtWebKitWebWidget::triggerAction(WindowAction action, bool checked)
+void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -1105,7 +1105,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	return widget;
 }
 
-QAction* QtWebKitWebWidget::getAction(WindowAction action)
+QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 {
 	const QWebPage::WebAction webAction = mapAction(action);
 
@@ -1528,7 +1528,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
-QWebPage::WebAction QtWebKitWebWidget::mapAction(WindowAction action) const
+QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 {
 	switch (action)
 	{

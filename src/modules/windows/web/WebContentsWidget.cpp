@@ -203,7 +203,7 @@ void WebContentsWidget::goToHistoryIndex(int index)
 	m_webWidget->goToHistoryIndex(index);
 }
 
-void WebContentsWidget::triggerAction(WindowAction action, bool checked)
+void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	if (action == FindAction || action == FindNextAction || action == FindPreviousAction)
 	{
@@ -382,7 +382,7 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 	return webWidget;
 }
 
-QAction* WebContentsWidget::getAction(WindowAction action)
+QAction* WebContentsWidget::getAction(ActionIdentifier action)
 {
 	return m_webWidget->getAction(action);
 }

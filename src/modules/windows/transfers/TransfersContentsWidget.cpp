@@ -107,7 +107,7 @@ void TransfersContentsWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
 	}
 }
 
@@ -440,7 +440,7 @@ void TransfersContentsWidget::print(QPrinter *printer)
 	m_ui->transfersView->render(printer);
 }
 
-void TransfersContentsWidget::triggerAction(WindowAction action, bool checked)
+void TransfersContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	Q_UNUSED(checked)
 
@@ -474,7 +474,7 @@ TransferInformation* TransfersContentsWidget::getTransfer(const QModelIndex &ind
 	return NULL;
 }
 
-QAction* TransfersContentsWidget::getAction(WindowAction action)
+QAction* TransfersContentsWidget::getAction(ActionIdentifier action)
 {
 	if (m_actions.contains(action))
 	{

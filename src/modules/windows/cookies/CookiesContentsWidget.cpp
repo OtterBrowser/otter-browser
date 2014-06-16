@@ -268,7 +268,7 @@ void CookiesContentsWidget::print(QPrinter *printer)
 	m_ui->cookiesView->render(printer);
 }
 
-void CookiesContentsWidget::triggerAction(WindowAction action, bool checked)
+void CookiesContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
 	Q_UNUSED(checked)
 
@@ -293,7 +293,7 @@ void CookiesContentsWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(static_cast<WindowAction>(action->data().toInt()));
+		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
 	}
 }
 
@@ -365,7 +365,7 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 	return NULL;
 }
 
-QAction* CookiesContentsWidget::getAction(WindowAction action)
+QAction* CookiesContentsWidget::getAction(ActionIdentifier action)
 {
 	if (m_actions.contains(action))
 	{

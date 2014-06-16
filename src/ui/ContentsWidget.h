@@ -48,7 +48,7 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
-	virtual QAction* getAction(WindowAction action);
+	virtual QAction* getAction(ActionIdentifier action);
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;
@@ -68,7 +68,7 @@ public slots:
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	virtual void goToHistoryIndex(int index);
-	virtual void triggerAction(WindowAction action, bool checked = false);
+	virtual void triggerAction(ActionIdentifier action, bool checked = false);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool typed = true);

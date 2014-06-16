@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-enum WindowAction
+enum ActionIdentifier
 {
 	NoAction = 0,
 	OpenLinkAction,
@@ -100,8 +100,10 @@ enum WindowAction
 	ActivateAddressFieldAction,
 	PasteAndGoAction,
 	ActivateTabOnLeftAction,
-	ActivateTabOnRightAction
-};
+	ActivateTabOnRightAction,
+	WindowAction = 4096,
+	MainWindowAction = 8192
+,};
 
 class ActionsManager : public QObject
 {
@@ -110,13 +112,13 @@ class ActionsManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
-	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), WindowAction windowAction = NoAction);
+	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier windowAction = NoAction);
 	static void registerWindow(QWidget *window, QList<QAction*> actions);
 	static void triggerAction(const QString &action);
-	static void triggerAction(WindowAction action);
+	static void triggerAction(ActionIdentifier action);
 	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
 	static QAction* getAction(const QString &action);
-	static QAction* getAction(WindowAction action);
+	static QAction* getAction(ActionIdentifier action);
 	static QKeySequence getNativeShortcut(const QString &action);
 	static QStringList getIdentifiers();
 
@@ -140,7 +142,7 @@ private:
 	static QHash<QString, QAction*> m_applicationActions;
 	static QHash<QString, QList<QKeySequence> > m_profileShortcuts;
 	static QHash<QString, QKeySequence> m_nativeShortcuts;
-	static QHash<WindowAction, QAction*> m_windowActions;
+	static QHash<ActionIdentifier, QAction*> m_windowActions;
 };
 
 }

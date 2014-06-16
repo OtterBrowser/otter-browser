@@ -44,7 +44,7 @@ public:
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
 	WebContentsWidget* clone(bool cloneHistory = true);
-	QAction* getAction(WindowAction action);
+	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -65,7 +65,7 @@ public:
 
 public slots:
 	void goToHistoryIndex(int index);
-	void triggerAction(WindowAction action, bool checked = false);
+	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);

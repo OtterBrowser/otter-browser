@@ -60,7 +60,7 @@ class WindowsManager : public QObject
 public:
 	explicit WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool isPrivate = false);
 
-	QAction* getAction(WindowAction action);
+	QAction* getAction(ActionIdentifier action);
 	Window* getWindow(int index) const;
 	QString getDefaultTextEncoding() const;
 	QString getTitle() const;
@@ -85,7 +85,7 @@ public slots:
 	void restore(const SessionMainWindow &session);
 	void print(int index = -1);
 	void printPreview(int index = -1);
-	void triggerAction(WindowAction action, bool checked = false);
+	void triggerAction(ActionIdentifier action, bool checked = false);
 	void clearClosedWindows();
 	void setActiveWindow(int index);
 	void setDefaultTextEncoding(const QString &encoding);

@@ -86,7 +86,7 @@ public:
 
 public slots:
 	void search(const QString &query, const QString &engine);
-	void triggerAction(WindowAction action, bool checked = false);
+	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setDefaultTextEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier);
 	void setSearchEngine(const QString &engine);

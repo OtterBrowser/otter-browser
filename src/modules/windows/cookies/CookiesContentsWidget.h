@@ -44,7 +44,7 @@ public:
 	~CookiesContentsWidget();
 
 	void print(QPrinter *printer);
-	QAction* getAction(WindowAction action);
+	QAction* getAction(ActionIdentifier action);
 	QString getTitle() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
@@ -52,7 +52,7 @@ public:
 	bool isLoading() const;
 
 public slots:
-	void triggerAction(WindowAction action, bool checked = false);
+	void triggerAction(ActionIdentifier action, bool checked = false);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -72,7 +72,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<WindowAction, QAction*> m_actions;
+	QHash<ActionIdentifier, QAction*> m_actions;
 	bool m_isLoading;
 	Ui::CookiesContentsWidget *m_ui;
 };

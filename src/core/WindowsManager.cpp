@@ -348,7 +348,7 @@ void WindowsManager::printPreview(QPrinter *printer)
 	}
 }
 
-void WindowsManager::triggerAction(WindowAction action, bool checked)
+void WindowsManager::triggerAction(ActionIdentifier action, bool checked)
 {
 	Window *window = m_mdi->getActiveWindow();
 
@@ -691,7 +691,7 @@ void WindowsManager::setTitle(const QString &title)
 	}
 }
 
-QAction* WindowsManager::getAction(WindowAction action)
+QAction* WindowsManager::getAction(ActionIdentifier action)
 {
 	Window *window = m_mdi->getActiveWindow();
 

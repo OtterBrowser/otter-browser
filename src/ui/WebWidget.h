@@ -67,7 +67,7 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void setQuickSearchEngine(const QString &engine);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
-	virtual QAction* getAction(WindowAction action) = 0;
+	virtual QAction* getAction(ActionIdentifier action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();
 	QMenu* getQuickSearchMenu();
@@ -91,7 +91,7 @@ public:
 
 public slots:
 	virtual void goToHistoryIndex(int index) = 0;
-	virtual void triggerAction(WindowAction action, bool checked = false) = 0;
+	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
 	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
