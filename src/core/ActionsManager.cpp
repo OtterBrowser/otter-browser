@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -287,6 +288,8 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
 		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
 		registerAction(QLatin1String("PasteAndGo"), tr("Paste and Go"), QIcon(), PasteAndGoAction);
+		registerAction(QLatin1String("ActivateTabOnLeft"), tr("Go to tab on left"), QIcon(), ActivateTabOnLeftAction);
+		registerAction(QLatin1String("ActivateTabOnRight"), tr("Go to tab on right"), QIcon(), ActivateTabOnRightAction);
 
 		loadProfiles();
 

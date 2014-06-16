@@ -352,7 +352,15 @@ void WindowsManager::triggerAction(WindowAction action, bool checked)
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	if (window)
+	if (action == ActivateTabOnLeftAction)
+	{
+		m_tabBar->activateTabOnLeft();
+	}
+	else if (action == ActivateTabOnRightAction)
+	{
+		m_tabBar->activateTabOnRight();
+	}
+	else if (window)
 	{
 		window->triggerAction(action, checked);
 	}

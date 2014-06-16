@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -79,6 +80,8 @@ void SessionsManager::connectActions()
 {
 	connect(ActionsManager::getAction(ActivateAddressFieldAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 	connect(ActionsManager::getAction(PasteAndGoAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
+	connect(ActionsManager::getAction(ActivateTabOnLeftAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
+	connect(ActionsManager::getAction(ActivateTabOnRightAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 }
 
 void SessionsManager::actionTriggered()
@@ -99,6 +102,14 @@ void SessionsManager::actionTriggered()
 	else if (windowAction == PasteAndGoAction)
 	{
 		m_activeWindow->getWindowsManager()->triggerAction(PasteAndGoAction);
+	}
+	else if (windowAction == ActivateTabOnLeftAction)
+	{
+		m_activeWindow->getWindowsManager()->triggerAction(ActivateTabOnLeftAction);
+	}
+	else if (windowAction == ActivateTabOnRightAction)
+	{
+		m_activeWindow->getWindowsManager()->triggerAction(ActivateTabOnRightAction);
 	}
 }
 

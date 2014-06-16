@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -212,19 +213,13 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 		return;
 	}
 
-	const int index = (currentIndex() + (event->delta() > 0 ? -1 : 1));
-
-	if (index < 0)
+	if (event->delta() > 0)
 	{
-		setCurrentIndex(count() - 1);
-	}
-	else if (index >= count())
-	{
-		setCurrentIndex(0);
+		activateTabOnLeft();
 	}
 	else
 	{
-		setCurrentIndex(index);
+		activateTabOnRight();
 	}
 }
 
@@ -338,6 +333,16 @@ void TabBarWidget::removeTab(int index)
 		updateGeometry();
 		adjustSize();
 	}
+}
+
+void TabBarWidget::activateTabOnLeft()
+{
+	setCurrentIndex((currentIndex() > 0) ? (currentIndex() - 1) : (count() - 1));
+}
+
+void TabBarWidget::activateTabOnRight()
+{
+	setCurrentIndex((currentIndex() + 1 < count()) ? (currentIndex() + 1) : 0);
 }
 
 void TabBarWidget::showPreview(int index)
