@@ -91,6 +91,7 @@ enum ActionIdentifier
 	FindAction,
 	FindNextAction,
 	FindPreviousAction,
+	QuickFindAction,
 	SaveMediaToDiskAction,
 	CopyMediaUrlToClipboardAction,
 	ToggleMediaControlsAction,

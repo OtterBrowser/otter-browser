@@ -91,6 +91,7 @@ private:
 	WebWidget *m_webWidget;
 	ProgressBarWidget *m_progressBarWidget;
 	int m_progressBarTimer;
+	int m_quickFindTimer;
 	bool m_showProgressBar;
 	Ui::WebContentsWidget *m_ui;
 

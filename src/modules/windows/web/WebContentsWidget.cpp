@@ -37,6 +37,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_webWidget(widget),
 	m_progressBarWidget(NULL),
 	m_progressBarTimer(0),
+	m_quickFindTimer(0),
 	m_showProgressBar(true),
 	m_ui(new Ui::WebContentsWidget)
 {
@@ -111,6 +112,14 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 		{
 			m_progressBarWidget->hide();
 		}
+	}
+	else if (event->timerId() == m_quickFindTimer)
+	{
+		killTimer(m_quickFindTimer);
+
+		m_quickFindTimer = 0;
+
+		m_ui->findWidget->hide();
 	}
 }
 
@@ -205,15 +214,24 @@ void WebContentsWidget::goToHistoryIndex(int index)
 
 void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 {
-	if (action == FindAction || action == FindNextAction || action == FindPreviousAction)
+	const bool isFindAction = (action == FindAction || action == QuickFindAction);
+
+	if (isFindAction || action == FindNextAction || action == FindPreviousAction)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			if (action != FindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+			if (action == QuickFindAction)
+			{
+				killTimer(m_quickFindTimer);
+
+				m_quickFindTimer = startTimer(2000);
+			}
+
+			if (!isFindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 			{
 				m_ui->findLineEdit->setText(m_quickFindQuery);
 
-				if (action == FindAction)
+				if (isFindAction)
 				{
 					updateFind();
 				}
@@ -225,7 +243,7 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		m_ui->findLineEdit->setFocus();
 		m_ui->findLineEdit->selectAll();
 
-		if (action != FindAction)
+		if (!isFindAction)
 		{
 			updateFind(action == FindPreviousAction);
 		}
@@ -283,6 +301,13 @@ void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, OpenHints hi
 
 void WebContentsWidget::updateFind(bool backwards)
 {
+	if (m_quickFindTimer != 0)
+	{
+		killTimer(m_quickFindTimer);
+
+		m_quickFindTimer = startTimer(2000);
+	}
+
 	if (sender() && sender()->objectName() == QLatin1String("findPreviousButton"))
 	{
 		backwards = true;
