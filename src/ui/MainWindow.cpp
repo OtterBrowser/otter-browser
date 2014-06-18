@@ -215,7 +215,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
 	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
 	connect(m_ui->menuUserAgent, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
+	connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
 	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
+	connect(m_ui->menuTextEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionTextEncoding(QAction*)));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 
@@ -680,8 +682,6 @@ void MainWindow::menuUserAgentAboutToShow()
 
 	m_userAgentGroup->addAction(customAction);
 
-	connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
-
 	if (!m_userAgentGroup->checkedAction() && m_ui->menuUserAgent->actions().count() > 2)
 	{
 		m_ui->menuUserAgent->actions().first()->setChecked(true);
@@ -721,8 +721,6 @@ void MainWindow::menuTextEncodingAboutToShow()
 
 			m_textEncodingGroup->addAction(textCodecAction);
 		}
-
-		connect(m_ui->menuTextEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionTextEncoding(QAction*)));
 	}
 
 	const QString encoding = m_windowsManager->getDefaultTextEncoding().toLower();
