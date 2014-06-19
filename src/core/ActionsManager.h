@@ -104,7 +104,7 @@ enum ActionIdentifier
 	ActivateTabOnRightAction,
 	WindowAction = 4096,
 	MainWindowAction = 8192
-,};
+};
 
 class ActionsManager : public QObject
 {
