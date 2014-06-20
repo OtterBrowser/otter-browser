@@ -1725,7 +1725,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (result.linkUrl().isValid())
+				if (result.linkUrl().isValid() && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
 				{
 					openUrl(result.linkUrl(), ((mouseEvent->modifiers() & Qt::AltModifier) ? NewTabBackgroundEndOpen : NewTabBackgroundOpen));
 
