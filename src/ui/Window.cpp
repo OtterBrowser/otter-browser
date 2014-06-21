@@ -40,8 +40,11 @@
 namespace Otter
 {
 
+qint64 Window::m_identifierCounter = 0;
+
 Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_contentsWidget(NULL),
+	m_identifier(++m_identifierCounter),
 	m_isPinned(false),
 	m_isPrivate(isPrivate),
 	m_ui(new Ui::Window)
@@ -594,6 +597,11 @@ QPair<QString, QString> Window::getUserAgent() const
 WindowLoadingState Window::getLoadingState() const
 {
 	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
+}
+
+qint64 Window::getIdentifier() const
+{
+	return m_identifier;
 }
 
 bool Window::canClone() const

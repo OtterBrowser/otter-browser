@@ -79,6 +79,7 @@ public:
 	SessionWindow getSession() const;
 	QPair<QString, QString> getUserAgent() const;
 	WindowLoadingState getLoadingState() const;
+	qint64 getIdentifier() const;
 	bool canClone() const;
 	bool isPinned() const;
 	bool isPrivate() const;
@@ -111,9 +112,12 @@ protected slots:
 private:
 	ContentsWidget *m_contentsWidget;
 	SessionWindow m_session;
+	qint64 m_identifier;
 	bool m_isPinned;
 	bool m_isPrivate;
 	Ui::Window *m_ui;
+
+	static qint64 m_identifierCounter;
 
 signals:
 	void aboutToClose();
