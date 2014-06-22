@@ -101,9 +101,14 @@ enum ActionIdentifier
 	ActivateAddressFieldAction,
 	PasteAndGoAction,
 	ActivateTabOnLeftAction,
-	ActivateTabOnRightAction,
-	WindowAction = 4096,
-	MainWindowAction = 8192
+	ActivateTabOnRightAction
+};
+
+enum ActionScope
+{
+	GlobalScope = 0,
+	MainWindowScope = 1,
+	WindowScope = 2
 };
 
 class ActionsManager : public QObject
