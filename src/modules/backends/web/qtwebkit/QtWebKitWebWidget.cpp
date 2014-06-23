@@ -1771,7 +1771,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
 
-			if (wheelEvent->modifiers() & Qt::CTRL || wheelEvent->buttons() & Qt::LeftButton)
+			if (wheelEvent->modifiers() & Qt::CTRL)
 			{
 				setZoom(getZoom() + (wheelEvent->delta() / 16));
 
