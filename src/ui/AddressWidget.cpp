@@ -241,7 +241,7 @@ void AddressWidget::handleUserInput(const QString &text)
 		}
 	}
 
-	if (QFileInfo.exists(text))
+	if (QFileInfo(text).exists())
 	{
 		emit requestedLoadUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()));
 
