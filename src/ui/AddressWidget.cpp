@@ -29,6 +29,7 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
@@ -238,6 +239,13 @@ void AddressWidget::handleUserInput(const QString &text)
 
 			return;
 		}
+	}
+
+	if (QFileInfo.exists(text))
+	{
+		emit requestedLoadUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()));
+
+		return;
 	}
 
 	const QUrl url = QUrl::fromUserInput(text);
