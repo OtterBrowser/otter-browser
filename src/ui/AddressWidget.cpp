@@ -48,7 +48,7 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
 	m_urlIconLabel(NULL),
-	m_lookupID(0),
+	m_lookupIdentifier(0),
 	m_lookupTimer(0)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -72,7 +72,7 @@ void AddressWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_lookupTimer)
 	{
-		QHostInfo::abortHostLookup(m_lookupID);
+		QHostInfo::abortHostLookup(m_lookupIdentifier);
 
 		killTimer(m_lookupTimer);
 
@@ -286,15 +286,14 @@ void AddressWidget::handleUserInput(const QString &text)
 
 		if (m_lookupTimer != 0)
 		{
-			QHostInfo::abortHostLookup(m_lookupID);
+			QHostInfo::abortHostLookup(m_lookupIdentifier);
 
 			killTimer(m_lookupTimer);
 
 			m_lookupTimer = 0;
 		}
 
-		m_lookupID = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
-
+		m_lookupIdentifier = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
 		m_lookupTimer = startTimer(lookupTimeout);
 
 		return;

@@ -71,7 +71,7 @@ private:
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;
 	QString m_lookupQuery;
-	int m_lookupID;
+	int m_lookupIdentifier;
 	int m_lookupTimer;
 
 signals:

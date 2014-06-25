@@ -54,7 +54,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void openUrl(const QUrl &url = QUrl());
+	void openUrl(const QString &input = QString());
 
 protected:
 	void changeEvent(QEvent *event);

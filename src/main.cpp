@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				window->openUrl(QUrl(urls.at(i)));
+				window->openUrl(urls.at(i));
 			}
 		}
 	}

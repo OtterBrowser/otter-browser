@@ -260,7 +260,7 @@ void Application::newConnection()
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				window->openUrl(QUrl(urls.at(i)));
+				window->openUrl(urls.at(i));
 			}
 		}
 		else if (session.isEmpty())
@@ -286,7 +286,7 @@ void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 
 	if (url.isValid() && window)
 	{
-		window->openUrl(url);
+		window->openUrl(url.toString());
 	}
 }
 

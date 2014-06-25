@@ -31,6 +31,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -39,6 +40,10 @@
 
 #include "ui_MainWindow.h"
 
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QRegularExpression>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTextCodec>
 #include <QtCore/QtMath>
 #include <QtGui/QClipboard>
@@ -347,9 +352,67 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
-void MainWindow::openUrl(const QUrl &url)
+void MainWindow::openUrl(const QString &input)
 {
-	m_windowsManager->open(url);
+	const BookmarkInformation *bookmark = BookmarksManager::getBookmarkByKeyword(input);
+
+	if (bookmark)
+	{
+		WindowsManager *windowsManager = SessionsManager::getWindowsManager();
+
+		if (windowsManager)
+		{
+			windowsManager->open(bookmark);
+
+			return;
+		}
+	}
+
+	if (input == QString(QLatin1Char('~')) || input.startsWith(QLatin1Char('~') + QDir::separator()))
+	{
+		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+
+		if (!locations.isEmpty())
+		{
+			m_windowsManager->open(QUrl(locations.first() + input.mid(1)));
+
+			return;
+		}
+	}
+
+	if (QFileInfo(input).exists())
+	{
+		m_windowsManager->open(QUrl::fromLocalFile(QFileInfo(input).canonicalFilePath()));
+
+		return;
+	}
+
+	const QUrl url = QUrl::fromUserInput(input);
+
+	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(input).hasMatch()))
+	{
+		m_windowsManager->open(url);
+
+		return;
+	}
+
+	const QString shortcut = input.section(QLatin1Char(' '), 0, 0);
+	const QStringList engines = SearchesManager::getSearchEngines();
+	SearchInformation *engine = NULL;
+
+	for (int i = 0; i < engines.count(); ++i)
+	{
+		engine = SearchesManager::getSearchEngine(engines.at(i));
+
+		if (engine && shortcut == engine->shortcut)
+		{
+			m_windowsManager->search(input.section(QLatin1Char(' '), 1), engine->identifier);
+
+			return;
+		}
+	}
+
+	m_windowsManager->open();
 }
 
 void MainWindow::actionNewTabPrivate()
