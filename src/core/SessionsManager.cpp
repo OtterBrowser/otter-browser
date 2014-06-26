@@ -96,7 +96,7 @@ void SessionsManager::actionTriggered()
 
 	const ActionIdentifier windowAction = static_cast<ActionIdentifier>(action->data().toInt());
 
-	if (windowAction != NoAction)
+	if (windowAction != UnknownAction)
 	{
 		m_activeWindow->getWindowsManager()->triggerAction(windowAction);
 	}

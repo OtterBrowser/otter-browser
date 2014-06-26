@@ -25,91 +25,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QShortcut>
 
+#include "Action.h"
+
 namespace Otter
 {
-
-enum ActionIdentifier
-{
-	NoAction = 0,
-	OpenLinkAction,
-	OpenLinkInThisTabAction,
-	OpenLinkInNewTabAction,
-	OpenLinkInNewTabBackgroundAction,
-	OpenLinkInNewWindowAction,
-	OpenLinkInNewWindowBackgroundAction,
-	CopyLinkToClipboardAction,
-	SaveLinkToDiskAction,
-	SaveLinkToDownloadsAction,
-	OpenFrameInThisTabAction,
-	OpenFrameInNewTabAction,
-	OpenFrameInNewTabBackgroundAction,
-	CopyFrameLinkToClipboardAction,
-	OpenImageInNewTabAction,
-	SaveImageToDiskAction,
-	CopyImageToClipboardAction,
-	CopyImageUrlToClipboardAction,
-	ImagePropertiesAction,
-	GoBackAction,
-	GoForwardAction,
-	RewindBackAction,
-	RewindForwardAction,
-	StopAction,
-	StopScheduledPageRefreshAction,
-	ReloadAction,
-	ReloadOrStopAction,
-	ReloadFrameAction,
-	ReloadImageAction,
-	ReloadAndBypassCacheAction,
-	ReloadTimeAction,
-	CutAction,
-	CopyAction,
-	PasteAction,
-	DeleteAction,
-	SelectAllAction,
-	ClearAllAction,
-	SpellCheckAction,
-	UndoAction,
-	RedoAction,
-	InspectPageAction,
-	InspectElementAction,
-	PrintAction,
-	BookmarkAction,
-	BookmarkLinkAction,
-	CopyAddressAction,
-	ViewSourceAction,
-	ViewSourceFrameAction,
-	ValidateAction,
-	ContentBlockingAction,
-	WebsitePreferencesAction,
-	ZoomInAction,
-	ZoomOutAction,
-	ZoomOriginalAction,
-	SearchAction,
-	SearchMenuAction,
-	OpenSelectionAsLinkAction,
-	CreateSearchAction,
-	FindAction,
-	FindNextAction,
-	FindPreviousAction,
-	QuickFindAction,
-	SaveMediaToDiskAction,
-	CopyMediaUrlToClipboardAction,
-	ToggleMediaControlsAction,
-	ToggleMediaLoopAction,
-	ToggleMediaPlayPauseAction,
-	ToggleMediaMuteAction,
-	ActivateAddressFieldAction,
-	PasteAndGoAction,
-	ActivateTabOnLeftAction,
-	ActivateTabOnRightAction
-};
-
-enum ActionScope
-{
-	GlobalScope = 0,
-	MainWindowScope = 1,
-	WindowScope = 2
-};
 
 class ActionsManager : public QObject
 {
@@ -118,7 +37,7 @@ class ActionsManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
-	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier windowAction = NoAction);
+	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier windowAction = UnknownAction);
 	static void registerWindow(QWidget *window, QList<QAction*> actions);
 	static void triggerAction(const QString &action);
 	static void triggerAction(ActionIdentifier action);

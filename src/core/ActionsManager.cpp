@@ -141,7 +141,7 @@ void ActionsManager::loadProfiles()
 				continue;
 			}
 
-			QAction *action = new QAction(profile.value(macros.at(j) + QLatin1String("/title"), QString()).toString(), SessionsManager::getActiveWindow());
+			QAction *action = new Action(QIcon(), profile.value(macros.at(j) + QLatin1String("/title"), QString()).toString(), SessionsManager::getActiveWindow());
 			action->setObjectName(macros.at(j));
 
 			connect(action, SIGNAL(triggered()), m_instance, SLOT(triggerMacro()));
@@ -199,13 +199,13 @@ void ActionsManager::removeWindow(QObject *window)
 
 void ActionsManager::registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon, ActionIdentifier windowAction)
 {
-	QAction *action = new QAction(icon, text, m_instance);
+	QAction *action = new Action(icon, text, m_instance);
 	action->setObjectName(identifier);
 	action->setShortcutContext(Qt::ApplicationShortcut);
 
 	m_applicationActions[identifier] = action;
 
-	if (windowAction != NoAction)
+	if (windowAction != UnknownAction)
 	{
 		action->setData(windowAction);
 

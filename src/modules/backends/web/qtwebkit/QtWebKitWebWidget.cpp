@@ -1114,7 +1114,7 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 		return m_webView->page()->action(webAction);
 	}
 
-	if (action == NoAction)
+	if (action == UnknownAction)
 	{
 		return NULL;
 	}

@@ -26,6 +26,7 @@ configHeader.output = config.h
 QMAKE_SUBSTITUTES += configHeader
 
 SOURCES += src/main.cpp \
+    src/core/Action.cpp \
     src/core/ActionsManager.cpp \
     src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
@@ -98,7 +99,8 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp
 
-HEADERS += src/core/ActionsManager.h \
+HEADERS += src/core/Action.h \
+    src/core/ActionsManager.h \
     src/core/AddressCompletionModel.h \
     src/core/Application.h \
     src/core/BookmarksManager.h \
