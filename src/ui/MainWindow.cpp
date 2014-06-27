@@ -122,10 +122,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_ui->actionGoBack->setData(GoBackAction);
 	m_ui->actionGoForward->setIcon(Utils::getIcon(QLatin1String("go-next")));
 	m_ui->actionGoForward->setData(GoForwardAction);
-	m_ui->actionRewindBack->setIcon(Utils::getIcon(QLatin1String("go-first")));
-	m_ui->actionRewindBack->setData(RewindBackAction);
-	m_ui->actionRewindForward->setIcon(Utils::getIcon(QLatin1String("go-last")));
-	m_ui->actionRewindForward->setData(RewindForwardAction);
+	m_ui->actionRewind->setIcon(Utils::getIcon(QLatin1String("go-first")));
+	m_ui->actionRewind->setData(RewindAction);
+	m_ui->actionFastForward->setIcon(Utils::getIcon(QLatin1String("go-last")));
+	m_ui->actionFastForward->setData(FastForwardAction);
 	m_ui->menuClosedWindows->setIcon(Utils::getIcon(QLatin1String("user-trash")));
 	m_ui->menuClosedWindows->setEnabled(false);
 	m_ui->actionViewHistory->setIcon(Utils::getIcon(QLatin1String("view-history")));
@@ -203,8 +203,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionStop, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionGoBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionRewindBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionRewindForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionRewind, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_ui->actionFastForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionViewHistory, SIGNAL(triggered()), this, SLOT(actionViewHistory()));
 	connect(m_ui->actionClearHistory, SIGNAL(triggered()), this, SLOT(actionClearHistory()));
 	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
@@ -1020,9 +1020,9 @@ void MainWindow::updateActions()
 	updateAction(m_windowsManager->getAction(ViewSourceAction), m_ui->actionViewSource);
 	updateAction(m_windowsManager->getAction(InspectPageAction), m_ui->actionInspectPage);
 	updateAction(m_windowsManager->getAction(GoBackAction), m_ui->actionGoBack);
-	updateAction(m_windowsManager->getAction(RewindBackAction), m_ui->actionRewindBack);
+	updateAction(m_windowsManager->getAction(RewindAction), m_ui->actionRewind);
 	updateAction(m_windowsManager->getAction(GoForwardAction), m_ui->actionGoForward);
-	updateAction(m_windowsManager->getAction(RewindForwardAction), m_ui->actionRewindForward);
+	updateAction(m_windowsManager->getAction(FastForwardAction), m_ui->actionFastForward);
 
 	const bool canZoom = m_windowsManager->canZoom();
 

@@ -95,8 +95,8 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	{
 		menu.addAction(getAction(GoBackAction));
 		menu.addAction(getAction(GoForwardAction));
-		menu.addAction(getAction(RewindBackAction));
-		menu.addAction(getAction(RewindForwardAction));
+		menu.addAction(getAction(RewindAction));
+		menu.addAction(getAction(FastForwardAction));
 		menu.addSeparator();
 		menu.addAction(getAction(ReloadAction));
 		menu.addAction(getAction(ReloadTimeAction));

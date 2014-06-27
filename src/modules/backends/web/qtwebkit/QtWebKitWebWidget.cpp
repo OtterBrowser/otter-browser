@@ -210,8 +210,8 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 	m_thumbnail = QPixmap();
 
-	getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 	QAction *action = getAction(ReloadOrStopAction);
 
@@ -416,8 +416,8 @@ void QtWebKitWebWidget::notifyTitleChanged()
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
-	getAction(RewindBackAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	getAction(RewindForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
+	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 	emit urlChanged(url);
 
@@ -500,11 +500,11 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 	switch (action)
 	{
-		case RewindBackAction:
+		case RewindAction:
 			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
 
 			break;
-		case RewindForwardAction:
+		case FastForwardAction:
 			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
 
 			break;
@@ -881,8 +881,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 		getAction(GoBackAction)->setEnabled(false);
 		getAction(GoForwardAction)->setEnabled(false);
-		getAction(RewindBackAction)->setEnabled(false);
-		getAction(RewindForwardAction)->setEnabled(false);
+		getAction(RewindAction)->setEnabled(false);
+		getAction(FastForwardAction)->setEnabled(false);
 
 		emit actionsChanged();
 
@@ -1181,14 +1181,14 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("SaveLinkToDownloads"));
 
 			break;
-		case RewindBackAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("RewindBack"), true);
+		case RewindAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("Rewind"), true);
 
 			actionObject->setEnabled(getAction(GoBackAction)->isEnabled());
 
 			break;
-		case RewindForwardAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("RewindForward"), true);
+		case FastForwardAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("FastForward"), true);
 
 			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
 

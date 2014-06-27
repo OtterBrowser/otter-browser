@@ -175,8 +175,8 @@
     </widget>
     <addaction name="actionGoBack"/>
     <addaction name="actionGoForward"/>
-    <addaction name="actionRewindBack"/>
-    <addaction name="actionRewindForward"/>
+    <addaction name="actionRewind"/>
+    <addaction name="actionFastForward"/>
     <addaction name="separator"/>
     <addaction name="menuClosedWindows"/>
     <addaction name="separator"/>
@@ -441,14 +441,14 @@
     <string>Clear</string>
    </property>
   </action>
-  <action name="actionRewindBack">
+  <action name="actionRewind">
    <property name="text">
-    <string>Rewind Back</string>
+    <string>Rewind</string>
    </property>
   </action>
-  <action name="actionRewindForward">
+  <action name="actionFastForward">
    <property name="text">
-    <string>Rewind Forward</string>
+    <string>Fast Forward</string>
    </property>
   </action>
   <action name="actionSaveSession">
