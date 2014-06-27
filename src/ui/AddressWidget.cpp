@@ -187,7 +187,7 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 
 void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty())
+	if (text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
 	{
 		handleUserInput(QApplication::clipboard()->text().trimmed());
 
