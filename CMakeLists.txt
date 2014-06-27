@@ -11,7 +11,7 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 	set(CPACK_SET_DESTDIR "on")
 	set(CPACK_PACKAGING_INSTALL_PREFIX "/usr")
-	set(CPACK_GENERATOR "DEB")
+	set(CPACK_GENERATOR "DEB;RPM")
 	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Web browser controlled by the user, not vice-versa")
 	set(CPACK_PACKAGE_VENDOR "Vendor")
 	set(CPACK_PACKAGE_CONTACT "Michal Dutkiewicz <michal@emdek.pl>")
@@ -27,6 +27,23 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_DEBIAN_PACKAGE_SECTION "net")
 	set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 	set(CPACK_COMPONENTS_ALL Libraries ApplicationData)
+	set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
+		${CMAKE_INSTALL_PREFIX}/share/applications
+		/usr/share/icons
+		/usr/share/icons/hicolor
+		/usr/share/icons/hicolor/16x16
+		/usr/share/icons/hicolor/32x32
+		/usr/share/icons/hicolor/48x48
+		/usr/share/icons/hicolor/64x64
+		/usr/share/icons/hicolor/128x128
+		/usr/share/icons/hicolor/256x256
+		/usr/share/icons/hicolor/16x16/apps
+		/usr/share/icons/hicolor/32x32/apps
+		/usr/share/icons/hicolor/48x48/apps
+		/usr/share/icons/hicolor/64x64/apps
+		/usr/share/icons/hicolor/128x128/apps
+		/usr/share/icons/hicolor/256x256/apps
+	)
 
 	include(CPack)
 endif (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
