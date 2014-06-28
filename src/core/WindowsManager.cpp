@@ -788,6 +788,34 @@ int WindowsManager::getZoom() const
 	return (window ? window->getContentsWidget()->getZoom() : 100);
 }
 
+bool WindowsManager::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+	{
+		for (int i = 0; i < m_tabBar->count(); ++i)
+		{
+			Window *window = getWindow(i);
+
+			if (window)
+			{
+				const QString text = (window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
+
+				if (!m_tabBar->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
+				{
+					m_tabBar->setTabText(i, text);
+				}
+
+				if (i == m_tabBar->currentIndex())
+				{
+					emit windowTitleChanged(text);
+				}
+			}
+		}
+	}
+
+	return QObject::event(event);
+}
+
 bool WindowsManager::canZoom() const
 {
 	Window *window = m_mdi->getActiveWindow();

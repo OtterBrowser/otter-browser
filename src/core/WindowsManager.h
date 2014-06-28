@@ -96,6 +96,7 @@ protected:
 	void openTab(QUrl url, OpenHints hints = DefaultOpen);
 	void gatherBookmarks(int folder);
 	int getWindowIndex(Window *window) const;
+	bool event(QEvent *event);
 
 protected slots:
 	void printPreview(QPrinter *printer);
