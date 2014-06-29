@@ -294,32 +294,40 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
-	QStandardItemModel *ciphersModel = new QStandardItemModel(this);
-	const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
-	const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
-	const QList<QSslCipher> defaultCiphers = NetworkManagerFactory::getDefaultCiphers();
-	const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
-
-	for (int i = 0; i < supportedCiphers.count(); ++i)
+	if (QSslSocket::supportsSsl())
 	{
-		if ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (selectedCiphers.isEmpty() || selectedCiphers.contains(supportedCiphers.at(i).name()))))
-		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(supportedCiphers.at(i).name()));
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		QStandardItemModel *ciphersModel = new QStandardItemModel(this);
+		const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
+		const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
+		const QList<QSslCipher> defaultCiphers = NetworkManagerFactory::getDefaultCiphers();
+		const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
 
-			ciphersModel->appendRow(items);
-		}
-		else
+		for (int i = 0; i < supportedCiphers.count(); ++i)
 		{
-			m_ui->ciphersAddButton->menu()->addAction(supportedCiphers.at(i).name());
+			if ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (selectedCiphers.isEmpty() || selectedCiphers.contains(supportedCiphers.at(i).name()))))
+			{
+				QList<QStandardItem*> items;
+				items.append(new QStandardItem(supportedCiphers.at(i).name()));
+				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+				ciphersModel->appendRow(items);
+			}
+			else
+			{
+				m_ui->ciphersAddButton->menu()->addAction(supportedCiphers.at(i).name());
+			}
 		}
+
+		m_ui->ciphersViewWidget->setModel(ciphersModel);
+		m_ui->ciphersViewWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
+		m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
+		m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
+	}
+	else
+	{
+		m_ui->ciphersViewWidget->setEnabled(false);
 	}
 
-	m_ui->ciphersViewWidget->setModel(ciphersModel);
-	m_ui->ciphersViewWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
-	m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
-	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
