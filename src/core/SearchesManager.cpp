@@ -186,6 +186,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 			postUrl.setQuery(postQuery);
 
 			*body = postUrl.toString().mid(1).toUtf8();
+			request->setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
 		}
 		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 		{
