@@ -62,7 +62,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
         <source>Save to Downloads</source>
-        <translation>Uložiť do stiahnutých</translation>
+        <translation>Uložiť do Stiahnutých</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="264"/>
@@ -1120,7 +1120,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="53"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Relácie</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="64"/>
@@ -1135,7 +1135,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="108"/>
         <source>View</source>
-        <translation>Zobrazi</translation>
+        <translation>Zobraziť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="112"/>
@@ -1145,32 +1145,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="117"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Uživateľský agent</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="138"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Záložky</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="146"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Nástroje</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="157"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Pomocník</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="166"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>História</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="173"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Zavreté karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="198"/>
@@ -1180,104 +1180,104 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="207"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nová karta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="212"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nová súkromná karta</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="217"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Nové okno</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="222"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Nové súkromné okno</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="227"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="235"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="240"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Tlač...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="245"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Náhlad tlače...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="253"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Pracovať bez pripojenia</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="264"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Ukázať lištu s menu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="269"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Ukončiť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="277"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Zavrieť kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="285"/>
         <location filename="../../src/ui/MainWindow.cpp" line="933"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Späť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="293"/>
         <location filename="../../src/ui/MainWindow.cpp" line="946"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Znova</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="301"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Vystrihnúť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="309"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="317"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Vložiť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="322"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Vybrať všetko</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="327"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Nájsť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="332"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Nájsť ďalšie</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="337"/>
@@ -1287,22 +1287,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="342"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Pridať záložku...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="347"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Spravovať záložky...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="352"/>
         <source>Read Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Čítať kanály</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="357"/>
         <source>Manage Feeds...</source>
-        <translation type="unfinished"/>
+        <translation>Spravovať kanály...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="362"/>
@@ -1312,118 +1312,118 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="370"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>O Qt...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="378"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Priblížiť...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="383"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Oddialiť...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="388"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Pôvodná veľkosť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="396"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="401"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Dozadu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="406"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Dopredu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="411"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť históriu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="416"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Zmazať históriu...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="421"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Obnoviť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="426"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Zastaviť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="431"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť zdrojový kód</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="436"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Celá obrazovka</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="441"/>
         <location filename="../../src/ui/MainWindow.cpp" line="758"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Zmazať</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="446"/>
         <source>Rewind Back</source>
-        <translation type="unfinished"/>
+        <translation>Skociť dozadu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="451"/>
         <source>Rewind Forward</source>
-        <translation type="unfinished"/>
+        <translation>Skočiť dopredu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="456"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť terajšiu reláciu...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="461"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Spravovať relácie...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="469"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Prezkúmať stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="474"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Cookies...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="479"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Prenosy...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="484"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Nastavenia...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="495"/>
         <source>Blocked Content...</source>
-        <translation type="unfinished"/>
+        <translation>Blokovaný obsah...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="503"/>
@@ -1438,7 +1438,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="274"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Otázka</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="275"/>
@@ -1453,28 +1453,29 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="280"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Neukazovať túto správu znovu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="365"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť súbor</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="479"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varovanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="479"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Túto adresu už máte vo svojich záložkách.
+Chcete pokračovať?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="567"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Internetový prehliadač ovládaný použivateľom, nie naopak.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="568"/>
@@ -1497,7 +1498,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="666"/>
         <location filename="../../src/ui/MainWindow.cpp" line="817"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Bez názvu)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="630"/>
@@ -1507,52 +1508,52 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="654"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predvolené</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="676"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Vlastné</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="701"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Automatické zistenie</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="767"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Okno - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="805"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť všetky</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1075"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1076"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť na novej karte</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1077"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť na novej karte v pozadí</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1079"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť v novom okne</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1080"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť v novom okne v pozadí</translation>
     </message>
 </context>
 <context>
@@ -1599,12 +1600,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="122"/>
         <source>Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Predvolené</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="125"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť...</translation>
     </message>
 </context>
 <context>
@@ -1612,38 +1613,38 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Nastavenia</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1352"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Všeobecné</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Spustenie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>Správanie pri spustení:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>Continue previous session</source>
-        <translation type="unfinished"/>
+        <translation>Pokračovať predchádzajúcu reláciu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="67"/>
         <source>Show startup dialog</source>
-        <translation type="unfinished"/>
+        <translation>Ukázať dialóg pri spustení</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>Ukázať domovskú stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
@@ -1658,210 +1659,210 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>Použiť aktuálnu stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="123"/>
         <source>Use Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Použiť záložku...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>Obnoviť predvolené nastavenia</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Sťahovanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="159"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť súbory do:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="174"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>Vždy sa pýtať, kam súbory uložiť</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť nové okno radšej v novej karte</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Nenačítavať karty dokedy nie sú vybrané</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>Použiť aktuálnu kartu znovu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="215"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť novú kartu vedľa aktívnej</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Pri zatvorení karty:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Ísť na poslednú aktívnu kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Ísť na ďalšiu kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktivovať prvú kartu otvorenú z aktívnej karty</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
         <source>Preferred language:</source>
-        <translation type="unfinished"/>
+        <translation>Uprednostňovaný jazyk:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Obsah</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blokovanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
         <source>Pop-ups:</source>
-        <translation type="unfinished"/>
+        <translation>Vyskakovacie okná:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Blokovať všetky vyskakovacie okná</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
         <source>Open all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť všetky vyskakovacie okná</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
         <source>Open all pop-ups in background</source>
-        <translation type="unfinished"/>
+        <translation>Otvoiť všetky vyskakovacie okná v pozadí</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Priblíženie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>Predvolené priblíženie:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
         <source>Zoom text only</source>
-        <translation type="unfinished"/>
+        <translation>Približovať iba text</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Písma</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="464"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Štýl</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="469"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Písmo</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="474"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="613"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Náhľad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>Predvolená veľkosť proporcionálneho písma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="494"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="530"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="549"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="510"/>
         <source>Default fixed-width font size:</source>
-        <translation type="unfinished"/>
+        <translation>Predvolená veľkosť písma s pevnou šírkou:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="520"/>
         <source>Minimum font size:</source>
-        <translation type="unfinished"/>
+        <translation>Najmenšia veľkosť písma:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="546"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Žiadna</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>Farby</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="608"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="635"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Súkromie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="647"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Sledovanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>Nesledovať:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="670"/>
