@@ -280,6 +280,22 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		}
 	}
 
+    int count = 0;
+    foreach (HistoryEntry entry, HistoryManager::getEntries(false))
+    {
+        if (entry.time.time().secsTo(HistoryManager::getEntry(m_historyEntry).time.time()) > 60)
+        {
+            break;
+        }
+        if (entry.url == HistoryManager::getEntry(m_historyEntry).url)
+        {
+            count++;
+            if (count > 1) {
+                HistoryManager::removeEntry(entry.identifier);
+            }
+        }
+    }
+
 	emit loadingChanged(false);
 }
 
