@@ -115,6 +115,7 @@ private:
 	qint64 m_historyEntry;
 	bool m_isLoading;
 	bool m_isReloading;
+    bool m_wasRequested;
 	bool m_isTyped;
 
 friend class QtWebKitWebBackend;
