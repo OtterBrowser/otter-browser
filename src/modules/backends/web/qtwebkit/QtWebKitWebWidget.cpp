@@ -1751,6 +1751,20 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 		}
+		else if (event->type() == QEvent::MouseButtonRelease)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent->button() == Qt::MidButton)
+			{
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (m_hitResult.linkUrl().isValid())
+				{
+					return true;
+				}
+			}
+		}
 		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
