@@ -230,7 +230,24 @@ void QtWebKitWebWidget::pageLoadStarted()
 		}
 		else
 		{
-			m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+            m_wasAdded = false;
+            foreach (HistoryEntry entry, HistoryManager::getEntries(false))
+            {
+                if (entry.time.time().secsTo(QTime::currentTime()) > 60)
+                {
+                    break;
+                }
+                if (entry.url == getUrl())
+                {
+                    m_wasAdded = true;
+                    break;
+                }
+            }
+            if (!m_wasAdded)
+            {
+                m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+            }
+
 		}
 
 		m_isTyped = false;
