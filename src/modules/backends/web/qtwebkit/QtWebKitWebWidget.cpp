@@ -230,7 +230,10 @@ void QtWebKitWebWidget::pageLoadStarted()
 		}
 		else
 		{
-			m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+			if (HistoryManager::getEntry(m_historyEntry).url != getUrl())
+			{
+				m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
+			}
 		}
 
 		m_isTyped = false;
