@@ -323,6 +323,11 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
 	}
 
+	if (operation == PostOperation)
+	{
+		mutableRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+	}
+
 	if (NetworkManagerFactory::isWorkingOffline())
 	{
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
