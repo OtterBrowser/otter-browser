@@ -60,13 +60,20 @@ void NetworkManagerFactory::initialize()
 {
 	m_isInitialized = true;
 
-///FIXME workaround, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
-#if QT_VERSION < 0x050300
-	QSslSocket* tmpSocket = new QSslSocket();
-	tmpSocket->deleteLater();
-#endif
-
-	m_defaultCiphers = QSslSocket::defaultCiphers();
+	m_defaultCiphers = QSslSocket::supportedCiphers();
+	// Remove ciphers known as week
+        for (int i = m_defaultCiphers.count()-1 ; i >= 0 ; --i)
+        {
+		if(m_defaultCiphers.at(i).authenticationMethod()==QLatin1String("PSK") 
+		|| m_defaultCiphers.at(i).authenticationMethod()==QLatin1String("EXP") 
+		|| m_defaultCiphers.at(i).authenticationMethod()==QLatin1String("NULL")
+		|| m_defaultCiphers.at(i).authenticationMethod()==QLatin1String("ADH")
+		|| m_defaultCiphers.at(i).isNull())
+		{
+			m_defaultCiphers.removeAt(i);
+		
+		}
+        }
 
 	loadUserAgents();
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
