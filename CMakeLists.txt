@@ -10,7 +10,7 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
 
 	set(CPACK_SET_DESTDIR "on")
-	set(CPACK_PACKAGING_INSTALL_PREFIX "/usr")
+	set(CPACK_PACKAGING_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 	set(CPACK_GENERATOR "DEB;RPM")
 	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Web browser controlled by the user, not vice-versa")
 	set(CPACK_PACKAGE_VENDOR "Vendor")
