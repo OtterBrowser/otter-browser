@@ -228,12 +228,9 @@ void QtWebKitWebWidget::pageLoadStarted()
 		{
 			m_isReloading = false;
 		}
-		else
+		else if (HistoryManager::getEntry(m_historyEntry).url != getUrl())
 		{
-			if (HistoryManager::getEntry(m_historyEntry).url != getUrl())
-			{
-				m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
-			}
+			m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
 		}
 
 		m_isTyped = false;
