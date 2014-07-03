@@ -220,6 +220,7 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_sr@ijekavianlatin.ts \
     resources/translations/otter-browser_sr@latin.ts \
     resources/translations/otter-browser_tr_TR.ts \
-    resources/translations/otter-browser_uk_UA.ts
+    resources/translations/otter-browser_uk_UA.ts \
+    resources/translations/otter-browser_zh_CN.ts
 
 RC_FILE = otter-browser.rc

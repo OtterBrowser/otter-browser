@@ -447,7 +447,24 @@ void TransfersContentsWidget::triggerAction(ActionIdentifier action, bool checke
 	switch (action)
 	{
 		case CopyAction:
-			copyTransferInformation();
+			if (m_ui->transfersView->hasFocus() && m_ui->transfersView->currentIndex().isValid())
+			{
+				copyTransferInformation();
+			}
+			else
+			{
+				QWidget *widget = focusWidget();
+
+				if (widget->metaObject()->className() == QLatin1String("Otter::TextLabelWidget"))
+				{
+					TextLabelWidget *label = qobject_cast<TextLabelWidget*>(widget);
+
+					if (label)
+					{
+						label->copy();
+					}
+				}
+			}
 
 			break;
 		case DeleteAction:

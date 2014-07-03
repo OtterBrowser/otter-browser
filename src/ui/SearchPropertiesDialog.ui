@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>379</height>
+    <width>450</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
           <string>Change Icon...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../resources/resources.qrc">
+          <iconset resource="../../resources/resources.qrc">
            <normaloff>:/icons/edit-find.png</normaloff>:/icons/edit-find.png</iconset>
          </property>
          <property name="iconSize">
@@ -140,7 +140,7 @@
        <item>
         <widget class="QCheckBox" name="resultsPostMethodCheckBox">
          <property name="text">
-          <string>POST  Method</string>
+          <string>POST Method</string>
          </property>
         </widget>
        </item>
@@ -248,7 +248,7 @@
        <item>
         <widget class="QCheckBox" name="suggestionsPostMethodCheckBox">
          <property name="text">
-          <string>POST  Method</string>
+          <string>POST Method</string>
          </property>
         </widget>
        </item>
@@ -322,6 +322,12 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
     </spacer>
    </item>
    <item>
@@ -354,7 +360,7 @@
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../resources/resources.qrc"/>
+  <include location="../../resources/resources.qrc"/>
  </resources>
  <connections>
   <connection>
