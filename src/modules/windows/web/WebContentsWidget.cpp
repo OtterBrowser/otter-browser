@@ -259,9 +259,9 @@ void WebContentsWidget::setUserAgent(const QString &identifier, const QString &v
 	m_webWidget->setUserAgent(identifier, value);
 }
 
-void WebContentsWidget::setDefaultTextEncoding(const QString &encoding)
+void WebContentsWidget::setDefaultCharacterEncoding(const QString &encoding)
 {
-	m_webWidget->setDefaultTextEncoding(encoding);
+	m_webWidget->setDefaultCharacterEncoding(encoding);
 }
 
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
@@ -417,9 +417,9 @@ QUndoStack* WebContentsWidget::getUndoStack()
 	return m_webWidget->getUndoStack();
 }
 
-QString WebContentsWidget::getDefaultTextEncoding() const
+QString WebContentsWidget::getDefaultCharacterEncoding() const
 {
-	return m_webWidget->getDefaultTextEncoding();
+	return m_webWidget->getDefaultCharacterEncoding();
 }
 
 QString WebContentsWidget::getTitle() const

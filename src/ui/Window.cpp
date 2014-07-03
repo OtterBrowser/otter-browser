@@ -254,7 +254,7 @@ void Window::setSession(SessionWindow session)
 	}
 }
 
-void Window::setDefaultTextEncoding(const QString &encoding)
+void Window::setDefaultCharacterEncoding(const QString &encoding)
 {
 	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
@@ -262,7 +262,7 @@ void Window::setDefaultTextEncoding(const QString &encoding)
 
 		if (webWidget)
 		{
-			return webWidget->setDefaultTextEncoding(encoding);
+			return webWidget->setDefaultCharacterEncoding(encoding);
 		}
 	}
 }
@@ -514,7 +514,7 @@ ContentsWidget* Window::getContentsWidget()
 	return m_contentsWidget;
 }
 
-QString Window::getDefaultTextEncoding() const
+QString Window::getDefaultCharacterEncoding() const
 {
 	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
 	{
@@ -522,7 +522,7 @@ QString Window::getDefaultTextEncoding() const
 
 		if (webWidget)
 		{
-			return webWidget->getDefaultTextEncoding();
+			return webWidget->getDefaultCharacterEncoding();
 		}
 	}
 

@@ -107,9 +107,9 @@
     <property name="title">
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuTextEncoding">
+    <widget class="QMenu" name="menuCharacterEncoding">
      <property name="title">
-      <string>Text Encoding</string>
+      <string>Character Encoding</string>
      </property>
     </widget>
     <widget class="QMenu" name="menuUserAgent">
@@ -131,7 +131,7 @@
     <addaction name="actionInspectPage"/>
     <addaction name="menuUserAgent"/>
     <addaction name="separator"/>
-    <addaction name="menuTextEncoding"/>
+    <addaction name="menuCharacterEncoding"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
     <property name="title">
