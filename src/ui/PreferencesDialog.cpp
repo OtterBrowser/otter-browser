@@ -49,7 +49,7 @@ namespace Otter
 {
 
 PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
-	m_defaultSearch(SettingsManager::getValue("Search/DefaultSearchEngine").toString()),
+	m_defaultSearch(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString()),
 	m_clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
 	m_userAgentsModified(false),
 	m_ui(new Ui::PreferencesDialog)
