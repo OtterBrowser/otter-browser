@@ -63,7 +63,7 @@
          <bool>false</bool>
         </property>
         <property name="toolTip">
-         <string>Find Next Occurence</string>
+         <string>Find Next</string>
         </property>
         <property name="icon">
          <iconset resource="../../../../resources/resources.qrc">
@@ -77,7 +77,7 @@
          <bool>false</bool>
         </property>
         <property name="toolTip">
-         <string>Find Previous Occurence</string>
+         <string>Find Previous</string>
         </property>
         <property name="icon">
          <iconset resource="../../../../resources/resources.qrc">
