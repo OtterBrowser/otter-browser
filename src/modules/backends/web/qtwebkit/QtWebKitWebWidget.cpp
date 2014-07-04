@@ -860,7 +860,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 	}
 }
 
-void QtWebKitWebWidget::setDefaultTextEncoding(const QString &encoding)
+void QtWebKitWebWidget::setDefaultCharacterEncoding(const QString &encoding)
 {
 	m_webView->settings()->setDefaultTextEncoding(encoding);
 	m_webView->reload();
@@ -1091,7 +1091,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	const QPair<QString, QString> userAgent = getUserAgent();
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setNetworkManager(m_networkManager->clone(NULL));
-	widget->setDefaultTextEncoding(getDefaultTextEncoding());
+	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 
@@ -1346,7 +1346,7 @@ QWebPage* QtWebKitWebWidget::getPage()
 	return m_webView->page();
 }
 
-QString QtWebKitWebWidget::getDefaultTextEncoding() const
+QString QtWebKitWebWidget::getDefaultCharacterEncoding() const
 {
 	return m_webView->settings()->defaultTextEncoding();
 }
@@ -1749,6 +1749,20 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				event->accept();
 
 				return true;
+			}
+		}
+		else if (event->type() == QEvent::MouseButtonRelease)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent->button() == Qt::MidButton)
+			{
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (m_hitResult.linkUrl().isValid())
+				{
+					return true;
+				}
 			}
 		}
 		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())

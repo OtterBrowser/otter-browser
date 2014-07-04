@@ -68,7 +68,7 @@ public:
 	void setSession(SessionWindow session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
-	QString getDefaultTextEncoding() const;
+	QString getDefaultCharacterEncoding() const;
 	QString getSearchEngine() const;
 	QString getTitle() const;
 	QLatin1String getType() const;
@@ -88,7 +88,7 @@ public:
 public slots:
 	void search(const QString &query, const QString &engine);
 	void triggerAction(ActionIdentifier action, bool checked = false);
-	void setDefaultTextEncoding(const QString &encoding);
+	void setDefaultCharacterEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier);
 	void setSearchEngine(const QString &engine);
 	void setUrl(const QUrl &url, bool typed = true);

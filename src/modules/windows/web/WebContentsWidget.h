@@ -46,7 +46,7 @@ public:
 	WebContentsWidget* clone(bool cloneHistory = true);
 	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
-	QString getDefaultTextEncoding() const;
+	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getStatusMessage() const;
 	QString getQuickFindValue() const;
@@ -67,7 +67,7 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setUserAgent(const QString &identifier, const QString &value);
-	void setDefaultTextEncoding(const QString &encoding);
+	void setDefaultCharacterEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);

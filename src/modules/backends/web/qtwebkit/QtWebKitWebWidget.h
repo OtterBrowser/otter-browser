@@ -47,7 +47,7 @@ public:
 	WebWidget* clone(bool cloneHistory = true);
 	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
-	QString getDefaultTextEncoding() const;
+	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getSelectedText() const;
 	QVariant evaluateJavaScript(const QString &script);
@@ -68,7 +68,7 @@ public slots:
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
-	void setDefaultTextEncoding(const QString &encoding);
+	void setDefaultCharacterEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);

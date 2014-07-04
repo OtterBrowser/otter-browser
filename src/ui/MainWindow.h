@@ -72,7 +72,7 @@ protected slots:
 	void actionWorkOffline(bool enabled);
 	void actionFullScreen();
 	void actionUserAgent(QAction *action);
-	void actionTextEncoding(QAction *action);
+	void actionCharacterEncoding(QAction *action);
 	void actionClearClosedWindows();
 	void actionRestoreClosedWindow();
 	void actionViewHistory();
@@ -90,7 +90,7 @@ protected slots:
 	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();
 	void menuUserAgentAboutToShow();
-	void menuTextEncodingAboutToShow();
+	void menuCharacterEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
 	void menuBookmarksAboutToShow();
 	void openBookmark();
@@ -106,7 +106,7 @@ protected slots:
 private:
 	WindowsManager *m_windowsManager;
 	QActionGroup *m_sessionsGroup;
-	QActionGroup *m_textEncodingGroup;
+	QActionGroup *m_characterEncodingGroup;
 	QActionGroup *m_userAgentGroup;
 	QMenu *m_closedWindowsMenu;
 #ifdef Q_OS_WIN

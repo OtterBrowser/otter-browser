@@ -58,7 +58,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_sessionsGroup(NULL),
-	m_textEncodingGroup(NULL),
+	m_characterEncodingGroup(NULL),
 	m_userAgentGroup(NULL),
 	m_closedWindowsMenu(new QMenu(this)),
 	m_ui(new Ui::MainWindow)
@@ -221,8 +221,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
 	connect(m_ui->menuUserAgent, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
 	connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
-	connect(m_ui->menuTextEncoding, SIGNAL(aboutToShow()), this, SLOT(menuTextEncodingAboutToShow()));
-	connect(m_ui->menuTextEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionTextEncoding(QAction*)));
+	connect(m_ui->menuCharacterEncoding, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
+	connect(m_ui->menuCharacterEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
 
@@ -482,7 +482,7 @@ void MainWindow::actionUserAgent(QAction *action)
 	}
 }
 
-void MainWindow::actionTextEncoding(QAction *action)
+void MainWindow::actionCharacterEncoding(QAction *action)
 {
 	QString encoding;
 
@@ -496,7 +496,7 @@ void MainWindow::actionTextEncoding(QAction *action)
 		}
 	}
 
-	m_windowsManager->setDefaultTextEncoding(encoding.toLower());
+	m_windowsManager->setDefaultCharacterEncoding(encoding.toLower());
 }
 
 void MainWindow::actionClearClosedWindows()
@@ -751,23 +751,23 @@ void MainWindow::menuUserAgentAboutToShow()
 	}
 }
 
-void MainWindow::menuTextEncodingAboutToShow()
+void MainWindow::menuCharacterEncodingAboutToShow()
 {
-	if (!m_textEncodingGroup)
+	if (!m_characterEncodingGroup)
 	{
 		QList<int> textCodecs;
 		textCodecs << 106 << 1015 << 1017 << 4 << 5 << 6 << 7 << 8 << 82 << 10 << 85 << 12 << 13 << 109 << 110 << 112 << 2250 << 2251 << 2252 << 2253 << 2254 << 2255 << 2256 << 2257 << 2258 << 18 << 39 << 17 << 38 << 2026;
 
-		m_textEncodingGroup = new QActionGroup(this);
-		m_textEncodingGroup->setExclusive(true);
+		m_characterEncodingGroup = new QActionGroup(this);
+		m_characterEncodingGroup->setExclusive(true);
 
-		QAction *defaultAction = m_ui->menuTextEncoding->addAction(tr("Auto Detect"));
+		QAction *defaultAction = m_ui->menuCharacterEncoding->addAction(tr("Auto Detect"));
 		defaultAction->setData(-1);
 		defaultAction->setCheckable(true);
 
-		m_textEncodingGroup->addAction(defaultAction);
+		m_characterEncodingGroup->addAction(defaultAction);
 
-		m_ui->menuTextEncoding->addSeparator();
+		m_ui->menuCharacterEncoding->addSeparator();
 
 		for (int i = 0; i < textCodecs.count(); ++i)
 		{
@@ -778,19 +778,19 @@ void MainWindow::menuTextEncodingAboutToShow()
 				continue;
 			}
 
-			QAction *textCodecAction = m_ui->menuTextEncoding->addAction(Utils::elideText(codec->name(), m_ui->menuTextEncoding));
+			QAction *textCodecAction = m_ui->menuCharacterEncoding->addAction(Utils::elideText(codec->name(), m_ui->menuCharacterEncoding));
 			textCodecAction->setData(textCodecs.at(i));
 			textCodecAction->setCheckable(true);
 
-			m_textEncodingGroup->addAction(textCodecAction);
+			m_characterEncodingGroup->addAction(textCodecAction);
 		}
 	}
 
-	const QString encoding = m_windowsManager->getDefaultTextEncoding().toLower();
+	const QString encoding = m_windowsManager->getDefaultCharacterEncoding().toLower();
 
-	for (int i = 2; i < m_ui->menuTextEncoding->actions().count(); ++i)
+	for (int i = 2; i < m_ui->menuCharacterEncoding->actions().count(); ++i)
 	{
-		QAction *action = m_ui->menuTextEncoding->actions().at(i);
+		QAction *action = m_ui->menuCharacterEncoding->actions().at(i);
 
 		if (!action)
 		{
@@ -805,9 +805,9 @@ void MainWindow::menuTextEncodingAboutToShow()
 		}
 	}
 
-	if (!m_textEncodingGroup->checkedAction())
+	if (!m_characterEncodingGroup->checkedAction())
 	{
-		m_ui->menuTextEncoding->actions().first()->setChecked(true);
+		m_ui->menuCharacterEncoding->actions().first()->setChecked(true);
 	}
 }
 

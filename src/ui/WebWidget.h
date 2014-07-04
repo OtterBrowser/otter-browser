@@ -72,7 +72,7 @@ public:
 	WebBackend* getBackend();
 	QMenu* getQuickSearchMenu();
 	QString getQuickSearchEngine() const;
-	virtual QString getDefaultTextEncoding() const = 0;
+	virtual QString getDefaultCharacterEncoding() const = 0;
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
@@ -92,7 +92,7 @@ public:
 public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
-	virtual void setDefaultTextEncoding(const QString &encoding) = 0;
+	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
