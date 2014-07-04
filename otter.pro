@@ -83,7 +83,7 @@ SOURCES += src/main.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/BlockedContentDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
-    src/ui/preferences/SearchShortcutDelegate.cpp \
+    src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
@@ -156,7 +156,7 @@ HEADERS += src/core/Action.h \
     src/ui/Window.h \
     src/ui/preferences/BlockedContentDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
-    src/ui/preferences/SearchShortcutDelegate.h \
+    src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \

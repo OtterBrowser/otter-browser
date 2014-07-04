@@ -119,7 +119,7 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/preferences/BlockedContentDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
-	src/ui/preferences/SearchShortcutDelegate.cpp
+	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp

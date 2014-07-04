@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SEARCHSHORTCUTDELEGATE_H
-#define OTTER_SEARCHSHORTCUTDELEGATE_H
+#ifndef OTTER_SEARCHKEYWORDDELEGATE_H
+#define OTTER_SEARCHKEYWORDDELEGATE_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QItemDelegate>
@@ -26,10 +26,10 @@
 namespace Otter
 {
 
-class SearchShortcutDelegate : public QItemDelegate
+class SearchKeywordDelegate : public QItemDelegate
 {
 public:
-	explicit SearchShortcutDelegate(QObject *parent);
+	explicit SearchKeywordDelegate(QObject *parent);
 
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;

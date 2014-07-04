@@ -24,7 +24,7 @@
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
 #include "UserAgentsManagerDialog.h"
-#include "preferences/SearchShortcutDelegate.h"
+#include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/NetworkManagerFactory.h"
@@ -227,7 +227,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
 	m_ui->searchViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
-	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchShortcutDelegate(this));
+	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 	m_ui->moveDownSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));

@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "SearchShortcutDelegate.h"
+#include "SearchKeywordDelegate.h"
 
 #include <QtGui/QRegularExpressionValidator>
 #include <QtWidgets/QLineEdit>
@@ -25,11 +25,11 @@
 namespace Otter
 {
 
-SearchShortcutDelegate::SearchShortcutDelegate(QObject *parent) : QItemDelegate(parent)
+SearchKeywordDelegate::SearchKeywordDelegate(QObject *parent) : QItemDelegate(parent)
 {
 }
 
-void SearchShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void SearchKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 	Q_UNUSED(index)
@@ -37,7 +37,7 @@ void SearchShortcutDelegate::updateEditorGeometry(QWidget *editor, const QStyleO
 	editor->setGeometry(option.rect);
 }
 
-void SearchShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void SearchKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QLineEdit *widget = qobject_cast<QLineEdit*>(editor);
 
@@ -47,24 +47,24 @@ void SearchShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 	}
 }
 
-QWidget* SearchShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 
-	QStringList shortcuts;
+	QStringList keywords;
 
 	for (int i = 0; i < index.model()->rowCount(); ++i)
 	{
-		const QString shortcut = index.model()->index(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword = index.model()->index(i, 1).data(Qt::DisplayRole).toString();
 
-		if (index.row() != i && !shortcut.isEmpty())
+		if (index.row() != i && !keyword.isEmpty())
 		{
-			shortcuts.append(shortcut);
+			keywords.append(keyword);
 		}
 	}
 
 	QLineEdit *widget = new QLineEdit(index.data(Qt::DisplayRole).toString(), parent);
-	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), widget));
+	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
 
 	return widget;
 }
