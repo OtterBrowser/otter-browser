@@ -36,7 +36,7 @@ class SearchPropertiesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SearchPropertiesDialog(const QVariantHash &engineData, const QStringList &shortcuts, QWidget *parent = NULL);
+	explicit SearchPropertiesDialog(const QVariantHash &engineData, const QStringList &keywords, QWidget *parent = NULL);
 	~SearchPropertiesDialog();
 
 	QVariantHash getEngineData() const;

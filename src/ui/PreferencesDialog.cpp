@@ -183,7 +183,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
 
 	QStringList searchEnginesLabels;
-	searchEnginesLabels << tr("Name") << tr("Shortcut");
+	searchEnginesLabels << tr("Name") << tr("Keyword");
 
 	QStandardItemModel *searchEnginesModel = new QStandardItemModel(this);
 	searchEnginesModel->setHorizontalHeaderLabels(searchEnginesLabels);
@@ -218,7 +218,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		items[0]->setToolTip(engine->description);
 		items[0]->setData(engineData, Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-		items.append(new QStandardItem(engine->shortcut));
+		items.append(new QStandardItem(engine->keyword));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 		searchEnginesModel->appendRow(items);
@@ -528,17 +528,17 @@ void PreferencesDialog::addSearch()
 {
 	QString identifier;
 	QStringList identifiers;
-	QStringList shortcuts;
+	QStringList keywords;
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
 		identifiers.append(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toHash().value(QLatin1String("identifier"), QString()).toString());
 
-		const QString shortcut = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
 
-		if (!shortcut.isEmpty())
+		if (!keyword.isEmpty())
 		{
-			shortcuts.append(shortcut);
+			keywords.append(keyword);
 		}
 	}
 
@@ -566,12 +566,12 @@ void PreferencesDialog::addSearch()
 	engineData[QLatin1String("suggestionsEnctype")] = QString();
 	engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
 	engineData[QLatin1String("suggestionsParameters")] = QString();
-	engineData[QLatin1String("shortcut")] = QString();
+	engineData[QLatin1String("keyword")] = QString();
 	engineData[QLatin1String("title")] = tr("New Search Engine");
 	engineData[QLatin1String("description")] = QString();
 	engineData[QLatin1String("icon")] = Utils::getIcon(QLatin1String("edit-find"));
 
-	SearchPropertiesDialog dialog(engineData, shortcuts, this);
+	SearchPropertiesDialog dialog(engineData, keywords, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -580,9 +580,9 @@ void PreferencesDialog::addSearch()
 
 	engineData = dialog.getEngineData();
 
-	if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
+	if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
 	{
-		engineData[QLatin1String("shortcut")] = QString();
+		engineData[QLatin1String("keyword")] = QString();
 	}
 
 	if (engineData[QLatin1String("isDefault")].toBool())
@@ -595,7 +595,7 @@ void PreferencesDialog::addSearch()
 	items[0]->setToolTip(engineData[QLatin1String("description")].toString());
 	items[0]->setData(engineData, Qt::UserRole);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(engineData[QLatin1String("shortcut")].toString()));
+	items.append(new QStandardItem(engineData[QLatin1String("keyword")].toString()));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
@@ -613,24 +613,24 @@ void PreferencesDialog::editSearch()
 	}
 
 	QVariantHash engineData = index.data(Qt::UserRole).toHash();
-	engineData[QLatin1String("shortcut")] = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
+	engineData[QLatin1String("keyword")] = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
 	engineData[QLatin1String("title")] = index.data(Qt::DisplayRole).toString();
 	engineData[QLatin1String("description")] = index.data(Qt::ToolTipRole).toString();
 	engineData[QLatin1String("icon")] = index.data(Qt::DecorationRole).value<QIcon>();
 
-	QStringList shortcuts;
+	QStringList keywords;
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
-		const QString shortcut = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
 
-		if (m_ui->searchViewWidget->getCurrentRow() != i && !shortcut.isEmpty())
+		if (m_ui->searchViewWidget->getCurrentRow() != i && !keyword.isEmpty())
 		{
-			shortcuts.append(shortcut);
+			keywords.append(keyword);
 		}
 	}
 
-	SearchPropertiesDialog dialog(engineData, shortcuts, this);
+	SearchPropertiesDialog dialog(engineData, keywords, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -639,9 +639,9 @@ void PreferencesDialog::editSearch()
 
 	engineData = dialog.getEngineData();
 
-	if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
+	if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
 	{
-		engineData[QLatin1String("shortcut")] = QString();
+		engineData[QLatin1String("keyword")] = QString();
 	}
 
 	if (engineData[QLatin1String("isDefault")].toBool())
@@ -653,7 +653,7 @@ void PreferencesDialog::editSearch()
 	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("description")], Qt::ToolTipRole);
 	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("icon")], Qt::DecorationRole);
 	m_ui->searchViewWidget->setData(index, engineData, Qt::UserRole);
-	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("shortcut")], Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("keyword")], Qt::DisplayRole);
 
 	markModified();
 }
@@ -1209,7 +1209,7 @@ void PreferencesDialog::save()
 		engine->identifier = engineData[QLatin1String("identifier")].toString();
 		engine->title = index.data(Qt::DisplayRole).toString();
 		engine->description = index.data(Qt::ToolTipRole).toString();
-		engine->shortcut = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
+		engine->keyword = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
 		engine->encoding = engineData[QLatin1String("encoding")].toString();
 		engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
 		engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();

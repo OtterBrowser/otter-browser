@@ -35,7 +35,7 @@ namespace Otter
 SearchesManager* SearchesManager::m_instance = NULL;
 QStandardItemModel* SearchesManager::m_searchEnginesModel = NULL;
 QStringList SearchesManager::m_searchEnginesOrder;
-QStringList SearchesManager::m_searchShortcuts;
+QStringList SearchesManager::m_searchKeywords;
 QHash<QString, SearchInformation*> SearchesManager::m_searchEngines;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
@@ -77,7 +77,7 @@ void SearchesManager::updateSearchEnginesModel()
 			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon), QString());
 			item->setData(search->title, Qt::UserRole);
 			item->setData(search->identifier, (Qt::UserRole + 1));
-			item->setData(search->shortcut, (Qt::UserRole + 2));
+			item->setData(search->keyword, (Qt::UserRole + 2));
 			item->setData(QSize(-1, 22), Qt::SizeHintRole);
 
 			m_searchEnginesModel->appendRow(item);
@@ -251,13 +251,13 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 				}
 				else if (reader.name() == QLatin1String("Shortcut"))
 				{
-					const QString shortcut = reader.readElementText();
+					const QString keyword = reader.readElementText();
 
-					if (!shortcut.isEmpty() && !m_searchShortcuts.contains(shortcut))
+					if (!keyword.isEmpty() && !m_searchKeywords.contains(keyword))
 					{
-						search->shortcut = shortcut;
+						search->keyword = keyword;
 
-						m_searchShortcuts.append(shortcut);
+						m_searchKeywords.append(keyword);
 					}
 				}
 				else if (reader.name() == QLatin1String("ShortName"))
@@ -371,9 +371,9 @@ QStringList SearchesManager::getSearchEngines()
 	return m_searchEnginesOrder;
 }
 
-QStringList SearchesManager::getSearchShortcuts()
+QStringList SearchesManager::getSearchKeywords()
 {
-	return m_searchShortcuts;
+	return m_searchKeywords;
 }
 
 bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
@@ -384,7 +384,7 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 	writer.writeStartDocument();
 	writer.writeStartElement(QLatin1String("OpenSearchDescription"));
 	writer.writeAttribute(QLatin1String("xmlns"), QLatin1String("http://a9.com/-/spec/opensearch/1.1/"));
-	writer.writeTextElement(QLatin1String("Shortcut"), search->shortcut);
+	writer.writeTextElement(QLatin1String("Shortcut"), search->keyword);
 	writer.writeTextElement(QLatin1String("ShortName"), search->title);
 	writer.writeTextElement(QLatin1String("Description"), search->description);
 	writer.writeTextElement(QLatin1String("InputEncoding"), search->encoding);

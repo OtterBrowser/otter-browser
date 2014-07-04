@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, const QStringList &shortcuts, QWidget *parent) : QDialog(parent),
+SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, const QStringList &keywords, QWidget *parent) : QDialog(parent),
 	m_currentLineEdit(NULL),
 	m_engineData(engineData),
 	m_ui(new Ui::SearchPropertiesDialog)
@@ -38,8 +38,8 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	m_ui->iconButton->setIcon(engineData[QLatin1String("icon")].value<QIcon>());
 	m_ui->titleLineEdit->setText(engineData[QLatin1String("title")].toString());
 	m_ui->descriptionLineEdit->setText(engineData[QLatin1String("description")].toString());
-	m_ui->shortcutLineEdit->setText(engineData[QLatin1String("shortcut")].toString());
-	m_ui->shortcutLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((shortcuts.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(shortcuts.join('|'))) + "[a-z0-9]*"), m_ui->shortcutLineEdit));
+	m_ui->keywordLineEdit->setText(engineData[QLatin1String("keyword")].toString());
+	m_ui->keywordLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEdit));
 	m_ui->defaultSearchCheckBox->setChecked(engineData[QLatin1String("isDefault")].toBool());
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
@@ -106,7 +106,7 @@ QVariantHash SearchPropertiesDialog::getEngineData() const
 	engineData[QLatin1String("icon")] = m_ui->iconButton->icon();
 	engineData[QLatin1String("title")] = m_ui->titleLineEdit->text();
 	engineData[QLatin1String("description")] = m_ui->descriptionLineEdit->text();
-	engineData[QLatin1String("shortcut")] = m_ui->shortcutLineEdit->text();
+	engineData[QLatin1String("keyword")] = m_ui->keywordLineEdit->text();
 	engineData[QLatin1String("isDefault")] = m_ui->defaultSearchCheckBox->isChecked();
 	engineData[QLatin1String("resultsUrl")] = m_ui->resultsAddressLineEdit->text();
 	engineData[QLatin1String("resultsParameters")] = m_ui->resultsQueryLineEdit->text();

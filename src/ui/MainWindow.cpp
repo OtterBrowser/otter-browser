@@ -396,7 +396,7 @@ void MainWindow::openUrl(const QString &input)
 		return;
 	}
 
-	const QString shortcut = input.section(QLatin1Char(' '), 0, 0);
+	const QString keyword = input.section(QLatin1Char(' '), 0, 0);
 	const QStringList engines = SearchesManager::getSearchEngines();
 	SearchInformation *engine = NULL;
 
@@ -404,7 +404,7 @@ void MainWindow::openUrl(const QString &input)
 	{
 		engine = SearchesManager::getSearchEngine(engines.at(i));
 
-		if (engine && shortcut == engine->shortcut)
+		if (engine && keyword == engine->keyword)
 		{
 			m_windowsManager->search(input.section(QLatin1Char(' '), 1), engine->identifier);
 

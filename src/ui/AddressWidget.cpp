@@ -257,7 +257,7 @@ void AddressWidget::handleUserInput(const QString &text)
 		return;
 	}
 
-	const QString shortcut = text.section(QLatin1Char(' '), 0, 0);
+	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
 	const QStringList engines = SearchesManager::getSearchEngines();
 	SearchInformation *engine = NULL;
 
@@ -265,7 +265,7 @@ void AddressWidget::handleUserInput(const QString &text)
 	{
 		engine = SearchesManager::getSearchEngine(engines.at(i));
 
-		if (engine && shortcut == engine->shortcut)
+		if (engine && keyword == engine->keyword)
 		{
 			emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
 

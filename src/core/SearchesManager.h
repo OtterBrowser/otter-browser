@@ -42,7 +42,7 @@ struct SearchInformation
 	QString identifier;
 	QString title;
 	QString description;
-	QString shortcut;
+	QString keyword;
 	QString encoding;
 	QString selfUrl;
 	SearchUrl resultsUrl;
@@ -64,7 +64,7 @@ public:
 	static SearchInformation* getSearchEngine(const QString &identifier);
 	static QStandardItemModel* getSearchEnginesModel();
 	static QStringList getSearchEngines();
-	static QStringList getSearchShortcuts();
+	static QStringList getSearchKeywords();
 	static bool writeSearch(QIODevice *device, SearchInformation *search);
 	static bool setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 	static bool setSearchEngines(const QList<SearchInformation*> &engines);
@@ -78,7 +78,7 @@ private:
 	static SearchesManager *m_instance;
 	static QStandardItemModel *m_searchEnginesModel;
 	static QStringList m_searchEnginesOrder;
-	static QStringList m_searchShortcuts;
+	static QStringList m_searchKeywords;
 	static QHash<QString, SearchInformation*> m_searchEngines;
 
 signals:

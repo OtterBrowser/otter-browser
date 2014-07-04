@@ -148,7 +148,7 @@
            <item row="3" column="1">
             <widget class="QDateTimeEdit" name="expiresDateTimeEdit">
              <property name="displayFormat">
-              <string>dd.MM.yyyy HH:mm:ss</string>
+              <string comment="Date and time format">MM.dd.yyyy HH:mm</string>
              </property>
             </widget>
            </item>

@@ -759,7 +759,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 					}
 
 					const QStringList identifiers = SearchesManager::getSearchEngines();
-					QStringList shortcuts;
+					QStringList keywords;
 					QList<SearchInformation*> engines;
 
 					for (int i = 0; i < identifiers.count(); ++i)
@@ -773,11 +773,11 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 						engines.append(engine);
 
-						const QString shortcut = engine->shortcut;
+						const QString keyword = engine->keyword;
 
-						if (!shortcut.isEmpty())
+						if (!keyword.isEmpty())
 						{
-							shortcuts.append(shortcut);
+							keywords.append(keyword);
 						}
 					}
 
@@ -808,12 +808,12 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 					engineData[QLatin1String("suggestionsEnctype")] = QString();
 					engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
 					engineData[QLatin1String("suggestionsParameters")] = QString();
-					engineData[QLatin1String("shortcut")] = QString();
+					engineData[QLatin1String("keyword")] = QString();
 					engineData[QLatin1String("title")] = getTitle();
 					engineData[QLatin1String("description")] = QString();
 					engineData[QLatin1String("icon")] = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
 
-					SearchPropertiesDialog dialog(engineData, shortcuts, this);
+					SearchPropertiesDialog dialog(engineData, keywords, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
@@ -822,16 +822,16 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 					engineData = dialog.getEngineData();
 
-					if (shortcuts.contains(engineData[QLatin1String("shortcut")].toString()))
+					if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
 					{
-						engineData[QLatin1String("shortcut")] = QString();
+						engineData[QLatin1String("keyword")] = QString();
 					}
 
 					SearchInformation *engine = new SearchInformation();
 					engine->identifier = engineData[QLatin1String("identifier")].toString();
 					engine->title = engineData[QLatin1String("title")].toString();
 					engine->description = engineData[QLatin1String("description")].toString();
-					engine->shortcut = engineData[QLatin1String("shortcut")].toString();
+					engine->keyword = engineData[QLatin1String("keyword")].toString();
 					engine->encoding = engineData[QLatin1String("encoding")].toString();
 					engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
 					engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();
