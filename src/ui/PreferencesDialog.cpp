@@ -544,7 +544,7 @@ void PreferencesDialog::addSearch()
 
 	do
 	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Search Engine Identifier:"));
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Search Engine Identifier:"));
 
 		if (identifier.isEmpty())
 		{
@@ -1459,7 +1459,7 @@ QString PreferencesDialog::createProfileIdentifier(TableViewWidget *view, QStrin
 
 	do
 	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Profile Identifier:"), QLineEdit::Normal, identifier);
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Profile Identifier:"), QLineEdit::Normal, identifier);
 
 		if (identifier.isEmpty())
 		{

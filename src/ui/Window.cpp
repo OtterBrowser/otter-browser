@@ -285,7 +285,7 @@ void Window::setUserAgent(const QString &identifier)
 
 	if (identifier == QLatin1String("custom"))
 	{
-		value = QInputDialog::getText(this, tr("Select User Agent"), tr("Input User Agent:"), QLineEdit::Normal, webWidget->getUserAgent().second);
+		value = QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, webWidget->getUserAgent().second);
 	}
 	else
 	{

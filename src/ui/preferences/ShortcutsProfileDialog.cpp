@@ -141,7 +141,7 @@ void ShortcutsProfileDialog::addMacro()
 
 	do
 	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Macro Identifier:"));
+		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Macro Identifier:"));
 
 		if (identifier.isEmpty())
 		{

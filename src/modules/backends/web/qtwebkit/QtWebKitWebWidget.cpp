@@ -785,7 +785,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 					while (identifier.isEmpty() || identifiers.contains(identifier))
 					{
-						identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Input Unique Search Engine Identifier:"));
+						identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Search Engine Identifier:"));
 
 						if (identifier.isEmpty())
 						{
