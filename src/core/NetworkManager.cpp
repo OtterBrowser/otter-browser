@@ -287,7 +287,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 
 void NetworkManager::setUserAgent(const QString &identifier, const QString &value)
 {
-	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
+	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() : identifier);
 	m_userAgentValue = value;
 }
 

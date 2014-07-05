@@ -352,7 +352,7 @@ QString WebWidget::getStatusMessage() const
 
 QUrl WebWidget::getRequestedUrl() const
 {
-	return ((getUrl().isEmpty() || isLoading()) ?  m_requestedUrl : getUrl());
+	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
 }
 
 }

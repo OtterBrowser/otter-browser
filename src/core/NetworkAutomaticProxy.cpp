@@ -311,7 +311,7 @@ QScriptValue NetworkAutomaticProxy::dateRange(QScriptContext *context, QScriptEn
 	{
 		if (context->argument(i).isString())
 		{
-			const int month = (m_months.indexOf(context->argument(i).toString().toLower())  + 1);
+			const int month = (m_months.indexOf(context->argument(i).toString().toLower()) + 1);
 
 			if (month < 1)
 			{

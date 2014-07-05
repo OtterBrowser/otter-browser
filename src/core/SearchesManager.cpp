@@ -173,7 +173,7 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 					}
 				}
 
-				body->append(QLatin1String("--AaB03x\r\ncontent-disposition: form-data; name=\"") + parameters.at(i).first +  QLatin1String("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n") + encodedValue + QLatin1String("\r\n--AaB03x\r\n"));
+				body->append(QLatin1String("--AaB03x\r\ncontent-disposition: form-data; name=\"") + parameters.at(i).first + QLatin1String("\"\r\ncontent-type: text/plain;charset=UTF-8\r\ncontent-transfer-encoding: quoted-printable\r\n") + encodedValue + QLatin1String("\r\n--AaB03x\r\n"));
 			}
 		}
 	}

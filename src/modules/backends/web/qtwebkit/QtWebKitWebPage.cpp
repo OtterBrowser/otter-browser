@@ -137,7 +137,7 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 
 void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool manual)
 {
-	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() :  identifier);
+	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() : identifier);
 	m_userAgentParsed = QString(value).replace(QLatin1String("{platform}"), QLatin1String("%Platform%%Security%%Subplatform%")).replace(QLatin1String("{engineVersion}"), QLatin1String("%WebKitVersion%")).replace(QLatin1String("{engineName}"), QLatin1String("AppleWebKit")).replace(QLatin1String("{applicationVersion}"), QCoreApplication::applicationVersion());
 	m_userAgentValue = value;
 	m_isGlobalUserAgent = !manual;
