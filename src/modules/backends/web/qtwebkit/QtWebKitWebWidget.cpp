@@ -855,6 +855,17 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			triggerAction(DeleteAction);
 
 			break;
+		case CopyAsPlainTextAction:
+			{
+				const QString text = getSelectedText();
+
+				if (!text.isEmpty())
+				{
+					QApplication::clipboard()->setText(text);
+				}
+			}
+
+			break;
 		default:
 			break;
 	}
@@ -1317,6 +1328,12 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			break;
 		case FindPreviousAction:
 			ActionsManager::setupLocalAction(actionObject, QLatin1String("FindPrevious"), true);
+
+			actionObject->setEnabled(true);
+
+			break;
+		case CopyAsPlainTextAction:
+			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyAsPlainText"), true);
 
 			actionObject->setEnabled(true);
 

@@ -60,6 +60,7 @@ enum ActionIdentifier
 	ReloadTimeAction,
 	CutAction,
 	CopyAction,
+	CopyAsPlainTextAction,
 	PasteAction,
 	DeleteAction,
 	SelectAllAction,

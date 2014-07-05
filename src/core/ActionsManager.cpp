@@ -288,6 +288,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
 		registerAction(QLatin1String("QuickFind"), tr("Quick Find"), QIcon(), QuickFindAction);
 		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
+		registerAction(QLatin1String("CopyAsPlainText"), tr("Copy as Plain Text"), QIcon(), CopyAsPlainTextAction);
 		registerAction(QLatin1String("PasteAndGo"), tr("Paste and Go"), QIcon(), PasteAndGoAction);
 		registerAction(QLatin1String("ActivateTabOnLeft"), tr("Go to tab on left"), QIcon(), ActivateTabOnLeftAction);
 		registerAction(QLatin1String("ActivateTabOnRight"), tr("Go to tab on right"), QIcon(), ActivateTabOnRightAction);

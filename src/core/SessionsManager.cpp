@@ -78,6 +78,7 @@ void SessionsManager::scheduleSave()
 
 void SessionsManager::connectActions()
 {
+	connect(ActionsManager::getAction(CopyAsPlainTextAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 	connect(ActionsManager::getAction(QuickFindAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 	connect(ActionsManager::getAction(ActivateAddressFieldAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
 	connect(ActionsManager::getAction(PasteAndGoAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
