@@ -436,7 +436,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			}
 
 			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');
-			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).index +  1) << QLatin1String("\n\n");
+			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).index + 1) << QLatin1String("\n\n");
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
