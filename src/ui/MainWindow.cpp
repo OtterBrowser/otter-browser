@@ -533,7 +533,7 @@ void MainWindow::actionViewHistory()
 
 void MainWindow::actionClearHistory()
 {
-	ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList(), false, this);
+	ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ManualClearOptions")).toStringList(), false, this);
 	dialog.exec();
 }
 

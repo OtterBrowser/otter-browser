@@ -51,6 +51,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 	else
 	{
 		m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Clear Now"));
+		m_ui->periodSpinBox->setValue(SettingsManager::getValue(QLatin1String("History/ManualClearPeriod")).toInt());
 
 		connect(this, SIGNAL(accepted()), this, SLOT(clearHistory()));
 	}
@@ -106,6 +107,9 @@ void ClearHistoryDialog::clearHistory()
 	{
 		NetworkManagerFactory::clearCache(m_ui->periodSpinBox->value());
 	}
+
+	SettingsManager::setValue(QLatin1String("History/ManualClearOptions"), getClearSettings());
+	SettingsManager::setValue(QLatin1String("History/ManualClearPeriod"), m_ui->periodSpinBox->value());
 }
 
 QStringList ClearHistoryDialog::getClearSettings() const
