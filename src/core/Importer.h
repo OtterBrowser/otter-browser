@@ -30,12 +30,14 @@ enum ImportType
 	OtherImport = 0,
 	FullImport = 1,
 	BookmarksImport = 2,
-	CookiesImport = 3,
-	FeedsImport = 4,
-	HistoryImport = 5,
-	MailImport = 6,
-	PasswordsImport = 7,
-	SettingsImport = 8
+	SettingsImport = 3,
+	PasswordsImport = 4,
+	SearchEnginesImport = 5,
+	SessionsImport = 6,
+	CookiesImport = 7,
+	HistoryImport = 8,
+	FeedsImport = 9,
+	MailImport = 10
 };
 
 class Importer : public QObject
@@ -52,8 +54,10 @@ public:
 	virtual QString getSuggestedPath() const = 0;
 	virtual QString getBrowser() const = 0;
 	virtual ImportType getType() const = 0;
+
+public slots:
 	virtual bool import() = 0;
-	virtual void setPath(const QString &path) = 0;
+	virtual void setPath(const QString &path, bool isPrefix = false) = 0;
 
 signals:
 	void importProgress(int amount, int total, ImportType type);
