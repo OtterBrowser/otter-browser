@@ -57,11 +57,12 @@ protected:
 	void mouseDoubleClickEvent(QMouseEvent *event);
 
 protected slots:
-	void removeIcon();
 	void optionChanged(const QString &option, const QVariant &value);
+	void removeIcon();
 	void verifyLookup(const QHostInfo &host);
 	void notifyRequestedLoadUrl();
 	void updateBookmark();
+	void setCompletion(const QString &text);
 	void setIcon(const QIcon &icon);
 
 private:

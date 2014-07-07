@@ -54,15 +54,16 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
+	m_completer->setFilterMode(Qt::MatchStartsWith);
 
 	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 	setCompleter(m_completer);
 	setMinimumWidth(100);
 	setMouseTracking(true);
-
 	installEventFilter(this);
 
+	connect(this, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -302,16 +303,6 @@ void AddressWidget::handleUserInput(const QString &text)
 	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
 }
 
-void AddressWidget::removeIcon()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		SettingsManager::setValue(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString()), false);
-	}
-}
-
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
@@ -366,6 +357,16 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
+void AddressWidget::removeIcon()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		SettingsManager::setValue(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString()), false);
+	}
+}
+
 void AddressWidget::verifyLookup(const QHostInfo &host)
 {
 	killTimer(m_lookupTimer);
@@ -388,6 +389,7 @@ void AddressWidget::notifyRequestedLoadUrl()
 {
 	const QString input = text().trimmed();
 
+	qDebug() << m_completer->currentCompletion() << input;
 	if (!input.isEmpty())
 	{
 		handleUserInput(input);
@@ -417,6 +419,11 @@ void AddressWidget::updateBookmark()
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
+}
+
+void AddressWidget::setCompletion(const QString &text)
+{
+	m_completer->setCompletionPrefix(text);
 }
 
 void AddressWidget::setIcon(const QIcon &icon)
