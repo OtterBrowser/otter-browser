@@ -2,213 +2,228 @@
 <context>
     <name>Otter::ActionsManager</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Open in New Tab</source>
         <translation>Yeni Sekmede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
         <source>Open in New Background Tab</source>
         <translation>Arka Planda Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
         <source>Open in New Window</source>
         <translation>Yeni Pencerede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Open in New Background Window</source>
         <translation>Arka Plandaki Pencerede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <source>Copy Link to Clipboard</source>
         <translation>Adresi Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Çerçeve Adresini Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Reload</source>
         <translation>Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Reload Image</source>
         <translation>Resmi Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
         <source>View Source</source>
         <translation>Sayfa Kaynağını Göster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
         <source>Save Link Target As...</source>
         <translation>Hedefi Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
         <source>Save to Downloads</source>
         <translation>İndirmelere Kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>Bookmark Link...</source>
         <translation>Sık Kullanılanlara Ekle...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Reload Each</source>
         <translation>Her Birini Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Copy Address</source>
         <translation>Adresi Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>Validate</source>
         <translation>Geçerliliği Denetle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>Content Blocking...</source>
         <translation>İçerik Engelleme...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>Website Preferences...</source>
         <translation>Sayfa Özellikleri</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Image Properties...</source>
         <translation>Resim Özellikleri...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Open Image</source>
         <translation>Resmi Aç</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Save Image...</source>
         <translation>Resmi Kaydet...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Copy Image to Clipboard</source>
         <translation>Resmi Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Resmin Adresini Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Search Using</source>
         <translation>Bununla Ara</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Go to This Address</source>
         <translation>Adrese Git</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Clear All</source>
         <translation>Tümünü Temizle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Check Spelling</source>
         <translation>Yazım Denetimi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Create Search...</source>
         <translation>Aram Oluştur...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Inspect Element...</source>
         <translation>Öğeyi Denetle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Save Media...</source>
         <translation>Medyayı Kaydet...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Medya Adresini Kopyala</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Show Controls</source>
         <translation>Kontrolleri Göster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Looping</source>
         <translation>Döngüle</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Play</source>
         <translation>Oynat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Mute</source>
         <translation>Sessiz</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <source>Quick Find</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Activate Address Field</source>
         <translation>Adres Satırını Aktifleştir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <source>Paste and Go</source>
         <translation>Yapıştır ve Git</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <source>Go to tab on left</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <source>Go to tab on right</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="412"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="419"/>
         <source>Remove Bookmark</source>
         <translation>Yer İmini Sil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="412"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="419"/>
         <source>Add Bookmark</source>
         <translation>Yer İmi Ekle</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="499"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="506"/>
         <source>Remove This Icon</source>
         <translation>Simgeyi Kaldır</translation>
     </message>
@@ -463,8 +478,8 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
-        <source>Do you really want to delete this folder and all its children?</source>
-        <translation>Gerçekten bu klasörü ve ona ait tüm içeriği silmek istiyor musunuz?</translation>
+        <source>Do you really want to delete this folder and all of its contents?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -811,8 +826,9 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
-        <source>dd.MM.yyyy HH:mm:ss</source>
-        <translation>gg.aa.yyyy HH:mm:ss</translation>
+        <source>MM.dd.yyyy HH:mm</source>
+        <comment>Date and time format</comment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
@@ -1141,8 +1157,8 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="112"/>
-        <source>Text Encoding</source>
-        <translation>Metin kodlama</translation>
+        <source>Character Encoding</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="117"/>
@@ -1241,13 +1257,13 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="285"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="933"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="994"/>
         <source>Undo</source>
         <translation>Geri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="293"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="946"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1007"/>
         <source>Redo</source>
         <translation>İleri</translation>
     </message>
@@ -1379,19 +1395,19 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="441"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="758"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="819"/>
         <source>Clear</source>
         <translation>Temizle</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="446"/>
-        <source>Rewind Back</source>
-        <translation>En Başa Dön</translation>
+        <source>Rewind</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="451"/>
-        <source>Rewind Forward</source>
-        <translation>En Sona Dön</translation>
+        <source>Fast Forward</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="456"/>
@@ -1439,122 +1455,122 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <translation>Uygulama Diline Geç...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="274"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="281"/>
         <source>Question</source>
         <translation>Soru</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="275"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="282"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="276"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="283"/>
         <source>Do you want to continue?</source>
         <translation>Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="280"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="287"/>
         <source>Do not show this message again</source>
         <translation>Bu mesajı tekrar gösterme</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="365"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="430"/>
         <source>Open File</source>
         <translation>Dosya aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="479"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="544"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="479"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="544"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Bu adres yer imlerinizde kayıtlı.
 Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="567"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="632"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Kullanıcının kontrol ettiği Web tarayıcı, tersinin değil. </translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="568"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="633"/>
         <source>Web backend: %1 %2.</source>
         <translation>Web arka yüzü: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="572"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="637"/>
         <source>SSL library version: %1.</source>
         <translation>SSL kütüphane sürümü: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="576"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="641"/>
         <source>SSL library not available.</source>
         <translation>SSL kütüphanesi yok.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="615"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="630"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="666"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="817"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="680"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="695"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="731"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="878"/>
         <source>(Untitled)</source>
         <translation>(Başlıksız)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="630"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="695"/>
         <source>%1 (%n tab(s))</source>
         <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="654"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="719"/>
         <source>Default</source>
         <translation>Varsayılan</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="676"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="741"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="701"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="764"/>
         <source>Auto Detect</source>
         <translation>Otomatik Algıla</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="767"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="828"/>
         <source>Window - %1</source>
         <translation>Pencere - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="805"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
         <source>Open All</source>
         <translation>Tümünü Aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1075"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1136"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1076"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1137"/>
         <source>Open in New Tab</source>
         <translation>Yeni Sekmede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1077"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1138"/>
         <source>Open in New Background Tab</source>
         <translation>Arkaplanda Yeni Sekmede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1079"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1140"/>
         <source>Open in New Window</source>
         <translation>Yeni Pencerede Aç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1080"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1141"/>
         <source>Open in New Background Window</source>
         <translation>Arkaplanda Yeni Pencerede Aç</translation>
     </message>
@@ -2286,91 +2302,91 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1088"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1096"/>
         <source>Name</source>
         <translation>İsim</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
-        <source>Shortcut</source>
-        <translation>Kısayol</translation>
+        <source>Keyword</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="688"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="696"/>
         <source>Default</source>
         <translation>Varsayılan</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="248"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="694"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="817"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="823"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="856"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="885"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="956"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="962"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="995"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1024"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1106"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1336"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1371"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="702"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="825"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="831"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="864"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="893"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="964"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="970"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1003"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1032"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1114"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1344"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1379"/>
         <source>(Untitled)</source>
         <translation>(Başlıksız)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="539"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1454"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1462"/>
         <source>Select Identifier</source>
         <translation>Tanımlayıcı Seç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="539"/>
-        <source>Input Unique Search Engine Identifier:</source>
-        <translation>Arama Motoru Girişi Tanımlayıcı:</translation>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
+        <source>Enter Unique Search Engine Identifier:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="562"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
         <source>New Search Engine</source>
         <translation>Yeni Arama Motoru</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="763"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="771"/>
         <source>Select Proxy Automatic Configuration File</source>
         <translation>Otomatik Proksi Yapılandırma Dosyasını Seç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="763"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="771"/>
         <source>PAC files (*.pac)</source>
         <translation>PAC dosyaları (*.pac)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="906"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1045"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="914"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1053"/>
         <source>Question</source>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="907"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1046"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="915"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1054"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Bu profili gerçekten silmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="914"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1053"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="922"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1061"/>
         <source>Delete profile permanently</source>
         <translation>Profili tamamen sil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1088"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1096"/>
         <source>Identifier</source>
         <translation>Tanımlayıcı</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1454"/>
-        <source>Input Unique Profile Identifier:</source>
-        <translation>Profil Girişi Tanımlayıcı:</translation>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1462"/>
+        <source>Enter Unique Profile Identifier:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2506,8 +2522,8 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="788"/>
-        <source>Input Unique Search Engine Identifier:</source>
-        <translation>Arama Motoru Girişi Tanımlayıcı:</translation>
+        <source>Enter Unique Search Engine Identifier:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1038"/>
@@ -2666,8 +2682,8 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
-        <source>Shortcut:</source>
-        <translation>Kısayol:</translation>
+        <source>Keyword:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
@@ -2694,8 +2710,8 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="143"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="251"/>
-        <source>POST  Method</source>
-        <translation>POST Metodu</translation>
+        <source>POST Method</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
@@ -2930,8 +2946,8 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
-        <source>Input Unique Macro Identifier:</source>
-        <translation>Makro Girişi Tanımlayıcı:</translation>
+        <source>Enter Unique Macro Identifier:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
@@ -2959,8 +2975,8 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
-        <source>Begin with empty page</source>
-        <translation>Boş bir sayfa ile başla</translation>
+        <source>Begin with blank page</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
@@ -2998,32 +3014,32 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
 <context>
     <name>Otter::TabBarWidget</name>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="98"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="99"/>
         <source>Clone Tab</source>
         <translation>Sekmeyi Çoğalt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="99"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="100"/>
         <source>Unpin Tab</source>
         <translation>Sekmeyi Ayır</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="99"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="100"/>
         <source>Pin Tab</source>
         <translation>Sekmeyi Sabitle</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="101"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="102"/>
         <source>Detach Tab</source>
         <translation>Seçmeyi Çoğalt</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="119"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
         <source>Close Other Tabs</source>
         <translation>Diğer Sekmeleri Kapat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="363"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="368"/>
         <source>(Untitled)</source>
         <translation>(Başlıksız)</translation>
     </message>
@@ -3172,7 +3188,7 @@ Boyut: %3
         <translation>Tamamlanan İndirmeleri Temizle</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="516"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="533"/>
         <source>Transfers Manager</source>
         <translation>İndirme Yöneticisi</translation>
     </message>
@@ -3276,13 +3292,13 @@ Yeni bir klasör seçin.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
-        <source>Find Next Occurence</source>
-        <translation>Diğer Oluşumu Bul</translation>
+        <source>Find Next</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
-        <source>Find Previous Occurence</source>
-        <translation>Önceki Oluşumu Bul</translation>
+        <source>Find Previous</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
@@ -3316,20 +3332,20 @@ Yeni bir klasör seçin.</translation>
         <translation>Adres girin ya da arama yapın...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="217"/>
-        <location filename="../../src/ui/Window.cpp" line="237"/>
+        <location filename="../../src/ui/Window.cpp" line="220"/>
+        <location filename="../../src/ui/Window.cpp" line="240"/>
         <source>(Untitled)</source>
         <translation>(Başlıksız)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="285"/>
+        <location filename="../../src/ui/Window.cpp" line="288"/>
         <source>Select User Agent</source>
         <translation>Tarayıcı Kimliği Seç</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="285"/>
-        <source>Input User Agent:</source>
-        <translation>Tarayıcı Kimliği Girişi:</translation>
+        <location filename="../../src/ui/Window.cpp" line="288"/>
+        <source>Enter User Agent:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3360,13 +3376,14 @@ Yeni bir klasör seçin.</translation>
         <translation>Yazdırma Ön İzleme</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="478"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="486"/>
         <source>(Untitled)</source>
         <translation>(Başlıksız)</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="672"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="714"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="680"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="722"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="801"/>
         <source>Empty</source>
         <translation>Boş</translation>
     </message>
