@@ -153,11 +153,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	SessionsManager::registerWindow(m_windowsManager);
 
 #ifdef Q_OS_WIN
-	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
+	{
+		connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
+	}
 #endif
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
