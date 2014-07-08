@@ -436,12 +436,18 @@ QKeySequence ActionsManager::getNativeShortcut(const QString &action)
 
 QStringList ActionsManager::getIdentifiers()
 {
-	if (!m_mainWindowActions.contains(SessionsManager::getActiveWindow()))
+	QStringList identifiers = m_applicationActions.keys();
+
+	if (m_mainWindowActions.contains(SessionsManager::getActiveWindow()))
 	{
-		return m_profileShortcuts.keys();
+		identifiers << m_mainWindowActions[SessionsManager::getActiveWindow()].keys();
+	}
+	else
+	{
+		identifiers << m_profileShortcuts.keys();
 	}
 
-	return m_mainWindowActions[SessionsManager::getActiveWindow()].keys();
+	return identifiers;
 }
 
 }
