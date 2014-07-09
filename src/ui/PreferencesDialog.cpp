@@ -1296,6 +1296,7 @@ void PreferencesDialog::save()
 	if (m_userAgentsModified)
 	{
 		QSettings userAgents(SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"), QSettings::IniFormat);
+		userAgents.setIniCodec("UTF-8");
 		userAgents.clear();
 
 		for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
@@ -1510,6 +1511,8 @@ QHash<QString, QVariantHash> PreferencesDialog::getProfileData(const QString &pa
 {
 	QHash<QString, QVariantHash> data;
 	QSettings settings(path, QSettings::IniFormat);
+	settings.setIniCodec("UTF-8");
+
 	const QStringList groups = settings.childGroups();
 
 	for (int i = 0; i < groups.count(); ++i)

@@ -389,7 +389,6 @@ void AddressWidget::notifyRequestedLoadUrl()
 {
 	const QString input = text().trimmed();
 
-	qDebug() << m_completer->currentCompletion() << input;
 	if (!input.isEmpty())
 	{
 		handleUserInput(input);
