@@ -24,6 +24,7 @@
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
 #include "../ui/MdiWidget.h"
+#include "../ui/OpenBookmarkDialog.h"
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 
@@ -46,6 +47,7 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
+	connect(ActionsManager::getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(quickBookmarkAccess()));
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
@@ -95,6 +97,11 @@ void WindowsManager::openTab(QUrl url, OpenHints hints)
 
 void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 {
+	if (!bookmark)
+	{
+		return;
+	}
+
 	if (hints == DefaultOpen && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
 	{
 		hints = CurrentTabOpen;
@@ -814,6 +821,15 @@ bool WindowsManager::event(QEvent *event)
 	}
 
 	return QObject::event(event);
+}
+
+void WindowsManager::quickBookmarkAccess()
+{
+	OpenBookmarkDialog dialog(m_mdi);
+
+	connect(&dialog, SIGNAL(requestedOpenBookmark(const BookmarkInformation*)), this, SLOT(open(const BookmarkInformation*)));
+
+	dialog.exec();
 }
 
 bool WindowsManager::canZoom() const

@@ -65,7 +65,8 @@ public:
 	static void updateVisit(const QUrl &url);
 	static BookmarksManager* getInstance();
 	static BookmarkInformation* getBookmark(const int identifier);
-	static BookmarkInformation* getBookmarkByKeyword(const QString &keyword);
+	static BookmarkInformation* getBookmark(const QString &keyword);
+	static QStringList getKeywords();
 	static QStringList getUrls();
 	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);

@@ -99,6 +99,7 @@ set(otter_src
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
 	src/ui/MdiWidget.cpp
+	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionDelegate.cpp
 	src/ui/OptionWidget.cpp
 	src/ui/PreferencesDialog.cpp
@@ -147,6 +148,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/ConsoleWidget.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
+	src/ui/OpenBookmarkDialog.ui
 	src/ui/PreferencesDialog.ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchPropertiesDialog.ui

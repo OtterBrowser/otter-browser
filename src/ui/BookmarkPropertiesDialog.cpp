@@ -176,7 +176,7 @@ void BookmarkPropertiesDialog::saveBookmark()
 {
 	const QString newKeyword = m_ui->keywordLineEdit->text();
 
-	if (m_bookmark->keyword != newKeyword && BookmarksManager::getBookmarkByKeyword(newKeyword))
+	if (m_bookmark->keyword != newKeyword && BookmarksManager::getBookmark(newKeyword))
 	{
 		QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
 

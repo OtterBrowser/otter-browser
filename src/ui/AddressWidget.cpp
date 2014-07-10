@@ -216,7 +216,7 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void AddressWidget::handleUserInput(const QString &text)
 {
-	const BookmarkInformation *bookmark = BookmarksManager::getBookmarkByKeyword(text);
+	const BookmarkInformation *bookmark = BookmarksManager::getBookmark(text);
 
 	if (bookmark)
 	{

@@ -277,22 +277,17 @@ BookmarksManager* BookmarksManager::getInstance()
 	return m_instance;
 }
 
-QStringList BookmarksManager::getUrls()
-{
-	return m_urls.toList();
-}
-
-BookmarkInformation *BookmarksManager::getBookmark(const int identifier)
+BookmarkInformation* BookmarksManager::getBookmark(const int identifier)
 {
 	return (m_pointers.contains(identifier) ? m_pointers[identifier] : NULL);
 }
 
-BookmarkInformation* BookmarksManager::getBookmarkByKeyword(const QString &keyword)
+BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
 {
 	return m_keywords.value(keyword);
 }
 
-BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
+BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
 {
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->parent = parent;
@@ -416,6 +411,16 @@ BookmarkInformation *BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 	m_allBookmarks.append(bookmark);
 
 	return bookmark;
+}
+
+QStringList BookmarksManager::getKeywords()
+{
+	return m_keywords.keys();
+}
+
+QStringList BookmarksManager::getUrls()
+{
+	return m_urls.toList();
 }
 
 QList<BookmarkInformation*> BookmarksManager::getBookmarks()

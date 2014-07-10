@@ -99,6 +99,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
+	void quickBookmarkAccess();
 	void printPreview(QPrinter *printer);
 	void addWindow(Window *window, OpenHints hints = DefaultOpen);
 	void openWindow(ContentsWidget *widget, OpenHints hints = false);

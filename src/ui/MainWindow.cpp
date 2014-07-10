@@ -357,7 +357,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::openUrl(const QString &input)
 {
-	const BookmarkInformation *bookmark = BookmarksManager::getBookmarkByKeyword(input);
+	const BookmarkInformation *bookmark = BookmarksManager::getBookmark(input);
 
 	if (bookmark)
 	{

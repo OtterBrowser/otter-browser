@@ -286,6 +286,7 @@ void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
 		registerAction(QLatin1String("ToggleMediaLoop"), tr("Looping"));
 		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
+		registerAction(QLatin1String("QuickBookmarkAccess"), tr("QuickBookmarkAccess"));
 		registerAction(QLatin1String("QuickFind"), tr("Quick Find"), QIcon(), QuickFindAction);
 		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
 		registerAction(QLatin1String("CopyAsPlainText"), tr("Copy as Plain Text"), QIcon(), CopyAsPlainTextAction);
