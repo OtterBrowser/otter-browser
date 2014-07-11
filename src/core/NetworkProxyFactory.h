@@ -52,7 +52,7 @@ protected slots:
 
 private:
 	NetworkAutomaticProxy *m_automaticProxy;
-	QHash<QNetworkProxy::ProxyType, QList<QNetworkProxy> > m_proxies;
+	QHash<QString, QList<QNetworkProxy> > m_proxies;
 	ProxyMode m_proxyMode;
 };
 

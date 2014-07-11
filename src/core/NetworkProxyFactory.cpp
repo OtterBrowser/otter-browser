@@ -73,22 +73,22 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		m_proxyMode = ManualProxy;
 
 		m_proxies.clear();
-		m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
+		m_proxies[QLatin1String("NoProxy")] << QNetworkProxy(QNetworkProxy::NoProxy);
 
 		const bool useCommon = SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool();
 		QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes;
-		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("Http")) << qMakePair(QNetworkProxy::HttpCachingProxy, QLatin1String("Https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("Ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("Proxy/Socks"));
+		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")) << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("Proxy/Socks"));
 
 		for (int i = 0; i < proxyTypes.count(); ++i)
 		{
 			if (useCommon && proxyTypes.at(i).first != QNetworkProxy::Socks5Proxy)
 			{
-				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt());
+				m_proxies[proxyTypes.at(i).second] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt());
 			}
 
 			if (SettingsManager::getValue(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
 			{
-				m_proxies[proxyTypes.at(i).first] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
+				m_proxies[proxyTypes.at(i).second] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
 			}
 		}
 	}
@@ -105,7 +105,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		else
 		{
 			m_proxyMode = NoProxy;
-			m_proxies[QNetworkProxy::NoProxy] << QNetworkProxy(QNetworkProxy::NoProxy);
+			m_proxies[QLatin1String("NoProxy")] << QNetworkProxy(QNetworkProxy::NoProxy);
 		}
 	}
 }
@@ -121,25 +121,25 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 	{
 		const QString protocol = query.protocolTag().toLower();
 
-		if (m_proxies.contains(QNetworkProxy::Socks5Proxy))
+		if (m_proxies.contains(QLatin1String("Proxy/Socks")))
 		{
-			return m_proxies[QNetworkProxy::Socks5Proxy];
+			return m_proxies[QLatin1String("Proxy/Socks")];
 		}
-		else if (protocol == QLatin1String("http") && m_proxies.contains(QNetworkProxy::HttpProxy))
+		else if ((protocol == QLatin1String("http")) && m_proxies.contains(protocol))
 		{
-			return m_proxies[QNetworkProxy::HttpProxy];
+			return m_proxies[protocol];
 		}
-		else if (protocol == QLatin1String("https") && m_proxies.contains(QNetworkProxy::HttpCachingProxy))
+		else if (protocol == QLatin1String("https") && m_proxies.contains(protocol))
 		{
-			return m_proxies[QNetworkProxy::HttpCachingProxy];
+			return m_proxies[protocol];
 		}
-		else if (protocol == QLatin1String("ftp") && m_proxies.contains(QNetworkProxy::FtpCachingProxy))
+		else if (protocol == QLatin1String("ftp") && m_proxies.contains(protocol))
 		{
-			return m_proxies[QNetworkProxy::FtpCachingProxy];
+			return m_proxies[protocol];
 		}
 		else
 		{
-			return m_proxies[QNetworkProxy::NoProxy];
+			return m_proxies[QLatin1String("NoProxy")];
 		}
 	}
 
@@ -148,7 +148,7 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 		return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName());
 	}
 
-	return m_proxies[QNetworkProxy::NoProxy];
+	return m_proxies[QLatin1String("NoProxy")];
 }
 
 }
