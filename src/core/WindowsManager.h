@@ -93,7 +93,7 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
-	void openTab(QUrl url, OpenHints hints = DefaultOpen);
+	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
 	void gatherBookmarks(int folder);
 	int getWindowIndex(Window *window) const;
 	bool event(QEvent *event);

@@ -86,7 +86,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 }
 
-void WindowsManager::openTab(QUrl url, OpenHints hints)
+void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 {
 	Window *window = new Window((hints & PrivateOpen), NULL, m_mdi);
 
