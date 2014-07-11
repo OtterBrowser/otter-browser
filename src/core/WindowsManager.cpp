@@ -92,7 +92,7 @@ void WindowsManager::openTab(QUrl url, OpenHints hints)
 
 	addWindow(window, hints);
 
-	window->setUrl((url.isEmpty() ? QUrl(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString()) : url), false);
+	window->setUrl(url, false);
 }
 
 void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
