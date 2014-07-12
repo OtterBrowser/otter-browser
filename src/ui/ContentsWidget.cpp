@@ -174,6 +174,11 @@ QAction* ContentsWidget::getAction(ActionIdentifier action)
 	return NULL;
 }
 
+Window* ContentsWidget::getParent()
+{
+	return qobject_cast<Window*>(parent());
+}
+
 QUndoStack* ContentsWidget::getUndoStack()
 {
 	return NULL;

@@ -49,6 +49,7 @@ public:
 	void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
 	virtual QAction* getAction(ActionIdentifier action);
+	Window* getParent();
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;

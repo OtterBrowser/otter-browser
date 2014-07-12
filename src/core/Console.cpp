@@ -42,7 +42,7 @@ void Console::createInstance(QObject *parent)
 	m_instance = new Console(parent);
 }
 
-void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line)
+void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line, qint64 window)
 {
 	ConsoleMessage *message = new ConsoleMessage();
 	message->time = QDateTime::currentDateTime();
@@ -51,6 +51,7 @@ void Console::addMessage(const QString &note, MessageCategory category, MessageL
 	message->category = category;
 	message->level = level;
 	message->line = line;
+	message->window = window;
 
 	m_messages.append(message);
 

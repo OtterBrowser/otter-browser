@@ -49,6 +49,7 @@ struct ConsoleMessage
 	QString source;
 	MessageCategory category;
 	MessageLevel level;
+	qint64 window;
 	int line;
 };
 
@@ -60,7 +61,7 @@ public:
 	~Console();
 
 	static void createInstance(QObject *parent = NULL);
-	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1);
+	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, qint64 window = -1);
 	static Console* getInstance();
 	static QList<ConsoleMessage*> getMessages();
 
