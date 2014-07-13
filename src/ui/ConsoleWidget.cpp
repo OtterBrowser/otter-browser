@@ -31,6 +31,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 {
 	m_ui->setupUi(this);
 
+	connect(m_ui->scopeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(filterCategories()));
 	connect(m_ui->networkButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->securityButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
@@ -124,6 +125,7 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 	parentItem->setData(message->time.toTime_t(), Qt::UserRole);
 	parentItem->setData(message->category, (Qt::UserRole + 1));
 	parentItem->setData(source, (Qt::UserRole + 2));
+	parentItem->setData(message->window, (Qt::UserRole + 3));
 
 	if (!message->note.isEmpty())
 	{
