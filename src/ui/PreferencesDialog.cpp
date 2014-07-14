@@ -26,11 +26,11 @@
 #include "UserAgentsManagerDialog.h"
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
-#include "../core/ActionsManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SessionsManager.h"
+#include "../core/ShortcutsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
@@ -1427,7 +1427,7 @@ void PreferencesDialog::save()
 
 	SettingsManager::setValue(QLatin1String("Browser/ActionMacrosProfilesOrder"), macrosProfiles);
 
-	ActionsManager::loadProfiles();
+	ShortcutsManager::loadProfiles();
 
 	if (sender() == m_ui->buttonBox)
 	{
@@ -1557,7 +1557,7 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 
 			for (int j = 0; j < rawShortcuts.count(); ++j)
 			{
-				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
 
 				if (!shortcut.isEmpty())
 				{
@@ -1591,7 +1591,7 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 
 			for (int j = 0; j < rawShortcuts.count(); ++j)
 			{
-				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
 
 				if (!shortcut.isEmpty())
 				{

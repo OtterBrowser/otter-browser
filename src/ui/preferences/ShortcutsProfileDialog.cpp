@@ -20,6 +20,7 @@
 #include "ShortcutsProfileDialog.h"
 #include "KeyboardShortcutDelegate.h"
 #include "../../core/ActionsManager.h"
+#include "../../core/ShortcutsManager.h"
 
 #include "ui_ShortcutsProfileDialog.h"
 
@@ -66,25 +67,18 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	{
 		labels << tr("Action");
 
-		const QStringList actions = ActionsManager::getIdentifiers();
+		const QList<ActionDefinition> actions = ActionsManager::getActions();
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
-			QAction *action = ActionsManager::getAction(actions.at(i));
-
-			if (!action || action->isSeparator())
-			{
-				continue;
-			}
-
 			QList<QStandardItem*> items;
-			items.append(new QStandardItem(action->icon(), action->text()));
-			items[0]->setData(actions.at(i), Qt::UserRole);
+			items.append(new QStandardItem(actions.at(i).icon, actions.at(i).text));
+			items[0]->setData(actions.at(i).name, Qt::UserRole);
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-			if (data.contains(actions.at(i)))
+			if (data.contains(actions.at(i).name))
 			{
-				items[0]->setData(data[actions.at(i)].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
+				items[0]->setData(data[actions.at(i).name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
 			}
 
 			model->appendRow(items);
@@ -135,9 +129,15 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 
 void ShortcutsProfileDialog::addMacro()
 {
-//FIXME create list from profiles, like shortcuts
-	const QStringList identifiers = ActionsManager::getIdentifiers();
+///FIXME create list from profiles, like shortcuts
+	QStringList identifiers = m_shortcuts.keys();
+	QList<ActionDefinition> actions = ActionsManager::getActions();
 	QString identifier;
+
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		identifiers.append(actions.at(i).name);
+	}
 
 	do
 	{
@@ -199,7 +199,7 @@ void ShortcutsProfileDialog::updateMacrosActions()
 
 	for (int i = 0; i < rawShortcuts.count(); ++i)
 	{
-		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ActionsManager::getNativeShortcut(m_currentAction.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
+		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(m_currentAction.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
 
 		if (!shortcut.isEmpty())
 		{

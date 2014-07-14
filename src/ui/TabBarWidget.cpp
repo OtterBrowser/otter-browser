@@ -89,8 +89,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	hidePreview();
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(QLatin1String("NewTab")));
-	menu.addAction(ActionsManager::getAction(QLatin1String("NewTabPrivate")));
+	menu.addAction(ActionsManager::getAction(QLatin1String("NewTab"), this));
+	menu.addAction(ActionsManager::getAction(QLatin1String("NewTabPrivate"), this));
 
 	if (m_clickedTab >= 0)
 	{
@@ -104,15 +104,15 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			QAction *closeAction = menu.addAction(QString());
+			QAction *closeAction = menu.addAction(Utils::getIcon(QLatin1String("tab-close")), tr("Close Tab"));
 
-			ActionsManager::setupLocalAction(closeAction, QLatin1String("CloseTab"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CloseTab"), this), closeAction, true);
 
 			closeAction->setEnabled(false);
 		}
 		else
 		{
-			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab")));
+			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab"), this));
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
@@ -141,7 +141,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 	if (tab < 0)
 	{
-		ActionsManager::triggerAction(QLatin1String("NewTab"));
+		ActionsManager::triggerAction(QLatin1String("NewTab"), this);
 	}
 	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
 	{
@@ -159,7 +159,7 @@ void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		if (tab < 0)
 		{
-			ActionsManager::triggerAction(QLatin1String("NewTab"));
+			ActionsManager::triggerAction(QLatin1String("NewTab"), this);
 		}
 		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 		{

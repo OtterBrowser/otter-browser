@@ -18,13 +18,13 @@
 **************************************************************************/
 
 #include "Application.h"
-#include "ActionsManager.h"
 #include "BookmarksManager.h"
 #include "Console.h"
 #include "HistoryManager.h"
 #include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
+#include "ShortcutsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
 #include "./config.h"
@@ -162,7 +162,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SessionsManager::createInstance(profilePath, cachePath, this);
 
-	ActionsManager::createInstance(this);
+	ShortcutsManager::createInstance(this);
 
 	NetworkManagerFactory::createInstance(this);
 

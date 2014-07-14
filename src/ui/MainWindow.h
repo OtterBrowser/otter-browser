@@ -40,6 +40,7 @@ namespace Ui
 	class MainWindow;
 }
 
+class ActionsManager;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -50,6 +51,7 @@ public:
 	explicit MainWindow(bool isPrivate = false, const SessionMainWindow &windows = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
+	ActionsManager* getActionsManager();
 	WindowsManager* getWindowsManager();
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -104,6 +106,7 @@ protected slots:
 #endif
 
 private:
+	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_characterEncodingGroup;

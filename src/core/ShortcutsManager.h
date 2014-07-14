@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,45 +18,47 @@
 *
 **************************************************************************/
 
-#include "Action.h"
+#ifndef OTTER_SHORTCUTSMANAGER_H
+#define OTTER_SHORTCUTSMANAGER_H
+
+#include <QtCore/QObject>
+#include <QtWidgets/QAction>
 
 namespace Otter
 {
 
-Action::Action(const QIcon &icon, const QString &text, QObject *parent) : QAction(icon, text, parent),
-	m_identifier(UnknownAction),
-	m_scope(MainWindowScope)
+class ShortcutsManager : public QObject
 {
-}
+	Q_OBJECT
 
-void Action::setName(const QString &name)
-{
-	setObjectName(name);
-}
+public:
+	static void createInstance(QObject *parent = NULL);
+	static void loadProfiles();
+	static ShortcutsManager* getInstance();
+	static QHash<QString, QList<QKeySequence> > getShortcuts();
+	static QKeySequence getNativeShortcut(const QString &action);
 
-void Action::setIdentifier(ActionIdentifier identifier)
-{
-	m_identifier = identifier;
-}
+protected:
+	explicit ShortcutsManager(QObject *parent = NULL);
 
-void Action::setScope(ActionScope scope)
-{
-	m_scope = scope;
-}
+	void timerEvent(QTimerEvent *event);
 
-QString Action::getName() const
-{
-	return objectName();
-}
+protected slots:
+	void optionChanged(const QString &option);
+	void triggerMacro();
 
-ActionIdentifier Action::getIdentifier() const
-{
-	return m_identifier;
-}
+private:
+	int m_reloadTimer;
 
-ActionScope Action::getScope() const
-{
-	return m_scope;
-}
+	static ShortcutsManager *m_instance;
+	static QHash<QAction*, QStringList> m_macros;
+	static QHash<QString, QList<QKeySequence> > m_shortcuts;
+	static QHash<QString, QKeySequence> m_nativeShortcuts;
+
+signals:
+	void shortcutsChanged();
+};
 
 }
+
+#endif

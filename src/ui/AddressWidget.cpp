@@ -154,7 +154,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		{
 			if (menu->actions().at(i)->text().endsWith(shortcut))
 			{
-				menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(PasteAndGoAction));
+				menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(PasteAndGoAction, this));
 
 				found = true;
 
@@ -165,7 +165,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (!found)
 	{
-		menu->insertAction(menu->actions().at(6), ActionsManager::getAction(PasteAndGoAction));
+		menu->insertAction(menu->actions().at(6), ActionsManager::getAction(PasteAndGoAction, this));
 	}
 
 	menu->exec(event->globalPos());

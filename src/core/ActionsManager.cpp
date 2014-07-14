@@ -19,9 +19,9 @@
 **************************************************************************/
 
 #include "ActionsManager.h"
-#include "SessionsManager.h"
-#include "SettingsManager.h"
+#include "ShortcutsManager.h"
 #include "Utils.h"
+#include "../ui/MainWindow.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QSettings>
@@ -29,296 +29,135 @@
 namespace Otter
 {
 
-ActionsManager* ActionsManager::m_instance = NULL;
-QHash<QAction*, QStringList> ActionsManager::m_applicationMacros;
-QHash<QObject*, QHash<QString, QAction*> > ActionsManager::m_mainWindowActions;
-QHash<QString, QAction*> ActionsManager::m_applicationActions;
-QHash<QString, QList<QKeySequence> > ActionsManager::m_profileShortcuts;
-QHash<QString, QKeySequence> ActionsManager::m_nativeShortcuts;
-QHash<ActionIdentifier, QAction*> ActionsManager::m_windowActions;
+QHash<QString, ActionDefinition> ActionsManager::m_definitions;
+QHash<QObject*, MainWindow*> ActionsManager::m_cache;
 
-ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
-	m_reloadTimer(0)
+ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
+	m_window(parent)
 {
-}
-
-void ActionsManager::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_reloadTimer)
+	if (m_definitions.isEmpty())
 	{
-		killTimer(m_reloadTimer);
-
-		m_reloadTimer = 0;
-
-		loadProfiles();
+		registerAction(QLatin1String("OpenLinkInThisTab"), QT_TR_NOOP("Open"));
+		registerAction(QLatin1String("OpenLinkInNewTab"), QT_TR_NOOP("Open in New Tab"));
+		registerAction(QLatin1String("OpenLinkInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"));
+		registerAction(QLatin1String("OpenLinkInNewWindow"), QT_TR_NOOP("Open in New Window"));
+		registerAction(QLatin1String("OpenLinkInNewWindowBackground"), QT_TR_NOOP("Open in New Background Window"));
+		registerAction(QLatin1String("CopyLinkToClipboard"), QT_TR_NOOP("Copy Link to Clipboard"));
+		registerAction(QLatin1String("OpenFrameInThisTab"), QT_TR_NOOP("Open"));
+		registerAction(QLatin1String("OpenFrameInNewTab"), QT_TR_NOOP("Open in New Tab"));
+		registerAction(QLatin1String("OpenFrameInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"));
+		registerAction(QLatin1String("CopyFrameLinkToClipboard"), QT_TR_NOOP("Copy Frame Link to Clipboard"));
+		registerAction(QLatin1String("ReloadFrame"), QT_TR_NOOP("Reload"));
+		registerAction(QLatin1String("ReloadImage"), QT_TR_NOOP("Reload Image"));
+		registerAction(QLatin1String("ViewSourceFrame"), QT_TR_NOOP("View Source"));
+		registerAction(QLatin1String("SaveLinkToDisk"), QT_TR_NOOP("Save Link Target As..."));
+		registerAction(QLatin1String("SaveLinkToDownloads"), QT_TR_NOOP("Save to Downloads"));
+		registerAction(QLatin1String("BookmarkLink"), QT_TR_NOOP("Bookmark Link..."), Utils::getIcon(QLatin1String("bookmark-new")));
+		registerAction(QLatin1String("ReloadTime"), QT_TR_NOOP("Reload Each"));
+		registerAction(QLatin1String("CopyAddress"), QT_TR_NOOP("Copy Address"));
+		registerAction(QLatin1String("Validate"), QT_TR_NOOP("Validate"));
+		registerAction(QLatin1String("ContentBlocking"), QT_TR_NOOP("Content Blocking..."));
+		registerAction(QLatin1String("WebsitePreferences"), QT_TR_NOOP("Website Preferences..."));
+		registerAction(QLatin1String("ImageProperties"), QT_TR_NOOP("Image Properties..."));
+		registerAction(QLatin1String("OpenImageInNewTab"), QT_TR_NOOP("Open Image"));
+		registerAction(QLatin1String("SaveImageToDisk"), QT_TR_NOOP("Save Image..."));
+		registerAction(QLatin1String("CopyImageToClipboard"), QT_TR_NOOP("Copy Image to Clipboard"));
+		registerAction(QLatin1String("CopyImageUrlToClipboard"), QT_TR_NOOP("Copy Image Link to Clipboard"));
+		registerAction(QLatin1String("Search"), QT_TR_NOOP("Search"));
+		registerAction(QLatin1String("SearchMenu"), QT_TR_NOOP("Search Using"));
+		registerAction(QLatin1String("OpenSelectionAsLink"), QT_TR_NOOP("Go to This Address"));
+		registerAction(QLatin1String("ClearAll"), QT_TR_NOOP("Clear All"));
+		registerAction(QLatin1String("SpellCheck"), QT_TR_NOOP("Check Spelling"));
+		registerAction(QLatin1String("CreateSearch"), QT_TR_NOOP("Create Search..."));
+		registerAction(QLatin1String("InspectElement"), QT_TR_NOOP("Inspect Element..."));
+		registerAction(QLatin1String("SaveMediaToDisk"), QT_TR_NOOP("Save Media..."));
+		registerAction(QLatin1String("CopyMediaUrlToClipboard"), QT_TR_NOOP("Copy Media Link to Clipboard"));
+		registerAction(QLatin1String("ToggleMediaControls"), QT_TR_NOOP("Show Controls"));
+		registerAction(QLatin1String("ToggleMediaLoop"), QT_TR_NOOP("Looping"));
+		registerAction(QLatin1String("ToggleMediaPlayPause"), QT_TR_NOOP("Play"));
+		registerAction(QLatin1String("ToggleMediaMute"), QT_TR_NOOP("Mute"));
+		registerAction(QLatin1String("QuickBookmarkAccess"), QT_TR_NOOP("QuickBookmarkAccess"));
+		registerAction(QLatin1String("QuickFind"), QT_TR_NOOP("Quick Find"), QIcon(), QuickFindAction);
+		registerAction(QLatin1String("ActivateAddressField"), QT_TR_NOOP("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
+		registerAction(QLatin1String("CopyAsPlainText"), QT_TR_NOOP("Copy as Plain Text"), QIcon(), CopyAsPlainTextAction);
+		registerAction(QLatin1String("PasteAndGo"), QT_TR_NOOP("Paste and Go"), QIcon(), PasteAndGoAction);
+		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TR_NOOP("Go to tab on left"), QIcon(), ActivateTabOnLeftAction);
+		registerAction(QLatin1String("ActivateTabOnRight"), QT_TR_NOOP("Go to tab on right"), QIcon(), ActivateTabOnRightAction);
 	}
-}
 
-void ActionsManager::createInstance(QObject *parent)
-{
-	m_instance = new ActionsManager(parent);
-}
+	const QList<QAction*> windowActions = m_window->actions();
 
-void ActionsManager::loadProfiles()
-{
-	QHash<QAction*, QStringList>::iterator macrosIterator;
-
-	for (macrosIterator = m_applicationMacros.begin(); macrosIterator != m_applicationMacros.end(); ++macrosIterator)
+	for (int i = 0; i < windowActions.count(); ++i)
 	{
-		const QString indentifier = macrosIterator.key()->objectName();
-
-		if (m_applicationActions.contains(indentifier))
+		if (!windowActions.at(i)->objectName().isEmpty())
 		{
-			m_applicationActions[indentifier]->deleteLater();
+			windowActions.at(i)->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
-			m_applicationActions.remove(indentifier);
+			m_actions[windowActions.at(i)->objectName().mid(6)] = windowActions.at(i);
 		}
 	}
 
-	m_applicationMacros.clear();
-	m_profileShortcuts.clear();
+	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
 
-	QList<QKeySequence> shortcutsInUse;
-	const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
-
-	for (int i = 0; i < shortcutsProfiles.count(); ++i)
+	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList actions = profile.childGroups();
+		Action *action =  new Action(definitionsIterator.value().icon, definitionsIterator.value().text, m_window);
+		action->setScope(definitionsIterator.value().scope);
+		action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
-		for (int j = 0; j < actions.count(); ++j)
+		if (definitionsIterator.value().identifier != UnknownAction)
 		{
-			const QStringList rawShortcuts = profile.value(actions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-			QList<QKeySequence> actionShortcuts;
+			action->setIdentifier(definitionsIterator.value().identifier);
+			action->setData(definitionsIterator.value().identifier);
 
-			for (int k = 0; k < rawShortcuts.count(); ++k)
-			{
-				const QKeySequence shortcut = ((rawShortcuts.at(k) == QLatin1String("native")) ? m_nativeShortcuts.value(actions.at(j), QKeySequence()) : QKeySequence(rawShortcuts.at(k)));
-
-				if (!shortcut.isEmpty() && !shortcutsInUse.contains(shortcut))
-				{
-					actionShortcuts.append(shortcut);
-					shortcutsInUse.append(shortcut);
-				}
-			}
-
-			if (!actionShortcuts.isEmpty())
-			{
-				m_profileShortcuts[actions.at(j)] = actionShortcuts;
-			}
+			m_standardActions[definitionsIterator.value().identifier] = action;
 		}
+
+		m_actions[definitionsIterator.key()] = action;
+
+		m_window->addAction(action);
 	}
 
-	QHash<QString, QAction*>::iterator actionsIterator;
+	updateActions();
 
-	for (actionsIterator = m_applicationActions.begin(); actionsIterator != m_applicationActions.end(); ++actionsIterator)
-	{
-		if (m_profileShortcuts.contains(actionsIterator.key()))
-		{
-			actionsIterator.value()->setShortcuts(m_profileShortcuts[actionsIterator.key()]);
-		}
-		else
-		{
-			actionsIterator.value()->setShortcut(QKeySequence());
-		}
-	}
-
-	const QStringList macrosProfiles = SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfilesOrder")).toStringList();
-
-	for (int i = 0; i < macrosProfiles.count(); ++i)
-	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/macros/") + macrosProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/macros/") + macrosProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList macros = profile.childGroups();
-
-		for (int j = 0; j < macros.count(); ++j)
-		{
-			const QStringList actions = profile.value(macros.at(j) + QLatin1String("/actions"), QString()).toStringList();
-
-			if (m_applicationActions.contains(macros.at(j)) || actions.isEmpty())
-			{
-				continue;
-			}
-
-			QAction *action = new Action(QIcon(), profile.value(macros.at(j) + QLatin1String("/title"), QString()).toString(), SessionsManager::getActiveWindow());
-			action->setObjectName(macros.at(j));
-
-			connect(action, SIGNAL(triggered()), m_instance, SLOT(triggerMacro()));
-
-			m_applicationActions[macros.at(j)] = action;
-			m_applicationMacros[action] = actions;
-
-			const QStringList rawShortcuts = profile.value(macros.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-			QList<QKeySequence> actionShortcuts;
-
-			for (int k = 0; k < rawShortcuts.count(); ++k)
-			{
-				const QKeySequence shortcut(rawShortcuts.at(k));
-
-				if (!shortcut.isEmpty() && !shortcutsInUse.contains(shortcut))
-				{
-					actionShortcuts.append(shortcut);
-					shortcutsInUse.append(shortcut);
-				}
-			}
-
-			if (!actionShortcuts.isEmpty())
-			{
-				m_profileShortcuts[macros.at(j)] = actionShortcuts;
-
-				action->setShortcuts(actionShortcuts);
-				action->setShortcutContext(Qt::ApplicationShortcut);
-			}
-		}
-	}
-
-	QList<QObject*> windows = m_mainWindowActions.keys();
-
-	for (int i = 0; i < windows.count(); ++i)
-	{
-		setupWindowActions(windows.at(i));
-	}
+	connect(ShortcutsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateActions()));
 }
 
-void ActionsManager::optionChanged(const QString &option)
+void ActionsManager::updateActions()
 {
-	if ((option == QLatin1String("Browser/ActionMacrosProfilesOrder") || option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder")) && m_reloadTimer == 0)
-	{
-		m_reloadTimer = startTimer(50);
-	}
-}
-
-void ActionsManager::removeWindow(QObject *window)
-{
-	if (m_mainWindowActions.contains(window))
-	{
-		m_mainWindowActions.remove(qobject_cast<QWidget*>(window));
-	}
-}
-
-void ActionsManager::registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon, ActionIdentifier windowAction)
-{
-	QAction *action = new Action(icon, text, m_instance);
-	action->setObjectName(identifier);
-	action->setShortcutContext(Qt::ApplicationShortcut);
-
-	m_applicationActions[identifier] = action;
-
-	if (windowAction != UnknownAction)
-	{
-		action->setData(windowAction);
-
-		m_windowActions[windowAction] = action;
-	}
-}
-
-void ActionsManager::registerWindow(QWidget *window, QList<QAction*> actions)
-{
-	if (!window)
-	{
-		return;
-	}
-
-	window->addActions(actions);
-
-	if (m_profileShortcuts.isEmpty())
-	{
-		m_nativeShortcuts[QLatin1String("NewWindow")] = QKeySequence(QKeySequence::New);
-		m_nativeShortcuts[QLatin1String("Open")] = QKeySequence(QKeySequence::Open);
-		m_nativeShortcuts[QLatin1String("Save")] = QKeySequence(QKeySequence::Save);
-		m_nativeShortcuts[QLatin1String("Exit")] = QKeySequence(QKeySequence::Quit);
-		m_nativeShortcuts[QLatin1String("Undo")] = QKeySequence(QKeySequence::Undo);
-		m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
-		m_nativeShortcuts[QLatin1String("Redo")] = QKeySequence(QKeySequence::Redo);
-		m_nativeShortcuts[QLatin1String("Cut")] = QKeySequence(QKeySequence::Cut);
-		m_nativeShortcuts[QLatin1String("Copy")] = QKeySequence(QKeySequence::Copy);
-		m_nativeShortcuts[QLatin1String("Paste")] = QKeySequence(QKeySequence::Paste);
-		m_nativeShortcuts[QLatin1String("Delete")] = QKeySequence(QKeySequence::Delete);
-		m_nativeShortcuts[QLatin1String("SelectAll")] = QKeySequence(QKeySequence::SelectAll);
-		m_nativeShortcuts[QLatin1String("Find")] = QKeySequence(QKeySequence::Find);
-		m_nativeShortcuts[QLatin1String("FindNext")] = QKeySequence(QKeySequence::FindNext);
-		m_nativeShortcuts[QLatin1String("FindPrevious")] = QKeySequence(QKeySequence::FindPrevious);
-		m_nativeShortcuts[QLatin1String("Reload")] = QKeySequence(QKeySequence::Refresh);
-		m_nativeShortcuts[QLatin1String("ZoomIn")] = QKeySequence(QKeySequence::ZoomIn);
-		m_nativeShortcuts[QLatin1String("ZoomOut")] = QKeySequence(QKeySequence::ZoomOut);
-		m_nativeShortcuts[QLatin1String("Back")] = QKeySequence(QKeySequence::Back);
-		m_nativeShortcuts[QLatin1String("Forward")] = QKeySequence(QKeySequence::Forward);
-		m_nativeShortcuts[QLatin1String("Help")] = QKeySequence(QKeySequence::HelpContents);
-		m_nativeShortcuts[QLatin1String("ApplicationConfiguration")] = QKeySequence(QKeySequence::Preferences);
-
-		registerAction(QLatin1String("OpenLinkInThisTab"), tr("Open"));
-		registerAction(QLatin1String("OpenLinkInNewTab"), tr("Open in New Tab"));
-		registerAction(QLatin1String("OpenLinkInNewTabBackground"), tr("Open in New Background Tab"));
-		registerAction(QLatin1String("OpenLinkInNewWindow"), tr("Open in New Window"));
-		registerAction(QLatin1String("OpenLinkInNewWindowBackground"), tr("Open in New Background Window"));
-		registerAction(QLatin1String("CopyLinkToClipboard"), tr("Copy Link to Clipboard"));
-		registerAction(QLatin1String("OpenFrameInThisTab"), tr("Open"));
-		registerAction(QLatin1String("OpenFrameInNewTab"), tr("Open in New Tab"));
-		registerAction(QLatin1String("OpenFrameInNewTabBackground"), tr("Open in New Background Tab"));
-		registerAction(QLatin1String("CopyFrameLinkToClipboard"), tr("Copy Frame Link to Clipboard"));
-		registerAction(QLatin1String("ReloadFrame"), tr("Reload"));
-		registerAction(QLatin1String("ReloadImage"), tr("Reload Image"));
-		registerAction(QLatin1String("ViewSourceFrame"), tr("View Source"));
-		registerAction(QLatin1String("SaveLinkToDisk"), tr("Save Link Target As..."));
-		registerAction(QLatin1String("SaveLinkToDownloads"), tr("Save to Downloads"));
-		registerAction(QLatin1String("BookmarkLink"), tr("Bookmark Link..."), Utils::getIcon(QLatin1String("bookmark-new")));
-		registerAction(QLatin1String("ReloadTime"), tr("Reload Each"));
-		registerAction(QLatin1String("CopyAddress"), tr("Copy Address"));
-		registerAction(QLatin1String("Validate"), tr("Validate"));
-		registerAction(QLatin1String("ContentBlocking"), tr("Content Blocking..."));
-		registerAction(QLatin1String("WebsitePreferences"), tr("Website Preferences..."));
-		registerAction(QLatin1String("ImageProperties"), tr("Image Properties..."));
-		registerAction(QLatin1String("OpenImageInNewTab"), tr("Open Image"));
-		registerAction(QLatin1String("SaveImageToDisk"), tr("Save Image..."));
-		registerAction(QLatin1String("CopyImageToClipboard"), tr("Copy Image to Clipboard"));
-		registerAction(QLatin1String("CopyImageUrlToClipboard"), tr("Copy Image Link to Clipboard"));
-		registerAction(QLatin1String("Search"), tr("Search"));
-		registerAction(QLatin1String("SearchMenu"), tr("Search Using"));
-		registerAction(QLatin1String("OpenSelectionAsLink"), tr("Go to This Address"));
-		registerAction(QLatin1String("ClearAll"), tr("Clear All"));
-		registerAction(QLatin1String("SpellCheck"), tr("Check Spelling"));
-		registerAction(QLatin1String("CreateSearch"), tr("Create Search..."));
-		registerAction(QLatin1String("InspectElement"), tr("Inspect Element..."));
-		registerAction(QLatin1String("SaveMediaToDisk"), tr("Save Media..."));
-		registerAction(QLatin1String("CopyMediaUrlToClipboard"), tr("Copy Media Link to Clipboard"));
-		registerAction(QLatin1String("ToggleMediaControls"), tr("Show Controls"));
-		registerAction(QLatin1String("ToggleMediaLoop"), tr("Looping"));
-		registerAction(QLatin1String("ToggleMediaPlayPause"), tr("Play"));
-		registerAction(QLatin1String("ToggleMediaMute"), tr("Mute"));
-		registerAction(QLatin1String("QuickBookmarkAccess"), tr("QuickBookmarkAccess"));
-		registerAction(QLatin1String("QuickFind"), tr("Quick Find"), QIcon(), QuickFindAction);
-		registerAction(QLatin1String("ActivateAddressField"), tr("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
-		registerAction(QLatin1String("CopyAsPlainText"), tr("Copy as Plain Text"), QIcon(), CopyAsPlainTextAction);
-		registerAction(QLatin1String("PasteAndGo"), tr("Paste and Go"), QIcon(), PasteAndGoAction);
-		registerAction(QLatin1String("ActivateTabOnLeft"), tr("Go to tab on left"), QIcon(), ActivateTabOnLeftAction);
-		registerAction(QLatin1String("ActivateTabOnRight"), tr("Go to tab on right"), QIcon(), ActivateTabOnRightAction);
-
-		loadProfiles();
-
-		SessionsManager::connectActions();
-
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
-	}
-
-	if (!m_mainWindowActions.contains(window))
-	{
-		m_mainWindowActions[window] = QHash<QString, QAction*>();
-
-		connect(window, SIGNAL(destroyed(QObject*)), m_instance, SLOT(removeWindow(QObject*)));
-	}
+	const QHash<QString, QList<QKeySequence> > shortcuts = ShortcutsManager::getShortcuts();
+	const QList<QAction*> actions = m_window->actions();
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		if (actions.at(i) && !actions.at(i)->isSeparator() && !actions.at(i)->objectName().isEmpty())
-		{
-			m_mainWindowActions[window][actions.at(i)->objectName().startsWith(QLatin1String("action")) ? actions.at(i)->objectName().mid(6) : actions.at(i)->objectName()] = actions.at(i);
+		const QString name = actions.at(i)->objectName().mid(6);
 
-			actions.at(i)->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+		if (shortcuts.contains(name))
+		{
+			actions.at(i)->setShortcuts(shortcuts[name]);
+		}
+		else
+		{
+			actions.at(i)->setShortcut(QKeySequence());
 		}
 	}
 
-	setupWindowActions(window);
+	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
+
+	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
+	{
+		if (m_actions.contains(definitionsIterator.key()))
+		{
+			if (shortcuts.contains(definitionsIterator.key()))
+			{
+				m_actions[definitionsIterator.key()]->setShortcuts(shortcuts[definitionsIterator.key()]);
+			}
+			else
+			{
+				m_actions[definitionsIterator.key()]->setShortcut(QKeySequence());
+			}
+		}
+	}
 }
 
 void ActionsManager::triggerAction(const QString &action)
@@ -341,114 +180,130 @@ void ActionsManager::triggerAction(ActionIdentifier action)
 	}
 }
 
-void ActionsManager::triggerMacro()
+void ActionsManager::triggerAction(const QString &action, QObject *parent)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	ActionsManager *manager = findManager(parent);
 
-	if (action)
+	if (manager)
 	{
-		const QStringList actions = m_applicationMacros.value(action, QStringList());
-
-		for (int i = 0; i < actions.count(); ++i)
-		{
-			triggerAction(actions.at(i));
-		}
+		manager->triggerAction(action);
 	}
 }
 
-void ActionsManager::setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger)
+void ActionsManager::triggerAction(ActionIdentifier action, QObject *parent)
 {
-	if (!localAction)
+	ActionsManager *manager = findManager(parent);
+
+	if (manager)
+	{
+		manager->triggerAction(action);
+	}
+}
+
+void ActionsManager::setupLocalAction(QAction *globalAction, QAction *localAction, bool connectTrigger)
+{
+	if (!globalAction || !localAction)
 	{
 		return;
 	}
 
-	QAction *action = getAction(globalAction);
+	localAction->setCheckable(globalAction->isCheckable());
+	localAction->setChecked(globalAction->isChecked());
+	localAction->setEnabled(globalAction->isEnabled());
+	localAction->setIcon(globalAction->icon());
+	localAction->setText(globalAction->text());
+	localAction->setShortcut(globalAction->shortcut());
+	localAction->setObjectName(globalAction->objectName());
 
-	if (action)
+	if (connectTrigger)
 	{
-		localAction->setCheckable(action->isCheckable());
-		localAction->setChecked(action->isChecked());
-		localAction->setEnabled(action->isEnabled());
-		localAction->setIcon(action->icon());
-		localAction->setText(action->text());
-		localAction->setShortcut(action->shortcut());
-		localAction->setObjectName(action->objectName());
-
-		if (connectTrigger)
-		{
-			connect(localAction, SIGNAL(triggered()), action, SLOT(trigger()));
-		}
+		connect(localAction, SIGNAL(triggered()), globalAction, SLOT(trigger()));
 	}
 }
 
-void ActionsManager::setupWindowActions(QObject *window)
+ActionsManager* ActionsManager::findManager(QObject *parent)
 {
-	if (!m_mainWindowActions.contains(window))
+	MainWindow *window = NULL;
+	QObject *originalParent = parent;
+
+	if (parent && m_cache.contains(parent))
 	{
-		return;
+		window = m_cache[parent];
+	}
+	else
+	{
+		while (parent)
+		{
+			if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
+			{
+				window = qobject_cast<MainWindow*>(parent);
+
+				break;
+			}
+
+			parent = parent->parent();
+		}
 	}
 
-	const QHash<QString, QAction*> actions = m_mainWindowActions[window];
-	QHash<QString, QAction*>::const_iterator windowActionsIterator;
-	QWidget *widget = qobject_cast<QWidget*>(window);
-
-	for (windowActionsIterator = actions.constBegin(); windowActionsIterator != actions.constEnd(); ++windowActionsIterator)
+	if (window)
 	{
-		if (m_profileShortcuts.contains(windowActionsIterator.key()))
-		{
-			windowActionsIterator.value()->setShortcuts(m_profileShortcuts[windowActionsIterator.key()]);
-		}
-		else
-		{
-			windowActionsIterator.value()->setShortcut(QKeySequence());
-		}
+		m_cache[originalParent] = window;
+	}
+	else
+	{
+		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
 	}
 
-	widget->addActions(m_applicationActions.values());
+	return (window ? window->getActionsManager() : NULL);
 }
 
 QAction* ActionsManager::getAction(const QString &action)
 {
-	if (m_applicationActions.contains(action))
-	{
-		return m_applicationActions[action];
-	}
-
-	QWidget *window = SessionsManager::getActiveWindow();
-
-	if (m_mainWindowActions.contains(window) && m_mainWindowActions[window].contains(action))
-	{
-		return m_mainWindowActions[window][action];
-	}
-
-	return NULL;
+	return (m_actions.contains(action) ? m_actions[action] : NULL);
 }
 
-QAction *ActionsManager::getAction(ActionIdentifier action)
+QAction* ActionsManager::getAction(ActionIdentifier action)
 {
-	return (m_windowActions.contains(action) ? m_windowActions[action] : NULL);
+	return (m_standardActions.contains(action) ? m_standardActions[action] : NULL);
 }
 
-QKeySequence ActionsManager::getNativeShortcut(const QString &action)
+QAction* ActionsManager::getAction(const QString &action, QObject *parent)
 {
-	return m_nativeShortcuts.value(action, QKeySequence());
+	ActionsManager *manager = findManager(parent);
+
+	return (manager ? manager->getAction(action) : NULL);
 }
 
-QStringList ActionsManager::getIdentifiers()
+QAction* ActionsManager::getAction(ActionIdentifier action, QObject *parent)
 {
-	QStringList identifiers = m_applicationActions.keys();
+	ActionsManager *manager = findManager(parent);
 
-	if (m_mainWindowActions.contains(SessionsManager::getActiveWindow()))
+	return (manager ? manager->getAction(action) : NULL);
+}
+
+QList<ActionDefinition> ActionsManager::getActions()
+{
+	return m_definitions.values();
+}
+
+bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon, ActionIdentifier identifier)
+{
+	if (m_definitions.contains(name))
 	{
-		identifiers << m_mainWindowActions[SessionsManager::getActiveWindow()].keys();
-	}
-	else
-	{
-		identifiers << m_profileShortcuts.keys();
+		return false;
 	}
 
-	return identifiers;
+	ActionDefinition definition;
+	definition.name = name;
+	definition.text = text;
+	definition.icon = icon;
+	definition.identifier = identifier;
+///FIXME
+	definition.scope = MainWindowScope;
+
+	m_definitions[name] = definition;
+
+	return true;
 }
 
 }

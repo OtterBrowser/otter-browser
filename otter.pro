@@ -46,6 +46,7 @@ SOURCES += src/main.cpp \
     src/core/SearchSuggester.cpp \
     src/core/SessionsManager.cpp \
     src/core/SettingsManager.cpp \
+    src/core/ShortcutsManager.cpp \
     src/core/TransfersManager.cpp \
     src/core/Utils.cpp \
     src/core/WebBackend.cpp \
@@ -120,6 +121,7 @@ HEADERS += src/core/Action.h \
     src/core/SearchSuggester.h \
     src/core/SessionsManager.h \
     src/core/SettingsManager.h \
+    src/core/ShortcutsManager.h \
     src/core/TransfersManager.h \
     src/core/Utils.h \
     src/core/WebBackend.h \

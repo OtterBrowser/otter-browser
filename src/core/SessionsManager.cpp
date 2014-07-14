@@ -76,33 +76,6 @@ void SessionsManager::scheduleSave()
 	}
 }
 
-void SessionsManager::connectActions()
-{
-	connect(ActionsManager::getAction(CopyAsPlainTextAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-	connect(ActionsManager::getAction(QuickFindAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-	connect(ActionsManager::getAction(ActivateAddressFieldAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-	connect(ActionsManager::getAction(PasteAndGoAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-	connect(ActionsManager::getAction(ActivateTabOnLeftAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-	connect(ActionsManager::getAction(ActivateTabOnRightAction), SIGNAL(triggered()), m_instance, SLOT(actionTriggered()));
-}
-
-void SessionsManager::actionTriggered()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (!action || !m_activeWindow)
-	{
-		return;
-	}
-
-	const ActionIdentifier windowAction = static_cast<ActionIdentifier>(action->data().toInt());
-
-	if (windowAction != UnknownAction)
-	{
-		m_activeWindow->getWindowsManager()->triggerAction(windowAction);
-	}
-}
-
 void SessionsManager::clearClosedWindows()
 {
 	m_closedWindows.clear();

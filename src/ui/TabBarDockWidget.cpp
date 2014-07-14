@@ -62,7 +62,7 @@ void TabBarDockWidget::setup(QMenu *closedWindowsMenu)
 	setWidget(widget);
 
 	m_newTabButton->setAutoRaise(true);
-	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab")));
+	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab"), this));
 	m_newTabButton->setFixedSize(32, 32);
 	m_newTabButton->show();
 	m_newTabButton->raise();

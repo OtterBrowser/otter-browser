@@ -392,7 +392,7 @@ QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
 	QAction *actionObject = new QAction(this);
 	actionObject->setData(action);
 
-	ActionsManager::setupLocalAction(actionObject, QLatin1String("Delete"));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), actionObject);
 
 	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
 

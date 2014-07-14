@@ -47,7 +47,7 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
-	connect(ActionsManager::getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(quickBookmarkAccess()));
+	connect(ActionsManager::getAction(QLatin1String("QuickBookmarkAccess"), this), SIGNAL(triggered()), this, SLOT(quickBookmarkAccess()));
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)

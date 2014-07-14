@@ -23,51 +23,55 @@
 
 #include <QtCore/QObject>
 #include <QtWidgets/QAction>
-#include <QtWidgets/QShortcut>
 
 #include "Action.h"
 
 namespace Otter
 {
 
+struct ActionDefinition
+{
+	QString name;
+	QString text;
+	QIcon icon;
+	ActionIdentifier identifier;
+	ActionScope scope;
+};
+
+class MainWindow;
+
 class ActionsManager : public QObject
 {
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
-	static void loadProfiles();
-	static void registerAction(const QLatin1String &identifier, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier windowAction = UnknownAction);
-	static void registerWindow(QWidget *window, QList<QAction*> actions);
-	static void triggerAction(const QString &action);
-	static void triggerAction(ActionIdentifier action);
-	static void setupLocalAction(QAction *localAction, const QLatin1String &globalAction, bool connectTrigger = false);
-	static QAction* getAction(const QString &action);
-	static QAction* getAction(ActionIdentifier action);
-	static QKeySequence getNativeShortcut(const QString &action);
-	static QStringList getIdentifiers();
+	explicit ActionsManager(MainWindow *parent = NULL);
+
+	void triggerAction(const QString &action);
+	void triggerAction(ActionIdentifier action);
+	static void triggerAction(const QString &action, QObject *parent);
+	static void triggerAction(ActionIdentifier action, QObject *parent);
+	static void setupLocalAction(QAction *globalAction, QAction *localAction, bool connectTrigger = false);
+	QAction* getAction(const QString &action);
+	QAction* getAction(ActionIdentifier action);
+	static QAction* getAction(const QString &action, QObject *parent);
+	static QAction* getAction(ActionIdentifier action, QObject *parent);
+	static QList<ActionDefinition> getActions();
+	static bool registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier identifier = UnknownAction);
+
+public slots:
+	void updateActions();
 
 protected:
-	explicit ActionsManager(QObject *parent = NULL);
-
-	void timerEvent(QTimerEvent *event);
-	static void setupWindowActions(QObject *window);
-
-protected slots:
-	void optionChanged(const QString &option);
-	void removeWindow(QObject *object);
-	void triggerMacro();
+	static ActionsManager* findManager(QObject *parent);
 
 private:
-	int m_reloadTimer;
+	MainWindow *m_window;
+	QHash<QString, QAction*> m_actions;
+	QHash<ActionIdentifier, QAction*> m_standardActions;
 
-	static ActionsManager *m_instance;
-	static QHash<QAction*, QStringList> m_applicationMacros;
-	static QHash<QObject*, QHash<QString, QAction*> > m_mainWindowActions;
-	static QHash<QString, QAction*> m_applicationActions;
-	static QHash<QString, QList<QKeySequence> > m_profileShortcuts;
-	static QHash<QString, QKeySequence> m_nativeShortcuts;
-	static QHash<ActionIdentifier, QAction*> m_windowActions;
+	static QHash<QString, ActionDefinition> m_definitions;
+	static QHash<QObject*, MainWindow*> m_cache;
 };
 
 }

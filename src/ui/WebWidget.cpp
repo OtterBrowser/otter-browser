@@ -136,7 +136,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		menu.addAction(getAction(ContentBlockingAction));
 		menu.addAction(getAction(WebsitePreferencesAction));
 		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(QLatin1String("FullScreen")));
+		menu.addAction(ActionsManager::getAction(QLatin1String("FullScreen"), this));
 	}
 	else
 	{

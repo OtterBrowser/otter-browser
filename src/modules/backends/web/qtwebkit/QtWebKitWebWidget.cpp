@@ -87,33 +87,33 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
-	ActionsManager::setupLocalAction(getAction(CutAction), QLatin1String("Cut"));
-	ActionsManager::setupLocalAction(getAction(CopyAction), QLatin1String("Copy"));
-	ActionsManager::setupLocalAction(getAction(PasteAction), QLatin1String("Paste"));
-	ActionsManager::setupLocalAction(getAction(DeleteAction), QLatin1String("Delete"));
-	ActionsManager::setupLocalAction(getAction(SelectAllAction), QLatin1String("SelectAll"));
-	ActionsManager::setupLocalAction(getAction(UndoAction), QLatin1String("Undo"));
-	ActionsManager::setupLocalAction(getAction(RedoAction), QLatin1String("Redo"));
-	ActionsManager::setupLocalAction(getAction(GoBackAction), QLatin1String("GoBack"));
-	ActionsManager::setupLocalAction(getAction(GoForwardAction), QLatin1String("GoForward"));
-	ActionsManager::setupLocalAction(getAction(ReloadAction), QLatin1String("Reload"));
-	ActionsManager::setupLocalAction(getAction(StopAction), QLatin1String("Stop"));
-	ActionsManager::setupLocalAction(getAction(OpenLinkInThisTabAction), QLatin1String("OpenLinkInThisTab"));
-	ActionsManager::setupLocalAction(getAction(OpenLinkInNewWindowAction), QLatin1String("OpenLinkInNewWindow"));
-	ActionsManager::setupLocalAction(getAction(OpenFrameInNewTabAction), QLatin1String("OpenFrameInNewTab"));
-	ActionsManager::setupLocalAction(getAction(SaveLinkToDiskAction), QLatin1String("SaveLinkToDisk"));
-	ActionsManager::setupLocalAction(getAction(OpenImageInNewTabAction), QLatin1String("OpenImageInNewTab"));
-	ActionsManager::setupLocalAction(getAction(SaveImageToDiskAction), QLatin1String("SaveImageToDisk"));
-	ActionsManager::setupLocalAction(getAction(CopyImageToClipboardAction), QLatin1String("CopyImageToClipboard"));
-	ActionsManager::setupLocalAction(getAction(CopyImageUrlToClipboardAction), QLatin1String("CopyImageUrlToClipboard"));
-	ActionsManager::setupLocalAction(getAction(InspectElementAction), QLatin1String("InspectElement"));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Cut"), this), getAction(CutAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Copy"), this), getAction(CopyAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Paste"), this), getAction(PasteAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), getAction(DeleteAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SelectAll"), this), getAction(SelectAllAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Undo"), this), getAction(UndoAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Redo"), this), getAction(RedoAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("GoBack"), this), getAction(GoBackAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("GoForward"), this), getAction(GoForwardAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), getAction(ReloadAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Stop"), this), getAction(StopAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInThisTab"), this), getAction(OpenLinkInThisTabAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindow"), this), getAction(OpenLinkInNewWindowAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInNewTab"), this), getAction(OpenFrameInNewTabAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveLinkToDisk"), this), getAction(SaveLinkToDiskAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenImageInNewTab"), this), getAction(OpenImageInNewTabAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveImageToDisk"), this), getAction(SaveImageToDiskAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageToClipboard"), this), getAction(CopyImageToClipboardAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageUrlToClipboard"), this), getAction(CopyImageUrlToClipboardAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectElement"), this), getAction(InspectElementAction));
 #if QTWEBKIT_VERSION >= 0x050200
-	ActionsManager::setupLocalAction(getAction(SaveMediaToDiskAction), QLatin1String("SaveMediaToDisk"));
-	ActionsManager::setupLocalAction(getAction(CopyMediaUrlToClipboardAction), QLatin1String("CopyMediaUrlToClipboard"));
-	ActionsManager::setupLocalAction(getAction(ToggleMediaControlsAction), QLatin1String("ToggleMediaControls"));
-	ActionsManager::setupLocalAction(getAction(ToggleMediaLoopAction), QLatin1String("ToggleMediaLoop"));
-	ActionsManager::setupLocalAction(getAction(ToggleMediaPlayPauseAction), QLatin1String("ToggleMediaPlayPause"));
-	ActionsManager::setupLocalAction(getAction(ToggleMediaMuteAction), QLatin1String("ToggleMediaMute"));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveMediaToDisk"), this), getAction(SaveMediaToDiskAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyMediaUrlToClipboard"), this), getAction(CopyMediaUrlToClipboardAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaControls"), this), getAction(ToggleMediaControlsAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaLoop"), this), getAction(ToggleMediaLoopAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaPlayPause"), this), getAction(ToggleMediaPlayPauseAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaMute"), this), getAction(ToggleMediaMuteAction));
 #endif
 
 	getAction(ReloadAction)->setEnabled(true);
@@ -215,7 +215,7 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 	QAction *action = getAction(ReloadOrStopAction);
 
-	ActionsManager::setupLocalAction(action, QLatin1String("Stop"));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Stop"), this), action);
 
 	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
@@ -257,7 +257,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	QAction *action = getAction(ReloadOrStopAction);
 
-	ActionsManager::setupLocalAction(action, QLatin1String("Reload"));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), action);
 
 	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
@@ -1143,197 +1143,197 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 	switch (action)
 	{
 		case OpenLinkInNewTabAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenLinkInNewTab"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewTab"), this), actionObject, true);
 
 			break;
 		case OpenLinkInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenLinkInNewTabBackground"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewTabBackground"), this), actionObject, true);
 
 			break;
 		case OpenLinkInNewWindowAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenLinkInNewWindow"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindow"), this), actionObject, true);
 
 			break;
 		case OpenLinkInNewWindowBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenLinkInNewWindowBackground"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindowBackground"), this), actionObject, true);
 
 			break;
 		case OpenFrameInThisTabAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenFrameInThisTab"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInThisTab"), this), actionObject, true);
 
 			break;
 		case OpenFrameInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenFrameInNewTabBackground"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInNewTabBackground"), this), actionObject, true);
 
 			break;
 		case CopyLinkToClipboardAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyLinkToClipboard"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyLinkToClipboard"), this), actionObject, true);
 
 			break;
 		case CopyFrameLinkToClipboardAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyFrameLinkToClipboard"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyFrameLinkToClipboard"), this), actionObject, true);
 
 			break;
 		case ViewSourceFrameAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ViewSourceFrame"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ViewSourceFrame"), this), actionObject, true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ReloadFrameAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadFrame"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadFrame"), this), actionObject, true);
 
 			break;
 		case ReloadImageAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadImage"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadImage"), this), actionObject, true);
 
 			break;
 		case SaveLinkToDownloadsAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("SaveLinkToDownloads"));
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveLinkToDownloads"), this), actionObject);
 
 			break;
 		case RewindAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Rewind"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Rewind"), this), actionObject, true);
 
 			actionObject->setEnabled(getAction(GoBackAction)->isEnabled());
 
 			break;
 		case FastForwardAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("FastForward"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FastForward"), this), actionObject, true);
 
 			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
 
 			break;
 		case ReloadAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Reload"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), actionObject, true);
 
 			break;
 		case ReloadTimeAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ReloadTime"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
 
 			break;
 		case PrintAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Print"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Print"), this), actionObject, true);
 
 			break;
 		case BookmarkAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("AddBookmark"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("AddBookmark"), this), actionObject, true);
 
 			break;
 		case BookmarkLinkAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("BookmarkLink"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("BookmarkLink"), this), actionObject, true);
 
 			break;
 		case CopyAddressAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyAddress"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyAddress"), this), actionObject, true);
 
 			break;
 		case ViewSourceAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ViewSource"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ViewSource"), this), actionObject, true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ValidateAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Validate"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Validate"), this), actionObject, true);
 
 			actionObject->setMenu(new QMenu(this));
 			actionObject->setEnabled(false);
 
 			break;
 		case ContentBlockingAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ContentBlocking"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ContentBlocking"), this), actionObject, true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case WebsitePreferencesAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("WebsitePreferences"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ZoomInAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ZoomIn"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomIn"), this), actionObject, true);
 
 			break;
 		case ZoomOutAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ZoomOut"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomOut"), this), actionObject, true);
 
 			break;
 		case ZoomOriginalAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ZoomOriginal"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomOriginal"), this), actionObject, true);
 
 			break;
 		case SearchAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Search"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Search"), this), actionObject, true);
 
 			break;
 		case SearchMenuAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("SearchMenu"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SearchMenu"), this), actionObject, true);
 
 			actionObject->setMenu(getQuickSearchMenu());
 
 			break;
 		case OpenSelectionAsLinkAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("OpenSelectionAsLink"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenSelectionAsLink"), this), actionObject, true);
 
 			break;
 		case ClearAllAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ClearAll"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ClearAll"), this), actionObject, true);
 
 			break;
 		case SpellCheckAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("SpellCheck"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SpellCheck"), this), actionObject, true);
 
 			actionObject->setEnabled(false);
 
 			break;
 		case ImagePropertiesAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("ImageProperties"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ImageProperties"), this), actionObject, true);
 
 			break;
 		case CreateSearchAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("CreateSearch"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CreateSearch"), this), actionObject, true);
 
 			break;
 		case ReloadOrStopAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Reload"));
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), actionObject);
 
 			actionObject->setEnabled(true);
 			actionObject->setShortcut(QKeySequence());
 
 			break;
 		case InspectPageAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("InspectPage"));
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectPage"), this), actionObject);
 
 			actionObject->setEnabled(true);
 			actionObject->setShortcut(QKeySequence());
 
 			break;
 		case FindAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("Find"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Find"), this), actionObject, true);
 
 			actionObject->setEnabled(true);
 
 			break;
 		case FindNextAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("FindNext"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FindNext"), this), actionObject, true);
 
 			actionObject->setEnabled(true);
 
 			break;
 		case FindPreviousAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("FindPrevious"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FindPrevious"), this), actionObject, true);
 
 			actionObject->setEnabled(true);
 
 			break;
 		case CopyAsPlainTextAction:
-			ActionsManager::setupLocalAction(actionObject, QLatin1String("CopyAsPlainText"), true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyAsPlainText"), this), actionObject, true);
 
 			actionObject->setEnabled(true);
 
@@ -1820,7 +1820,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				triggerAction(StopAction);
 
-				ActionsManager::triggerAction(ActivateAddressFieldAction);
+				ActionsManager::triggerAction(ActivateAddressFieldAction, this);
 
 				event->accept();
 

@@ -56,6 +56,7 @@ namespace Otter
 {
 
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
+	m_actionsManager(NULL),
 	m_windowsManager(NULL),
 	m_sessionsGroup(NULL),
 	m_characterEncodingGroup(NULL),
@@ -64,6 +65,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
+
+	QList<QAction*> actions;
+	actions << m_ui->menuFile->actions() << m_ui->menuEdit->actions() << m_ui->menuView->actions() << m_ui->menuHistory->actions() << m_ui->menuBookmarks->actions() << m_ui->menuTools->actions() << m_ui->menuHelp->actions();
+
+	addActions(actions);
+
+	m_actionsManager = new ActionsManager(this);
+
 	m_ui->menuBookmarks->installEventFilter(this);
 
 #ifdef Q_OS_WIN
@@ -71,11 +80,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 #endif
 
 	SessionsManager::setActiveWindow(this);
-
-	QList<QAction*> actions;
-	actions << m_ui->menuFile->actions() << m_ui->menuEdit->actions() << m_ui->menuView->actions() << m_ui->menuHistory->actions() << m_ui->menuBookmarks->actions() << m_ui->menuTools->actions() << m_ui->menuHelp->actions();
-
-	ActionsManager::registerWindow(this, actions);
 
 	m_ui->actionNewTab->setIcon(Utils::getIcon(QLatin1String("tab-new")));
 	m_ui->actionNewTabPrivate->setIcon(Utils::getIcon(QLatin1String("tab-new-private")));
@@ -228,6 +232,12 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->menuCharacterEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+	connect(m_actionsManager->getAction(CopyAsPlainTextAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(ActivateAddressFieldAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(ActivateTabOnLeftAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(ActivateTabOnRightAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 
 	m_windowsManager->restore(windows);
 
@@ -256,6 +266,11 @@ void MainWindow::changeEvent(QEvent *event)
 	{
 		case QEvent::LanguageChange:
 			m_ui->retranslateUi(this);
+
+			if (m_actionsManager)
+			{
+				m_actionsManager->updateActions();
+			}
 
 			break;
 		default:
@@ -1077,6 +1092,11 @@ void MainWindow::updateWindowsTaskbarProgress()
 	}
 }
 #endif
+
+ActionsManager* MainWindow::getActionsManager()
+{
+	return m_actionsManager;
+}
 
 WindowsManager* MainWindow::getWindowsManager()
 {

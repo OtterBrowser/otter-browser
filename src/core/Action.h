@@ -104,9 +104,8 @@ enum ActionIdentifier
 
 enum ActionScope
 {
-	GlobalScope = 0,
-	MainWindowScope = 1,
-	WindowScope = 2
+	MainWindowScope = 0,
+	WindowScope = 1
 };
 
 class Action : public QAction
