@@ -63,7 +63,7 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 	setMouseTracking(true);
 	installEventFilter(this);
 
-	connect(this, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
+	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
