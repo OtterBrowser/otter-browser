@@ -46,6 +46,7 @@ class ActionsManager : public QObject
 
 public:
 	explicit ActionsManager(MainWindow *parent = NULL);
+	~ActionsManager();
 
 	void triggerAction(const QString &action);
 	void triggerAction(ActionIdentifier action);

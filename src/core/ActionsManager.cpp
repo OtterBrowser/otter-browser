@@ -123,6 +123,19 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	connect(ShortcutsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateActions()));
 }
 
+ActionsManager::~ActionsManager()
+{
+	QHash<QObject*, MainWindow*>::iterator cacheIterator;
+
+	for (cacheIterator = m_cache.begin(); cacheIterator != m_cache.end(); ++cacheIterator)
+	{
+		if (cacheIterator.value() == m_window)
+		{
+			cacheIterator = m_cache.erase(cacheIterator);
+		}
+	}
+}
+
 void ActionsManager::updateActions()
 {
 	const QHash<QString, QList<QKeySequence> > shortcuts = ShortcutsManager::getShortcuts();
