@@ -299,7 +299,7 @@ QList<ActionDefinition> ActionsManager::getActions()
 	return m_definitions.values();
 }
 
-bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon, ActionIdentifier identifier)
+bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon, ActionIdentifier identifier, ActionScope scope)
 {
 	if (m_definitions.contains(name))
 	{
@@ -311,8 +311,7 @@ bool ActionsManager::registerAction(const QLatin1String &name, const QString &te
 	definition.text = text;
 	definition.icon = icon;
 	definition.identifier = identifier;
-///FIXME
-	definition.scope = MainWindowScope;
+	definition.scope = scope;
 
 	m_definitions[name] = definition;
 

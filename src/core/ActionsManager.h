@@ -58,7 +58,7 @@ public:
 	static QAction* getAction(const QString &action, QObject *parent);
 	static QAction* getAction(ActionIdentifier action, QObject *parent);
 	static QList<ActionDefinition> getActions();
-	static bool registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier identifier = UnknownAction);
+	static bool registerAction(const QLatin1String &name, const QString &text, const QIcon &icon = QIcon(), ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
 
 public slots:
 	void updateActions();
