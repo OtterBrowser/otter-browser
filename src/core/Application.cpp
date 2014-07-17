@@ -60,6 +60,16 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	QString profilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
 	QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+
+	m_localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
+
+	if (QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
+	{
+		m_localePath = applicationDirPath() + QLatin1String("/locale/");
+	}
+
+	setLocale(QLatin1String("system"));
+
 	QCommandLineParser *parser = getParser();
 	parser->process(arguments());
 
@@ -172,13 +182,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SearchesManager::createInstance(this);
 
 	TransfersManager::createInstance(this);
-
-	m_localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
-
-	if (isPortable || QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
-	{
-		m_localePath = applicationDirPath() + QLatin1String("/locale/");
-	}
 
 	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 	setQuitOnLastWindowClosed(true);
