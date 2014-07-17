@@ -24,7 +24,6 @@
 #include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
-#include "ShortcutsManager.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
 #include "./config.h"
@@ -161,8 +160,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
 	SessionsManager::createInstance(profilePath, cachePath, this);
-
-	ShortcutsManager::createInstance(this);
 
 	NetworkManagerFactory::createInstance(this);
 

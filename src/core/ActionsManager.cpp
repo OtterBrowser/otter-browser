@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "ActionsManager.h"
+#include "Application.h"
 #include "ShortcutsManager.h"
 #include "Utils.h"
 #include "../ui/MainWindow.h"
@@ -37,6 +38,8 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 {
 	if (m_definitions.isEmpty())
 	{
+		ShortcutsManager::createInstance(Application::getInstance());
+
 		registerAction(QLatin1String("OpenLinkInThisTab"), QT_TR_NOOP("Open"));
 		registerAction(QLatin1String("OpenLinkInNewTab"), QT_TR_NOOP("Open in New Tab"));
 		registerAction(QLatin1String("OpenLinkInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"));
