@@ -22,7 +22,6 @@
 
 #include "../core/Importer.h"
 
-#include <QtCore/QString>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -35,7 +34,7 @@ namespace Ui
 
 class ImportDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 	~ImportDialog();
@@ -43,7 +42,7 @@ public:
 	static void createDialog(const QString &importerName, QWidget *parent = NULL);
 
 protected:
-	ImportDialog(Importer *importer, QWidget *parent);
+	explicit ImportDialog(Importer *importer, QWidget *parent);
 
 protected slots:
 	void import();

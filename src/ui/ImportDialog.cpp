@@ -54,9 +54,11 @@ ImportDialog::~ImportDialog()
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
+	Q_UNUSED(importerName)
+
 	Importer *importer = NULL;
 
-	///TODO here goes logic determining which module should be used
+///TODO here goes logic determining which module should be used
 
 	if (importer)
 	{
