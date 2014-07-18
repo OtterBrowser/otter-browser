@@ -60,6 +60,7 @@ SOURCES += src/main.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/FilePathWidget.cpp \
+    src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/LocaleDialog.cpp \
     src/ui/MainWindow.cpp \
@@ -135,6 +136,7 @@ HEADERS += src/core/Action.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/FilePathWidget.h \
+    src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
     src/ui/LocaleDialog.h \
     src/ui/MainWindow.h \
@@ -180,6 +182,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
     src/ui/ClearHistoryDialog.ui \
     src/ui/ConsoleWidget.ui \
+    src/ui/ImportDialog.ui \
     src/ui/LocaleDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/OpenBookmarkDialog.ui \

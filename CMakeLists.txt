@@ -96,6 +96,7 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/FilePathWidget.cpp
+	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
@@ -147,6 +148,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/BookmarkPropertiesDialog.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui
+	src/ui/ImportDialog.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
 	src/ui/OpenBookmarkDialog.ui
