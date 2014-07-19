@@ -617,7 +617,7 @@ void PreferencesDialog::editSearch()
 	engineData[QLatin1String("title")] = index.data(Qt::DisplayRole).toString();
 	engineData[QLatin1String("description")] = index.data(Qt::ToolTipRole).toString();
 	engineData[QLatin1String("icon")] = index.data(Qt::DecorationRole).value<QIcon>();
-    engineData[QLatin1String("isDefault")] = m_defaultSearch;
+	engineData[QLatin1String("isDefault")] = m_defaultSearch;
 
 	QStringList keywords;
 
