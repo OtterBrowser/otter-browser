@@ -40,7 +40,11 @@ SearchPropertiesDialog::SearchPropertiesDialog(const QVariantHash &engineData, c
 	m_ui->descriptionLineEdit->setText(engineData[QLatin1String("description")].toString());
 	m_ui->keywordLineEdit->setText(engineData[QLatin1String("keyword")].toString());
 	m_ui->keywordLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEdit));
-	m_ui->defaultSearchCheckBox->setChecked(engineData[QLatin1String("isDefault")].toBool());
+    if (engineData[QLatin1String("isDefault")] == engineData[QLatin1String("title")].toString().toLower())
+    {
+        m_ui->defaultSearchCheckBox->setChecked(true);
+    }
+
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
