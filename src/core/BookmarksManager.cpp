@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "BookmarksManager.h"
+#include "BookmarksModel.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
@@ -31,6 +32,7 @@ namespace Otter
 {
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
+BookmarksModel* BookmarksManager::m_model = NULL;
 QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
 QList<BookmarkInformation*> BookmarksManager::m_allBookmarks;
 QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
@@ -252,6 +254,7 @@ void BookmarksManager::updateKeywords()
 void BookmarksManager::createInstance(QObject *parent)
 {
 	m_instance = new BookmarksManager(parent);
+	m_model = new BookmarksModel(m_instance);
 }
 
 void BookmarksManager::updateVisit(const QUrl &url)
@@ -275,6 +278,11 @@ void BookmarksManager::updateVisit(const QUrl &url)
 BookmarksManager* BookmarksManager::getInstance()
 {
 	return m_instance;
+}
+
+BookmarksModel* BookmarksManager::getModel()
+{
+	return m_model;
 }
 
 BookmarkInformation* BookmarksManager::getBookmark(const int identifier)

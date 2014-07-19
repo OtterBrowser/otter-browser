@@ -54,6 +54,8 @@ struct BookmarkInformation
 	BookmarkInformation() : type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
 };
 
+class BookmarksModel;
+
 class BookmarksManager : public QObject
 {
 	Q_OBJECT
@@ -64,6 +66,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisit(const QUrl &url);
 	static BookmarksManager* getInstance();
+	static BookmarksModel* getModel();
 	static BookmarkInformation* getBookmark(const int identifier);
 	static BookmarkInformation* getBookmark(const QString &keyword);
 	static QStringList getKeywords();
@@ -96,6 +99,7 @@ private:
 	int m_saveTimer;
 
 	static BookmarksManager *m_instance;
+	static BookmarksModel* m_model;
 	static QHash<int, BookmarkInformation*> m_pointers;
 	static QList<BookmarkInformation*> m_bookmarks;
 	static QList<BookmarkInformation*> m_allBookmarks;

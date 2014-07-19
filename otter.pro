@@ -31,6 +31,7 @@ SOURCES += src/main.cpp \
     src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
     src/core/BookmarksManager.cpp \
+    src/core/BookmarksModel.cpp \
     src/core/Console.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
@@ -107,6 +108,7 @@ HEADERS += src/core/Action.h \
     src/core/AddressCompletionModel.h \
     src/core/Application.h \
     src/core/BookmarksManager.h \
+    src/core/BookmarksModel.h \
     src/core/Console.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
