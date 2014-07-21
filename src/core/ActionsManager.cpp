@@ -45,6 +45,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("OpenLinkInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"));
 		registerAction(QLatin1String("OpenLinkInNewWindow"), QT_TR_NOOP("Open in New Window"));
 		registerAction(QLatin1String("OpenLinkInNewWindowBackground"), QT_TR_NOOP("Open in New Background Window"));
+		registerAction(QLatin1String("ReopenTab"), QT_TR_NOOP("Reopen Previously Closed Tab"));
 		registerAction(QLatin1String("CopyLinkToClipboard"), QT_TR_NOOP("Copy Link to Clipboard"));
 		registerAction(QLatin1String("OpenFrameInThisTab"), QT_TR_NOOP("Open"));
 		registerAction(QLatin1String("OpenFrameInNewTab"), QT_TR_NOOP("Open in New Tab"));
