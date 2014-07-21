@@ -41,7 +41,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -147,7 +147,7 @@
     </property>
     <addaction name="actionTransfers"/>
     <addaction name="actionCookies"/>
-    <addaction name="actionBlockedContent"/>
+    <addaction name="actionContentBlocking"/>
     <addaction name="actionErrorConsole"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
@@ -487,12 +487,12 @@
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
-  <action name="actionBlockedContent">
+  <action name="actionContentBlocking">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
-    <string>Blocked Content...</string>
+    <string>Content blocking</string>
    </property>
   </action>
   <action name="actionErrorConsole">

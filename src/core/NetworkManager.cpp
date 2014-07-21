@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "NetworkManager.h"
+#include "ContentBlockingManager.h"
+#include "Console.h"
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "NetworkCache.h"
@@ -309,6 +311,13 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
 		return new LocalListingNetworkReply(this, request);
+	}
+
+	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
+
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}
 
 	QNetworkRequest mutableRequest(request);

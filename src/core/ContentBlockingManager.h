@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,31 @@
 *
 **************************************************************************/
 
-#include "BlockedContentDialog.h"
+#ifndef OTTER_CONTENTBLOCKINGMANAGER_H
+#define OTTER_CONTENTBLOCKINGMANAGER_H
 
-#include "ui_BlockedContentDialog.h"
+#include <QtCore/QObject>
+#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
 
-BlockedContentDialog::BlockedContentDialog(QWidget *parent) : QDialog(parent),
-	m_ui(new Ui::BlockedContentDialog)
+class ContentBlockingList;
+
+class ContentBlockingManager : public QObject
 {
-	m_ui->setupUi(this);
-}
+public:
+    static QList<ContentBlockingList*> getBlockingDefinitions();
+    static void loadLists();
+    static void updateLists();
+    static bool isUrlBlocked(const QNetworkRequest &request);
+    static bool isContentBlockingEnabled();
 
-BlockedContentDialog::~BlockedContentDialog()
-{
-	delete m_ui;
-}
-
-void BlockedContentDialog::changeEvent(QEvent *event)
-{
-	QDialog::changeEvent(event);
-
-	switch (event->type())
-	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
-	}
-}
+private:
+    static bool m_isContentBlockingEnabled;
+    static QList<ContentBlockingList*> m_blockingLists;
+};
 
 }
+
+#endif

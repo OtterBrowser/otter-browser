@@ -8,7 +8,7 @@
     error("Qt 5.2.0 or newer is required.")
 }
 
-QT += core gui network printsupport script sql webkitwidgets widgets
+QT += concurrent core gui network printsupport script sql webkitwidgets widgets
 
 win32: QT += winextras
 win32: INCLUDEPATH += .\
@@ -32,6 +32,8 @@ SOURCES += src/main.cpp \
     src/core/Application.cpp \
     src/core/BookmarksManager.cpp \
     src/core/BookmarksModel.cpp \
+    src/core/ContentBlockingList.cpp \
+    src/core/ContentBlockingManager.cpp \
     src/core/Console.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
@@ -85,7 +87,7 @@ SOURCES += src/main.cpp \
     src/ui/WebWidget.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
     src/ui/Window.cpp \
-    src/ui/preferences/BlockedContentDialog.cpp \
+    src/ui/preferences/ContentBlockingDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
@@ -109,6 +111,8 @@ HEADERS += src/core/Action.h \
     src/core/Application.h \
     src/core/BookmarksManager.h \
     src/core/BookmarksModel.h \
+    src/core/ContentBlockingList.h \
+    src/core/ContentBlockingManager.h \
     src/core/Console.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
@@ -162,7 +166,7 @@ HEADERS += src/core/Action.h \
     src/ui/UserAgentsManagerDialog.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
-    src/ui/preferences/BlockedContentDialog.h \
+    src/ui/preferences/ContentBlockingDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
@@ -195,7 +199,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/StartupDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/Window.ui \
-    src/ui/preferences/BlockedContentDialog.ui \
+    src/ui/preferences/ContentBlockingDialog.ui \
     src/ui/preferences/ShortcutsProfileDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/cache/CacheContentsWidget.ui \

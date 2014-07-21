@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "NetworkManagerFactory.h"
+#include "ContentBlockingManager.h"
 #include "CookieJar.h"
 #include "NetworkCache.h"
 #include "NetworkManager.h"
@@ -67,6 +68,8 @@ void NetworkManagerFactory::initialize()
 #endif
 
 	m_defaultCiphers = QSslSocket::defaultCiphers();
+
+	ContentBlockingManager::loadLists();
 
 	loadUserAgents();
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));

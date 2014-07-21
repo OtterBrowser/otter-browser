@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,32 +18,37 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BLOCKEDCONTENTDIALOG_H
-#define OTTER_BLOCKEDCONTENTDIALOG_H
+#ifndef OTTER_CONTENTBLOCKINGDIALOG_H
+#define OTTER_CONTENTBLOCKINGDIALOG_H
 
 #include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
+class TableViewWidget;
+
 namespace Ui
 {
-	class BlockedContentDialog;
+	class ContentBlockingDialog;
 }
 
-class BlockedContentDialog : public QDialog
+class ContentBlockingDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit BlockedContentDialog(QWidget *parent = NULL);
-	~BlockedContentDialog();
+	explicit ContentBlockingDialog(QWidget *parent = NULL);
+	~ContentBlockingDialog();
 
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void save();
+
 private:
-	Ui::BlockedContentDialog *m_ui;
+	Ui::ContentBlockingDialog *m_ui;
 };
 
 }

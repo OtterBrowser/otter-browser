@@ -26,6 +26,7 @@
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
@@ -219,6 +220,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionErrorConsole, SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
+	connect(m_ui->actionContentBlocking, SIGNAL(triggered()), this, SLOT(actionContentBlocking()));
 	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
 	connect(m_ui->actionSwitchApplicationLanguage, SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
 	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
@@ -630,6 +632,12 @@ void MainWindow::actionTransfers()
 void MainWindow::actionErrorConsole(bool enabled)
 {
 	m_ui->consoleDockWidget->setVisible(enabled);
+}
+
+void MainWindow::actionContentBlocking()
+{
+	ContentBlockingDialog dialog(this);
+	dialog.exec();
 }
 
 void MainWindow::actionPreferences()

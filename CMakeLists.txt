@@ -68,6 +68,8 @@ set(otter_src
 	src/core/Application.cpp
 	src/core/BookmarksManager.cpp
 	src/core/BookmarksModel.cpp
+	src/core/ContentBlockingList.cpp
+	src/core/ContentBlockingManager.cpp
 	src/core/Console.cpp
 	src/core/CookieJar.cpp
 	src/core/FileSystemCompleterModel.cpp
@@ -121,7 +123,7 @@ set(otter_src
 	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
-	src/ui/preferences/BlockedContentDialog.cpp
+	src/ui/preferences/ContentBlockingDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
@@ -160,7 +162,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/StartupDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
 	src/ui/Window.ui
-	src/ui/preferences/BlockedContentDialog.ui
+	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
