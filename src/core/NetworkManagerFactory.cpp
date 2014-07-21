@@ -61,13 +61,7 @@ void NetworkManagerFactory::initialize()
 {
 	m_isInitialized = true;
 
-///FIXME workaround, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
-#if QT_VERSION < 0x050300
-	QSslSocket* tmpSocket = new QSslSocket();
-	tmpSocket->deleteLater();
-#endif
-
-	m_defaultCiphers = QSslSocket::defaultCiphers();
+	m_defaultCiphers = QSslSocket::supportedCiphers();
 
 	ContentBlockingManager::loadLists();
 
