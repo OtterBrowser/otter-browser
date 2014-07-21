@@ -1044,7 +1044,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		flags |= ImageMenu;
 
 		const bool isImageOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
-		const QString fileName = m_hitResult.imageUrl().fileName();
+		const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl().fileName(), Qt::ElideMiddle, 256);
 		QAction *openImageAction = getAction(OpenImageInNewTabAction);
 		openImageAction->setText((fileName.isEmpty() || m_hitResult.imageUrl().scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName));
 		openImageAction->setEnabled(!isImageOpened);
