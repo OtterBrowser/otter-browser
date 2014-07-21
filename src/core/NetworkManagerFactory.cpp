@@ -61,13 +61,19 @@ void NetworkManagerFactory::initialize()
 {
 	m_isInitialized = true;
 
-///FIXME workaround, without it QSslSocket::defaultCiphers() will cause lockup (Qt 5.2)
 #if QT_VERSION < 0x050300
-	QSslSocket* tmpSocket = new QSslSocket();
-	tmpSocket->deleteLater();
-#endif
+	m_defaultCiphers = QSslSocket::supportedCiphers();
 
+	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
+	{
+		if (m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("NULL") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH") || m_defaultCiphers.at(i).isNull())
+		{
+			m_defaultCiphers.removeAt(i);
+		}
+	}
+#else
 	m_defaultCiphers = QSslSocket::defaultCiphers();
+#endif
 
 	ContentBlockingManager::loadLists();
 
@@ -75,8 +81,8 @@ void NetworkManagerFactory::initialize()
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
 	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
 	optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
-	optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
 	optionChanged(QLatin1String("Proxy/UseSystemAuthentication"), SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")));
+	optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
@@ -108,6 +114,10 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 	{
 		m_isWorkingOffline = value.toBool();
 	}
+	else if (option == QLatin1String("Proxy/UseSystemAuthentication"))
+	{
+		m_isUsingSystemProxyAuthentication = value.toBool();
+	}
 	else if (option == QLatin1String("Security/Ciphers"))
 	{
 		if (value.toString() == QLatin1String("default"))
@@ -130,10 +140,6 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 		}
 
 		QSslSocket::setDefaultCiphers(ciphers);
-	}
-	else if (option == QLatin1String("Proxy/UseSystemAuthentication"))
-	{
-		m_isUsingSystemProxyAuthentication = value.toBool();
 	}
 }
 
