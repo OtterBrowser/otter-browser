@@ -48,6 +48,7 @@ WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWi
 	m_isRestored(false)
 {
 	connect(ActionsManager::getAction(QLatin1String("QuickBookmarkAccess"), this), SIGNAL(triggered()), this, SLOT(quickBookmarkAccess()));
+	connect(ActionsManager::getAction(QLatin1String("ReopenTab"), this), SIGNAL(triggered()), this, SLOT(restore()));
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
