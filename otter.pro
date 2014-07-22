@@ -8,7 +8,7 @@
     error("Qt 5.2.0 or newer is required.")
 }
 
-QT += concurrent core gui network printsupport script sql webkitwidgets widgets
+QT += core gui network printsupport script sql webkitwidgets widgets
 
 win32: QT += winextras
 win32: INCLUDEPATH += .\
