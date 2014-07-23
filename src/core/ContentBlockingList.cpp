@@ -83,7 +83,7 @@ void ContentBlockingList::parseRules()
 		}
 	}
 
-	if (!fileHeader.startsWith(QLatin1String("[Adblock Plus 2.0")))
+	if (!fileHeader.startsWith(QLatin1String("[Adblock Plus 2.")))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Loaded adblock file is not valid: %0").arg(rulesFile.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
@@ -502,7 +502,7 @@ void ContentBlockingList::updateDownloaded(QNetworkReply* reply)
 		}
 	}
 
-	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.0")))
+	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
 	{
         Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0").arg(m_fullFilePath), Otter::OtherMessageCategory, ErrorMessageLevel);
 

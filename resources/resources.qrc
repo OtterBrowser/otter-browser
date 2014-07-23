@@ -4,12 +4,14 @@
         <file>files/listing.html</file>
         <file>files/start.html</file>
         <file>adblock/abpindo.txt</file>
-        <file>adblock/adblock.txt</file>
         <file>adblock/adblock_bg.txt</file>
+        <file>adblock/adblock_polska.txt</file>
+        <file>adblock/advblock.txt</file>
         <file>adblock/easylist.txt</file>
         <file>adblock/easylistdutch.txt</file>
         <file>adblock/easylistgermany.txt</file>
         <file>adblock/easylisthebrew.txt</file>
+        <file>adblock/easylistchina.txt</file>
         <file>adblock/easylistitaly.txt</file>
         <file>adblock/easylistlithuania.txt</file>
         <file>adblock/filters.txt</file>
