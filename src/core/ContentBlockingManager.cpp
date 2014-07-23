@@ -29,8 +29,8 @@
 namespace Otter
 {
 
-bool ContentBlockingManager::m_isContentBlockingEnabled = false;
 QList<ContentBlockingList*> ContentBlockingManager::m_blockingLists;
+bool ContentBlockingManager::m_isContentBlockingEnabled = false;
 
 void ContentBlockingManager::loadLists()
 {
@@ -48,7 +48,7 @@ void ContentBlockingManager::loadLists()
 		QFile::copy(QLatin1String(":/other/adblock.ini"), configPath);
 		QFile::setPermissions(configPath, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
 	}
-	
+
 	const QStringList definitions = QDir(QLatin1String(":/adblock/")).entryList(QDir::Files);
 
 	for (int i = 0; i < definitions.count(); ++i)
@@ -71,16 +71,14 @@ void ContentBlockingManager::loadLists()
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const QString entry = entries.at(i);
-
 		int indexOfFile = adBlockList.indexOf(adblock.value(QStringLiteral("%1/file").arg(entry)).toString());
 
 		if (indexOfFile >= 0)
 		{
-			ContentBlockingList* definition = new ContentBlockingList();
-
+			ContentBlockingList *definition = new ContentBlockingList();
 			definition->setFile(adBlockPath, adBlockList.at(indexOfFile));
-            definition->setListName(adblock.value(QStringLiteral("%1/title").arg(entry)).toString());
-            definition->setConfigListName(entry);
+			definition->setListName(adblock.value(QStringLiteral("%1/title").arg(entry)).toString());
+			definition->setConfigListName(entry);
 
 			if (adblock.value(QStringLiteral("%1/enabled").arg(entry)).toBool())
 			{
@@ -93,7 +91,7 @@ void ContentBlockingManager::loadLists()
 				definition->setEnabled(false);
 			}
 
-            m_blockingLists.append(definition);
+			m_blockingLists.append(definition);
 
 			adBlockList.removeAt(indexOfFile);
 		}
@@ -116,7 +114,7 @@ void ContentBlockingManager::loadLists()
 		definition->setFile(adBlockPath, value);
 		definition->setEnabled(false);
 
-        m_blockingLists.append(definition);
+		m_blockingLists.append(definition);
 	}
 }
 
@@ -131,13 +129,13 @@ void ContentBlockingManager::updateLists()
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
-        for (int j = 0; j < m_blockingLists.count(); ++j)
+		for (int j = 0; j < m_blockingLists.count(); ++j)
 		{
-            if (m_blockingLists.at(j)->getFileName() == adblock.value(QStringLiteral("%1/file").arg(entries.at(i))).toString())
+			if (m_blockingLists.at(j)->getFileName() == adblock.value(QStringLiteral("%1/file").arg(entries.at(i))).toString())
 			{
 				if (adblock.value(QStringLiteral("%1/enabled").arg(entries.at(i))).toBool())
 				{
-                    m_blockingLists.at(j)->setEnabled(true);
+					m_blockingLists.at(j)->setEnabled(true);
 
 					m_isContentBlockingEnabled = true;
 
@@ -145,7 +143,7 @@ void ContentBlockingManager::updateLists()
 				}
 				else
 				{
-                    m_blockingLists.at(j)->setEnabled(false);
+					m_blockingLists.at(j)->setEnabled(false);
 
 					break;
 				}
@@ -154,20 +152,25 @@ void ContentBlockingManager::updateLists()
 	}
 }
 
+QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
+{
+	return m_blockingLists;
+}
+
 bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)
 {
 	const QString scheme = request.url().scheme();
 
 	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
 	{
-        return false;
+		return false;
 	}
 
-    for (int i = 0; i < m_blockingLists.count(); ++i)
+	for (int i = 0; i < m_blockingLists.count(); ++i)
 	{
-        if (m_blockingLists.at(i)->isEnabled())
+		if (m_blockingLists.at(i)->isEnabled())
 		{
-            if (m_blockingLists.at(i)->isUrlBlocked(request))
+			if (m_blockingLists.at(i)->isUrlBlocked(request))
 			{
 				return true;
 			}
@@ -180,11 +183,6 @@ bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)
 bool ContentBlockingManager::isContentBlockingEnabled()
 {
 	return m_isContentBlockingEnabled;
-}
-
-QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
-{
-    return m_blockingLists;
 }
 
 }

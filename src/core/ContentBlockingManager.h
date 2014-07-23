@@ -31,15 +31,15 @@ class ContentBlockingList;
 class ContentBlockingManager : public QObject
 {
 public:
-    static QList<ContentBlockingList*> getBlockingDefinitions();
-    static void loadLists();
-    static void updateLists();
-    static bool isUrlBlocked(const QNetworkRequest &request);
-    static bool isContentBlockingEnabled();
+	static void loadLists();
+	static void updateLists();
+	static QList<ContentBlockingList*> getBlockingDefinitions();
+	static bool isUrlBlocked(const QNetworkRequest &request);
+	static bool isContentBlockingEnabled();
 
 private:
-    static bool m_isContentBlockingEnabled;
-    static QList<ContentBlockingList*> m_blockingLists;
+	static QList<ContentBlockingList*> m_blockingLists;
+	static bool m_isContentBlockingEnabled;
 };
 
 }

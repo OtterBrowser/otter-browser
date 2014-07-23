@@ -30,91 +30,91 @@ namespace Otter
 
 class ContentBlockingList : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit ContentBlockingList(QObject *parent = NULL);
+	explicit ContentBlockingList(QObject *parent = NULL);
 
-    enum RuleType
-    {
-        StandardFilterRule = 1,
-        ElementHidingRule = 2,
-        ExceptionRule = 4,
-    };
+	enum RuleType
+	{
+		StandardFilterRule = 1,
+		ElementHidingRule = 2,
+		ExceptionRule = 4,
+	};
 
-    enum RuleOption
-    {
-        NoOption = 0,
-        ThirdPartyOption = 1,
-        StyleSheetOption = 2,
-        ScriptOption = 4,
-        ImageOption = 8,
-        ObjectOption = 16,
-        ObjectSubRequestOption = 32,
-        SubDocumentOption = 64,
-        XmlHttpRequestOption = 128
-    };
+	enum RuleOption
+	{
+		NoOption = 0,
+		ThirdPartyOption = 1,
+		StyleSheetOption = 2,
+		ScriptOption = 4,
+		ImageOption = 8,
+		ObjectOption = 16,
+		ObjectSubRequestOption = 32,
+		SubDocumentOption = 64,
+		XmlHttpRequestOption = 128
+	};
 
-    Q_DECLARE_FLAGS(RuleOptions, RuleOption)
+	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
 
-    struct ContentBlockingRule
-    {
-        bool isException;
-        QString rule;
-        QStringList blockedDomains;
-        QStringList allowedDomains;
-        RuleType ruleType;
-        RuleOptions ruleOption;
-        RuleOptions exceptionRuleOption;
-    };
+	struct ContentBlockingRule
+	{
+		QString rule;
+		QStringList blockedDomains;
+		QStringList allowedDomains;
+		RuleType ruleType;
+		RuleOptions ruleOption;
+		RuleOptions exceptionRuleOption;
+		bool isException;
+	};
 
-    void setEnabled(const bool enabled);
-    void setFile(const QString path, const QString name);
-    void setListName(const QString title);
-    void setConfigListName(const QString name);
-    QString getFileName() const;
-    QString getListName() const;
-    QString getConfigListName() const;
-    bool isEnabled() const;
-    bool isUrlBlocked(const QNetworkRequest &request);
+	void setEnabled(const bool enabled);
+	void setFile(const QString path, const QString name);
+	void setListName(const QString title);
+	void setConfigListName(const QString name);
+	QString getFileName() const;
+	QString getListName() const;
+	QString getConfigListName() const;
+	bool isEnabled() const;
+	bool isUrlBlocked(const QNetworkRequest &request);
 
 protected:
-    struct Node
-    {
-        QChar value;
-        ContentBlockingRule rule;
-        QHash<QChar, Node*> children;
+	struct Node
+	{
+		QChar value;
+		ContentBlockingRule rule;
+		QHash<QChar, Node*> children;
 
-        Node() : value(0) {}
-    };
+		Node() : value(0) {}
+	};
 
-    void parseRules();
-    void loadRuleFile();
-    void clear();
-    void parseRuleLine(QString line);
-    void resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked);
-    bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-    bool checkUrlSubstring(const QString subString, const QNetworkRequest &request);
-    bool checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request);
-    void addRule(const ContentBlockingRule rule);
-    void deleteNode(Node* node);
-    void downloadUpdate();
+	void parseRules();
+	void loadRuleFile();
+	void clear();
+	void parseRuleLine(QString line);
+	void resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked);
+	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
+	bool checkUrlSubstring(const QString subString, const QNetworkRequest &request);
+	bool checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request);
+	void addRule(const ContentBlockingRule rule);
+	void deleteNode(Node *node);
+	void downloadUpdate();
 
 private slots:
-    void updateDownloaded(QNetworkReply* reply);
+	void updateDownloaded(QNetworkReply *reply);
 
 private:
-    bool m_isUpdated;
-    bool m_isEnabled;
-    int m_daysToExpire;
-    QDateTime m_lastUpdate;
-    QString m_fullFilePath;
-    QString m_fileName;
-    QString m_listName;
-    QString m_configListName;
-    QUrl m_updateUrl;
-    NetworkManager m_networkManager;
-    Node* m_root;
+	Node *m_root;
+	QDateTime m_lastUpdate;
+	QString m_fullFilePath;
+	QString m_fileName;
+	QString m_listName;
+	QString m_configListName;
+	QUrl m_updateUrl;
+	NetworkManager m_networkManager;
+	int m_daysToExpire;
+	bool m_isUpdated;
+	bool m_isEnabled;
 };
 
 }
