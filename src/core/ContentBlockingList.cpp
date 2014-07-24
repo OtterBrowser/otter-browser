@@ -31,10 +31,10 @@ namespace Otter
 {
 
 ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
-	m_isUpdated(false),
-	m_isEnabled(false),
 	m_daysToExpire(4),
-	m_lastUpdate(QDateTime::currentDateTime())
+	m_lastUpdate(QDateTime::currentDateTime()),
+	m_isUpdated(false),
+	m_isEnabled(false)
 {
 }
 
@@ -250,23 +250,6 @@ void ContentBlockingList::parseRuleLine(QString line)
 	return;
 }
 
-bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request)
-{
-	bool isBlocked = false;
-
-	if (rule.ruleType == StandardFilterRule)
-	{
-		if (request.url().url().contains(rule.rule))
-		{
-			isBlocked = !rule.isException;
-
-			resolveRuleOptions(rule, request, isBlocked);
-		}
-	}
-
-	return isBlocked;
-}
-
 void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked)
 {
 	const QString url = request.url().url();
@@ -355,19 +338,6 @@ void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule rule, con
 	}
 }
 
-bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStringList &ruleList)
-{
-	for (int i = 0; i < ruleList.count(); ++i)
-	{
-		if (url.contains(ruleList.at(i)))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
 void ContentBlockingList::setFile(const QString path, const QString name)
 {
 	m_fileName = name;
@@ -386,24 +356,6 @@ void ContentBlockingList::setEnabled(const bool enabled)
 	{
 		parseRules();
 	}
-}
-
-bool ContentBlockingList::isUrlBlocked(const QNetworkRequest &request)
-{
-	const QString url = request.url().url();
-	const int urlLenght = url.length();
-
-	for (int i = 0; i < urlLenght; ++i)
-	{
-		const QString testString = url.right(urlLenght - i);
-
-		if (checkUrlSubstring(testString, request))
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void ContentBlockingList::addRule(const ContentBlockingRule rule)
@@ -427,35 +379,6 @@ void ContentBlockingList::addRule(const ContentBlockingRule rule)
 	}
 
 	node->rule = rule;
-}
-
-bool ContentBlockingList::checkUrlSubstring(const QString subString, const QNetworkRequest &request)
-{
-	Node *node = m_root;
-
-	for (int i = 0; i < subString.length(); ++i)
-	{
-		const QChar treeChar = subString.at(i);
-
-		if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
-		{
-			return true;
-		}
-
-		if (!node->children.contains(treeChar))
-		{
-			return false;
-		}
-
-		node = node->children[treeChar];
-	}
-
-	if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
-	{
-		return true;
-	}
-
-	return false;
 }
 
 void ContentBlockingList::deleteNode(Node *node)
@@ -571,9 +494,86 @@ QString ContentBlockingList::getConfigListName() const
 	return m_configListName;
 }
 
+bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStringList &ruleList)
+{
+	for (int i = 0; i < ruleList.count(); ++i)
+	{
+		if (url.contains(ruleList.at(i)))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ContentBlockingList::checkUrlSubstring(const QString subString, const QNetworkRequest &request)
+{
+	Node *node = m_root;
+
+	for (int i = 0; i < subString.length(); ++i)
+	{
+		const QChar treeChar = subString.at(i);
+
+		if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
+		{
+			return true;
+		}
+
+		if (!node->children.contains(treeChar))
+		{
+			return false;
+		}
+
+		node = node->children[treeChar];
+	}
+
+	if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request)
+{
+	bool isBlocked = false;
+
+	if (rule.ruleType == StandardFilterRule)
+	{
+		if (request.url().url().contains(rule.rule))
+		{
+			isBlocked = !rule.isException;
+
+			resolveRuleOptions(rule, request, isBlocked);
+		}
+	}
+
+	return isBlocked;
+}
+
 bool ContentBlockingList::isEnabled() const
 {
 	return m_isEnabled;
+}
+
+bool ContentBlockingList::isUrlBlocked(const QNetworkRequest &request)
+{
+	const QString url = request.url().url();
+	const int urlLenght = url.length();
+
+	for (int i = 0; i < urlLenght; ++i)
+	{
+		const QString testString = url.right(urlLenght - i);
+
+		if (checkUrlSubstring(testString, request))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 }

@@ -93,12 +93,12 @@ protected:
 	void clear();
 	void parseRuleLine(QString line);
 	void resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked);
-	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-	bool checkUrlSubstring(const QString subString, const QNetworkRequest &request);
-	bool checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request);
 	void addRule(const ContentBlockingRule rule);
 	void deleteNode(Node *node);
 	void downloadUpdate();
+	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
+	bool checkUrlSubstring(const QString subString, const QNetworkRequest &request);
+	bool checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request);
 
 private slots:
 	void updateDownloaded(QNetworkReply *reply);
