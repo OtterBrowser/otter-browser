@@ -65,6 +65,7 @@ void TabBarDockWidget::setup(QMenu *closedWindowsMenu)
 	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab"), this));
 	m_newTabButton->setFixedSize(32, 32);
 	m_newTabButton->show();
+	m_newTabButton->raise();
 	m_newTabButton->move(m_tabBar->geometry().topRight());
 
 	connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
