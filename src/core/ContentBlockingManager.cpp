@@ -173,11 +173,6 @@ void ContentBlockingManager::updateLists()
 	}
 }
 
-QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
-{
-	return m_blockingLists;
-}
-
 void ContentBlockingManager::updateCustomStyleSheets()
 {
 	m_hidingRules.clear();
@@ -194,10 +189,19 @@ void ContentBlockingManager::updateCustomStyleSheets()
 	emit styleSheetsUpdated();
 }
 
+ContentBlockingManager* ContentBlockingManager::getInstance()
+{
+	return m_instance;
+}
+
+QByteArray ContentBlockingManager::getStyleSheetHidingRules()
+{
+	return m_hidingRules;
+}
+
 QStringList ContentBlockingManager::createSubdomainList(const QString domain)
 {
 	QStringList subdomainList;
-
 	int dotPosition = domain.lastIndexOf(QLatin1Char('.'));
 	dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
 
@@ -213,9 +217,9 @@ QStringList ContentBlockingManager::createSubdomainList(const QString domain)
 	return subdomainList;
 }
 
-QByteArray ContentBlockingManager::getStyleSheetHidingRules()
+QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
 {
-	return m_hidingRules;
+	return m_blockingLists;
 }
 
 QMultiHash<QString, QString> ContentBlockingManager::getSpecificDomainHidingRules()
@@ -226,11 +230,6 @@ QMultiHash<QString, QString> ContentBlockingManager::getSpecificDomainHidingRule
 QMultiHash<QString, QString> ContentBlockingManager::getHidingRulesExceptions()
 {
 	return m_hidingRulesExceptions;
-}
-
-ContentBlockingManager* ContentBlockingManager::getInstance()
-{
-	return m_instance;
 }
 
 bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)

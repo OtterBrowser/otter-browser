@@ -31,8 +31,8 @@ namespace Otter
 {
 
 ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
-	m_daysToExpire(4),
 	m_lastUpdate(QDateTime::currentDateTime()),
+	m_daysToExpire(4),
 	m_isUpdated(false),
 	m_isEnabled(false)
 {

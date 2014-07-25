@@ -81,13 +81,12 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 void QtWebKitWebPage::pageLoadFinished()
 {
 	clearIgnoreJavaScriptPopups();
-	
+
 	if (ContentBlockingManager::isContentBlockingEnabled() && mainFrame()->url().isValid())
 	{
 		const QStringList domainList = ContentBlockingManager::createSubdomainList(mainFrame()->url().host());
 
 		updateBlockedPageElements(domainList, false);
-
 		updateBlockedPageElements(domainList, true);
 	}
 }

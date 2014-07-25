@@ -227,7 +227,6 @@ void ActionsManager::setupLocalAction(QAction *globalAction, QAction *localActio
 ActionsManager* ActionsManager::findManager(QObject *parent)
 {
 	MainWindow *window = NULL;
-	QObject *originalParent = parent;
 
 	while (parent)
 	{

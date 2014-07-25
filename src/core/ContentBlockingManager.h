@@ -35,10 +35,10 @@ class ContentBlockingManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateLists();
-	static QList<ContentBlockingList*> getBlockingDefinitions();
-	static QByteArray getStyleSheetHidingRules();
 	static ContentBlockingManager* getInstance();
+	static QByteArray getStyleSheetHidingRules();
 	static QStringList createSubdomainList(const QString domain);
+	static QList<ContentBlockingList*> getBlockingDefinitions();
 	static QMultiHash<QString, QString> getSpecificDomainHidingRules();
 	static QMultiHash<QString, QString> getHidingRulesExceptions();
 	static bool isUrlBlocked(const QNetworkRequest &request);
