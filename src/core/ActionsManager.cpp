@@ -31,7 +31,6 @@ namespace Otter
 {
 
 QHash<QString, ActionDefinition> ActionsManager::m_definitions;
-QHash<QObject*, MainWindow*> ActionsManager::m_cache;
 
 ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	m_window(parent)
@@ -125,19 +124,6 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	updateActions();
 
 	connect(ShortcutsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateActions()));
-}
-
-ActionsManager::~ActionsManager()
-{
-	QHash<QObject*, MainWindow*>::iterator cacheIterator;
-
-	for (cacheIterator = m_cache.begin(); cacheIterator != m_cache.end(); ++cacheIterator)
-	{
-		if (cacheIterator.value() == m_window)
-		{
-			cacheIterator = m_cache.erase(cacheIterator);
-		}
-	}
 }
 
 void ActionsManager::updateActions()
@@ -243,30 +229,19 @@ ActionsManager* ActionsManager::findManager(QObject *parent)
 	MainWindow *window = NULL;
 	QObject *originalParent = parent;
 
-	if (parent && m_cache.contains(parent))
+	while (parent)
 	{
-		window = m_cache[parent];
-	}
-	else
-	{
-		while (parent)
+		if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
 		{
-			if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
-			{
-				window = qobject_cast<MainWindow*>(parent);
+			window = qobject_cast<MainWindow*>(parent);
 
-				break;
-			}
-
-			parent = parent->parent();
+			break;
 		}
+
+		parent = parent->parent();
 	}
 
-	if (window)
-	{
-		m_cache[originalParent] = window;
-	}
-	else
+	if (!window)
 	{
 		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
 	}

@@ -46,7 +46,6 @@ class ActionsManager : public QObject
 
 public:
 	explicit ActionsManager(MainWindow *parent = NULL);
-	~ActionsManager();
 
 	void triggerAction(const QString &action);
 	void triggerAction(ActionIdentifier action);
@@ -72,7 +71,6 @@ private:
 	QHash<ActionIdentifier, QAction*> m_standardActions;
 
 	static QHash<QString, ActionDefinition> m_definitions;
-	static QHash<QObject*, MainWindow*> m_cache;
 };
 
 }
