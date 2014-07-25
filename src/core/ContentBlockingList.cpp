@@ -117,7 +117,15 @@ void ContentBlockingList::loadRuleFile()
 		parseRuleLine(adFileStream.readLine());
 	}
 
+	if (m_cssHidingRules.length() > 0)
+	{
+		m_cssHidingRules = m_cssHidingRules.left(m_cssHidingRules.length() - 1);
+		m_cssHidingRules += QLatin1String("{display:none;}");
+	}
+
 	m_isEnabled = true;
+
+	emit updateCustomStyleSheets();
 
 	rulesFile.close();
 }
@@ -126,6 +134,27 @@ void ContentBlockingList::parseRuleLine(QString line)
 {
 	if (line.indexOf(QLatin1Char('!')) == 0 || line.isEmpty())
 	{
+		return;
+	}
+
+	if (line.startsWith(QLatin1String("##")))
+	{
+		m_cssHidingRules += line.mid(2) + QLatin1Char(',');
+
+		return;
+	}
+
+	if (line.contains(QLatin1String("##")))
+	{
+		parseCssRule(line.split(QLatin1String("##")), m_cssSpecificDomainHidingRules);
+
+		return;
+	}
+
+	if (line.contains(QLatin1String("#@#")))
+	{
+		parseCssRule(line.split(QLatin1String("#@#")), m_cssHidingRulesExceptions);
+
 		return;
 	}
 
@@ -248,6 +277,16 @@ void ContentBlockingList::parseRuleLine(QString line)
 	addRule(rule);
 
 	return;
+}
+
+void ContentBlockingList::parseCssRule(const QStringList line, QMultiHash<QString, QString> &list)
+{
+	const QStringList domains = line.at(0).split(QLatin1Char(','));
+
+	for (int i = 0; i < domains.count(); ++i)
+	{
+		list.insert(domains.at(i), line.at(1));
+	}
 }
 
 void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked)
@@ -467,6 +506,10 @@ void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 void ContentBlockingList::clear()
 {
 	QtConcurrent::run(this, &ContentBlockingList::deleteNode, m_root);
+
+	m_cssHidingRules.clear();
+	m_cssHidingRulesExceptions.clear();
+	m_cssSpecificDomainHidingRules.clear();
 }
 
 void ContentBlockingList::setListName(const QString title)
@@ -489,9 +532,24 @@ QString ContentBlockingList::getListName() const
 	return m_listName;
 }
 
+QString ContentBlockingList::getCssRules() const
+{
+	return m_cssHidingRules;
+}
+
 QString ContentBlockingList::getConfigListName() const
 {
 	return m_configListName;
+}
+
+QMultiHash<QString, QString> ContentBlockingList::getSpecificDomainHidingRules() const
+{
+	return m_cssSpecificDomainHidingRules;
+}
+
+QMultiHash<QString, QString> ContentBlockingList::getHidingRulesExceptions() const
+{
+	return m_cssHidingRulesExceptions;
 }
 
 bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStringList &ruleList)

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
+#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
@@ -36,6 +38,7 @@
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
+#include <QtWebKit/QWebElement>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 
@@ -51,7 +54,8 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
 
-	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(clearIgnoreJavaScriptPopups()));
+	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
@@ -70,13 +74,66 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	}
 	else if (option.startsWith(QLatin1String("Content/")))
 	{
-		settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}").arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8().toBase64())));
+		updatePageStyleSheets();
+	}
+}
+
+void QtWebKitWebPage::pageLoadFinished()
+{
+	clearIgnoreJavaScriptPopups();
+	
+	if (ContentBlockingManager::isContentBlockingEnabled() && mainFrame()->url().isValid())
+	{
+		const QStringList domainList = ContentBlockingManager::createSubdomainList(mainFrame()->url().host());
+
+		updateBlockedPageElements(domainList, false);
+
+		updateBlockedPageElements(domainList, true);
 	}
 }
 
 void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
 {
 	m_ignoreJavaScriptPopups = false;
+}
+
+void QtWebKitWebPage::updatePageStyleSheets()
+{
+	const QString userStyleSheets = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
+
+	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + userStyleSheets.toUtf8().toBase64()));
+}
+
+void QtWebKitWebPage::updateBlockedPageElements(const QStringList domainList, const bool isException)
+{
+	for (int i = 0; i < domainList.count(); ++i)
+	{
+		const QList<QString> exceptionList = isException ? ContentBlockingManager::getHidingRulesExceptions().values(domainList.at(i)) : ContentBlockingManager::getSpecificDomainHidingRules().values(domainList.at(i));
+
+		for (int j = 0; j < exceptionList.count(); ++j)
+		{
+			const QWebElementCollection elements = mainFrame()->documentElement().findAll(exceptionList.at(j));
+
+			for (int k = 0; k < elements.count(); ++k)
+			{
+				QWebElement element = elements.at(k);
+
+				if (element.isNull())
+				{
+					continue;
+				}
+
+				if (isException)
+				{
+					element.setStyleProperty(QLatin1String("display"), QLatin1String("block"));
+				}
+				else
+				{
+					element.removeFromDocument();
+				}
+			}
+		}
+	}
 }
 
 void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)

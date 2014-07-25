@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +48,7 @@ public:
 	bool supportsExtension(Extension extension) const;
 
 protected:
+	void updateBlockedPageElements(const QStringList domainList, const bool isException);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 	QWebPage* createWindow(WebWindowType type);
@@ -58,6 +60,8 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void clearIgnoreJavaScriptPopups();
+	void updatePageStyleSheets();
+	void pageLoadFinished();
 
 private:
 	QtWebKitWebWidget *m_webWidget;

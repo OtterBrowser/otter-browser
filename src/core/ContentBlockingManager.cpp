@@ -29,8 +29,23 @@
 namespace Otter
 {
 
+ContentBlockingManager* ContentBlockingManager::m_instance = NULL;
 QList<ContentBlockingList*> ContentBlockingManager::m_blockingLists;
+QByteArray ContentBlockingManager::m_hidingRules;
+QMultiHash<QString, QString> ContentBlockingManager::m_specificDomainHidingRules;
+QMultiHash<QString, QString> ContentBlockingManager::m_hidingRulesExceptions;
 bool ContentBlockingManager::m_isContentBlockingEnabled = false;
+
+ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent)
+{
+}
+
+void ContentBlockingManager::createInstance(QObject *parent)
+{
+	m_instance = new ContentBlockingManager(parent);
+
+	loadLists();
+}
 
 void ContentBlockingManager::loadLists()
 {
@@ -82,6 +97,8 @@ void ContentBlockingManager::loadLists()
 
 			if (adblock.value(QStringLiteral("%1/enabled").arg(entry)).toBool())
 			{
+				connect(definition, SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
+
 				definition->setEnabled(true);
 
 				m_isContentBlockingEnabled = true;
@@ -135,6 +152,8 @@ void ContentBlockingManager::updateLists()
 			{
 				if (adblock.value(QStringLiteral("%1/enabled").arg(entries.at(i))).toBool())
 				{
+					connect(m_blockingLists.at(j), SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
+
 					m_blockingLists.at(j)->setEnabled(true);
 
 					m_isContentBlockingEnabled = true;
@@ -143,6 +162,8 @@ void ContentBlockingManager::updateLists()
 				}
 				else
 				{
+					disconnect(m_blockingLists.at(j), SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
+
 					m_blockingLists.at(j)->setEnabled(false);
 
 					break;
@@ -155,6 +176,61 @@ void ContentBlockingManager::updateLists()
 QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
 {
 	return m_blockingLists;
+}
+
+void ContentBlockingManager::updateCustomStyleSheets()
+{
+	m_hidingRules.clear();
+	m_specificDomainHidingRules.clear();
+	m_hidingRulesExceptions.clear();
+
+	for (int i = 0; i < m_blockingLists.count(); ++i)
+	{
+		m_hidingRules.append(m_blockingLists.at(i)->getCssRules());
+		m_specificDomainHidingRules += m_blockingLists.at(i)->getSpecificDomainHidingRules();
+		m_hidingRulesExceptions += m_blockingLists.at(i)->getHidingRulesExceptions();
+	}
+
+	emit styleSheetsUpdated();
+}
+
+QStringList ContentBlockingManager::createSubdomainList(const QString domain)
+{
+	QStringList subdomainList;
+
+	int dotPosition = domain.lastIndexOf(QLatin1Char('.'));
+	dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
+
+	while (dotPosition != -1)
+	{
+		subdomainList.append(domain.mid(dotPosition + 1));
+
+		dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
+	}
+
+	subdomainList.append(domain);
+
+	return subdomainList;
+}
+
+QByteArray ContentBlockingManager::getStyleSheetHidingRules()
+{
+	return m_hidingRules;
+}
+
+QMultiHash<QString, QString> ContentBlockingManager::getSpecificDomainHidingRules()
+{
+	return m_specificDomainHidingRules;
+}
+
+QMultiHash<QString, QString> ContentBlockingManager::getHidingRulesExceptions()
+{
+	return m_hidingRulesExceptions;
+}
+
+ContentBlockingManager* ContentBlockingManager::getInstance()
+{
+	return m_instance;
 }
 
 bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)

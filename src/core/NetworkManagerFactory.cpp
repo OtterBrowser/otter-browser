@@ -75,7 +75,7 @@ void NetworkManagerFactory::initialize()
 	m_defaultCiphers = QSslSocket::defaultCiphers();
 #endif
 
-	ContentBlockingManager::loadLists();
+	ContentBlockingManager::createInstance();
 
 	loadUserAgents();
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));

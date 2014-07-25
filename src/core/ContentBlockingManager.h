@@ -30,16 +30,38 @@ class ContentBlockingList;
 
 class ContentBlockingManager : public QObject
 {
+	Q_OBJECT
+
 public:
-	static void loadLists();
+	static void createInstance(QObject *parent = NULL);
 	static void updateLists();
 	static QList<ContentBlockingList*> getBlockingDefinitions();
+	static QByteArray getStyleSheetHidingRules();
+	static ContentBlockingManager* getInstance();
+	static QStringList createSubdomainList(const QString domain);
+	static QMultiHash<QString, QString> getSpecificDomainHidingRules();
+	static QMultiHash<QString, QString> getHidingRulesExceptions();
 	static bool isUrlBlocked(const QNetworkRequest &request);
 	static bool isContentBlockingEnabled();
 
+protected:
+	explicit ContentBlockingManager(QObject *parent = NULL);
+
+	static void loadLists();
+
+protected slots:
+	void updateCustomStyleSheets();
+
 private:
+	static ContentBlockingManager *m_instance;
 	static QList<ContentBlockingList*> m_blockingLists;
+	static QByteArray m_hidingRules;
+	static QMultiHash<QString, QString> m_specificDomainHidingRules;
+	static QMultiHash<QString, QString> m_hidingRulesExceptions;
 	static bool m_isContentBlockingEnabled;
+
+signals:
+	void styleSheetsUpdated();
 };
 
 }

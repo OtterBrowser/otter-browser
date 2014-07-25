@@ -75,6 +75,9 @@ public:
 	QString getFileName() const;
 	QString getListName() const;
 	QString getConfigListName() const;
+	QString getCssRules() const;
+	QMultiHash<QString, QString> getSpecificDomainHidingRules() const;
+	QMultiHash<QString, QString> getHidingRulesExceptions() const;
 	bool isEnabled() const;
 	bool isUrlBlocked(const QNetworkRequest &request);
 
@@ -93,6 +96,7 @@ protected:
 	void clear();
 	void parseRuleLine(QString line);
 	void resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked);
+	void parseCssRule(const QStringList line, QMultiHash<QString, QString> &list);
 	void addRule(const ContentBlockingRule rule);
 	void deleteNode(Node *node);
 	void downloadUpdate();
@@ -110,11 +114,17 @@ private:
 	QString m_fileName;
 	QString m_listName;
 	QString m_configListName;
+	QString m_cssHidingRules;
 	QUrl m_updateUrl;
 	NetworkManager m_networkManager;
+	QMultiHash<QString, QString> m_cssSpecificDomainHidingRules;
+	QMultiHash<QString, QString> m_cssHidingRulesExceptions;
 	int m_daysToExpire;
 	bool m_isUpdated;
 	bool m_isEnabled;
+
+signals:
+	void updateCustomStyleSheets();
 };
 
 }
