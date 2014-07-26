@@ -30,6 +30,19 @@ class BookmarksModel : public QStandardItemModel
 	Q_OBJECT
 
 public:
+	enum BookmarksRole
+	{
+		BookmarkTitleRole = Qt::DisplayRole,
+		BookmarkDescriptionRole = Qt::ToolTipRole,
+		BookmarkTypeRole = Qt::UserRole,
+		BookmarkUrlRole = (Qt::UserRole + 1),
+		BookmarkKeywordRole = (Qt::UserRole + 2),
+		BookmarkTimeAddedRole = (Qt::UserRole + 3),
+		BookmarkTimeModifiedRole = (Qt::UserRole + 4),
+		BookmarkTimeVisitedRole = (Qt::UserRole + 5),
+		BookmarkVisitsRole = (Qt::UserRole + 6)
+	};
+
 	explicit BookmarksModel(QObject *parent = NULL);
 
 protected slots:
