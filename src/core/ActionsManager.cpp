@@ -71,6 +71,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("OpenSelectionAsLink"), QT_TR_NOOP("Go to This Address"));
 		registerAction(QLatin1String("ClearAll"), QT_TR_NOOP("Clear All"));
 		registerAction(QLatin1String("SpellCheck"), QT_TR_NOOP("Check Spelling"));
+		registerAction(QLatin1String("ApplicationConfiguration"), QT_TR_NOOP("ApplicationConfiguration"));
 		registerAction(QLatin1String("CreateSearch"), QT_TR_NOOP("Create Search..."));
 		registerAction(QLatin1String("InspectElement"), QT_TR_NOOP("Inspect Element..."));
 		registerAction(QLatin1String("SaveMediaToDisk"), QT_TR_NOOP("Save Media..."));
