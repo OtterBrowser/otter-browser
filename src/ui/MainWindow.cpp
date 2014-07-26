@@ -238,6 +238,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(ActivateAddressFieldAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction("ApplicationConfiguration"), SIGNAL(triggered()), this, SLOT(actionPreferences()));
 	connect(m_actionsManager->getAction(ActivateTabOnLeftAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(ActivateTabOnRightAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 
