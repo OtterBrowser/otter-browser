@@ -71,6 +71,8 @@ protected slots:
 	void actionSaveSession();
 	void actionManageSessions();
 	void actionSession(QAction *action);
+	void actionImportOperaBookmarks();
+	void actionImportHtmlBookmarks();
 	void actionWorkOffline(bool enabled);
 	void actionFullScreen();
 	void actionUserAgent(QAction *action);

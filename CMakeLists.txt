@@ -68,6 +68,7 @@ set(otter_src
 	src/core/ActionsManager.cpp
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
+	src/core/BookmarksImporter.cpp
 	src/core/BookmarksManager.cpp
 	src/core/BookmarksModel.cpp
 	src/core/ContentBlockingList.cpp
@@ -96,6 +97,7 @@ set(otter_src
 	src/ui/AddressWidget.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
+	src/ui/BookmarksImporterWidget.cpp
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ConsoleWidget.cpp
 	src/ui/ContentsDialog.cpp
@@ -132,6 +134,8 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
+	src/modules/importers/opera/OperaBookmarksImporter.cpp
+	src/modules/importers/other/HtmlBookmarksImporter.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -151,6 +155,7 @@ qt5_add_resources(otter_res
 qt5_wrap_ui(otter_ui
 	src/ui/AuthenticationDialog.ui
 	src/ui/BookmarkPropertiesDialog.ui
+	src/ui/BookmarksImporterWidget.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui
 	src/ui/ImportDialog.ui

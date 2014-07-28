@@ -41,7 +41,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -58,11 +58,25 @@
     </widget>
     <widget class="QMenu" name="menuImportExport">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
       <string>Import and Export</string>
      </property>
+     <widget class="QMenu" name="menuOperaImport">
+      <property name="title">
+       <string>Import from Opera</string>
+      </property>
+      <addaction name="actionImportOperaBookmarks"/>
+     </widget>
+     <widget class="QMenu" name="menuOtherImport">
+      <property name="title">
+       <string>Other import</string>
+      </property>
+      <addaction name="actionImportHtmlBookmarks"/>
+     </widget>
+     <addaction name="menuOperaImport"/>
+     <addaction name="menuOtherImport"/>
     </widget>
     <addaction name="actionNewTab"/>
     <addaction name="actionNewTabPrivate"/>
@@ -506,6 +520,16 @@
   <action name="actionSwitchApplicationLanguage">
    <property name="text">
     <string>Switch Application Language...</string>
+   </property>
+  </action>
+  <action name="actionImportOperaBookmarks">
+   <property name="text">
+    <string>Bookmarks</string>
+   </property>
+  </action>
+  <action name="actionImportHtmlBookmarks">
+   <property name="text">
+    <string>Html Bookmarks</string>
    </property>
   </action>
  </widget>

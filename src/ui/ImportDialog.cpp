@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "ImportDialog.h"
+#include "../modules/importers/opera/OperaBookmarksImporter.h"
+#include "../modules/importers/other/HtmlBookmarksImporter.h"
 
 #include "ui_ImportDialog.h"
 
@@ -58,7 +60,14 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 
 	Importer *importer = NULL;
 
-///TODO here goes logic determining which module should be used
+	if (importerName == QLatin1String("OperaBookmarks"))
+	{
+		importer = new OperaBookmarksImporter();
+	}
+	else if (importerName == QLatin1String("HtmlBookmarks"))
+	{
+		importer = new HtmlBookmarksImporter();
+	}
 
 	if (importer)
 	{
@@ -77,8 +86,14 @@ void ImportDialog::setPath()
 
 void ImportDialog::import()
 {
-	m_importer->setPath(m_path);
-	m_importer->import();
+	if (m_importer->setPath(m_path))
+	{
+		m_importer->import();
+	}
+	else
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Failed to open file for reading."));
+	}
 }
 
 }

@@ -22,6 +22,7 @@
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
+#include "ImportDialog.h"
 #include "MdiWidget.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
@@ -187,6 +188,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_ui->actionSaveSession, SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
+	connect(m_ui->actionImportOperaBookmarks, SIGNAL(triggered()), this, SLOT(actionImportOperaBookmarks()));
+	connect(m_ui->actionImportHtmlBookmarks, SIGNAL(triggered()), this, SLOT(actionImportHtmlBookmarks()));
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_ui->actionWorkOffline, SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
@@ -473,6 +476,16 @@ void MainWindow::actionSession(QAction *action)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()));
 	}
+}
+
+void MainWindow::actionImportOperaBookmarks()
+{
+	ImportDialog::createDialog(QLatin1String("OperaBookmarks"), this);
+}
+
+void MainWindow::actionImportHtmlBookmarks()
+{
+	ImportDialog::createDialog(QLatin1String("HtmlBookmarks"), this);
 }
 
 void MainWindow::actionWorkOffline(bool enabled)

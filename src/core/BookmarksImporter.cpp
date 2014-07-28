@@ -70,6 +70,16 @@ void BookmarksImporter::goToParent()
 	}
 }
 
+void BookmarksImporter::removeAllBookmarks()
+{
+	const QList<BookmarkInformation*> currentBookmarks = BookmarksManager::getBookmarks();
+
+	for (int i = 0; i < currentBookmarks.count(); ++i)
+	{
+		BookmarksManager::deleteBookmark(currentBookmarks.at(i), false);
+	}
+}
+
 void BookmarksImporter::setImportFolder(BookmarkInformation *folder)
 {
 	m_baseFolder = folder;

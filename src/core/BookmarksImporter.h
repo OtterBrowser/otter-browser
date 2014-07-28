@@ -41,6 +41,7 @@ protected:
 	void addSeparator(BookmarkInformation information);
 	void enterNewFolder(BookmarkInformation information);
 	void goToParent();
+	void removeAllBookmarks();
 	void setImportFolder(BookmarkInformation *folder);
 
 private:
