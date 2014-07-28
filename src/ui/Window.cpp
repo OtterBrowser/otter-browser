@@ -466,12 +466,13 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		if (isUrlEmpty())
 		{
 			m_ui->addressWidget->setFocus();
+
+			emit titleChanged(m_contentsWidget->getTitle());
 		}
 	}
 
 	emit actionsChanged();
 	emit canZoomChanged(m_contentsWidget->canZoom());
-	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
