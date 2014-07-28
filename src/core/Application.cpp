@@ -53,7 +53,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_localServer(NULL)
 {
 	setApplicationName(QLatin1String("Otter"));
-	setApplicationVersion(QLatin1String("0.9.02-dev"));
+	setApplicationVersion(QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT));
 	setWindowIcon(QIcon::fromTheme(QLatin1String("otter-browser"), QIcon(QLatin1String(":/icons/otter-browser.png"))));
 
 	m_instance = this;
@@ -61,7 +61,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QString profilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
 	QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 
-	m_localePath = INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
+	m_localePath = OTTER_INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
 
 	if (QFile::exists(applicationDirPath() + QLatin1String("/locale/")))
 	{

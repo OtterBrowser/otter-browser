@@ -4,7 +4,9 @@ project(otter-browser)
 
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
-set(PATCH_VERSION "02-dev")
+set(PATCH_VERSION "02")
+set(OTTER_VERSION_MAIN "0.9.02")
+set(OTTER_VERSION_CONTEXT "-dev")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
@@ -186,7 +188,7 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 qt5_use_modules(otter-browser PrintSupport Script Sql WebKitWidgets)
 
-set(INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
 configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)

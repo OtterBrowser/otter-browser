@@ -14,6 +14,9 @@ win32: QT += winextras
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
+OTTER_VERSION_MAIN = 0.9.02
+OTTER_VERSION_CONTEXT = -dev
+
 isEmpty(PREFIX): PREFIX = /usr/local
 
 TARGET = otter-browser
