@@ -53,8 +53,8 @@ protected:
 	void processElement(QWebElement e);
 
 private:
-	BookmarksImporterWidget *m_optionsWidget;
 	QFile *m_file;
+	BookmarksImporterWidget *m_optionsWidget;
 	bool m_duplicate;
 
 };

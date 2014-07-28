@@ -29,8 +29,8 @@ namespace Otter
 {
 
 BookmarksImporterWidget::BookmarksImporterWidget(QWidget *parent) : QWidget(parent),
-	m_folder(0),
 	m_model(new QStandardItemModel(this)),
+	m_folder(0),
 	m_ui(new Ui::BookmarksImporterWidget)
 {
 	m_ui->setupUi(this);
@@ -130,12 +130,12 @@ void BookmarksImporterWidget::reloadFolders()
 
 	populateFolder(BookmarksManager::getFolder(0), item);
 
-	QTreeView *treeView = qobject_cast<QTreeView*>(m_ui->folderComboBox->view());
+	QTreeView *view = qobject_cast<QTreeView*>(m_ui->folderComboBox->view());
 
-	if (treeView)
+	if (view)
 	{
-		treeView->setCurrentIndex(m_index);
-		treeView->expandAll();
+		view->setCurrentIndex(m_index);
+		view->expandAll();
 
 		m_ui->folderComboBox->setRootModelIndex(m_index.parent());
 		m_ui->folderComboBox->setModelColumn(0);
@@ -180,6 +180,7 @@ bool BookmarksImporterWidget::duplicate()
 {
 	return !m_ui->notDuplicateCheckBox->isChecked();
 }
+
 bool BookmarksImporterWidget::importIntoSubfolder()
 {
 	return m_ui->toSubfolderCheckBox->isChecked();

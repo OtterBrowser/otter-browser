@@ -52,6 +52,7 @@ void HtmlBookmarksImporter::handleOptions()
 			folder->type = FolderBookmark;
 
 			BookmarksManager::addBookmark(folder);
+
 			setImportFolder(folder);
 		}
 		else
@@ -92,9 +93,9 @@ void HtmlBookmarksImporter::processElement(QWebElement element)
 
 		time = element.attribute(QLatin1String("LAST_MODIFIED")).toUInt();
 
-		if (time);
+		if (time)
 		{
-			bookmark.modified= QDateTime::fromTime_t(time);
+			bookmark.modified = QDateTime::fromTime_t(time);
 		}
 
 		time = element.attribute(QLatin1String("LAST_VISITED")).toUInt();
@@ -160,7 +161,7 @@ QString HtmlBookmarksImporter::getTitle() const
 
 QString HtmlBookmarksImporter::getDescription() const
 {
-	return QString(tr("Gets bookmarks from HTML file. Many browsers are able to create such file."));
+	return QString(tr("Imports bookmarks from HTML file (Netscape format)."));
 }
 
 QString HtmlBookmarksImporter::getVersion() const
@@ -206,7 +207,10 @@ bool HtmlBookmarksImporter::import()
 	handleOptions();
 
 	frame->setHtml(m_file->readAll());
+
 	processElement(frame->documentElement());
+
+	return true;
 }
 
 }

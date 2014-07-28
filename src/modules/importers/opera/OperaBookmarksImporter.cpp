@@ -78,7 +78,7 @@ QString OperaBookmarksImporter::getTitle() const
 
 QString OperaBookmarksImporter::getDescription() const
 {
-	return QString(tr("Imports bookmarks from Opera browser version 12 or earlier"));
+	return QString(tr("Imports bookmarks from Opera Browser version 12 or earlier"));
 }
 
 QString OperaBookmarksImporter::getVersion() const
@@ -206,6 +206,8 @@ bool OperaBookmarksImporter::import()
 				case SeparatorOperaBookmarkEntry:
 					addSeparator(readedBookmark);
 
+					break;
+				default:
 					break;
 			}
 
