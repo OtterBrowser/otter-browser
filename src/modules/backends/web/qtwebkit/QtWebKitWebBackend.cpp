@@ -49,6 +49,7 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 	QWebSettings *globalSettings = QWebSettings::globalSettings();
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+	globalSettings->setAttribute(QWebSettings::AutoLoadImages, SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toBool());
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
