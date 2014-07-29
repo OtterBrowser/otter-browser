@@ -317,7 +317,10 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
 
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
+		QUrl url = QUrl();
+		url.setScheme(QLatin1String("http"));
+
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::HeadOperation, QNetworkRequest(url));
 	}
 
 	QNetworkRequest mutableRequest(request);
