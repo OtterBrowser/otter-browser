@@ -50,7 +50,7 @@ public slots:
 
 protected:
 	void handleOptions();
-	void processElement(QWebElement e);
+	void processElement(const QWebElement &element);
 
 private:
 	QFile *m_file;

@@ -68,7 +68,7 @@ void HtmlBookmarksImporter::handleOptions()
 	}
 }
 
-void HtmlBookmarksImporter::processElement(QWebElement element)
+void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	BookmarkInformation bookmark;
 	uint time;
