@@ -1244,12 +1244,6 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			actionObject->setEnabled(false);
 
 			break;
-		case ContentBlockingAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ContentBlocking"), this), actionObject, true);
-
-			actionObject->setEnabled(false);
-
-			break;
 		case WebsitePreferencesAction:
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, true);
 

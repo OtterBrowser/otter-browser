@@ -506,7 +506,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Content blocking</string>
+    <string>Content Blocking...</string>
    </property>
   </action>
   <action name="actionErrorConsole">

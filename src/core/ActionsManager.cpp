@@ -59,7 +59,6 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ReloadTime"), QT_TR_NOOP("Reload Each"));
 		registerAction(QLatin1String("CopyAddress"), QT_TR_NOOP("Copy Address"));
 		registerAction(QLatin1String("Validate"), QT_TR_NOOP("Validate"));
-		registerAction(QLatin1String("ContentBlocking"), QT_TR_NOOP("Content Blocking..."));
 		registerAction(QLatin1String("WebsitePreferences"), QT_TR_NOOP("Website Preferences..."));
 		registerAction(QLatin1String("ImageProperties"), QT_TR_NOOP("Image Properties..."));
 		registerAction(QLatin1String("OpenImageInNewTab"), QT_TR_NOOP("Open Image"));
