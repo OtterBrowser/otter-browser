@@ -6,12 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>500</width>
+    <height>149</height>
    </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -23,6 +20,9 @@
    </item>
    <item>
     <widget class="QStackedWidget" name="removeDependentStackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="removePage">
       <layout class="QFormLayout" name="formLayout_3">
        <property name="fieldGrowthPolicy">
@@ -79,7 +79,7 @@
           <item row="0" column="1">
            <widget class="QLineEdit" name="subfolderNameLineEdit">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Leave empty to import into main folder&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>Leave empty to import into main folder</string>
             </property>
            </widget>
           </item>
@@ -89,6 +89,19 @@
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
