@@ -1,16 +1,11 @@
 Release schedule of planned main features (it's not a full list), note that specific features may be delayed or added earlier than planned.
 
-0.9.02 (beta 2):
+0.9.03 (beta 3):
 - start page
 - passwords manager
 - greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
-- basic content blocking
 - exposing MDI features
 - page specific preferences
-
-0.9.03 (beta 3):
-- delayed loading of Flash objects
-- feeds reader (as module)
 - panels (page informations, notes, transfers, bookmarks etc.)
 - import of existing settings, bookmarks etc.
 - user scripts and stylesheets
@@ -18,6 +13,8 @@ Release schedule of planned main features (it's not a full list), note that spec
 
 1.0.01 (first stable release):
 - mouse gestures
+- delayed loading of Flash objects
+- feeds reader (as module)
 - shared contacts database
 - fine-tune UI (sizes, margins and other details)
 - support for tab thumbnails embedded in tab bar
