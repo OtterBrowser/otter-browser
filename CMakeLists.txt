@@ -6,7 +6,7 @@ set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
 set(PATCH_VERSION "02")
 set(OTTER_VERSION_MAIN "0.9.02")
-set(OTTER_VERSION_CONTEXT "-dev")
+set(OTTER_VERSION_CONTEXT " beta 2")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)

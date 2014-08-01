@@ -1,4 +1,4 @@
-0.9.02 (--.--.2014):
+0.9.02 (01.08.2014):
 - added initial support for content blocking (Adblock Plus compatible);
 - added Opera and HTML (Netscape) bookmarks import;
 - added rocker navigation;

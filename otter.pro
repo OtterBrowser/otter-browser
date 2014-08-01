@@ -15,7 +15,7 @@ win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
 OTTER_VERSION_MAIN = 0.9.02
-OTTER_VERSION_CONTEXT = -dev
+OTTER_VERSION_CONTEXT = " beta 2"
 
 isEmpty(PREFIX): PREFIX = /usr/local
 
