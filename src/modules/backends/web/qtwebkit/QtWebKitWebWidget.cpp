@@ -1772,8 +1772,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				if (mouseEvent->buttons() & Qt::LeftButton)
 				{
-					m_ignoreContextMenu = true;
-
 					triggerAction(GoForwardAction);
 
 					event->ignore();
@@ -1811,7 +1809,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
-			else if (mouseEvent->button() == Qt::RightButton)
+			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
 			{
 				if (m_ignoreContextMenu)
 				{
@@ -1820,9 +1818,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				else
 				{
 					showContextMenu(mouseEvent->pos());
-
-					return true;
 				}
+
+				return true;
 			}
 		}
 		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
