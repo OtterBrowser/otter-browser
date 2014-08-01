@@ -1,211 +1,226 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
     <name>Otter::ActionsManager</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="42"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="43"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Open in New Tab</source>
         <translation>Otevřít v novém listu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="44"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Open in New Background Tab</source>
         <translation>Otevřít v novém listu na pozadí</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>Open in New Window</source>
         <translation>Otevřít v novém okně</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open in New Background Window</source>
         <translation>Otevřít v novém okně na pozadí</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="47"/>
+        <source>Reopen Previously Closed Tab</source>
+        <translation>Otevřít znovu předtím zavřený list</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopírovat odkaz do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Kopírovat odkaz na rámeček do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Reload</source>
         <translation>Nahrát znovu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Reload Image</source>
         <translation>Nahrát obrázek znovu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>View Source</source>
         <translation>Zobrazit zdroj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Save Link Target As...</source>
         <translation>Uložit odkaz na cíl jako...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="57"/>
         <source>Save to Downloads</source>
         <translation>Uložit do stahování</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Bookmark Link...</source>
         <translation>Přidat odkaz do záložek...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Reload Each</source>
         <translation>Nahrát znovu každých</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Copy Address</source>
         <translation>Kopírovat adresu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Validate</source>
         <translation>Schválit</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Content Blocking...</source>
         <translation>Blokování obsahu...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Website Preferences...</source>
         <translation>Nastavení internetových stránek...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Image Properties...</source>
         <translation>Vlastnosti obrázků...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Open Image</source>
         <translation>Otevřít obrázek</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <source>Save Image...</source>
         <translation>Uložit obrázek...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Copy Image to Clipboard</source>
         <translation>Kopírovat obrázek do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Kopírovat odkaz na obrázek do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Search</source>
         <translation>Hledat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Search Using</source>
         <translation>Hledat pomocí</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Go to This Address</source>
         <translation>Jít na tuto adresu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <source>Clear All</source>
         <translation>Smazat vše</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Check Spelling</source>
         <translation>Ověření pravopisu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Create Search...</source>
         <translation>Vytvořit hledání...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Inspect Element...</source>
         <translation>Přezkoumat prvek...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Save Media...</source>
         <translation>Uložit multimédia...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Kopírovat odkaz na multimédia do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Show Controls</source>
         <translation>Ukázat ovládací prvky</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>Looping</source>
         <translation>Přehrávat ve smyčce</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="82"/>
+        <source>Quick Bookmark Access</source>
+        <translation>Rychlý přístup k záložkám</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Quick Find</source>
         <translation>Rychlé hledání</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Activate Address Field</source>
         <translation>Zapnout adresní řádek</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="85"/>
+        <source>Copy as Plain Text</source>
+        <translation>Kopírovat jako prostý text</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Paste and Go</source>
         <translation>Vložit a jít</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Go to tab on left</source>
         <translation>Jít na list vlevo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Go to tab on right</source>
         <translation>Jít na list vpravo</translation>
     </message>
@@ -213,17 +228,17 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="419"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="420"/>
         <source>Remove Bookmark</source>
         <translation>Odstranit záložku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="419"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="420"/>
         <source>Add Bookmark</source>
         <translation>Přidat záložku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="506"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="512"/>
         <source>Remove This Icon</source>
         <translation>Odstranit tuto ikonu</translation>
     </message>
@@ -269,34 +284,6 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="46"/>
         <source>Password:</source>
         <translation>Heslo:</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::BlockedContentDialog</name>
-    <message>
-        <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="14"/>
-        <source>Blocked Content</source>
-        <translation>Blokovaný obsah</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="24"/>
-        <source>Search...</source>
-        <translation>Hledat...</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="41"/>
-        <source>Add</source>
-        <translation>Přidat</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="51"/>
-        <source>Edit</source>
-        <translation>Upravit</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/BlockedContentDialog.ui" line="61"/>
-        <source>Remove</source>
-        <translation>Odstranit</translation>
     </message>
 </context>
 <context>
@@ -533,6 +520,65 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::BookmarksImporterWidget</name>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulář</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
+        <source>Remove existing bookmarks</source>
+        <translation>Odstranit stávající záložky</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
+        <source>Do not duplicate bookmarks with same address</source>
+        <translation>Nezdvojovat záložky s toutéž adresou</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
+        <source>Import into folder:</source>
+        <translation>Zavést do složky:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
+        <source>Import into subfolder</source>
+        <translation>Zavést do podsložky</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
+        <source>Subfolder name:</source>
+        <translation>Název podsložky:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
+        <source>Leave empty to import into main folder</source>
+        <translation>Ponechejte prázdné pro zavedení do hlavní složky</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
+        <source>Folder Name</source>
+        <translation>Název složky</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
+        <source>Select name of new folder:</source>
+        <translation>Vyberte název nové složky:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
+        <source>(Untitled)</source>
+        <translation>(Bez názvu)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
+        <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
+        <source>Bookmarks</source>
+        <translation>Záložky</translation>
+    </message>
+</context>
+<context>
     <name>Otter::CacheContentsWidget</name>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
@@ -754,38 +800,96 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
 <context>
     <name>Otter::ConsoleWidget</name>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="98"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
+        <source>All tabs</source>
+        <translation>Všechny listy</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
+        <source>Current tab only</source>
+        <translation>Pouze nynější list</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
+        <source>Current tab and unspecified</source>
+        <translation>Nynější list a blíže neurčený</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="99"/>
         <source>Network</source>
         <translation>Síť</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="44"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="102"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="66"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
         <source>Security</source>
         <translation>Bezpečnost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="57"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="106"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="79"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
         <source>JS</source>
         <translation>JS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="70"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="110"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
         <source>Other</source>
         <translation>Jiné</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="99"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="121"/>
         <source>Clear</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="125"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter...</source>
         <translation>Filtr...</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ContentBlockingDialog</name>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
+        <source>Content Blocking</source>
+        <translation>Blokování obsahu</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
+        <source>AdBlock filters</source>
+        <translation>Filtry AdBlock</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
+        <source>Add</source>
+        <translation>Přidat</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
+        <source>Remove</source>
+        <translation>Odstranit</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
+        <source>Edit</source>
+        <translation>Upravit</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
+        <source>Update</source>
+        <translation>Aktualizovat</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
+        <source>Name</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
+        <source>Last update</source>
+        <translation>Poslední aktualizace</translation>
     </message>
 </context>
 <context>
@@ -1003,6 +1107,19 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::HtmlBookmarksImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="159"/>
+        <source>HTML bookmarks</source>
+        <translation>Záložky HTML</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="164"/>
+        <source>Imports bookmarks from HTML file (Netscape format).</source>
+        <translation>Zavede záložky ze souboru HTML (formát Netscape).</translation>
+    </message>
+</context>
+<context>
     <name>Otter::ImagePropertiesDialog</name>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="14"/>
@@ -1069,6 +1186,30 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
         <translation>%1 x %2 obrazových bodů @ %3 bitů na obrazový bod</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ImportDialog</name>
+    <message>
+        <location filename="../../src/ui/ImportDialog.ui" line="22"/>
+        <source>Source:</source>
+        <translation>Zdroj:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
+        <source>Unable to import selected type.</source>
+        <translation>Nelze zavést vybraný typ.</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
+        <source>Failed to open file for reading.</source>
+        <translation>Nepodařilo se otevřít soubor pro čtení.</translation>
     </message>
 </context>
 <context>
@@ -1145,430 +1286,446 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <translation>Zavedení a vyvedení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="90"/>
+        <location filename="../../src/ui/MainWindow.ui" line="68"/>
+        <source>Import from Opera</source>
+        <translation>Zavést z Opery</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MainWindow.ui" line="74"/>
+        <source>Other Import</source>
+        <translation>Jiné zavedení</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MainWindow.ui" line="104"/>
         <source>Edit</source>
         <translation>Úpravy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="108"/>
+        <location filename="../../src/ui/MainWindow.ui" line="122"/>
         <source>View</source>
         <translation>Zobrazení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="112"/>
+        <location filename="../../src/ui/MainWindow.ui" line="126"/>
         <source>Character Encoding</source>
         <translation>Kódování znaků</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="117"/>
+        <location filename="../../src/ui/MainWindow.ui" line="131"/>
         <source>User Agent</source>
         <translation>Uživatelský agent</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="138"/>
+        <location filename="../../src/ui/MainWindow.ui" line="152"/>
+        <location filename="../../src/ui/MainWindow.ui" line="527"/>
         <source>Bookmarks</source>
         <translation>Záložky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="146"/>
+        <location filename="../../src/ui/MainWindow.ui" line="160"/>
         <source>Tools</source>
         <translation>Nástroje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="157"/>
+        <location filename="../../src/ui/MainWindow.ui" line="171"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="166"/>
+        <location filename="../../src/ui/MainWindow.ui" line="180"/>
         <source>History</source>
         <translation>Historie</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="173"/>
+        <location filename="../../src/ui/MainWindow.ui" line="187"/>
         <source>Closed Tabs</source>
         <translation>Zavřené listy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="198"/>
+        <location filename="../../src/ui/MainWindow.ui" line="212"/>
         <source>Console</source>
         <translation>Konzole</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="207"/>
+        <location filename="../../src/ui/MainWindow.ui" line="221"/>
         <source>New Tab</source>
         <translation>Nový list</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="212"/>
+        <location filename="../../src/ui/MainWindow.ui" line="226"/>
         <source>New Private Tab</source>
         <translation>Nový soukromý list</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="217"/>
+        <location filename="../../src/ui/MainWindow.ui" line="231"/>
         <source>New Window</source>
         <translation>Nové okno</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="222"/>
+        <location filename="../../src/ui/MainWindow.ui" line="236"/>
         <source>New Private Window</source>
         <translation>Nové soukromé okno</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="227"/>
+        <location filename="../../src/ui/MainWindow.ui" line="241"/>
         <source>Open...</source>
         <translation>Otevřít...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="235"/>
+        <location filename="../../src/ui/MainWindow.ui" line="249"/>
         <source>Save...</source>
         <translation>Uložit...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="240"/>
+        <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Print...</source>
         <translation>Tisk...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="245"/>
+        <location filename="../../src/ui/MainWindow.ui" line="259"/>
         <source>Print Preview</source>
         <translation>Náhled tisku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="253"/>
+        <location filename="../../src/ui/MainWindow.ui" line="267"/>
         <source>Work Offline</source>
         <translation>Pracovat bez připojení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="264"/>
+        <location filename="../../src/ui/MainWindow.ui" line="278"/>
         <source>Show Menubar</source>
         <translation>Ukázat hlavní nabídku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="269"/>
+        <location filename="../../src/ui/MainWindow.ui" line="283"/>
         <source>Exit</source>
         <translation>Ukončit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="277"/>
+        <location filename="../../src/ui/MainWindow.ui" line="291"/>
         <source>Close Tab</source>
         <translation>Zavřít list</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="285"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="994"/>
+        <location filename="../../src/ui/MainWindow.ui" line="299"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1033"/>
         <source>Undo</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="293"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="1007"/>
+        <location filename="../../src/ui/MainWindow.ui" line="307"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1046"/>
         <source>Redo</source>
         <translation>Znovu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="301"/>
+        <location filename="../../src/ui/MainWindow.ui" line="315"/>
         <source>Cut</source>
         <translation>Vyjmout</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="309"/>
+        <location filename="../../src/ui/MainWindow.ui" line="323"/>
         <source>Copy</source>
         <translation>Kopírovat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="317"/>
+        <location filename="../../src/ui/MainWindow.ui" line="331"/>
         <source>Paste</source>
         <translation>Vložit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="322"/>
+        <location filename="../../src/ui/MainWindow.ui" line="336"/>
         <source>Select All</source>
         <translation>Vybrat vše</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="327"/>
+        <location filename="../../src/ui/MainWindow.ui" line="341"/>
         <source>Find...</source>
         <translation>Najít...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="332"/>
+        <location filename="../../src/ui/MainWindow.ui" line="346"/>
         <source>Find Next</source>
         <translation>Najít další</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="337"/>
+        <location filename="../../src/ui/MainWindow.ui" line="351"/>
         <source>Find Previous</source>
         <translation>Najít předchozí</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="342"/>
+        <location filename="../../src/ui/MainWindow.ui" line="356"/>
         <source>Add Bookmark...</source>
         <translation>Přidat záložku...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="347"/>
+        <location filename="../../src/ui/MainWindow.ui" line="361"/>
         <source>Manage Bookmarks...</source>
         <translation>Spravovat záložky...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="352"/>
+        <location filename="../../src/ui/MainWindow.ui" line="366"/>
         <source>Read Feeds</source>
         <translation>Číst kanály</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="357"/>
+        <location filename="../../src/ui/MainWindow.ui" line="371"/>
         <source>Manage Feeds...</source>
         <translation>Spravovat kanály...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="362"/>
+        <location filename="../../src/ui/MainWindow.ui" line="376"/>
         <source>About Otter...</source>
         <translation>O programu Otter...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="370"/>
+        <location filename="../../src/ui/MainWindow.ui" line="384"/>
         <source>About Qt...</source>
         <translation>O Qt...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="378"/>
+        <location filename="../../src/ui/MainWindow.ui" line="392"/>
         <source>Zoom In</source>
         <translation>Přiblížit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="383"/>
+        <location filename="../../src/ui/MainWindow.ui" line="397"/>
         <source>Zoom Out</source>
         <translation>Oddálit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="388"/>
+        <location filename="../../src/ui/MainWindow.ui" line="402"/>
         <source>Zoom Original</source>
         <translation>Původní velikost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="396"/>
+        <location filename="../../src/ui/MainWindow.ui" line="410"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="401"/>
+        <location filename="../../src/ui/MainWindow.ui" line="415"/>
         <source>Back</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="406"/>
+        <location filename="../../src/ui/MainWindow.ui" line="420"/>
         <source>Forward</source>
         <translation>Vpřed</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="411"/>
+        <location filename="../../src/ui/MainWindow.ui" line="425"/>
         <source>View History</source>
         <translation>Zobrazit historii</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="416"/>
+        <location filename="../../src/ui/MainWindow.ui" line="430"/>
         <source>Clear History...</source>
         <translation>Smazat historii...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="421"/>
+        <location filename="../../src/ui/MainWindow.ui" line="435"/>
         <source>Reload</source>
         <translation>Nahrát znovu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="426"/>
+        <location filename="../../src/ui/MainWindow.ui" line="440"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="431"/>
+        <location filename="../../src/ui/MainWindow.ui" line="445"/>
         <source>View Source</source>
         <translation>Zobrazit zdroj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="436"/>
+        <location filename="../../src/ui/MainWindow.ui" line="450"/>
         <source>Full Screen</source>
         <translation>Na celou obrazovku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="441"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="819"/>
+        <location filename="../../src/ui/MainWindow.ui" line="455"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="858"/>
         <source>Clear</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="446"/>
+        <location filename="../../src/ui/MainWindow.ui" line="460"/>
         <source>Rewind</source>
         <translation>Přetočit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="451"/>
+        <location filename="../../src/ui/MainWindow.ui" line="465"/>
         <source>Fast Forward</source>
         <translation>Přetočit vpřed</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="456"/>
+        <location filename="../../src/ui/MainWindow.ui" line="470"/>
         <source>Save Current Session...</source>
         <translation>Uložit nynější sezení...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="461"/>
+        <location filename="../../src/ui/MainWindow.ui" line="475"/>
         <source>Manage Sessions...</source>
         <translation>Spravovat sezení...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="469"/>
+        <location filename="../../src/ui/MainWindow.ui" line="483"/>
         <source>Inspect Page</source>
         <translation>Přezkoumat stránku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="474"/>
+        <location filename="../../src/ui/MainWindow.ui" line="488"/>
         <source>Cookies...</source>
         <translation>Koláčky (cookies)...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="479"/>
+        <location filename="../../src/ui/MainWindow.ui" line="493"/>
         <source>Transfers...</source>
         <translation>Přenosy...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="484"/>
+        <location filename="../../src/ui/MainWindow.ui" line="498"/>
         <source>Preferences...</source>
         <translation>Nastavení...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="495"/>
-        <source>Blocked Content...</source>
-        <translation>Blokovaný obsah...</translation>
+        <location filename="../../src/ui/MainWindow.ui" line="509"/>
+        <source>Content blocking</source>
+        <translation>Blokování obsahu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="503"/>
+        <location filename="../../src/ui/MainWindow.ui" line="517"/>
         <source>Error Console</source>
         <translation>Chybová konzole</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="508"/>
+        <location filename="../../src/ui/MainWindow.ui" line="522"/>
         <source>Switch Application Language...</source>
         <translation>Přepnout jazyk aplikace...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="281"/>
+        <location filename="../../src/ui/MainWindow.ui" line="532"/>
+        <source>HTML Bookmarks</source>
+        <translation>Záložky HTML</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MainWindow.cpp" line="304"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="282"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="305"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Chystáte se ukončit, i když %n soubor se pořád ještě stahuje.</numerusform><numerusform>Chystáte se ukončit, i když %n soubory se pořád ještě stahují.</numerusform><numerusform>Chystáte se ukončit, i když %n souborů se pořád ještě stahuje.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="283"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="306"/>
         <source>Do you want to continue?</source>
         <translation>Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="287"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="310"/>
         <source>Do not show this message again</source>
         <translation>Neukazovat tuto zprávu znovu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="430"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="453"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="544"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="577"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="544"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="577"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Tuto adresu již máte ve svých záložkách.
 Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="632"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="671"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Prohlížeč ovládaný uživatelem; nikoli uživatel prohlížečem.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="633"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="672"/>
         <source>Web backend: %1 %2.</source>
         <translation>Webové jádro: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="637"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="676"/>
         <source>SSL library version: %1.</source>
         <translation>Verze knihovny SSL: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="641"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="680"/>
         <source>SSL library not available.</source>
         <translation>Knihovna SSL není dostupná.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="680"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="695"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="731"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="878"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="719"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="734"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="770"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="917"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="695"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="734"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n list)</numerusform><numerusform>%1 (%n listy)</numerusform><numerusform>%1 (%n listů)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="719"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="758"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="741"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="780"/>
         <source>Custom</source>
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="764"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="803"/>
         <source>Auto Detect</source>
         <translation>Automatické zjištění</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="828"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="867"/>
         <source>Window - %1</source>
         <translation>Okno - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="905"/>
         <source>Open All</source>
         <translation>Otevřít vše</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1136"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1180"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1137"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1181"/>
         <source>Open in New Tab</source>
         <translation>Otevřít v novém listu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1138"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1182"/>
         <source>Open in New Background Tab</source>
         <translation>Otevřít v novém listu na pozadí</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1140"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1184"/>
         <source>Open in New Window</source>
         <translation>Otevřít v novém okně</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1141"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1185"/>
         <source>Open in New Background Window</source>
         <translation>Otevřít v novém okně na pozadí</translation>
     </message>
@@ -1576,18 +1733,18 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::NetworkManager</name>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="265"/>
-        <location filename="../../src/core/NetworkManager.cpp" line="282"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="267"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="284"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="265"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="267"/>
         <source>SSL errors occured, do you want to continue?</source>
         <translation>Vyskytly se chyby SSL. Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="282"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="284"/>
         <source>SSL errors occured:
 
 %1
@@ -1603,7 +1760,7 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="219"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="228"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
@@ -1614,6 +1771,32 @@ Chcete pokračovat?</translation>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
         <translation>Nepodařilo se nastavit proxy automatické nastavení (PAC)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpenBookmarkDialog</name>
+    <message>
+        <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
+        <source>Go to Bookmark</source>
+        <translation>Jít na záložku</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
+        <source>Enter the keyword of bookmark:</source>
+        <translation>Zadejte klíčové slovo záložky:</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OperaBookmarksImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="76"/>
+        <source>Opera bookmarks</source>
+        <translation>Záložky Opera</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="81"/>
+        <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
+        <translation>Zavede záložky z prohlížeče Opera verze 12 nebo dřívější</translation>
     </message>
 </context>
 <context>
@@ -2297,7 +2480,7 @@ Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1096"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -2308,30 +2491,30 @@ Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="696"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="697"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="248"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="702"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="825"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="831"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="864"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="893"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="964"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="970"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1003"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1032"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1114"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1344"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1379"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="703"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="826"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="832"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="865"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="894"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="965"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="971"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1004"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1033"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1115"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1346"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1381"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1462"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Select Identifier</source>
         <translation>Vybraný identifikátor</translation>
     </message>
@@ -2346,40 +2529,40 @@ Chcete pokračovat?</translation>
         <translation>Nový vyhledávač</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="771"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
         <source>Select Proxy Automatic Configuration File</source>
         <translation>Vyberte soubor pro automatické nastavení proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="771"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
         <source>PAC files (*.pac)</source>
         <translation>Soubory PAC (*.pac)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="914"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1053"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="915"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1054"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="915"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1054"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="916"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1055"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Skutečně chcete odstranit tento profil?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="922"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1061"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1062"/>
         <source>Delete profile permanently</source>
         <translation>Smazat profil trvale</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1096"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
         <source>Identifier</source>
         <translation>Identifikátor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1462"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
         <translation>Zadejte jedinečný identifikátor profilu:</translation>
     </message>
@@ -2416,12 +2599,12 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="108"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="109"/>
         <source>WebKit Backend</source>
         <translation>Jádro WebKit</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="113"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="114"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>Jádro používající modul QtWebKit</translation>
     </message>
@@ -2429,56 +2612,56 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::QtWebKitWebPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="96"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="269"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="312"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="152"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="325"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="368"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="97"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="270"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="313"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="153"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="326"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="369"/>
         <source>Disable JavaScript popups</source>
         <translation>Zakázat vyskakovací okna JavaScriptu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="209"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="229"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="285"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="439"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="209"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="230"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="286"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Jste si jistý, že chcete poslat data formuláře znovu?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="209"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="231"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="287"/>
         <source>Do you want to resend data?</source>
         <translation>Chcete data poslat znovu?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="210"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="235"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="266"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="291"/>
         <source>Do not show this message again</source>
         <translation>Neukazovat tuto zprávu znovu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="414"/>
         <source>Error %1</source>
         <translation>Chyba %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="439"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Zdá se, že skript na této stránce potkaly potíže.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="439"/>
         <source>Do you want to stop the script?</source>
         <translation>Chcete skript zastavit?</translation>
     </message>
@@ -2521,87 +2704,87 @@ Chcete pokračovat?</translation>
         <translation>Zadejte jedinečný identifikátor vyhledávače:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1038"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1049"/>
         <source>Open Image (Untitled)</source>
         <translation>Otevřít obrázek (bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1038"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1049"/>
         <source>Open Image (%1)</source>
         <translation>Otevřít obrázek (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1053"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1064"/>
         <source>Save Video...</source>
         <translation>Uložit obrazový záznam...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1053"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1064"/>
         <source>Save Audio...</source>
         <translation>Uložit zvukový záznam...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1054"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1065"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Kopírovat odkaz na obrazový záznam do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1054"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1065"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Kopírovat odkaz na zvukový záznam do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1055"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1066"/>
         <source>Show Controls</source>
         <translation>Ukázat ovládací prvky</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1056"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1067"/>
         <source>Looping</source>
         <translation>Přehrávat ve smyčce</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1058"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1069"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1058"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1069"/>
         <source>Pause</source>
         <translation>Pozastavit</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1060"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1071"/>
         <source>Unmute</source>
         <translation>Zrušit ztlumení</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1060"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1071"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1085"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1096"/>
         <source>Open Image</source>
         <translation>Otevřít obrázek</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1364"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1381"/>
         <source>Blank Page</source>
         <translation>Prázdná stránka</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1377"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1394"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1675"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1692"/>
         <source>Address: %1</source>
         <translation>Adresa: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1675"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1692"/>
         <source>Title: %1
 Address: %2</source>
         <translation>Název: %1
@@ -2711,8 +2894,8 @@ Chcete je přepsat?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="292"/>
-        <source>Enctype:</source>
-        <translation>Typ kódování:</translation>
+        <source>Data encoding (enctype):</source>
+        <translation>Kódování dat (typ kódování):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
@@ -2776,13 +2959,13 @@ Chcete je přepsat?</translation>
 <context>
     <name>Otter::SessionsManager</name>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="226"/>
-        <location filename="../../src/core/SessionsManager.cpp" line="241"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="200"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="215"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="241"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="215"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
@@ -2872,7 +3055,7 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="44"/>
         <source>Actions</source>
         <translation>Činnosti</translation>
     </message>
@@ -2919,18 +3102,18 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="44"/>
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="50"/>
+        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="51"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="67"/>
+        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="68"/>
         <source>Action</source>
         <translation>Činnost</translation>
     </message>
@@ -3027,6 +3210,11 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <location filename="../../src/ui/TabBarWidget.cpp" line="102"/>
         <source>Detach Tab</source>
         <translation>Odpojit list</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
+        <source>Close Tab</source>
+        <translation>Zavřít list</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -3346,39 +3534,39 @@ Vyberte jinou.</translation>
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="116"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="124"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="117"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="125"/>
         <source>You are about to open %n bookmarks.</source>
         <translation><numerusform>Chystáte se otevřít %n záložku.</numerusform><numerusform>Chystáte se otevřít %n záložky.</numerusform><numerusform>Chystáte se otevřít %n záložek.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="122"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="130"/>
         <source>Do not show this message again</source>
         <translation>Neukazovat tuto zprávu znovu</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="307"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="315"/>
         <source>Print Page</source>
         <translation>Vytisknout stránku</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="332"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="340"/>
         <source>Print Preview</source>
         <translation>Náhled tisku</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="486"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="494"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="680"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="722"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="801"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="688"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="730"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="809"/>
         <source>Empty</source>
         <translation>Prázdný</translation>
     </message>
@@ -3416,11 +3604,41 @@ Vyberte jinou.</translation>
         <translation>Nastaví cesty pro dočasné soubory (vyrovnávací paměť) a soubory profilu na adresář se spustitelným souborem programu</translation>
     </message>
     <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="48"/>
+        <source>Failed to load adblock file: %0</source>
+        <translation>Nepodařilo se nahrát soubor adblock: %0</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="86"/>
+        <source>Loaded adblock file is not valid: %0</source>
+        <translation>Nahraný soubor adblock není platný: %0</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="458"/>
+        <source>Content blocking file checksum mismatch: %0</source>
+        <translation>Kontrolní součet souboru pro blokování obsahu neodpovídá: %0</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="466"/>
+        <source>Unable to download update for content blocking: %0</source>
+        <translation>Nelze stáhnout aktualizaci pro blokování obsahu: %0</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="477"/>
+        <source>Unable to write downloaded content blocking file: %0</source>
+        <translation>Nelze zapsat stažený soubor pro blokování obsahu: %0</translation>
+    </message>
+    <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
         <source>Failed to parse entry of proxy auto-config (PAC):
 %1</source>
         <translation>Nepodařilo se načíst automatické nastavení proxy (PAC):
 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManager.cpp" line="318"/>
+        <source>Blocked content: %0</source>
+        <translation>Blokovaný obsah: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>

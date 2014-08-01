@@ -230,10 +230,14 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_en_US.ts \
     resources/translations/otter-browser_es_ES.ts \
     resources/translations/otter-browser_et.ts \
+    resources/translations/otter-browser_fi.ts \
     resources/translations/otter-browser_fr_FR.ts \
+    resources/translations/otter-browser_hu.ts \
     resources/translations/otter-browser_id_ID.ts \
     resources/translations/otter-browser_it_IT.ts \
+    resources/translations/otter-browser_ka_GE.ts \
     resources/translations/otter-browser_lt.ts \
+    resources/translations/otter-browser_nb_NO.ts \
     resources/translations/otter-browser_nl.ts \
     resources/translations/otter-browser_pl_PL.ts \
     resources/translations/otter-browser_pt_BR.ts \
@@ -247,6 +251,7 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_sr@latin.ts \
     resources/translations/otter-browser_tr_TR.ts \
     resources/translations/otter-browser_uk_UA.ts \
-    resources/translations/otter-browser_zh_CN.ts
+    resources/translations/otter-browser_zh_CN.ts \
+    resources/translations/otter-browser_zh_TW.ts
 
 RC_FILE = otter-browser.rc
