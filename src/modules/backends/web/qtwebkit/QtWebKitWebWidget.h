@@ -113,6 +113,7 @@ private:
 	QWebHitTestResult m_hitResult;
 	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
+	bool m_ignoreContextMenu;
 	bool m_isLoading;
 	bool m_isReloading;
 	bool m_isTyped;

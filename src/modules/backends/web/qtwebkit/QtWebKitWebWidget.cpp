@@ -65,6 +65,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
+	m_ignoreContextMenu(false),
 	m_isLoading(false),
 	m_isReloading(false),
 	m_isTyped(false)
@@ -1651,7 +1652,18 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		if (event->type() == QEvent::Resize)
+		if (event->type() == QEvent::ContextMenu)
+		{
+			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+			if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
+			{
+				event->ignore();
+
+				return true;
+			}
+		}
+		else if (event->type() == QEvent::Resize)
 		{
 			emit progressBarGeometryChanged();
 		}
@@ -1709,6 +1721,17 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent->button() == Qt::LeftButton)
 			{
+				if (mouseEvent->buttons() & Qt::RightButton)
+				{
+					m_ignoreContextMenu = true;
+
+					triggerAction(GoBackAction);
+
+					event->ignore();
+
+					return true;
+				}
+
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
 				if (m_hitResult.linkUrl().isValid())
@@ -1745,6 +1768,19 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
+			else if (mouseEvent->button() == Qt::RightButton)
+			{
+				if (mouseEvent->buttons() & Qt::LeftButton)
+				{
+					m_ignoreContextMenu = true;
+
+					triggerAction(GoForwardAction);
+
+					event->ignore();
+
+					return true;
+				}
+			}
 			else if (mouseEvent->button() == Qt::BackButton)
 			{
 				triggerAction(GoBackAction);
@@ -1772,6 +1808,19 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (m_hitResult.linkUrl().isValid())
 				{
+					return true;
+				}
+			}
+			else if (mouseEvent->button() == Qt::RightButton)
+			{
+				if (m_ignoreContextMenu)
+				{
+					m_ignoreContextMenu = false;
+				}
+				else
+				{
+					showContextMenu(mouseEvent->pos());
+
 					return true;
 				}
 			}
