@@ -478,8 +478,15 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	}
 
 	bookmark->parent = folder;
-	bookmark->added = QDateTime::currentDateTime();
-	bookmark->modified = bookmark->added;
+
+	if (!bookmark->added.isValid())
+	{
+		bookmark->added = QDateTime::currentDateTime();
+	}
+	if (!bookmark->modified.isValid())
+	{
+		bookmark->modified = bookmark->added;
+	}
 
 	if (folder == 0)
 	{
