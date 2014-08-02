@@ -44,9 +44,6 @@ public:
 	};
 
 	explicit BookmarksModel(QObject *parent = NULL);
-
-protected slots:
-
 };
 
 }

@@ -151,6 +151,11 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	WebWidget::focusInEvent(event);
 
 	m_webView->setFocus();
+
+	if (m_inspector && m_inspector->isVisible())
+	{
+		m_inspectorCloseButton->raise();
+	}
 }
 
 void QtWebKitWebWidget::search(const QString &query, const QString &engine)
