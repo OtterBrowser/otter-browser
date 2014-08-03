@@ -466,7 +466,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		if (isUrlEmpty())
 		{
 			m_ui->addressWidget->setFocus();
+		}
 
+		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || isUrlEmpty())
+		{
 			emit titleChanged(m_contentsWidget->getTitle());
 		}
 	}
