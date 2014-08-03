@@ -90,7 +90,7 @@ protected:
 	static void updateIndex();
 	static void updateUrls();
 	static void updateKeywords();
-	BookmarkInformation* readBookmark(QXmlStreamReader *reader, int parent = -1);
+	BookmarkInformation* readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier);
 
 protected slots:
 	void load();

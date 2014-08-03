@@ -94,7 +94,7 @@ void BookmarksManager::load()
 		{
 			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
 			{
-				m_bookmarks.append(readBookmark(&reader, 0));
+				m_bookmarks.append(readBookmark(&reader, m_model->invisibleRootItem(), 0));
 			}
 			else
 			{
@@ -295,10 +295,14 @@ BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
 	return m_keywords.value(keyword);
 }
 
-BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, int parent)
+BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier)
 {
 	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->parent = parent;
+	bookmark->parent = parentIdentifier;
+
+	QStandardItem *item = new QStandardItem();
+
+	parent->appendRow(item);
 
 	if (reader->name() == QLatin1String("folder"))
 	{
@@ -321,7 +325,7 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 				}
 				else if (reader->name() == QLatin1String("folder") || reader->name() == QLatin1String("bookmark") || reader->name() == QLatin1String("separator"))
 				{
-					bookmark->children.append(readBookmark(reader, bookmark->identifier));
+					bookmark->children.append(readBookmark(reader, item, bookmark->identifier));
 				}
 				else
 				{
@@ -417,6 +421,16 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, in
 	}
 
 	m_allBookmarks.append(bookmark);
+
+	item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
+	item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
+	item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
+	item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
+	item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
+	item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
+	item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
+	item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
+	item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
 
 	return bookmark;
 }
