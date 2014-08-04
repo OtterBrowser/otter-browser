@@ -298,10 +298,10 @@ BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
 
 BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier)
 {
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->parent = parentIdentifier;
-
 	QStandardItem *item = new QStandardItem();
+	BookmarkInformation *bookmark = new BookmarkInformation();
+	bookmark->item = item;
+	bookmark->parent = parentIdentifier;
 
 	parent->appendRow(item);
 
@@ -519,6 +519,33 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 
 	m_allBookmarks.append(bookmark);
 
+	QStandardItem *item = new QStandardItem();
+	item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
+	item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
+	item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
+	item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
+	item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
+	item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
+	item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
+	item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
+	item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
+
+	if (bookmark->type == FolderBookmark)
+	{
+		item->setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
+	}
+	else if (bookmark->type == SeparatorBookmark)
+	{
+		item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+	}
+
+	if (m_pointers[folder]->item)
+	{
+		m_pointers[folder]->item->appendRow(item);
+	}
+
+	bookmark->item = item;
+
 	emit m_instance->folderModified(folder);
 
 	return save();
@@ -526,18 +553,31 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 
 bool BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 {
-	if (bookmark && m_allBookmarks.contains(bookmark))
+	if (!bookmark || !m_allBookmarks.contains(bookmark))
 	{
-		bookmark->modified = QDateTime::currentDateTime();
-
-		updateIndex();
-
-		emit m_instance->folderModified(bookmark->parent);
-
-		return save();
+		return false;
 	}
 
-	return false;
+	bookmark->modified = QDateTime::currentDateTime();
+
+	if (bookmark->item)
+	{
+		bookmark->item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
+		bookmark->item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
+		bookmark->item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
+		bookmark->item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
+		bookmark->item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
+		bookmark->item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
+		bookmark->item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
+		bookmark->item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
+		bookmark->item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
+	}
+
+	updateIndex();
+
+	emit m_instance->folderModified(bookmark->parent);
+
+	return save();
 }
 
 bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)
@@ -565,6 +605,11 @@ bool BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify
 	if (bookmark->type == FolderBookmark)
 	{
 		m_pointers.remove(bookmark->identifier);
+	}
+
+	if (bookmark->item && bookmark->item->parent())
+	{
+		bookmark->item->parent()->removeRow(bookmark->item->row());
 	}
 
 	delete bookmark;

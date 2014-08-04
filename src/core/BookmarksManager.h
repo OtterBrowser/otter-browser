@@ -38,6 +38,7 @@ enum BookmarkType
 
 struct BookmarkInformation
 {
+	QStandardItem *item;
 	QString url;
 	QString title;
 	QString description;
@@ -51,7 +52,7 @@ struct BookmarkInformation
 	int parent;
 	int visits;
 
-	BookmarkInformation() : type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
+	BookmarkInformation() : item(NULL), type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
 };
 
 class BookmarksModel;
