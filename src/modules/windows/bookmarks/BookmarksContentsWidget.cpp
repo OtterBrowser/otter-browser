@@ -19,10 +19,9 @@
 
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/BookmarksModel.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
-#include "../../../core/WebBackend.h"
-#include "../../../core/WebBackendsManager.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ItemDelegate.h"
 
@@ -38,8 +37,6 @@ namespace Otter
 {
 
 BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidget(window),
-	m_model(new QStandardItemModel(this)),
-	m_isLoading(true),
 	m_ui(new Ui::BookmarksContentsWidget)
 {
 	m_ui->setupUi(this);
@@ -50,12 +47,17 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
 	m_ui->addButton->setMenu(addMenu);
+	m_ui->bookmarksView->setModel(BookmarksManager::getModel());
+	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 
-	QTimer::singleShot(100, this, SLOT(populateBookmarks()));
-
+	connect(BookmarksManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
+	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
+	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 
 BookmarksContentsWidget::~BookmarksContentsWidget()
@@ -76,76 +78,6 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 		default:
 			break;
 	}
-}
-
-void BookmarksContentsWidget::populateBookmarks()
-{
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder();
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		addBookmark(bookmarks.at(i), m_model->invisibleRootItem());
-	}
-
-	m_ui->bookmarksView->setModel(m_model);
-	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
-
-	m_isLoading = false;
-
-	emit loadingChanged(false);
-
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateFolder(int)));
-	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
-	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
-	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
-}
-
-void BookmarksContentsWidget::addBookmark(BookmarkInformation *bookmark, QStandardItem *parent)
-{
-	if (!bookmark)
-	{
-		return;
-	}
-
-	if (!parent)
-	{
-		parent = findFolder(bookmark->parent);
-	}
-
-	if (!parent)
-	{
-		return;
-	}
-
-	QStandardItem *item = NULL;
-
-	switch (bookmark->type)
-	{
-		case FolderBookmark:
-			item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
-
-			for (int i = 0; i < bookmark->children.count(); ++i)
-			{
-				addBookmark(bookmark->children.at(i), item);
-			}
-
-			break;
-		case UrlBookmark:
-			item = new QStandardItem(WebBackendsManager::getBackend()->getIconForUrl(QUrl(bookmark->url)), (bookmark->title.isEmpty() ? tr("(Untitled)") : bookmark->title));
-
-			break;
-		default:
-			item = new QStandardItem();
-			item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
-
-			break;
-	}
-
-	item->setData(qVariantFromValue((void*) bookmark), Qt::UserRole);
-
-	parent->appendRow(item);
 }
 
 void BookmarksContentsWidget::addBookmark()
@@ -292,25 +224,6 @@ void BookmarksContentsWidget::triggerAction()
 	}
 }
 
-void BookmarksContentsWidget::updateFolder(int folder)
-{
-	QStandardItem *item = findFolder(folder);
-
-	if (!item)
-	{
-		return;
-	}
-
-	item->removeRows(0, item->rowCount());
-
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
-
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		addBookmark(bookmarks.at(i), item);
-	}
-}
-
 void BookmarksContentsWidget::updateActions()
 {
 	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();
@@ -342,12 +255,12 @@ QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *it
 {
 	if (folder == 0)
 	{
-		return m_model->invisibleRootItem();
+		return BookmarksManager::getModel()->invisibleRootItem();
 	}
 
 	if (!item)
 	{
-		item = m_model->invisibleRootItem();
+		item = BookmarksManager::getModel()->invisibleRootItem();
 	}
 
 	for (int i = 0; i < item->rowCount(); ++i)
@@ -443,7 +356,7 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	{
 		if (sender())
 		{
-			branch = m_model->invisibleRootItem();
+			branch = BookmarksManager::getModel()->invisibleRootItem();
 		}
 		else
 		{
@@ -477,11 +390,6 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
 
 	return found;
-}
-
-bool BookmarksContentsWidget::isLoading() const
-{
-	return m_isLoading;
 }
 
 }

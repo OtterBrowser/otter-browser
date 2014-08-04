@@ -49,7 +49,6 @@ public:
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	bool isLoading() const;
 
 public slots:
 	void triggerAction(ActionIdentifier action, bool checked = false);
@@ -61,8 +60,6 @@ protected:
 
 protected slots:
 	void triggerAction();
-	void populateBookmarks();
-	void addBookmark(BookmarkInformation *bookmark, QStandardItem *parent = NULL);
 	void addBookmark();
 	void addFolder();
 	void addSeparator();
@@ -71,14 +68,11 @@ protected slots:
 	void copyBookmarkLink();
 	void bookmarkProperties();
 	void showContextMenu(const QPoint &point);
-	void updateFolder(int folder);
 	void updateActions();
 	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
 
 private:
-	QStandardItemModel *m_model;
 	QHash<ActionIdentifier, QAction*> m_actions;
-	bool m_isLoading;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 

@@ -22,6 +22,7 @@
 #include "BookmarksModel.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QSet>
@@ -311,6 +312,8 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
 		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
 
+		item->setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
+
 		while (reader->readNext())
 		{
 			if (reader->isStartElement())
@@ -416,6 +419,8 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 	else if (reader->name() == QLatin1String("separator"))
 	{
 		bookmark->type = SeparatorBookmark;
+
+		item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 
 		reader->readNext();
 	}
