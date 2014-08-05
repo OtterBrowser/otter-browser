@@ -539,7 +539,11 @@ bool BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 		item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 	}
 
-	if (m_pointers[folder]->item)
+	if (folder == 0)
+	{
+		m_model->invisibleRootItem()->appendRow(item);
+	}
+	else if (m_pointers[folder]->item)
 	{
 		m_pointers[folder]->item->appendRow(item);
 	}
