@@ -66,6 +66,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
 	m_ignoreContextMenu(false),
+	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
 	m_isReloading(false),
 	m_isTyped(false)
@@ -107,7 +108,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveImageToDisk"), this), getAction(SaveImageToDiskAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageToClipboard"), this), getAction(CopyImageToClipboardAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageUrlToClipboard"), this), getAction(CopyImageUrlToClipboardAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectElement"), this), getAction(InspectElementAction));
 #if QTWEBKIT_VERSION >= 0x050200
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveMediaToDisk"), this), getAction(SaveMediaToDiskAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyMediaUrlToClipboard"), this), getAction(CopyMediaUrlToClipboardAction));
@@ -668,6 +668,12 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			emit progressBarGeometryChanged();
 
 			break;
+		case InspectElementAction:
+			triggerAction(InspectPageAction, true);
+
+			m_webView->triggerPageAction(QWebPage::InspectElement);
+
+			break;
 		case SaveLinkToDownloadsAction:
 			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
 
@@ -988,7 +994,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
-	if (position.isNull() && (m_webView->selectedText().isEmpty() || m_hotclickPosition.isNull()))
+	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().isEmpty() || m_hotclickPosition.isNull())))
 	{
 		m_hotclickPosition = QPoint();
 
@@ -1314,6 +1320,13 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			actionObject->setShortcut(QKeySequence());
 
 			break;
+		case InspectElementAction:
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectElement"), this), actionObject);
+
+			actionObject->setEnabled(true);
+			actionObject->setShortcut(QKeySequence());
+
+			break;
 		case FindAction:
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Find"), this), actionObject, true);
 
@@ -1589,8 +1602,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 			return QWebPage::Undo;
 		case RedoAction:
 			return QWebPage::Redo;
-		case InspectElementAction:
-			return QWebPage::InspectElement;
 #if QTWEBKIT_VERSION >= 0x050200
 		case SaveMediaToDiskAction:
 			return QWebPage::DownloadMediaToDisk;
@@ -1661,12 +1672,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
-			if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
-			{
-				event->ignore();
-
-				return true;
-			}
+			m_ignoreContextMenu = (contextMenuEvent->reason() == QContextMenuEvent::Mouse);
 		}
 		else if (event->type() == QEvent::Resize)
 		{
@@ -1728,7 +1734,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				if (mouseEvent->buttons() & Qt::RightButton)
 				{
-					m_ignoreContextMenu = true;
+					m_isUsingRockerNavigation = true;
 
 					triggerAction(GoBackAction);
 
@@ -1816,12 +1822,14 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
 			{
-				if (m_ignoreContextMenu)
+				if (m_isUsingRockerNavigation)
 				{
-					m_ignoreContextMenu = false;
+					m_isUsingRockerNavigation = false;
 				}
 				else
 				{
+					m_ignoreContextMenu = false;
+
 					showContextMenu(mouseEvent->pos());
 				}
 

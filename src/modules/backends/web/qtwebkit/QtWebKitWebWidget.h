@@ -114,6 +114,7 @@ private:
 	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
 	bool m_ignoreContextMenu;
+	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isReloading;
 	bool m_isTyped;
