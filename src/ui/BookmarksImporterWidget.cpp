@@ -74,16 +74,11 @@ void BookmarksImporterWidget::createFolder()
 
 	disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
 
-	if (BookmarksManager::addBookmark(bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt()))
-	{
-		m_folder = bookmark->identifier;
+	BookmarksManager::addBookmark(bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt());
 
-		reloadFolders();
-	}
-	else
-	{
-		delete bookmark;
-	}
+	m_folder = bookmark->identifier;
+
+	reloadFolders();
 
 	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
 }
