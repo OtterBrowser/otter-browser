@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -188,20 +189,10 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 
 void SearchWidget::currentSearchEngineChanged(int index)
 {
-	lineEdit()->setGeometry(m_lineEditRectangle);
-
-	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
+	if (!setPlaceholderText(index))
 	{
-		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
-	}
-	else
-	{
-		lineEdit()->setPlaceholderText(QString());
-
 		return;
 	}
-
-	lineEdit()->setText(m_query);
 
 	if (!m_query.isEmpty())
 	{
@@ -277,6 +268,8 @@ void SearchWidget::storeCurrentSearchEngine()
 	m_storedSearchEngine = getCurrentSearchEngine();
 
 	hidePopup();
+
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
 
 void SearchWidget::restoreCurrentSearchEngine()
@@ -287,6 +280,8 @@ void SearchWidget::restoreCurrentSearchEngine()
 
 		m_storedSearchEngine = QString();
 	}
+
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 }
 
 void SearchWidget::setCurrentSearchEngine(const QString &engine)
@@ -306,7 +301,7 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : engine));
 
 	setCurrentIndex(index);
-	currentSearchEngineChanged(index);
+	setPlaceholderText(index);
 	searchEngineSelected(index);
 	setEnabled(true);
 
@@ -319,6 +314,26 @@ void SearchWidget::setCurrentSearchEngine(const QString &engine)
 QString SearchWidget::getCurrentSearchEngine() const
 {
 	return currentData(Qt::UserRole + 1).toString();
+}
+
+bool SearchWidget::setPlaceholderText(int index)
+{
+	lineEdit()->setGeometry(m_lineEditRectangle);
+
+	if (itemData(index, Qt::AccessibleDescriptionRole).toString().isEmpty())
+	{
+		lineEdit()->setPlaceholderText(tr("Search Using %1").arg(itemData(index, Qt::UserRole).toString()));
+	}
+	else
+	{
+		lineEdit()->setPlaceholderText(QString());
+
+		return false;
+	}
+
+	lineEdit()->setText(m_query);
+
+	return true;
 }
 
 }

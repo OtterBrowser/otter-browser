@@ -179,7 +179,7 @@ void WindowsManager::search(const QString &query, const QString &engine)
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	if (window && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	if (window && (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() || window->isUrlEmpty()))
 	{
 		window->search(query, engine);
 
