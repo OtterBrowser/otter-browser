@@ -201,7 +201,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		}
 		else if (flags & LinkMenu)
 		{
-			menu.addAction(getAction(OpenLinkInThisTabAction));
+			menu.addAction(getAction(OpenLinkAction));
 			menu.addAction(getAction(OpenLinkInNewTabAction));
 			menu.addAction(getAction(OpenLinkInNewTabBackgroundAction));
 			menu.addSeparator();

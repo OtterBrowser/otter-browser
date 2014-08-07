@@ -100,6 +100,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("GoForward"), this), getAction(GoForwardAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), getAction(ReloadAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Stop"), this), getAction(StopAction));
+	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLink"), this), getAction(OpenLinkAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInThisTab"), this), getAction(OpenLinkInThisTabAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindow"), this), getAction(OpenLinkInNewWindowAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInNewTab"), this), getAction(OpenFrameInNewTabAction));
@@ -118,7 +119,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 #endif
 
 	getAction(ReloadAction)->setEnabled(true);
-	getAction(OpenLinkInThisTabAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
+	getAction(OpenLinkAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
