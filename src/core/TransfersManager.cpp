@@ -532,12 +532,17 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 	{
 		if (path.isEmpty())
 		{
-			path = QFileDialog::getSaveFileName(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
+			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
+			dialog.setFileMode(QFileDialog::AnyFile);
+			dialog.setAcceptMode(QFileDialog::AcceptSave);
+			dialog.exec();
 
-			if (path.isEmpty())
+			if (dialog.selectedFiles().isEmpty())
 			{
 				break;
 			}
+
+			path = dialog.selectedFiles().first();
 		}
 
 		const bool exists = QFile::exists(path);
