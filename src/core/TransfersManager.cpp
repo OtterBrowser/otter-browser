@@ -535,9 +535,8 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);
-			dialog.exec();
 
-			if (dialog.selectedFiles().isEmpty())
+			if (dialog.exec() == QDialog::Rejected || dialog.selectedFiles().isEmpty())
 			{
 				break;
 			}
