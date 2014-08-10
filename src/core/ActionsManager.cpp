@@ -39,6 +39,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	{
 		ShortcutsManager::createInstance(Application::getInstance());
 
+		registerAction(QLatin1String("CloseWindow"), QT_TR_NOOP("Close Window"));
 		registerAction(QLatin1String("OpenLinkTab"), QT_TR_NOOP("Open"));
 		registerAction(QLatin1String("OpenLinkInThisTab"), QT_TR_NOOP("Open in This Tab"));
 		registerAction(QLatin1String("OpenLinkInNewTab"), QT_TR_NOOP("Open in New Tab"));

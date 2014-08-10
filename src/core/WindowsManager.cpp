@@ -545,15 +545,26 @@ void WindowsManager::closeWindow(Window *window)
 		}
 	}
 
+	const QString lastTabClosingAction = SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString();
+
 	if (m_tabBar->count() == 1)
 	{
-		window = getWindow(0);
-
-		if (window)
+		if (lastTabClosingAction == QLatin1String("closeWindow"))
 		{
-			window->clear();
+			ActionsManager::triggerAction(QLatin1String("CloseWindow"), m_mdi);
 
 			return;
+		}
+		else if (lastTabClosingAction == QLatin1String("openTab"))
+		{
+			window = getWindow(0);
+
+			if (window)
+			{
+				window->clear();
+
+				return;
+			}
 		}
 	}
 
@@ -561,7 +572,7 @@ void WindowsManager::closeWindow(Window *window)
 
 	emit windowRemoved(index);
 
-	if (m_tabBar->count() < 1)
+	if (m_tabBar->count() < 1 && lastTabClosingAction != QLatin1String("doNothing"))
 	{
 		open();
 	}

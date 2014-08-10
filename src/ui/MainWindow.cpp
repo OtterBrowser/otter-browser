@@ -193,7 +193,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_ui->actionWorkOffline, SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
-	connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+	connect(m_ui->actionExit, SIGNAL(triggered()), Application::getInstance(), SLOT(closeAllWindows()));
 	connect(m_ui->actionUndo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionRedo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_ui->actionCut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -237,6 +237,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->menuCharacterEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
 	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
 	connect(m_actionsManager->getAction(CopyAsPlainTextAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(ActivateAddressFieldAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
