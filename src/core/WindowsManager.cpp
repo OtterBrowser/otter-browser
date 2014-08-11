@@ -87,15 +87,6 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 }
 
-void WindowsManager::openTab(const QUrl &url, OpenHints hints)
-{
-	Window *window = new Window((hints & PrivateOpen), NULL, m_mdi);
-
-	addWindow(window, hints);
-
-	window->setUrl(url, false);
-}
-
 void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 {
 	if (!bookmark)
@@ -156,6 +147,15 @@ void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 		default:
 			break;
 	}
+}
+
+void WindowsManager::openTab(const QUrl &url, OpenHints hints)
+{
+	Window *window = new Window((hints & PrivateOpen), NULL, m_mdi);
+
+	addWindow(window, hints);
+
+	window->setUrl(url, false);
 }
 
 void WindowsManager::gatherBookmarks(int folder)
