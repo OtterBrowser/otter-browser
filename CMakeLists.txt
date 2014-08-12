@@ -4,7 +4,7 @@ project(otter-browser)
 
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
-set(PATCH_VERSION "02")
+set(PATCH_VERSION "03")
 set(OTTER_VERSION_MAIN "0.9.03")
 set(OTTER_VERSION_CONTEXT "-dev")
 
