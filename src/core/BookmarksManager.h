@@ -31,9 +31,10 @@ namespace Otter
 
 enum BookmarkType
 {
-	FolderBookmark = 0,
-	UrlBookmark = 1,
-	SeparatorBookmark = 2
+	UnknownBookmark = 0,
+	FolderBookmark = 1,
+	UrlBookmark = 2,
+	SeparatorBookmark = 3
 };
 
 struct BookmarkInformation

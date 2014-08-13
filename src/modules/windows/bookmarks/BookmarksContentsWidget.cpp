@@ -127,23 +127,20 @@ void BookmarksContentsWidget::removeBookmark()
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(Qt::UserRole).value<void*>());
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 	QAction *action = qobject_cast<QAction*>(sender());
 
-	if (bookmark && manager)
+	if (manager && action && static_cast<BookmarkType>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::BookmarkTypeRole).toInt()) == UrlBookmark)
 	{
-		manager->open(bookmark, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
+		manager->open((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::BookmarkUrlRole).toUrl(), (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 	}
 }
 
 void BookmarksContentsWidget::copyBookmarkLink()
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
-
-	if (bookmark)
+	if (static_cast<BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::BookmarkTypeRole).toInt()) == UrlBookmark)
 	{
-		QGuiApplication::clipboard()->setText(bookmark->url);
+		QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::BookmarkUrlRole).toUrl().toString());
 	}
 }
 
@@ -160,10 +157,11 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->indexAt(point).data(Qt::UserRole).value<void*>());
+	const QModelIndex index = m_ui->bookmarksView->indexAt(point);
+	const BookmarkType type = static_cast<BookmarkType>(index.data(BookmarksModel::BookmarkTypeRole).toInt());
 	QMenu menu(this);
 
-	if (bookmark)
+	if (type != UnknownBookmark)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
@@ -172,7 +170,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(NewWindowOpen);
 		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(NewWindowBackgroundOpen);
 
-		if (bookmark->type == SeparatorBookmark || (bookmark->type == FolderBookmark && bookmark->children.isEmpty()))
+		if (type == SeparatorBookmark || (type == FolderBookmark && index.child(0, 0).data(BookmarksModel::BookmarkTypeRole).toInt() == 0))
 		{
 			for (int i = 0; i < menu.actions().count(); ++i)
 			{
@@ -181,7 +179,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		}
 
 		menu.addSeparator();
-		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(bookmark->type == UrlBookmark);
+		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(type == UrlBookmark);
 		menu.addSeparator();
 
 		QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
@@ -227,23 +225,15 @@ void BookmarksContentsWidget::triggerAction()
 void BookmarksContentsWidget::updateActions()
 {
 	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>((m_ui->bookmarksView->selectionModel()->hasSelection() ? m_ui->bookmarksView->selectionModel()->currentIndex() : QModelIndex()).data(Qt::UserRole).value<void*>());
+	const QModelIndex index = (m_ui->bookmarksView->selectionModel()->hasSelection() ? m_ui->bookmarksView->selectionModel()->currentIndex() : QModelIndex());
+	const BookmarkType type = static_cast<BookmarkType>(index.data(BookmarksModel::BookmarkTypeRole).toInt());
 
-	m_ui->propertiesButton->setEnabled((hasSelecion && bookmark && bookmark->type != SeparatorBookmark));
-	m_ui->deleteButton->setEnabled(hasSelecion);
-
-	if (bookmark)
-	{
-		m_ui->addressLabelWidget->setText(bookmark->url);
-		m_ui->titleLabelWidget->setText(bookmark->title);
-		m_ui->descriptionLabelWidget->setText(bookmark->description);
-	}
-	else
-	{
-		m_ui->addressLabelWidget->setText(QString());
-		m_ui->titleLabelWidget->setText(QString());
-		m_ui->descriptionLabelWidget->setText(QString());
-	}
+	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::BookmarkUrlRole).toUrl().toString());
+	m_ui->titleLabelWidget->setText(index.data(BookmarksModel::BookmarkTitleRole).toString());
+	m_ui->descriptionLabelWidget->setText(index.data(BookmarksModel::BookmarkDescriptionRole).toString());
+	m_ui->keywordLabelWidget->setText(index.data(BookmarksModel::BookmarkKeywordRole).toString());
+	m_ui->propertiesButton->setEnabled((hasSelecion && (type == FolderBookmark || type == UrlBookmark)));
+	m_ui->deleteButton->setEnabled(hasSelecion && type != UnknownBookmark);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
