@@ -328,15 +328,15 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	m_allBookmarks.append(bookmark);
 
 	QStandardItem *item = new QStandardItem();
-	item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
-	item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
-	item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
-	item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
-	item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
-	item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
-	item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
-	item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
-	item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
+	item->setData(bookmark->title, BookmarksModel::TitleRole);
+	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
+	item->setData(bookmark->type, BookmarksModel::TypeRole);
+	item->setData(bookmark->url, BookmarksModel::UrlRole);
+	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
+	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
+	item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
+	item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
+	item->setData(bookmark->visits, BookmarksModel::VisitsRole);
 
 	if (bookmark->type == FolderBookmark)
 	{
@@ -374,15 +374,15 @@ void BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
 
 	if (bookmark->item)
 	{
-		bookmark->item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
-		bookmark->item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
-		bookmark->item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
-		bookmark->item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
-		bookmark->item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
-		bookmark->item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
-		bookmark->item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
-		bookmark->item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
-		bookmark->item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
+		bookmark->item->setData(bookmark->title, BookmarksModel::TitleRole);
+		bookmark->item->setData(bookmark->description, BookmarksModel::DescriptionRole);
+		bookmark->item->setData(bookmark->type, BookmarksModel::TypeRole);
+		bookmark->item->setData(bookmark->url, BookmarksModel::UrlRole);
+		bookmark->item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
+		bookmark->item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
+		bookmark->item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
+		bookmark->item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
+		bookmark->item->setData(bookmark->visits, BookmarksModel::VisitsRole);
 	}
 
 	updateIndex();
@@ -605,15 +605,15 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 
 	m_allBookmarks.append(bookmark);
 
-	item->setData(bookmark->title, BookmarksModel::BookmarkTitleRole);
-	item->setData(bookmark->description, BookmarksModel::BookmarkDescriptionRole);
-	item->setData(bookmark->type, BookmarksModel::BookmarkTypeRole);
-	item->setData(bookmark->url, BookmarksModel::BookmarkUrlRole);
-	item->setData(bookmark->keyword, BookmarksModel::BookmarkKeywordRole);
-	item->setData(bookmark->added, BookmarksModel::BookmarkTimeAddedRole);
-	item->setData(bookmark->modified, BookmarksModel::BookmarkTimeModifiedRole);
-	item->setData(bookmark->visited, BookmarksModel::BookmarkTimeVisitedRole);
-	item->setData(bookmark->visits, BookmarksModel::BookmarkVisitsRole);
+	item->setData(bookmark->title, BookmarksModel::TitleRole);
+	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
+	item->setData(bookmark->type, BookmarksModel::TypeRole);
+	item->setData(bookmark->url, BookmarksModel::UrlRole);
+	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
+	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
+	item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
+	item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
+	item->setData(bookmark->visits, BookmarksModel::VisitsRole);
 
 	return bookmark;
 }
