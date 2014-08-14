@@ -368,9 +368,9 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 
 	if (!found)
 	{
-		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(branch->data(Qt::UserRole).value<void*>());
+		const BookmarkType type = static_cast<BookmarkType>(branch->data(BookmarksModel::BookmarkTypeRole).toInt());
 
-		if (bookmark && bookmark->type != SeparatorBookmark && (bookmark->url.contains(filter, Qt::CaseInsensitive) || bookmark->title.contains(filter, Qt::CaseInsensitive) || bookmark->description.contains(filter, Qt::CaseInsensitive) || bookmark->keyword.contains(filter, Qt::CaseInsensitive)))
+		if ((type == FolderBookmark || type == UrlBookmark) && (branch->data(BookmarksModel::BookmarkUrlRole).toUrl().toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::BookmarkTitleRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::BookmarkDescriptionRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::BookmarkKeywordRole).toString().contains(filter, Qt::CaseInsensitive)))
 		{
 			found = true;
 		}
