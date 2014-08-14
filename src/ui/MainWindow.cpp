@@ -314,6 +314,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			if (messageBox.exec() == QMessageBox::Yes)
 			{
 				runningTransfers = 0;
+				transfersDialog = 1;
 			}
 
 			SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
