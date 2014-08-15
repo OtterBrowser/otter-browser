@@ -130,7 +130,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 	QAction *action = qobject_cast<QAction*>(sender());
 
-	if (manager && action && static_cast<BookmarkType>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::TypeRole).toInt()) == UrlBookmark)
+	if (manager && static_cast<BookmarkType>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::TypeRole).toInt()) == UrlBookmark)
 	{
 		manager->open((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::UrlRole).toUrl(), (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 	}
