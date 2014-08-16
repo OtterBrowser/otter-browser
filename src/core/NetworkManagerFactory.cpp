@@ -55,6 +55,8 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 	QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
 	m_instance = new NetworkManagerFactory(parent);
+
+	ContentBlockingManager::createInstance(m_instance);
 }
 
 void NetworkManagerFactory::initialize()
@@ -74,8 +76,6 @@ void NetworkManagerFactory::initialize()
 #else
 	m_defaultCiphers = QSslSocket::defaultCiphers();
 #endif
-
-	ContentBlockingManager::createInstance();
 
 	loadUserAgents();
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));

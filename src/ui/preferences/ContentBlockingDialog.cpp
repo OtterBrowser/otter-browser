@@ -38,26 +38,26 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 {
 	m_ui->setupUi(this);
 
-	QList<ContentBlockingList*> definitions = ContentBlockingManager::getBlockingDefinitions();
-	QStandardItemModel *blockingModel = new QStandardItemModel(this);
-	QStringList blockingLabels;
-	blockingLabels << tr("Name") << tr("Last update");
+	const QList<ContentBlockingList*> definitions = ContentBlockingManager::getBlockingDefinitions();
+	QStandardItemModel *model = new QStandardItemModel(this);
+	QStringList labels;
+	labels << tr("Name") << tr("Last update");
 
-	blockingModel->setHorizontalHeaderLabels(blockingLabels);
-	
+	model->setHorizontalHeaderLabels(labels);
+
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QList<QStandardItem*> blockingItems;
-		blockingItems.append(new QStandardItem(definitions.at(i)->getListName()));
-		blockingItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-		blockingItems[0]->setData(definitions.at(i)->getConfigListName(), Qt::UserRole);
-		blockingItems[0]->setCheckable(true);
-		blockingItems[0]->setCheckState(definitions.at(i)->isEnabled() ? Qt::Checked : Qt::Unchecked);
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(definitions.at(i)->getListName()));
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+		items[0]->setData(definitions.at(i)->getConfigListName(), Qt::UserRole);
+		items[0]->setCheckable(true);
+		items[0]->setCheckState(definitions.at(i)->isEnabled() ? Qt::Checked : Qt::Unchecked);
 
-		blockingModel->appendRow(blockingItems);
+		model->appendRow(items);
 	}
 
-	m_ui->filtersViewWidget->setModel(blockingModel);
+	m_ui->filtersViewWidget->setModel(model);
 	m_ui->filtersViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->filtersViewWidget->horizontalHeader()->setVisible(true);
 	m_ui->filtersViewWidget->setItemDelegate(new OptionDelegate(true, this));
@@ -90,7 +90,7 @@ void ContentBlockingDialog::save()
 {
 	QSettings adBlock(SessionsManager::getProfilePath() + QLatin1String("/adblock.ini"), QSettings::IniFormat);
 	adBlock.setIniCodec("UTF-8");
-	
+
 	for (int i = 0; i < m_ui->filtersViewWidget->getRowCount(); ++i)
 	{
 		const QModelIndex index = m_ui->filtersViewWidget->getIndex(i, 0);
