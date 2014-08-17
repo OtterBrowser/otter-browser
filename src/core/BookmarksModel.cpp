@@ -18,9 +18,30 @@
 **************************************************************************/
 
 #include "BookmarksModel.h"
+#include "WebBackend.h"
+#include "WebBackendsManager.h"
 
 namespace Otter
 {
+
+BookmarksItem::BookmarksItem() : QStandardItem()
+{
+}
+
+QVariant BookmarksItem::data(int role) const
+{
+	if (role == Qt::DecorationRole && QStandardItem::data(Qt::DecorationRole).isNull())
+	{
+		return WebBackendsManager::getBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
+	}
+
+	return QStandardItem::data(role);
+}
+
+void BookmarksItem::setData(const QVariant &value, int role)
+{
+	QStandardItem::setData(value, role);
+}
 
 BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 {

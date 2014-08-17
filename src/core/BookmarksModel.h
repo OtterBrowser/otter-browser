@@ -25,6 +25,20 @@
 namespace Otter
 {
 
+class BookmarksItem : public QStandardItem
+{
+public:
+	explicit BookmarksItem();
+
+	QVariant data(int role) const;
+
+protected:
+	void setData(const QVariant &value, int role);
+
+	friend class BookmarksManager;
+	friend class BookmarkPropertiesDialog;
+};
+
 class BookmarksModel : public QStandardItemModel
 {
 	Q_OBJECT

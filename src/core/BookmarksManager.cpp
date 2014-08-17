@@ -327,7 +327,7 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 
 	m_allBookmarks.append(bookmark);
 
-	QStandardItem *item = new QStandardItem();
+	BookmarksItem *item = new BookmarksItem();
 	item->setData(bookmark->title, BookmarksModel::TitleRole);
 	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
 	item->setData(bookmark->type, BookmarksModel::TypeRole);
@@ -476,7 +476,7 @@ BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
 
 BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier)
 {
-	QStandardItem *item = new QStandardItem();
+	BookmarksItem *item = new BookmarksItem();
 	BookmarkInformation *bookmark = new BookmarkInformation();
 	bookmark->item = item;
 	bookmark->parent = parentIdentifier;
