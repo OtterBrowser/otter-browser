@@ -21,6 +21,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 
+#include <QtGui/QMouseEvent>
 #include <QtWidgets/QInputDialog>
 
 namespace Otter
@@ -33,6 +34,7 @@ BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(pa
 	setModel(BookmarksManager::getModel());
 	updateBranch();
 
+	m_view->parent()->installEventFilter(this);
 	m_view->setHeaderHidden(true);
 	m_view->setItemsExpandable(false);
 	m_view->setRootIsDecorated(false);
@@ -85,6 +87,16 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 	m_view->expandAll();
 }
 
+void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
+{
+	m_index = index;
+
+	setRootModelIndex(index.parent());
+	setModelColumn(0);
+	setCurrentIndex(index.row());
+	setRootModelIndex(QModelIndex());
+}
+
 QStandardItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
 	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(m_view->currentIndex());
@@ -97,12 +109,19 @@ QStandardItem* BookmarksComboBoxWidget::getCurrentFolder()
 	return BookmarksManager::getModel()->invisibleRootItem();
 }
 
-void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
+bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 {
-	setRootModelIndex(index.parent());
-	setModelColumn(0);
-	setCurrentIndex(index.row());
-	setRootModelIndex(QModelIndex());
+	if (object == m_view->parent() && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			m_index = m_view->indexAt(mouseEvent->pos());
+		}
+	}
+
+	return QComboBox::eventFilter(object, event);
 }
 
 }

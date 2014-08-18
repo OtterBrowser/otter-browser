@@ -36,8 +36,7 @@ public:
 
 	void setCurrentFolder(const QModelIndex &index);
 	QStandardItem* getCurrentFolder();
-
-protected:
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
 	void createFolder();
