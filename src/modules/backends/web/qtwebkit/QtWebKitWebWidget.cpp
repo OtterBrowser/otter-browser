@@ -278,7 +278,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 			if (m_historyEntry >= 0)
 			{
 				HistoryManager::updateEntry(m_historyEntry, getUrl(), m_webView->title(), m_webView->icon());
-				BookmarksManager::updateVisit(getUrl());
+				BookmarksManager::updateVisits(getUrl());
 			}
 		}
 		else if (m_historyEntry >= 0)

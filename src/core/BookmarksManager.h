@@ -69,7 +69,7 @@ public:
 	~BookmarksManager();
 
 	static void createInstance(QObject *parent = NULL);
-	static void updateVisit(const QUrl &url);
+	static void updateVisits(const QUrl &url);
 	static void addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
 	static void deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
 	static void deleteBookmark(const QUrl &url);
@@ -89,7 +89,7 @@ protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
+	static void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
 	static void updateIndex();
 	static void updateUrls();
 	static void updateKeywords();

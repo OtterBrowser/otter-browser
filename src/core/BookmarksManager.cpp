@@ -66,6 +66,12 @@ void BookmarksManager::timerEvent(QTimerEvent *event)
 	}
 }
 
+void BookmarksManager::createInstance(QObject *parent)
+{
+	m_instance = new BookmarksManager(parent);
+	m_model = new BookmarksModel(m_instance);
+}
+
 void BookmarksManager::scheduleSave()
 {
 	if (m_saveTimer == 0)
@@ -107,48 +113,56 @@ void BookmarksManager::load()
 
 	updateIndex();
 
+	connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
+	connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+	connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+	connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), m_instance, SLOT(scheduleSave()));
+
 	emit folderModified(0);
 }
 
-void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark)
+void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark)
 {
-	switch (bookmark->type)
+	if (!bookmark)
+	{
+		return;
+	}
+
+	switch (static_cast<BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
 	{
 		case FolderBookmark:
 			writer->writeStartElement(QLatin1String("folder"));
 
-			if (bookmark->added.isValid())
+			if (bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isValid())
 			{
-				writer->writeAttribute(QLatin1String("added"), bookmark->added.toString(Qt::ISODate));
+				writer->writeAttribute(QLatin1String("added"), bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (bookmark->modified.isValid())
+			if (bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().isValid())
 			{
-				writer->writeAttribute(QLatin1String("modified"), bookmark->modified.toString(Qt::ISODate));
+				writer->writeAttribute(QLatin1String("modified"), bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			writer->writeTextElement(QLatin1String("title"), bookmark->title);
+			writer->writeTextElement(QLatin1String("title"), bookmark->data(BookmarksModel::TitleRole).toString());
 
-			if (!bookmark->description.isEmpty())
+			if (!bookmark->data(BookmarksModel::DescriptionRole).toString().isEmpty())
 			{
-				writer->writeTextElement(QLatin1String("desc"), bookmark->description);
+				writer->writeTextElement(QLatin1String("desc"), bookmark->data(BookmarksModel::DescriptionRole).toString());
 			}
 
-			if (!bookmark->keyword.isEmpty())
+			if (!bookmark->data(BookmarksModel::KeywordRole).toString().isEmpty())
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
 				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
-
-				writer->writeTextElement(QLatin1String("keyword"), bookmark->keyword);
-
+				writer->writeTextElement(QLatin1String("keyword"), bookmark->data(BookmarksModel::KeywordRole).toString());
 				writer->writeEndElement();
 				writer->writeEndElement();
 			}
 
-			for (int i = 0; i < bookmark->children.count(); ++i)
+			for (int i = 0; i < bookmark->rowCount(); ++i)
 			{
-				writeBookmark(writer, bookmark->children.at(i));
+				writeBookmark(writer, bookmark->child(i, 0));
 			}
 
 			writer->writeEndElement();
@@ -157,47 +171,47 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, BookmarkInformati
 		case UrlBookmark:
 			writer->writeStartElement(QLatin1String("bookmark"));
 
-			if (!bookmark->url.isEmpty())
+			if (!bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())
 			{
-				writer->writeAttribute(QLatin1String("href"), bookmark->url);
+				writer->writeAttribute(QLatin1String("href"), bookmark->data(BookmarksModel::UrlRole).toString());
 			}
 
-			if (bookmark->added.isValid())
+			if (bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isValid())
 			{
-				writer->writeAttribute(QLatin1String("added"), bookmark->added.toString(Qt::ISODate));
+				writer->writeAttribute(QLatin1String("added"), bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (bookmark->modified.isValid())
+			if (bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().isValid())
 			{
-				writer->writeAttribute(QLatin1String("modified"), bookmark->modified.toString(Qt::ISODate));
+				writer->writeAttribute(QLatin1String("modified"), bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (bookmark->visited.isValid())
+			if (bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().isValid())
 			{
-				writer->writeAttribute(QLatin1String("visited"), bookmark->visited.toString(Qt::ISODate));
+				writer->writeAttribute(QLatin1String("visited"), bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			writer->writeTextElement(QLatin1String("title"), bookmark->title);
+			writer->writeTextElement(QLatin1String("title"), bookmark->data(BookmarksModel::TitleRole).toString());
 
-			if (!bookmark->description.isEmpty())
+			if (!bookmark->data(BookmarksModel::DescriptionRole).toString().isEmpty())
 			{
-				writer->writeTextElement(QLatin1String("desc"), bookmark->description);
+				writer->writeTextElement(QLatin1String("desc"), bookmark->data(BookmarksModel::DescriptionRole).toString());
 			}
 
-			if (!bookmark->keyword.isEmpty() || bookmark->visits > 0)
+			if (!bookmark->data(BookmarksModel::KeywordRole).toString().isEmpty() || bookmark->data(BookmarksModel::VisitsRole).toInt() > 0)
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
 				writer->writeAttribute(QLatin1String("owner"), QLatin1String("http://otter-browser.org/otter-xbel-bookmark"));
 
-				if (!bookmark->keyword.isEmpty())
+				if (!bookmark->data(BookmarksModel::KeywordRole).toString().isEmpty())
 				{
-					writer->writeTextElement(QLatin1String("keyword"), bookmark->keyword);
+					writer->writeTextElement(QLatin1String("keyword"), bookmark->data(BookmarksModel::KeywordRole).toString());
 				}
 
-				if (bookmark->visits > 0)
+				if (bookmark->data(BookmarksModel::VisitsRole).toInt() > 0)
 				{
-					writer->writeTextElement(QLatin1String("visits"), QString().setNum(bookmark->visits));
+					writer->writeTextElement(QLatin1String("visits"), QString::number(bookmark->data(BookmarksModel::VisitsRole).toInt()));
 				}
 
 				writer->writeEndElement();
@@ -253,15 +267,7 @@ void BookmarksManager::updateKeywords()
 	}
 }
 
-void BookmarksManager::createInstance(QObject *parent)
-{
-	m_instance = new BookmarksManager(parent);
-	m_model = new BookmarksModel(m_instance);
-
-	connect(m_model, SIGNAL(layoutChanged()), m_instance, SLOT(scheduleSave()));
-}
-
-void BookmarksManager::updateVisit(const QUrl &url)
+void BookmarksManager::updateVisits(const QUrl &url)
 {
 	if (hasBookmark(url))
 	{
@@ -651,9 +657,9 @@ bool BookmarksManager::save(const QString &path)
 	writer.writeStartElement(QLatin1String("xbel"));
 	writer.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
 
-	for (int i = 0; i < m_bookmarks.count(); ++i)
+	for (int i = 0; i < m_model->getRootItem()->rowCount(); ++i)
 	{
-		writeBookmark(&writer, m_bookmarks.at(i));
+		writeBookmark(&writer, m_model->getRootItem()->child(i, 0));
 	}
 
 	writer.writeEndDocument();
