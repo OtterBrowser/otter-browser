@@ -72,6 +72,8 @@ void BookmarksManager::scheduleSave()
 	{
 		m_saveTimer = startTimer(1000);
 	}
+
+	updateIndex();
 }
 
 void BookmarksManager::load()
@@ -255,6 +257,8 @@ void BookmarksManager::createInstance(QObject *parent)
 {
 	m_instance = new BookmarksManager(parent);
 	m_model = new BookmarksModel(m_instance);
+
+	connect(m_model, SIGNAL(layoutChanged()), m_instance, SLOT(scheduleSave()));
 }
 
 void BookmarksManager::updateVisit(const QUrl &url)
@@ -270,6 +274,8 @@ void BookmarksManager::updateVisit(const QUrl &url)
 				m_allBookmarks.at(i)->visited = QDateTime::currentDateTime();
 
 				++m_allBookmarks.at(i)->visits;
+
+				m_allBookmarks.at(i)->item->setData(m_allBookmarks.at(i)->visits, BookmarksModel::VisitsRole);
 
 				m_instance->scheduleSave();
 			}
@@ -348,35 +354,6 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	emit m_instance->folderModified(folder);
 
 	m_instance->scheduleSave();
-}
-
-void BookmarksManager::updateBookmark(BookmarkInformation *bookmark)
-{
-	if (!bookmark || !m_allBookmarks.contains(bookmark))
-	{
-		return;
-	}
-
-	bookmark->modified = QDateTime::currentDateTime();
-
-	if (bookmark->item)
-	{
-		bookmark->item->setData(bookmark->title, BookmarksModel::TitleRole);
-		bookmark->item->setData(bookmark->description, BookmarksModel::DescriptionRole);
-		bookmark->item->setData(bookmark->type, BookmarksModel::TypeRole);
-		bookmark->item->setData(bookmark->url, BookmarksModel::UrlRole);
-		bookmark->item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
-		bookmark->item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
-		bookmark->item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
-		bookmark->item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
-		bookmark->item->setData(bookmark->visits, BookmarksModel::VisitsRole);
-	}
-
-	updateIndex();
-
-	m_instance->scheduleSave();
-
-	emit m_instance->folderModified(bookmark->parent);
 }
 
 void BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)

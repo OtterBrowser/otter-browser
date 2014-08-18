@@ -634,4 +634,5 @@ bool Window::isUrlEmpty() const
 
 	return false;
 }
+
 }

@@ -50,7 +50,6 @@ protected:
 	void populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent);
 
 protected slots:
-	void createFolder();
 	void folderChanged(const QModelIndex &index);
 	void reloadFolders();
 	void removeStateChanged(bool checked);

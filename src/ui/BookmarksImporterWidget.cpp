@@ -60,29 +60,6 @@ BookmarksImporterWidget::~BookmarksImporterWidget()
 	delete m_ui;
 }
 
-void BookmarksImporterWidget::createFolder()
-{
-	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
-
-	if (title.isEmpty())
-	{
-		return;
-	}
-
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->title = title;
-
-	disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
-
-	BookmarksManager::addBookmark(bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt());
-
-	m_folder = bookmark->identifier;
-
-	reloadFolders();
-
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
-}
-
 void BookmarksImporterWidget::populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent)
 {
 	for (int i = 0; i < bookmarks.count(); ++i)

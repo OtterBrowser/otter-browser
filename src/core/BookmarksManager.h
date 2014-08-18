@@ -71,7 +71,6 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisit(const QUrl &url);
 	static void addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
-	static void updateBookmark(BookmarkInformation *bookmark);
 	static void deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
 	static void deleteBookmark(const QUrl &url);
 	static BookmarksManager* getInstance();
@@ -90,7 +89,6 @@ protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	void scheduleSave();
 	static void writeBookmark(QXmlStreamWriter *writer, BookmarkInformation *bookmark);
 	static void updateIndex();
 	static void updateUrls();
@@ -98,6 +96,7 @@ protected:
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier);
 
 protected slots:
+	void scheduleSave();
 	void load();
 
 private:
