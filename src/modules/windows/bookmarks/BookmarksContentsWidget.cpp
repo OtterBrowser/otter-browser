@@ -184,8 +184,12 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			}
 		}
 
-		menu.addSeparator();
-		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(type == UrlBookmark);
+		if (type != RootBookmark)
+		{
+			menu.addSeparator();
+			menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(type == UrlBookmark);
+		}
+
 		menu.addSeparator();
 
 		QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
@@ -193,10 +197,13 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 		addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
-		menu.addSeparator();
-		menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
-		menu.addSeparator();
-		menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
+		if (type != RootBookmark)
+		{
+			menu.addSeparator();
+			menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
+			menu.addSeparator();
+			menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
+		}
 	}
 	else
 	{
@@ -295,7 +302,7 @@ QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
 	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
 
-	if (!item)
+	if (!item || item == BookmarksManager::getModel()->getRootItem() || BookmarksManager::getModel()->getTrashItem())
 	{
 		return BookmarksManager::getModel()->getRootItem();
 	}

@@ -99,14 +99,14 @@ void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
 
 QStandardItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
-	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(m_view->currentIndex());
+	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(m_index);
 
 	if (item)
 	{
 		return item;
 	}
 
-	return BookmarksManager::getModel()->invisibleRootItem();
+	return BookmarksManager::getModel()->getRootItem();
 }
 
 bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)
