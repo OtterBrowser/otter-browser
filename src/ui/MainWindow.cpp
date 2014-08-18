@@ -387,7 +387,7 @@ void MainWindow::openUrl(const QString &input)
 
 		if (windowsManager)
 		{
-			windowsManager->open(bookmark);
+			windowsManager->open(bookmark->item);
 
 			return;
 		}
@@ -616,7 +616,7 @@ void MainWindow::actionOpenBookmarkFolder()
 
 	if (action)
 	{
-		m_windowsManager->open(BookmarksManager::getBookmark(action->data().toInt()));
+		m_windowsManager->open(BookmarksManager::getBookmark(action->data().toInt())->item);
 	}
 }
 

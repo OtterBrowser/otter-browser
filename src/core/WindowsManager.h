@@ -21,10 +21,10 @@
 #define OTTER_WINDOWSMANAGER_H
 
 #include "ActionsManager.h"
-#include "BookmarksManager.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QUrl>
+#include <QtGui/QStandardItem>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMdiArea>
 
@@ -47,6 +47,7 @@ enum OpenHint
 
 Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
+class BookmarksItem;
 class ContentsWidget;
 class MdiWidget;
 class StatusBarWidget;
@@ -76,7 +77,7 @@ public:
 
 public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
-	void open(const BookmarkInformation *bookmark, OpenHints hints = DefaultOpen);
+	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine);
 	void close(int index = -1);
 	void closeAll();
@@ -94,7 +95,7 @@ public slots:
 
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
-	void gatherBookmarks(int folder);
+	void gatherBookmarks(QStandardItem *branch);
 	int getWindowIndex(Window *window) const;
 	bool event(QEvent *event);
 
@@ -116,7 +117,7 @@ private:
 	TabBarWidget *m_tabBar;
 	StatusBarWidget *m_statusBar;
 	QList<SessionWindow> m_closedWindows;
-	QList<QString> m_bookmarksToOpen;
+	QList<QUrl> m_bookmarksToOpen;
 	int m_printedWindow;
 	bool m_isPrivate;
 	bool m_isRestored;

@@ -39,9 +39,12 @@ enum BookmarkType
 	SeparatorBookmark = 5
 };
 
+class BookmarksItem;
+class BookmarksModel;
+
 struct BookmarkInformation
 {
-	QStandardItem *item;
+	BookmarksItem *item;
 	QString url;
 	QString title;
 	QString description;
@@ -57,9 +60,6 @@ struct BookmarkInformation
 
 	BookmarkInformation() : item(NULL), type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
 };
-
-class BookmarksItem;
-class BookmarksModel;
 
 class BookmarksManager : public QObject
 {

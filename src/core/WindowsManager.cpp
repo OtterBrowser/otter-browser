@@ -20,6 +20,7 @@
 
 #include "WindowsManager.h"
 #include "Application.h"
+#include "BookmarksModel.h"
 #include "SettingsManager.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
@@ -87,7 +88,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 }
 
-void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
+void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 {
 	if (!bookmark)
 	{
@@ -99,15 +100,16 @@ void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 		hints = CurrentTabOpen;
 	}
 
-	switch (bookmark->type)
+	switch (static_cast<BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
 	{
 		case UrlBookmark:
-			open(QUrl(bookmark->url), hints);
+			open(QUrl(bookmark->data(BookmarksModel::UrlRole).toUrl()), hints);
 
 			break;
+		case RootBookmark:
 		case FolderBookmark:
 			{
-				gatherBookmarks(bookmark->identifier);
+				gatherBookmarks(bookmark);
 
 				if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
 				{
@@ -133,11 +135,11 @@ void WindowsManager::open(const BookmarkInformation *bookmark, OpenHints hints)
 					return;
 				}
 
-				open(QUrl(m_bookmarksToOpen.at(0)), hints);
+				open(m_bookmarksToOpen.at(0), hints);
 
 				for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
 				{
-					open(QUrl(m_bookmarksToOpen.at(i)), ((hints == DefaultOpen || hints == CurrentTabOpen) ? NewTabOpen : hints));
+					open(m_bookmarksToOpen.at(i), ((hints == DefaultOpen || hints == CurrentTabOpen) ? NewTabOpen : hints));
 				}
 
 				m_bookmarksToOpen.clear();
@@ -158,19 +160,31 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 	window->setUrl(url, false);
 }
 
-void WindowsManager::gatherBookmarks(int folder)
+void WindowsManager::gatherBookmarks(QStandardItem *branch)
 {
-	const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
-
-	for (int i = 0; i < bookmarks.count(); ++i)
+	if (!branch)
 	{
-		if (bookmarks.at(i)->type == FolderBookmark)
+		return;
+	}
+
+	for (int i = 0; i < branch->rowCount(); ++i)
+	{
+		QStandardItem *item = branch->child(i, 0);
+
+		if (!item)
 		{
-			gatherBookmarks(bookmarks.at(i)->identifier);
+			continue;
 		}
-		else if (bookmarks.at(i)->type == UrlBookmark)
+
+		const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+
+		if (type == FolderBookmark)
 		{
-			m_bookmarksToOpen.append(bookmarks.at(i)->url);
+			gatherBookmarks(item);
+		}
+		else if (type == UrlBookmark)
+		{
+			m_bookmarksToOpen.append(item->data(BookmarksModel::UrlRole).toUrl());
 		}
 	}
 }

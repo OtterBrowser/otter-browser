@@ -120,12 +120,14 @@ void BookmarksContentsWidget::removeBookmark()
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->bookmarksView->currentIndex()));
 	WindowsManager *manager = SessionsManager::getWindowsManager();
-	QAction *action = qobject_cast<QAction*>(sender());
 
-	if (manager && static_cast<BookmarkType>((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::TypeRole).toInt()) == UrlBookmark)
+	if (bookmark && manager)
 	{
-		manager->open((index.isValid() ? index : m_ui->bookmarksView->currentIndex()).data(BookmarksModel::UrlRole).toUrl(), (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
+		QAction *action = qobject_cast<QAction*>(sender());
+
+		manager->open(bookmark, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
 	}
 }
 
