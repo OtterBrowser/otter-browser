@@ -18,19 +18,37 @@
 **************************************************************************/
 
 #include "BookmarksModel.h"
+#include "Utils.h"
 #include "WebBackend.h"
 #include "WebBackendsManager.h"
 
 namespace Otter
 {
 
-BookmarksItem::BookmarksItem() : QStandardItem()
+BookmarksItem::BookmarksItem(BookmarkType type, const QUrl &url, const QString &title) : QStandardItem()
 {
+	setData(type, BookmarksModel::TypeRole);
+	setData(url, BookmarksModel::UrlRole);
+	setData(title, BookmarksModel::TitleRole);
+
+	if (type == RootBookmark || type == FolderBookmark)
+	{
+		setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
+	}
+	else if (type == TrashBookmark)
+	{
+		setData(Utils::getIcon(QLatin1String("user-trash")), Qt::DecorationRole);
+		setEnabled(false);
+	}
+	else if (type == SeparatorBookmark)
+	{
+		setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+	}
 }
 
 QVariant BookmarksItem::data(int role) const
 {
-	if (role == Qt::DecorationRole && QStandardItem::data(Qt::DecorationRole).isNull())
+	if (role == Qt::DecorationRole && QStandardItem::data(Qt::DecorationRole).isNull() && static_cast<BookmarkType>(QStandardItem::data(BookmarksModel::TypeRole).toInt()) != SeparatorBookmark)
 	{
 		return WebBackendsManager::getBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
 	}
@@ -45,6 +63,18 @@ void BookmarksItem::setData(const QVariant &value, int role)
 
 BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 {
+	appendRow(new BookmarksItem(RootBookmark, QUrl(), tr("Bookmarks")));
+	appendRow(new BookmarksItem(TrashBookmark, QUrl(), tr("Trash")));
+}
+
+BookmarksItem* BookmarksModel::getRootItem()
+{
+	return dynamic_cast<BookmarksItem*>(item(0, 0));
+}
+
+BookmarksItem* BookmarksModel::getTrashItem()
+{
+	return dynamic_cast<BookmarksItem*>(item(1, 0));
 }
 
 }

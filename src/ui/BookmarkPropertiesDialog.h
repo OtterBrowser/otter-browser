@@ -34,29 +34,25 @@ namespace Ui
 	class BookmarkPropertiesDialog;
 }
 
+class BookmarksItem;
+
 class BookmarkPropertiesDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(BookmarkInformation *bookmark, int folder = -1, QWidget *parent = NULL);
+	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QStandardItem *folder = NULL, QWidget *parent = NULL);
 	~BookmarkPropertiesDialog();
 
 protected:
 	void changeEvent(QEvent *event);
-	void populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent);
 
 protected slots:
-	void folderChanged(const QModelIndex &index);
-	void createFolder();
-	void reloadFolders();
 	void saveBookmark();
 
 private:
-	BookmarkInformation *m_bookmark;
+	BookmarksItem *m_bookmark;
 	QStandardItemModel *m_model;
-	QModelIndex m_index;
-	int m_folder;
 	Ui::BookmarkPropertiesDialog *m_ui;
 };
 

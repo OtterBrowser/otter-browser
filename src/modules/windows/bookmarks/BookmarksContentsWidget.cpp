@@ -49,6 +49,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->bookmarksView->setModel(BookmarksManager::getModel());
 	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
+	m_ui->bookmarksView->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
@@ -82,9 +83,7 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->type = UrlBookmark;
-
+	BookmarksItem *bookmark = new BookmarksItem(UrlBookmark);
 	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -95,9 +94,7 @@ void BookmarksContentsWidget::addBookmark()
 
 void BookmarksContentsWidget::addFolder()
 {
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->type = FolderBookmark;
-
+	BookmarksItem *bookmark = new BookmarksItem(FolderBookmark);
 	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -108,11 +105,7 @@ void BookmarksContentsWidget::addFolder()
 
 void BookmarksContentsWidget::addSeparator()
 {
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->type = SeparatorBookmark;
-	bookmark->parent = findFolder(m_ui->bookmarksView->currentIndex());
-
-	BookmarksManager::addBookmark(bookmark, bookmark->parent);
+	findFolder(m_ui->bookmarksView->currentIndex())->appendRow(new BookmarksItem(SeparatorBookmark));
 }
 
 void BookmarksContentsWidget::removeBookmark()
@@ -140,19 +133,26 @@ void BookmarksContentsWidget::copyBookmarkLink()
 {
 	if (static_cast<BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == UrlBookmark)
 	{
-		QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::UrlRole).toUrl().toString());
+		QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::UrlRole).toString());
 	}
 }
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex()));
 
 	if (bookmark)
 	{
-		BookmarkPropertiesDialog dialog(bookmark, -1, this);
+		BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 		dialog.exec();
+
+		updateActions();
 	}
+}
+
+void BookmarksContentsWidget::emptyTrash()
+{
+	BookmarksManager::getModel()->getTrashItem()->removeRows(0, BookmarksManager::getModel()->getTrashItem()->rowCount());
 }
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
@@ -161,7 +161,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	const BookmarkType type = static_cast<BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 	QMenu menu(this);
 
-	if (type != UnknownBookmark)
+	if (type == TrashBookmark)
+	{
+		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), this, SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
+	}
+	else if (type != UnknownBookmark)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
@@ -228,7 +232,7 @@ void BookmarksContentsWidget::updateActions()
 	const QModelIndex index = (m_ui->bookmarksView->selectionModel()->hasSelection() ? m_ui->bookmarksView->selectionModel()->currentIndex() : QModelIndex());
 	const BookmarkType type = static_cast<BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
-	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::UrlRole).toUrl().toString());
+	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::UrlRole).toString());
 	m_ui->titleLabelWidget->setText(index.data(BookmarksModel::TitleRole).toString());
 	m_ui->descriptionLabelWidget->setText(index.data(BookmarksModel::DescriptionRole).toString());
 	m_ui->keywordLabelWidget->setText(index.data(BookmarksModel::KeywordRole).toString());
@@ -239,45 +243,6 @@ void BookmarksContentsWidget::updateActions()
 void BookmarksContentsWidget::print(QPrinter *printer)
 {
 	m_ui->bookmarksView->render(printer);
-}
-
-QStandardItem *BookmarksContentsWidget::findFolder(int folder, QStandardItem *item)
-{
-	if (folder == 0)
-	{
-		return BookmarksManager::getModel()->invisibleRootItem();
-	}
-
-	if (!item)
-	{
-		item = BookmarksManager::getModel()->invisibleRootItem();
-	}
-
-	for (int i = 0; i < item->rowCount(); ++i)
-	{
-		QStandardItem *child = item->child(i, 0);
-
-		if (!child)
-		{
-			continue;
-		}
-
-		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(child->data(Qt::UserRole).value<void*>());
-
-		if (bookmark && bookmark->type == FolderBookmark && bookmark->identifier == folder)
-		{
-			return child;
-		}
-
-		QStandardItem *result = findFolder(folder, child);
-
-		if (result)
-		{
-			return result;
-		}
-	}
-
-	return NULL;
 }
 
 QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
@@ -302,7 +267,6 @@ QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
 	m_actions[action] = actionObject;
 
 	return actionObject;
-
 }
 
 QString BookmarksContentsWidget::getTitle() const
@@ -325,19 +289,18 @@ QIcon BookmarksContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("bookmarks"), false);
 }
 
-int BookmarksContentsWidget::findFolder(const QModelIndex &index)
+QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
-	if (index.isValid())
-	{
-		BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(index.data(Qt::UserRole).value<void*>());
+	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
 
-		if (bookmark)
-		{
-			return ((bookmark->type == FolderBookmark) ? bookmark->identifier : bookmark->parent);
-		}
+	if (!item)
+	{
+		return BookmarksManager::getModel()->getRootItem();
 	}
 
-	return 0;
+	const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+
+	return ((type == RootBookmark || type == FolderBookmark) ? item : item->parent());
 }
 
 bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
@@ -370,7 +333,7 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	{
 		const BookmarkType type = static_cast<BookmarkType>(branch->data(BookmarksModel::TypeRole).toInt());
 
-		if ((type == FolderBookmark || type == UrlBookmark) && (branch->data(BookmarksModel::UrlRole).toUrl().toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::TitleRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::DescriptionRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::KeywordRole).toString().contains(filter, Qt::CaseInsensitive)))
+		if ((type == FolderBookmark || type == UrlBookmark) && (branch->data(BookmarksModel::UrlRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::TitleRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::DescriptionRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::KeywordRole).toString().contains(filter, Qt::CaseInsensitive)))
 		{
 			found = true;
 		}

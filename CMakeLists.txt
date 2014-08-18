@@ -97,6 +97,7 @@ set(otter_src
 	src/ui/AddressWidget.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
+	src/ui/BookmarksComboBoxWidget.cpp
 	src/ui/BookmarksImporterWidget.cpp
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ConsoleWidget.cpp

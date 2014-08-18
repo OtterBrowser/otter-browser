@@ -22,7 +22,6 @@
 #include "BookmarksModel.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
-#include "Utils.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QSet>
@@ -95,7 +94,7 @@ void BookmarksManager::load()
 		{
 			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
 			{
-				m_bookmarks.append(readBookmark(&reader, m_model->invisibleRootItem(), 0));
+				m_bookmarks.append(readBookmark(&reader, m_model->getRootItem(), 0));
 			}
 			else
 			{
@@ -327,25 +326,13 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 
 	m_allBookmarks.append(bookmark);
 
-	BookmarksItem *item = new BookmarksItem();
-	item->setData(bookmark->title, BookmarksModel::TitleRole);
+	BookmarksItem *item = new BookmarksItem(bookmark->type, bookmark->url, bookmark->title);
 	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
-	item->setData(bookmark->type, BookmarksModel::TypeRole);
-	item->setData(bookmark->url, BookmarksModel::UrlRole);
 	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
 	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
 	item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
 	item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
 	item->setData(bookmark->visits, BookmarksModel::VisitsRole);
-
-	if (bookmark->type == FolderBookmark)
-	{
-		item->setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
-	}
-	else if (bookmark->type == SeparatorBookmark)
-	{
-		item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
-	}
 
 	if (folder == 0)
 	{
@@ -474,14 +461,11 @@ BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
 	return m_keywords.value(keyword);
 }
 
-BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier)
+BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier)
 {
-	BookmarksItem *item = new BookmarksItem();
+	BookmarksItem *item = NULL;
 	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->item = item;
 	bookmark->parent = parentIdentifier;
-
-	parent->appendRow(item);
 
 	if (reader->name() == QLatin1String("folder"))
 	{
@@ -490,7 +474,7 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
 		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
 
-		item->setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
+		item = new BookmarksItem(FolderBookmark);
 
 		while (reader->readNext())
 		{
@@ -523,6 +507,8 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
+		item = new BookmarksItem(UrlBookmark);
+
 		bookmark->type = UrlBookmark;
 		bookmark->url = reader->attributes().value(QLatin1String("href")).toString();
 		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
@@ -596,18 +582,21 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, QS
 	}
 	else if (reader->name() == QLatin1String("separator"))
 	{
-		bookmark->type = SeparatorBookmark;
+		item = new BookmarksItem(SeparatorBookmark);
 
-		item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+		bookmark->type = SeparatorBookmark;
 
 		reader->readNext();
 	}
 
 	m_allBookmarks.append(bookmark);
 
+	bookmark->item = item;
+
+	parent->appendRow(item);
+
 	item->setData(bookmark->title, BookmarksModel::TitleRole);
 	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
-	item->setData(bookmark->type, BookmarksModel::TypeRole);
 	item->setData(bookmark->url, BookmarksModel::UrlRole);
 	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
 	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);

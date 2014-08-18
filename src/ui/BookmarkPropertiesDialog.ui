@@ -56,7 +56,7 @@
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QComboBox" name="folderComboBox">
+        <widget class="Otter::BookmarksComboBoxWidget" name="folderComboBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -176,6 +176,11 @@
    <extends>QWidget</extends>
    <header>src/ui/TextLabelWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::BookmarksComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/BookmarksComboBoxWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

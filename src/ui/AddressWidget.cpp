@@ -24,6 +24,7 @@
 #include "Window.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
+#include "../core/BookmarksModel.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -482,12 +483,8 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				}
 				else
 				{
-					BookmarkInformation *bookmark = new BookmarkInformation();
-					bookmark->url = getUrl().toString(QUrl::RemovePassword);
-					bookmark->title = m_window->getTitle();
-					bookmark->type = UrlBookmark;
-
-					BookmarkPropertiesDialog dialog(bookmark, -1, this);
+					BookmarksItem *bookmark = new BookmarksItem(UrlBookmark, getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle());
+					BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{

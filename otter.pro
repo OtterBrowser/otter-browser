@@ -62,6 +62,7 @@ SOURCES += src/main.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
+    src/ui/BookmarksComboBoxWidget.cpp \
     src/ui/BookmarksImporterWidget.cpp \
     src/ui/ClearHistoryDialog.cpp \
     src/ui/ConsoleWidget.cpp \
@@ -145,6 +146,7 @@ HEADERS += src/core/Action.h \
     src/ui/AddressWidget.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
+    src/ui/BookmarksComboBoxWidget.h \
     src/ui/BookmarksImporterWidget.h \
     src/ui/ClearHistoryDialog.h \
     src/ui/ConsoleWidget.h \

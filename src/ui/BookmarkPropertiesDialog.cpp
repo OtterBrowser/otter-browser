@@ -19,37 +19,48 @@
 **************************************************************************/
 
 #include "BookmarkPropertiesDialog.h"
+#include "BookmarksComboBoxWidget.h"
+#include "../core/BookmarksModel.h"
 #include "../core/Utils.h"
 
 #include "ui_BookmarkPropertiesDialog.h"
 
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QTreeView>
 
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark, int folder, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QStandardItem *folder, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
-	m_folder((folder < 0) ? bookmark->parent : folder),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	m_ui->setupUi(this);
-	m_ui->titleLineEdit->setText(m_bookmark->title);
-	m_ui->addressLineEdit->setText(m_bookmark->url);
-	m_ui->addressLineEdit->setVisible(m_bookmark->type == UrlBookmark);
-	m_ui->addressLabel->setVisible(m_bookmark->type == UrlBookmark);
-	m_ui->descriptionTextEdit->setPlainText(m_bookmark->description);
-	m_ui->keywordLineEdit->setText(m_bookmark->keyword);
-	m_ui->addedLabelWidget->setText(m_bookmark->added.isValid() ? m_bookmark->added.toString() : tr("Unknown"));
-	m_ui->modifiedLabelWidget->setText(m_bookmark->modified.isValid() ? m_bookmark->modified.toString() : tr("Unknown"));
+	const BookmarkType type = static_cast<BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
 
-	if (m_bookmark->type == UrlBookmark)
+	m_ui->setupUi(this);
+	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
+	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
+	m_ui->addressLineEdit->setVisible(type == UrlBookmark);
+	m_ui->addressLabel->setVisible(type == UrlBookmark);
+	m_ui->descriptionTextEdit->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
+	m_ui->keywordLineEdit->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
+	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? m_bookmark->data(BookmarksModel::TitleRole).toDateTime().toString() : tr("Unknown"));
+	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString() : tr("Unknown"));
+
+	if (!folder)
 	{
-		m_ui->lastVisitLabelWidget->setText(m_bookmark->visited.isValid() ? m_bookmark->visited.toString() : tr("Unknown"));
-		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->visits));
+		folder = bookmark->parent();
+	}
+
+	if (folder)
+	{
+		m_ui->folderComboBox->setCurrentFolder(folder->index());
+	}
+
+	if (type == UrlBookmark)
+	{
+		m_ui->lastVisitLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeVisitedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeVisitedRole).toString() : tr("Unknown"));
+		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->data(BookmarksModel::VisitsRole).toInt()));
 	}
 	else
 	{
@@ -59,7 +70,11 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 		m_ui->lastVisitLabelWidget->hide();
 	}
 
-	if (bookmark->parent < 0)
+	if (bookmark->parent())
+	{
+		setWindowTitle(tr("Edit Bookmark"));
+	}
+	else
 	{
 		setWindowTitle(tr("Add Bookmark"));
 
@@ -72,26 +87,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarkInformation *bookmark
 		m_ui->modifiedLabel->hide();
 		m_ui->modifiedLabelWidget->hide();
 	}
-	else
-	{
-		setWindowTitle(tr("Edit Bookmark"));
-	}
 
-	QTreeView *view = new QTreeView(m_ui->folderComboBox);
-
-	m_ui->folderComboBox->setView(view);
-	m_ui->folderComboBox->setModel(m_model);
-
-	view->setHeaderHidden(true);
-	view->setItemsExpandable(false);
-	view->setRootIsDecorated(false);
-	view->setStyleSheet(QLatin1String("QTreeView::branch {border-image: url(invalid.png);}"));
-
-	reloadFolders();
-
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
-	connect(view->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(folderChanged(QModelIndex)));
-	connect(m_ui->newFolderButton, SIGNAL(clicked()), this, SLOT(createFolder()));
+	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -116,113 +113,28 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void BookmarkPropertiesDialog::populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent)
-{
-	for (int i = 0; i < bookmarks.count(); ++i)
-	{
-		if (bookmarks.at(i)->type == FolderBookmark)
-		{
-			const QString title = (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : bookmarks.at(i)->title);
-			QStandardItem *item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), title);
-			item->setData(bookmarks.at(i)->identifier, Qt::UserRole);
-			item->setToolTip(title);
-
-			parent->appendRow(item);
-
-			populateFolder(BookmarksManager::getFolder(bookmarks.at(i)->identifier), item);
-
-			if (bookmarks.at(i)->identifier == m_folder)
-			{
-				m_index = item->index();
-			}
-		}
-	}
-}
-
-void BookmarkPropertiesDialog::folderChanged(const QModelIndex &index)
-{
-	m_folder = index.data(Qt::UserRole).toInt();
-}
-
-void BookmarkPropertiesDialog::reloadFolders()
-{
-	m_model->clear();
-
-	QStandardItem *item = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), tr("Bookmarks"));
-	item->setData(0, Qt::UserRole);
-	item->setToolTip(tr("Bookmarks"));
-
-	m_model->invisibleRootItem()->appendRow(item);
-
-	m_index = item->index();
-
-	populateFolder(BookmarksManager::getFolder(0), item);
-
-	QTreeView *view = qobject_cast<QTreeView*>(m_ui->folderComboBox->view());
-
-	if (view)
-	{
-		view->setCurrentIndex(m_index);
-		view->expandAll();
-
-		m_ui->folderComboBox->setRootModelIndex(m_index.parent());
-		m_ui->folderComboBox->setModelColumn(0);
-		m_ui->folderComboBox->setCurrentIndex(m_index.row());
-		m_ui->folderComboBox->setRootModelIndex(QModelIndex());
-	}
-}
-
 void BookmarkPropertiesDialog::saveBookmark()
 {
-	const QString newKeyword = m_ui->keywordLineEdit->text();
+	const QString keyword = m_ui->keywordLineEdit->text();
 
-	if (m_bookmark->keyword != newKeyword && BookmarksManager::getBookmark(newKeyword))
+	if (m_bookmark->data(BookmarksModel::KeywordRole).toString() != keyword && BookmarksManager::getBookmark(keyword))
 	{
 		QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
 
 		return;
 	}
 
-	m_bookmark->url = m_ui->addressLineEdit->text();
-	m_bookmark->title = m_ui->titleLineEdit->text();
-	m_bookmark->description = m_ui->descriptionTextEdit->toPlainText();
-	m_bookmark->keyword = newKeyword;
+	m_bookmark->setData(m_ui->addressLineEdit->text(), BookmarksModel::UrlRole);
+	m_bookmark->setData(m_ui->titleLineEdit->text(), BookmarksModel::TitleRole);
+	m_bookmark->setData(m_ui->descriptionTextEdit->toPlainText(), BookmarksModel::DescriptionRole);
+	m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
 
-	if (m_bookmark->parent >= 0)
+	if (!m_bookmark->parent())
 	{
-		BookmarksManager::updateBookmark(m_bookmark);
-	}
-	else
-	{
-		disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
-
-		BookmarksManager::addBookmark(m_bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt());
+		m_ui->folderComboBox->getCurrentFolder()->appendRow(m_bookmark);
 	}
 
 	accept();
-}
-
-void BookmarkPropertiesDialog::createFolder()
-{
-	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
-
-	if (title.isEmpty())
-	{
-		return;
-	}
-
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->title = title;
-
-	disconnect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
-
-	BookmarksManager::addBookmark(bookmark, m_ui->folderComboBox->view()->currentIndex().data(Qt::UserRole).toInt());
-
-	m_folder = bookmark->identifier;
-
-	reloadFolders();
-
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(reloadFolders()));
 }
 
 }

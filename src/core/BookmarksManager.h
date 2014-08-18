@@ -32,9 +32,11 @@ namespace Otter
 enum BookmarkType
 {
 	UnknownBookmark = 0,
-	FolderBookmark = 1,
-	UrlBookmark = 2,
-	SeparatorBookmark = 3
+	RootBookmark = 1,
+	TrashBookmark = 2,
+	FolderBookmark = 3,
+	UrlBookmark = 4,
+	SeparatorBookmark = 5
 };
 
 struct BookmarkInformation
@@ -56,6 +58,7 @@ struct BookmarkInformation
 	BookmarkInformation() : item(NULL), type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
 };
 
+class BookmarksItem;
 class BookmarksModel;
 
 class BookmarksManager : public QObject
@@ -92,7 +95,7 @@ protected:
 	static void updateIndex();
 	static void updateUrls();
 	static void updateKeywords();
-	BookmarkInformation* readBookmark(QXmlStreamReader *reader, QStandardItem *parent, int parentIdentifier);
+	BookmarkInformation* readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier);
 
 protected slots:
 	void load();

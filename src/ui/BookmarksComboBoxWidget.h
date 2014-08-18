@@ -17,53 +17,35 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKSMODEL_H
-#define OTTER_BOOKMARKSMODEL_H
+#ifndef OTTER_BOOKMARKSCOMBOBOXWIDGET_H
+#define OTTER_BOOKMARKSCOMBOBOXWIDGET_H
 
-#include "BookmarksManager.h"
-
-#include <QtCore/QUrl>
-#include <QtGui/QStandardItemModel>
+#include <QtGui/QStandardItem>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QTreeView>
 
 namespace Otter
 {
 
-class BookmarksItem : public QStandardItem
-{
-public:
-	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
-
-	QVariant data(int role) const;
-
-protected:
-	void setData(const QVariant &value, int role);
-
-	friend class BookmarksManager;
-	friend class BookmarkPropertiesDialog;
-};
-
-class BookmarksModel : public QStandardItemModel
+class BookmarksComboBoxWidget : public QComboBox
 {
 	Q_OBJECT
 
 public:
-	enum BookmarksRole
-	{
-		TitleRole = Qt::DisplayRole,
-		DescriptionRole = Qt::ToolTipRole,
-		TypeRole = Qt::UserRole,
-		UrlRole = (Qt::UserRole + 1),
-		KeywordRole = (Qt::UserRole + 2),
-		TimeAddedRole = (Qt::UserRole + 3),
-		TimeModifiedRole = (Qt::UserRole + 4),
-		TimeVisitedRole = (Qt::UserRole + 5),
-		VisitsRole = (Qt::UserRole + 6)
-	};
+	explicit BookmarksComboBoxWidget(QWidget *parent = NULL);
 
-	explicit BookmarksModel(QObject *parent = NULL);
+	void setCurrentFolder(const QModelIndex &index);
+	QStandardItem* getCurrentFolder();
 
-	BookmarksItem* getRootItem();
-	BookmarksItem* getTrashItem();
+protected:
+
+protected slots:
+	void createFolder();
+	void updateBranch(QStandardItem *branch = NULL);
+
+private:
+	QTreeView *m_view;
+	QModelIndex m_index;
 };
 
 }

@@ -55,8 +55,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	QStandardItem* findFolder(int folder, QStandardItem *item = NULL);
-	int findFolder(const QModelIndex &index);
+	QStandardItem* findFolder(const QModelIndex &index);
 
 protected slots:
 	void triggerAction();
@@ -67,6 +66,7 @@ protected slots:
 	void openBookmark(const QModelIndex &index = QModelIndex());
 	void copyBookmarkLink();
 	void bookmarkProperties();
+	void emptyTrash();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
 	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
