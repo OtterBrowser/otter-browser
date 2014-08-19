@@ -34,7 +34,7 @@ BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(pa
 	setModel(BookmarksManager::getModel());
 	updateBranch();
 
-	m_view->parent()->installEventFilter(this);
+	m_view->viewport()->installEventFilter(this);
 	m_view->setHeaderHidden(true);
 	m_view->setItemsExpandable(false);
 	m_view->setRootIsDecorated(false);
@@ -111,7 +111,7 @@ QStandardItem* BookmarksComboBoxWidget::getCurrentFolder()
 
 bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_view->parent() && event->type() == QEvent::MouseButtonPress)
+	if (object == m_view->viewport() && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
 

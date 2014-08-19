@@ -356,7 +356,7 @@ QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
 	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
 
-	if (!item || item == BookmarksManager::getModel()->getRootItem() || BookmarksManager::getModel()->getTrashItem())
+	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
 	{
 		return BookmarksManager::getModel()->getRootItem();
 	}

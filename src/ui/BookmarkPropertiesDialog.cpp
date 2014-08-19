@@ -126,6 +126,11 @@ void BookmarkPropertiesDialog::setReadOnly(bool readOnly)
 
 void BookmarkPropertiesDialog::saveBookmark()
 {
+	if (m_ui->titleLineEdit->text().isEmpty())
+	{
+		return;
+	}
+
 	if (m_ui->folderComboBox->isEnabled())
 	{
 		const QString keyword = m_ui->keywordLineEdit->text();
