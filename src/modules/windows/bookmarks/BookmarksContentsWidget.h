@@ -56,6 +56,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	QStandardItem* findFolder(const QModelIndex &index);
+	bool isInTrash(const QModelIndex &index) const;
 
 protected slots:
 	void triggerAction();
@@ -63,6 +64,7 @@ protected slots:
 	void addFolder();
 	void addSeparator();
 	void removeBookmark();
+	void restoreBookmark();
 	void openBookmark(const QModelIndex &index = QModelIndex());
 	void copyBookmarkLink();
 	void bookmarkProperties();
@@ -73,6 +75,7 @@ protected slots:
 
 private:
 	QHash<ActionIdentifier, QAction*> m_actions;
+	QHash<QStandardItem*, QPair<QModelIndex, int> > m_trash;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 

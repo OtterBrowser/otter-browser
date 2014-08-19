@@ -110,11 +110,49 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarkInformation *bookmark = static_cast<BookmarkInformation*>(m_ui->bookmarksView->currentIndex().data(Qt::UserRole).value<void*>());
+	QStandardItem *bookmark = BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex());
+	const BookmarkType type = static_cast<BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt());
 
-	if (bookmark && (bookmark->type == SeparatorBookmark || QMessageBox::question(this, tr("Question"), ((bookmark->type == FolderBookmark) ? tr("Do you really want to delete this folder and all of its contents?") : tr("Do you really want to delete this bookmark?")), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes))
+	if (bookmark && type != RootBookmark && type != TrashBookmark)
 	{
-		BookmarksManager::deleteBookmark(bookmark);
+		if (type == SeparatorBookmark)
+		{
+			bookmark->parent()->removeRow(bookmark->row());
+		}
+		else
+		{
+			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
+
+			BookmarksManager::getModel()->getTrashItem()->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+			BookmarksManager::getModel()->getTrashItem()->setEnabled(true);
+		}
+	}
+}
+
+void BookmarksContentsWidget::restoreBookmark()
+{
+	QStandardItem *bookmark = BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex());
+	QStandardItem *formerParent = (m_trash.contains(bookmark) ? BookmarksManager::getModel()->itemFromIndex(m_trash[bookmark].first) : BookmarksManager::getModel()->getRootItem());
+
+	if (!formerParent || static_cast<BookmarkType>(formerParent->data(BookmarksModel::TypeRole).toInt()) != FolderBookmark)
+	{
+		formerParent = BookmarksManager::getModel()->getRootItem();
+	}
+
+	if (bookmark)
+	{
+		if (m_trash.contains(bookmark))
+		{
+			formerParent->insertRow(m_trash[bookmark].second, bookmark->parent()->takeRow(bookmark->row()));
+
+			m_trash.remove(bookmark);
+		}
+		else
+		{
+			formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+		}
+
+		BookmarksManager::getModel()->getTrashItem()->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
 }
 
@@ -146,6 +184,7 @@ void BookmarksContentsWidget::bookmarkProperties()
 	if (bookmark)
 	{
 		BookmarkPropertiesDialog dialog(bookmark, NULL, this);
+		dialog.setReadOnly(isInTrash(bookmark->index()));
 		dialog.exec();
 
 		updateActions();
@@ -155,6 +194,7 @@ void BookmarksContentsWidget::bookmarkProperties()
 void BookmarksContentsWidget::emptyTrash()
 {
 	BookmarksManager::getModel()->getTrashItem()->removeRows(0, BookmarksManager::getModel()->getTrashItem()->rowCount());
+	BookmarksManager::getModel()->getTrashItem()->setEnabled(false);
 }
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
@@ -167,8 +207,16 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), this, SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
-	else if (type != UnknownBookmark)
+	else if (type == UnknownBookmark)
 	{
+		menu.addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+		menu.addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+	}
+	else
+	{
+		const bool inTrash = isInTrash(index);
+
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(NewTabBackgroundOpen);
@@ -190,26 +238,32 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(type == UrlBookmark);
 		}
 
-		menu.addSeparator();
+		if (!inTrash)
+		{
+			menu.addSeparator();
 
-		QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
-		addMenu->addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-		addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
-		addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+			QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
+			addMenu->addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+			addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
+		}
 
 		if (type != RootBookmark)
 		{
 			menu.addSeparator();
-			menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
+
+			if (inTrash)
+			{
+				menu.addAction(tr("Restore Bookmark"), this, SLOT(restoreBookmark()));
+			}
+			else
+			{
+				menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
+			}
+
 			menu.addSeparator();
 			menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
 		}
-	}
-	else
-	{
-		menu.addAction(Utils::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-		menu.addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
-		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
 
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
@@ -352,6 +406,30 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
 
 	return found;
+}
+
+bool BookmarksContentsWidget::isInTrash(const QModelIndex &index) const
+{
+	QModelIndex parent = index;
+
+	while (parent.isValid())
+	{
+		const BookmarkType type = static_cast<BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
+
+		if (type == TrashBookmark)
+		{
+			return true;
+		}
+
+		if (type == RootBookmark)
+		{
+			break;
+		}
+
+		parent = parent.parent();
+	}
+
+	return false;
 }
 
 }

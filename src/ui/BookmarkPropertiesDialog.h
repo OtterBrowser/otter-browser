@@ -44,6 +44,8 @@ public:
 	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QStandardItem *folder = NULL, QWidget *parent = NULL);
 	~BookmarkPropertiesDialog();
 
+	void setReadOnly(bool readOnly);
+
 protected:
 	void changeEvent(QEvent *event);
 

@@ -113,25 +113,39 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
+void BookmarkPropertiesDialog::setReadOnly(bool readOnly)
+{
+	m_ui->folderComboBox->setEnabled(!readOnly);
+	m_ui->newFolderButton->setEnabled(!readOnly);
+	m_ui->titleLineEdit->setEnabled(!readOnly);
+	m_ui->addressLineEdit->setEnabled(!readOnly);
+	m_ui->addressLabel->setEnabled(!readOnly);
+	m_ui->descriptionTextEdit->setEnabled(!readOnly);
+	m_ui->keywordLineEdit->setEnabled(!readOnly);
+}
+
 void BookmarkPropertiesDialog::saveBookmark()
 {
-	const QString keyword = m_ui->keywordLineEdit->text();
-
-	if (m_bookmark->data(BookmarksModel::KeywordRole).toString() != keyword && BookmarksManager::getBookmark(keyword))
+	if (m_ui->folderComboBox->isEnabled())
 	{
-		QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
+		const QString keyword = m_ui->keywordLineEdit->text();
 
-		return;
-	}
+		if (m_bookmark->data(BookmarksModel::KeywordRole).toString() != keyword && BookmarksManager::getBookmark(keyword))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Bookmark with this keyword already exists."), QMessageBox::Close);
 
-	m_bookmark->setData(m_ui->addressLineEdit->text(), BookmarksModel::UrlRole);
-	m_bookmark->setData(m_ui->titleLineEdit->text(), BookmarksModel::TitleRole);
-	m_bookmark->setData(m_ui->descriptionTextEdit->toPlainText(), BookmarksModel::DescriptionRole);
-	m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
+			return;
+		}
 
-	if (!m_bookmark->parent())
-	{
-		m_ui->folderComboBox->getCurrentFolder()->appendRow(m_bookmark);
+		m_bookmark->setData(m_ui->addressLineEdit->text(), BookmarksModel::UrlRole);
+		m_bookmark->setData(m_ui->titleLineEdit->text(), BookmarksModel::TitleRole);
+		m_bookmark->setData(m_ui->descriptionTextEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
+
+		if (!m_bookmark->parent())
+		{
+			m_ui->folderComboBox->getCurrentFolder()->appendRow(m_bookmark);
+		}
 	}
 
 	accept();

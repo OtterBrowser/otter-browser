@@ -1,3 +1,6 @@
+0.9.03 (--.--.2014):
+- added Trash to Bookmarks Manager.
+
 0.9.02 (01.08.2014):
 - added initial support for content blocking (Adblock Plus compatible);
 - added Opera and HTML (Netscape) bookmarks import;
