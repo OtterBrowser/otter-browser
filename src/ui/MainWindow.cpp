@@ -170,7 +170,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	}
 #endif
 
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmarks(int)));
+	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
@@ -616,7 +616,7 @@ void MainWindow::actionOpenBookmarkFolder()
 
 	if (action)
 	{
-		m_windowsManager->open(BookmarksManager::getBookmark(action->data().toInt())->item);
+		m_windowsManager->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())));
 	}
 }
 
@@ -987,7 +987,7 @@ void MainWindow::updateClosedWindows()
 	m_ui->tabsDockWidget->setClosedWindowsMenuEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
 }
 
-void MainWindow::updateBookmarks(int folder)
+void MainWindow::updateBookmarks()
 {
 	if (m_ui->menuBookmarks->actions().count() == 3)
 	{
@@ -996,21 +996,8 @@ void MainWindow::updateBookmarks(int folder)
 
 	for (int i = (m_ui->menuBookmarks->actions().count() - 1); i > 2; --i)
 	{
-		QAction *action = m_ui->menuBookmarks->actions().at(i);
-
-		if (folder == 0)
-		{
-			action->deleteLater();
-
-			m_ui->menuBookmarks->removeAction(action);
-		}
-		else if (m_ui->menuBookmarks->actions().at(i)->menu())
-		{
-			action->menu()->deleteLater();
-			action->setMenu(new QMenu());
-
-			connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
-		}
+		m_ui->menuBookmarks->actions().at(i)->deleteLater();
+		m_ui->menuBookmarks->removeAction(m_ui->menuBookmarks->actions().at(i));
 	}
 }
 

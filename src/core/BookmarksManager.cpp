@@ -33,23 +33,11 @@ namespace Otter
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
 BookmarksModel* BookmarksManager::m_model = NULL;
-QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
-QList<BookmarkInformation*> BookmarksManager::m_allBookmarks;
-QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
-int BookmarksManager::m_identifier;
 
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
 	 m_saveTimer(0)
 {
 	QTimer::singleShot(250, this, SLOT(load()));
-}
-
-BookmarksManager::~BookmarksManager()
-{
-	for (int i = 0; i < m_bookmarks.count(); ++i)
-	{
-		delete m_bookmarks.at(i);
-	}
 }
 
 void BookmarksManager::timerEvent(QTimerEvent *event)
@@ -76,13 +64,12 @@ void BookmarksManager::scheduleSave()
 	{
 		m_saveTimer = startTimer(1000);
 	}
+
+	emit modelModified();
 }
 
 void BookmarksManager::load()
 {
-	m_bookmarks.clear();
-	m_identifier = 0;
-
 	QFile file(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -98,7 +85,7 @@ void BookmarksManager::load()
 		{
 			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
 			{
-				m_bookmarks.append(readBookmark(&reader, m_model->getRootItem(), 0));
+				readBookmark(&reader, m_model->getRootItem());
 			}
 			else
 			{
@@ -112,7 +99,164 @@ void BookmarksManager::load()
 	connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
 	connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), m_instance, SLOT(scheduleSave()));
 
-	emit folderModified(0);
+	emit modelModified();
+}
+
+void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
+{
+	BookmarksItem *bookmark = NULL;
+
+	if (reader->name() == QLatin1String("folder"))
+	{
+		bookmark = new BookmarksItem(FolderBookmark);
+		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
+		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
+
+		while (reader->readNext())
+		{
+			if (reader->isStartElement())
+			{
+				if (reader->name() == QLatin1String("title"))
+				{
+					bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::TitleRole);
+				}
+				else if (reader->name() == QLatin1String("desc"))
+				{
+					bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::DescriptionRole);
+				}
+				else if (reader->name() == QLatin1String("folder") || reader->name() == QLatin1String("bookmark") || reader->name() == QLatin1String("separator"))
+				{
+					readBookmark(reader, bookmark);
+				}
+				else if (reader->name() == QLatin1String("info"))
+				{
+					while (reader->readNext())
+					{
+						if (reader->isStartElement())
+						{
+							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith("http://otter-browser.org/"))
+							{
+								while (reader->readNext())
+								{
+									if (reader->isStartElement())
+									{
+										if (reader->name() == QLatin1String("keyword"))
+										{
+											bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::KeywordRole);
+										}
+										else
+										{
+											reader->skipCurrentElement();
+										}
+									}
+									else if (reader->isEndElement() && reader->name() == QLatin1String("metadata"))
+									{
+										break;
+									}
+								}
+							}
+							else
+							{
+								reader->skipCurrentElement();
+							}
+						}
+						else if (reader->isEndElement() && reader->name() == QLatin1String("info"))
+						{
+							break;
+						}
+					}
+				}
+				else
+				{
+					reader->skipCurrentElement();
+				}
+			}
+			else if (reader->isEndElement() && reader->name() == QLatin1String("folder"))
+			{
+				break;
+			}
+		}
+	}
+	else if (reader->name() == QLatin1String("bookmark"))
+	{
+		bookmark = new BookmarksItem(UrlBookmark, reader->attributes().value(QLatin1String("href")).toString());
+		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
+		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
+		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate), BookmarksModel::TimeVisitedRole);
+
+		while (reader->readNext())
+		{
+			if (reader->isStartElement())
+			{
+				if (reader->name() == QLatin1String("title"))
+				{
+					bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::TitleRole);
+				}
+				else if (reader->name() == QLatin1String("desc"))
+				{
+					bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::DescriptionRole);
+				}
+				else if (reader->name() == QLatin1String("info"))
+				{
+					while (reader->readNext())
+					{
+						if (reader->isStartElement())
+						{
+							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith("http://otter-browser.org/"))
+							{
+								while (reader->readNext())
+								{
+									if (reader->isStartElement())
+									{
+										if (reader->name() == QLatin1String("keyword"))
+										{
+											bookmark->setData(reader->readElementText().trimmed(), BookmarksModel::KeywordRole);
+										}
+										else if (reader->name() == QLatin1String("visits"))
+										{
+											bookmark->setData(reader->readElementText().toInt(), BookmarksModel::VisitsRole);
+										}
+										else
+										{
+											reader->skipCurrentElement();
+										}
+									}
+									else if (reader->isEndElement() && reader->name() == QLatin1String("metadata"))
+									{
+										break;
+									}
+								}
+							}
+							else
+							{
+								reader->skipCurrentElement();
+							}
+						}
+						else if (reader->isEndElement() && reader->name() == QLatin1String("info"))
+						{
+							break;
+						}
+					}
+				}
+				else
+				{
+					reader->skipCurrentElement();
+				}
+			}
+			else if (reader->isEndElement() && reader->name() == QLatin1String("bookmark"))
+			{
+				break;
+			}
+		}
+	}
+	else if (reader->name() == QLatin1String("separator"))
+	{
+		bookmark = new BookmarksItem(SeparatorBookmark);
+
+		reader->readNext();
+	}
+
+	parent->appendRow(bookmark);
 }
 
 void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark)
@@ -236,67 +380,6 @@ void BookmarksManager::updateVisits(const QString &url)
 	}
 }
 
-void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, int index)
-{
-	if (!bookmark || (folder != 0 && !m_pointers.contains(folder)))
-	{
-		return;
-	}
-
-	if (bookmark->type == FolderBookmark)
-	{
-		bookmark->identifier = ++m_identifier;
-
-		m_pointers[bookmark->identifier] = bookmark;
-	}
-
-	bookmark->parent = folder;
-
-	if (!bookmark->added.isValid())
-	{
-		bookmark->added = QDateTime::currentDateTime();
-	}
-
-	if (!bookmark->modified.isValid())
-	{
-		bookmark->modified = bookmark->added;
-	}
-
-	if (folder == 0)
-	{
-		m_bookmarks.insert(((index < 0) ? m_bookmarks.count() : index), bookmark);
-	}
-	else
-	{
-		m_pointers[folder]->children.insert(((index < 0) ? m_pointers[folder]->children.count() : index), bookmark);
-	}
-
-	m_allBookmarks.append(bookmark);
-
-	BookmarksItem *item = new BookmarksItem(bookmark->type, bookmark->url, bookmark->title);
-	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
-	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
-	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
-	item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
-	item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
-	item->setData(bookmark->visits, BookmarksModel::VisitsRole);
-
-	if (folder == 0)
-	{
-		m_model->invisibleRootItem()->appendRow(item);
-	}
-	else if (m_pointers[folder]->item)
-	{
-		m_pointers[folder]->item->appendRow(item);
-	}
-
-	bookmark->item = item;
-
-	emit m_instance->folderModified(folder);
-
-	m_instance->scheduleSave();
-}
-
 void BookmarksManager::deleteBookmark(const QString &url)
 {
 	if (!hasBookmark(url))
@@ -322,160 +405,9 @@ BookmarksModel* BookmarksManager::getModel()
 	return m_model;
 }
 
-BookmarkInformation* BookmarksManager::getBookmark(const int identifier)
-{
-	return (m_pointers.contains(identifier) ? m_pointers[identifier] : NULL);
-}
-
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 {
 	return BookmarksItem::getBookmark(keyword);
-}
-
-BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier)
-{
-	BookmarksItem *item = NULL;
-	BookmarkInformation *bookmark = new BookmarkInformation();
-	bookmark->parent = parentIdentifier;
-
-	if (reader->name() == QLatin1String("folder"))
-	{
-		bookmark->type = FolderBookmark;
-		bookmark->identifier = ++m_identifier;
-		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
-		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
-
-		item = new BookmarksItem(FolderBookmark);
-
-		while (reader->readNext())
-		{
-			if (reader->isStartElement())
-			{
-				if (reader->name() == QLatin1String("title"))
-				{
-					bookmark->title = reader->readElementText().trimmed();
-				}
-				else if (reader->name() == QLatin1String("desc"))
-				{
-					bookmark->description = reader->readElementText().trimmed();
-				}
-				else if (reader->name() == QLatin1String("folder") || reader->name() == QLatin1String("bookmark") || reader->name() == QLatin1String("separator"))
-				{
-					bookmark->children.append(readBookmark(reader, item, bookmark->identifier));
-				}
-				else
-				{
-					reader->skipCurrentElement();
-				}
-			}
-			else if (reader->isEndElement() && reader->name() == QLatin1String("folder"))
-			{
-				break;
-			}
-		}
-
-		m_pointers[bookmark->identifier] = bookmark;
-	}
-	else if (reader->name() == QLatin1String("bookmark"))
-	{
-		item = new BookmarksItem(UrlBookmark);
-
-		bookmark->type = UrlBookmark;
-		bookmark->url = reader->attributes().value(QLatin1String("href")).toString();
-		bookmark->added = QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate);
-		bookmark->modified = QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate);
-		bookmark->visited = QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate);
-
-		while (reader->readNext())
-		{
-			if (reader->isStartElement())
-			{
-				if (reader->name() == QLatin1String("title"))
-				{
-					bookmark->title = reader->readElementText().trimmed();
-				}
-				else if (reader->name() == QLatin1String("desc"))
-				{
-					bookmark->description = reader->readElementText().trimmed();
-				}
-				else if (reader->name() == QLatin1String("info"))
-				{
-					while (reader->readNext())
-					{
-						if (reader->isStartElement())
-						{
-							if (reader->name() == QLatin1String("metadata") && reader->attributes().value(QLatin1String("owner")).toString().startsWith("http://otter-browser.org/"))
-							{
-								while (reader->readNext())
-								{
-									if (reader->isStartElement())
-									{
-										if (reader->name() == QLatin1String("keyword"))
-										{
-											bookmark->keyword = reader->readElementText().trimmed();
-										}
-										else if (reader->name() == QLatin1String("visits"))
-										{
-											bookmark->visits = reader->readElementText().toInt();
-										}
-										else
-										{
-											reader->skipCurrentElement();
-										}
-									}
-									else if (reader->isEndElement() && reader->name() == QLatin1String("metadata"))
-									{
-										break;
-									}
-								}
-							}
-							else
-							{
-								reader->skipCurrentElement();
-							}
-						}
-						else if (reader->isEndElement() && reader->name() == QLatin1String("info"))
-						{
-							break;
-						}
-					}
-				}
-				else
-				{
-					reader->skipCurrentElement();
-				}
-			}
-			else if (reader->isEndElement() && reader->name() == QLatin1String("bookmark"))
-			{
-				break;
-			}
-		}
-	}
-	else if (reader->name() == QLatin1String("separator"))
-	{
-		item = new BookmarksItem(SeparatorBookmark);
-
-		bookmark->type = SeparatorBookmark;
-
-		reader->readNext();
-	}
-
-	m_allBookmarks.append(bookmark);
-
-	bookmark->item = item;
-
-	parent->appendRow(item);
-
-	item->setData(bookmark->title, BookmarksModel::TitleRole);
-	item->setData(bookmark->description, BookmarksModel::DescriptionRole);
-	item->setData(bookmark->url, BookmarksModel::UrlRole);
-	item->setData(bookmark->keyword, BookmarksModel::KeywordRole);
-	item->setData(bookmark->added, BookmarksModel::TimeAddedRole);
-	item->setData(bookmark->modified, BookmarksModel::TimeModifiedRole);
-	item->setData(bookmark->visited, BookmarksModel::TimeVisitedRole);
-	item->setData(bookmark->visits, BookmarksModel::VisitsRole);
-
-	return bookmark;
 }
 
 QStringList BookmarksManager::getKeywords()
@@ -488,24 +420,14 @@ QStringList BookmarksManager::getUrls()
 	return BookmarksItem::getUrls();
 }
 
-QList<BookmarkInformation*> BookmarksManager::getFolder(int folder)
-{
-	if (folder == 0)
-	{
-		return m_bookmarks;
-	}
-
-	if (m_pointers.contains(folder))
-	{
-		return m_pointers[folder]->children;
-	}
-
-	return QList<BookmarkInformation*>();
-}
-
 bool BookmarksManager::hasBookmark(const QString &url)
 {
 	return BookmarksItem::hasUrl(url);
+}
+
+bool BookmarksManager::hasKeyword(const QString &keyword)
+{
+	return BookmarksItem::hasKeyword(keyword);
 }
 
 bool BookmarksManager::save(const QString &path)

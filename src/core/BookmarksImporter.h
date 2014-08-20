@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,20 +34,21 @@ class BookmarksImporter : public Importer
 public:
 	explicit BookmarksImporter(QObject *parent = NULL);
 
+	QStandardItem* getCurrentFolder();
 	ImportType getType() const;
+	bool allowDuplicates() const;
 
 protected:
-	BookmarkInformation* addBookmark(BookmarkInformation information);
-	void addUrl(BookmarkInformation information, bool duplicate);
-	void addSeparator(BookmarkInformation information);
-	void enterNewFolder(BookmarkInformation information);
 	void goToParent();
 	void removeAllBookmarks();
-	void setImportFolder(BookmarkInformation *folder);
+	void setAllowDuplicates(bool allow);
+	void setCurrentFolder(QStandardItem *folder);
+	void setImportFolder(QStandardItem *folder);
 
 private:
-	BookmarkInformation *m_baseFolder;
-	BookmarkInformation *m_currentFolder;
+	QStandardItem *m_importFolder;
+	QStandardItem *m_currentFolder;
+	bool m_allowDuplicates;
 };
 
 }

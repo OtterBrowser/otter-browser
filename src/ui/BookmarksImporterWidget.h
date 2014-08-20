@@ -40,25 +40,17 @@ public:
 	explicit BookmarksImporterWidget(QWidget *parent = 0);
 	~BookmarksImporterWidget();
 
-	QString subfolderName();
-	int targetFolder();
-	bool duplicate();
+	QStandardItem* targetFolder();
+	QString getSubfolderName();
+	bool allowDuplicates();
 	bool importIntoSubfolder();
 	bool removeExisting();
 
-protected:
-	void populateFolder(const QList<BookmarkInformation*> bookmarks, QStandardItem *parent);
-
 protected slots:
-	void folderChanged(const QModelIndex &index);
-	void reloadFolders();
 	void removeStateChanged(bool checked);
 	void toSubfolderChanged(bool checked);
 
 private:
-	QStandardItemModel *m_model;
-	QModelIndex m_index;
-	int m_folder;
 	Ui::BookmarksImporterWidget *m_ui;
 };
 

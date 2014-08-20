@@ -101,7 +101,7 @@ protected slots:
 	void openBookmark();
 	void triggerWindowAction();
 	void updateClosedWindows();
-	void updateBookmarks(int folder);
+	void updateBookmarks();
 	void updateActions();
 	void updateWindowTitle(const QString &title);
 #ifdef Q_OS_WIN

@@ -34,10 +34,10 @@ public:
 	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
 	~BookmarksItem();
 
+	void setData(const QVariant &value, int role);
 	QVariant data(int role) const;
 
 protected:
-	void setData(const QVariant &value, int role);
 	static QList<BookmarksItem*> getBookmarks(const QString &url);
 	static QStringList getKeywords();
 	static QStringList getUrls();

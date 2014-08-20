@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,49 +26,26 @@ namespace Otter
 {
 
 BookmarksImporter::BookmarksImporter(QObject *parent): Importer(parent),
-	m_baseFolder(NULL),
-	m_currentFolder(NULL)
+	m_importFolder(NULL),
+	m_currentFolder(NULL),
+	m_allowDuplicates(true)
 {
-}
-
-void BookmarksImporter::addUrl(BookmarkInformation bookmark, bool duplicate)
-{
-	bookmark.type = UrlBookmark;
-
-	if (duplicate || !BookmarksManager::hasBookmark(bookmark.url))
-	{
-		addBookmark(bookmark);
-	}
-}
-
-void BookmarksImporter::addSeparator(BookmarkInformation bookmark)
-{
-	bookmark.type = SeparatorBookmark;
-
-	addBookmark(bookmark);
-}
-
-void BookmarksImporter::enterNewFolder(BookmarkInformation bookmark)
-{
-	bookmark.type = FolderBookmark;
-
-	m_currentFolder = addBookmark(bookmark);
 }
 
 void BookmarksImporter::goToParent()
 {
-	if (m_currentFolder == m_baseFolder)
+	if (m_currentFolder == m_importFolder)
 	{
 		return;
 	}
 
 	if (m_currentFolder)
 	{
-		m_currentFolder = BookmarksManager::getBookmark(m_currentFolder->parent);
+		m_currentFolder = m_currentFolder->parent();
 	}
 	else
 	{
-		m_currentFolder = BookmarksManager::getBookmark(0);
+		m_currentFolder = BookmarksManager::getModel()->getRootItem();
 	}
 }
 
@@ -76,36 +54,35 @@ void BookmarksImporter::removeAllBookmarks()
 	BookmarksManager::getModel()->getRootItem()->removeRows(0, BookmarksManager::getModel()->getRootItem()->rowCount());
 }
 
-void BookmarksImporter::setImportFolder(BookmarkInformation *folder)
+void BookmarksImporter::setAllowDuplicates(bool allow)
 {
-	m_baseFolder = folder;
+	m_allowDuplicates = allow;
+}
+
+void BookmarksImporter::setCurrentFolder(QStandardItem *folder)
+{
 	m_currentFolder = folder;
 }
 
-BookmarkInformation* BookmarksImporter::addBookmark(BookmarkInformation bookmark)
+void BookmarksImporter::setImportFolder(QStandardItem *folder)
 {
-	BookmarkInformation *added = new BookmarkInformation(bookmark);
+	m_importFolder = folder;
+	m_currentFolder = folder;
+}
 
-	if (BookmarksManager::getBookmark(added->keyword))
-	{
-		added->keyword = QString();
-	}
-
-	if (m_currentFolder)
-	{
-		BookmarksManager::addBookmark(added, m_currentFolder->identifier);
-	}
-	else
-	{
-		BookmarksManager::addBookmark(added);
-	}
-
-	return added;
+QStandardItem *BookmarksImporter::getCurrentFolder()
+{
+	return m_currentFolder;
 }
 
 ImportType BookmarksImporter::getType() const
 {
 	return BookmarksImport;
+}
+
+bool BookmarksImporter::allowDuplicates() const
+{
+	return m_allowDuplicates;
 }
 
 }

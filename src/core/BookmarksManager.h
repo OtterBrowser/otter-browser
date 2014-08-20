@@ -42,52 +42,29 @@ enum BookmarkType
 class BookmarksItem;
 class BookmarksModel;
 
-struct BookmarkInformation
-{
-	BookmarksItem *item;
-	QString url;
-	QString title;
-	QString description;
-	QString keyword;
-	QDateTime added;
-	QDateTime modified;
-	QDateTime visited;
-	QList<BookmarkInformation*> children;
-	BookmarkType type;
-	int identifier;
-	int parent;
-	int visits;
-
-	BookmarkInformation() : item(NULL), type(FolderBookmark), identifier(-1), parent(-1), visits(0) {}
-};
-
 class BookmarksManager : public QObject
 {
 	Q_OBJECT
 
 public:
-	~BookmarksManager();
-
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisits(const QString &url);
-	static void addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
 	static void deleteBookmark(const QString &url);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarkInformation* getBookmark(const int identifier);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static QStringList getKeywords();
 	static QStringList getUrls();
-	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool hasBookmark(const QString &url);
+	static bool hasKeyword(const QString &keyword);
 	static bool save(const QString &path = QString());
 
 protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
+	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
 	static void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
-	BookmarkInformation* readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier);
 
 protected slots:
 	void scheduleSave();
@@ -98,13 +75,9 @@ private:
 
 	static BookmarksManager *m_instance;
 	static BookmarksModel* m_model;
-	static QHash<int, BookmarkInformation*> m_pointers;
-	static QList<BookmarkInformation*> m_bookmarks;
-	static QList<BookmarkInformation*> m_allBookmarks;
-	static int m_identifier;
 
 signals:
-	void folderModified(int folder);
+	void modelModified();
 };
 
 }

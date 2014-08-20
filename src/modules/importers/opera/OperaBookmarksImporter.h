@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,20 +29,20 @@
 namespace Otter
 {
 
-enum OperaBookmarkEntry
-{
-	NoOperaBookmarkEntry = 0,
-	UrlOperaBookmarkEntry = 1,
-	FolderOperaBookmarkEntry = 2,
-	FolderEndOperaBookmarkEntry = 3,
-	SeparatorOperaBookmarkEntry = 4
-};
-
 class OperaBookmarksImporter : public BookmarksImporter
 {
 	Q_OBJECT
 
 public:
+	enum OperaBookmarkEntry
+	{
+		NoEntry = 0,
+		UrlEntry = 1,
+		FolderStartEntry = 2,
+		FolderEndEntry = 3,
+		SeparatorEntry = 4
+	};
+
 	explicit OperaBookmarksImporter(QObject *parent = NULL);
 	~OperaBookmarksImporter();
 
@@ -53,8 +54,8 @@ public:
 	QString getBrowser() const;
 
 public slots:
-	bool setPath(const QString &path, bool isPrefix = false);
 	bool import();
+	bool setPath(const QString &path, bool isPrefix = false);
 
 protected:
 	void handleOptions();
@@ -62,7 +63,6 @@ protected:
 private:
 	QFile *m_file;
 	BookmarksImporterWidget *m_optionsWidget;
-	bool m_duplicate;
 };
 
 }

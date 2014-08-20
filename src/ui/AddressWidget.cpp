@@ -66,7 +66,7 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
-	connect(BookmarksManager::getInstance(), SIGNAL(folderModified(int)), this, SLOT(updateBookmark()));
+	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 

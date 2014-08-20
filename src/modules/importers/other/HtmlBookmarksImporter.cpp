@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 **************************************************************************/
 
 #include "HtmlBookmarksImporter.h"
+#include "../../../core/BookmarksModel.h"
 
 //TODO QtWebKit should not be used directly
 #include <QtWebKitWidgets/QWebPage>
@@ -27,16 +29,15 @@
 namespace Otter
 {
 
-HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent): BookmarksImporter(parent),
+HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : BookmarksImporter(parent),
 	m_file(NULL),
-	m_optionsWidget(new BookmarksImporterWidget),
-	m_duplicate(true)
+	m_optionsWidget(new BookmarksImporterWidget())
 {
 }
 
 HtmlBookmarksImporter::~HtmlBookmarksImporter()
 {
-	delete m_optionsWidget;
+	m_optionsWidget->deleteLater();
 }
 
 void HtmlBookmarksImporter::handleOptions()
@@ -47,90 +48,89 @@ void HtmlBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->importIntoSubfolder())
 		{
-			BookmarkInformation *folder = new BookmarkInformation;
-			folder->title = m_optionsWidget->subfolderName();
-			folder->type = FolderBookmark;
+			BookmarksItem *folder = new BookmarksItem(FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
 
-			BookmarksManager::addBookmark(folder);
+			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
 
 			setImportFolder(folder);
 		}
 		else
 		{
-			setImportFolder(BookmarksManager::getBookmark(0));
+			setImportFolder(BookmarksManager::getModel()->getRootItem());
 		}
 	}
 	else
 	{
-		setImportFolder(BookmarksManager::getBookmark(m_optionsWidget->targetFolder()));
-
-		m_duplicate = m_optionsWidget->duplicate();
+		setAllowDuplicates(m_optionsWidget->allowDuplicates());
+		setImportFolder(m_optionsWidget->targetFolder());
 	}
 }
 
 void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
-	BookmarkInformation bookmark;
-	uint time;
-
-	if (element.tagName().toLower() == QLatin1String("a"))
+	if (element.tagName().toLower() == QLatin1String("h3"))
 	{
-		bookmark.url = element.attribute(QLatin1String("href"));
-		bookmark.title = element.toPlainText();
-		bookmark.keyword = element.attribute(QLatin1String("SHORTCUTURL"));
+		BookmarksItem *bookmark = new BookmarksItem(FolderBookmark, QUrl(), element.toPlainText());
+		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
+
+		if (!BookmarksManager::hasKeyword(keyword))
+		{
+			bookmark->setData(keyword, BookmarksModel::KeywordRole);
+		}
+
+		if (!element.attribute(QLatin1String("ADD_DATE")).isEmpty())
+		{
+			const QDateTime time = QDateTime::fromTime_t(element.attribute(QLatin1String("ADD_DATE")).toUInt());
+
+			bookmark->setData(time, BookmarksModel::TimeAddedRole);
+			bookmark->setData(time, BookmarksModel::TimeModifiedRole);
+		}
+
+		getCurrentFolder()->appendRow(bookmark);;
+		setCurrentFolder(bookmark);
+	}
+	else if (element.tagName().toLower() == QLatin1String("a"))
+	{
+		const QString url = element.attribute(QLatin1String("href"));
+
+		if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
+		{
+			return;
+		}
+
+		BookmarksItem *bookmark = new BookmarksItem(UrlBookmark, QUrl(url), element.toPlainText());
+		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
+
+		if (!BookmarksManager::hasKeyword(keyword))
+		{
+			bookmark->setData(keyword, BookmarksModel::KeywordRole);
+		}
 
 		if (element.parent().nextSibling().tagName().toLower() == QLatin1String("dd"))
 		{
-			bookmark.description = element.parent().nextSibling().toPlainText();
+			bookmark->setData(element.parent().nextSibling().toPlainText(), BookmarksModel::DescriptionRole);
 		}
 
-		time = element.attribute(QLatin1String("ADD_DATE")).toUInt();
-
-		if (time)
+		if (!element.attribute(QLatin1String("ADD_DATE")).isEmpty())
 		{
-			bookmark.added = QDateTime::fromTime_t(time);
+			bookmark->setData(QDateTime::fromTime_t(element.attribute(QLatin1String("ADD_DATE")).toUInt()), BookmarksModel::TimeAddedRole);
 		}
 
-		time = element.attribute(QLatin1String("LAST_MODIFIED")).toUInt();
-
-		if (time)
+		if (!element.attribute(QLatin1String("LAST_MODIFIED")).isEmpty())
 		{
-			bookmark.modified = QDateTime::fromTime_t(time);
+			bookmark->setData(QDateTime::fromTime_t(element.attribute(QLatin1String("LAST_MODIFIED")).toUInt()), BookmarksModel::TimeModifiedRole);
 		}
 
-		time = element.attribute(QLatin1String("LAST_VISITED")).toUInt();
-
-		if (time)
+		if (!element.attribute(QLatin1String("LAST_VISITED")).isEmpty())
 		{
-			bookmark.visited = QDateTime::fromTime_t(time);
+			bookmark->setData(QDateTime::fromTime_t(element.attribute(QLatin1String("LAST_VISITED")).toUInt()), BookmarksModel::TimeVisitedRole);
 		}
 
-		addUrl(bookmark, m_duplicate);
+		getCurrentFolder()->appendRow(bookmark);
 	}
 	else if (element.tagName().toLower() == QLatin1String("hr"))
 	{
-		addSeparator(bookmark);
-	}
-	else if (element.tagName().toLower() == QLatin1String("h3"))
-	{
-		bookmark.title = element.toPlainText();
-		bookmark.keyword = element.attribute(QLatin1String("SHORTCUTURL"));
-
-		time = element.attribute(QLatin1String("ADD_DATE")).toUInt();
-
-		if (time)
-		{
-			bookmark.added = QDateTime::fromTime_t(time);
-		}
-
-		time = element.attribute(QLatin1String("ADD_DATE")).toUInt();
-
-		if (time)
-		{
-			bookmark.modified= QDateTime::fromTime_t(time);
-		}
-
-		enterNewFolder(bookmark);
+		getCurrentFolder()->appendRow(new BookmarksItem(SeparatorBookmark));
 	}
 
 	const QWebElementCollection descendants = element.findAll(QLatin1String("*"));
@@ -156,7 +156,7 @@ QWidget* HtmlBookmarksImporter::getOptionsWidget()
 
 QString HtmlBookmarksImporter::getTitle() const
 {
-	return QString(tr("HTML bookmarks"));
+	return QString(tr("HTML Bookmarks"));
 }
 
 QString HtmlBookmarksImporter::getDescription() const
@@ -179,6 +179,19 @@ QString HtmlBookmarksImporter::getBrowser() const
 	return QLatin1String("other");
 }
 
+bool HtmlBookmarksImporter::import()
+{
+	QWebPage page;
+
+	handleOptions();
+
+	page.mainFrame()->setHtml(m_file->readAll());
+
+	processElement(page.mainFrame()->documentElement());
+
+	return true;
+}
+
 bool HtmlBookmarksImporter::setPath(const QString &path, bool isPrefix)
 {
 	QUrl url(path);
@@ -197,20 +210,6 @@ bool HtmlBookmarksImporter::setPath(const QString &path, bool isPrefix)
 	m_file = new QFile(url.url(), this);
 
 	return m_file->open(QIODevice::ReadOnly);
-}
-
-bool HtmlBookmarksImporter::import()
-{
-	QWebPage page;
-	QWebFrame* frame = page.mainFrame();
-
-	handleOptions();
-
-	frame->setHtml(m_file->readAll());
-
-	processElement(frame->documentElement());
-
-	return true;
 }
 
 }

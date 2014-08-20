@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 **************************************************************************/
 
 #include "OperaBookmarksImporter.h"
+#include "../../../core/BookmarksModel.h"
 
 #include <QtCore/QTextStream>
 #include <QtCore/QUrl>
@@ -27,14 +29,13 @@ namespace Otter
 
 OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImporter(parent),
 	m_file(NULL),
-	m_optionsWidget(new BookmarksImporterWidget),
-	m_duplicate(true)
+	m_optionsWidget(new BookmarksImporterWidget)
 {
 }
 
 OperaBookmarksImporter::~OperaBookmarksImporter()
 {
-	delete m_optionsWidget;
+	m_optionsWidget->deleteLater();
 }
 
 void OperaBookmarksImporter::handleOptions()
@@ -45,24 +46,21 @@ void OperaBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->importIntoSubfolder())
 		{
-			BookmarkInformation *folder = new BookmarkInformation;
-			folder->title = m_optionsWidget->subfolderName();
-			folder->type = FolderBookmark;
+			BookmarksItem *folder = new BookmarksItem(FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
 
-			BookmarksManager::addBookmark(folder);
+			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
 
 			setImportFolder(folder);
 		}
 		else
 		{
-			setImportFolder(BookmarksManager::getBookmark(0));
+			setImportFolder(BookmarksManager::getModel()->getRootItem());
 		}
 	}
 	else
 	{
-		setImportFolder(BookmarksManager::getBookmark(m_optionsWidget->targetFolder()));
-
-		m_duplicate = m_optionsWidget->duplicate();
+		setAllowDuplicates(m_optionsWidget->allowDuplicates());
+		setImportFolder(m_optionsWidget->targetFolder());
 	}
 }
 
@@ -73,7 +71,7 @@ QWidget* OperaBookmarksImporter::getOptionsWidget()
 
 QString OperaBookmarksImporter::getTitle() const
 {
-	return QString(tr("Opera bookmarks"));
+	return QString(tr("Opera Bookmarks"));
 }
 
 QString OperaBookmarksImporter::getDescription() const
@@ -96,6 +94,112 @@ QString OperaBookmarksImporter::getBrowser() const
 	return QLatin1String("opera");
 }
 
+bool OperaBookmarksImporter::import()
+{
+	QTextStream stream(m_file);
+	QString line = stream.readLine();
+
+	if (line != QLatin1String("Opera Hotlist version 2.0"))
+	{
+		return false;
+	}
+
+	BookmarksItem *bookmark = NULL;
+	OperaBookmarkEntry entryType = NoEntry;
+	bool isHeader = true;
+
+	handleOptions();
+
+	while (!stream.atEnd())
+	{
+		line = stream.readLine();
+
+		if (isHeader && (line.isEmpty() || line.at(0) != QLatin1Char('#')))
+		{
+			continue;
+		}
+
+		isHeader = false;
+
+		if (line.startsWith(QLatin1String("#URL")))
+		{
+			bookmark = new BookmarksItem(UrlBookmark);
+			entryType = UrlEntry;
+		}
+		else if (line.startsWith(QLatin1String("#FOLDER")))
+		{
+			bookmark = new BookmarksItem(FolderBookmark);
+			entryType = FolderStartEntry;
+		}
+		else if (line.startsWith(QLatin1String("#SEPERATOR")))
+		{
+			bookmark = new BookmarksItem(SeparatorBookmark);
+			entryType = SeparatorEntry;
+		}
+		else if (line == QLatin1String("-"))
+		{
+			entryType = FolderEndEntry;
+		}
+		else if (line.startsWith(QLatin1String("\tURL=")) && bookmark)
+		{
+			const QString url = line.section(QLatin1Char('='), 1, -1);
+
+			if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
+			{
+				delete bookmark;
+
+				bookmark = NULL;
+			}
+			else
+			{
+				bookmark->setData(url, BookmarksModel::UrlRole);
+			}
+		}
+		else if (line.startsWith(QLatin1String("\tNAME=")) && bookmark)
+		{
+			bookmark->setData(line.section(QLatin1Char('='), 1, -1), BookmarksModel::TitleRole);
+		}
+		else if (line.startsWith(QLatin1String("\tDESCRIPTION=")) && bookmark)
+		{
+			bookmark->setData(line.section(QLatin1Char('='), 1, -1), BookmarksModel::DescriptionRole);
+		}
+		else if (line.startsWith(QLatin1String("\tSHORT NAME=")) && bookmark)
+		{
+			const QString keyword = line.section(QLatin1Char('='), 1, -1);
+
+			if (!BookmarksManager::hasKeyword(keyword))
+			{
+				bookmark->setData(keyword, BookmarksModel::KeywordRole);
+			}
+		}
+		else if (line.startsWith(QLatin1String("\tCREATED=")) && bookmark)
+		{
+			bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeAddedRole);
+		}
+		else if (line.startsWith(QLatin1String("\tVISITED=")) && bookmark)
+		{
+			bookmark->setData(QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt()), BookmarksModel::TimeVisitedRole);
+		}
+		else if (line.isEmpty())
+		{
+			if (bookmark)
+			{
+				getCurrentFolder()->appendRow(bookmark);
+
+				bookmark = NULL;
+			}
+			else if (entryType == FolderEndEntry)
+			{
+				goToParent();
+			}
+
+			entryType = NoEntry;
+		}
+	}
+
+	return true;
+}
+
 bool OperaBookmarksImporter::setPath(const QString &path, bool isPrefix)
 {
 	QUrl url(path);
@@ -114,108 +218,6 @@ bool OperaBookmarksImporter::setPath(const QString &path, bool isPrefix)
 	m_file = new QFile(url.url(), this);
 
 	return m_file->open(QIODevice::ReadOnly);
-}
-
-bool OperaBookmarksImporter::import()
-{
-	QTextStream stream(m_file);
-	QString line;
-	BookmarkInformation readedBookmark;
-	OperaBookmarkEntry currentEntryType = NoOperaBookmarkEntry;
-	bool isHeader = true;
-
-	handleOptions();
-
-	line = stream.readLine();
-
-	if (line != QLatin1String("Opera Hotlist version 2.0"))
-	{
-		return false;
-	}
-
-	while (!stream.atEnd())
-	{
-		line = stream.readLine();
-
-		if (isHeader && (line.isEmpty() || line.at(0) != QLatin1Char('#')))
-		{
-			continue;
-		}
-
-		isHeader = false;
-
-		if (line.startsWith(QLatin1String("#URL")))
-		{
-			readedBookmark = BookmarkInformation();
-			currentEntryType = UrlOperaBookmarkEntry;
-		}
-		else if (line.startsWith(QLatin1String("#FOLDER")))
-		{
-			readedBookmark = BookmarkInformation();
-			currentEntryType = FolderOperaBookmarkEntry;
-		}
-		else if (line.startsWith(QLatin1String("#SEPERATOR")))
-		{
-			readedBookmark = BookmarkInformation();
-			currentEntryType = SeparatorOperaBookmarkEntry;
-		}
-		else if (line == QLatin1String("-"))
-		{
-			currentEntryType = FolderEndOperaBookmarkEntry;
-		}
-		else if (line.startsWith(QLatin1String("\tURL=")))
-		{
-			readedBookmark.url = line.section(QLatin1Char('='), 1, -1);
-		}
-		else if (line.startsWith(QLatin1String("\tNAME=")))
-		{
-			readedBookmark.title = line.section(QLatin1Char('='), 1, -1);
-		}
-		else if (line.startsWith(QLatin1String("\tDESCRIPTION=")))
-		{
-			readedBookmark.description = line.section(QLatin1Char('='), 1, -1).replace(QLatin1String("\x02\x02"), QLatin1String("\n"));
-		}
-		else if (line.startsWith(QLatin1String("\tSHORT NAME=")))
-		{
-			readedBookmark.keyword = line.section(QLatin1Char('='), 1, -1);
-		}
-		else if (line.startsWith(QLatin1String("\tCREATED=")))
-		{
-			readedBookmark.added = QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt());
-		}
-		else if (line.startsWith(QLatin1String("\tVISITED=")))
-		{
-			readedBookmark.visited = QDateTime::fromTime_t(line.section(QLatin1Char('='), 1, -1).toUInt());
-		}
-		else if (line.isEmpty())
-		{
-			switch (currentEntryType)
-			{
-				case UrlOperaBookmarkEntry:
-					addUrl(readedBookmark, m_duplicate);
-
-					break;
-				case FolderOperaBookmarkEntry:
-					enterNewFolder(readedBookmark);
-
-					break;
-				case FolderEndOperaBookmarkEntry:
-					goToParent();
-
-					break;
-				case SeparatorOperaBookmarkEntry:
-					addSeparator(readedBookmark);
-
-					break;
-				default:
-					break;
-			}
-
-			currentEntryType = NoOperaBookmarkEntry;
-		}
-	}
-
-	return true;
 }
 
 }
