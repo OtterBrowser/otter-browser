@@ -891,52 +891,67 @@ void MainWindow::menuBookmarksAboutToShow()
 	menu->setObjectName(QLatin1String("bookmarks"));
 	menu->installEventFilter(this);
 
-	const int folder = menu->menuAction()->data().toInt();
+	const QModelIndex index = menu->menuAction()->data().toModelIndex();
 
-	if ((folder == 0 && menu->actions().count() == 3) || (folder != 0 && menu->actions().isEmpty()))
+	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3))
 	{
-		WebBackend *backend = WebBackendsManager::getBackend();
-		const QList<BookmarkInformation*> bookmarks = BookmarksManager::getFolder(folder);
+		return;
+	}
 
-		if (folder != 0 && bookmarks.count() > 1)
+	QStandardItem *branch = (index.isValid() ? BookmarksManager::getModel()->itemFromIndex(index) : BookmarksManager::getModel()->getRootItem());
+
+	if (!branch)
+	{
+		return;
+	}
+
+	if (index.isValid() && branch->rowCount() > 1)
+	{
+		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"));
+		openAllAction->setData(index);
+
+		connect(openAllAction, SIGNAL(triggered()), this, SLOT(actionOpenBookmarkFolder()));
+
+		menu->addSeparator();
+	}
+
+	for (int i = 0; i < branch->rowCount(); ++i)
+	{
+		QStandardItem *item = branch->child(i);
+
+		if (!item)
 		{
-			QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"));
-			openAllAction->setData(folder);
-
-			connect(openAllAction, SIGNAL(triggered()), this, SLOT(actionOpenBookmarkFolder()));
-
-			menu->addSeparator();
+			continue;
 		}
 
-		for (int i = 0; i < bookmarks.count(); ++i)
+		const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+
+		if (type == RootBookmark || type == FolderBookmark || type == UrlBookmark)
 		{
-			if (bookmarks.at(i)->type == FolderBookmark || bookmarks.at(i)->type == UrlBookmark)
+			QAction *action = menu->addAction(item->data(Qt::DecorationRole).value<QIcon>(), (item->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(item->data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
+			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
+
+			if (type == UrlBookmark)
 			{
-				QAction *action = menu->addAction(((bookmarks.at(i)->type == FolderBookmark) ? Utils::getIcon(QLatin1String("inode-directory")) : backend->getIconForUrl(QUrl(bookmarks.at(i)->url))), (bookmarks.at(i)->title.isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(bookmarks.at(i)->title).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
-				action->setToolTip(bookmarks.at(i)->description);
+				action->setData(item->data(BookmarksModel::UrlRole).toString());
 
-				if (bookmarks.at(i)->type == FolderBookmark)
-				{
-					action->setData(bookmarks.at(i)->identifier);
-
-					if (!bookmarks.at(i)->children.isEmpty())
-					{
-						action->setMenu(new QMenu());
-
-						connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
-					}
-				}
-				else
-				{
-					action->setData(bookmarks.at(i)->url);
-
-					connect(action, SIGNAL(triggered()), this, SLOT(actionOpenBookmark()));
-				}
+				connect(action, SIGNAL(triggered()), this, SLOT(actionOpenBookmark()));
 			}
 			else
 			{
-				menu->addSeparator();
+				action->setData(item->index());
+
+				if (item->rowCount() > 0)
+				{
+					action->setMenu(new QMenu());
+
+					connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+				}
 			}
+		}
+		else
+		{
+			menu->addSeparator();
 		}
 	}
 }
