@@ -217,7 +217,7 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void AddressWidget::handleUserInput(const QString &text)
 {
-	BookmarkInformation *bookmark = BookmarksManager::getBookmark(text);
+	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
 
 	if (bookmark)
 	{
@@ -225,7 +225,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 		if (windowsManager)
 		{
-			windowsManager->open(bookmark->item);
+			windowsManager->open(bookmark);
 
 			return;
 		}
@@ -414,7 +414,7 @@ void AddressWidget::updateBookmark()
 		return;
 	}
 
-	const bool hasBookmark = BookmarksManager::hasBookmark(url);
+	const bool hasBookmark = BookmarksManager::hasBookmark(url.toString());
 
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
@@ -477,9 +477,11 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			if (m_bookmarkLabel->isEnabled())
 			{
-				if (BookmarksManager::hasBookmark(getUrl()))
+				const QString url = getUrl().toString();
+
+				if (BookmarksManager::hasBookmark(url))
 				{
-					BookmarksManager::deleteBookmark(getUrl());
+					BookmarksManager::deleteBookmark(url);
 				}
 				else
 				{

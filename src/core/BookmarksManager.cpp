@@ -36,8 +36,6 @@ BookmarksModel* BookmarksManager::m_model = NULL;
 QList<BookmarkInformation*> BookmarksManager::m_bookmarks;
 QList<BookmarkInformation*> BookmarksManager::m_allBookmarks;
 QHash<int, BookmarkInformation*> BookmarksManager::m_pointers;
-QSet<QString> BookmarksManager::m_urls;
-QHash<QString, BookmarkInformation*> BookmarksManager::m_keywords;
 int BookmarksManager::m_identifier;
 
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
@@ -78,8 +76,6 @@ void BookmarksManager::scheduleSave()
 	{
 		m_saveTimer = startTimer(1000);
 	}
-
-	updateIndex();
 }
 
 void BookmarksManager::load()
@@ -110,8 +106,6 @@ void BookmarksManager::load()
 			}
 		}
 	}
-
-	updateIndex();
 
 	connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
 	connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
@@ -228,63 +222,16 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 	}
 }
 
-void BookmarksManager::updateIndex()
+void BookmarksManager::updateVisits(const QString &url)
 {
-	updateUrls();
-	updateKeywords();
-}
-
-void BookmarksManager::updateUrls()
-{
-	QStringList urls;
-
-	for (int i = 0; i < m_allBookmarks.count(); ++i)
+	if (BookmarksItem::hasBookmark(url))
 	{
-		if (m_allBookmarks.at(i) && m_allBookmarks.at(i)->type == UrlBookmark)
+		const QList<BookmarksItem*> bookmarks = BookmarksItem::getBookmarks(url);
+
+		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			const QUrl url(m_allBookmarks.at(i)->url);
-
-			if (url.isValid())
-			{
-				urls.append(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
-			}
-		}
-	}
-
-	m_urls = urls.toSet();
-}
-
-void BookmarksManager::updateKeywords()
-{
-	m_keywords.clear();
-
-	for (int i = 0; i < m_allBookmarks.count(); ++i)
-	{
-		if (m_allBookmarks.at(i) && !m_allBookmarks.at(i)->keyword.isEmpty())
-		{
-			m_keywords.insert(m_allBookmarks.at(i)->keyword, m_allBookmarks.at(i));
-		}
-	}
-}
-
-void BookmarksManager::updateVisits(const QUrl &url)
-{
-	if (hasBookmark(url))
-	{
-		const QString address = url.toString();
-
-		for (int i = 0; i < m_allBookmarks.count(); ++i)
-		{
-			if (m_allBookmarks.at(i) && address == m_allBookmarks.at(i)->url)
-			{
-				m_allBookmarks.at(i)->visited = QDateTime::currentDateTime();
-
-				++m_allBookmarks.at(i)->visits;
-
-				m_allBookmarks.at(i)->item->setData(m_allBookmarks.at(i)->visits, BookmarksModel::VisitsRole);
-
-				m_instance->scheduleSave();
-			}
+			bookmarks.at(i)->setData(bookmarks.at(i)->data(BookmarksModel::VisitsRole).toInt(), BookmarksModel::VisitsRole);
+			bookmarks.at(i)->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
 		}
 	}
 }
@@ -294,18 +241,6 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	if (!bookmark || (folder != 0 && !m_pointers.contains(folder)))
 	{
 		return;
-	}
-
-	const QUrl url(bookmark->url);
-
-	if (url.isValid())
-	{
-		m_urls.insert(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
-	}
-
-	if (!bookmark->keyword.isEmpty())
-	{
-		m_keywords.insert(bookmark->keyword, bookmark);
 	}
 
 	if (bookmark->type == FolderBookmark)
@@ -362,65 +297,18 @@ void BookmarksManager::addBookmark(BookmarkInformation *bookmark, int folder, in
 	m_instance->scheduleSave();
 }
 
-void BookmarksManager::deleteBookmark(BookmarkInformation *bookmark, bool notify)
-{
-	if (!bookmark || !m_allBookmarks.contains(bookmark))
-	{
-		return;
-	}
-
-	const int folder = bookmark->parent;
-
-	for (int i = 0; i < bookmark->children.count(); ++i)
-	{
-		deleteBookmark(bookmark->children.at(i), false);
-	}
-
-	m_bookmarks.removeAll(bookmark);
-	m_allBookmarks.removeAll(bookmark);
-
-	if (folder > 0 && m_pointers.contains(folder))
-	{
-		m_pointers[folder]->children.removeAll(bookmark);
-	}
-
-	if (bookmark->type == FolderBookmark)
-	{
-		m_pointers.remove(bookmark->identifier);
-	}
-
-	if (bookmark->item && bookmark->item->parent())
-	{
-		bookmark->item->parent()->removeRow(bookmark->item->row());
-	}
-
-	delete bookmark;
-
-	updateIndex();
-
-	m_instance->scheduleSave();
-
-	if (notify)
-	{
-		emit m_instance->folderModified(folder);
-	}
-}
-
-void BookmarksManager::deleteBookmark(const QUrl &url)
+void BookmarksManager::deleteBookmark(const QString &url)
 {
 	if (!hasBookmark(url))
 	{
 		return;
 	}
 
-	const QString bookmarkUrl = url.toString(QUrl::RemovePassword);
+	const QList<QStandardItem*> items = m_model->findUrls(url);
 
-	for (int i = 0; i < m_allBookmarks.count(); ++i)
+	for (int i = 0; i < items.count(); ++i)
 	{
-		if (m_allBookmarks.at(i) && m_allBookmarks.at(i)->type == UrlBookmark && m_allBookmarks.at(i)->url == bookmarkUrl)
-		{
-			deleteBookmark(m_allBookmarks.at(i));
-		}
+		items.at(i)->parent()->removeRow(items.at(i)->row());
 	}
 }
 
@@ -439,9 +327,9 @@ BookmarkInformation* BookmarksManager::getBookmark(const int identifier)
 	return (m_pointers.contains(identifier) ? m_pointers[identifier] : NULL);
 }
 
-BookmarkInformation* BookmarksManager::getBookmark(const QString &keyword)
+BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 {
-	return m_keywords.value(keyword);
+	return BookmarksItem::getBookmark(keyword);
 }
 
 BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier)
@@ -592,17 +480,12 @@ BookmarkInformation* BookmarksManager::readBookmark(QXmlStreamReader *reader, Bo
 
 QStringList BookmarksManager::getKeywords()
 {
-	return m_keywords.keys();
+	return BookmarksItem::getKeywords();
 }
 
 QStringList BookmarksManager::getUrls()
 {
-	return m_urls.toList();
-}
-
-QList<BookmarkInformation*> BookmarksManager::getBookmarks()
-{
-	return m_bookmarks;
+	return BookmarksItem::getUrls();
 }
 
 QList<BookmarkInformation*> BookmarksManager::getFolder(int folder)
@@ -622,22 +505,7 @@ QList<BookmarkInformation*> BookmarksManager::getFolder(int folder)
 
 bool BookmarksManager::hasBookmark(const QString &url)
 {
-	if (url.isEmpty())
-	{
-		return false;
-	}
-
-	return hasBookmark(QUrl(url));
-}
-
-bool BookmarksManager::hasBookmark(const QUrl &url)
-{
-	if (!url.isValid())
-	{
-		return false;
-	}
-
-	return m_urls.contains(url.toString(QUrl::RemovePassword | QUrl::RemoveFragment));
+	return BookmarksItem::hasUrl(url);
 }
 
 bool BookmarksManager::save(const QString &path)

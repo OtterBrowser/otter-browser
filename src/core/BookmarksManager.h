@@ -69,20 +69,17 @@ public:
 	~BookmarksManager();
 
 	static void createInstance(QObject *parent = NULL);
-	static void updateVisits(const QUrl &url);
+	static void updateVisits(const QString &url);
 	static void addBookmark(BookmarkInformation *bookmark, int folder = 0, int index = -1);
-	static void deleteBookmark(BookmarkInformation *bookmark, bool notify = true);
-	static void deleteBookmark(const QUrl &url);
+	static void deleteBookmark(const QString &url);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
 	static BookmarkInformation* getBookmark(const int identifier);
-	static BookmarkInformation* getBookmark(const QString &keyword);
+	static BookmarksItem* getBookmark(const QString &keyword);
 	static QStringList getKeywords();
 	static QStringList getUrls();
-	static QList<BookmarkInformation*> getBookmarks();
 	static QList<BookmarkInformation*> getFolder(int folder = 0);
 	static bool hasBookmark(const QString &url);
-	static bool hasBookmark(const QUrl &url);
 	static bool save(const QString &path = QString());
 
 protected:
@@ -90,9 +87,6 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	static void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
-	static void updateIndex();
-	static void updateUrls();
-	static void updateKeywords();
 	BookmarkInformation* readBookmark(QXmlStreamReader *reader, BookmarksItem *parent, int parentIdentifier);
 
 protected slots:
@@ -107,8 +101,6 @@ private:
 	static QHash<int, BookmarkInformation*> m_pointers;
 	static QList<BookmarkInformation*> m_bookmarks;
 	static QList<BookmarkInformation*> m_allBookmarks;
-	static QSet<QString> m_urls;
-	static QHash<QString, BookmarkInformation*> m_keywords;
 	static int m_identifier;
 
 signals:

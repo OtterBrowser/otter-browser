@@ -853,7 +853,7 @@ void WindowsManager::quickBookmarkAccess()
 {
 	OpenBookmarkDialog dialog(m_mdi);
 
-	connect(&dialog, SIGNAL(requestedOpenBookmark(const BookmarkInformation*)), this, SLOT(open(const BookmarkInformation*)));
+	connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), this, SLOT(open(BookmarksItem*)));
 
 	dialog.exec();
 }

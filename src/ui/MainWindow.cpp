@@ -379,7 +379,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::openUrl(const QString &input)
 {
-	const BookmarkInformation *bookmark = BookmarksManager::getBookmark(input);
+	BookmarksItem *bookmark = BookmarksManager::getBookmark(input);
 
 	if (bookmark)
 	{
@@ -387,7 +387,7 @@ void MainWindow::openUrl(const QString &input)
 
 		if (windowsManager)
 		{
-			windowsManager->open(bookmark->item);
+			windowsManager->open(bookmark);
 
 			return;
 		}

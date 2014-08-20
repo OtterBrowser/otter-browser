@@ -50,7 +50,7 @@ private:
 	Ui::OpenBookmarkDialog *m_ui;
 
 signals:
-	void requestedOpenBookmark(const BookmarkInformation *bookmark);
+	void requestedOpenBookmark(BookmarksItem *bookmark);
 };
 
 }

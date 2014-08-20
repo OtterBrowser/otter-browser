@@ -19,6 +19,7 @@
 
 #include "BookmarksImporter.h"
 #include "BookmarksManager.h"
+#include "BookmarksModel.h"
 
 namespace Otter
 {
@@ -72,12 +73,7 @@ void BookmarksImporter::goToParent()
 
 void BookmarksImporter::removeAllBookmarks()
 {
-	const QList<BookmarkInformation*> currentBookmarks = BookmarksManager::getBookmarks();
-
-	for (int i = 0; i < currentBookmarks.count(); ++i)
-	{
-		BookmarksManager::deleteBookmark(currentBookmarks.at(i), false);
-	}
+	BookmarksManager::getModel()->getRootItem()->removeRows(0, BookmarksManager::getModel()->getRootItem()->rowCount());
 }
 
 void BookmarksImporter::setImportFolder(BookmarkInformation *folder)

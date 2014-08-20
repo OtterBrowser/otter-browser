@@ -48,7 +48,7 @@ OpenBookmarkDialog::~OpenBookmarkDialog()
 
 void OpenBookmarkDialog::openBookmark()
 {
-	emit requestedOpenBookmark(BookmarksManager::getBookmark(m_ui->lineEdit->text()) );
+	emit requestedOpenBookmark(BookmarksManager::getBookmark(m_ui->lineEdit->text()));
 }
 
 void OpenBookmarkDialog::setCompletion(const QString &text)

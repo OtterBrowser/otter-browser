@@ -32,11 +32,23 @@ class BookmarksItem : public QStandardItem
 {
 public:
 	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
+	~BookmarksItem();
 
 	QVariant data(int role) const;
 
 protected:
 	void setData(const QVariant &value, int role);
+	static QList<BookmarksItem*> getBookmarks(const QString &url);
+	static QStringList getKeywords();
+	static QStringList getUrls();
+	static BookmarksItem* getBookmark(const QString &keyword);
+	static bool hasBookmark(const QString &url);
+	static bool hasKeyword(const QString &keyword);
+	static bool hasUrl(const QString &url);
+
+private:
+	static QHash<QString, QList<BookmarksItem*> > m_urls;
+	static QHash<QString, BookmarksItem*> m_keywords;
 
 	friend class BookmarksManager;
 	friend class BookmarkPropertiesDialog;
@@ -64,6 +76,7 @@ public:
 
 	BookmarksItem* getRootItem();
 	BookmarksItem* getTrashItem();
+	QList<QStandardItem*> findUrls(const QString &url, QStandardItem *branch = NULL);
 };
 
 }
