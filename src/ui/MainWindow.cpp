@@ -291,6 +291,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 		int runningTransfers = 0;
+		int transfersDialog = 0;
 
 		for (int i = 0; i < transfers.count(); ++i)
 		{
@@ -314,6 +315,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			if (messageBox.exec() == QMessageBox::Yes)
 			{
 				runningTransfers = 0;
+				transfersDialog = 1;
 			}
 
 			SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
@@ -323,6 +325,33 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				event->ignore();
 
 				return;
+			}
+		}
+
+		const QString warnQuitAction = SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString();
+
+		if (transfersDialog == 0 && warnQuitAction != QLatin1String("noWarn"))
+		{
+			if (warnQuitAction == QLatin1String("alwaysWarn") || (m_windowsManager->getWindowCount() > 1 && warnQuitAction == QLatin1String("warnOpenTabs")))
+			{
+				QMessageBox messageBox;
+				messageBox.setWindowTitle(tr("Question"));
+				messageBox.setText(tr("You are about to quit the current Otter session."));
+				messageBox.setInformativeText(tr("Do you want to continue?"));
+				messageBox.setIcon(QMessageBox::Question);
+				messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+				messageBox.setDefaultButton(QMessageBox::Yes);
+				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+				if (messageBox.exec() == QMessageBox::Cancel)
+				{
+					event->ignore();
+					return;
+				}
+				if (messageBox.checkBox()->isChecked())
+				{
+					SettingsManager::setValue(QLatin1String("Choices/WarnQuit"), QLatin1String("noWarn"));
+				}
 			}
 		}
 
