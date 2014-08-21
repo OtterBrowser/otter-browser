@@ -115,7 +115,7 @@ void BookmarksContentsWidget::removeBookmark()
 
 	if (bookmark && type != RootBookmark && type != TrashBookmark)
 	{
-		if (type == SeparatorBookmark)
+		if (type == SeparatorBookmark || isInTrash(bookmark->index()))
 		{
 			bookmark->parent()->removeRow(bookmark->row());
 		}
@@ -300,7 +300,7 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->descriptionLabelWidget->setText(index.data(BookmarksModel::DescriptionRole).toString());
 	m_ui->keywordLabelWidget->setText(index.data(BookmarksModel::KeywordRole).toString());
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == FolderBookmark || type == UrlBookmark)));
-	m_ui->deleteButton->setEnabled(hasSelecion && type != UnknownBookmark);
+	m_ui->deleteButton->setEnabled(hasSelecion && type != RootBookmark && type != TrashBookmark);
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
