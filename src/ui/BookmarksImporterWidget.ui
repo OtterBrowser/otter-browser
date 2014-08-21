@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>149</height>
+    <height>131</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -28,13 +28,18 @@
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
        </property>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="notDuplicateCheckBox">
-         <property name="text">
-          <string>Do not duplicate bookmarks with same address</string>
-         </property>
-        </widget>
-       </item>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item row="0" column="0" colspan="2">
         <layout class="QFormLayout" name="removeForm">
          <property name="fieldGrowthPolicy">
@@ -48,14 +53,54 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="Otter::BookmarksComboBoxWidget" name="folderComboBox"/>
+          <layout class="QHBoxLayout" name="folderLayout">
+           <item>
+            <widget class="Otter::BookmarksComboBoxWidget" name="folderComboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="newFolderButton">
+             <property name="text">
+              <string>New</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="allowDuplicatesCheckBox">
+         <property name="text">
+          <string>Allow to duplicate already existing bookmarks</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="noRemovePage">
       <layout class="QFormLayout" name="formLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item row="0" column="0">
         <widget class="QCheckBox" name="toSubfolderCheckBox">
          <property name="text">
@@ -69,17 +114,17 @@
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
           </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="subfolderNameLabel">
-            <property name="text">
-             <string>Subfolder name:</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="subfolderNameLineEdit">
             <property name="toolTip">
              <string>Leave empty to import into main folder</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="subfolderNameLabel">
+            <property name="text">
+             <string>Subfolder name:</string>
             </property>
            </widget>
           </item>

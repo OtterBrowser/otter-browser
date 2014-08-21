@@ -36,6 +36,7 @@ BookmarksImporterWidget::BookmarksImporterWidget(QWidget *parent) : QWidget(pare
 	removeStateChanged(m_ui->removeCheckBox->checkState());
 	toSubfolderChanged(m_ui->toSubfolderCheckBox->checkState());
 
+	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
 	connect(m_ui->removeCheckBox, SIGNAL(toggled(bool)), this, SLOT(removeStateChanged(bool)));
 	connect(m_ui->toSubfolderCheckBox, SIGNAL(toggled(bool)), this, SLOT(toSubfolderChanged(bool)));
 }
@@ -79,7 +80,7 @@ bool BookmarksImporterWidget::removeExisting()
 
 bool BookmarksImporterWidget::allowDuplicates()
 {
-	return !m_ui->notDuplicateCheckBox->isChecked();
+	return m_ui->allowDuplicatesCheckBox->isChecked();
 }
 
 bool BookmarksImporterWidget::importIntoSubfolder()
