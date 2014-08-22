@@ -291,7 +291,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	{
 		const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 		int runningTransfers = 0;
-		int transfersDialog = 0;
+		bool transfersDialog = false;
 
 		for (int i = 0; i < transfers.count(); ++i)
 		{
@@ -315,7 +315,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			if (messageBox.exec() == QMessageBox::Yes)
 			{
 				runningTransfers = 0;
-				transfersDialog = 1;
+				transfersDialog = true;
 			}
 
 			SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
@@ -328,15 +328,15 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			}
 		}
 
-		const QString warnQuitAction = SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString();
+		const QString warnQuitMode = SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString();
 
-		if (transfersDialog == 0 && warnQuitAction != QLatin1String("noWarn"))
+		if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
 		{
-			if (warnQuitAction == QLatin1String("alwaysWarn") || (m_windowsManager->getWindowCount() > 1 && warnQuitAction == QLatin1String("warnOpenTabs")))
+			if (warnQuitMode == QLatin1String("alwaysWarn") || (m_windowsManager->getWindowCount() > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
 			{
 				QMessageBox messageBox;
 				messageBox.setWindowTitle(tr("Question"));
-				messageBox.setText(tr("You are about to quit the current Otter session."));
+				messageBox.setText(tr("You are about to quit the current Otter Browser session."));
 				messageBox.setInformativeText(tr("Do you want to continue?"));
 				messageBox.setIcon(QMessageBox::Question);
 				messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
@@ -346,8 +346,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				if (messageBox.exec() == QMessageBox::Cancel)
 				{
 					event->ignore();
+
 					return;
 				}
+
 				if (messageBox.checkBox()->isChecked())
 				{
 					SettingsManager::setValue(QLatin1String("Choices/WarnQuit"), QLatin1String("noWarn"));
