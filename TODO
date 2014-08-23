@@ -2,17 +2,16 @@ Release schedule of planned main features (it's not a full list), note that spec
 
 0.9.03 (beta 3):
 - start page
-- passwords manager
+- mouse gestures
 - greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
 - exposing MDI features
 - page specific preferences
 - panels (page informations, notes, transfers, bookmarks etc.)
-- import of existing settings, bookmarks etc.
 - user scripts and stylesheets
 - system tray icon
 
 1.0.01 (first stable release):
-- mouse gestures
+- passwords manager
 - delayed loading of Flash objects
 - feeds reader (as module)
 - shared contacts database
