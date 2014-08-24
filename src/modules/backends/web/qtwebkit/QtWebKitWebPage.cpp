@@ -394,42 +394,59 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 
 bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
-	if (extension == QWebPage::ErrorPageExtension)
+	if (extension != QWebPage::ErrorPageExtension)
 	{
-		const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
-		QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
-
-		if (!errorOption || !errorOutput)
-		{
-			return false;
-		}
-
-		QFile file(QLatin1String(":/files/error.html"));
-		file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
-
-		QHash<QString, QString> variables;
-		variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
-		variables[QLatin1String("description")] = errorOption->errorString;
-		variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-
-		QString html = stream.readAll();
-		QHash<QString, QString>::iterator iterator;
-
-		for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-		{
-			html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
-		}
-
-		errorOutput->baseUrl = errorOption->url;
-		errorOutput->content = html.toUtf8();
-
-		return true;
+		return false;
 	}
 
-	return false;
+	const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
+	QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
+
+	if (!errorOption || !errorOutput)
+	{
+		return false;
+	}
+
+	QFile file(QLatin1String(":/files/error.html"));
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+
+	QHash<QString, QString> variables;
+	variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
+	variables[QLatin1String("description")] = errorOption->errorString;
+	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
+
+	QString html = stream.readAll();
+	QHash<QString, QString>::iterator iterator;
+
+	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+	{
+		html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+	}
+
+	errorOutput->baseUrl = errorOption->url;
+	errorOutput->content = html.toUtf8();
+
+	QString domain;
+
+	if (errorOption->domain == QWebPage::QtNetwork)
+	{
+		domain = QLatin1String("QtNetwork");
+	}
+	else if (errorOption->domain == QWebPage::WebKit)
+	{
+		domain = QLatin1String("WebKit");
+	}
+	else
+	{
+		domain = QLatin1String("HTTP");
+	}
+
+	Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString());
+
+	return true;
 }
 
 bool QtWebKitWebPage::shouldInterruptJavaScript()
