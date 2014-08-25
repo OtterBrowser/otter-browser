@@ -100,8 +100,8 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
+    src/modules/importers/html/HtmlBookmarksImporter.cpp \
     src/modules/importers/opera/OperaBookmarksImporter.cpp \
-    src/modules/importers/other/HtmlBookmarksImporter.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/cache/CacheContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
@@ -184,8 +184,8 @@ HEADERS += src/core/Action.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
+    src/modules/importers/html/HtmlBookmarksImporter.h \
     src/modules/importers/opera/OperaBookmarksImporter.h \
-    src/modules/importers/other/HtmlBookmarksImporter.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/cache/CacheContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \

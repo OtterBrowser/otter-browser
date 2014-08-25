@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "ImportDialog.h"
+#include "../modules/importers/html/HtmlBookmarksImporter.h"
 #include "../modules/importers/opera/OperaBookmarksImporter.h"
-#include "../modules/importers/other/HtmlBookmarksImporter.h"
 
 #include "ui_ImportDialog.h"
 
@@ -56,8 +56,6 @@ ImportDialog::~ImportDialog()
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
-	Q_UNUSED(importerName)
-
 	Importer *importer = NULL;
 
 	if (importerName == QLatin1String("OperaBookmarks"))

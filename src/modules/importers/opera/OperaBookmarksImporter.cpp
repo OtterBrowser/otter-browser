@@ -29,17 +29,27 @@ namespace Otter
 
 OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImporter(parent),
 	m_file(NULL),
-	m_optionsWidget(new BookmarksImporterWidget)
+	m_optionsWidget(NULL)
 {
 }
 
 OperaBookmarksImporter::~OperaBookmarksImporter()
 {
-	m_optionsWidget->deleteLater();
+	if (m_optionsWidget)
+	{
+		m_optionsWidget->deleteLater();
+	}
 }
 
 void OperaBookmarksImporter::handleOptions()
 {
+	if (!m_optionsWidget)
+	{
+		setImportFolder(BookmarksManager::getModel()->getRootItem());
+
+		return;
+	}
+
 	if (m_optionsWidget->removeExisting())
 	{
 		removeAllBookmarks();
@@ -66,6 +76,11 @@ void OperaBookmarksImporter::handleOptions()
 
 QWidget* OperaBookmarksImporter::getOptionsWidget()
 {
+	if (!m_optionsWidget)
+	{
+		m_optionsWidget = new BookmarksImporterWidget();
+	}
+
 	return m_optionsWidget;
 }
 
