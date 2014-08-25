@@ -120,7 +120,7 @@ bool OperaBookmarksImporter::import()
 	}
 
 	BookmarksItem *bookmark = NULL;
-	OperaBookmarkEntry entryType = NoEntry;
+	OperaBookmarkEntry type = NoEntry;
 	bool isHeader = true;
 
 	handleOptions();
@@ -139,21 +139,21 @@ bool OperaBookmarksImporter::import()
 		if (line.startsWith(QLatin1String("#URL")))
 		{
 			bookmark = new BookmarksItem(UrlBookmark);
-			entryType = UrlEntry;
+			type = UrlEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
 			bookmark = new BookmarksItem(FolderBookmark);
-			entryType = FolderStartEntry;
+			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
 			bookmark = new BookmarksItem(SeparatorBookmark);
-			entryType = SeparatorEntry;
+			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))
 		{
-			entryType = FolderEndEntry;
+			type = FolderEndEntry;
 		}
 		else if (line.startsWith(QLatin1String("\tURL=")) && bookmark)
 		{
@@ -201,14 +201,19 @@ bool OperaBookmarksImporter::import()
 			{
 				getCurrentFolder()->appendRow(bookmark);
 
+				if (type == FolderStartEntry)
+				{
+					setCurrentFolder(bookmark);
+				}
+
 				bookmark = NULL;
 			}
-			else if (entryType == FolderEndEntry)
+			else if (type == FolderEndEntry)
 			{
 				goToParent();
 			}
 
-			entryType = NoEntry;
+			type = NoEntry;
 		}
 	}
 
