@@ -35,6 +35,7 @@ public:
 	~BookmarksItem();
 
 	void setData(const QVariant &value, int role);
+	QStandardItem* clone() const;
 	QVariant data(int role) const;
 
 protected:
@@ -77,6 +78,7 @@ public:
 	BookmarksItem* getRootItem();
 	BookmarksItem* getTrashItem();
 	QList<QStandardItem*> findUrls(const QString &url, QStandardItem *branch = NULL);
+	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 };
 
 }

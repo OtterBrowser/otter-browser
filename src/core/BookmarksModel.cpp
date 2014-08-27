@@ -34,18 +34,20 @@ BookmarksItem::BookmarksItem(BookmarkType type, const QUrl &url, const QString &
 	setData(url, BookmarksModel::UrlRole);
 	setData(title, BookmarksModel::TitleRole);
 
-	if (type == RootBookmark || type == FolderBookmark)
+	if (type == UrlBookmark || type == SeparatorBookmark)
 	{
-		setData(Utils::getIcon(QLatin1String("inode-directory")), Qt::DecorationRole);
+		setDropEnabled(false);
 	}
-	else if (type == TrashBookmark)
+
+	if (type == RootBookmark)
 	{
-		setData(Utils::getIcon(QLatin1String("user-trash")), Qt::DecorationRole);
+		setDragEnabled(false);
+	}
+
+	if (type == TrashBookmark)
+	{
 		setEnabled(false);
-	}
-	else if (type == SeparatorBookmark)
-	{
-		setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+		setDragEnabled(false);
 	}
 }
 
@@ -118,6 +120,19 @@ void BookmarksItem::setData(const QVariant &value, int role)
 	QStandardItem::setData(value, role);
 }
 
+QStandardItem* BookmarksItem::clone() const
+{
+	BookmarksItem *item = new BookmarksItem(static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()), data(BookmarksModel::UrlRole).toUrl(), data(BookmarksModel::TitleRole).toString());
+	item->setData(data(BookmarksModel::DescriptionRole), BookmarksModel::DescriptionRole);
+	item->setData(data(BookmarksModel::KeywordRole), BookmarksModel::KeywordRole);
+	item->setData(data(BookmarksModel::TimeAddedRole), BookmarksModel::TimeAddedRole);
+	item->setData(data(BookmarksModel::TimeModifiedRole), BookmarksModel::TimeModifiedRole);
+	item->setData(data(BookmarksModel::TimeVisitedRole), BookmarksModel::TimeVisitedRole);
+	item->setData(data(BookmarksModel::VisitsRole), BookmarksModel::VisitsRole);
+
+	return item;
+}
+
 QList<BookmarksItem*> BookmarksItem::getBookmarks(const QString &url)
 {
 	if (m_urls.contains(url))
@@ -150,9 +165,29 @@ BookmarksItem *BookmarksItem::getBookmark(const QString &keyword)
 
 QVariant BookmarksItem::data(int role) const
 {
-	if (role == Qt::DecorationRole && QStandardItem::data(Qt::DecorationRole).isNull() && static_cast<BookmarkType>(QStandardItem::data(BookmarksModel::TypeRole).toInt()) != SeparatorBookmark)
+	if (role == Qt::DecorationRole)
 	{
-		return WebBackendsManager::getBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
+		const BookmarkType type = static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt());
+
+		if (type == RootBookmark || type == FolderBookmark)
+		{
+			return Utils::getIcon(QLatin1String("inode-directory"));
+		}
+		else if (type == TrashBookmark)
+		{
+			return Utils::getIcon(QLatin1String("user-trash"));
+		}
+		else if (type == UrlBookmark)
+		{
+			return WebBackendsManager::getBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
+		}
+
+		return QVariant();
+	}
+
+	if (role == Qt::AccessibleDescriptionRole && static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()) == SeparatorBookmark)
+	{
+		return QLatin1String("separator");
 	}
 
 	return QStandardItem::data(role);
@@ -177,6 +212,7 @@ BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 {
 	appendRow(new BookmarksItem(RootBookmark, QUrl(), tr("Bookmarks")));
 	appendRow(new BookmarksItem(TrashBookmark, QUrl(), tr("Trash")));
+	setItemPrototype(new BookmarksItem(UnknownBookmark));
 }
 
 BookmarksItem* BookmarksModel::getRootItem()
@@ -218,6 +254,18 @@ QList<QStandardItem*> BookmarksModel::findUrls(const QString &url, QStandardItem
 	}
 
 	return items;
+}
+
+bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+	const BookmarkType type = static_cast<BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
+
+	if (type == FolderBookmark || type == RootBookmark || type == TrashBookmark)
+	{
+		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
+	}
+
+	return false;
 }
 
 }
