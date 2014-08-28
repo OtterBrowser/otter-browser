@@ -22,6 +22,8 @@
 #include "WebBackend.h"
 #include "WebBackendsManager.h"
 
+#include <QtCore/QMimeData>
+
 namespace Otter
 {
 
@@ -215,6 +217,27 @@ BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 	setItemPrototype(new BookmarksItem(UnknownBookmark));
 }
 
+QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
+{
+	QMimeData *mimeData = new QMimeData();
+	QStringList texts;
+	QList<QUrl> urls;
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && static_cast<BookmarkType>(indexes.at(i).data(TypeRole).toInt()) == UrlBookmark)
+		{
+			texts.append(indexes.at(i).data(UrlRole).toString());
+			urls.append(indexes.at(i).data(UrlRole).toUrl());
+		}
+	}
+
+	mimeData->setText(texts.join(QLatin1String(", ")));
+	mimeData->setUrls(urls);
+
+	return mimeData;
+}
+
 BookmarksItem* BookmarksModel::getRootItem()
 {
 	return dynamic_cast<BookmarksItem*>(item(0, 0));
@@ -223,6 +246,11 @@ BookmarksItem* BookmarksModel::getRootItem()
 BookmarksItem* BookmarksModel::getTrashItem()
 {
 	return dynamic_cast<BookmarksItem*>(item(1, 0));
+}
+
+QStringList BookmarksModel::mimeTypes() const
+{
+	return QStringList(QLatin1String("text/uri-list"));
 }
 
 QList<QStandardItem*> BookmarksModel::findUrls(const QString &url, QStandardItem *branch)
