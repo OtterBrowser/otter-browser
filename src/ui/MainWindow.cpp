@@ -1221,6 +1221,41 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
+	if (event->type() == QEvent::MouseButtonRelease && object->objectName().contains(QLatin1String("bookmarks"), Qt::CaseInsensitive))
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMenu *menu = qobject_cast<QMenu*>(object);
+
+		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton) && menu)
+		{
+			QAction *action = menu->actionAt(mouseEvent->pos());
+
+			if (action && action->data().type() == QVariant::String)
+			{
+				OpenHints hints = DefaultOpen;
+
+				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
+				{
+					hints = NewTabBackgroundOpen;
+				}
+				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
+				{
+					hints = NewTabOpen;
+				}
+				else
+				{
+					hints = (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen);
+				}
+
+				m_windowsManager->open(QUrl(action->data().toString()), hints);
+
+				m_ui->menuBookmarks->close();
+
+				return true;
+			}
+		}
+	}
+
 	if (event->type() == QEvent::KeyPress && isFullScreen())
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);

@@ -88,7 +88,7 @@ protected slots:
 	void actionCookies();
 	void actionTransfers();
 	void actionErrorConsole(bool enabled);
-    void actionContentBlocking();
+	void actionContentBlocking();
 	void actionPreferences();
 	void actionSwitchApplicationLanguage();
 	void actionAboutApplication();
