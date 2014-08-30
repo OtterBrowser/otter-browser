@@ -29,6 +29,7 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
+#include <QtGui/QMouseEvent>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
@@ -50,6 +51,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->setModel(BookmarksManager::getModel());
 	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 	m_ui->bookmarksView->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
+	m_ui->bookmarksView->viewport()->installEventFilter(this);
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
@@ -332,6 +334,20 @@ QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
 	return actionObject;
 }
 
+QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
+{
+	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
+
+	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
+	{
+		return BookmarksManager::getModel()->getRootItem();
+	}
+
+	const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+
+	return ((type == RootBookmark || type == FolderBookmark) ? item : item->parent());
+}
+
 QString BookmarksContentsWidget::getTitle() const
 {
 	return tr("Bookmarks Manager");
@@ -350,20 +366,6 @@ QUrl BookmarksContentsWidget::getUrl() const
 QIcon BookmarksContentsWidget::getIcon() const
 {
 	return Utils::getIcon(QLatin1String("bookmarks"), false);
-}
-
-QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
-{
-	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
-
-	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
-	{
-		return BookmarksManager::getModel()->getRootItem();
-	}
-
-	const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
-
-	return ((type == RootBookmark || type == FolderBookmark) ? item : item->parent());
 }
 
 bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
@@ -430,6 +432,44 @@ bool BookmarksContentsWidget::isInTrash(const QModelIndex &index) const
 	}
 
 	return false;
+}
+
+bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->bookmarksView->viewport())
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		WindowsManager *manager = SessionsManager::getWindowsManager();
+
+		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton))
+		{
+			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->indexAt(mouseEvent->pos())));
+
+			if (bookmark)
+			{
+				OpenHints hints = DefaultOpen;
+
+				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
+				{
+					hints = NewTabBackgroundOpen;
+				}
+				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
+				{
+					hints = NewTabOpen;
+				}
+				else
+				{
+					return false;
+				}
+
+				manager->open(bookmark, hints);
+
+				return true;
+			}
+		}
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }
