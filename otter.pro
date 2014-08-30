@@ -77,6 +77,7 @@ SOURCES += src/main.cpp \
     src/ui/OpenBookmarkDialog.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
+    src/ui/HotlistWidget.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/PreviewWidget.cpp \
     src/ui/SaveSessionDialog.cpp \
@@ -161,6 +162,7 @@ HEADERS += src/core/Action.h \
     src/ui/OpenBookmarkDialog.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \
+    src/ui/HotlistWidget.h \
     src/ui/PreferencesDialog.h \
     src/ui/PreviewWidget.h \
     src/ui/SaveSessionDialog.h \
@@ -206,6 +208,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/LocaleDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/OpenBookmarkDialog.ui \
+    src/ui/HotlistWidget.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \

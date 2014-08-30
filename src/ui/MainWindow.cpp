@@ -181,6 +181,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionErrorConsole, SLOT(setChecked(bool)));
+	connect(m_ui->hotlistDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionHotlist, SLOT(setChecked(bool)));
+	connect(m_ui->hotlistDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->hotlistWidget, SLOT(notifyLocationChange(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
@@ -224,6 +226,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
 	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
 	connect(m_ui->actionErrorConsole, SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
+	connect(m_ui->actionHotlist, SIGNAL(toggled(bool)), this, SLOT(actionHotlist(bool)));
 	connect(m_ui->actionContentBlocking, SIGNAL(triggered()), this, SLOT(actionContentBlocking()));
 	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
 	connect(m_ui->actionSwitchApplicationLanguage, SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
@@ -248,7 +251,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_windowsManager->restore(windows);
 
-	m_ui->panelDockWidget->hide();
+	m_ui->hotlistDockWidget->hide();
 	m_ui->consoleDockWidget->hide();
 
 	SettingsManager::setDefaultValue(QLatin1String("Window/Geometry"), QByteArray());
@@ -674,6 +677,11 @@ void MainWindow::actionTransfers()
 void MainWindow::actionErrorConsole(bool enabled)
 {
 	m_ui->consoleDockWidget->setVisible(enabled);
+}
+
+void MainWindow::actionHotlist(bool enabled)
+{
+	m_ui->hotlistDockWidget->setVisible(enabled);
 }
 
 void MainWindow::actionContentBlocking()

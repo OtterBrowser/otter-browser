@@ -112,6 +112,7 @@ set(otter_src
 	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionDelegate.cpp
 	src/ui/OptionWidget.cpp
+	src/ui/HotlistWidget.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp
 	src/ui/SaveSessionDialog.cpp
@@ -163,6 +164,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
 	src/ui/OpenBookmarkDialog.ui
+	src/ui/HotlistWidget.ui
 	src/ui/PreferencesDialog.ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchPropertiesDialog.ui

@@ -17,14 +17,14 @@
    <set>QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget"/>
-  <widget class="QDockWidget" name="panelDockWidget">
+  <widget class="QDockWidget" name="hotlistDockWidget">
    <property name="features">
-    <set>QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="panelWidget"/>
+   <widget class="Otter::HotlistWidget" name="hotlistWidget"/>
   </widget>
   <widget class="Otter::TabBarDockWidget" name="tabsDockWidget">
    <property name="features">
@@ -41,7 +41,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>24</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -163,6 +163,7 @@
     <addaction name="actionCookies"/>
     <addaction name="actionContentBlocking"/>
     <addaction name="actionErrorConsole"/>
+    <addaction name="actionHotlist"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
@@ -517,6 +518,14 @@
     <string>Error Console</string>
    </property>
   </action>
+  <action name="actionHotlist">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hotlist</string>
+   </property>
+  </action>
   <action name="actionSwitchApplicationLanguage">
    <property name="text">
     <string>Switch Application Language...</string>
@@ -551,6 +560,11 @@
    <extends>QWidget</extends>
    <header>src/ui/ConsoleWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::HotlistWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/HotlistWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
