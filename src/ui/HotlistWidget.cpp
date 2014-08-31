@@ -32,10 +32,10 @@ HotlistWidget::HotlistWidget(QWidget *parent) : QWidget(parent),
 {
 	m_ui->setupUi(this);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-
+	optionChanged(QLatin1String("Hotlist/CurrentPanel"), SettingsManager::getValue(QLatin1String("Hotlist/CurrentPanel")));
 	optionChanged(QLatin1String("Hotlist/Panels"), SettingsManager::getValue(QLatin1String("Hotlist/Panels")));
-	optionChanged(QLatin1String("Hotlist/OpenPanel"), SettingsManager::getValue(QLatin1String("Hotlist/OpenPanel")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 HotlistWidget::~HotlistWidget()
@@ -43,7 +43,38 @@ HotlistWidget::~HotlistWidget()
 	delete m_ui;
 }
 
-void HotlistWidget::notifyLocationChange(Qt::DockWidgetArea area)
+void HotlistWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Hotlist/CurrentPanel"))
+	{
+		openPanel(value.toString());
+	}
+	else if (option == QLatin1String("Hotlist/Panels"))
+	{
+		for (QHash<QString, QToolButton*>::const_iterator iterator = m_buttons.constBegin(); iterator != m_buttons.constEnd(); ++iterator)
+		{
+			m_ui->buttonsLayout->removeWidget(iterator.value());
+
+			iterator.value()->deleteLater();
+		}
+
+		const QStringList panels = value.toString().split(QLatin1Char(','), QString::SkipEmptyParts);
+		QHash<QString, QIcon> allPanels;
+		allPanels[QLatin1String("bookmarks")] = Utils::getIcon(QLatin1String("bookmarks"));
+		allPanels[QLatin1String("cache")] = Utils::getIcon(QLatin1String("cache"));
+		allPanels[QLatin1String("config")] = Utils::getIcon(QLatin1String("configuration"));
+		allPanels[QLatin1String("cookies")] = Utils::getIcon(QLatin1String("cookies"));
+		allPanels[QLatin1String("history")] = Utils::getIcon(QLatin1String("view-history"));
+		allPanels[QLatin1String("transfers")] = Utils::getIcon(QLatin1String("transfers"));
+
+		for (int i = 0; i < panels.count(); ++i)
+		{
+			registerPanel(panels.at(i), allPanels.value(panels.at(i)));
+		}
+	}
+}
+
+void HotlistWidget::locationChanged(Qt::DockWidgetArea area)
 {
 	if (area == Qt::RightDockWidgetArea)
 	{
@@ -70,41 +101,41 @@ void HotlistWidget::openPanel()
 
 	if (action)
 	{
-		SettingsManager::setValue(QLatin1String("Hotlist/OpenPanel"), (action->data().toString() == m_currentPanel ? QString() : action->data().toString()));
+		SettingsManager::setValue(QLatin1String("Hotlist/CurrentPanel"), (action->data().toString() == m_currentPanel ? QString() : action->data().toString()));
 	}
 }
 
-void HotlistWidget::openPanel(const QString &id)
+void HotlistWidget::openPanel(const QString &identifier)
 {
 	QWidget *widget = NULL;
 
-	if (id.isEmpty())
+	if (identifier.isEmpty())
 	{
 		widget = NULL;
 	}
-	else if (id == QLatin1String("bookmarks") || id == QLatin1String("cache") || id == QLatin1String("config") || id == QLatin1String("cookies") || id == QLatin1String("history") || id == QLatin1String("transfers"))
+	else if (identifier == QLatin1String("bookmarks") || identifier == QLatin1String("cache") || identifier == QLatin1String("config") || identifier == QLatin1String("cookies") || identifier == QLatin1String("history") || identifier == QLatin1String("transfers"))
 	{
 		Window *window = new Window(false, NULL, this);
-		window->setUrl(QLatin1String("about:") + id, false);
+		window->setUrl(QLatin1String("about:") + identifier, false);
 
 		connect(window, SIGNAL(requestedOpenUrl(QUrl, OpenHints)), this, SLOT(openUrl(QUrl, OpenHints)));
 
 		widget = window;
 	}
-	else if (id.startsWith(QLatin1String("web:")))
+	else if (identifier.startsWith(QLatin1String("web:")))
 	{
 		Window *window = new Window(false, NULL, this);
-		window->setUrl(id.section(':', 1, -1));
+		window->setUrl(identifier.section(':', 1, -1));
 
 		connect(window, SIGNAL(requestedOpenUrl(QUrl, OpenHints)), this, SLOT(openUrl(QUrl, OpenHints)));
 
 		widget = window;
 	}
-
 
 	if (m_currentWidget)
 	{
 		m_ui->currentLayout->removeWidget(m_currentWidget);
+
 		m_currentWidget->deleteLater();
 	}
 
@@ -117,13 +148,13 @@ void HotlistWidget::openPanel(const QString &id)
 	{
 		m_ui->currentLayout->addWidget(widget);
 
-		if (m_buttons.contains(id) && m_buttons[id])
+		if (m_buttons.contains(identifier) && m_buttons[identifier])
 		{
-			m_buttons[id]->setChecked(true);
+			m_buttons[identifier]->setChecked(true);
 		}
 	}
 
-	m_currentPanel = id;
+	m_currentPanel = identifier;
 	m_currentWidget = widget;
 }
 
@@ -134,31 +165,6 @@ void HotlistWidget::openUrl(const QUrl &url, OpenHints hints)
 	if (manager)
 	{
 		manager->open(url, hints);
-	}
-}
-
-void HotlistWidget::optionChanged(const QString &option, const QVariant &value)
-{
-	if (option == QLatin1String("Hotlist/OpenPanel"))
-	{
-		openPanel(value.toString());
-	}
-	else if (option == QLatin1String("Hotlist/Panels"))
-	{
-		for (QHash<QString, QToolButton*>::const_iterator iterator = m_buttons.constBegin(); iterator != m_buttons.constEnd(); ++iterator)
-		{
-			m_ui->buttonsLayout->removeWidget(iterator.value());
-
-			iterator.value()->deleteLater();
-		}
-
-		const QStringList panels = value.toString().split(QLatin1Char(','), QString::SkipEmptyParts);
-		QHash<QString, QIcon> allPanels = knownPanels();
-
-		for (int i = 0; i < panels.count(); ++i)
-		{
-			registerPanel(panels.at(i), allPanels.value(panels.at(i)));
-		}
 	}
 }
 
@@ -177,19 +183,6 @@ void HotlistWidget::registerPanel(const QString &id, const QIcon &icon)
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
-}
-
-QHash<QString, QIcon> HotlistWidget::knownPanels()
-{
-	QHash<QString, QIcon> result;
-	result["bookmarks"] = Utils::getIcon(QLatin1String("bookmarks"));
-	result["cache"] = Utils::getIcon(QLatin1String("cache"));
-	result["config"] = Utils::getIcon(QLatin1String("configuration"));
-	result["cookies"] = Utils::getIcon(QLatin1String("cookies"));
-	result["history"] = Utils::getIcon(QLatin1String("view-history"));
-	result["transfers"] = Utils::getIcon(QLatin1String("transfers"));
-
-	return result;
 }
 
 QSize HotlistWidget::sizeHint() const

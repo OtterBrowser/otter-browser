@@ -182,7 +182,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionErrorConsole, SLOT(setChecked(bool)));
 	connect(m_ui->hotlistDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionHotlist, SLOT(setChecked(bool)));
-	connect(m_ui->hotlistDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->hotlistWidget, SLOT(notifyLocationChange(Qt::DockWidgetArea)));
+	connect(m_ui->hotlistDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->hotlistWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
 	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
 	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
 	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));

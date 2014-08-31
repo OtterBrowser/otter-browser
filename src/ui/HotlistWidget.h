@@ -39,27 +39,27 @@ class HotlistWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit HotlistWidget(QWidget *parent = 0);
+	explicit HotlistWidget(QWidget *parent = NULL);
 	~HotlistWidget();
+
 	QSize sizeHint() const;
 
 public slots:
-	void notifyLocationChange(Qt::DockWidgetArea area);
+	void locationChanged(Qt::DockWidgetArea area);
 
-private:
-	void openPanel(const QString &name);
-	void registerPanel(const QString &name, const QIcon &icon = QIcon());
-	QHash<QString, QIcon> knownPanels();
+protected:
+	void openPanel(const QString &identifier);
+	void registerPanel(const QString &identifier, const QIcon &icon = QIcon());
 
-private slots:
+protected slots:
 	void openPanel();
 	void openUrl(const QUrl &url, OpenHints);
 	void optionChanged(const QString &option, const QVariant &value);
 
 private:
+	QWidget *m_currentWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
-	QWidget *m_currentWidget;
 	Ui::HotlistWidget *m_ui;
 };
 
