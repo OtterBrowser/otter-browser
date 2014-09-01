@@ -49,7 +49,7 @@ public slots:
 
 protected:
 	void openPanel(const QString &identifier);
-	void registerPanel(const QString &identifier, const QIcon &icon = QIcon());
+	void registerPanel(const QString &identifier);
 
 protected slots:
 	void openPanel();

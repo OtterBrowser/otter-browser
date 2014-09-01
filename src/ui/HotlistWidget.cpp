@@ -59,17 +59,10 @@ void HotlistWidget::optionChanged(const QString &option, const QVariant &value)
 		}
 
 		const QStringList panels = value.toString().split(QLatin1Char(','), QString::SkipEmptyParts);
-		QHash<QString, QIcon> allPanels;
-		allPanels[QLatin1String("bookmarks")] = Utils::getIcon(QLatin1String("bookmarks"));
-		allPanels[QLatin1String("cache")] = Utils::getIcon(QLatin1String("cache"));
-		allPanels[QLatin1String("config")] = Utils::getIcon(QLatin1String("configuration"));
-		allPanels[QLatin1String("cookies")] = Utils::getIcon(QLatin1String("cookies"));
-		allPanels[QLatin1String("history")] = Utils::getIcon(QLatin1String("view-history"));
-		allPanels[QLatin1String("transfers")] = Utils::getIcon(QLatin1String("transfers"));
 
 		for (int i = 0; i < panels.count(); ++i)
 		{
-			registerPanel(panels.at(i), allPanels.value(panels.at(i)));
+			registerPanel(panels.at(i));
 		}
 	}
 }
@@ -118,7 +111,7 @@ void HotlistWidget::openPanel(const QString &identifier)
 		Window *window = new Window(false, NULL, this);
 		window->setUrl(QLatin1String("about:") + identifier, false);
 
-		connect(window, SIGNAL(requestedOpenUrl(QUrl, OpenHints)), this, SLOT(openUrl(QUrl, OpenHints)));
+		connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
 
 		widget = window;
 	}
@@ -127,7 +120,7 @@ void HotlistWidget::openPanel(const QString &identifier)
 		Window *window = new Window(false, NULL, this);
 		window->setUrl(identifier.section(':', 1, -1));
 
-		connect(window, SIGNAL(requestedOpenUrl(QUrl, OpenHints)), this, SLOT(openUrl(QUrl, OpenHints)));
+		connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
 
 		widget = window;
 	}
@@ -168,10 +161,50 @@ void HotlistWidget::openUrl(const QUrl &url, OpenHints hints)
 	}
 }
 
-void HotlistWidget::registerPanel(const QString &identifier, const QIcon &icon)
+void HotlistWidget::registerPanel(const QString &identifier)
 {
+	QString title;
+	QIcon icon;
+
+	if (identifier == QLatin1String("bookmarks"))
+	{
+		icon = Utils::getIcon(QLatin1String("bookmarks"));
+		title = tr("Bookmarks");
+	}
+	else if (identifier == QLatin1String("cache"))
+	{
+		icon  = Utils::getIcon(QLatin1String("cache"));
+		title = tr("Cache");
+	}
+	else if (identifier == QLatin1String("config"))
+	{
+		icon  = Utils::getIcon(QLatin1String("configuration"));
+		title = tr("Configuration");
+	}
+	else if (identifier == QLatin1String("cookies"))
+	{
+		icon  = Utils::getIcon(QLatin1String("cookies"));
+		title = tr("Cookies");
+	}
+	else if (identifier == QLatin1String("history"))
+	{
+		icon  = Utils::getIcon(QLatin1String("view-history"));
+		title = tr("History");
+	}
+	else if (identifier == QLatin1String("transfers"))
+	{
+		icon  = Utils::getIcon(QLatin1String("transfers"));
+		title = tr("Transfers");
+	}
+	else
+	{
+		icon  = Utils::getIcon(QLatin1String("text-html"));
+		title = identifier.section(':', 1, -1);
+	}
+
 	QToolButton *button = new QToolButton(this);
 	button->setIcon(icon);
+	button->setToolTip(title);
 	button->setCheckable(true);
 	button->setAutoRaise(true);
 
