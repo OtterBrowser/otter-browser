@@ -168,18 +168,19 @@ void HotlistWidget::openUrl(const QUrl &url, OpenHints hints)
 	}
 }
 
-void HotlistWidget::registerPanel(const QString &id, const QIcon &icon)
+void HotlistWidget::registerPanel(const QString &identifier, const QIcon &icon)
 {
 	QToolButton *button = new QToolButton(this);
 	button->setIcon(icon);
 	button->setCheckable(true);
+	button->setAutoRaise(true);
 
 	QAction *action = new QAction(button);
-	action->setData(id);
+	action->setData(identifier);
 
-	m_ui->buttonsLayout->addWidget(button);
+	m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
 
-	m_buttons.insert(id, button);
+	m_buttons.insert(identifier, button);
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
