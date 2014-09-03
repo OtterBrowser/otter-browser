@@ -7,7 +7,6 @@ Release schedule of planned main features (it's not a full list), note that spec
 - exposing MDI features
 - page specific preferences
 - user scripts and stylesheets
-- system tray icon
 
 1.0.01 (first stable release):
 - passwords manager
