@@ -33,6 +33,7 @@
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
+#include "../../../../ui/MainWindow.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
 
 #include <QtCore/QEventLoop>

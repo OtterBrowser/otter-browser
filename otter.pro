@@ -91,6 +91,7 @@ SOURCES += src/main.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TableViewWidget.cpp \
     src/ui/TextLabelWidget.cpp \
+    src/ui/TrayIcon.cpp \
     src/ui/WebWidget.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
     src/ui/Window.cpp \
@@ -176,6 +177,7 @@ HEADERS += src/core/Action.h \
     src/ui/TabBarWidget.h \
     src/ui/TableViewWidget.h \
     src/ui/TextLabelWidget.h \
+    src/ui/TrayIcon.h \
     src/ui/UserAgentsManagerDialog.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \

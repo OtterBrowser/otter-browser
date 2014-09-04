@@ -140,7 +140,7 @@ WindowsManager* SessionsManager::getWindowsManager()
 	return (m_activeWindow ? m_activeWindow->getWindowsManager() : NULL);
 }
 
-QWidget* SessionsManager::getActiveWindow()
+MainWindow* SessionsManager::getActiveWindow()
 {
 	return m_activeWindow;
 }

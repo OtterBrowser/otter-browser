@@ -135,6 +135,16 @@ QStandardItem* BookmarksItem::clone() const
 	return item;
 }
 
+BookmarksItem* BookmarksItem::getBookmark(const QString &keyword)
+{
+	if (m_keywords.contains(keyword))
+	{
+		return m_keywords[keyword];
+	}
+
+	return NULL;
+}
+
 QList<BookmarksItem*> BookmarksItem::getBookmarks(const QString &url)
 {
 	if (m_urls.contains(url))
@@ -153,16 +163,6 @@ QStringList BookmarksItem::getKeywords()
 QStringList BookmarksItem::getUrls()
 {
 	return m_urls.keys();
-}
-
-BookmarksItem *BookmarksItem::getBookmark(const QString &keyword)
-{
-	if (m_keywords.contains(keyword))
-	{
-		return m_keywords[keyword];
-	}
-
-	return NULL;
 }
 
 QVariant BookmarksItem::data(int role) const

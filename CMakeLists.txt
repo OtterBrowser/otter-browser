@@ -126,6 +126,7 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/TableViewWidget.cpp
 	src/ui/TextLabelWidget.cpp
+	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp

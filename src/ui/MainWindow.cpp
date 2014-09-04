@@ -474,6 +474,16 @@ void MainWindow::openUrl(const QString &input)
 	m_windowsManager->open();
 }
 
+void MainWindow::storeWindowState()
+{
+	m_previousState = windowState();
+}
+
+void MainWindow::restoreWindowState()
+{
+	setWindowState(m_previousState);
+}
+
 void MainWindow::actionNewTabPrivate()
 {
 	m_windowsManager->open(QUrl(), PrivateOpen);
@@ -533,12 +543,11 @@ void MainWindow::actionFullScreen()
 {
 	if (isFullScreen())
 	{
-		setWindowState(m_previousState);
+		restoreWindowState();
 	}
 	else
 	{
-		m_previousState = windowState();
-
+		storeWindowState();
 		showFullScreen();
 	}
 }

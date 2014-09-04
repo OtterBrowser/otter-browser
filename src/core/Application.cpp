@@ -28,6 +28,7 @@
 #include "WebBackendsManager.h"
 #include "./config.h"
 #include "../ui/MainWindow.h"
+#include "../ui/TrayIcon.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QCryptographicHash>
@@ -185,6 +186,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 	setQuitOnLastWindowClosed(true);
+
+	new TrayIcon(this);
 }
 
 Application::~Application()

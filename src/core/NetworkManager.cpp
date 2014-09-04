@@ -29,6 +29,7 @@
 #include "../ui/AuthenticationDialog.h"
 #include "../ui/ContentsDialog.h"
 #include "../ui/ContentsWidget.h"
+#include "../ui/MainWindow.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>

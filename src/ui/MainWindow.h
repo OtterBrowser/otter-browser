@@ -57,6 +57,8 @@ public:
 
 public slots:
 	void openUrl(const QString &input = QString());
+	void storeWindowState();
+	void restoreWindowState();
 
 protected:
 	void changeEvent(QEvent *event);

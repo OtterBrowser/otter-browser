@@ -123,7 +123,7 @@ public:
 	static void setActiveWindow(MainWindow *window);
 	static SessionsManager* getInstance();
 	static WindowsManager* getWindowsManager();
-	static QWidget* getActiveWindow();
+	static MainWindow *getActiveWindow();
 	static QString getCurrentSession();
 	static QString getCachePath();
 	static QString getProfilePath();

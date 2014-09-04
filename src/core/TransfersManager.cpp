@@ -22,6 +22,7 @@
 #include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "../ui/MainWindow.h"
 
 #include <QtCore/QRegularExpression>
 #include <QtCore/QMimeDatabase>
