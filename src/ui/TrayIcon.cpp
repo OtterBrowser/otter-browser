@@ -22,18 +22,34 @@
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
 TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_icon(new QSystemTrayIcon(this))
 {
+	QMenu *menu = new QMenu();
+	menu->addAction(tr("Show Window"))->setData(QLatin1String("toggleWindow"));
+	menu->addSeparator();
+	menu->addAction(tr("New Tab"))->setData(QLatin1String("newTab"));
+	menu->addAction(tr("New Private Tab"))->setData(QLatin1String("newPrivateTab"));
+	menu->addSeparator();
+	menu->addAction(tr("Bookmarks"))->setData(QLatin1String("bookmarks"));
+	menu->addAction(tr("Transfers"))->setData(QLatin1String("transfers"));
+	menu->addAction(tr("History"))->setData(QLatin1String("history"));
+	menu->addSeparator();
+	menu->addAction(tr("Exit"))->setData(QLatin1String("exit"));
+
 	m_icon->setIcon(parent->windowIcon());
+	m_icon->setContextMenu(menu);
 	m_icon->setToolTip(tr("Otter Browser"));
 	m_icon->show();
 
 	setParent(NULL);
 
+	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
 	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
 	connect(m_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(activated(QSystemTrayIcon::ActivationReason)));
 }
