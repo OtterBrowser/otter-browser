@@ -52,6 +52,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
 	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
+	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 	connect(m_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(activated(QSystemTrayIcon::ActivationReason)));
 }
 
@@ -121,6 +122,16 @@ void TrayIcon::triggerAction(QAction *action)
 				manager->open(QUrl(QLatin1String("about:history")));
 			}
 		}
+	}
+}
+
+void TrayIcon::updateMenu()
+{
+	MainWindow *window = SessionsManager::getActiveWindow();
+
+	if (window)
+	{
+		m_icon->contextMenu()->actions().at(0)->setText(window->isMinimized() ? tr("Show Window") : tr("Hide Window"));
 	}
 }
 

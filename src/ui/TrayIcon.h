@@ -38,6 +38,7 @@ public:
 protected slots:
 	void activated(QSystemTrayIcon::ActivationReason reason);
 	void triggerAction(QAction *action);
+	void updateMenu();
 
 private:
 	QSystemTrayIcon *m_icon;
