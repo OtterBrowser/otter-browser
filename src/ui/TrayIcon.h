@@ -20,6 +20,7 @@
 #ifndef OTTER_TRAYICON_H
 #define OTTER_TRAYICON_H
 
+#include <QtWidgets/QAction>
 #include <QtWidgets/QSystemTrayIcon>
 
 namespace Otter
@@ -36,6 +37,7 @@ public:
 
 protected slots:
 	void activated(QSystemTrayIcon::ActivationReason reason);
+	void triggerAction(QAction *action);
 
 private:
 	QSystemTrayIcon *m_icon;

@@ -51,6 +51,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 
 	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
 	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
 	connect(m_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(activated(QSystemTrayIcon::ActivationReason)));
 }
 
@@ -71,6 +72,53 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 			{
 				window->storeWindowState();
 				window->showMinimized();
+			}
+		}
+	}
+}
+
+void TrayIcon::triggerAction(QAction *action)
+{
+	if (!action || action->data().isNull())
+	{
+		return;
+	}
+
+	const QString identifier = action->data().toString();
+
+	if (identifier == QLatin1String("toggleWindow"))
+	{
+		activated(QSystemTrayIcon::Trigger);
+	}
+	else if (identifier == QLatin1String("exit"))
+	{
+		Application::getInstance()->exit();
+	}
+	else
+	{
+		WindowsManager *manager = SessionsManager::getWindowsManager();
+
+		if (manager)
+		{
+			if (identifier == QLatin1String("newTab"))
+			{
+				manager->open(QUrl(), DefaultOpen);
+			}
+			else if (identifier == QLatin1String("newPrivateTab"))
+			{
+				manager->open(QUrl(), PrivateOpen);
+			}
+			else if (identifier == QLatin1String("bookmarks"))
+			{
+				manager->open(QUrl(QLatin1String("about:bookmarks")));
+			}
+			else if (identifier == QLatin1String("transfers"))
+			{
+				manager->open(QUrl(QLatin1String("about:transfers")));
+			}
+			else if (identifier == QLatin1String("history"))
+			{
+				manager->open(QUrl(QLatin1String("about:history")));
 			}
 		}
 	}
