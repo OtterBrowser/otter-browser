@@ -51,6 +51,7 @@ public:
 	bool isRunning() const;
 
 public slots:
+	void close();
 	void newWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 
 protected slots:

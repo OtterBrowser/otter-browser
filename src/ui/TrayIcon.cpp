@@ -93,7 +93,7 @@ void TrayIcon::triggerAction(QAction *action)
 	}
 	else if (identifier == QLatin1String("exit"))
 	{
-		Application::getInstance()->exit();
+		Application::getInstance()->close();
 	}
 	else
 	{

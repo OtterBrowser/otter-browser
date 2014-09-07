@@ -198,6 +198,13 @@ Application::~Application()
 	}
 }
 
+void Application::close()
+{
+	SessionsManager::saveSession();
+
+	exit();
+}
+
 void Application::removeWindow(MainWindow *window)
 {
 	m_windows.removeAll(window);
