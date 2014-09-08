@@ -13,3 +13,6 @@ cd build
 qmake ../otter.pro
 make
 make install
+
+Sometimes you may need to manually add QtConcurrent to list of required modules, in case of CMake build system you have to modify CMakeLists.txt by adding it to line starting with "qt5_use_modules(otter-browser ", resulting in "qt5_use_modules(otter-browser Concurrent ".
+Or add it to otter.pro, adding it to list starting with "QT += core", resulting in "QT += core concurrent ".
