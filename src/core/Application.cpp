@@ -187,7 +187,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 	setQuitOnLastWindowClosed(true);
 
-	new TrayIcon(this);
+	if (SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon]")).toBool())
+	{
+		new TrayIcon(this);
+	}
 }
 
 Application::~Application()
