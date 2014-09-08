@@ -32,7 +32,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Önceki Kapanan Sekmeyi Aç</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
@@ -192,12 +192,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Hızlı Yer İmleri Erişimi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Hızlı Bul</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Düz Metin Olarak Kopyala</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -217,12 +217,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Go to tab on left</source>
-        <translation type="unfinished"/>
+        <translation>Soldaki sekmeye git</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Go to tab on right</source>
-        <translation type="unfinished"/>
+        <translation>Sağdaki sekmeye git</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all of its contents?</source>
-        <translation type="unfinished"/>
+        <translation>Bu klasörü ve tüm içeriği silmek istediğinze emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -525,58 +525,58 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Kimden</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Var olan yer imlerini sil</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
         <source>Do not duplicate bookmarks with same address</source>
-        <translation type="unfinished"/>
+        <translation>Aynı adrese sahip yerimi oluşturamazsınız</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Bu klasöre aktar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
         <source>Import into subfolder</source>
-        <translation type="unfinished"/>
+        <translation>Alt klasöre aktar</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
         <source>Subfolder name:</source>
-        <translation type="unfinished"/>
+        <translation>Alt klasör ismi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
         <source>Leave empty to import into main folder</source>
-        <translation type="unfinished"/>
+        <translation>Ana klasör içerisine almak için boş bırakın</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Klasör İsmi</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Yeni Klasör İsmi Girin:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Başlıksız)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Yer İmleri</translation>
     </message>
 </context>
 <context>
@@ -803,17 +803,17 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Tüm sekmeler</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Sadece geçerli sekme</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Geçerli sekme ve belirtilmemiş</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
@@ -855,42 +855,42 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>İçerik Engelleme</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>AdBlock filters</source>
-        <translation type="unfinished"/>
+        <translation>Reklam Engelleme Filtreleri</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Ekle</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Güncelle</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last update</source>
-        <translation type="unfinished"/>
+        <translation>Son güncelleme</translation>
     </message>
 </context>
 <context>
@@ -932,7 +932,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>MM.dd.yyyy HH:mm</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
@@ -1112,12 +1112,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="159"/>
         <source>HTML bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>HTML yer imleri</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="164"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation type="unfinished"/>
+        <translation>Yer imlerini HTML&apos;den aktar (Netscape formatı)</translation>
     </message>
 </context>
 <context>
@@ -1180,7 +1180,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 pixels @ %3 bits per pixel in %n frames</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
@@ -1194,23 +1194,23 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Kaynak:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
-        <translation type="unfinished"/>
+        <translation>Seçili formattan içeri aktırlamıyor</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
-        <translation type="unfinished"/>
+        <translation>Dosya okunamıyor</translation>
     </message>
 </context>
 <context>
@@ -1289,12 +1289,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="68"/>
         <source>Import from Opera</source>
-        <translation type="unfinished"/>
+        <translation>Opera&apos;dan Aktar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="74"/>
         <source>Other Import</source>
-        <translation type="unfinished"/>
+        <translation>Diğerlerinden aktar</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="104"/>
@@ -1309,7 +1309,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="126"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Karakter Kodlama</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="131"/>
@@ -1554,12 +1554,12 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="460"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="465"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Hızlı İleri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="470"/>
@@ -1594,7 +1594,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="509"/>
         <source>Content blocking</source>
-        <translation type="unfinished"/>
+        <translation>İçerik engelleme</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="517"/>
@@ -1609,7 +1609,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="532"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>HTML Yer İmleri</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="304"/>
@@ -1619,7 +1619,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="305"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Çıkış yapmak üzeresiniz fakat halen %n dosya indiriliyor.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="306"/>
@@ -1679,7 +1679,7 @@ Devam etmek istiyor musunuz?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="734"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n sekme)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="758"/>
@@ -1780,12 +1780,12 @@ Devam etmek istiyor musunuz?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Yer İmlerine Git</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation type="unfinished"/>
+        <translation>Yer imi için takma ad girin:</translation>
     </message>
 </context>
 <context>
@@ -1793,12 +1793,12 @@ Devam etmek istiyor musunuz?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="76"/>
         <source>Opera bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Opera yer imleri</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="81"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Yer İmlerini Opera Tarayıcı 12 ya da daha önceki bir sürümden aktarın</translation>
     </message>
 </context>
 <context>
@@ -2492,7 +2492,7 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Takma ad</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
@@ -2526,7 +2526,7 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz Bir Arama Motoru Tanımlayıcı Girin:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
@@ -2569,7 +2569,7 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz Bir Kimlik Tanımlayıcı Girin:</translation>
     </message>
 </context>
 <context>
@@ -2706,7 +2706,7 @@ Kahverengi hızlı tilki tembel köpeğin üstünden atlıyor.</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="788"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz Bir Arama Motoru Tanımlayıcı Girin:</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1049"/>
@@ -2866,7 +2866,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Takma ad:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
@@ -2894,13 +2894,13 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="143"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="251"/>
         <source>POST Method</source>
-        <translation type="unfinished"/>
+        <translation>POST Metodu</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="292"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Veri Kodlama(enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
@@ -3130,7 +3130,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Enter Unique Macro Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Benzeriz Makro Tanımlayıcı Girin:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
@@ -3159,7 +3159,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with blank page</source>
-        <translation type="unfinished"/>
+        <translation>Boş sayfayla başla</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
@@ -3219,7 +3219,7 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -3342,7 +3342,7 @@ Boyut: %3
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="422"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="423"/>
         <source>%1 (%n B)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n B)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="371"/>
@@ -3481,12 +3481,12 @@ Yeni bir klasör seçin.</translation>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Sonrakini Bul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Öncekini Bul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
@@ -3533,7 +3533,7 @@ Yeni bir klasör seçin.</translation>
     <message>
         <location filename="../../src/ui/Window.cpp" line="288"/>
         <source>Enter User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı Tanımlayıcı Girin:</translation>
     </message>
 </context>
 <context>
@@ -3546,7 +3546,7 @@ Yeni bir klasör seçin.</translation>
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="125"/>
         <source>You are about to open %n bookmarks.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n yer imini açmak üzeresiniz.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="130"/>
@@ -3611,27 +3611,27 @@ Yeni bir klasör seçin.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="48"/>
         <source>Failed to load adblock file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Reklam engelleme dosyası yüklenemedi: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="86"/>
         <source>Loaded adblock file is not valid: %0</source>
-        <translation type="unfinished"/>
+        <translation>Reklam engelleme dosyası geçersiz: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="458"/>
         <source>Content blocking file checksum mismatch: %0</source>
-        <translation type="unfinished"/>
+        <translation>İçerik engelleme dosyası eşleşmiyor: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="466"/>
         <source>Unable to download update for content blocking: %0</source>
-        <translation type="unfinished"/>
+        <translation>İçerik engelleme için güncelleme indirilemiyor: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="477"/>
         <source>Unable to write downloaded content blocking file: %0</source>
-        <translation type="unfinished"/>
+        <translation>İndirilen içerik engelleme dosyasına yazılamıyor: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
@@ -3643,7 +3643,7 @@ Yeni bir klasör seçin.</translation>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="318"/>
         <source>Blocked content: %0</source>
-        <translation type="unfinished"/>
+        <translation>Engellenen içerik: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>

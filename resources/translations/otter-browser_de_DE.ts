@@ -554,7 +554,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
         <source>Leave empty to import into main folder</source>
-        <translation type="unfinished"/>
+        <translation>Nichts eintragen führt zum Import in den Hauptordner</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
@@ -1204,12 +1204,12 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
-        <translation type="unfinished"/>
+        <translation>Der ausgewählte Typ konnte nicht importiert werden.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
-        <translation type="unfinished"/>
+        <translation>Datei konnte zum Lesen nicht geöffnet werden.</translation>
     </message>
 </context>
 <context>
@@ -2676,7 +2676,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="315"/>
         <source>Failed to open file for writing.</source>
-        <translation>Datei konnte zum schreiben nicht geöffnet werden.</translation>
+        <translation>Datei konnte zum Schreiben nicht geöffnet werden.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="448"/>

@@ -32,7 +32,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Riaprire la scheda precedentemente chiusa </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
@@ -192,7 +192,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Accesso Rapido ai Preferiti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Copia come Testo Semplice</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -524,58 +524,58 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Modulo </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere presenti segnalibri</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
         <source>Do not duplicate bookmarks with same address</source>
-        <translation type="unfinished"/>
+        <translation>Non duplicare segnalibri con lo stesso indirizzo</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importare nella cartella: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
         <source>Import into subfolder</source>
-        <translation type="unfinished"/>
+        <translation>Importazione in sottocartella :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
         <source>Subfolder name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome della sottocartella: </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
         <source>Leave empty to import into main folder</source>
-        <translation type="unfinished"/>
+        <translation>Lasciare vuoto per importare nella cartella principale </translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome cartella</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona nome della nuova cartella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri</translation>
     </message>
 </context>
 <context>
@@ -802,17 +802,17 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Tutte le schede</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Solo nella scheda corrente </translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Scheda corrente e non specificato</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
@@ -854,42 +854,42 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blocco del contenuto</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>AdBlock filters</source>
-        <translation type="unfinished"/>
+        <translation>Filtri di AdBlock</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Modifica</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last update</source>
-        <translation type="unfinished"/>
+        <translation>Ultimo aggiornamento</translation>
     </message>
 </context>
 <context>
@@ -1111,12 +1111,12 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="159"/>
         <source>HTML bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri HTML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="164"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri dal file HTML (formato Netscape).</translation>
     </message>
 </context>
 <context>
@@ -1193,23 +1193,23 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Fonte: </translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile importare il tipo selezionato.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file in solo lettura.</translation>
     </message>
 </context>
 <context>
@@ -1288,12 +1288,12 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="68"/>
         <source>Import from Opera</source>
-        <translation type="unfinished"/>
+        <translation>Importazione da Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="74"/>
         <source>Other Import</source>
-        <translation type="unfinished"/>
+        <translation>Importati da Altro</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="104"/>
@@ -1592,7 +1592,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="509"/>
         <source>Content blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blocco del contenuto</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="517"/>
@@ -1607,7 +1607,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="532"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="304"/>
@@ -1778,12 +1778,12 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Vai a Segnalibro</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation type="unfinished"/>
+        <translation>Inserire la parola chiave del segnalibro:</translation>
     </message>
 </context>
 <context>
@@ -1791,12 +1791,12 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="76"/>
         <source>Opera bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Segnalibri di Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="81"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri di Opera  12 o precedente</translation>
     </message>
 </context>
 <context>
@@ -2895,7 +2895,7 @@ Si desidera sovrascriverlo? </translation>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="292"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Codifica dei dati (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
@@ -3214,7 +3214,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Chiudi scheda </translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -3606,27 +3606,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="48"/>
         <source>Failed to load adblock file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file adblock: %0 </translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="86"/>
         <source>Loaded adblock file is not valid: %0</source>
-        <translation type="unfinished"/>
+        <translation>Il file adblock caricato non valido: %0 </translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="458"/>
         <source>Content blocking file checksum mismatch: %0</source>
-        <translation type="unfinished"/>
+        <translation>Il checksum del contenuto file di blocco mancata corrispondenza: %0 </translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="466"/>
         <source>Unable to download update for content blocking: %0</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile scaricare aggiornamenti per il blocco dei contenuti: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="477"/>
         <source>Unable to write downloaded content blocking file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile scrivere il file blocco del contenuto :  %0 </translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
@@ -3638,7 +3638,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="318"/>
         <source>Blocked content: %0</source>
-        <translation type="unfinished"/>
+        <translation>Contenuto bloccato: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>

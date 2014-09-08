@@ -157,7 +157,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Inspect Element...</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Elemen...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
@@ -192,37 +192,37 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Akses Bookmark Cepat</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Pencarian Cepat</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Aktifkan Bidang Alamat</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Salin sbg Teks Biasa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Tempel dan Pergi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Go to tab on left</source>
-        <translation type="unfinished"/>
+        <translation>Pindah ke tab kiri</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Go to tab on right</source>
-        <translation type="unfinished"/>
+        <translation>Pindah ke tab kanan</translation>
     </message>
 </context>
 <context>
@@ -248,13 +248,13 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="246"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Awas</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="246"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Sesi ini tidak tersimpan dengan baik. Apakah Anda ingin mengembalikan sesi ini?</translation>
     </message>
 </context>
 <context>
@@ -315,34 +315,34 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungan:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungan Terakhir</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>Dibuat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Dimodifikasi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Kata kunci:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tak diketahui</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
@@ -357,7 +357,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="125"/>
         <source>(Untitled)</source>
-        <translation>(Tidak Berjudul)</translation>
+        <translation>(Tak Berjudul)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
@@ -374,7 +374,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark dengan kata kunci ini sudah tersedia.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
@@ -465,7 +465,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all of its contents?</source>
-        <translation type="unfinished"/>
+        <translation>Apa Anda yakin ingin menghapus folder dan semua isinya?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
@@ -523,58 +523,58 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Dari</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Hapus bookmark yang ada</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
         <source>Do not duplicate bookmarks with same address</source>
-        <translation type="unfinished"/>
+        <translation>Jangan duplikat bookmark dengan alamat sama</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Impor ke folder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
         <source>Import into subfolder</source>
-        <translation type="unfinished"/>
+        <translation>Impor ke subfolder</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
         <source>Subfolder name:</source>
-        <translation type="unfinished"/>
+        <translation>Nama subfolder:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
         <source>Leave empty to import into main folder</source>
-        <translation type="unfinished"/>
+        <translation>Biarkan kosong untuk impor ke folder utama</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama Folder</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Pilih nama folder baru:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Tak berjudul)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark</translation>
     </message>
 </context>
 <context>
@@ -801,51 +801,51 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Semua tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Hanya tab ini</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Tab ini dan tak ditentukan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="99"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Jaringan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="66"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Keamanan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="79"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Lain</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="121"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Bersihkan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Saring...</translation>
     </message>
 </context>
 <context>
@@ -853,42 +853,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blok konten</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>AdBlock filters</source>
-        <translation type="unfinished"/>
+        <translation>Penyaring AdBlock</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Tambahkan</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Perbarui</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last update</source>
-        <translation type="unfinished"/>
+        <translation>Perbaruan terakhir</translation>
     </message>
 </context>
 <context>
@@ -930,7 +930,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>MM.dd.yyy HH::mm</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
@@ -955,7 +955,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="228"/>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Terapkan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="255"/>

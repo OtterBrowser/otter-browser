@@ -233,9 +233,11 @@ RESOURCES += resources/resources.qrc
 
 TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_de_DE.ts \
+    resources/translations/otter-browser_el.ts \
     resources/translations/otter-browser_en_GB.ts \
     resources/translations/otter-browser_en_US.ts \
     resources/translations/otter-browser_es_ES.ts \
+    resources/translations/otter-browser_es_MX.ts \
     resources/translations/otter-browser_et.ts \
     resources/translations/otter-browser_fi.ts \
     resources/translations/otter-browser_fr_FR.ts \
@@ -252,6 +254,7 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_ro.ts \
     resources/translations/otter-browser_ru_RU.ts \
     resources/translations/otter-browser_sk.ts \
+    resources/translations/otter-browser_sl_SI.ts \
     resources/translations/otter-browser_sr.ts \
     resources/translations/otter-browser_sr@Ijekavian.ts \
     resources/translations/otter-browser_sr@ijekavianlatin.ts \

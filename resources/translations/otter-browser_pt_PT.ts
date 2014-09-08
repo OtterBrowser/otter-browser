@@ -32,7 +32,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Voltar a Abrir o Separador Anteriormente Fechado</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
@@ -192,12 +192,12 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Accesso Rápido aos Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Procura Rápida</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Copiar como Texto Simples</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -524,58 +524,58 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulário</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Remover Marcadores Existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
         <source>Do not duplicate bookmarks with same address</source>
-        <translation type="unfinished"/>
+        <translation>Não duplicar marcadores com o mesmo endereço</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importar para pasta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
         <source>Import into subfolder</source>
-        <translation type="unfinished"/>
+        <translation>Importar para sub-pasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
         <source>Subfolder name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome da sub-pasta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
         <source>Leave empty to import into main folder</source>
-        <translation type="unfinished"/>
+        <translation>Deixar em branco para importar para a pasta principal</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome da Pasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Selecione o nome da nova pasta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sem Título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores</translation>
     </message>
 </context>
 <context>
@@ -802,17 +802,17 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Todos os separadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Apenas o separador actual</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Separador actual e não especificado</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
@@ -854,42 +854,42 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Bloqueador de Conteúdos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>AdBlock filters</source>
-        <translation type="unfinished"/>
+        <translation>Filtros AdBlock</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last update</source>
-        <translation type="unfinished"/>
+        <translation>Última actualização</translation>
     </message>
 </context>
 <context>
@@ -1111,12 +1111,12 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="159"/>
         <source>HTML bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores HTML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="164"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores apartir de ficheiro HTML (formato Netscape).</translation>
     </message>
 </context>
 <context>
@@ -1193,23 +1193,23 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Fonte:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
-        <translation type="unfinished"/>
+        <translation>Impossível importar o tipo selecionado.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
-        <translation type="unfinished"/>
+        <translation>Falhou ao abrir ficheiro para leitura.</translation>
     </message>
 </context>
 <context>
@@ -1288,12 +1288,12 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="68"/>
         <source>Import from Opera</source>
-        <translation type="unfinished"/>
+        <translation>Importar do Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="74"/>
         <source>Other Import</source>
-        <translation type="unfinished"/>
+        <translation>Importar outros</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="104"/>
@@ -1607,7 +1607,7 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="532"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="304"/>
@@ -1778,12 +1778,12 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Ir para Marcador</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation type="unfinished"/>
+        <translation>Inserir palavra-chave do marcador:</translation>
     </message>
 </context>
 <context>
@@ -1791,12 +1791,12 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="76"/>
         <source>Opera bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores do Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="81"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores do Browser Opera versão 12 ou anterior</translation>
     </message>
 </context>
 <context>
@@ -3215,7 +3215,7 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Fechar Separador</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -3607,12 +3607,12 @@ Selecione outro caminho.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="48"/>
         <source>Failed to load adblock file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Falhou ao carregar o ficheiro adblock: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="86"/>
         <source>Loaded adblock file is not valid: %0</source>
-        <translation type="unfinished"/>
+        <translation>O ficheiro adblock carregado não é válido: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="458"/>
@@ -3638,7 +3638,7 @@ Selecione outro caminho.</translation>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="318"/>
         <source>Blocked content: %0</source>
-        <translation type="unfinished"/>
+        <translation>Conteúdo bloqueado: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>

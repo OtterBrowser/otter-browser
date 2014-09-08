@@ -1,228 +1,228 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fi" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="el" version="2.1">
 <context>
     <name>Otter::ActionsManager</name>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Open in New Tab</source>
-        <translation>Avaa uudessa välilehdessä</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Open in New Background Tab</source>
-        <translation>Avaa taustalla</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>Open in New Window</source>
-        <translation>Avaa uudessa ikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open in New Background Window</source>
-        <translation>Avaa uudessa taustaikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation>Avaa suljettu välilehti uudelleen</translation>
+        <translation>Άνοιγμα Προηγουμένως Κλειστής Καρτέλας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Kopioi URL leikepöydälle</translation>
+        <translation>Αντιγραφή Συνδέσμου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Kopioi kehyksen osoite leikepöydälle</translation>
+        <translation>Αντιγραφή Συνδέσμου Πλαισίου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Reload</source>
-        <translation>Päivitä</translation>
+        <translation>Επαναφόρτωση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Reload Image</source>
-        <translation>Päivitä kuva</translation>
+        <translation>Επαναφόρτωση Εικόνας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>View Source</source>
-        <translation>Näytä lähdekoodi</translation>
+        <translation>Προβολή Πηγαίου Κώδικα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Save Link Target As...</source>
-        <translation>Tallenna kohde nimellä...</translation>
+        <translation>Αποθήκευση Στόχου Συνδέσμου Ως...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="57"/>
         <source>Save to Downloads</source>
-        <translation>Tallenna latauskansioon</translation>
+        <translation>Αποθήκευση στις Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Bookmark Link...</source>
-        <translation>Lisää linkki kirjanmerkkeihin...</translation>
+        <translation>Σύνδεσμος Σελιδοδείκτη...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Επαναφόρτωση Καθενός</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή Διεύθυνσης</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Validate</source>
-        <translation type="unfinished"/>
+        <translation>Επαλήθευση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Αποκλεισμός Περιεχομένου...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Προτιμήσεις Ιστοσελίδας...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Ιδιότητες Εικόνας...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Open Image</source>
-        <translation>Avaa kuva</translation>
+        <translation>Άνοιγμα Εικόνας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <source>Save Image...</source>
-        <translation>Tallenna kuva...</translation>
+        <translation>Αποθήκευση Εικόνας...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Copy Image to Clipboard</source>
-        <translation>Kopioi kuva</translation>
+        <translation>Αντιγραφή Εικόνας στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Kopioi kuvan osoite</translation>
+        <translation>Αντιγραφή Συνδέσμου Εικόνας στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση Χρησιμοποιώντας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση σε Αυτή τη Διεύθυνση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση Όλων</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Check Spelling</source>
-        <translation>Tarkista oikeinkirjoitus</translation>
+        <translation>Ορθογραφικός Έλεγχος</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργία Αναζήτησης...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Inspect Element...</source>
-        <translation type="unfinished"/>
+        <translation>Επιθεώρηση Στοιχείου...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Αποθήκευση Πολυμέσου...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή Συνδέσμου Πολυμέσου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση Πλήκτρων Ελέγχου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Επανάληψη</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Play</source>
-        <translation>Toista</translation>
+        <translation>Αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Mute</source>
-        <translation>Mykistä</translation>
+        <translation>Σίγαση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Γρήγορη Πρόσβαση στους Σελιδοδείκτες</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Γρήγορη Εύρεση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Ενεργοποίηση Πεδίου Διευθύνσεων</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή ως Απλό Κείμενο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Paste and Go</source>
-        <translation>Liitä ja mene</translation>
+        <translation>Επικόλληση και Μετάβαση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Go to tab on left</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση στην καρτέλα στα αριστερά</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Go to tab on right</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση στην καρτέλα στα δεξιά</translation>
     </message>
 </context>
 <context>
@@ -230,17 +230,17 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="420"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="420"/>
         <source>Add Bookmark</source>
-        <translation>Lisää kirjanmerkki</translation>
+        <translation>Προσθήκη Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="512"/>
         <source>Remove This Icon</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Αυτού του Εικονιδίου</translation>
     </message>
 </context>
 <context>
@@ -248,13 +248,14 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="246"/>
         <source>Warning</source>
-        <translation>Varoitus</translation>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="246"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Αυτή η συνεδρία δεν αποθηκεύτηκε σωστά.
+Είστε σίγουρος ότι θέλετε να επαναφέρετε αυτή τη συνεδρία ούτως ή άλλως;</translation>
     </message>
 </context>
 <context>
@@ -262,27 +263,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation type="unfinished"/>
+        <translation>Απαιτείται Πιστοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
         <source>Server:</source>
-        <translation type="unfinished"/>
+        <translation>Διακομιστής:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="29"/>
         <source>Message:</source>
-        <translation type="unfinished"/>
+        <translation>Μήνυμα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="36"/>
         <source>User:</source>
-        <translation>Käyttäjätunnus:</translation>
+        <translation>Χρήστης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="46"/>
         <source>Password:</source>
-        <translation>Salasana:</translation>
+        <translation>Κωδικός πρόσβασης:</translation>
     </message>
 </context>
 <context>
@@ -290,106 +291,106 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="29"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Περιγραφή:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="39"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="49"/>
         <source>Folder:</source>
-        <translation>Kansio:</translation>
+        <translation>Φάκελος:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New</source>
-        <translation>Uusi</translation>
+        <translation>Νέο</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
         <source>Visits:</source>
-        <translation type="unfinished"/>
+        <translation>Επισκέψεις:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation type="unfinished"/>
+        <translation>Τελευταία Επίσκεψη:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
         <source>Created:</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργήθηκε:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="138"/>
         <source>Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Τροποποιήθηκε:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Λέξη-κλειδί:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="46"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="51"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Άγνωστο</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="64"/>
         <source>Add Bookmark</source>
-        <translation>Lisää kirjanmerkki</translation>
+        <translation>Προσθήκη Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="77"/>
         <source>Edit Bookmark</source>
-        <translation>Muokkaa kirjanmerkkiä</translation>
+        <translation>Επεξεργασία Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="125"/>
         <source>(Untitled)</source>
-        <translation>(Nimetön)</translation>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="151"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="153"/>
         <source>Bookmarks</source>
-        <translation>Kirjanmerkit</translation>
+        <translation>Σελιδοδείκτες</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
         <source>Error</source>
-        <translation>Virhe</translation>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="181"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>Kirjanmerkki avainsanalla on jo olemassa.</translation>
+        <translation>Ο σελιδοδείκτης με αυτή τη λέξη-κλειδί υπάρχει ήδη.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="201"/>
         <source>Failed to save bookmark.</source>
-        <translation>Kirjanmerkkiä ei voitu tallentaa.</translation>
+        <translation>Αποτυχία αποθήκευσης σελιδοδείκτη.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
         <source>Folder Name</source>
-        <translation>Kansion nimi</translation>
+        <translation>Όνομα Φακέλου</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="214"/>
         <source>Select name of new folder:</source>
-        <translation>Valitse uuden kansion nimi:</translation>
+        <translation>Επιλέξτε όνομα νέου φακέλου:</translation>
     </message>
 </context>
 <context>
@@ -397,44 +398,44 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="76"/>
         <source>Address:</source>
-        <translation>Osoite:</translation>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="83"/>
         <source>Title:</source>
-        <translation>Otsikko:</translation>
+        <translation>Τίτλος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="90"/>
         <source>Description:</source>
-        <translation>Kuvaus:</translation>
+        <translation>Περιγραφή:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="114"/>
         <source>Properties</source>
-        <translation>Ominaisuudet</translation>
+        <translation>Ιδιότητες</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="124"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="131"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="256"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="267"/>
         <source>Add Folder</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη Φακέλου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
@@ -442,80 +443,80 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="257"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="268"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="50"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="258"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="269"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη Διαχωριστικού</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="127"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="136"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this folder and all of its contents?</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε πραγματικά να διαγράψετε αυτό το φάκελο και όλα τα περιεχόμενά του;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="190"/>
         <source>Do you really want to delete this bookmark?</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε πραγματικά να διαγράψετε αυτό το σελιδοδείκτη;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="236"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="237"/>
         <source>Open in New Tab</source>
-        <translation>Avaa uudessa välilehdessä</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="238"/>
         <source>Open in New Background Tab</source>
-        <translation>Avaa taustalla</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="240"/>
         <source>Open in New Window</source>
-        <translation>Avaa uudessa ikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="241"/>
         <source>Open in New Background Window</source>
-        <translation>Avaa uudessa taustaikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="252"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή Συνδέσμου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="261"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Σελιδοδείκτη</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="263"/>
         <source>Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Ιδιότητες...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="407"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Διαχειριστής Σελιδοδεικτών</translation>
     </message>
 </context>
 <context>
@@ -523,32 +524,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Φόρμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="20"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση υπαρχόντων σελιδοδεικτών</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="37"/>
         <source>Do not duplicate bookmarks with same address</source>
-        <translation type="unfinished"/>
+        <translation>Να μην δημιουργούνται διπλότυποι σελιδοδείκτες με ίδια διεύθυνση</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="49"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή στο φάκελο:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="65"/>
         <source>Import into subfolder</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή στον υπό-φάκελο</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="78"/>
         <source>Subfolder name:</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα υπό-φακέλου:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="85"/>
@@ -558,23 +559,23 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα Φακέλου</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="65"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Επιλέξτε όνομα νέου φακέλου:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="97"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="123"/>
         <location filename="../../src/ui/BookmarksImporterWidget.cpp" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Σελιδοδείκτες</translation>
     </message>
 </context>
 <context>
@@ -582,122 +583,122 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="110"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="120"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="130"/>
         <source>Last Modified:</source>
-        <translation type="unfinished"/>
+        <translation>Τελευταία Τροποποίηση:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="140"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Λήξη:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="150"/>
         <source>Location:</source>
-        <translation type="unfinished"/>
+        <translation>Τοποθεσία:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="171"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Προεπισκόπηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="210"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Τελευταία Τροποποίηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Λήξη</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="380"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="381"/>
         <source>Open in New Tab</source>
-        <translation>Avaa uudessa välilehdessä</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="382"/>
         <source>Open in New Background Tab</source>
-        <translation>Avaa taustalla</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="384"/>
         <source>Open in New Window</source>
-        <translation>Avaa uudessa ikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="385"/>
         <source>Open in New Background Window</source>
-        <translation>Avaa uudessa taustaikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή Συνδέσμου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Καταγραφής</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Όλων των Καταγραφών από Αυτό τον Τομέα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="456"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Άγνωστο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="592"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Προσωρινή Μνήμη</translation>
     </message>
 </context>
 <context>
@@ -705,67 +706,67 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση Ιστορικού</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to Clear:</source>
-        <translation type="unfinished"/>
+        <translation>Περίοδος για Εκκαθάριση</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Όλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="45"/>
         <source> h</source>
-        <translation type="unfinished"/>
+        <translation>ω</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση ιστορικού περιήγησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση ιστορικού φορμών</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση ιστορικού λήψεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση ιστορικού αναζήτησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση προσγωρινής μνήμης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση δεδομένων αποθήκευσης ιστοσελίδων</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση κωδικών πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
         <source>Clear Now</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση Τώρα</translation>
     </message>
 </context>
 <context>
@@ -773,27 +774,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Αξία</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="201"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Διαχειριστής Ρυθμίσεων</translation>
     </message>
 </context>
 <context>
@@ -801,51 +802,51 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Όλες οι καρτέλες</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο η τρέχουσα καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Η τρέχουσα καρτέλα και οι μη προσδιορισμένες</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="99"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Δίκτυο</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="66"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Ασφάλεια</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="79"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Άλλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="121"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Φίλτρο...</translation>
     </message>
 </context>
 <context>
@@ -853,42 +854,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Αποκλεισμός Περιεχομένου</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>AdBlock filters</source>
-        <translation type="unfinished"/>
+        <translation>Φίλτρα AdBlock</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Ενημέρωση</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last update</source>
-        <translation type="unfinished"/>
+        <translation>Τελευταία ενημέρωση</translation>
     </message>
 </context>
 <context>
@@ -896,7 +897,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ContentsDialog.cpp" line="59"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο</translation>
     </message>
 </context>
 <context>
@@ -904,73 +905,73 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Τομέας:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="112"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="125"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Αξία:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="138"/>
         <source>Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Λήξη:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="151"/>
         <source>MM.dd.yyyy HH:mm</source>
         <comment>Date and time format</comment>
-        <translation type="unfinished"/>
+        <translation>ΜΜ.ηη.εεεε ΩΩ:λλ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Ασφαλής</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
         <source>HTTP only</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο HTTP</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="205"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="228"/>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Εφαρμογή</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="255"/>
         <source>Remove Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Cookie</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="258"/>
         <source>Remove All Cookies from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Όλων των Cookies από Αυτό τον Τομέα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="407"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Διαχειριστής Cookies</translation>
     </message>
 </context>
 <context>
@@ -978,17 +979,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="35"/>
         <source>Browse...</source>
-        <translation type="unfinished"/>
+        <translation>Περιήγηση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select File</source>
-        <translation>Valitse tiedosto</translation>
+        <translation>Επιλέξτε Αρχείο</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
         <source>Select Directory</source>
-        <translation type="unfinished"/>
+        <translation>Επιλέξτε Κατάλογο</translation>
     </message>
 </context>
 <context>
@@ -996,113 +997,113 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Today</source>
-        <translation type="unfinished"/>
+        <translation>Σήμερα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Yesterday</source>
-        <translation type="unfinished"/>
+        <translation>Χθες</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Week</source>
-        <translation type="unfinished"/>
+        <translation>Νωρίτερα Αυτή την Εβδομάδα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Previous Week</source>
-        <translation type="unfinished"/>
+        <translation>Προηγούμενη Εβδομάδα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Month</source>
-        <translation type="unfinished"/>
+        <translation>Νωρίτερα Αυτό το Μήνα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Year</source>
-        <translation type="unfinished"/>
+        <translation>Νωρίτερα Αυτό το Χρόνο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Older</source>
-        <translation type="unfinished"/>
+        <translation>Παλαιότερα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Ημερομηνία</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="210"/>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="244"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
         <source>Open in New Tab</source>
-        <translation>Avaa uudessa välilehdessä</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Open in New Background Tab</source>
-        <translation>Avaa taustalla</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
         <source>Open in New Window</source>
-        <translation>Avaa uudessa ikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
         <source>Open in New Background Window</source>
-        <translation>Avaa uudessa taustaikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
         <source>Add to Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη στους Σελιδοδείκτες...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή Συνδέσμου στο Πρόχειρο</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Καταγραφής</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση Όλων των Καταγραφών από Αυτό τον Τομέα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Ιστορικό</translation>
     </message>
 </context>
 <context>
@@ -1110,12 +1111,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="159"/>
         <source>HTML bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Σελιδοδείκτες HTML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/other/HtmlBookmarksImporter.cpp" line="164"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation>Tuo kirjanmerkit HTML-muodossa (Netscape-muoto).</translation>
+        <translation>Εισαγωγή σελιδοδεικτών από αρχείο HTML (Μορφή netscape).</translation>
     </message>
 </context>
 <context>
@@ -1123,68 +1124,68 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="14"/>
         <source>Image Properties</source>
-        <translation type="unfinished"/>
+        <translation>Ιδιότητες Εικόνας</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="22"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="36"/>
         <source>File Size:</source>
-        <translation>Tiedoston koko:</translation>
+        <translation>Μέγεθος Αρχείου:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="43"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative Text:</source>
-        <translation type="unfinished"/>
+        <translation>Εναλλακτικό Κείμενο:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.ui" line="57"/>
         <source>Long Description:</source>
-        <translation type="unfinished"/>
+        <translation>Μεγάλη Περιγραφή:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="62"/>
         <source>%1 GB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 GB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 MB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 MB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="71"/>
         <source>%1 KB (%2 bytes)</source>
-        <translation type="unfinished"/>
+        <translation>%1 KB (%2 bytes)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation type="unfinished"/>
+        <translation>%1 B</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 pixel @ %3 bits ανά pixel σε %n κάδρα</numerusform><numerusform>%1 x %2 pixels @ %3 bits ανά pixel σε %n κάδρα</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixels @ %3 bits ανά pixel</translation>
     </message>
 </context>
 <context>
@@ -1192,23 +1193,23 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Πηγαίος Κώδικας:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
-        <translation type="unfinished"/>
+        <translation>Αδυναμία εισαγωγής επιλεγμένου τύπου.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
-        <translation>Ei voinut lukea tiedostoa.</translation>
+        <translation>Αποτυχία ανοίγματος αρχείου για ανάγνωση.</translation>
     </message>
 </context>
 <context>
@@ -1216,27 +1217,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="59"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Περιεχόμενα Καταλόγου</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="62"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="63"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="64"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Ημερομηνία</translation>
     </message>
 </context>
 <context>
@@ -1244,27 +1245,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="14"/>
         <source>Switch Application Language</source>
-        <translation type="unfinished"/>
+        <translation>Αλλαγή Γλώσσας Εφαρμογής</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="22"/>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Γλώσσα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="32"/>
         <source>Custom path:</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμοσμένη διαδρομή:</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="43"/>
         <source>System</source>
-        <translation type="unfinished"/>
+        <translation>Σύστημα</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="48"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμοσμένο</translation>
     </message>
 </context>
 <context>
@@ -1272,397 +1273,398 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="49"/>
         <source>File</source>
-        <translation>Tiedosto</translation>
+        <translation>Αρχείο</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="53"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Συνεδρίες</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="64"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή και Εξαγωγή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="68"/>
         <source>Import from Opera</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή από </translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="74"/>
         <source>Other Import</source>
-        <translation type="unfinished"/>
+        <translation>Άλλη Εισαγωγή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="104"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="122"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Προβολή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="126"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Κρυπτογράφηση Χαρακτήρων</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="131"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Λειτουργία Χρήστη</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="152"/>
         <location filename="../../src/ui/MainWindow.ui" line="527"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Σελιδοδείκτες</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="160"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Εργαλεία</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="171"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Βοήθεια</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="180"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Ιστορικό</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="187"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Κλειστές Καρτέλες</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="212"/>
         <source>Console</source>
-        <translation type="unfinished"/>
+        <translation>Κονσόλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="221"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="226"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Νέα Ιδιωτική Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="231"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="236"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Νέο Ιδιωτικό Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="241"/>
         <source>Open...</source>
-        <translation>Avaa...</translation>
+        <translation>Άνοιγμα...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="249"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Αποθήκευση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="254"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Εκτύπωση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="259"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Προεπισκόπηση Εκτύπωσης</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="267"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Εργασία Χωρίς Σύνδεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="278"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση Γραμμής Μενού</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="283"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Έξοδος</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="291"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο Καρτέλας</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="299"/>
         <location filename="../../src/ui/MainWindow.cpp" line="1033"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Αναίρεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="307"/>
         <location filename="../../src/ui/MainWindow.cpp" line="1046"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Επανάληψη</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="315"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Αποκοπή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="323"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="331"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Επικόλληση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="336"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Επιλογή Όλων</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="341"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="346"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση Επόμενου</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="351"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση Προηγούμενου</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="356"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη Σελιδοδείκτη...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="361"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Διαχείριση Σελιδοδεικτών...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="366"/>
         <source>Read Feeds</source>
-        <translation type="unfinished"/>
+        <translation>Ανάγνωση Ροών</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="371"/>
         <source>Manage Feeds...</source>
-        <translation type="unfinished"/>
+        <translation>Διαχείριση Ροών...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="376"/>
         <source>About Otter...</source>
-        <translation type="unfinished"/>
+        <translation>Σχετικά με το Otter...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="384"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Σχετικά με το Qt...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="392"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Μεγέθυνση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="397"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Σμίκρυνση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="402"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Αρχικό Ζουμ</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="410"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="415"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="420"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Εμπρός</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="425"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Προβολή Ιστορικού</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="430"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση Ιστορικού...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="435"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Επαναφόρτωση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="440"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Διακοπή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="445"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Προβολή Πηγαίου Κώδικα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="450"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Πλήρης Οθόνη</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="455"/>
         <location filename="../../src/ui/MainWindow.cpp" line="858"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="460"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Πισωγύρισμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="465"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Γρήγορη Προώθηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="470"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Αποθήκευση Τρέχουσας Συνεδρίας...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="475"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Διαχείριση Συνεδριών...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="483"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Επιθεώρηση Σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="488"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Cookies...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="493"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Μεταφορές...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="498"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Προτιμήσεις...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="509"/>
         <source>Content blocking</source>
-        <translation type="unfinished"/>
+        <translation>Αποκλεισμός περιεχομένου</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="517"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Κονσόλα Σφαλμάτων</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="522"/>
         <source>Switch Application Language...</source>
-        <translation type="unfinished"/>
+        <translation>Αλλαγή Γλώσσας Εφαρμογής...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.ui" line="532"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Σελιδοδείκτες HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="304"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="305"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Olet lopettamassa, samalla kun %n tiedostoa ladataan.</numerusform><numerusform>Olet lopettamassa, samalla kun %n tiedostoa ladataan.</numerusform></translation>
+        <translation><numerusform>Πρόκειται να εξέλθετε ενώ %n αρχείο κατεβαίνει ακόμη.</numerusform><numerusform>Πρόκειται να εξέλθετε ενώ %n αρχεία κατεβαίνουν ακόμη.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="306"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="310"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Να μην εμφανιστεί ξανά αυτό το μήνυμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="453"/>
         <source>Open File</source>
-        <translation>Avaa tiedosto</translation>
+        <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="577"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="577"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Έχετε ήδη αυτή τη διεύθυνση στους σελιδοδείκτες σας.
+Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="671"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Ο Περιηγητής ιστού που ελέγχεται από το χρήστη, όχι το αντίθετο.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="672"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Backend ιστού: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="676"/>
         <source>SSL library version: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Έκδοση βιβλιοθήκης SSL: %1.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="680"/>
         <source>SSL library not available.</source>
-        <translation type="unfinished"/>
+        <translation>Μη διαθέσιμη βιβλιοθήκη SSL.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="719"/>
@@ -1670,62 +1672,62 @@ Do you want to continue?</source>
         <location filename="../../src/ui/MainWindow.cpp" line="770"/>
         <location filename="../../src/ui/MainWindow.cpp" line="917"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="734"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n καρτέλα)</numerusform><numerusform>%1 (%n καρτέλες)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="758"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="780"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="803"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Αυτόματη Ανίχνευση</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="867"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Παράθυρο - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="905"/>
         <source>Open All</source>
-        <translation>Avaa kaikki</translation>
+        <translation>Άνοιγμα Όλων</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1180"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1181"/>
         <source>Open in New Tab</source>
-        <translation>Avaa uudessa välilehdessä</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1182"/>
         <source>Open in New Background Tab</source>
-        <translation>Avaa taustalla</translation>
+        <translation>Άνοιγμα σε Νέα Καρτέλα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1184"/>
         <source>Open in New Window</source>
-        <translation>Avaa uudessa ikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1185"/>
         <source>Open in New Background Window</source>
-        <translation>Avaa uudessa taustaikkunassa</translation>
+        <translation>Άνοιγμα σε Νέο Παράθυρο Παρασκηνίου</translation>
     </message>
 </context>
 <context>
@@ -1734,12 +1736,12 @@ Do you want to continue?</source>
         <location filename="../../src/core/NetworkManager.cpp" line="267"/>
         <location filename="../../src/core/NetworkManager.cpp" line="284"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="267"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Προέκυψαν σφάλματα SSL, θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="284"/>
@@ -1748,7 +1750,11 @@ Do you want to continue?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Προέκυψαν σφάλματα SSL:
+
+%1
+
+Θέλετε να συνεχίσετε;</translation>
     </message>
 </context>
 <context>
@@ -1756,7 +1762,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="228"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
 </context>
 <context>
@@ -1764,7 +1770,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία ορισμού αυτόματης ρύθμισης διακομιστή μεσολάβησης (PAC)</translation>
     </message>
 </context>
 <context>
@@ -1772,12 +1778,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση στους Σελιδοδείκτες</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation type="unfinished"/>
+        <translation>Εισάγετε τη λέξη-κλειδί του σελιδοδείκτη:</translation>
     </message>
 </context>
 <context>
@@ -1785,12 +1791,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="76"/>
         <source>Opera bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Σελιδοδείκτες Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="81"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Εισάγει σελιδοδείκτες από τον Περιηγητή Opera έκδοση 12 ή παλαιότερη</translation>
     </message>
 </context>
 <context>
@@ -1798,12 +1804,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="122"/>
         <source>Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογές</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="125"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Αποθήκευση</translation>
     </message>
 </context>
 <context>
@@ -1811,88 +1817,88 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Προτιμήσεις</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1352"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Γενικές</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="39"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Εκκίνηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="51"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>Συμπεριφορά εκκίνησης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>Continue previous session</source>
-        <translation type="unfinished"/>
+        <translation>Συνέχιση προηγούμενης συνεδρίας</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="67"/>
         <source>Show startup dialog</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση διαλόγου εκκίνησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση αρχικής σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση κενής σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="85"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>Αρχική σελίδα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση Τρέχουσας Σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="123"/>
         <source>Use Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση Σελιδοδείκτη....</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>Επαναφορά στην Προεπιλογή</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Λήψεις</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="159"/>
         <source>Save files to:</source>
-        <translation>Tallenna tiedostot:</translation>
+        <translation>Αποθήκευση αρχείων σε:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="174"/>
         <source>Always ask me where to save files</source>
-        <translation>Kysy aina, minne tiedostot tallennetaan</translation>
+        <translation>Να γίνεται πάντα ερώτηση για το που θα αποθηκευτούν τα αρχεία</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Καρτέλες</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Avaa uudet ikkunat välilehtinä</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
@@ -1907,7 +1913,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="215"/>
         <source>Open new tab next to active</source>
-        <translation>Avaa uusi välilehti aktiivisen viereen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
@@ -1927,12 +1933,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation>Siirry ensimmäiselle välilehdelle, joka on avattu aktiivisesta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Γλώσσα</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
@@ -1942,47 +1948,47 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Περιεχόμενο</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Αποκλεισμός</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
         <source>Pop-ups:</source>
-        <translation type="unfinished"/>
+        <translation>Αναδυόμενα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Αποκλεισμός όλων των αναδυόμενων</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
         <source>Open all pop-ups</source>
-        <translation>Salli kaikki ponnahdusikkunat</translation>
+        <translation>Άνοιγμα όλων των αναδυόμενων</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
         <source>Open all pop-ups in background</source>
-        <translation>Avaa kaikki ponnahdusikkunat taustalle</translation>
+        <translation>Άνοιγμα όλων των αναδυόμενων στο παρασκήνιο</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Ζουμ</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλεγμένο ζουμ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
@@ -1992,23 +1998,23 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Γραμματοσειρές</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="464"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Στυλ</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="469"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Γραμματοσειρά</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="474"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="613"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Προεπισκόπηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
@@ -2020,7 +2026,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="530"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="549"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="510"/>
@@ -2035,27 +2041,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="546"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Κανένα</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>Χρώματα</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="608"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Τύπος</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="635"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Απόρρητο</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="647"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Παρακολούθηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
@@ -2080,7 +2086,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Ιστορικό</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="703"/>
@@ -2150,7 +2156,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="926"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Λήξη</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="931"/>
@@ -2186,7 +2192,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1026"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1381"/>
         <source>Manage...</source>
-        <translation type="unfinished"/>
+        <translation>Διαχείριση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1040"/>
@@ -2201,24 +2207,24 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1096"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1147"/>
         <source>Add...</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1157"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1885"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2030"/>
         <source>Edit...</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1167"/>
@@ -2226,7 +2232,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1905"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2050"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1192"/>
@@ -2262,27 +2268,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Δίκτυο</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1265"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Ασφάλεια</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1270"/>
         <source>Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Πληκτρολόγιο</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Προτάσεις</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Πρόταση σελιδοδεικτών</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
@@ -2377,7 +2383,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1637"/>
         <source>Path to PAC file:</source>
-        <translation>PAC-tiedoston sijainti</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1649"/>
@@ -2455,17 +2461,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Background Color</source>
-        <translation type="unfinished"/>
+        <translation>Χρώμα Παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>Χρώμα Κειμένου</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Χρώμα Συνδέσμου</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
@@ -2525,12 +2531,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
         <source>Select Proxy Automatic Configuration File</source>
-        <translation>Valitse tiedosto puskuripalvelimen automaattiseksi säätämiseksi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
         <source>PAC files (*.pac)</source>
-        <translation>PAC-tiedostot (*.pac)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="915"/>
@@ -2542,13 +2548,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="916"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1055"/>
         <source>Do you really want to remove this profile?</source>
-        <translation>Haluatko varmasti poistaa tämän profiilin?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1062"/>
         <source>Delete profile permanently</source>
-        <translation>Poista profiili pysyvästi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
@@ -2558,7 +2564,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation>Näppäile toistumaton profiilin nimi:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2670,7 +2676,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="315"/>
         <source>Failed to open file for writing.</source>
-        <translation>Ei voinut avata tiedostoa lukemista varten.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="448"/>
@@ -2700,12 +2706,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1049"/>
         <source>Open Image (Untitled)</source>
-        <translation>Avaa kuva (nimetön)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1049"/>
         <source>Open Image (%1)</source>
-        <translation>Avaa kuva (%1)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1064"/>
@@ -2730,17 +2736,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1066"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση Πλήκτρων Ελέγχου</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1067"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Επανάληψη</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1069"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1069"/>
@@ -2755,12 +2761,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1071"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Σίγαση</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1096"/>
         <source>Open Image</source>
-        <translation>Avaa kuva</translation>
+        <translation>Άνοιγμα Εικόνας</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1381"/>
@@ -2770,7 +2776,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1394"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1692"/>
@@ -2809,7 +2815,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
@@ -2820,7 +2826,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="86"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="86"/>
@@ -2843,17 +2849,17 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="58"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="68"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Περιγραφή:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Λέξη-κλειδί:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
@@ -2869,7 +2875,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="115"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="223"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="128"/>
@@ -2893,13 +2899,13 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="195"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="303"/>
         <source>application/x-www-form-urlencoded</source>
-        <translation type="unfinished"/>
+        <translation>application/x-www-form-urlencoded</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="200"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="308"/>
         <source>multipart/form-data</source>
-        <translation type="unfinished"/>
+        <translation>multipart/form-data</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
@@ -2929,7 +2935,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="138"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Γλώσσα</translation>
     </message>
 </context>
 <context>
@@ -2937,7 +2943,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchWidget.cpp" line="195"/>
         <source>Search Using %1</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση Χρησιμοποιώντας %1</translation>
     </message>
 </context>
 <context>
@@ -2954,12 +2960,12 @@ Do you want to overwrite it?</source>
         <location filename="../../src/core/SessionsManager.cpp" line="200"/>
         <location filename="../../src/core/SessionsManager.cpp" line="215"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="215"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
 </context>
 <context>
@@ -2972,7 +2978,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
@@ -2987,28 +2993,28 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="82"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="89"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="113"/>
         <source>Open session in current window</source>
-        <translation>Avaa istunto nykyiseen ikkunaan</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="44"/>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="67"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
@@ -3029,7 +3035,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="128"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="128"/>
@@ -3042,7 +3048,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Profiilin asetukset</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
@@ -3053,19 +3059,19 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="167"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="101"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="177"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="205"/>
@@ -3075,12 +3081,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="211"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="221"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Περιγραφή:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="231"/>
@@ -3101,7 +3107,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="51"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="68"/>
@@ -3135,7 +3141,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation type="unfinished"/>
+        <translation>Συνέχιση συνεδρίας</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
@@ -3151,17 +3157,17 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
         <location filename="../../src/ui/StartupDialog.cpp" line="50"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="83"/>
         <source>Window %1</source>
-        <translation type="unfinished"/>
+        <translation>Παράθυρο %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
 </context>
 <context>
@@ -3169,7 +3175,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/StatusBarWidget.cpp" line="64"/>
         <source>Zoom %1%</source>
-        <translation type="unfinished"/>
+        <translation>Ζουμ %1%</translation>
     </message>
 </context>
 <context>
@@ -3177,7 +3183,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarDockWidget.cpp" line="48"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Κλειστές Καρτέλες</translation>
     </message>
 </context>
 <context>
@@ -3205,7 +3211,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο Καρτέλας</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -3215,7 +3221,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="368"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
 </context>
 <context>
@@ -3228,7 +3234,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="123"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>Πηγή:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="133"/>
@@ -3238,7 +3244,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="143"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="153"/>
@@ -3266,12 +3272,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Filename</source>
-        <translation>Tiedoston nimi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
@@ -3301,7 +3307,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
@@ -3323,17 +3329,17 @@ Progress: %5&lt;/pre&gt;</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="422"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="423"/>
         <source>%1 (%n B)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="371"/>
         <source>Open</source>
-        <translation>Avaa</translation>
+        <translation>Άνοιγμα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="372"/>
         <source>Open Folder</source>
-        <translation>Avaa kansio</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
@@ -3349,7 +3355,7 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
@@ -3367,20 +3373,19 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="363"/>
         <source>file</source>
-        <translation>tiedosto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="406"/>
         <location filename="../../src/core/TransfersManager.cpp" line="437"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="406"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
-        <translation>Tämän niminen tiedosto on jo olemassa.
-Haluatko korvata sen?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="437"/>
@@ -3388,21 +3393,18 @@ Haluatko korvata sen?</translation>
 Do you want to overwrite it?
 
 %1</source>
-        <translation>Tämän niminen tiedosto on jo olemassa.
-Haluatko korvata sen?
-
-%1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="535"/>
         <source>Save File</source>
-        <translation>Tallenna tiedosto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="549"/>
         <location filename="../../src/core/TransfersManager.cpp" line="558"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="549"/>
@@ -3427,27 +3429,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="64"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="74"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Τίτλος</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Αξία</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
 </context>
 <context>
@@ -3455,17 +3457,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="56"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση Επόμενου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση Προηγούμενου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
@@ -3480,7 +3482,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="139"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο</translation>
     </message>
 </context>
 <context>
@@ -3502,7 +3504,7 @@ Select another one.</source>
         <location filename="../../src/ui/Window.cpp" line="220"/>
         <location filename="../../src/ui/Window.cpp" line="240"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="288"/>
@@ -3520,17 +3522,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="124"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="125"/>
         <source>You are about to open %n bookmarks.</source>
-        <translation><numerusform>Avataan %n kirjanmerkki.</numerusform><numerusform>Avataan %n kirjanmerkkiä.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="130"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Να μην εμφανιστεί ξανά αυτό το μήνυμα</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="315"/>
@@ -3540,12 +3542,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="340"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Προεπισκόπηση Εκτύπωσης</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="494"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="688"/>
@@ -3560,7 +3562,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="356"/>
         <source>URL to open</source>
-        <translation>Avattava URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="357"/>
@@ -3627,12 +3629,12 @@ Select another one.</source>
         <location filename="../../src/core/SessionsManager.h" line="73"/>
         <location filename="../../src/core/SessionsManager.h" line="76"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="77"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
 </context>
 </TS>
