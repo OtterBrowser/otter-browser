@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PANELWIDGET_H
-#define OTTER_PANELWIDGET_H
+#ifndef OTTER_SIDEBARWIDGET_H
+#define OTTER_SIDEBARWIDGET_H
 
 #include "Window.h"
 
@@ -31,16 +31,16 @@ namespace Otter
 
 namespace Ui
 {
-	class HotlistWidget;
+	class SidebarWidget;
 }
 
-class HotlistWidget : public QWidget
+class SidebarWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit HotlistWidget(QWidget *parent = NULL);
-	~HotlistWidget();
+	explicit SidebarWidget(QWidget *parent = NULL);
+	~SidebarWidget();
 
 	QSize sizeHint() const;
 
@@ -60,7 +60,7 @@ private:
 	QWidget *m_currentWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
-	Ui::HotlistWidget *m_ui;
+	Ui::SidebarWidget *m_ui;
 };
 
 }

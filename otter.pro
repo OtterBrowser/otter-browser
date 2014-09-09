@@ -77,7 +77,6 @@ SOURCES += src/main.cpp \
     src/ui/OpenBookmarkDialog.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
-    src/ui/HotlistWidget.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/PreviewWidget.cpp \
     src/ui/SaveSessionDialog.cpp \
@@ -85,6 +84,7 @@ SOURCES += src/main.cpp \
     src/ui/SearchPropertiesDialog.cpp \
     src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
+    src/ui/SidebarWidget.cpp \
     src/ui/StartupDialog.cpp \
     src/ui/StatusBarWidget.cpp \
     src/ui/TabBarDockWidget.cpp \
@@ -163,7 +163,6 @@ HEADERS += src/core/Action.h \
     src/ui/OpenBookmarkDialog.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \
-    src/ui/HotlistWidget.h \
     src/ui/PreferencesDialog.h \
     src/ui/PreviewWidget.h \
     src/ui/SaveSessionDialog.h \
@@ -171,6 +170,7 @@ HEADERS += src/core/Action.h \
     src/ui/SearchPropertiesDialog.h \
     src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
+    src/ui/SidebarWidget.h \
     src/ui/StartupDialog.h \
     src/ui/StatusBarWidget.h \
     src/ui/TabBarDockWidget.h \
@@ -210,11 +210,11 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/LocaleDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/OpenBookmarkDialog.ui \
-    src/ui/HotlistWidget.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
+    src/ui/SidebarWidget.ui \
     src/ui/StartupDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/Window.ui \

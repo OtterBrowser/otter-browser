@@ -17,39 +17,39 @@
 *
 **************************************************************************/
 
-#include "HotlistWidget.h"
+#include "SidebarWidget.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
-#include "ui_HotlistWidget.h"
+#include "ui_SidebarWidget.h"
 
 namespace Otter
 {
 
-HotlistWidget::HotlistWidget(QWidget *parent) : QWidget(parent),
+SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	m_currentWidget(NULL),
-	m_ui(new Ui::HotlistWidget)
+	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
 
-	optionChanged(QLatin1String("Hotlist/CurrentPanel"), SettingsManager::getValue(QLatin1String("Hotlist/CurrentPanel")));
-	optionChanged(QLatin1String("Hotlist/Panels"), SettingsManager::getValue(QLatin1String("Hotlist/Panels")));
+	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
+	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
-HotlistWidget::~HotlistWidget()
+SidebarWidget::~SidebarWidget()
 {
 	delete m_ui;
 }
 
-void HotlistWidget::optionChanged(const QString &option, const QVariant &value)
+void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Hotlist/CurrentPanel"))
+	if (option == QLatin1String("Sidebar/CurrentPanel"))
 	{
 		openPanel(value.toString());
 	}
-	else if (option == QLatin1String("Hotlist/Panels"))
+	else if (option == QLatin1String("Sidebar/Panels"))
 	{
 		for (QHash<QString, QToolButton*>::const_iterator iterator = m_buttons.constBegin(); iterator != m_buttons.constEnd(); ++iterator)
 		{
@@ -67,7 +67,7 @@ void HotlistWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
-void HotlistWidget::locationChanged(Qt::DockWidgetArea area)
+void SidebarWidget::locationChanged(Qt::DockWidgetArea area)
 {
 	if (area == Qt::RightDockWidgetArea)
 	{
@@ -88,17 +88,17 @@ void HotlistWidget::locationChanged(Qt::DockWidgetArea area)
 	}
 }
 
-void HotlistWidget::openPanel()
+void SidebarWidget::openPanel()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
 
 	if (action)
 	{
-		SettingsManager::setValue(QLatin1String("Hotlist/CurrentPanel"), (action->data().toString() == m_currentPanel ? QString() : action->data().toString()));
+		SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), (action->data().toString() == m_currentPanel ? QString() : action->data().toString()));
 	}
 }
 
-void HotlistWidget::openPanel(const QString &identifier)
+void SidebarWidget::openPanel(const QString &identifier)
 {
 	QWidget *widget = NULL;
 
@@ -151,7 +151,7 @@ void HotlistWidget::openPanel(const QString &identifier)
 	m_currentWidget = widget;
 }
 
-void HotlistWidget::openUrl(const QUrl &url, OpenHints hints)
+void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
 {
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
@@ -161,7 +161,7 @@ void HotlistWidget::openUrl(const QUrl &url, OpenHints hints)
 	}
 }
 
-void HotlistWidget::registerPanel(const QString &identifier)
+void SidebarWidget::registerPanel(const QString &identifier)
 {
 	QString title;
 	QIcon icon;
@@ -219,9 +219,9 @@ void HotlistWidget::registerPanel(const QString &identifier)
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
 }
 
-QSize HotlistWidget::sizeHint() const
+QSize SidebarWidget::sizeHint() const
 {
-	return QSize((m_currentWidget ? SettingsManager::getValue(QLatin1String("Hotlist/Width")).toInt() : 1), 100);
+	return QSize((m_currentWidget ? SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt() : 1), 100);
 }
 
 }
