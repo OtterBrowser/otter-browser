@@ -24,6 +24,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeDatabase>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QIcon>
@@ -46,11 +47,12 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	QDir directory(request.url().toLocalFile());
 	const QFileInfoList entries = directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst));
+	const QRegularExpression expression(QLatin1String("^/+"));
 	QStringList navigation;
 
 	do
 	{
-		navigation.prepend(QStringLiteral("<a href=\"%1\">%2</a>%3").arg(directory.canonicalPath()).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
+		navigation.prepend(QStringLiteral("<a href=\"file:///%1\">%2</a>%3").arg(directory.canonicalPath().remove(expression)).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
 	}
 	while (directory.cdUp());
 
@@ -65,7 +67,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	variables[QLatin1String("header_date")] = tr("Date");
 	variables[QLatin1String("body")] = QString();
 
-	QMimeDatabase database;
+	const QMimeDatabase database;
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
@@ -74,7 +76,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 		QBuffer buffer(&byteArray);
 		QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
 
-		variables[QLatin1String("body")].append(QStringLiteral("<tr>\n<td><a href=\"file://%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath()).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(entries.at(i).lastModified().toString()));
+		variables[QLatin1String("body")].append(QStringLiteral("<tr>\n<td><a href=\"file:///%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath().remove(expression)).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(entries.at(i).lastModified().toString()));
 	}
 
 	QString html = stream.readAll();
