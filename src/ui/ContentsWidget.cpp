@@ -19,7 +19,6 @@
 
 #include "ContentsWidget.h"
 #include "ContentsDialog.h"
-#include "../core/HistoryManager.h"
 
 namespace Otter
 {
@@ -147,7 +146,8 @@ void ContentsWidget::setZoom(int zoom)
 
 void ContentsWidget::setUrl(const QUrl &url, bool typed)
 {
-	HistoryManager::addEntry(url, getTitle(), getIcon(), typed);
+	Q_UNUSED(url)
+	Q_UNUSED(typed)
 }
 
 void ContentsWidget::setParent(Window *window)
