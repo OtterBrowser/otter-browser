@@ -108,7 +108,7 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 
 	if (reader->name() == QLatin1String("folder"))
 	{
-		bookmark = new BookmarksItem(FolderBookmark);
+		bookmark = new BookmarksItem(BookmarksItem::FolderBookmark);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
 
@@ -179,7 +179,7 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		bookmark = new BookmarksItem(UrlBookmark, reader->attributes().value(QLatin1String("href")).toString());
+		bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, reader->attributes().value(QLatin1String("href")).toString());
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate), BookmarksModel::TimeVisitedRole);
@@ -251,7 +251,7 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 	}
 	else if (reader->name() == QLatin1String("separator"))
 	{
-		bookmark = new BookmarksItem(SeparatorBookmark);
+		bookmark = new BookmarksItem(BookmarksItem::SeparatorBookmark);
 
 		reader->readNext();
 	}
@@ -266,9 +266,9 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 		return;
 	}
 
-	switch (static_cast<BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
+	switch (static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
 	{
-		case FolderBookmark:
+		case BookmarksItem::FolderBookmark:
 			writer->writeStartElement(QLatin1String("folder"));
 
 			if (bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isValid())
@@ -306,7 +306,7 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 			writer->writeEndElement();
 
 			break;
-		case UrlBookmark:
+		case BookmarksItem::UrlBookmark:
 			writer->writeStartElement(QLatin1String("bookmark"));
 
 			if (!bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())

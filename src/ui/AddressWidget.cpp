@@ -485,7 +485,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				}
 				else
 				{
-					BookmarksItem *bookmark = new BookmarksItem(UrlBookmark, getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle());
+					BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle());
 					BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 
 					if (dialog.exec() == QDialog::Rejected)

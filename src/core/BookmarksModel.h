@@ -31,6 +31,16 @@ namespace Otter
 class BookmarksItem : public QStandardItem
 {
 public:
+	enum BookmarkType
+	{
+		UnknownBookmark = 0,
+		RootBookmark = 1,
+		TrashBookmark = 2,
+		FolderBookmark = 3,
+		UrlBookmark = 4,
+		SeparatorBookmark = 5
+	};
+
 	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
 	~BookmarksItem();
 
@@ -60,7 +70,7 @@ class BookmarksModel : public QStandardItemModel
 	Q_OBJECT
 
 public:
-	enum BookmarksRole
+	enum BookmarkRole
 	{
 		TitleRole = Qt::DisplayRole,
 		DescriptionRole = Qt::ToolTipRole,

@@ -56,7 +56,7 @@ void OperaBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->importIntoSubfolder())
 		{
-			BookmarksItem *folder = new BookmarksItem(FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
+			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
 
 			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
 
@@ -138,17 +138,17 @@ bool OperaBookmarksImporter::import()
 
 		if (line.startsWith(QLatin1String("#URL")))
 		{
-			bookmark = new BookmarksItem(UrlBookmark);
+			bookmark = new BookmarksItem(BookmarksItem::UrlBookmark);
 			type = UrlEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
-			bookmark = new BookmarksItem(FolderBookmark);
+			bookmark = new BookmarksItem(BookmarksItem::FolderBookmark);
 			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
-			bookmark = new BookmarksItem(SeparatorBookmark);
+			bookmark = new BookmarksItem(BookmarksItem::SeparatorBookmark);
 			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))

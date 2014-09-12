@@ -212,9 +212,9 @@ bool BookmarksItem::hasUrl(const QString &url)
 
 BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 {
-	appendRow(new BookmarksItem(RootBookmark, QUrl(), tr("Bookmarks")));
-	appendRow(new BookmarksItem(TrashBookmark, QUrl(), tr("Trash")));
-	setItemPrototype(new BookmarksItem(UnknownBookmark));
+	appendRow(new BookmarksItem(BookmarksItem::RootBookmark, QUrl(), tr("Bookmarks")));
+	appendRow(new BookmarksItem(BookmarksItem::TrashBookmark, QUrl(), tr("Trash")));
+	setItemPrototype(new BookmarksItem(BookmarksItem::UnknownBookmark));
 }
 
 QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
@@ -225,7 +225,7 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		if (indexes.at(i).isValid() && static_cast<BookmarkType>(indexes.at(i).data(TypeRole).toInt()) == UrlBookmark)
+		if (indexes.at(i).isValid() && static_cast<BookmarksItem::BookmarkType>(indexes.at(i).data(TypeRole).toInt()) == BookmarksItem::UrlBookmark)
 		{
 			texts.append(indexes.at(i).data(UrlRole).toString());
 			urls.append(indexes.at(i).data(UrlRole).toUrl());
@@ -268,13 +268,13 @@ QList<QStandardItem*> BookmarksModel::findUrls(const QString &url, QStandardItem
 
 		if (item)
 		{
-			const BookmarkType type = static_cast<BookmarkType>(item->data(TypeRole).toInt());
+			const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(TypeRole).toInt());
 
-			if (type == FolderBookmark)
+			if (type == BookmarksItem::FolderBookmark)
 			{
 				items.append(findUrls(url, item));
 			}
-			else if (type == UrlBookmark && item->data(UrlRole).toUrl().toString() == url)
+			else if (type == BookmarksItem::UrlBookmark && item->data(UrlRole).toUrl().toString() == url)
 			{
 				items.append(item);
 			}
@@ -286,9 +286,9 @@ QList<QStandardItem*> BookmarksModel::findUrls(const QString &url, QStandardItem
 
 bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	const BookmarkType type = static_cast<BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
+	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
 
-	if (type == FolderBookmark || type == RootBookmark || type == TrashBookmark)
+	if (type == BookmarksItem::FolderBookmark || type == BookmarksItem::RootBookmark || type == BookmarksItem::TrashBookmark)
 	{
 		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
 	}

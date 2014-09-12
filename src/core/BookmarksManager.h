@@ -29,16 +29,6 @@
 namespace Otter
 {
 
-enum BookmarkType
-{
-	UnknownBookmark = 0,
-	RootBookmark = 1,
-	TrashBookmark = 2,
-	FolderBookmark = 3,
-	UrlBookmark = 4,
-	SeparatorBookmark = 5
-};
-
 class BookmarksItem;
 class BookmarksModel;
 

@@ -624,7 +624,7 @@ void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)
 		return;
 	}
 
-	BookmarksItem *bookmark = new BookmarksItem(UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
+	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
 	BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -972,14 +972,14 @@ void MainWindow::menuBookmarksAboutToShow()
 			continue;
 		}
 
-		const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
 
-		if (type == RootBookmark || type == FolderBookmark || type == UrlBookmark)
+		if (type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)
 		{
 			QAction *action = menu->addAction(item->data(Qt::DecorationRole).value<QIcon>(), (item->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(item->data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
 			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
 
-			if (type == UrlBookmark)
+			if (type == BookmarksItem::UrlBookmark)
 			{
 				action->setData(item->data(BookmarksModel::UrlRole).toString());
 

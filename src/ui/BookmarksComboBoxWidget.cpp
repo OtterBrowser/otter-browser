@@ -52,7 +52,7 @@ void BookmarksComboBoxWidget::createFolder()
 		return;
 	}
 
-	BookmarksItem *item = new BookmarksItem(FolderBookmark, QUrl(), title);
+	BookmarksItem *item = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), title);
 
 	getCurrentFolder()->appendRow(item);
 	setCurrentFolder(item->index());
@@ -71,9 +71,9 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 
 		if (item)
 		{
-			const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+			const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
 
-			if (type == RootBookmark || type == FolderBookmark)
+			if (type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark)
 			{
 				updateBranch(item);
 			}

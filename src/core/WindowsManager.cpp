@@ -100,14 +100,14 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		hints = CurrentTabOpen;
 	}
 
-	switch (static_cast<BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
+	switch (static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
 	{
-		case UrlBookmark:
+		case BookmarksItem::UrlBookmark:
 			open(QUrl(bookmark->data(BookmarksModel::UrlRole).toUrl()), hints);
 
 			break;
-		case RootBookmark:
-		case FolderBookmark:
+		case BookmarksItem::RootBookmark:
+		case BookmarksItem::FolderBookmark:
 			{
 				gatherBookmarks(bookmark);
 
@@ -176,13 +176,13 @@ void WindowsManager::gatherBookmarks(QStandardItem *branch)
 			continue;
 		}
 
-		const BookmarkType type = static_cast<BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
 
-		if (type == FolderBookmark)
+		if (type == BookmarksItem::FolderBookmark)
 		{
 			gatherBookmarks(item);
 		}
-		else if (type == UrlBookmark)
+		else if (type == BookmarksItem::UrlBookmark)
 		{
 			m_bookmarksToOpen.append(item->data(BookmarksModel::UrlRole).toUrl());
 		}
