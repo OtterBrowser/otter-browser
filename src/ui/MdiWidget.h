@@ -22,6 +22,7 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 
 private:
 	QPointer<Window> m_activeWindow;

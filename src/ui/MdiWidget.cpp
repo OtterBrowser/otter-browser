@@ -1,7 +1,8 @@
 #include "MdiWidget.h"
 #include "Window.h"
+#include "../core/ActionsManager.h"
 
-#include <QtCore/QEvent>
+#include <QtGui/QKeyEvent>
 
 namespace Otter
 {
@@ -18,6 +19,26 @@ void MdiWidget::resizeEvent(QResizeEvent *event)
 	if (m_activeWindow)
 	{
 		m_activeWindow->resize(size());
+	}
+}
+
+void MdiWidget::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Tab)
+	{
+		ActionsManager::triggerAction(QLatin1String("ActivateTabOnRight"), parentWidget());
+
+		event->accept();
+	}
+	else if (event->key() == Qt::Key_Backtab)
+	{
+		ActionsManager::triggerAction(QLatin1String("ActivateTabOnLeft"), parentWidget());
+
+		event->accept();
+	}
+	else
+	{
+		QWidget::keyPressEvent(event);
 	}
 }
 
