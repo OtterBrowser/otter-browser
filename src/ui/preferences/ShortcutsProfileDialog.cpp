@@ -72,7 +72,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 		for (int i = 0; i < actions.count(); ++i)
 		{
 			QList<QStandardItem*> items;
-			items.append(new QStandardItem(actions.at(i).icon, actions.at(i).text));
+			items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
 			items[0]->setData(actions.at(i).name, Qt::UserRole);
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 

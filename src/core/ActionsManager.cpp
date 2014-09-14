@@ -48,16 +48,16 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("OpenLinkInNewWindowBackground"), QT_TR_NOOP("Open in New Background Window"));
 		registerAction(QLatin1String("ReopenTab"), QT_TR_NOOP("Reopen Previously Closed Tab"));
 		registerAction(QLatin1String("CopyLinkToClipboard"), QT_TR_NOOP("Copy Link to Clipboard"));
-		registerAction(QLatin1String("OpenFrameInThisTab"), QT_TR_NOOP("Open"));
-		registerAction(QLatin1String("OpenFrameInNewTab"), QT_TR_NOOP("Open in New Tab"));
-		registerAction(QLatin1String("OpenFrameInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"));
+		registerAction(QLatin1String("OpenFrameInThisTab"), QT_TR_NOOP("Open"), QT_TR_NOOP("Open Frame in This Tab"));
+		registerAction(QLatin1String("OpenFrameInNewTab"), QT_TR_NOOP("Open in New Tab"), QT_TR_NOOP("Open Frame in New Tab"));
+		registerAction(QLatin1String("OpenFrameInNewTabBackground"), QT_TR_NOOP("Open in New Background Tab"), QT_TR_NOOP("Open Frame in New Background Tab"));
 		registerAction(QLatin1String("CopyFrameLinkToClipboard"), QT_TR_NOOP("Copy Frame Link to Clipboard"));
-		registerAction(QLatin1String("ReloadFrame"), QT_TR_NOOP("Reload"));
+		registerAction(QLatin1String("ReloadFrame"), QT_TR_NOOP("Reload"), QT_TR_NOOP("Reload Frame"));
 		registerAction(QLatin1String("ReloadImage"), QT_TR_NOOP("Reload Image"));
 		registerAction(QLatin1String("ViewSourceFrame"), QT_TR_NOOP("View Source"));
 		registerAction(QLatin1String("SaveLinkToDisk"), QT_TR_NOOP("Save Link Target As..."));
 		registerAction(QLatin1String("SaveLinkToDownloads"), QT_TR_NOOP("Save to Downloads"));
-		registerAction(QLatin1String("BookmarkLink"), QT_TR_NOOP("Bookmark Link..."), Utils::getIcon(QLatin1String("bookmark-new")));
+		registerAction(QLatin1String("BookmarkLink"), QT_TR_NOOP("Bookmark Link..."), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 		registerAction(QLatin1String("ReloadTime"), QT_TR_NOOP("Reload Each"));
 		registerAction(QLatin1String("CopyAddress"), QT_TR_NOOP("Copy Address"));
 		registerAction(QLatin1String("Validate"), QT_TR_NOOP("Validate"));
@@ -81,12 +81,12 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ToggleMediaPlayPause"), QT_TR_NOOP("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), QT_TR_NOOP("Mute"));
 		registerAction(QLatin1String("QuickBookmarkAccess"), QT_TR_NOOP("Quick Bookmark Access"));
-		registerAction(QLatin1String("QuickFind"), QT_TR_NOOP("Quick Find"), QIcon(), QuickFindAction);
-		registerAction(QLatin1String("ActivateAddressField"), QT_TR_NOOP("Activate Address Field"), QIcon(), ActivateAddressFieldAction);
-		registerAction(QLatin1String("CopyAsPlainText"), QT_TR_NOOP("Copy as Plain Text"), QIcon(), CopyAsPlainTextAction);
-		registerAction(QLatin1String("PasteAndGo"), QT_TR_NOOP("Paste and Go"), QIcon(), PasteAndGoAction);
-		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TR_NOOP("Go to tab on left"), QIcon(), ActivateTabOnLeftAction);
-		registerAction(QLatin1String("ActivateTabOnRight"), QT_TR_NOOP("Go to tab on right"), QIcon(), ActivateTabOnRightAction);
+		registerAction(QLatin1String("QuickFind"), QT_TR_NOOP("Quick Find"), QString(), QIcon(), QuickFindAction);
+		registerAction(QLatin1String("ActivateAddressField"), QT_TR_NOOP("Activate Address Field"), QString(), QIcon(), ActivateAddressFieldAction);
+		registerAction(QLatin1String("CopyAsPlainText"), QT_TR_NOOP("Copy as Plain Text"), QString(), QIcon(), CopyAsPlainTextAction);
+		registerAction(QLatin1String("PasteAndGo"), QT_TR_NOOP("Paste and Go"), QString(), QIcon(), PasteAndGoAction);
+		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TR_NOOP("Go to Tab on Left"), QString(), QIcon(), ActivateTabOnLeftAction);
+		registerAction(QLatin1String("ActivateTabOnRight"), QT_TR_NOOP("Go to Tab on Right"), QString(), QIcon(), ActivateTabOnRightAction);
 	}
 
 	const QList<QAction*> windowActions = m_window->actions();
@@ -278,7 +278,7 @@ QList<ActionDefinition> ActionsManager::getActions()
 	return m_definitions.values();
 }
 
-bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QIcon &icon, ActionIdentifier identifier, ActionScope scope)
+bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QString &description , const QIcon &icon, ActionIdentifier identifier, ActionScope scope)
 {
 	if (m_definitions.contains(name))
 	{
@@ -288,6 +288,7 @@ bool ActionsManager::registerAction(const QLatin1String &name, const QString &te
 	ActionDefinition definition;
 	definition.name = name;
 	definition.text = text;
+	definition.description = description;
 	definition.icon = icon;
 	definition.identifier = identifier;
 	definition.scope = scope;
