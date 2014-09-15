@@ -114,6 +114,8 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::clear()
 {
+	m_ui->addressWidget->clear();
+
 	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
 }
 

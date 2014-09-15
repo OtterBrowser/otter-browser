@@ -303,7 +303,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 
 		if (cache && cache->metaData(request.url()).isValid())
 		{
-			QIODevice* device = cache->data(request.url());
+			QIODevice *device = cache->data(request.url());
 
 			if (device && device->size() > 0)
 			{
