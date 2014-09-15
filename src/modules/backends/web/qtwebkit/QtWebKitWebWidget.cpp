@@ -524,20 +524,27 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 		case ReloadImageAction:
 			if (!m_hitResult.imageUrl().isEmpty() && !m_hitResult.element().isNull())
 			{
-				const QUrl url(m_hitResult.imageUrl());
-				const QString src = m_hitResult.element().attribute(QLatin1String("src"));
-				NetworkCache *cache = NetworkManagerFactory::getCache();
-
-				m_hitResult.element().setAttribute(QLatin1String("src"), QString());
-
-				if (cache)
+				if (getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
-					cache->remove(url);
+					triggerAction(ReloadAndBypassCacheAction);
 				}
+				else
+				{
+					const QUrl url(m_hitResult.imageUrl());
+					const QString src = m_hitResult.element().attribute(QLatin1String("src"));
+					NetworkCache *cache = NetworkManagerFactory::getCache();
 
-				m_hitResult.element().setAttribute(QLatin1String("src"), src);
+					m_hitResult.element().setAttribute(QLatin1String("src"), QString());
 
-				evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+					if (cache)
+					{
+						cache->remove(url);
+					}
+
+					m_hitResult.element().setAttribute(QLatin1String("src"), src);
+
+					evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+				}
 			}
 
 			break;
