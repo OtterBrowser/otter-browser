@@ -29,6 +29,8 @@ namespace Otter
 {
 
 CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent),
+	m_keepCookiesPolicy(UntilExpireKeepCookies),
+	m_thirdPartyCookiesAcceptPolicy(AlwaysAcceptCookies),
 	m_saveTimer(0),
 	m_enableCookies(true),
 	m_isPrivate(isPrivate)
@@ -155,6 +157,16 @@ QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 QList<QNetworkCookie> CookieJar::getCookies() const
 {
 	return allCookies();
+}
+
+CookieJar::KeepCookiesPolicy CookieJar::getKeepCookiesPolicy() const
+{
+	return m_keepCookiesPolicy;
+}
+
+CookieJar::ThirdPartyCookiesAcceptPolicy CookieJar::getThirdPartyCookiesAcceptPolicy() const
+{
+	return m_thirdPartyCookiesAcceptPolicy;
 }
 
 bool CookieJar::insertCookie(const QNetworkCookie &cookie)
