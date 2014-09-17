@@ -38,7 +38,7 @@ QPointer<MainWindow> SessionsManager::m_activeWindow = NULL;
 QString SessionsManager::m_session;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
-QList<WindowsManager*> SessionsManager::m_managers;
+QList<MainWindow*> SessionsManager::m_windows;
 QList<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_dirty = false;
 
@@ -83,24 +83,24 @@ void SessionsManager::clearClosedWindows()
 	emit m_instance->closedWindowsChanged();
 }
 
-void SessionsManager::registerWindow(WindowsManager *manager)
+void SessionsManager::registerWindow(MainWindow *window)
 {
-	if (manager)
+	if (window)
 	{
-		m_managers.append(manager);
+		m_windows.append(window);
 	}
 }
 
-void SessionsManager::storeClosedWindow(WindowsManager *manager)
+void SessionsManager::storeClosedWindow(MainWindow *window)
 {
-	if (!manager)
+	if (!window)
 	{
 		return;
 	}
 
-	m_managers.removeAll(manager);
+	m_windows.removeAll(window);
 
-	SessionMainWindow session = manager->getSession();
+	SessionMainWindow session = window->getWindowsManager()->getSession();
 
 	if (!session.windows.isEmpty())
 	{
@@ -188,21 +188,6 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 	return m_profilePath + QLatin1String("/sessions/") + cleanPath;
 }
 
-QStringList SessionsManager::getClosedWindows()
-{
-	QStringList closedWindows;
-
-	for (int i = 0; i < m_closedWindows.count(); ++i)
-	{
-		const SessionMainWindow window = m_closedWindows.at(i);
-		const QString title = window.windows.value(window.index, SessionWindow()).getTitle();
-
-		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
-	}
-
-	return closedWindows;
-}
-
 SessionInformation SessionsManager::getSession(const QString &path)
 {
 	const QString sessionPath = getSessionPath(path);
@@ -251,6 +236,26 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	}
 
 	return session;
+}
+
+QList<MainWindow*> SessionsManager::getWindows()
+{
+	return m_windows;
+}
+
+QStringList SessionsManager::getClosedWindows()
+{
+	QStringList closedWindows;
+
+	for (int i = 0; i < m_closedWindows.count(); ++i)
+	{
+		const SessionMainWindow window = m_closedWindows.at(i);
+		const QString title = window.windows.value(window.index, SessionWindow()).getTitle();
+
+		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
+	}
+
+	return closedWindows;
 }
 
 QStringList SessionsManager::getSessions()
@@ -452,16 +457,16 @@ bool SessionsManager::moveSession(const QString &from, const QString &to)
 
 bool SessionsManager::isLastWindow()
 {
-	return (m_managers.count() == 1);
+	return (m_windows.count() == 1);
 }
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
-	for (int i = 0; i < m_managers.count(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		if (m_managers.at(i)->hasUrl(url, activate))
+		if (m_windows.at(i)->getWindowsManager()->hasUrl(url, activate))
 		{
-			QWidget *window = qobject_cast<QWidget*>(m_managers.at(i)->parent());
+			QWidget *window = qobject_cast<QWidget*>(m_windows.at(i)->parent());
 
 			if (window)
 			{

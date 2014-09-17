@@ -116,21 +116,22 @@ class SessionsManager : public QObject
 public:
 	static void createInstance(const QString &profilePath, const QString &cachePath, QObject *parent = NULL);
 	static void clearClosedWindows();
-	static void registerWindow(WindowsManager *manager);
-	static void storeClosedWindow(WindowsManager *manager);
+	static void registerWindow(MainWindow *window);
+	static void storeClosedWindow(MainWindow *window);
 	static void markSessionModified();
 	static void removeStoredUrl(const QString &url);
 	static void setActiveWindow(MainWindow *window);
 	static SessionsManager* getInstance();
 	static WindowsManager* getWindowsManager();
-	static MainWindow *getActiveWindow();
+	static MainWindow* getActiveWindow();
 	static QString getCurrentSession();
 	static QString getCachePath();
 	static QString getProfilePath();
 	static QString getSessionPath(const QString &path, bool bound = false);
-	static QStringList getClosedWindows();
 	static SessionInformation getSession(const QString &path);
+	static QStringList getClosedWindows();
 	static QStringList getSessions();
+	static QList<MainWindow*> getWindows();
 	static bool restoreClosedWindow(int index = -1);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = NULL, bool isPrivate = false);
 	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL, bool clean = true);
@@ -153,7 +154,7 @@ private:
 	static QString m_session;
 	static QString m_cachePath;
 	static QString m_profilePath;
-	static QList<WindowsManager*> m_managers;
+	static QList<MainWindow*> m_windows;
 	static QList<SessionMainWindow> m_closedWindows;
 	static bool m_dirty;
 

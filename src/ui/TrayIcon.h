@@ -42,6 +42,7 @@ protected slots:
 
 private:
 	QSystemTrayIcon *m_icon;
+	bool m_isHidden;
 };
 
 }

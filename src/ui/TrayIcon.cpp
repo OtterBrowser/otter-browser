@@ -28,10 +28,11 @@ namespace Otter
 {
 
 TrayIcon::TrayIcon(Application *parent) : QObject(parent),
-	m_icon(new QSystemTrayIcon(this))
+	m_icon(new QSystemTrayIcon(this)),
+	m_isHidden(false)
 {
 	QMenu *menu = new QMenu();
-	menu->addAction(tr("Show Window"))->setData(QLatin1String("toggleWindow"));
+	menu->addAction(tr("Show Windows"))->setData(QLatin1String("toggleVisibility"));
 	menu->addSeparator();
 	menu->addAction(tr("New Tab"))->setData(QLatin1String("newTab"));
 	menu->addAction(tr("New Private Tab"))->setData(QLatin1String("newPrivateTab"));
@@ -60,21 +61,29 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger)
 	{
-		MainWindow *window = SessionsManager::getActiveWindow();
+		const QList<MainWindow*> windows = SessionsManager::getWindows();
 
-		if (window)
+		for (int i = 0; i < windows.count(); ++i)
 		{
-			if (window->isMinimized())
+			if (!windows.at(i))
 			{
-				window->activateWindow();
-				window->restoreWindowState();
+				continue;
+			}
+
+			if (m_isHidden)
+			{
+				windows.at(i)->show();
+				windows.at(i)->activateWindow();
+				windows.at(i)->restoreWindowState();
 			}
 			else
 			{
-				window->storeWindowState();
-				window->showMinimized();
+				windows.at(i)->storeWindowState();
+				windows.at(i)->hide();
 			}
 		}
+
+		m_isHidden = !m_isHidden;
 	}
 }
 
@@ -87,7 +96,7 @@ void TrayIcon::triggerAction(QAction *action)
 
 	const QString identifier = action->data().toString();
 
-	if (identifier == QLatin1String("toggleWindow"))
+	if (identifier == QLatin1String("toggleVisibility"))
 	{
 		activated(QSystemTrayIcon::Trigger);
 	}
@@ -127,12 +136,7 @@ void TrayIcon::triggerAction(QAction *action)
 
 void TrayIcon::updateMenu()
 {
-	MainWindow *window = SessionsManager::getActiveWindow();
-
-	if (window)
-	{
-		m_icon->contextMenu()->actions().at(0)->setText(window->isMinimized() ? tr("Show Window") : tr("Hide Window"));
-	}
+	m_icon->contextMenu()->actions().at(0)->setText(m_isHidden ? tr("Show Windows") : tr("Hide Windows"));
 }
 
 }

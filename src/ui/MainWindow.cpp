@@ -157,7 +157,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
-	SessionsManager::registerWindow(m_windowsManager);
+	SessionsManager::registerWindow(this);
 
 #ifdef Q_OS_WIN
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
@@ -398,7 +398,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 	else
 	{
-		SessionsManager::storeClosedWindow(m_windowsManager);
+		SessionsManager::storeClosedWindow(this);
 	}
 
 	m_windowsManager->closeAll();
