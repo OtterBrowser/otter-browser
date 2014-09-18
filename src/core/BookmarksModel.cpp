@@ -223,6 +223,11 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 	QStringList texts;
 	QList<QUrl> urls;
 
+	if (indexes.count() == 1)
+	{
+		mimeData->setProperty("x-item-index", indexes.at(0));
+	}
+
 	for (int i = 0; i < indexes.count(); ++i)
 	{
 		if (indexes.at(i).isValid() && static_cast<BookmarksItem::BookmarkType>(indexes.at(i).data(TypeRole).toInt()) == BookmarksItem::UrlBookmark)
@@ -290,6 +295,29 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 	if (type == BookmarksItem::FolderBookmark || type == BookmarksItem::RootBookmark || type == BookmarksItem::TrashBookmark)
 	{
+		const QModelIndex index = data->property("x-item-index").toModelIndex();
+
+		if (index.isValid())
+		{
+			QStandardItem *source = itemFromIndex(index);
+			QStandardItem *target = itemFromIndex(parent);
+			int targetRow = row;
+
+			if (source && target)
+			{
+				if (source->parent() == target && source->row() < row)
+				{
+					--targetRow;
+				}
+
+				target->insertRow(targetRow, source->parent()->takeRow(source->row()));
+
+				return true;
+			}
+
+			return false;
+		}
+
 		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
 	}
 
