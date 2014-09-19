@@ -301,10 +301,18 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 		{
 			QStandardItem *source = itemFromIndex(index);
 			QStandardItem *target = itemFromIndex(parent);
-			int targetRow = row;
 
 			if (source && target)
 			{
+				if (row < 0)
+				{
+					target->appendRow(source->parent()->takeRow(source->row()));
+
+					return true;
+				}
+
+				int targetRow = row;
+
 				if (source->parent() == target && source->row() < row)
 				{
 					--targetRow;

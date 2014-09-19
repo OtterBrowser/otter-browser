@@ -48,7 +48,7 @@
       <enum>QAbstractItemView::DragDrop</enum>
      </property>
      <property name="defaultDropAction">
-      <enum>Qt::MoveAction</enum>
+      <enum>Qt::CopyAction</enum>
      </property>
      <attribute name="headerVisible">
       <bool>false</bool>
