@@ -1,0 +1,167 @@
+[
+	{
+		"identifier": "MenuFile",
+		"type": "menu",
+		"title": "File",
+		"actions":
+		[
+			"NewTab",
+			"NewTabPrivate",
+			"NewWindow",
+			"NewWindowPrivate",
+			"separator",
+			"Open",
+			"Save",
+			"CloseTab",
+			"separator",
+			{
+				"identifier": "MenuSessions",
+				"type": "menu",
+				"title": "Sessions",
+				"actions":
+				[
+					"SaveSession",
+					"ManageSessions",
+					"separator",
+				]
+			},
+			{
+				"identifier": "MenuImportExport",
+				"type": "menu",
+				"title": "Import and Export",
+				"actions":
+				[
+				]
+			},
+			"separator",
+			"Print",
+			"PrintPreview",
+			"separator",
+			"WorkOffline",
+			"separator",
+			"ShowMenubar",
+			"separator",
+			"Exit"
+		]
+	},
+	{
+		"identifier": "MenuEdit",
+		"type": "menu",
+		"title": "Edit",
+		"actions":
+		[
+			"Undo",
+			"Redo",
+			"separator",
+			"Cut",
+			"Copy",
+			"Paste",
+			"Delete",
+			"separator",
+			"SelectAll",
+			"separator",
+			"Find",
+			"FindNext",
+			"FindPrevious"
+		]
+	},
+	{
+		"identifier": "MenuView",
+		"type": "menu",
+		"title": "View",
+		"actions":
+		[
+			"Reload",
+			"Stop",
+			"separator",
+			"ZoomIn",
+			"ZoomOut",
+			"ZoomOriginal",
+			"separator",
+			"FullScreen",
+			"separator",
+			"ViewSource",
+			"InspectPage",
+			{
+				"identifier": "MenuUserAgent",
+				"type": "menu",
+				"title": "User Agent",
+				"actions":
+				[
+				]
+			},
+			"separator",
+			{
+				"identifier": "MenuCharacterEncoding",
+				"type": "menu",
+				"title": "Character Encoding",
+				"actions":
+				[
+				]
+			}
+		]
+	},
+	{
+		"identifier": "MenuHistory",
+		"type": "menu",
+		"title": "History",
+		"actions":
+		[
+			"GoBack",
+			"GoForward",
+			"Rewind",
+			"FastForward",
+			"separator",
+			{
+				"identifier": "MenuClosedWindows",
+				"type": "menu",
+				"title": "Closed Windows",
+				"actions":
+				[
+				]
+			},
+			"separator",
+			"ViewHistory",
+			"separator",
+			"ClearHistory",
+		]
+	},
+	{
+		"identifier": "MenuBookmarks",
+		"type": "menu",
+		"title": "Bookmarks",
+		"actions":
+		[
+			"AddBookmark",
+			"ManageBookmarks",
+			"separator"
+		]
+	},
+	{
+		"identifier": "MenuTools",
+		"type": "menu",
+		"title": "Tools",
+		"actions":
+		[
+			"Transfers",
+			"Cookies",
+			"ContentBlocking",
+			"ErrorConsole",
+			"Sidebar",
+			"separator",
+			"Preferences"
+		]
+	},
+	{
+		"identifier": "MenuHelp",
+		"type": "menu",
+		"title": "Help",
+		"actions":
+		[
+			"SwitchApplicationLanguage",
+			"separator",
+			"AboutApplication",
+			"AboutQt"
+		]
+	}
+]
