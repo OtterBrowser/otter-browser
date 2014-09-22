@@ -24,6 +24,7 @@
 #include "LocaleDialog.h"
 #include "ImportDialog.h"
 #include "MdiWidget.h"
+#include "Menu.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
@@ -45,6 +46,8 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextCodec>
@@ -69,79 +72,24 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 {
 	m_ui->setupUi(this);
 
-	QList<QAction*> actions;
-	actions << m_ui->menuFile->actions() << m_ui->menuEdit->actions() << m_ui->menuView->actions() << m_ui->menuHistory->actions() << m_ui->menuBookmarks->actions() << m_ui->menuTools->actions() << m_ui->menuHelp->actions();
-
-	addActions(actions);
-
 	m_actionsManager = new ActionsManager(this);
 
-	m_ui->menuBookmarks->installEventFilter(this);
+	const QString menuBarPath = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
+	QFile menuBarFile(QFile::exists(menuBarPath) ? menuBarPath : QLatin1String(":/other/menuBar.json"));
+	menuBarFile.open(QFile::ReadOnly);
+
+	const QJsonArray menuBar = QJsonDocument::fromJson(menuBarFile.readAll()).array();
+
+	for (int i = 0; i < menuBar.count(); ++i)
+	{
+		m_ui->menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_ui->menuBar));
+	}
 
 #ifdef Q_OS_WIN
 	m_taskbarButton = NULL;
 #endif
 
 	SessionsManager::setActiveWindow(this);
-
-	m_ui->actionNewTab->setIcon(Utils::getIcon(QLatin1String("tab-new")));
-	m_ui->actionNewTabPrivate->setIcon(Utils::getIcon(QLatin1String("tab-new-private")));
-	m_ui->actionNewWindow->setIcon(Utils::getIcon(QLatin1String("window-new")));
-	m_ui->actionNewWindowPrivate->setIcon(Utils::getIcon(QLatin1String("window-new-private")));
-	m_ui->actionOpen->setIcon(Utils::getIcon(QLatin1String("document-open")));
-	m_ui->actionCloseTab->setIcon(Utils::getIcon(QLatin1String("tab-close")));
-	m_ui->actionSave->setIcon(Utils::getIcon(QLatin1String("document-save")));
-	m_ui->actionPrint->setIcon(Utils::getIcon(QLatin1String("document-print")));
-	m_ui->actionPrintPreview->setIcon(Utils::getIcon(QLatin1String("document-print-preview")));
-	m_ui->actionExit->setIcon(Utils::getIcon(QLatin1String("application-exit")));
-	m_ui->actionUndo->setIcon(Utils::getIcon(QLatin1String("edit-undo")));
-	m_ui->actionUndo->setData(UndoAction);
-	m_ui->actionRedo->setIcon(Utils::getIcon(QLatin1String("edit-redo")));
-	m_ui->actionRedo->setData(RedoAction);
-	m_ui->actionCut->setIcon(Utils::getIcon(QLatin1String("edit-cut")));
-	m_ui->actionCut->setData(CutAction);
-	m_ui->actionCopy->setIcon(Utils::getIcon(QLatin1String("edit-copy")));
-	m_ui->actionCopy->setData(CopyAction);
-	m_ui->actionPaste->setIcon(Utils::getIcon(QLatin1String("edit-paste")));
-	m_ui->actionPaste->setData(PasteAction);
-	m_ui->actionDelete->setIcon(Utils::getIcon(QLatin1String("edit-delete")));
-	m_ui->actionDelete->setData(DeleteAction);
-	m_ui->actionSelectAll->setIcon(Utils::getIcon(QLatin1String("edit-select-all")));
-	m_ui->actionSelectAll->setData(SelectAllAction);
-	m_ui->actionFind->setIcon(Utils::getIcon(QLatin1String("edit-find")));
-	m_ui->actionFind->setData(FindAction);
-	m_ui->actionFindNext->setData(FindNextAction);
-	m_ui->actionFindPrevious->setData(FindPreviousAction);
-	m_ui->actionReload->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
-	m_ui->actionReload->setData(ReloadAction);
-	m_ui->actionStop->setIcon(Utils::getIcon(QLatin1String("process-stop")));
-	m_ui->actionStop->setData(StopAction);
-	m_ui->actionZoomIn->setIcon(Utils::getIcon(QLatin1String("zoom-in")));
-	m_ui->actionZoomIn->setData(ZoomInAction);
-	m_ui->actionZoomOut->setIcon(Utils::getIcon(QLatin1String("zoom-out")));
-	m_ui->actionZoomOut->setData(ZoomOutAction);
-	m_ui->actionZoomOriginal->setIcon(Utils::getIcon(QLatin1String("zoom-original")));
-	m_ui->actionZoomOriginal->setData(ZoomOriginalAction);
-	m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-	m_ui->actionViewSource->setData(ViewSourceAction);
-	m_ui->actionInspectPage->setData(InspectPageAction);
-	m_ui->actionGoBack->setIcon(Utils::getIcon(QLatin1String("go-previous")));
-	m_ui->actionGoBack->setData(GoBackAction);
-	m_ui->actionGoForward->setIcon(Utils::getIcon(QLatin1String("go-next")));
-	m_ui->actionGoForward->setData(GoForwardAction);
-	m_ui->actionRewind->setIcon(Utils::getIcon(QLatin1String("go-first")));
-	m_ui->actionRewind->setData(RewindAction);
-	m_ui->actionFastForward->setIcon(Utils::getIcon(QLatin1String("go-last")));
-	m_ui->actionFastForward->setData(FastForwardAction);
-	m_ui->menuClosedWindows->setIcon(Utils::getIcon(QLatin1String("user-trash")));
-	m_ui->menuClosedWindows->setEnabled(false);
-	m_ui->actionViewHistory->setIcon(Utils::getIcon(QLatin1String("view-history")));
-	m_ui->actionClearHistory->setIcon(Utils::getIcon(QLatin1String("edit-clear-history")));
-	m_ui->actionAddBookmark->setIcon(Utils::getIcon(QLatin1String("bookmark-new")));
-	m_ui->actionManageBookmarks->setIcon(Utils::getIcon(QLatin1String("bookmarks-organize")));
-	m_ui->actionSwitchApplicationLanguage->setIcon(Utils::getIcon(QLatin1String("preferences-desktop-locale"), false));
-	m_ui->actionAboutApplication->setIcon(windowIcon());
-	m_ui->actionAboutQt->setIcon(Utils::getIcon(QLatin1String("qt"), false));
 	m_ui->statusBar->setup();
 
 	setStyleSheet(QLatin1String("QMainWindow::separator {width:0;height:0;}"));
@@ -158,6 +106,57 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(this);
+
+	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
+
+	if (bookmarksMenu)
+	{
+		bookmarksMenu->installEventFilter(this);
+
+		connect(bookmarksMenu, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+	}
+
+	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
+
+	if (closedWindowsMenu)
+	{
+		closedWindowsMenu->setIcon(Utils::getIcon(QLatin1String("user-trash")));
+		closedWindowsMenu->setEnabled(false);
+
+		connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), closedWindowsMenu, SLOT(setEnabled(bool)));
+		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	}
+
+	Menu *fileMenu = getMenu(QLatin1String("MenuFile"));
+
+	if (fileMenu)
+	{
+		connect(fileMenu, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
+	}
+
+	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
+
+	if (sessionsMenu)
+	{
+		connect(sessionsMenu, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
+		connect(sessionsMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
+	}
+
+	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
+
+	if (userAgentMenu)
+	{
+		connect(userAgentMenu, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
+		connect(userAgentMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
+	}
+
+	Menu *characterEncodingMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
+
+	if (characterEncodingMenu)
+	{
+		connect(characterEncodingMenu, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
+		connect(characterEncodingMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
+	}
 
 #ifdef Q_OS_WIN
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
@@ -177,70 +176,60 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->tabsDockWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
-	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->menuClosedWindows, SLOT(setEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
-	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionErrorConsole, SLOT(setChecked(bool)));
-	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_ui->actionSidebar, SLOT(setChecked(bool)));
+	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("ErrorConsole")), SLOT(setChecked(bool)));
+	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("Sidebar")), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
-	connect(m_ui->actionNewTab, SIGNAL(triggered()), m_windowsManager, SLOT(open()));
-	connect(m_ui->actionNewTabPrivate, SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
-	connect(m_ui->actionNewWindow, SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
-	connect(m_ui->actionNewWindowPrivate, SIGNAL(triggered()), this, SLOT(actionNewWindowPrivate()));
-	connect(m_ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen()));
-	connect(m_ui->actionCloseTab, SIGNAL(triggered()), m_windowsManager, SLOT(close()));
-	connect(m_ui->actionSaveSession, SIGNAL(triggered()), this, SLOT(actionSaveSession()));
-	connect(m_ui->actionManageSessions, SIGNAL(triggered()), this, SLOT(actionManageSessions()));
-	connect(m_ui->actionImportOperaBookmarks, SIGNAL(triggered()), this, SLOT(actionImportOperaBookmarks()));
-	connect(m_ui->actionImportHtmlBookmarks, SIGNAL(triggered()), this, SLOT(actionImportHtmlBookmarks()));
-	connect(m_ui->actionPrint, SIGNAL(triggered()), m_windowsManager, SLOT(print()));
-	connect(m_ui->actionPrintPreview, SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
-	connect(m_ui->actionWorkOffline, SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
-	connect(m_ui->actionExit, SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
-	connect(m_ui->actionUndo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionRedo, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionCut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionCopy, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionPaste, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionDelete, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionSelectAll, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionFind, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionFindNext, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionFindPrevious, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionZoomIn, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionZoomOut, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionZoomOriginal, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(actionFullScreen()));
-	connect(m_ui->actionViewSource, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionInspectPage, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionReload, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionStop, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionGoBack, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionGoForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionRewind, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionFastForward, SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_ui->actionViewHistory, SIGNAL(triggered()), this, SLOT(actionViewHistory()));
-	connect(m_ui->actionClearHistory, SIGNAL(triggered()), this, SLOT(actionClearHistory()));
-	connect(m_ui->actionAddBookmark, SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
-	connect(m_ui->actionManageBookmarks, SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
-	connect(m_ui->actionCookies, SIGNAL(triggered()), this, SLOT(actionCookies()));
-	connect(m_ui->actionTransfers, SIGNAL(triggered()), this, SLOT(actionTransfers()));
-	connect(m_ui->actionErrorConsole, SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
-	connect(m_ui->actionSidebar, SIGNAL(toggled(bool)), this, SLOT(actionSidebar(bool)));
-	connect(m_ui->actionContentBlocking, SIGNAL(triggered()), this, SLOT(actionContentBlocking()));
-	connect(m_ui->actionPreferences, SIGNAL(triggered()), this, SLOT(actionPreferences()));
-	connect(m_ui->actionSwitchApplicationLanguage, SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
-	connect(m_ui->actionAboutApplication, SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
-	connect(m_ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
-	connect(m_ui->menuFile, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
-	connect(m_ui->menuSessions, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
-	connect(m_ui->menuSessions, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
-	connect(m_ui->menuUserAgent, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
-	connect(m_ui->menuUserAgent, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
-	connect(m_ui->menuCharacterEncoding, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
-	connect(m_ui->menuCharacterEncoding, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
-	connect(m_ui->menuClosedWindows, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
-	connect(m_ui->menuBookmarks, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+	connect(m_actionsManager->getAction(QLatin1String("NewTab")), SIGNAL(triggered()), m_windowsManager, SLOT(open()));
+	connect(m_actionsManager->getAction(QLatin1String("NewTabPrivate")), SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
+	connect(m_actionsManager->getAction(QLatin1String("NewWindow")), SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
+	connect(m_actionsManager->getAction(QLatin1String("NewWindowPrivate")), SIGNAL(triggered()), this, SLOT(actionNewWindowPrivate()));
+	connect(m_actionsManager->getAction(QLatin1String("Open")), SIGNAL(triggered()), this, SLOT(actionOpen()));
+	connect(m_actionsManager->getAction(QLatin1String("CloseTab")), SIGNAL(triggered()), m_windowsManager, SLOT(close()));
+	connect(m_actionsManager->getAction(QLatin1String("SaveSession")), SIGNAL(triggered()), this, SLOT(actionSaveSession()));
+	connect(m_actionsManager->getAction(QLatin1String("ManageSessions")), SIGNAL(triggered()), this, SLOT(actionManageSessions()));
+	connect(m_actionsManager->getAction(QLatin1String("ImportOperaBookmarks")), SIGNAL(triggered()), this, SLOT(actionImportOperaBookmarks()));
+	connect(m_actionsManager->getAction(QLatin1String("ImportHtmlBookmarks")), SIGNAL(triggered()), this, SLOT(actionImportHtmlBookmarks()));
+	connect(m_actionsManager->getAction(QLatin1String("Print")), SIGNAL(triggered()), m_windowsManager, SLOT(print()));
+	connect(m_actionsManager->getAction(QLatin1String("PrintPreview")), SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
+	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
+	connect(m_actionsManager->getAction(QLatin1String("Exit")), SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
+	connect(m_actionsManager->getAction(QLatin1String("Undo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Redo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Cut")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Copy")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Paste")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Delete")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("SelectAll")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Find")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("FindNext")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("FindPrevious")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("ZoomIn")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("ZoomOut")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("ZoomOriginal")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("FullScreen")), SIGNAL(triggered()), this, SLOT(actionFullScreen()));
+	connect(m_actionsManager->getAction(QLatin1String("ViewSource")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("InspectPage")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Reload")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Stop")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("GoBack")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("GoForward")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("Rewind")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("FastForward")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
+	connect(m_actionsManager->getAction(QLatin1String("ViewHistory")), SIGNAL(triggered()), this, SLOT(actionViewHistory()));
+	connect(m_actionsManager->getAction(QLatin1String("ClearHistory")), SIGNAL(triggered()), this, SLOT(actionClearHistory()));
+	connect(m_actionsManager->getAction(QLatin1String("AddBookmark")), SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
+	connect(m_actionsManager->getAction(QLatin1String("ManageBookmarks")), SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
+	connect(m_actionsManager->getAction(QLatin1String("Cookies")), SIGNAL(triggered()), this, SLOT(actionCookies()));
+	connect(m_actionsManager->getAction(QLatin1String("Transfers")), SIGNAL(triggered()), this, SLOT(actionTransfers()));
+	connect(m_actionsManager->getAction(QLatin1String("ErrorConsole")), SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
+	connect(m_actionsManager->getAction(QLatin1String("Sidebar")), SIGNAL(toggled(bool)), this, SLOT(actionSidebar(bool)));
+	connect(m_actionsManager->getAction(QLatin1String("ContentBlocking")), SIGNAL(triggered()), this, SLOT(actionContentBlocking()));
+	connect(m_actionsManager->getAction(QLatin1String("Preferences")), SIGNAL(triggered()), this, SLOT(actionPreferences()));
+	connect(m_actionsManager->getAction(QLatin1String("SwitchApplicationLanguage")), SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
+	connect(m_actionsManager->getAction(QLatin1String("AboutApplication")), SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
+	connect(m_actionsManager->getAction(QLatin1String("AboutQt")), SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
 	connect(m_actionsManager->getAction(CopyAsPlainTextAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -731,26 +720,27 @@ void MainWindow::actionAboutApplication()
 
 void MainWindow::menuFileAboutToShow()
 {
-	m_ui->actionWorkOffline->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
+	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 }
 
 void MainWindow::menuSessionsAboutToShow()
 {
+	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
+
+	if (!sessionsMenu)
+	{
+		return;
+	}
+
 	if (m_sessionsGroup)
 	{
 		m_sessionsGroup->deleteLater();
-
-		QAction *saveSessionAction = m_ui->menuSessions->actions().at(0);
-		saveSessionAction->setParent(this);
-
-		QAction *manageSessionsAction = m_ui->menuSessions->actions().at(1);
-		manageSessionsAction->setParent(this);
-
-		m_ui->menuSessions->clear();
-		m_ui->menuSessions->addAction(saveSessionAction);
-		m_ui->menuSessions->addAction(manageSessionsAction);
-		m_ui->menuSessions->addSeparator();
 	}
+
+	sessionsMenu->clear();
+	sessionsMenu->addAction(m_actionsManager->getAction(QLatin1String("SaveSession")));
+	sessionsMenu->addAction(m_actionsManager->getAction(QLatin1String("ManageSessions")));
+	sessionsMenu->addSeparator();
 
 	m_sessionsGroup = new QActionGroup(this);
 	m_sessionsGroup->setExclusive(true);
@@ -777,7 +767,7 @@ void MainWindow::menuSessionsAboutToShow()
 			windows += sorted.at(i).windows.at(j).windows.count();
 		}
 
-		QAction *action = m_ui->menuSessions->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
+		QAction *action = sessionsMenu->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
 		action->setChecked(sorted.at(i).path == currentSession);
@@ -788,11 +778,18 @@ void MainWindow::menuSessionsAboutToShow()
 
 void MainWindow::menuUserAgentAboutToShow()
 {
+	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
+
+	if (!userAgentMenu)
+	{
+		return;
+	}
+
 	if (m_userAgentGroup)
 	{
 		m_userAgentGroup->deleteLater();
 
-		m_ui->menuUserAgent->clear();
+		userAgentMenu->clear();
 	}
 
 	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
@@ -801,19 +798,19 @@ void MainWindow::menuUserAgentAboutToShow()
 	m_userAgentGroup = new QActionGroup(this);
 	m_userAgentGroup->setExclusive(true);
 
-	QAction *defaultAction = m_ui->menuUserAgent->addAction(tr("Default"));
+	QAction *defaultAction = userAgentMenu->addAction(tr("Default"));
 	defaultAction->setData(QLatin1String("default"));
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(userAgent == QLatin1String("default"));
 
 	m_userAgentGroup->addAction(defaultAction);
 
-	m_ui->menuUserAgent->addSeparator();
+	userAgentMenu->addSeparator();
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
 		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
-		QAction *userAgentAction = m_ui->menuUserAgent->addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, m_ui->menuUserAgent)));
+		QAction *userAgentAction = userAgentMenu->addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, userAgentMenu)));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);
 		userAgentAction->setChecked(userAgent == userAgents.at(i));
@@ -821,23 +818,30 @@ void MainWindow::menuUserAgentAboutToShow()
 		m_userAgentGroup->addAction(userAgentAction);
 	}
 
-	m_ui->menuUserAgent->addSeparator();
+	userAgentMenu->addSeparator();
 
-	QAction *customAction = m_ui->menuUserAgent->addAction(tr("Custom"));
+	QAction *customAction = userAgentMenu->addAction(tr("Custom"));
 	customAction->setData(QLatin1String("custom"));
 	customAction->setCheckable(true);
 	customAction->setChecked(userAgent == QLatin1String("custom"));
 
 	m_userAgentGroup->addAction(customAction);
 
-	if (!m_userAgentGroup->checkedAction() && m_ui->menuUserAgent->actions().count() > 2)
+	if (!m_userAgentGroup->checkedAction() && userAgentMenu->actions().count() > 2)
 	{
-		m_ui->menuUserAgent->actions().first()->setChecked(true);
+		userAgentMenu->actions().first()->setChecked(true);
 	}
 }
 
 void MainWindow::menuCharacterEncodingAboutToShow()
 {
+	Menu *characterEncodignMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
+
+	if (!characterEncodignMenu)
+	{
+		return;
+	}
+
 	if (!m_characterEncodingGroup)
 	{
 		QList<int> textCodecs;
@@ -846,13 +850,13 @@ void MainWindow::menuCharacterEncodingAboutToShow()
 		m_characterEncodingGroup = new QActionGroup(this);
 		m_characterEncodingGroup->setExclusive(true);
 
-		QAction *defaultAction = m_ui->menuCharacterEncoding->addAction(tr("Auto Detect"));
+		QAction *defaultAction = characterEncodignMenu->addAction(tr("Auto Detect"));
 		defaultAction->setData(-1);
 		defaultAction->setCheckable(true);
 
 		m_characterEncodingGroup->addAction(defaultAction);
 
-		m_ui->menuCharacterEncoding->addSeparator();
+		characterEncodignMenu->addSeparator();
 
 		for (int i = 0; i < textCodecs.count(); ++i)
 		{
@@ -863,7 +867,7 @@ void MainWindow::menuCharacterEncodingAboutToShow()
 				continue;
 			}
 
-			QAction *textCodecAction = m_ui->menuCharacterEncoding->addAction(Utils::elideText(codec->name(), m_ui->menuCharacterEncoding));
+			QAction *textCodecAction = characterEncodignMenu->addAction(Utils::elideText(codec->name(), characterEncodignMenu));
 			textCodecAction->setData(textCodecs.at(i));
 			textCodecAction->setCheckable(true);
 
@@ -873,9 +877,9 @@ void MainWindow::menuCharacterEncodingAboutToShow()
 
 	const QString encoding = m_windowsManager->getDefaultCharacterEncoding().toLower();
 
-	for (int i = 2; i < m_ui->menuCharacterEncoding->actions().count(); ++i)
+	for (int i = 2; i < characterEncodignMenu->actions().count(); ++i)
 	{
-		QAction *action = m_ui->menuCharacterEncoding->actions().at(i);
+		QAction *action = characterEncodignMenu->actions().at(i);
 
 		if (!action)
 		{
@@ -892,17 +896,24 @@ void MainWindow::menuCharacterEncodingAboutToShow()
 
 	if (!m_characterEncodingGroup->checkedAction())
 	{
-		m_ui->menuCharacterEncoding->actions().first()->setChecked(true);
+		characterEncodignMenu->actions().first()->setChecked(true);
 	}
 }
 
 void MainWindow::menuClosedWindowsAboutToShow()
 {
+	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
+
+	if (!closedWindowsMenu)
+	{
+		return;
+	}
+
 	m_closedWindowsMenu->clear();
 
-	m_ui->menuClosedWindows->clear();
-	m_ui->menuClosedWindows->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
-	m_ui->menuClosedWindows->addSeparator();
+	closedWindowsMenu->clear();
+	closedWindowsMenu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
+	closedWindowsMenu->addSeparator();
 
 	const QStringList windows = SessionsManager::getClosedWindows();
 
@@ -910,10 +921,10 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			m_ui->menuClosedWindows->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), m_ui->menuClosedWindows), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
+			closedWindowsMenu->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
-		m_ui->menuClosedWindows->addSeparator();
+		closedWindowsMenu->addSeparator();
 	}
 
 	WebBackend *backend = WebBackendsManager::getBackend();
@@ -921,10 +932,10 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		m_ui->menuClosedWindows->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), m_ui->menuClosedWindows), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
+		closedWindowsMenu->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
-	m_closedWindowsMenu->addActions(m_ui->menuClosedWindows->actions());
+	m_closedWindowsMenu->addActions(closedWindowsMenu->actions());
 }
 
 void MainWindow::menuBookmarksAboutToShow()
@@ -1014,7 +1025,12 @@ void MainWindow::openBookmark()
 
 		m_windowsManager->open(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen) | (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
 
-		m_ui->menuBookmarks->close();
+		Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
+
+		if (bookmarksMenu)
+		{
+			bookmarksMenu->close();
+		}
 	}
 
 	m_currentBookmark = QString();
@@ -1037,15 +1053,17 @@ void MainWindow::updateClosedWindows()
 
 void MainWindow::updateBookmarks()
 {
-	if (m_ui->menuBookmarks->actions().count() == 3)
+	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
+
+	if (!bookmarksMenu || bookmarksMenu->actions().count() == 3)
 	{
 		return;
 	}
 
-	for (int i = (m_ui->menuBookmarks->actions().count() - 1); i > 2; --i)
+	for (int i = (bookmarksMenu->actions().count() - 1); i > 2; --i)
 	{
-		m_ui->menuBookmarks->actions().at(i)->deleteLater();
-		m_ui->menuBookmarks->removeAction(m_ui->menuBookmarks->actions().at(i));
+		bookmarksMenu->actions().at(i)->deleteLater();
+		bookmarksMenu->removeAction(bookmarksMenu->actions().at(i));
 	}
 }
 
@@ -1072,50 +1090,50 @@ void MainWindow::updateActions()
 
 	if (undoAction)
 	{
-		m_ui->actionUndo->setEnabled(undoAction->isEnabled());
-		m_ui->actionUndo->setText(undoAction->text());
+		m_actionsManager->getAction(QLatin1String("Undo"))->setEnabled(undoAction->isEnabled());
+		m_actionsManager->getAction(QLatin1String("Undo"))->setText(undoAction->text());
 	}
 	else
 	{
-		m_ui->actionUndo->setEnabled(false);
-		m_ui->actionUndo->setText(tr("Undo"));
+		m_actionsManager->getAction(QLatin1String("Undo"))->setEnabled(false);
+		m_actionsManager->getAction(QLatin1String("Undo"))->setText(tr("Undo"));
 	}
 
 	QAction *redoAction = m_windowsManager->getAction(RedoAction);
 
 	if (redoAction)
 	{
-		m_ui->actionRedo->setEnabled(redoAction->isEnabled());
-		m_ui->actionRedo->setText(redoAction->text());
+		m_actionsManager->getAction(QLatin1String("Redo"))->setEnabled(redoAction->isEnabled());
+		m_actionsManager->getAction(QLatin1String("Redo"))->setText(redoAction->text());
 	}
 	else
 	{
-		m_ui->actionRedo->setEnabled(false);
-		m_ui->actionRedo->setText(tr("Redo"));
+		m_actionsManager->getAction(QLatin1String("Redo"))->setEnabled(false);
+		m_actionsManager->getAction(QLatin1String("Redo"))->setText(tr("Redo"));
 	}
 
-	updateAction(m_windowsManager->getAction(CutAction), m_ui->actionCut);
-	updateAction(m_windowsManager->getAction(CopyAction), m_ui->actionCopy);
-	updateAction(m_windowsManager->getAction(PasteAction), m_ui->actionPaste);
-	updateAction(m_windowsManager->getAction(DeleteAction), m_ui->actionDelete);
-	updateAction(m_windowsManager->getAction(SelectAllAction), m_ui->actionSelectAll);
-	updateAction(m_windowsManager->getAction(FindAction), m_ui->actionFind);
-	updateAction(m_windowsManager->getAction(FindNextAction), m_ui->actionFindNext);
-	updateAction(m_windowsManager->getAction(FindPreviousAction), m_ui->actionFindPrevious);
-	updateAction(m_windowsManager->getAction(ReloadAction), m_ui->actionReload);
-	updateAction(m_windowsManager->getAction(StopAction), m_ui->actionStop);
-	updateAction(m_windowsManager->getAction(ViewSourceAction), m_ui->actionViewSource);
-	updateAction(m_windowsManager->getAction(InspectPageAction), m_ui->actionInspectPage);
-	updateAction(m_windowsManager->getAction(GoBackAction), m_ui->actionGoBack);
-	updateAction(m_windowsManager->getAction(RewindAction), m_ui->actionRewind);
-	updateAction(m_windowsManager->getAction(GoForwardAction), m_ui->actionGoForward);
-	updateAction(m_windowsManager->getAction(FastForwardAction), m_ui->actionFastForward);
+	updateAction(m_windowsManager->getAction(CutAction), m_actionsManager->getAction(QLatin1String("Cut")));
+	updateAction(m_windowsManager->getAction(CopyAction), m_actionsManager->getAction(QLatin1String("Copy")));
+	updateAction(m_windowsManager->getAction(PasteAction), m_actionsManager->getAction(QLatin1String("Paste")));
+	updateAction(m_windowsManager->getAction(DeleteAction), m_actionsManager->getAction(QLatin1String("Delete")));
+	updateAction(m_windowsManager->getAction(SelectAllAction), m_actionsManager->getAction(QLatin1String("SelectAll")));
+	updateAction(m_windowsManager->getAction(FindAction), m_actionsManager->getAction(QLatin1String("Find")));
+	updateAction(m_windowsManager->getAction(FindNextAction), m_actionsManager->getAction(QLatin1String("FindNext")));
+	updateAction(m_windowsManager->getAction(FindPreviousAction), m_actionsManager->getAction(QLatin1String("FindPrevious")));
+	updateAction(m_windowsManager->getAction(ReloadAction), m_actionsManager->getAction(QLatin1String("Reload")));
+	updateAction(m_windowsManager->getAction(StopAction), m_actionsManager->getAction(QLatin1String("Stop")));
+	updateAction(m_windowsManager->getAction(ViewSourceAction), m_actionsManager->getAction(QLatin1String("ViewSource")));
+	updateAction(m_windowsManager->getAction(InspectPageAction), m_actionsManager->getAction(QLatin1String("InspectPage")));
+	updateAction(m_windowsManager->getAction(GoBackAction), m_actionsManager->getAction(QLatin1String("GoBack")));
+	updateAction(m_windowsManager->getAction(RewindAction), m_actionsManager->getAction(QLatin1String("Rewind")));
+	updateAction(m_windowsManager->getAction(GoForwardAction), m_actionsManager->getAction(QLatin1String("GoForward")));
+	updateAction(m_windowsManager->getAction(FastForwardAction), m_actionsManager->getAction(QLatin1String("FastForward")));
 
 	const bool canZoom = m_windowsManager->canZoom();
 
-	m_ui->actionZoomOut->setEnabled(canZoom);
-	m_ui->actionZoomIn->setEnabled(canZoom);
-	m_ui->actionZoomOriginal->setEnabled(canZoom);
+	m_actionsManager->getAction(QLatin1String("ZoomOut"))->setEnabled(canZoom);
+	m_actionsManager->getAction(QLatin1String("ZoomIn"))->setEnabled(canZoom);
+	m_actionsManager->getAction(QLatin1String("ZoomOriginal"))->setEnabled(canZoom);
 }
 
 void MainWindow::updateWindowTitle(const QString &title)
@@ -1162,6 +1180,11 @@ void MainWindow::updateWindowsTaskbarProgress()
 }
 #endif
 
+Menu* MainWindow::getMenu(const QString &identifier)
+{
+	return m_ui->menuBar->findChild<Menu*>(identifier);
+}
+
 ActionsManager* MainWindow::getActionsManager()
 {
 	return m_actionsManager;
@@ -1180,7 +1203,7 @@ bool MainWindow::event(QEvent *event)
 
 		if (isFullScreen())
 		{
-			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
 			m_ui->menuBar->hide();
 			m_ui->statusBar->hide();
 
@@ -1188,7 +1211,7 @@ bool MainWindow::event(QEvent *event)
 		}
 		else
 		{
-			m_ui->actionFullScreen->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
 			m_ui->menuBar->show();
 			m_ui->statusBar->show();
 
@@ -1266,7 +1289,12 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 				m_windowsManager->open(QUrl(action->data().toString()), hints);
 
-				m_ui->menuBookmarks->close();
+				Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
+
+				if (bookmarksMenu)
+				{
+					bookmarksMenu->close();
+				}
 
 				return true;
 			}

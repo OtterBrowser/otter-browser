@@ -37,6 +37,9 @@ struct ActionDefinition
 	QIcon icon;
 	ActionIdentifier identifier;
 	ActionScope scope;
+	bool isCheckable;
+	bool isChecked;
+	bool isEnabled;
 };
 
 class MainWindow;
@@ -58,7 +61,7 @@ public:
 	static QAction* getAction(const QString &action, QObject *parent);
 	static QAction* getAction(ActionIdentifier action, QObject *parent);
 	static QList<ActionDefinition> getActions();
-	static bool registerAction(const QLatin1String &name, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
+	static bool registerAction(const QLatin1String &name, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false, ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
 
 public slots:
 	void updateActions();

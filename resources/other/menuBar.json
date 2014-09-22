@@ -20,9 +20,6 @@
 				"title": "Sessions",
 				"actions":
 				[
-					"SaveSession",
-					"ManageSessions",
-					"separator",
 				]
 			},
 			{
@@ -123,7 +120,7 @@
 			"separator",
 			"ViewHistory",
 			"separator",
-			"ClearHistory",
+			"ClearHistory"
 		]
 	},
 	{

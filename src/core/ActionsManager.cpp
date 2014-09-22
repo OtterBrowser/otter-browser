@@ -40,39 +40,42 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		ShortcutsManager::createInstance(Application::getInstance());
 
 		registerAction(QLatin1String("NewTab"), QT_TR_NOOP("New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")));
-		registerAction(QLatin1String("NewTabPrivate"), QT_TR_NOOP("New Private Tab"));
+		registerAction(QLatin1String("NewTabPrivate"), QT_TR_NOOP("New Private Tab"), QString(), Utils::getIcon(QLatin1String("tab-new-private")));
 		registerAction(QLatin1String("NewWindow"), QT_TR_NOOP("New Window"), QString(), Utils::getIcon(QLatin1String("window-new")));
-		registerAction(QLatin1String("NewWindowPrivate"), QT_TR_NOOP("New Private Window"));
+		registerAction(QLatin1String("NewWindowPrivate"), QT_TR_NOOP("New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")));
 		registerAction(QLatin1String("Open"), QT_TR_NOOP("Open..."), QString(), Utils::getIcon(QLatin1String("document-open")));
-		registerAction(QLatin1String("Save"), QT_TR_NOOP("Save..."), QString(), Utils::getIcon(QLatin1String("document-save")));
+		registerAction(QLatin1String("Save"), QT_TR_NOOP("Save..."), QString(), Utils::getIcon(QLatin1String("document-save")), false);
 		registerAction(QLatin1String("CloseTab"), QT_TR_NOOP("Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
+		registerAction(QLatin1String("SaveSession"), QT_TR_NOOP("Save Current Session..."));
+		registerAction(QLatin1String("ManageSessions"), QT_TR_NOOP("Manage Sessions..."));
 		registerAction(QLatin1String("Print"), QT_TR_NOOP("Print..."), QString(), Utils::getIcon(QLatin1String("document-print")));
 		registerAction(QLatin1String("PrintPreview"), QT_TR_NOOP("Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
-		registerAction(QLatin1String("WorkOffline"), QT_TR_NOOP("Work Offline"));
-		registerAction(QLatin1String("ShowMenubar"), QT_TR_NOOP("Show Menubar"));
+		registerAction(QLatin1String("WorkOffline"), QT_TR_NOOP("Work Offline"), QString(), QIcon(), true, true, false);
+		registerAction(QLatin1String("ShowMenubar"), QT_TR_NOOP("Show Menubar"), QString(), QIcon(), false, true, true);
 		registerAction(QLatin1String("Exit"), QT_TR_NOOP("Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));
-		registerAction(QLatin1String("Undo"), QT_TR_NOOP("Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")));
-		registerAction(QLatin1String("Redo"), QT_TR_NOOP("Redo"), QString(), Utils::getIcon(QLatin1String("edit-redo")));
-		registerAction(QLatin1String("Cut"), QT_TR_NOOP("Cut"), QString(), Utils::getIcon(QLatin1String("edit-cut")));
-		registerAction(QLatin1String("Copy"), QT_TR_NOOP("Copy"), QString(), Utils::getIcon(QLatin1String("edit-copy")));
-		registerAction(QLatin1String("Paste"), QT_TR_NOOP("Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")));
-		registerAction(QLatin1String("Delete"), QT_TR_NOOP("Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));
-		registerAction(QLatin1String("SelectAll"), QT_TR_NOOP("Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")));
-		registerAction(QLatin1String("Find"), QT_TR_NOOP("Find..."), QString(), Utils::getIcon(QLatin1String("edit-find")));
-		registerAction(QLatin1String("FindNext"), QT_TR_NOOP("Find Next"));
-		registerAction(QLatin1String("FindPrevious"), QT_TR_NOOP("Find Previous"));
-		registerAction(QLatin1String("Reload"), QT_TR_NOOP("Reload"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
-		registerAction(QLatin1String("Stop"), QT_TR_NOOP("Stop"), QString(), Utils::getIcon(QLatin1String("process-stop")));
-		registerAction(QLatin1String("ZoomIn"), QT_TR_NOOP("Zoom In"), QString(), Utils::getIcon(QLatin1String("zoom-in")));
-		registerAction(QLatin1String("ZoomOut"), QT_TR_NOOP("Zoom Out"), QString(), Utils::getIcon(QLatin1String("zoom-out")));
-		registerAction(QLatin1String("ZoomOriginal"), QT_TR_NOOP("Zoom Original"), QString(), Utils::getIcon(QLatin1String("zoom-original")));
+		registerAction(QLatin1String("Undo"), QT_TR_NOOP("Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")), true, false, false, UndoAction);
+		registerAction(QLatin1String("Redo"), QT_TR_NOOP("Redo"), QString(), Utils::getIcon(QLatin1String("edit-redo")), true, false, false, RedoAction);
+		registerAction(QLatin1String("Cut"), QT_TR_NOOP("Cut"), QString(), Utils::getIcon(QLatin1String("edit-cut")), true, false, false, CutAction);
+		registerAction(QLatin1String("Copy"), QT_TR_NOOP("Copy"), QString(), Utils::getIcon(QLatin1String("edit-copy")), true, false, false, CopyAction);
+		registerAction(QLatin1String("Paste"), QT_TR_NOOP("Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")), true, false, false, PasteAction);
+		registerAction(QLatin1String("Delete"), QT_TR_NOOP("Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")), true, false, false, DeleteAction);
+		registerAction(QLatin1String("SelectAll"), QT_TR_NOOP("Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")), true, false, false, SelectAllAction);
+		registerAction(QLatin1String("Find"), QT_TR_NOOP("Find..."), QString(), Utils::getIcon(QLatin1String("edit-find")), true, false, false, FindAction);
+		registerAction(QLatin1String("FindNext"), QT_TR_NOOP("Find Next"), QString(), QIcon(), true, false, false, FindNextAction);
+		registerAction(QLatin1String("FindPrevious"), QT_TR_NOOP("Find Previous"), QString(), QIcon(), true, false, false, FindPreviousAction);
+		registerAction(QLatin1String("Reload"), QT_TR_NOOP("Reload"), QString(), Utils::getIcon(QLatin1String("view-refresh")), true, false, false, ReloadAction);
+		registerAction(QLatin1String("Stop"), QT_TR_NOOP("Stop"), QString(), Utils::getIcon(QLatin1String("process-stop")), true, false, false, StopAction);
+		registerAction(QLatin1String("ZoomIn"), QT_TR_NOOP("Zoom In"), QString(), Utils::getIcon(QLatin1String("zoom-in")), true, false, false, ZoomInAction);
+		registerAction(QLatin1String("ZoomOut"), QT_TR_NOOP("Zoom Out"), QString(), Utils::getIcon(QLatin1String("zoom-out")), true, false, false, ZoomOutAction);
+		registerAction(QLatin1String("ZoomOriginal"), QT_TR_NOOP("Zoom Original"), QString(), Utils::getIcon(QLatin1String("zoom-original")), true, false, false, ZoomOriginalAction);
 		registerAction(QLatin1String("FullScreen"), QT_TR_NOOP("Full Screen"), QString(), Utils::getIcon(QLatin1String("view-fullscreen")));
-		registerAction(QLatin1String("ViewSource"), QT_TR_NOOP("View Source"));
-		registerAction(QLatin1String("InspectPage"), QT_TR_NOOP("Inspect Page"));
-		registerAction(QLatin1String("GoBack"), QT_TR_NOOP("Back"), QString(), Utils::getIcon(QLatin1String("go-previous")));
-		registerAction(QLatin1String("GoForward"), QT_TR_NOOP("Forward"), QString(), Utils::getIcon(QLatin1String("go-next")));
-		registerAction(QLatin1String("Rewind"), QT_TR_NOOP("Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")));
-		registerAction(QLatin1String("FastForward"), QT_TR_NOOP("Fast Forward"), QString(), Utils::getIcon(QLatin1String("go-last")));
+		registerAction(QLatin1String("ViewSource"), QT_TR_NOOP("View Source"), QString(), QIcon(), false, false, false, ViewSourceAction);
+		registerAction(QLatin1String("InspectPage"), QT_TR_NOOP("Inspect Page"), QString(), QIcon(), true, true, false, InspectPageAction);
+		registerAction(QLatin1String("Sidebar"), QT_TR_NOOP("Show Sidebar"), QString(), QIcon(), true, true, false);
+		registerAction(QLatin1String("GoBack"), QT_TR_NOOP("Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), true, false, false, GoBackAction);
+		registerAction(QLatin1String("GoForward"), QT_TR_NOOP("Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), true, false, false, GoForwardAction);
+		registerAction(QLatin1String("Rewind"), QT_TR_NOOP("Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")), true, false, false, RewindAction);
+		registerAction(QLatin1String("FastForward"), QT_TR_NOOP("Fast Forward"), QString(), Utils::getIcon(QLatin1String("go-last")), true, false, false, FastForwardAction);
 		registerAction(QLatin1String("ViewHistory"), QT_TR_NOOP("View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
 		registerAction(QLatin1String("ClearHistory"), QT_TR_NOOP("Clear History..."), QString(), Utils::getIcon(QLatin1String("edit-clear-history")));
 		registerAction(QLatin1String("AddBookmark"), QT_TR_NOOP("Add Bookmark..."), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
@@ -80,12 +83,11 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("Transfers"), QT_TR_NOOP("Transfers..."));
 		registerAction(QLatin1String("Cookies"), QT_TR_NOOP("Cookies..."));
 		registerAction(QLatin1String("ContentBlocking"), QT_TR_NOOP("Content Blocking..."));
-		registerAction(QLatin1String("ErrorConsole"), QT_TR_NOOP("Error Console"));
-		registerAction(QLatin1String("Sidebar"), QT_TR_NOOP("Sidebar"));
+		registerAction(QLatin1String("ErrorConsole"), QT_TR_NOOP("Error Console"), QString(), QIcon(), true);
 		registerAction(QLatin1String("Preferences"), QT_TR_NOOP("Preferences..."));
-		registerAction(QLatin1String("SwitchApplicationLanguage"), QT_TR_NOOP("Switch Application Language..."));
-		registerAction(QLatin1String("AboutApplication"), QT_TR_NOOP("About Otter..."), QString(), Utils::getIcon(QLatin1String("otter-browser")));
-		registerAction(QLatin1String("AboutQt"), QT_TR_NOOP("About Qt..."));
+		registerAction(QLatin1String("SwitchApplicationLanguage"), QT_TR_NOOP("Switch Application Language..."), QString(), Utils::getIcon(QLatin1String("preferences-desktop-locale")));
+		registerAction(QLatin1String("AboutApplication"), QT_TR_NOOP("About Otter..."), QString(), Utils::getIcon(QLatin1String("otter-browser"), false));
+		registerAction(QLatin1String("AboutQt"), QT_TR_NOOP("About Qt..."), QString(), Utils::getIcon(QLatin1String("qt"), false));
 		registerAction(QLatin1String("CloseWindow"), QT_TR_NOOP("Close Window"));
 		registerAction(QLatin1String("OpenLinkTab"), QT_TR_NOOP("Open"));
 		registerAction(QLatin1String("OpenLinkInThisTab"), QT_TR_NOOP("Open in This Tab"));
@@ -128,12 +130,12 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ToggleMediaPlayPause"), QT_TR_NOOP("Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), QT_TR_NOOP("Mute"));
 		registerAction(QLatin1String("QuickBookmarkAccess"), QT_TR_NOOP("Quick Bookmark Access"));
-		registerAction(QLatin1String("QuickFind"), QT_TR_NOOP("Quick Find"), QString(), QIcon(), QuickFindAction);
-		registerAction(QLatin1String("ActivateAddressField"), QT_TR_NOOP("Activate Address Field"), QString(), QIcon(), ActivateAddressFieldAction);
-		registerAction(QLatin1String("CopyAsPlainText"), QT_TR_NOOP("Copy as Plain Text"), QString(), QIcon(), CopyAsPlainTextAction);
-		registerAction(QLatin1String("PasteAndGo"), QT_TR_NOOP("Paste and Go"), QString(), QIcon(), PasteAndGoAction);
-		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TR_NOOP("Go to Tab on Left"), QString(), QIcon(), ActivateTabOnLeftAction);
-		registerAction(QLatin1String("ActivateTabOnRight"), QT_TR_NOOP("Go to Tab on Right"), QString(), QIcon(), ActivateTabOnRightAction);
+		registerAction(QLatin1String("QuickFind"), QT_TR_NOOP("Quick Find"), QString(), QIcon(), true, false, false, QuickFindAction);
+		registerAction(QLatin1String("ActivateAddressField"), QT_TR_NOOP("Activate Address Field"), QString(), QIcon(), true, false, false, ActivateAddressFieldAction);
+		registerAction(QLatin1String("CopyAsPlainText"), QT_TR_NOOP("Copy as Plain Text"), QString(), QIcon(), true, false, false, CopyAsPlainTextAction);
+		registerAction(QLatin1String("PasteAndGo"), QT_TR_NOOP("Paste and Go"), QString(), QIcon(), true, false, false, PasteAndGoAction);
+		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TR_NOOP("Go to Tab on Left"), QString(), QIcon(), true, false, false, ActivateTabOnLeftAction);
+		registerAction(QLatin1String("ActivateTabOnRight"), QT_TR_NOOP("Go to Tab on Right"), QString(), QIcon(), true, false, false, ActivateTabOnRightAction);
 	}
 
 	const QList<QAction*> windowActions = m_window->actions();
@@ -155,6 +157,9 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		Action *action =  new Action(definitionsIterator.value().icon, definitionsIterator.value().text, m_window);
 		action->setScope(definitionsIterator.value().scope);
 		action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+		action->setEnabled(definitionsIterator.value().isEnabled);
+		action->setCheckable(definitionsIterator.value().isCheckable);
+		action->setChecked(definitionsIterator.value().isChecked);
 
 		if (definitionsIterator.value().identifier != UnknownAction)
 		{
@@ -325,7 +330,7 @@ QList<ActionDefinition> ActionsManager::getActions()
 	return m_definitions.values();
 }
 
-bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QString &description , const QIcon &icon, ActionIdentifier identifier, ActionScope scope)
+bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QString &description , const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked, ActionIdentifier identifier, ActionScope scope)
 {
 	if (m_definitions.contains(name))
 	{
@@ -339,6 +344,9 @@ bool ActionsManager::registerAction(const QLatin1String &name, const QString &te
 	definition.icon = icon;
 	definition.identifier = identifier;
 	definition.scope = scope;
+	definition.isEnabled = isEnabled;
+	definition.isCheckable = isCheckable;
+	definition.isChecked = isChecked;
 
 	m_definitions[name] = definition;
 

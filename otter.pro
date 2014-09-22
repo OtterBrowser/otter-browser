@@ -74,6 +74,7 @@ SOURCES += src/main.cpp \
     src/ui/LocaleDialog.cpp \
     src/ui/MainWindow.cpp \
     src/ui/MdiWidget.cpp \
+    src/ui/Menu.cpp \
     src/ui/OpenBookmarkDialog.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
@@ -160,6 +161,7 @@ HEADERS += src/core/Action.h \
     src/ui/LocaleDialog.h \
     src/ui/MainWindow.h \
     src/ui/MdiWidget.h \
+    src/ui/Menu.h \
     src/ui/OpenBookmarkDialog.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \

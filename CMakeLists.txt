@@ -109,6 +109,7 @@ set(otter_src
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
 	src/ui/MdiWidget.cpp
+	src/ui/Menu.cpp
 	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionDelegate.cpp
 	src/ui/OptionWidget.cpp

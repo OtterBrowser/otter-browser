@@ -41,6 +41,7 @@ namespace Ui
 }
 
 class ActionsManager;
+class Menu;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -64,6 +65,7 @@ protected:
 	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void updateAction(QAction *source, QAction *target);
+	Menu* getMenu(const QString &identifier);
 	bool event(QEvent *event);
 
 protected slots:
