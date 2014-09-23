@@ -90,6 +90,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 #endif
 
 	SessionsManager::setActiveWindow(this);
+
 	m_ui->statusBar->setup();
 
 	setStyleSheet(QLatin1String("QMainWindow::separator {width:0;height:0;}"));
@@ -106,6 +107,11 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(this);
+
+	m_actionsManager->getAction(QLatin1String("Exit"))->setMenuRole(QAction::QuitRole);
+	m_actionsManager->getAction(QLatin1String("Preferences"))->setMenuRole(QAction::PreferencesRole);
+	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
+	m_actionsManager->getAction(QLatin1String("AboutApplication"))->setMenuRole(QAction::AboutRole);
 
 	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
 
