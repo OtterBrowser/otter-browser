@@ -69,14 +69,14 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void actionNewTabPrivate();
 	void actionNewWindowPrivate();
 	void actionOpen();
 	void actionSaveSession();
 	void actionManageSessions();
 	void actionSession(QAction *action);
-	void actionImportOperaBookmarks();
-	void actionImportHtmlBookmarks();
+	void actionImport(QAction *action);
 	void actionWorkOffline(bool enabled);
 	void actionFullScreen();
 	void actionUserAgent(QAction *action);
@@ -97,7 +97,6 @@ protected slots:
 	void actionPreferences();
 	void actionSwitchApplicationLanguage();
 	void actionAboutApplication();
-	void menuFileAboutToShow();
 	void menuSessionsAboutToShow();
 	void menuUserAgentAboutToShow();
 	void menuCharacterEncodingAboutToShow();

@@ -127,19 +127,22 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	}
 
-	Menu *fileMenu = getMenu(QLatin1String("MenuFile"));
-
-	if (fileMenu)
-	{
-		connect(fileMenu, SIGNAL(aboutToShow()), this, SLOT(menuFileAboutToShow()));
-	}
-
 	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
 
 	if (sessionsMenu)
 	{
 		connect(sessionsMenu, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
 		connect(sessionsMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
+	}
+
+	Menu *importExportMenu = getMenu(QLatin1String("MenuImportExport"));
+
+	if (importExportMenu)
+	{
+		importExportMenu->addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
+		importExportMenu->addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
+
+		connect(importExportMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionImport(QAction*)));
 	}
 
 	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
@@ -171,6 +174,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
@@ -189,8 +193,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("CloseTab")), SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_actionsManager->getAction(QLatin1String("SaveSession")), SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_actionsManager->getAction(QLatin1String("ManageSessions")), SIGNAL(triggered()), this, SLOT(actionManageSessions()));
-	connect(m_actionsManager->getAction(QLatin1String("ImportOperaBookmarks")), SIGNAL(triggered()), this, SLOT(actionImportOperaBookmarks()));
-	connect(m_actionsManager->getAction(QLatin1String("ImportHtmlBookmarks")), SIGNAL(triggered()), this, SLOT(actionImportHtmlBookmarks()));
 	connect(m_actionsManager->getAction(QLatin1String("Print")), SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_actionsManager->getAction(QLatin1String("PrintPreview")), SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
@@ -473,6 +475,14 @@ void MainWindow::restoreWindowState()
 	setWindowState(m_previousState);
 }
 
+void MainWindow::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Network/WorkOffline"))
+	{
+		m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(value.toBool());
+	}
+}
+
 void MainWindow::actionNewTabPrivate()
 {
 	m_windowsManager->open(QUrl(), PrivateOpen);
@@ -513,14 +523,12 @@ void MainWindow::actionSession(QAction *action)
 	}
 }
 
-void MainWindow::actionImportOperaBookmarks()
+void MainWindow::actionImport(QAction *action)
 {
-	ImportDialog::createDialog(QLatin1String("OperaBookmarks"), this);
-}
-
-void MainWindow::actionImportHtmlBookmarks()
-{
-	ImportDialog::createDialog(QLatin1String("HtmlBookmarks"), this);
+	if (action)
+	{
+		ImportDialog::createDialog(action->data().toString(), this);
+	}
 }
 
 void MainWindow::actionWorkOffline(bool enabled)
@@ -716,11 +724,6 @@ void MainWindow::actionAboutApplication()
 	}
 
 	QMessageBox::about(this, QLatin1String("Otter"), about);
-}
-
-void MainWindow::menuFileAboutToShow()
-{
-	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 }
 
 void MainWindow::menuSessionsAboutToShow()
