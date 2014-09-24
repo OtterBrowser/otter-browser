@@ -19,6 +19,8 @@
 
 #include "Action.h"
 
+#include <QtCore/QCoreApplication>
+
 namespace Otter
 {
 
@@ -26,6 +28,7 @@ Action::Action(const QIcon &icon, const QString &text, QObject *parent) : QActio
 	m_identifier(UnknownAction),
 	m_scope(MainWindowScope)
 {
+	setText(QCoreApplication::translate("actions", text.toUtf8().constData()));
 }
 
 void Action::setName(const QString &name)
