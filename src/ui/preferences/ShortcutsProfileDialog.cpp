@@ -67,7 +67,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	{
 		labels << tr("Action");
 
-		const QList<ActionDefinition> actions = ActionsManager::getActions();
+		const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
@@ -131,7 +131,7 @@ void ShortcutsProfileDialog::addMacro()
 {
 ///FIXME create list from profiles, like shortcuts
 	QStringList identifiers = m_shortcuts.keys();
-	QList<ActionDefinition> actions = ActionsManager::getActions();
+	QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
 	QString identifier;
 
 	for (int i = 0; i < actions.count(); ++i)

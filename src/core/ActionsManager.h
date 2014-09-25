@@ -60,7 +60,8 @@ public:
 	QAction* getAction(ActionIdentifier action);
 	static QAction* getAction(const QString &action, QObject *parent);
 	static QAction* getAction(ActionIdentifier action, QObject *parent);
-	static QList<ActionDefinition> getActions();
+	static QList<ActionDefinition> getActionDefinitions();
+	static ActionDefinition getActionDefinition(const QString &action);
 	static bool registerAction(const QLatin1String &name, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false, ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
 
 public slots:

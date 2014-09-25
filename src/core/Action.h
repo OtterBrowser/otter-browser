@@ -121,6 +121,7 @@ public:
 	QString getName() const;
 	ActionIdentifier getIdentifier() const;
 	ActionScope getScope() const;
+	bool event(QEvent *event);
 
 private:
 	ActionIdentifier m_identifier;

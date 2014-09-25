@@ -155,6 +155,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
 	{
 		Action *action =  new Action(definitionsIterator.value().icon, definitionsIterator.value().text, m_window);
+		action->setObjectName(definitionsIterator.key());
 		action->setScope(definitionsIterator.value().scope);
 		action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 		action->setEnabled(definitionsIterator.value().isEnabled);
@@ -325,9 +326,14 @@ QAction* ActionsManager::getAction(ActionIdentifier action, QObject *parent)
 	return (manager ? manager->getAction(action) : NULL);
 }
 
-QList<ActionDefinition> ActionsManager::getActions()
+QList<ActionDefinition> ActionsManager::getActionDefinitions()
 {
 	return m_definitions.values();
+}
+
+ActionDefinition ActionsManager::getActionDefinition(const QString &action)
+{
+	return m_definitions[action];
 }
 
 bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QString &description , const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked, ActionIdentifier identifier, ActionScope scope)

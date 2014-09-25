@@ -25,10 +25,11 @@
 namespace Otter
 {
 
-Menu::Menu(const QJsonObject &definition, QWidget *parent) : QMenu(parent)
+Menu::Menu(const QJsonObject &definition, QWidget *parent) : QMenu(parent),
+	m_title(definition.value(QLatin1String("title")).toString())
 {
 	setObjectName(definition.value(QLatin1String("identifier")).toString());
-	setTitle(definition.value(QLatin1String("title")).toString());
+	setTitle(m_title);
 
 	const QJsonArray actions = definition.value(QLatin1String("actions")).toArray();
 
@@ -52,6 +53,16 @@ Menu::Menu(const QJsonObject &definition, QWidget *parent) : QMenu(parent)
 			}
 		}
 	}
+}
+
+bool Menu::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setText(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+	}
+
+	return QAction::event(event);
 }
 
 }

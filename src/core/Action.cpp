@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Action.h"
+#include "ActionsManager.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -59,6 +60,16 @@ ActionIdentifier Action::getIdentifier() const
 ActionScope Action::getScope() const
 {
 	return m_scope;
+}
+
+bool Action::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setText(QCoreApplication::translate("actions", ActionsManager::getActionDefinition(objectName()).text.toUtf8().constData()));
+	}
+
+	return QAction::event(event);
 }
 
 }
