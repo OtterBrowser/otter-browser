@@ -20,6 +20,7 @@
 #include "Menu.h"
 #include "../core/ActionsManager.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
 
 namespace Otter
@@ -59,10 +60,10 @@ bool Menu::event(QEvent *event)
 {
 	if (event->type() == QEvent::LanguageChange)
 	{
-		setText(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+		setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 	}
 
-	return QAction::event(event);
+	return QMenu::event(event);
 }
 
 }
