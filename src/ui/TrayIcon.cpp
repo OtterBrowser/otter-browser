@@ -50,6 +50,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 
 	setParent(NULL);
 
+	connect(Application::getInstance(), SIGNAL(aboutToQuit()), this, SLOT(hide()));
 	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
 	connect(parent, SIGNAL(destroyed()), this, SLOT(deleteLater()));
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
@@ -132,6 +133,13 @@ void TrayIcon::triggerAction(QAction *action)
 			}
 		}
 	}
+}
+
+void TrayIcon::hide()
+{
+	m_icon->hide();
+
+	Application::getInstance()->processEvents();
 }
 
 void TrayIcon::updateMenu()
