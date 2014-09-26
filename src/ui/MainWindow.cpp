@@ -956,8 +956,11 @@ void MainWindow::menuBookmarksAboutToShow()
 		return;
 	}
 
-	menu->setObjectName(QLatin1String("bookmarks"));
-	menu->installEventFilter(this);
+	if (menu->objectName().isEmpty())
+	{
+		menu->setObjectName(QLatin1String("bookmarks"));
+		menu->installEventFilter(this);
+	}
 
 	const QModelIndex index = menu->menuAction()->data().toModelIndex();
 
