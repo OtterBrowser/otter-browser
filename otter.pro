@@ -49,6 +49,7 @@ SOURCES += src/main.cpp \
     src/core/NetworkAutomaticProxy.cpp \
     src/core/NetworkCache.cpp \
     src/core/NetworkProxyFactory.cpp \
+    src/core/PlatformIntegration.cpp \
     src/core/SearchesManager.cpp \
     src/core/SearchSuggester.cpp \
     src/core/SessionsManager.cpp \
@@ -136,6 +137,7 @@ HEADERS += src/core/Action.h \
     src/core/NetworkManager.h \
     src/core/NetworkManagerFactory.h \
     src/core/NetworkProxyFactory.h \
+    src/core/PlatformIntegration.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \
     src/core/SessionsManager.h \

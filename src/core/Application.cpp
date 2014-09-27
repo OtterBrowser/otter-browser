@@ -49,6 +49,7 @@ namespace Otter
 Application* Application::m_instance = NULL;
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
+	m_platformIntegration(NULL),
 	m_qtTranslator(NULL),
 	m_applicationTranslator(NULL),
 	m_localServer(NULL)
@@ -213,6 +214,8 @@ void Application::removeWindow(MainWindow *window)
 	m_windows.removeAll(window);
 
 	window->deleteLater();
+
+	emit windowRemoved(window);
 }
 
 void Application::newConnection()
@@ -348,6 +351,8 @@ MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const S
 
 	connect(window, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SLOT(newWindow(bool,bool,QUrl)));
 
+	emit windowAdded(window);
+
 	return window;
 }
 
@@ -359,6 +364,11 @@ MainWindow* Application::getWindow()
 	}
 
 	return m_windows[0];
+}
+
+PlatformIntegration* Application::getPlatformIntegration()
+{
+	return m_platformIntegration;
 }
 
 QCommandLineParser* Application::getParser() const

@@ -31,6 +31,7 @@ namespace Otter
 {
 
 class MainWindow;
+class PlatformIntegration;
 
 class Application : public QApplication
 {
@@ -45,6 +46,7 @@ public:
 	static Application* getInstance();
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	MainWindow* getWindow();
+	PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getParser() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;
@@ -58,6 +60,7 @@ protected slots:
 	void newConnection();
 
 private:
+	PlatformIntegration *m_platformIntegration;
 	QTranslator *m_qtTranslator;
 	QTranslator *m_applicationTranslator;
 	QLocalServer *m_localServer;
@@ -65,6 +68,10 @@ private:
 	QList<MainWindow*> m_windows;
 
 	static Application *m_instance;
+
+signals:
+	void windowAdded(MainWindow *window);
+	void windowRemoved(MainWindow *window);
 };
 
 }
