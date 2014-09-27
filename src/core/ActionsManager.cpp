@@ -183,22 +183,6 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 void ActionsManager::updateActions()
 {
 	const QHash<QString, QList<QKeySequence> > shortcuts = ShortcutsManager::getShortcuts();
-	const QList<QAction*> actions = m_window->actions();
-
-	for (int i = 0; i < actions.count(); ++i)
-	{
-		const QString name = actions.at(i)->objectName().mid(6);
-
-		if (shortcuts.contains(name))
-		{
-			actions.at(i)->setShortcuts(shortcuts[name]);
-		}
-		else
-		{
-			actions.at(i)->setShortcut(QKeySequence());
-		}
-	}
-
 	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
 
 	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
