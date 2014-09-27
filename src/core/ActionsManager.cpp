@@ -83,7 +83,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("Transfers"), QT_TRANSLATE_NOOP("actions", "Transfers..."));
 		registerAction(QLatin1String("Cookies"), QT_TRANSLATE_NOOP("actions", "Cookies..."));
 		registerAction(QLatin1String("ContentBlocking"), QT_TRANSLATE_NOOP("actions", "Content Blocking..."));
-		registerAction(QLatin1String("ErrorConsole"), QT_TRANSLATE_NOOP("actions", "Error Console"), QString(), QIcon(), true);
+		registerAction(QLatin1String("ErrorConsole"), QT_TRANSLATE_NOOP("actions", "Error Console"), QString(), QIcon(), true, true, false);
 		registerAction(QLatin1String("Preferences"), QT_TRANSLATE_NOOP("actions", "Preferences..."));
 		registerAction(QLatin1String("SwitchApplicationLanguage"), QT_TRANSLATE_NOOP("actions", "Switch Application Language..."), QString(), Utils::getIcon(QLatin1String("preferences-desktop-locale")));
 		registerAction(QLatin1String("AboutApplication"), QT_TRANSLATE_NOOP("actions", "About Otter..."), QString(), Utils::getIcon(QLatin1String("otter-browser"), false));
