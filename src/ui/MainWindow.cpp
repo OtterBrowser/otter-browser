@@ -108,6 +108,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	SessionsManager::registerWindow(this);
 
+	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(value.toBool());
 	m_actionsManager->getAction(QLatin1String("Exit"))->setMenuRole(QAction::QuitRole);
 	m_actionsManager->getAction(QLatin1String("Preferences"))->setMenuRole(QAction::PreferencesRole);
 	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
