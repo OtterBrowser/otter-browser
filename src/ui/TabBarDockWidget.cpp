@@ -40,17 +40,22 @@ TabBarDockWidget::TabBarDockWidget(QWidget *parent) : QDockWidget(parent),
 
 void TabBarDockWidget::paintEvent(QPaintEvent *event)
 {
+	Q_UNUSED(event)
+
 	QPainter painter(this);
 	QStyleOption toolbarhandleoption;
 	toolbarhandleoption.initFrom(this);
-	
-	const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
-	
-	if (isHorizontal)
+
+	if (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth)
 	{
+		toolbarhandleoption.rect.setWidth(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
 		toolbarhandleoption.state = QStyle::State_Horizontal;
 	}
-	
+	else
+	{
+		toolbarhandleoption.rect.setHeight(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
+	}
+
 	style()->drawPrimitive(QStyle::PE_IndicatorToolBarHandle, &toolbarhandleoption, &painter, this);
 }
 
