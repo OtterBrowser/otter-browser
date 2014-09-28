@@ -22,8 +22,11 @@
 #include "../core/ActionsManager.h"
 #include "../core/Utils.h"
 
+#include <QtGui/QPainter>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QStyle>
+#include <QtWidgets/QStyleOption>
 
 namespace Otter
 {
@@ -33,6 +36,22 @@ TabBarDockWidget::TabBarDockWidget(QWidget *parent) : QDockWidget(parent),
 	m_newTabButton(new QToolButton(this)),
 	m_trashButton(NULL)
 {
+}
+
+void TabBarDockWidget::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+	QStyleOption toolbarhandleoption;
+	toolbarhandleoption.initFrom(this);
+	
+	const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
+	
+	if (isHorizontal)
+	{
+		toolbarhandleoption.state = QStyle::State_Horizontal;
+	}
+	
+	style()->drawPrimitive(QStyle::PE_IndicatorToolBarHandle, &toolbarhandleoption, &painter, this);
 }
 
 void TabBarDockWidget::setup(QMenu *closedWindowsMenu)

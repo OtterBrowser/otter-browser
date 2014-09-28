@@ -20,6 +20,7 @@
 #ifndef OTTER_TABBARDOCKWIDGET_H
 #define OTTER_TABBARDOCKWIDGET_H
 
+#include <QtGui/QPaintEvent>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QToolButton>
 
@@ -41,6 +42,9 @@ public:
 public slots:
 	void setClosedWindowsMenuEnabled(bool enabled);
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 protected slots:
 	void moveNewTabButton(int position);
 
@@ -48,6 +52,7 @@ private:
 	TabBarWidget *m_tabBar;
 	QToolButton *m_newTabButton;
 	QToolButton *m_trashButton;
+
 };
 
 }
