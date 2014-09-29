@@ -30,7 +30,7 @@ Menu::Menu(const QJsonObject &definition, QWidget *parent) : QMenu(parent),
 	m_title(definition.value(QLatin1String("title")).toString())
 {
 	setObjectName(definition.value(QLatin1String("identifier")).toString());
-	setTitle(m_title);
+	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 
 	const QJsonArray actions = definition.value(QLatin1String("actions")).toArray();
 
