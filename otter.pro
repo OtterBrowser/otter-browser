@@ -11,6 +11,7 @@
 QT += core gui network printsupport script sql webkitwidgets widgets
 
 win32: QT += winextras
+win32: LIBS += -lOle32
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
@@ -106,6 +107,7 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/importers/html/HtmlBookmarksImporter.cpp \
     src/modules/importers/opera/OperaBookmarksImporter.cpp \
+    src/modules/platforms/windows/WindowsPlatformIntegration.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/cache/CacheContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
@@ -194,6 +196,7 @@ HEADERS += src/core/Action.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/importers/html/HtmlBookmarksImporter.h \
     src/modules/importers/opera/OperaBookmarksImporter.h \
+    src/modules/platforms/windows/WindowsPlatformIntegration.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/cache/CacheContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \

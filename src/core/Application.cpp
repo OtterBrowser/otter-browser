@@ -27,6 +27,9 @@
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
 #include "./config.h"
+#ifdef Q_OS_WIN
+#include "../modules/platforms/windows/WindowsPlatformIntegration.h"
+#endif
 #include "../ui/MainWindow.h"
 #include "../ui/TrayIcon.h"
 
@@ -192,6 +195,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	{
 		new TrayIcon(this);
 	}
+
+#ifdef Q_OS_WIN
+	m_platformIntegration = new WindowsPlatformIntegration(this);
+#endif
 }
 
 Application::~Application()

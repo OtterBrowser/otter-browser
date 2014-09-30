@@ -2,6 +2,7 @@
 #define MyAppVersion "0.9.03-dev"
 #define MyAppURL "http://otter-browser.org/"
 #define MyAppExeName "otter-browser.exe"
+#define MyAppIdentifier "OtterBrowser"
 
 [Setup]
 AppId={{A0517512-5271-465D-AE59-D08F487B5CAF}
@@ -86,6 +87,32 @@ Source: "Z:\otter-browser-inno\input\locale\*.*"; DestDir: "{app}\locale"; Flags
 Source: "Z:\otter-browser-inno\input\platforms\*.*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\printsupport\*.*"; DestDir: "{app}\printsupport"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\sqldrivers\*.*"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion recursesubdirs
+
+[Registry]
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities"; ValueName: "ApplicationDescription"; ValueType: String; ValueData: "Web browser controlled by the user, not vice-versa"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities"; ValueName: "ApplicationIcon"; ValueType: String; ValueData: "{app}\{#MyAppExeName},0"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities"; ValueName: "ApplicationName"; ValueType: String; ValueData: "{#MyAppName}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\UrlAssociations"; ValueName: "http"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\UrlAssociations"; ValueName: "https"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\UrlAssociations"; ValueName: "ftp"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\FileAssociations"; ValueName: ".html"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\FileAssociations"; ValueName: ".htm"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\FileAssociations"; ValueName: ".xhtml"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\FileAssociations"; ValueName: ".shtml"; ValueType: String; ValueData: "{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities\Startmenu"; ValueName: "StartMenuInternet"; ValueType: String; ValueData: "{#MyAppName}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\shell\open\command"; ValueName: ""; ValueType: String; ValueData: "{app}\{#MyAppExeName}"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\DefaultIcon"; ValueName: ""; ValueType: String; ValueData: "{app}\{#MyAppExeName},0"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\InstallInfo"; ValueName: "IconsVisible"; ValueType: dword; ValueData: "1"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\RegisteredApplications"; ValueType: String; ValueName: "{#MyAppIdentifier}"; ValueData: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}\Capabilities"; Flags: uninsdeletevalue uninsdeletekeyifempty
+
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}"; ValueName: ""; ValueType: String; ValueData: "{#MyAppName} Document"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}"; ValueName: "FriendlyTypeName"; ValueType: String; ValueData: "{#MyAppName} Document"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}"; ValueName: "EditFlags"; ValueType: dword; ValueData: "2"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}\DefaultIcon"; ValueName: ""; ValueType: String; ValueData: "{app}\{#MyAppExeName},1"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}\shell\open\ddeexec"; ValueName: ""; ValueType: String; ValueData: ""; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Classes\{#MyAppIdentifier}\shell\open\command"; ValueName: ""; ValueType: String; ValueData: "{%|%22}{app}\{#MyAppExeName}{%|%22} {%|%22}%1{%|%22}"; Flags: uninsdeletekey
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

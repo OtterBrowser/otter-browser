@@ -37,7 +37,7 @@ bool PlatformIntegration::canSetAsDefaultBrowser() const
 	return false;
 }
 
-bool PlatformIntegration::isDefaultbrowser() const
+bool PlatformIntegration::isDefaultBrowser() const
 {
 	return false;
 }

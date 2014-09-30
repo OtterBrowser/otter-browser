@@ -34,9 +34,11 @@ class PlatformIntegration : public QObject
 public:
 	explicit PlatformIntegration(Application *parent);
 
-	virtual bool setAsDefaultBrowser();
 	virtual bool canSetAsDefaultBrowser() const;
-	virtual bool isDefaultbrowser() const;
+	virtual bool isDefaultBrowser() const;
+
+public slots:
+	virtual bool setAsDefaultBrowser();
 };
 
 }

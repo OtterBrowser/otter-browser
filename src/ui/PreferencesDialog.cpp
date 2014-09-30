@@ -26,7 +26,9 @@
 #include "UserAgentsManagerDialog.h"
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
+#include "../core/Application.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/PlatformIntegration.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SessionsManager.h"
@@ -93,6 +95,22 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	else if (startupBehaviorString == QLatin1String("startEmpty"))
 	{
 		startupBehaviorIndex = 3;
+	}
+
+	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+
+	if (integration == NULL || integration->isDefaultBrowser())
+	{
+		m_ui->setDefaultButton->setEnabled(false);
+	}
+	else if (!integration->canSetAsDefaultBrowser())
+	{
+		m_ui->setDefaultButton->setVisible(false);
+		m_ui->systemDefaultLabel->setText(tr("Run Otter Browser with administrator rights to set it as a default browser."));
+	}
+	else
+	{
+		connect(m_ui->setDefaultButton, SIGNAL(clicked()), integration, SLOT(setAsDefaultBrowser()));
 	}
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex(startupBehaviorIndex);

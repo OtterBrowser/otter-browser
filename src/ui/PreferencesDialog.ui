@@ -287,6 +287,53 @@
         </layout>
        </item>
        <item>
+        <widget class="QLabel" name="systemDefaultsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>System Defaults</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="systemDefaultsLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
+         <item>
+          <widget class="QPushButton" name="setDefaultButton">
+           <property name="text">
+            <string>Set as a default browser</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="systemDefaultLabel">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="systemDefaultSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="generalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
