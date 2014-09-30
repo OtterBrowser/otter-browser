@@ -1,6 +1,7 @@
 #include <windows.h>
 
 IDI_ICON1 ICON DISCARDABLE "resources/icons/otter-browser.ico"
+IDI_ICON2 ICON DISCARDABLE "resources/icons/otter-browser-file-type.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,9,0,3
