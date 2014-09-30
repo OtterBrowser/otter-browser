@@ -107,7 +107,6 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/importers/html/HtmlBookmarksImporter.cpp \
     src/modules/importers/opera/OperaBookmarksImporter.cpp \
-    src/modules/platforms/windows/WindowsPlatformIntegration.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/cache/CacheContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
@@ -118,6 +117,8 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp
+
+win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
 HEADERS += src/core/Action.h \
     src/core/ActionsManager.h \
@@ -196,7 +197,6 @@ HEADERS += src/core/Action.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/importers/html/HtmlBookmarksImporter.h \
     src/modules/importers/opera/OperaBookmarksImporter.h \
-    src/modules/platforms/windows/WindowsPlatformIntegration.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/cache/CacheContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \
@@ -207,6 +207,8 @@ HEADERS += src/core/Action.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/WebContentsWidget.h
+
+win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
 FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \

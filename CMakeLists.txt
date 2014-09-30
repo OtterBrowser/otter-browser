@@ -141,7 +141,6 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
-	src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -187,6 +186,10 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/ImagePropertiesDialog.ui
 	src/modules/windows/web/WebContentsWidget.ui
 )
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	set(otter_src ${otter_src} src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 add_executable(otter-browser
 	${otter_ui}
