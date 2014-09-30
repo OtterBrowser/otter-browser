@@ -102,7 +102,7 @@ void TabBarDockWidget::moveNewTabButton(int position)
 	{
 		const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
 
-		m_newTabButton->move(isHorizontal ? QPoint((qMin(position, m_tabBar->width()) + widget()->pos().x()), ((m_tabBar->height() - m_newTabButton->height()) / 2)) : QPoint(((m_tabBar->width() - m_newTabButton->width()) / 2), (qMin(position, m_tabBar->height()) + widget()->pos().y())));
+		m_newTabButton->move(isHorizontal ? QPoint((qMin(position, this->width()) + widget()->pos().x()), ((this->height() - m_newTabButton->height()) / 2)) : QPoint(((this->width() - m_newTabButton->width()) / 2), (qMin(position, this->height()) + widget()->pos().y())));
 	}
 }
 
