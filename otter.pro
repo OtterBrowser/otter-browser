@@ -253,6 +253,7 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_hu.ts \
     resources/translations/otter-browser_id_ID.ts \
     resources/translations/otter-browser_it_IT.ts \
+    resources/translations/otter-browser_ja_JP.ts \
     resources/translations/otter-browser_ka_GE.ts \
     resources/translations/otter-browser_lt.ts \
     resources/translations/otter-browser_nb_NO.ts \
