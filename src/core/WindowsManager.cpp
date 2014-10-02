@@ -580,6 +580,10 @@ void WindowsManager::closeWindow(Window *window)
 				return;
 			}
 		}
+		else
+		{
+			emit windowTitleChanged(QString());
+		}
 	}
 
 	m_tabBar->removeTab(index);

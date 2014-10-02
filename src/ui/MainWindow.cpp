@@ -1151,7 +1151,7 @@ void MainWindow::updateActions()
 
 void MainWindow::updateWindowTitle(const QString &title)
 {
-	setWindowTitle(QStringLiteral("%1 - Otter").arg(title));
+	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
 #ifdef Q_OS_WIN
