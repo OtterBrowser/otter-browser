@@ -57,6 +57,7 @@ public:
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	QPair<QString, QString> getUserAgent() const;
+	int getRefreshTime() const;
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
@@ -71,12 +72,14 @@ public slots:
 	void setDefaultCharacterEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
+	void setRefreshTime(int time);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
 	explicit QtWebKitWebWidget(bool isPrivate = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(QUrl url, OpenHints hints = DefaultOpen);
@@ -113,6 +116,8 @@ private:
 	QWebHitTestResult m_hitResult;
 	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
+	int m_refreshTime;
+	int m_refreshTimer;
 	bool m_ignoreContextMenu;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;

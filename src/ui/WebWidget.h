@@ -84,6 +84,7 @@ public:
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual QPair<QString, QString> getUserAgent() const = 0;
+	virtual int getRefreshTime() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;

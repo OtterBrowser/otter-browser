@@ -66,6 +66,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
+	m_refreshTime(-1),
+	m_refreshTimer(0),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
@@ -146,6 +148,21 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
+}
+
+void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_refreshTimer)
+	{
+		killTimer(m_refreshTimer);
+
+		m_refreshTimer = 0;
+
+		if (!isLoading())
+		{
+			triggerAction(ReloadAction);
+		}
+	}
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
@@ -285,6 +302,16 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		else if (m_historyEntry >= 0)
 		{
 			HistoryManager::removeEntry(m_historyEntry);
+		}
+	}
+
+	if (m_refreshTime >= 0)
+	{
+		triggerAction(StopScheduledPageRefreshAction);
+
+		if (m_refreshTime > 0)
+		{
+			m_refreshTimer = startTimer(m_refreshTime * 1000);
 		}
 	}
 
@@ -947,6 +974,31 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
+void QtWebKitWebWidget::setRefreshTime(int time)
+{
+	if (time != m_refreshTime)
+	{
+		m_refreshTime = time;
+
+		if (m_refreshTimer != 0)
+		{
+			killTimer(m_refreshTimer);
+
+			m_refreshTimer = 0;
+		}
+
+		if (time >= 0)
+		{
+			triggerAction(StopScheduledPageRefreshAction);
+
+			if (time > 0)
+			{
+				m_refreshTimer = startTimer(time * 1000);
+			}
+		}
+	}
+}
+
 void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
@@ -1126,6 +1178,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
+	widget->setRefreshTime(m_refreshTime);
 
 	if (cloneHistory)
 	{
@@ -1630,6 +1683,11 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 	}
 
 	return QWebPage::NoWebAction;
+}
+
+int QtWebKitWebWidget::getRefreshTime() const
+{
+	return m_refreshTime;
 }
 
 int QtWebKitWebWidget::getZoom() const
