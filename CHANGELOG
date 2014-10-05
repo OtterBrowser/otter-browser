@@ -1,6 +1,11 @@
 0.9.03 (--.--.2014):
 - initial version of sidebar;
-- added Trash to Bookmarks Manager.
+- added possibility to set Otter Browser as default under Windows;
+- added Trash to Bookmarks Manager;
+- added Ctrl+Tab tabs switching;
+- added tray icon;
+- allow to customize menu bar (JSON file);
+- various minor fixes and improvements.
 
 0.9.02 (01.08.2014):
 - added initial support for content blocking (Adblock Plus compatible);
