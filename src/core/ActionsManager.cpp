@@ -37,6 +37,19 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 {
 	if (m_definitions.isEmpty())
 	{
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "File"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sessions"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Import and Export"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Edit"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "View"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "User Agent"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Closed Windows"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"));
+
 		ShortcutsManager::createInstance(Application::getInstance());
 
 		registerAction(QLatin1String("NewTab"), QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")));
