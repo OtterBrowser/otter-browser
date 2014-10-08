@@ -1283,10 +1283,22 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 
 			break;
 		case ReloadTimeAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
+			{
+				ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
 
-			actionObject->setMenu(new QMenu(this));
-			actionObject->setEnabled(false);
+				QMenu *menu = new QMenu(this);
+				menu->addAction(tr("30 Minutes"))->setData(1800);
+				menu->addAction(tr("1 Hour"))->setData(3600);
+				menu->addAction(tr("2 Hours"))->setData(7200);
+				menu->addAction(tr("6 Hours"))->setData(21600);
+				menu->addAction(tr("Never"))->setData(0);
+				menu->addAction(tr("Custom"))->setData(-2);
+				menu->addSeparator();
+				menu->addAction(tr("Page Default"))->setData(-1);
+
+				actionObject->setMenu(menu);
+				actionObject->setEnabled(false);
+			}
 
 			break;
 		case PrintAction:
