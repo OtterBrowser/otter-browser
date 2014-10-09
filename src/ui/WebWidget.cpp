@@ -32,6 +32,7 @@ namespace Otter
 
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
+	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL)
 {
 	Q_UNUSED(isPrivate)
@@ -43,6 +44,41 @@ void WebWidget::search(const QString &query, const QString &engine)
 {
 	Q_UNUSED(query)
 	Q_UNUSED(engine)
+}
+
+void WebWidget::reloadTimeMenuAboutToShow()
+{
+	switch (getReloadTime())
+	{
+		case 1800:
+			m_reloadTimeMenu->actions().at(0)->setChecked(true);
+
+			break;
+		case 3600:
+			m_reloadTimeMenu->actions().at(1)->setChecked(true);
+
+			break;
+		case 7200:
+			m_reloadTimeMenu->actions().at(2)->setChecked(true);
+
+			break;
+		case 21600:
+			m_reloadTimeMenu->actions().at(3)->setChecked(true);
+
+			break;
+		case 0:
+			m_reloadTimeMenu->actions().at(4)->setChecked(true);
+
+			break;
+		case -1:
+			m_reloadTimeMenu->actions().at(7)->setChecked(true);
+
+			break;
+		default:
+			m_reloadTimeMenu->actions().at(5)->setChecked(true);
+
+			break;
+	}
 }
 
 void WebWidget::quickSearch(QAction *action)
@@ -284,6 +320,20 @@ void WebWidget::updateQuickSearch()
 	}
 }
 
+void WebWidget::setReloadTime(QAction *action)
+{
+	const int reloadTime = action->data().toInt();
+
+	if (reloadTime == -2)
+	{
+///TODO
+	}
+	else
+	{
+		setReloadTime(reloadTime);
+	}
+}
+
 void WebWidget::setStatusMessage(const QString &message, bool override)
 {
 	const QString oldMessage = getStatusMessage();
@@ -320,6 +370,37 @@ void WebWidget::setQuickSearchEngine(const QString &engine)
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
+}
+
+QMenu* WebWidget::getReloadTimeMenu()
+{
+	if (!m_reloadTimeMenu)
+	{
+		m_reloadTimeMenu = new QMenu(this);
+		m_reloadTimeMenu->addAction(tr("30 Minutes"))->setData(1800);
+		m_reloadTimeMenu->addAction(tr("1 Hour"))->setData(3600);
+		m_reloadTimeMenu->addAction(tr("2 Hours"))->setData(7200);
+		m_reloadTimeMenu->addAction(tr("6 Hours"))->setData(21600);
+		m_reloadTimeMenu->addAction(tr("Never"))->setData(0);
+		m_reloadTimeMenu->addAction(tr("Custom..."))->setData(-2);
+		m_reloadTimeMenu->addSeparator();
+		m_reloadTimeMenu->addAction(tr("Page Default"))->setData(-1);
+
+		QActionGroup *actionGroup = new QActionGroup(m_reloadTimeMenu);
+		actionGroup->setExclusive(true);
+
+		for (int i = 0; i < m_reloadTimeMenu->actions().count(); ++i)
+		{
+			m_reloadTimeMenu->actions().at(i)->setCheckable(true);
+
+			actionGroup->addAction(m_reloadTimeMenu->actions().at(i));
+		}
+
+		connect(m_reloadTimeMenu, SIGNAL(aboutToShow()), this, SLOT(reloadTimeMenuAboutToShow()));
+		connect(m_reloadTimeMenu, SIGNAL(triggered(QAction*)), this, SLOT(setReloadTime(QAction*)));
+	}
+
+	return m_reloadTimeMenu;
 }
 
 QMenu* WebWidget::getQuickSearchMenu()

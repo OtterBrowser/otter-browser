@@ -66,8 +66,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
-	m_refreshTime(-1),
-	m_refreshTimer(0),
+	m_reloadTime(-1),
+	m_reloadTimer(0),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
@@ -152,11 +152,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 
 void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_refreshTimer)
+	if (event->timerId() == m_reloadTimer)
 	{
-		killTimer(m_refreshTimer);
+		killTimer(m_reloadTimer);
 
-		m_refreshTimer = 0;
+		m_reloadTimer = 0;
 
 		if (!isLoading())
 		{
@@ -305,13 +305,13 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		}
 	}
 
-	if (m_refreshTime >= 0)
+	if (m_reloadTime >= 0)
 	{
 		triggerAction(StopScheduledPageRefreshAction);
 
-		if (m_refreshTime > 0)
+		if (m_reloadTime > 0)
 		{
-			m_refreshTimer = startTimer(m_refreshTime * 1000);
+			m_reloadTimer = startTimer(m_reloadTime * 1000);
 		}
 	}
 
@@ -974,17 +974,17 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
-void QtWebKitWebWidget::setRefreshTime(int time)
+void QtWebKitWebWidget::setReloadTime(int time)
 {
-	if (time != m_refreshTime)
+	if (time != m_reloadTime)
 	{
-		m_refreshTime = time;
+		m_reloadTime = time;
 
-		if (m_refreshTimer != 0)
+		if (m_reloadTimer != 0)
 		{
-			killTimer(m_refreshTimer);
+			killTimer(m_reloadTimer);
 
-			m_refreshTimer = 0;
+			m_reloadTimer = 0;
 		}
 
 		if (time >= 0)
@@ -993,7 +993,7 @@ void QtWebKitWebWidget::setRefreshTime(int time)
 
 			if (time > 0)
 			{
-				m_refreshTimer = startTimer(time * 1000);
+				m_reloadTimer = startTimer(time * 1000);
 			}
 		}
 	}
@@ -1178,7 +1178,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
-	widget->setRefreshTime(m_refreshTime);
+	widget->setReloadTime(m_reloadTime);
 
 	if (cloneHistory)
 	{
@@ -1286,18 +1286,8 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			{
 				ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
 
-				QMenu *menu = new QMenu(this);
-				menu->addAction(tr("30 Minutes"))->setData(1800);
-				menu->addAction(tr("1 Hour"))->setData(3600);
-				menu->addAction(tr("2 Hours"))->setData(7200);
-				menu->addAction(tr("6 Hours"))->setData(21600);
-				menu->addAction(tr("Never"))->setData(0);
-				menu->addAction(tr("Custom"))->setData(-2);
-				menu->addSeparator();
-				menu->addAction(tr("Page Default"))->setData(-1);
-
-				actionObject->setMenu(menu);
-				actionObject->setEnabled(false);
+				actionObject->setMenu(getReloadTimeMenu());
+//				actionObject->setEnabled(false);
 			}
 
 			break;
@@ -1697,9 +1687,9 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 	return QWebPage::NoWebAction;
 }
 
-int QtWebKitWebWidget::getRefreshTime() const
+int QtWebKitWebWidget::getReloadTime() const
 {
-	return m_refreshTime;
+	return m_reloadTime;
 }
 
 int QtWebKitWebWidget::getZoom() const

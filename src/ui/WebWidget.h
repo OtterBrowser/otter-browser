@@ -70,6 +70,7 @@ public:
 	virtual QAction* getAction(ActionIdentifier action) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();
+	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString getQuickSearchEngine() const;
 	virtual QString getDefaultCharacterEncoding() const = 0;
@@ -84,7 +85,7 @@ public:
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual QPair<QString, QString> getUserAgent() const = 0;
-	virtual int getRefreshTime() const = 0;
+	virtual int getReloadTime() const = 0;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -96,6 +97,7 @@ public slots:
 	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
+	virtual void setReloadTime(int time) = 0;
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
@@ -105,13 +107,16 @@ protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
 protected slots:
+	void reloadTimeMenuAboutToShow();
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void updateQuickSearch();
+	void setReloadTime(QAction *action);
 	void setStatusMessage(const QString &message, bool override = false);
 
 private:
 	WebBackend *m_backend;
+	QMenu *m_reloadTimeMenu;
 	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;
 	QString m_quickSearchEngine;
