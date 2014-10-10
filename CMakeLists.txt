@@ -116,6 +116,7 @@ set(otter_src
 	src/ui/OptionWidget.cpp
 	src/ui/PreferencesDialog.cpp
 	src/ui/PreviewWidget.cpp
+	src/ui/ReloadTimeDialog.cpp
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchDelegate.cpp
 	src/ui/SearchPropertiesDialog.cpp
@@ -168,6 +169,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/MainWindow.ui
 	src/ui/OpenBookmarkDialog.ui
 	src/ui/PreferencesDialog.ui
+	src/ui/ReloadTimeDialog.ui
 	src/ui/SaveSessionDialog.ui
 	src/ui/SearchPropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui

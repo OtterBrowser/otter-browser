@@ -19,6 +19,7 @@
 
 #include "WebWidget.h"
 #include "ContentsWidget.h"
+#include "ReloadTimeDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
@@ -326,7 +327,12 @@ void WebWidget::setReloadTime(QAction *action)
 
 	if (reloadTime == -2)
 	{
-///TODO
+		ReloadTimeDialog dialog(qMax(0, getReloadTime()), this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			setReloadTime(dialog.getReloadTime());
+		}
 	}
 	else
 	{

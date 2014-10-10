@@ -82,6 +82,7 @@ SOURCES += src/main.cpp \
     src/ui/OptionWidget.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/PreviewWidget.cpp \
+    src/ui/ReloadTimeDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/SearchDelegate.cpp \
     src/ui/SearchPropertiesDialog.cpp \
@@ -95,8 +96,8 @@ SOURCES += src/main.cpp \
     src/ui/TableViewWidget.cpp \
     src/ui/TextLabelWidget.cpp \
     src/ui/TrayIcon.cpp \
-    src/ui/WebWidget.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
+    src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
@@ -172,6 +173,7 @@ HEADERS += src/core/Action.h \
     src/ui/OptionWidget.h \
     src/ui/PreferencesDialog.h \
     src/ui/PreviewWidget.h \
+    src/ui/ReloadTimeDialog.h \
     src/ui/SaveSessionDialog.h \
     src/ui/SearchDelegate.h \
     src/ui/SearchPropertiesDialog.h \
@@ -220,6 +222,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/MainWindow.ui \
     src/ui/OpenBookmarkDialog.ui \
     src/ui/PreferencesDialog.ui \
+    src/ui/ReloadTimeDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
