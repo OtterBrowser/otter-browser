@@ -269,6 +269,11 @@ void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 	m_webWidget->setHistory(history);
 }
 
+void WebContentsWidget::setReloadTime(int time)
+{
+	m_webWidget->setReloadTime(time);
+}
+
 void WebContentsWidget::setZoom(int zoom)
 {
 	m_webWidget->setZoom(zoom);
@@ -460,6 +465,11 @@ WindowHistoryInformation WebContentsWidget::getHistory() const
 QPair<QString, QString> WebContentsWidget::getUserAgent() const
 {
 	return m_webWidget->getUserAgent();
+}
+
+int WebContentsWidget::getReloadTime() const
+{
+	return m_webWidget->getReloadTime();
 }
 
 int WebContentsWidget::getZoom() const

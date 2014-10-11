@@ -65,7 +65,7 @@ public:
 
 	void clear();
 	void close();
-	void setSession(SessionWindow session);
+	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
 	QString getDefaultCharacterEncoding() const;

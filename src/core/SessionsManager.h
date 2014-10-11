@@ -52,9 +52,10 @@ struct SessionWindow
 	QList<WindowHistoryEntry> history;
 	int group;
 	int index;
+	int reloadTime;
 	bool pinned;
 
-	SessionWindow() : group(0), index(-1), pinned(false) {}
+	SessionWindow() : group(0), index(-1), reloadTime(-1), pinned(false) {}
 
 	QString getUrl() const
 	{

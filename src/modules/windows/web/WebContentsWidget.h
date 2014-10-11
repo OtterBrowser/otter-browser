@@ -56,6 +56,7 @@ public:
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
 	QPair<QString, QString> getUserAgent() const;
+	int getReloadTime() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;
@@ -69,6 +70,7 @@ public slots:
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setDefaultCharacterEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);
+	void setReloadTime(int time);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
 

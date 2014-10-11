@@ -243,7 +243,7 @@ void Window::updateGoForwardMenu()
 	}
 }
 
-void Window::setSession(SessionWindow session)
+void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
 
@@ -453,6 +453,16 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			}
 		}
 
+		if (m_session.reloadTime != -1 && m_contentsWidget->getType() == QLatin1String("web"))
+		{
+			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+			if (webWidget)
+			{
+				webWidget->setReloadTime(m_session.reloadTime);
+			}
+		}
+
 		WindowHistoryInformation history;
 		history.index = m_session.index;
 		history.entries = m_session.history;
@@ -581,6 +591,16 @@ SessionWindow Window::getSession() const
 	session.group = 0;
 	session.index = history.index;
 	session.pinned = isPinned();
+
+	if (m_contentsWidget->getType() == QLatin1String("web"))
+	{
+		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+		if (webWidget && webWidget->getReloadTime() != 1)
+		{
+			session.reloadTime = webWidget->getReloadTime();
+		}
+	}
 
 	return session;
 }
