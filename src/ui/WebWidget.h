@@ -85,7 +85,7 @@ public:
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual QPair<QString, QString> getUserAgent() const = 0;
-	virtual int getReloadTime() const = 0;
+	virtual int getReloadTime() const;
 	virtual int getZoom() const = 0;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -97,7 +97,7 @@ public slots:
 	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
-	virtual void setReloadTime(int time) = 0;
+	virtual void setReloadTime(int time);
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
@@ -105,6 +105,9 @@ public slots:
 
 protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
+
+	void timerEvent(QTimerEvent *event);
+	void startReloadTimer();
 
 protected slots:
 	void reloadTimeMenuAboutToShow();
@@ -122,6 +125,8 @@ private:
 	QString m_quickSearchEngine;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
+	int m_reloadTime;
+	int m_reloadTimer;
 
 signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);

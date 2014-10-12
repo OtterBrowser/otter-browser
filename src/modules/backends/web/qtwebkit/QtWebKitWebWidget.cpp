@@ -66,8 +66,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
-	m_reloadTime(-1),
-	m_reloadTimer(0),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
@@ -148,21 +146,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
-}
-
-void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_reloadTimer)
-	{
-		killTimer(m_reloadTimer);
-
-		m_reloadTimer = 0;
-
-		if (!isLoading())
-		{
-			triggerAction(ReloadAction);
-		}
-	}
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
@@ -305,15 +288,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 		}
 	}
 
-	if (m_reloadTime >= 0)
-	{
-		triggerAction(StopScheduledPageRefreshAction);
-
-		if (m_reloadTime > 0)
-		{
-			m_reloadTimer = startTimer(m_reloadTime * 1000);
-		}
-	}
+	startReloadTimer();
 
 	emit loadingChanged(false);
 }
@@ -974,31 +949,6 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
-void QtWebKitWebWidget::setReloadTime(int time)
-{
-	if (time != m_reloadTime)
-	{
-		m_reloadTime = time;
-
-		if (m_reloadTimer != 0)
-		{
-			killTimer(m_reloadTimer);
-
-			m_reloadTimer = 0;
-		}
-
-		if (time >= 0)
-		{
-			triggerAction(StopScheduledPageRefreshAction);
-
-			if (time > 0)
-			{
-				m_reloadTimer = startTimer(time * 1000);
-			}
-		}
-	}
-}
-
 void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
@@ -1178,7 +1128,7 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
-	widget->setReloadTime(m_reloadTime);
+	widget->setReloadTime(getReloadTime());
 
 	if (cloneHistory)
 	{
@@ -1685,11 +1635,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 	}
 
 	return QWebPage::NoWebAction;
-}
-
-int QtWebKitWebWidget::getReloadTime() const
-{
-	return m_reloadTime;
 }
 
 int QtWebKitWebWidget::getZoom() const

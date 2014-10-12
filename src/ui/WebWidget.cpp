@@ -34,11 +34,41 @@ namespace Otter
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
 	m_reloadTimeMenu(NULL),
-	m_quickSearchMenu(NULL)
+	m_quickSearchMenu(NULL),
+	m_reloadTime(-1),
+	m_reloadTimer(0)
 {
 	Q_UNUSED(isPrivate)
 
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
+}
+
+void WebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_reloadTimer)
+	{
+		killTimer(m_reloadTimer);
+
+		m_reloadTimer = 0;
+
+		if (!isLoading())
+		{
+			triggerAction(ReloadAction);
+		}
+	}
+}
+
+void WebWidget::startReloadTimer()
+{
+	if (m_reloadTime >= 0)
+	{
+		triggerAction(StopScheduledPageRefreshAction);
+
+		if (m_reloadTime > 0)
+		{
+			m_reloadTimer = startTimer(m_reloadTime * 1000);
+		}
+	}
 }
 
 void WebWidget::search(const QString &query, const QString &engine)
@@ -321,6 +351,31 @@ void WebWidget::updateQuickSearch()
 	}
 }
 
+void WebWidget::setReloadTime(int time)
+{
+	if (time != m_reloadTime)
+	{
+		m_reloadTime = time;
+
+		if (m_reloadTimer != 0)
+		{
+			killTimer(m_reloadTimer);
+
+			m_reloadTimer = 0;
+		}
+
+		if (time >= 0)
+		{
+			triggerAction(StopScheduledPageRefreshAction);
+
+			if (time > 0)
+			{
+				m_reloadTimer = startTimer(time * 1000);
+			}
+		}
+	}
+}
+
 void WebWidget::setReloadTime(QAction *action)
 {
 	const int reloadTime = action->data().toInt();
@@ -440,6 +495,11 @@ QString WebWidget::getStatusMessage() const
 QUrl WebWidget::getRequestedUrl() const
 {
 	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
+}
+
+int WebWidget::getReloadTime() const
+{
+	return m_reloadTime;
 }
 
 }
