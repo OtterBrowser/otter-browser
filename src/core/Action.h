@@ -99,7 +99,13 @@ enum ActionIdentifier
 	ActivateAddressFieldAction,
 	PasteAndGoAction,
 	ActivateTabOnLeftAction,
-	ActivateTabOnRightAction
+	ActivateTabOnRightAction,
+	ScrollToStart,
+	ScrollToEnd,
+	ScrollPageUp,
+	ScrollPageDown,
+	ScrollPageLeft,
+	ScrollPageRight
 };
 
 enum ActionScope

@@ -149,6 +149,12 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("PasteAndGo"), QT_TRANSLATE_NOOP("actions", "Paste and Go"), QString(), QIcon(), true, false, false, PasteAndGoAction);
 		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"), QString(), QIcon(), true, false, false, ActivateTabOnLeftAction);
 		registerAction(QLatin1String("ActivateTabOnRight"), QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"), QString(), QIcon(), true, false, false, ActivateTabOnRightAction);
+		registerAction(QLatin1String("ScrollToStart"), QT_TRANSLATE_NOOP("actions", "Go to Start of the Page"), QString(), QIcon(), true, false, false, ScrollToStart);
+		registerAction(QLatin1String("ScrollToEnd"), QT_TRANSLATE_NOOP("actions", "Go to the End of the Page"), QString(), QIcon(), true, false, false, ScrollToEnd);
+		registerAction(QLatin1String("ScrollPageUp"), QT_TRANSLATE_NOOP("actions", "Page Up"), QString(), QIcon(), true, false, false, ScrollPageUp);
+		registerAction(QLatin1String("ScrollPageDown"), QT_TRANSLATE_NOOP("actions", "Page Down"), QString(), QIcon(), true, false, false, ScrollPageDown);
+		registerAction(QLatin1String("ScrollPageLeft"), QT_TRANSLATE_NOOP("actions", "Page Left"), QString(), QIcon(), true, false, false, ScrollPageLeft);
+		registerAction(QLatin1String("ScrollPageRight"), QT_TRANSLATE_NOOP("actions", "Page Right"), QString(), QIcon(), true, false, false, ScrollPageRight);
 	}
 
 	const QList<QAction*> windowActions = m_window->actions();
