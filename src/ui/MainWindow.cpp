@@ -51,7 +51,6 @@
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextCodec>
-#include <QtCore/QtMath>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QCheckBox>
@@ -84,10 +83,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	{
 		m_ui->menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_ui->menuBar));
 	}
-
-#ifdef Q_OS_WIN
-	m_taskbarButton = NULL;
-#endif
 
 	SessionsManager::setActiveWindow(this);
 
@@ -167,17 +162,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 		connect(characterEncodingMenu, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
 		connect(characterEncodingMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
 	}
-
-#ifdef Q_OS_WIN
-	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
-	{
-		connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateWindowsTaskbarProgress()));
-	}
-#endif
 
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
@@ -1153,45 +1137,6 @@ void MainWindow::updateWindowTitle(const QString &title)
 {
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
-
-#ifdef Q_OS_WIN
-void MainWindow::updateWindowsTaskbarProgress()
-{
-	const QList<TransferInformation*> transfers = TransfersManager::getInstance()->getTransfers();
-	qint64 bytesTotal = 0;
-	qint64 bytesReceived = 0;
-	bool hasActiveTransfers = false;
-
-	for (int i = 0; i < transfers.count(); ++i)
-	{
-		if (transfers[i]->state == RunningTransfer && transfers[i]->bytesTotal > 0)
-		{
-			hasActiveTransfers = true;
-			bytesTotal += transfers[i]->bytesTotal;
-			bytesReceived += transfers[i]->bytesReceived;
-		}
-	}
-
-	if (hasActiveTransfers)
-	{
-		if (!m_taskbarButton)
-		{
-			m_taskbarButton = new QWinTaskbarButton(this);
-			m_taskbarButton->setWindow(windowHandle());
-			m_taskbarButton->progress()->show();
-		}
-
-		m_taskbarButton->progress()->setValue((bytesReceived > 0) ? qFloor(((qreal) bytesReceived / bytesTotal) * 100) : 0);
-	}
-	else if (m_taskbarButton)
-	{
-		m_taskbarButton->progress()->reset();
-		m_taskbarButton->progress()->hide();
-		m_taskbarButton->deleteLater();
-		m_taskbarButton = NULL;
-	}
-}
-#endif
 
 Menu* MainWindow::getMenu(const QString &identifier)
 {

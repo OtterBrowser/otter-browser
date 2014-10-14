@@ -24,6 +24,9 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSettings>
+#include <QtWinExtras/QtWin>
+#include <QtWinExtras/QWinTaskbarButton>
+#include <QtWinExtras/QWinTaskbarProgress>
 
 #ifndef NOMINMAX // VC++ fix - http://qt-project.org/forums/viewthread/22133
 #define NOMINMAX
@@ -54,6 +57,8 @@ enum RegistrationType
 	ProtocolType
 };
 
+class MainWindow;
+
 class WindowsPlatformIntegration : public PlatformIntegration
 {
 	Q_OBJECT
@@ -71,12 +76,17 @@ protected:
 	bool registerToSystem();
 	bool isBrowserRegistered() const;
 
+protected slots:
+	void removeWindow(MainWindow *window);
+	void updateTaskbarButtons();
+
 private:
 	QString m_registrationIdentifier;
 	QString m_applicationFilePath;
 	QSettings m_applicationRegistration;
 	QSettings m_propertiesRegistration;
 	QList<QPair<QString, RegistrationType> > m_registrationPairs;
+	QHash<MainWindow*, QWinTaskbarButton*> m_taskbarButtons;
 };
 
 }

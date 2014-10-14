@@ -18,11 +18,14 @@
 **************************************************************************/
 
 #include "WindowsPlatformIntegration.h"
+#include "../../../core/Application.h"
 #include "../../../core/Console.h"
+#include "../../../core/TransfersManager.h"
+#include "../../../ui/MainWindow.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
-#include <QtWidgets/QMessageBox>
+#include <QtCore/QtMath>
 
 namespace Otter
 {
@@ -35,6 +38,68 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 {
 	m_registrationPairs << qMakePair(QLatin1String("http"), ProtocolType) << qMakePair(QLatin1String("https"), ProtocolType) << qMakePair(QLatin1String("ftp"), ProtocolType)
 	<< qMakePair(QLatin1String(".htm"), ExtensionType) << qMakePair(QLatin1String(".html"), ExtensionType) << qMakePair(QLatin1String(".xhtml"), ExtensionType);
+
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
+	{
+		connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(removeWindow(MainWindow*)));
+		connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+	}
+}
+
+void WindowsPlatformIntegration::removeWindow(MainWindow *window)
+{
+	if (m_taskbarButtons.contains(window))
+	{
+		m_taskbarButtons.remove(window);
+	}
+}
+
+void WindowsPlatformIntegration::updateTaskbarButtons()
+{
+	const QList<TransferInformation*> transfers = TransfersManager::getInstance()->getTransfers();
+	qint64 bytesTotal = 0;
+	qint64 bytesReceived = 0;
+	bool hasActiveTransfers = false;
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		if (transfers[i]->state == RunningTransfer && transfers[i]->bytesTotal > 0)
+		{
+			hasActiveTransfers = true;
+			bytesTotal += transfers[i]->bytesTotal;
+			bytesReceived += transfers[i]->bytesReceived;
+		}
+	}
+
+	const QList<MainWindow*> windows = Application::getInstance()->getWindows();
+
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		MainWindow *window = windows.at(i);
+
+		if (hasActiveTransfers)
+		{
+			if (!m_taskbarButtons.contains(window))
+			{
+				m_taskbarButtons[window] = new QWinTaskbarButton(window);
+				m_taskbarButtons[window]->setWindow(window->windowHandle());
+				m_taskbarButtons[window]->progress()->show();
+			}
+
+			m_taskbarButtons[window]->progress()->setValue((bytesReceived > 0) ? qFloor(((qreal) bytesReceived / bytesTotal) * 100) : 0);
+		}
+		else if (m_taskbarButtons.contains(window))
+		{
+			m_taskbarButtons[window]->progress()->reset();
+			m_taskbarButtons[window]->progress()->hide();
+			m_taskbarButtons[window]->deleteLater();
+			m_taskbarButtons.remove(window);
+		}
+	}
 }
 
 bool WindowsPlatformIntegration::setAsDefaultBrowser()
@@ -177,7 +242,7 @@ bool WindowsPlatformIntegration::isDefaultBrowser() const
 		else
 		{
 			isDefault &= (registry.value(QLatin1String("Classes/") + m_registrationPairs.at(i).first + QLatin1String("/."), QString()).toString() == m_registrationIdentifier);
-			
+
 			if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 			{
 				isDefault &= (registry.value(QLatin1String("Microsoft/Windows/CurrentVersion/Explorer/FileExts/") + m_registrationPairs.at(i).first + QLatin1String("/UserChoice/Progid")).toString() == m_registrationIdentifier);

@@ -26,12 +26,6 @@
 #include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMainWindow>
 
-#ifdef Q_OS_WIN
-#include <QtWinExtras/QtWin>
-#include <QtWinExtras/QWinTaskbarButton>
-#include <QtWinExtras/QWinTaskbarProgress>
-#endif
-
 namespace Otter
 {
 
@@ -108,9 +102,6 @@ protected slots:
 	void updateBookmarks();
 	void updateActions();
 	void updateWindowTitle(const QString &title);
-#ifdef Q_OS_WIN
-	void updateWindowsTaskbarProgress();
-#endif
 
 private:
 	ActionsManager *m_actionsManager;
@@ -119,9 +110,6 @@ private:
 	QActionGroup *m_characterEncodingGroup;
 	QActionGroup *m_userAgentGroup;
 	QMenu *m_closedWindowsMenu;
-#ifdef Q_OS_WIN
-	QWinTaskbarButton *m_taskbarButton;
-#endif
 	QString m_currentBookmark;
 	Qt::WindowStates m_previousState;
 	Ui::MainWindow *m_ui;
