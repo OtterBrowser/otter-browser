@@ -377,4 +377,33 @@ QPair<QString, QString> NetworkManager::getUserAgent() const
 	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
 }
 
+QHash<QByteArray, QByteArray> NetworkManager::getHeaders() const
+{
+	QHash<QByteArray, QByteArray> headers;
+
+	if (m_mainReply)
+	{
+		const QList<QNetworkReply::RawHeaderPair> rawHeaders = m_mainReply->rawHeaderPairs();
+
+		for (int i = 0; i < rawHeaders.count(); ++i)
+		{
+			headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
+		}
+	}
+
+	return headers;
+}
+
+QVariantHash NetworkManager::getStatistics() const
+{
+	QVariantHash statistics;
+	statistics[QLatin1String("finishedRequests")] = m_finishedRequests;
+	statistics[QLatin1String("startedRequests")] = m_startedRequests;
+	statistics[QLatin1String("bytesReceived")] = m_bytesReceived;
+	statistics[QLatin1String("bytesTotal")] = m_bytesTotal;
+	statistics[QLatin1String("speed")] = m_speed;
+
+	return statistics;
+}
+
 }

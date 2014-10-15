@@ -38,6 +38,8 @@ public:
 	void setUserAgent(const QString &identifier, const QString &value);
 	NetworkManager* clone(ContentsWidget *parent);
 	QPair<QString, QString> getUserAgent() const;
+	QHash<QByteArray, QByteArray> getHeaders() const;
+	QVariantHash getStatistics() const;
 
 protected:
 	void timerEvent(QTimerEvent *event);
