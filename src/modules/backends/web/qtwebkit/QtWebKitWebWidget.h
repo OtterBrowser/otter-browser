@@ -56,6 +56,8 @@ public:
 	QPixmap getThumbnail();
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	QHash<QByteArray, QByteArray> getHeaders() const;
+	QVariantHash getStatistics() const;
 	QPair<QString, QString> getUserAgent() const;
 	int getZoom() const;
 	bool isLoading() const;

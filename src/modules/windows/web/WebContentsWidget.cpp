@@ -422,6 +422,11 @@ QUndoStack* WebContentsWidget::getUndoStack()
 	return m_webWidget->getUndoStack();
 }
 
+WebWidget* WebContentsWidget::getWebWidget()
+{
+	return m_webWidget;
+}
+
 QString WebContentsWidget::getDefaultCharacterEncoding() const
 {
 	return m_webWidget->getDefaultCharacterEncoding();

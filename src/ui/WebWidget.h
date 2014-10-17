@@ -84,6 +84,8 @@ public:
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
+	virtual QVariantHash getStatistics() const = 0;
 	virtual QPair<QString, QString> getUserAgent() const = 0;
 	virtual int getReloadTime() const;
 	virtual int getZoom() const = 0;

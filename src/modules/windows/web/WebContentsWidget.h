@@ -46,6 +46,7 @@ public:
 	WebContentsWidget* clone(bool cloneHistory = true);
 	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
+	WebWidget* getWebWidget();
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getStatusMessage() const;

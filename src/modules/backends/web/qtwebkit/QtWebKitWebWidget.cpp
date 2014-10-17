@@ -1453,6 +1453,16 @@ QString QtWebKitWebWidget::getSelectedText() const
 	return m_webView->selectedText();
 }
 
+QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
+{
+	return m_networkManager->getHeaders();
+}
+
+QVariantHash QtWebKitWebWidget::getStatistics() const
+{
+	return m_networkManager->getStatistics();
+}
+
 QPair<QString, QString> QtWebKitWebWidget::getUserAgent() const
 {
 	return m_page->getUserAgent();
