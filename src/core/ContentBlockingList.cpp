@@ -20,6 +20,7 @@
 
 #include "ContentBlockingList.h"
 #include "Console.h"
+#include "ContentBlockingManager.h"
 
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QCoreApplication>
@@ -161,6 +162,7 @@ void ContentBlockingList::parseRuleLine(QString line)
 
 	ContentBlockingRule rule;
 	rule.isException = false;
+	rule.needsDomainCheck = false;
 	rule.ruleType = StandardFilterRule;
 	rule.ruleOption = NoOption;
 	rule.exceptionRuleOption = NoOption;
@@ -254,6 +256,8 @@ void ContentBlockingList::parseRuleLine(QString line)
 	if (line.startsWith(QLatin1String("||")))
 	{
 		line = line.mid(2);
+
+		rule.needsDomainCheck = true;
 	}
 
 	if (line.endsWith(QLatin1Char('|')) || line.endsWith(QLatin1Char('*')) || line.endsWith(QLatin1Char('^')))
@@ -603,6 +607,11 @@ bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule rule, const Q
 	{
 		if (request.url().url().contains(rule.rule))
 		{
+			if (rule.needsDomainCheck && !ContentBlockingManager::createSubdomainList(request.url().host()).contains(rule.rule.left(rule.rule.indexOf(QRegExp(QLatin1String("[:\?&/=]"))))))
+			{
+				return false;
+			}
+
 			isBlocked = !rule.isException;
 
 			resolveRuleOptions(rule, request, isBlocked);

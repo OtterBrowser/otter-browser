@@ -67,6 +67,7 @@ public:
 		RuleOptions ruleOption;
 		RuleOptions exceptionRuleOption;
 		bool isException;
+		bool needsDomainCheck;
 	};
 
 	void setEnabled(const bool enabled);
