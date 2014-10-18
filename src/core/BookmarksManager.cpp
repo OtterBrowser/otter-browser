@@ -74,6 +74,8 @@ void BookmarksManager::load()
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
+		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+
 		return;
 	}
 
