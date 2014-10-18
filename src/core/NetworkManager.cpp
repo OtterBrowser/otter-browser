@@ -321,7 +321,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		QUrl url = QUrl();
 		url.setScheme(QLatin1String("http"));
 
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::HeadOperation, QNetworkRequest(url));
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
 	}
 
 	QNetworkRequest mutableRequest(request);
