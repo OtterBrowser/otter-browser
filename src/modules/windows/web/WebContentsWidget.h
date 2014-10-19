@@ -50,7 +50,6 @@ public:
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getStatusMessage() const;
-	QString getQuickFindValue() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
