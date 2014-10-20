@@ -29,7 +29,7 @@
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Cette session n&apos;a pas été enregistrée correctement.
-Êtes vous sûr de vouloir restaurer cette session ?</translation>
+Êtes-vous sûr de vouloir restaurer cette session ?</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation>Mot clé :</translation>
+        <translation>Mot-clé :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="47"/>
@@ -137,7 +137,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="140"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>Un signet utilisant ce mot clé existe déjà.</translation>
+        <translation>Un signet utilisant ce mot-clé existe déjà.</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation>Mot clé :</translation>
+        <translation>Mot-clé :</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -245,7 +245,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="227"/>
         <source>Open in New Background Window</source>
-        <translation>Ouvrir dans une fenetre en arrière-plan</translation>
+        <translation>Ouvrir dans une fenêtre en arrière-plan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="240"/>
@@ -278,12 +278,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation>Supprimer le signet existant</translation>
+        <translation>Supprimer les signets existants</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
         <source>Import into folder:</source>
-        <translation>Importer dans un dossier</translation>
+        <translation>Importer dans le dossier :</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
@@ -419,7 +419,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="385"/>
         <source>Open in New Background Window</source>
-        <translation>Ouvrir dans une fenetre en arrière-plan</translation>
+        <translation>Ouvrir dans une fenêtre en arrière-plan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
@@ -502,12 +502,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation>Effacer les données des sites</translation>
+        <translation>Effacer les données de stockage des sites</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation>Effacer les mots de passes</translation>
+        <translation>Effacer les mots de passe</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
@@ -682,7 +682,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation>Sûr</translation>
+        <translation>Sécurisé</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
@@ -824,7 +824,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
         <source>Open in New Background Window</source>
-        <translation>Ouvrir dans une fenetre en arrière-plan</translation>
+        <translation>Ouvrir dans une fenêtre en arrière-plan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
@@ -1040,7 +1040,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="309"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Vous allez quitter alors qu&apos;il y a encore %n fichiers en transfert.</numerusform><numerusform>Vous allez quitter alors qu&apos;il y a encore %n fichiers en transfert.</numerusform></translation>
+        <translation><numerusform>Vous allez quitter alors qu&apos;il y a encore %n fichiers en transfert.</numerusform><numerusform>Vous allez quitter alors qu&apos;il y a encore %n fichiers en cours de téléchargement.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="310"/>
@@ -1057,7 +1057,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="340"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Vous êtes sur le point de quitter la session courante d&apos;Otter</translation>
+        <translation>Vous êtes sur le point de quitter la session courante d&apos;Otter Browser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="505"/>
@@ -1172,7 +1172,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="1269"/>
         <source>Open in New Background Window</source>
-        <translation>Ouvrir dans une fenetre en arrière-plan</translation>
+        <translation>Ouvrir dans une fenêtre en arrière-plan</translation>
     </message>
 </context>
 <context>
@@ -1228,7 +1228,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Entrer le mot clé du signet</translation>
+        <translation>Entrer le mot-clé du signet</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1288,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="67"/>
         <source>Show startup dialog</source>
-        <translation>Afficher la fenêtre pour choisir</translation>
+        <translation>Afficher la fenêtre de démarrage</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
@@ -1318,7 +1318,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="130"/>
         <source>Restore to Default</source>
-        <translation>Par défaut</translation>
+        <translation>Rétablir la valeur par défaut</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="147"/>
@@ -1576,7 +1576,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
         <source>Accept third-party cookies:</source>
-        <translation>Accepter les cookies de tiers :</translation>
+        <translation>Accepter les cookies tiers :</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
@@ -1621,17 +1621,17 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="971"/>
         <source>Settings...</source>
-        <translation>Paramêtres...</translation>
+        <translation>Paramètres...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="991"/>
         <source>Passwords</source>
-        <translation>Mots de passes</translation>
+        <translation>Mots de passe</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1003"/>
         <source>Remember passwords</source>
-        <translation>Se souvenir des mots de passes</translation>
+        <translation>Se souvenir des mots de passe</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1026"/>
@@ -1647,7 +1647,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1063"/>
         <source>Change...</source>
-        <translation>Changer...</translation>
+        <translation>Modifier...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
@@ -1708,7 +1708,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
         <source>Address Field</source>
-        <translation>Champs d&apos;adresse</translation>
+        <translation>Champ d&apos;adresses</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
@@ -1743,7 +1743,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
         <source>Suggest search results</source>
-        <translation>Suggérer des résultats de recherche</translation>
+        <translation>Suggérer à partir des résultats de recherche</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
@@ -1932,7 +1932,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
         <source>Keyword</source>
-        <translation>Mot clé</translation>
+        <translation>Mot-clé</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
@@ -1961,12 +1961,12 @@ Voulez-vous continuer ?</translation>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Select Identifier</source>
-        <translation>Choisir un identifieur</translation>
+        <translation>Choisir un identificateur</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation>Entrer l&apos;identifieur unique de moteur de recherche</translation>
+        <translation>Entrer l&apos;identificateur unique de moteur de recherche</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
@@ -2004,12 +2004,12 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
         <source>Identifier</source>
-        <translation>Identifieur</translation>
+        <translation>Identificateur</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation>Entrer l&apos;identifieur unique de profile</translation>
+        <translation>Entrer l&apos;identificateur unique de profile</translation>
     </message>
 </context>
 <context>
@@ -2136,7 +2136,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="457"/>
         <source>No search engines defined</source>
-        <translation>Pas de moteurs de recherches définis</translation>
+        <translation>Pas de moteurs de recherche définis</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="655"/>
@@ -2146,12 +2146,12 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
         <source>Select Identifier</source>
-        <translation>Choisir un identifieur</translation>
+        <translation>Choisir un identificateur</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation>Entrer l&apos;identifieur unique de moteur de recherche</translation>
+        <translation>Entrer l&apos;identificateur unique de moteur de recherche</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1070"/>
@@ -2186,7 +2186,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1087"/>
         <source>Show Controls</source>
-        <translation>Montrer les controls</translation>
+        <translation>Montrer les contrôles</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1088"/>
@@ -2256,7 +2256,7 @@ Adresse : %2</translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation>Identifieur de la session :</translation>
+        <translation>Identificateur de la session :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
@@ -2272,7 +2272,7 @@ Adresse : %2</translation>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation>Une session avec le même identifieur existe déjà.
+        <translation>Une session avec le même identificateur existe déjà.
 Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
@@ -2311,7 +2311,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Keyword:</source>
-        <translation>Mot clé :</translation>
+        <translation>Mot-clé :</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
@@ -2382,7 +2382,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="137"/>
         <source>Search Terms</source>
-        <translation>Élements de recherche</translation>
+        <translation>Éléments de recherche</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="138"/>
@@ -2435,7 +2435,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
         <source>Identifier</source>
-        <translation>Identifieur</translation>
+        <translation>Identificateur</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
@@ -2473,7 +2473,7 @@ Voulez-vous l&apos;écraser ?</translation>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Cette session n&apos;a pas été enregistrée correctement.
-Êtes vous sûr de vouloir restaurer cette session ?</translation>
+Êtes-vous sûr de vouloir restaurer cette session ?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
@@ -2501,7 +2501,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Configuration de profil</translation>
+        <translation>Configuration du profil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
@@ -2539,7 +2539,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="221"/>
         <source>Description:</source>
-        <translation>Description</translation>
+        <translation>Description :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="231"/>
@@ -2570,12 +2570,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Select Identifier</source>
-        <translation>Choisir l&apos;identifieur</translation>
+        <translation>Choisir l&apos;identificateur</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Enter Unique Macro Identifier:</source>
-        <translation>Entrer l&apos;identifieur unique de macro :</translation>
+        <translation>Entrer l&apos;identificateur unique de macro :</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
@@ -2799,7 +2799,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
-        <translation>Ce téléchargement est en court.
+        <translation>Ce téléchargement est en cours.
 Voulez-vous vraiment le supprimer ?</translation>
     </message>
     <message>
@@ -2913,7 +2913,7 @@ Choisissez-en un autre.</translation>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>L&apos;écriture n&apos;est pas possible dans le chemin cible.
-En choisir un autre.</translation>
+Choisissez-en un autre.</translation>
     </message>
 </context>
 <context>
@@ -3044,7 +3044,7 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/ui/Window.ui" line="68"/>
         <source>Enter address or search...</source>
-        <translation>Entrer l&apos;adresse ou la recherche</translation>
+        <translation>Entrer l&apos;adresse ou la recherche...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="222"/>
@@ -3203,7 +3203,7 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Save Current Session...</source>
-        <translation>Enregistrer la session courante</translation>
+        <translation>Enregistrer la session courante...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
@@ -3294,7 +3294,7 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Arrêter</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
@@ -3385,7 +3385,7 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation>Bloqueur de contenu...</translation>
+        <translation>Bloqueur de contenus...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -3448,7 +3448,7 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation>Ouvrir dans une fenetre en arrière-plan</translation>
+        <translation>Ouvrir dans une fenêtre en arrière-plan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
@@ -3671,17 +3671,17 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="382"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation>Restaurer la session &lt;session&gt; si elle existe</translation>
+        <translation>Restaure la session &lt;session&gt; si elle existe</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="383"/>
         <source>Starts private session</source>
-        <translation>Commencer une session privée</translation>
+        <translation>Commence une session privée</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="384"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation>Définir les dossiers de profil et de cache de telle sorte qu&apos;ils soient dans le dossier des fichiers binaires de l&apos;application</translation>
+        <translation>Définit les dossiers de profil et de cache de telle sorte qu&apos;ils soient dans le dossier des fichiers binaires de l&apos;application</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="49"/>
@@ -3696,17 +3696,17 @@ En choisir un autre.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="459"/>
         <source>Content blocking file checksum mismatch: %0</source>
-        <translation>La somme de contrôle du fichier du bloqueur de contenu ne correspond pas : %0</translation>
+        <translation>La somme de contrôle du fichier du bloqueur de contenus ne correspond pas : %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="467"/>
         <source>Unable to download update for content blocking: %0</source>
-        <translation>Impossible de télécharger une mise à jour pour le bloqueur de contenu : %0</translation>
+        <translation>Impossible de télécharger une mise à jour pour le bloqueur de contenus : %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="478"/>
         <source>Unable to write downloaded content blocking file: %0</source>
-        <translation>Impossible d&apos;écrire le fichier télécharger du bloqueur de contenu : %0</translation>
+        <translation>Impossible d&apos;écrire le fichier téléchargé du bloqueur de contenus : %0</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>

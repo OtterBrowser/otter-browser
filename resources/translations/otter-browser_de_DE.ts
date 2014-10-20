@@ -2926,12 +2926,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Neues Unterfenster</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Neues, privates Unterfenster</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
@@ -3172,7 +3172,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Neues, privates Unterfenster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
@@ -3425,19 +3425,19 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>In diesem Unterfenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>In neuem Unterfenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>In neuem Hintergrund Unterfenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
@@ -3557,7 +3557,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Suche mit</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
@@ -3642,12 +3642,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Zum linken Unterfenster</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Zum rechten Unterfenster</translation>
     </message>
 </context>
 <context>

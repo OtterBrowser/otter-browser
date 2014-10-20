@@ -144,12 +144,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Ime mape</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Izberite ime nove mape:</translation>
     </message>
 </context>
 <context>
@@ -177,7 +177,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Ključna beseda:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -219,7 +219,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="210"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Izprazni koš</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
@@ -287,12 +287,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>Novo</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Dovoli podvajanje že obstoječih zaznamkov.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -315,12 +315,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Zaznamki</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="216"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Koš</translation>
     </message>
 </context>
 <context>
@@ -423,7 +423,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj povezavo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
@@ -833,7 +833,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj povezavo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
@@ -856,7 +856,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="174"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>HTML zaznamki</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
@@ -1023,12 +1023,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="149"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Uvozi Opera zaznamke</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="150"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Uvozi HTML zaznamke</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="308"/>
@@ -1230,7 +1230,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="89"/>
         <source>Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Opera zaznamki</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="94"/>
@@ -2902,47 +2902,47 @@ Select another one.</source>
         <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Prikaži okna</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nov zavihek</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nov privatni zavihek</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Zaznamki</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Prenosi</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Zgodovina</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Izhod</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="48"/>
         <source>Otter Browser</source>
-        <translation type="unfinished"/>
+        <translation>Brskalnik Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Hide Windows</source>
-        <translation type="unfinished"/>
+        <translation>Skrij okna</translation>
     </message>
 </context>
 <context>
@@ -3088,7 +3088,7 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Datoteka</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
@@ -3098,17 +3098,17 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Uvoz in izvoz</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Uredi</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Pogled</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
@@ -3123,62 +3123,62 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Zgodovina</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Closed Windows</source>
-        <translation type="unfinished"/>
+        <translation>Zaprta okna</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Zaznamki</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Orodja</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Pomoč</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nov zavihek</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nov privatni zavihek</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Novo okno</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Novo privatno okno</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Odpri...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Shrani...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Zapri zavihek</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
@@ -3193,12 +3193,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Natisni...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Predogled tiskanja</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
@@ -3218,7 +3218,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Razveljavi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="57"/>
@@ -3228,79 +3228,79 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Izreži</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Prilepi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Izbriši</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Izberi vse</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Najdi...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Najdi naslednje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Najdi prejšnje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Naloži ponovno</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Ustavi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Povečaj povečavo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Zmanjšaj povečavo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Originalna povečava</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Cel zaslon</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Poglej vir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
@@ -3315,57 +3315,57 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Nazaj</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Naprej</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Prevrti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Hitro predvajanje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Poglej zgodovino</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Počisti zgodovino...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj zaznamek...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Urejanje zaznamke...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Prenosi...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Piškotki...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Blokiranje vsebine...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -3375,105 +3375,105 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Lastnosti...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Switch Application Language...</source>
-        <translation type="unfinished"/>
+        <translation>Zamenjaj jezik...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>About Otter...</source>
-        <translation type="unfinished"/>
+        <translation>O programu...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="90"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>O QT...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="91"/>
         <source>Close Window</source>
-        <translation type="unfinished"/>
+        <translation>Zapri okno</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="92"/>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Odpri</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri v tem zavihku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri v novem zavihku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri v novem zavihku v ozadju</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Odpri v novem oknu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Odpri v novem oknu v ozadju</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno odpri zaprti zavihek</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="99"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj povezavo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri okvir v tem zavihku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri okvir v novem zavihku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odpri okvir v novem zavihku v ozadju</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj povezavo do okvirja</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno naloži okvir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno naloži sliko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Shrani povezavo kot...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
@@ -3483,7 +3483,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Povezava zaznamka...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
@@ -3493,7 +3493,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj naslov</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
@@ -3503,62 +3503,62 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Lastnosti spletne strani...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Lastnosti slike...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Odpri sliko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="116"/>
         <source>Save Image...</source>
-        <translation type="unfinished"/>
+        <translation>Shrani sliko...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj sliko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj povezavo do slike</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Išči</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Išči z</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Pojdi na ta naslov</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Počisti vse</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Preveri črkovanje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari iskanje...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
@@ -3578,7 +3578,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Pokaži kontrole</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="129"/>
@@ -3588,47 +3588,47 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="130"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Predvajaj</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Tiho</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="132"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Hiter dostop do zaznamkov</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="133"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Hitro iskanje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Aktiviraj naslovno polje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj kot golo besedilo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="136"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Prilepi in pojdi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Pojdi na zavihek na levi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Pojdi na zavihek na desni</translation>
     </message>
 </context>
 <context>

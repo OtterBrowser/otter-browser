@@ -28,8 +28,8 @@
         <location filename="../../src/core/Application.cpp" line="262"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Эта сессия не была сохранена корректно.
-Всё равно восстановить эту сессию?</translation>
+        <translation>Этот сеанс не был сохранён корректно.
+Всё равно восстановить этот сеанс?</translation>
     </message>
 </context>
 <context>
@@ -145,12 +145,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя папки</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Выбрать имя папки:</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Ключевое слово:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -220,7 +220,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="210"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Очистить корзину</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
@@ -255,7 +255,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="259"/>
         <source>Restore Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="263"/>
@@ -270,7 +270,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="353"/>
         <source>Bookmarks Manager</source>
-        <translation>Закладки</translation>
+        <translation>Управлять закладками</translation>
     </message>
 </context>
 <context>
@@ -288,12 +288,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить дублировать уже существующие закладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -316,12 +316,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="216"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Корзина</translation>
     </message>
 </context>
 <context>
@@ -452,7 +452,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>Удаление личных данных</translation>
+        <translation>Удалить историю</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
@@ -834,7 +834,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
         <source>Copy Link to Clipboard</source>
-        <translation>Копировать</translation>
+        <translation>Копировать адрес ссылки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
@@ -857,7 +857,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="174"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки HTML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
@@ -1024,12 +1024,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="149"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать закладки Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="150"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать закладки HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="308"/>
@@ -1057,7 +1057,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="340"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Вы намерены покинуть текущий сеанс Otter Browser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="505"/>
@@ -1235,7 +1235,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="89"/>
         <source>Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="94"/>
@@ -2102,7 +2102,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="447"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 ошибка #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
@@ -2250,7 +2250,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation>Имя сессии:</translation>
+        <translation>Имя сеанса:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
@@ -2471,8 +2471,8 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="103"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Эта сессия не была сохранена корректно.
-Всё равно восстановить эту сессию?</translation>
+        <translation>Этот сеанс не был сохранён корректно.
+Всё равно восстановить этот сеанс?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="120"/>
@@ -2492,7 +2492,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="128"/>
         <source>Failed to delete session.</source>
-        <translation>Ошибка при удалении сессии.</translation>
+        <translation>Ошибка при удалении сеанса.</translation>
     </message>
 </context>
 <context>
@@ -2587,32 +2587,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="172"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="177"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Кэш</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="182"/>
         <source>Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Настройка</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="187"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="192"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="197"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Загрузки</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2626,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation>Продолжить сессию</translation>
+        <translation>Продолжить сеанс</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
@@ -2921,47 +2921,47 @@ Select another one.</source>
         <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Показать окна</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Новая вкладка</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Новая приватная вкладка</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Загрузки</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Выход</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="48"/>
         <source>Otter Browser</source>
-        <translation type="unfinished"/>
+        <translation>Otter Browser</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Hide Windows</source>
-        <translation type="unfinished"/>
+        <translation>Спрятать окна</translation>
     </message>
 </context>
 <context>
@@ -3107,547 +3107,547 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Сеансы</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Импорт и экспорт</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Правка</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Вид</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Идентификация браузера</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Кодировка символов</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Closed Windows</source>
-        <translation type="unfinished"/>
+        <translation>Закрытые окна</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Справка</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Новая вкладка</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Новая приватная вкладка</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Новое окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Новое приватное окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Открыть...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить текущий сеанс...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Управление сеансами...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Печать...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Предварительный просмотр</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Hаботать в автономном режиме</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Показать панель меню</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Выход</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="57"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Вернуть</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Вырезать</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Копировать</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Вставаить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Выделить всё</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Найти на странице...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Найти следующее</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Найти предыдущее</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Остановить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Приблизить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Отдалить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Оригинальный размер</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Во весь экран</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Просмотреть исходный код</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Инспектировать страницу</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Show Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Показать боковую панель</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Вперёд</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>В конец</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>В начало</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Просмотреть историю</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Очистить историю...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Добавить закладку...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Управлять закладками...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Загрузки...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Cookies...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Блокировка содержимого...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Консоль ошибок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Настройки...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Switch Application Language...</source>
-        <translation type="unfinished"/>
+        <translation>Изменить язык приложения...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>About Otter...</source>
-        <translation type="unfinished"/>
+        <translation>О Otter...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="90"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>О Qt...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="91"/>
         <source>Close Window</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="92"/>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в этой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в новой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в новой фоновой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в новом окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в новом фоновом окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть ранее закрытую вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="99"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать адрес ссылки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть фрейм в этой вкладе</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть фрейм в новой вкладе</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открыть фрейм в новой фоновой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать адрес фрейма в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Обновить фрейм</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Обновить изображение</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить по ссылке как...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить в папку загрузок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Ссылка закладки...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Перезагружать каждые</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Копировать адрес</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
         <source>Validate</source>
-        <translation type="unfinished"/>
+        <translation>Проверить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Предпочтения сайта...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Свойства изображения...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Открыть изображение</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="116"/>
         <source>Save Image...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить изображение...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать изображение в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать адрес изображения в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Искать</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Искать в</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Перейти по адресу</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Очистить всё</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Проверка орфографии</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Создать поиск...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Inspect Element...</source>
-        <translation type="unfinished"/>
+        <translation>Инспектировать элемент...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить медиа...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать ссылку на медиа в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Показать управление</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="129"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Повторять</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="130"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Воспроизвести</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Приглушить звук</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="132"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Быстрый доступ к закладкам</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="133"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Быстрый поиск</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Активировать поле адреса</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Копировать как обычный текст</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="136"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Вставить и перейти</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Перейти на вкладку слева</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Перейти на вкладку справа</translation>
     </message>
 </context>
 <context>
@@ -3675,7 +3675,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="383"/>
         <source>Starts private session</source>
-        <translation>Начать приватную сессию</translation>
+        <translation>Начать приватный сеанс</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="384"/>
