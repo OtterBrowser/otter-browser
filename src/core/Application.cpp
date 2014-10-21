@@ -55,7 +55,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_platformIntegration(NULL),
 	m_qtTranslator(NULL),
 	m_applicationTranslator(NULL),
-	m_localServer(NULL)
+	m_localServer(NULL),
+	m_isHidden(false)
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationVersion(QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT));
@@ -313,6 +314,38 @@ void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 	}
 }
 
+void Application::setHidden(bool hidden)
+{
+	if (hidden == m_isHidden)
+	{
+		return;
+	}
+
+	m_isHidden = hidden;
+
+	const QList<MainWindow*> windows = SessionsManager::getWindows();
+
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		if (!windows.at(i))
+		{
+			continue;
+		}
+
+		if (m_isHidden)
+		{
+			windows.at(i)->storeWindowState();
+			windows.at(i)->hide();
+		}
+		else
+		{
+			windows.at(i)->show();
+			windows.at(i)->activateWindow();
+			windows.at(i)->restoreWindowState();
+		}
+	}
+}
+
 void Application::setLocale(const QString &locale)
 {
 	if (!m_qtTranslator)
@@ -401,6 +434,11 @@ QString Application::getLocalePath() const
 QList<MainWindow*> Application::getWindows() const
 {
 	return m_windows;
+}
+
+bool Application::isHidden() const
+{
+	return m_isHidden;
 }
 
 bool Application::isRunning() const

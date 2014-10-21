@@ -50,11 +50,13 @@ public:
 	QCommandLineParser* getParser() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;
+	bool isHidden() const;
 	bool isRunning() const;
 
 public slots:
 	void close();
 	void newWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
+	void setHidden(bool hidden);
 
 protected slots:
 	void newConnection();
@@ -66,6 +68,7 @@ private:
 	QLocalServer *m_localServer;
 	QString m_localePath;
 	QList<MainWindow*> m_windows;
+	bool m_isHidden;
 
 	static Application *m_instance;
 

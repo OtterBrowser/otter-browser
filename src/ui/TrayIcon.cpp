@@ -20,7 +20,6 @@
 #include "TrayIcon.h"
 #include "MainWindow.h"
 #include "../core/Application.h"
-#include "../core/SessionsManager.h"
 
 #include <QtWidgets/QMenu>
 
@@ -28,8 +27,7 @@ namespace Otter
 {
 
 TrayIcon::TrayIcon(Application *parent) : QObject(parent),
-	m_icon(new QSystemTrayIcon(this)),
-	m_isHidden(false)
+	m_icon(new QSystemTrayIcon(this))
 {
 	QMenu *menu = new QMenu();
 	menu->addAction(tr("Show Windows"))->setData(QLatin1String("toggleVisibility"));
@@ -62,29 +60,8 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger)
 	{
-		const QList<MainWindow*> windows = SessionsManager::getWindows();
-
-		for (int i = 0; i < windows.count(); ++i)
-		{
-			if (!windows.at(i))
-			{
-				continue;
-			}
-
-			if (m_isHidden)
-			{
-				windows.at(i)->show();
-				windows.at(i)->activateWindow();
-				windows.at(i)->restoreWindowState();
-			}
-			else
-			{
-				windows.at(i)->storeWindowState();
-				windows.at(i)->hide();
-			}
-		}
-
-		m_isHidden = !m_isHidden;
+		Application *application = Application::getInstance();
+		application->setHidden(!application->isHidden());
 	}
 }
 
@@ -144,7 +121,7 @@ void TrayIcon::hide()
 
 void TrayIcon::updateMenu()
 {
-	m_icon->contextMenu()->actions().at(0)->setText(m_isHidden ? tr("Show Windows") : tr("Hide Windows"));
+	m_icon->contextMenu()->actions().at(0)->setText(Application::getInstance()->isHidden() ? tr("Show Windows") : tr("Hide Windows"));
 }
 
 }
