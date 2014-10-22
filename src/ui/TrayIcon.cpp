@@ -98,15 +98,30 @@ void TrayIcon::triggerAction(QAction *action)
 			}
 			else if (identifier == QLatin1String("bookmarks"))
 			{
-				manager->open(QUrl(QLatin1String("about:bookmarks")));
+				const QUrl url(QLatin1String("about:bookmarks"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					manager->open(url);
+				}
 			}
 			else if (identifier == QLatin1String("transfers"))
 			{
-				manager->open(QUrl(QLatin1String("about:transfers")));
+				const QUrl url(QLatin1String("about:transfers"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					manager->open(url);
+				}
 			}
 			else if (identifier == QLatin1String("history"))
 			{
-				manager->open(QUrl(QLatin1String("about:history")));
+				const QUrl url(QLatin1String("about:history"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					manager->open(url);
+				}
 			}
 		}
 	}
