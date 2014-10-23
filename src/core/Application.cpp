@@ -121,6 +121,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		const QStringList decodedArguments = arguments();
 		QStringList encodedArguments;
 
+#ifdef Q_OS_WIN
+		AllowSetForegroundWindow(ASFW_ANY);
+#endif
+
 		for (int i = 0; i < decodedArguments.count(); ++i)
 		{
 			encodedArguments.append(decodedArguments.at(i).toUtf8().toBase64());
@@ -299,6 +303,15 @@ void Application::newConnection()
 	{
 		window->raise();
 		window->activateWindow();
+
+		if (m_isHidden)
+		{
+			setHidden(false);
+		}
+		else
+		{
+			window->restoreWindowState();
+		}
 	}
 
 	delete parser;
