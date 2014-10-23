@@ -84,6 +84,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 		m_ui->menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_ui->menuBar));
 	}
 
+	m_ui->menuBar->setVisible(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+
 	SessionsManager::setActiveWindow(this);
 
 	m_ui->statusBar->setup();
@@ -104,6 +106,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	SessionsManager::registerWindow(this);
 
 	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
+	m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
 	m_actionsManager->getAction(QLatin1String("Exit"))->setMenuRole(QAction::QuitRole);
 	m_actionsManager->getAction(QLatin1String("Preferences"))->setMenuRole(QAction::PreferencesRole);
 	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
@@ -187,6 +190,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("Print")), SIGNAL(triggered()), m_windowsManager, SLOT(print()));
 	connect(m_actionsManager->getAction(QLatin1String("PrintPreview")), SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
+	connect(m_actionsManager->getAction(QLatin1String("ShowMenuBar")), SIGNAL(toggled(bool)), this, SLOT(actionShowMenuBar(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("Exit")), SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
 	connect(m_actionsManager->getAction(QLatin1String("Undo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(QLatin1String("Redo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
@@ -472,6 +476,10 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(value.toBool());
 	}
+	else if (option == QLatin1String("Interface/ShowMenuBar"))
+	{
+		m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(value.toBool());
+	}
 }
 
 void MainWindow::actionNewTabPrivate()
@@ -525,6 +533,13 @@ void MainWindow::actionImport(QAction *action)
 void MainWindow::actionWorkOffline(bool enabled)
 {
 	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enabled);
+}
+
+void MainWindow::actionShowMenuBar(bool enable)
+{
+	m_ui->menuBar->setVisible(enable);
+
+	SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), enable);
 }
 
 void MainWindow::actionFullScreen()

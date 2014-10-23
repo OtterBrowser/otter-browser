@@ -64,7 +64,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("Print"), QT_TRANSLATE_NOOP("actions", "Print..."), QString(), Utils::getIcon(QLatin1String("document-print")));
 		registerAction(QLatin1String("PrintPreview"), QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
 		registerAction(QLatin1String("WorkOffline"), QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), true, true, false);
-		registerAction(QLatin1String("ShowMenubar"), QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), false, true, true);
+		registerAction(QLatin1String("ShowMenuBar"), QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), true, true, true);
 		registerAction(QLatin1String("Exit"), QT_TRANSLATE_NOOP("actions", "Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));
 		registerAction(QLatin1String("Undo"), QT_TRANSLATE_NOOP("actions", "Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")), true, false, false, UndoAction);
 		registerAction(QLatin1String("Redo"), QT_TRANSLATE_NOOP("actions", "Redo"), QString(), Utils::getIcon(QLatin1String("edit-redo")), true, false, false, RedoAction);

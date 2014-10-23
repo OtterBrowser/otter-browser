@@ -72,6 +72,7 @@ protected slots:
 	void actionSession(QAction *action);
 	void actionImport(QAction *action);
 	void actionWorkOffline(bool enabled);
+	void actionShowMenuBar(bool enable);
 	void actionFullScreen();
 	void actionUserAgent(QAction *action);
 	void actionCharacterEncoding(QAction *action);
