@@ -20,6 +20,7 @@
 
 #include "BookmarksManager.h"
 #include "BookmarksModel.h"
+#include "Console.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
@@ -27,6 +28,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QTimer>
 #include <QtCore/QUrl>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -72,9 +74,16 @@ void BookmarksManager::load()
 {
 	QFile file(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
 
-	if (!file.open(QFile::ReadOnly | QFile::Text))
+	if (!file.exists())
 	{
 		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+
+		return;
+	}
+
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		Console::addMessage(tr("Failed to open bookmarks file: %0").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
@@ -92,6 +101,16 @@ void BookmarksManager::load()
 			else
 			{
 				reader.skipCurrentElement();
+			}
+
+			if (reader.hasError())
+			{
+				m_model->clear();
+
+				QMessageBox::warning(NULL, tr("Error"), tr("Failed to parse bookmarks file. No bookmarks were loaded."), QMessageBox::Close);
+				Console::addMessage(tr("Bookmarks file was not loaded sucesfully. XmlStreamReader error %0").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
+
+				return;
 			}
 		}
 	}
@@ -177,6 +196,10 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 			{
 				break;
 			}
+			else if (reader->hasError())
+			{
+				return;
+			}
 		}
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
@@ -248,6 +271,10 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 			else if (reader->isEndElement() && reader->name() == QLatin1String("bookmark"))
 			{
 				break;
+			}
+			else if (reader->hasError())
+			{
+				return;
 			}
 		}
 	}
