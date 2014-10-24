@@ -24,6 +24,7 @@
 #include "../core/WindowsManager.h"
 
 #include <QtWidgets/QActionGroup>
+#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
 
 namespace Otter
@@ -58,6 +59,7 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
+	void createMenuBar();
 	void updateAction(QAction *source, QAction *target);
 	Menu* getMenu(const QString &identifier);
 	bool event(QEvent *event);
@@ -107,6 +109,7 @@ protected slots:
 private:
 	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
+	QMenuBar *m_menuBar;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_characterEncodingGroup;
 	QActionGroup *m_userAgentGroup;

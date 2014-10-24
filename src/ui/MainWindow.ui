@@ -35,16 +35,6 @@
    </attribute>
    <widget class="QWidget" name="tabsWidget"/>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>640</width>
-     <height>24</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="Otter::StatusBarWidget" name="statusBar"/>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="windowTitle">

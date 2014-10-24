@@ -63,6 +63,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
 	m_actionsManager(NULL),
 	m_windowsManager(NULL),
+	m_menuBar(NULL),
 	m_sessionsGroup(NULL),
 	m_characterEncodingGroup(NULL),
 	m_userAgentGroup(NULL),
@@ -73,18 +74,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_actionsManager = new ActionsManager(this);
 
-	const QString menuBarPath = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
-	QFile menuBarFile(QFile::exists(menuBarPath) ? menuBarPath : QLatin1String(":/other/menuBar.json"));
-	menuBarFile.open(QFile::ReadOnly);
-
-	const QJsonArray menuBar = QJsonDocument::fromJson(menuBarFile.readAll()).array();
-
-	for (int i = 0; i < menuBar.count(); ++i)
+	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
 	{
-		m_ui->menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_ui->menuBar));
+		createMenuBar();
 	}
-
-	m_ui->menuBar->setVisible(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
 
 	SessionsManager::setActiveWindow(this);
 
@@ -397,6 +390,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
+void MainWindow::createMenuBar()
+{
+	m_menuBar = new QMenuBar(this);
+
+	setMenuBar(m_menuBar);
+
+	const QString menuBarPath = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
+	QFile menuBarFile(QFile::exists(menuBarPath) ? menuBarPath : QLatin1String(":/other/menuBar.json"));
+	menuBarFile.open(QFile::ReadOnly);
+
+	const QJsonArray menuBar = QJsonDocument::fromJson(menuBarFile.readAll()).array();
+
+	for (int i = 0; i < menuBar.count(); ++i)
+	{
+		m_menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_menuBar));
+	}
+}
+
 void MainWindow::openUrl(const QString &input)
 {
 	BookmarksItem *bookmark = BookmarksManager::getBookmark(input);
@@ -537,7 +548,18 @@ void MainWindow::actionWorkOffline(bool enabled)
 
 void MainWindow::actionShowMenuBar(bool enable)
 {
-	m_ui->menuBar->setVisible(enable);
+	if (enable && !m_menuBar)
+	{
+		createMenuBar();
+	}
+	else if (!enable && m_menuBar)
+	{
+		m_menuBar->deleteLater();
+
+		setMenuBar(NULL);
+
+		m_menuBar = NULL;
+	}
 
 	SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), enable);
 }
@@ -1155,7 +1177,12 @@ void MainWindow::updateWindowTitle(const QString &title)
 
 Menu* MainWindow::getMenu(const QString &identifier)
 {
-	return m_ui->menuBar->findChild<Menu*>(identifier);
+	if (!m_menuBar)
+	{
+		return NULL;
+	}
+
+	return m_menuBar->findChild<Menu*>(identifier);
 }
 
 ActionsManager* MainWindow::getActionsManager()
@@ -1177,16 +1204,24 @@ bool MainWindow::event(QEvent *event)
 		if (isFullScreen())
 		{
 			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
-			m_ui->menuBar->hide();
 			m_ui->statusBar->hide();
+
+			if (m_menuBar)
+			{
+				m_menuBar->hide();
+			}
 
 			centralWidget()->installEventFilter(this);
 		}
 		else
 		{
 			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-			m_ui->menuBar->show();
 			m_ui->statusBar->show();
+
+			if (m_menuBar)
+			{
+				m_menuBar->show();
+			}
 
 			centralWidget()->removeEventFilter(this);
 		}
