@@ -9,4 +9,5 @@ debug
 *.sln
 *.sdf
 *.user
-
+.kde4
+*.kde4

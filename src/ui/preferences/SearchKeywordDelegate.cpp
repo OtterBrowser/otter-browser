@@ -69,4 +69,12 @@ QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOption
 	return widget;
 }
 
+QSize SearchKeywordDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize result = index.data(Qt::SizeHintRole).toSize();
+	result.setHeight(option.fontMetrics.height());
+	
+	return result;
+}
+
 }

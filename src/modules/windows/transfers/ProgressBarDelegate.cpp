@@ -45,4 +45,12 @@ void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
 }
 
+QSize ProgressBarDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize result = index.data(Qt::SizeHintRole).toSize();
+	result.setHeight(option.fontMetrics.height());
+	
+	return result;
+}
+
 }
