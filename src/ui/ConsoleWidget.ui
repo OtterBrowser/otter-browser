@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>661</width>
     <height>300</height>
    </rect>
   </property>
@@ -152,6 +152,9 @@
    </item>
    <item>
     <widget class="QTreeView" name="consoleView">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>

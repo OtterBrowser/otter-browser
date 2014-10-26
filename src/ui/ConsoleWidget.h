@@ -47,8 +47,10 @@ protected:
 protected slots:
 	void addMessage(ConsoleMessage *message);
 	void clear();
+	void copyText();
 	void filterCategories();
 	void filterMessages(const QString &filter);
+	void showContextMenu(const QPoint position);
 
 private:
 	QStandardItemModel *m_model;

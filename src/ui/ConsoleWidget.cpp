@@ -22,6 +22,9 @@
 
 #include "ui_ConsoleWidget.h"
 
+#include <QtGui/QClipboard>
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
@@ -38,6 +41,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 	connect(m_ui->otherButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterMessages(QString)));
+	connect(m_ui->consoleView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 ConsoleWidget::~ConsoleWidget()
@@ -144,6 +148,11 @@ void ConsoleWidget::clear()
 	}
 }
 
+void ConsoleWidget::copyText()
+{
+	QApplication::clipboard()->setText(m_ui->consoleView->currentIndex().data(Qt::DisplayRole).toString());
+}
+
 void ConsoleWidget::filterCategories()
 {
 	QList<MessageCategory> categories;
@@ -206,6 +215,13 @@ void ConsoleWidget::filterMessages(const QString &filter)
 			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!(item->flags() & Qt::ItemIsEnabled) || (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))));
 		}
 	}
+}
+
+void ConsoleWidget::showContextMenu(const QPoint position)
+{
+	QMenu menu(m_ui->consoleView);
+	menu.addAction(Utils::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
+	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
 }
