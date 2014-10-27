@@ -434,13 +434,6 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		}
 	}
 
-	if (tabs == 0)
-	{
-		file.cancelWriting();
-
-		return false;
-	}
-
 	return file.commit();
 }
 
