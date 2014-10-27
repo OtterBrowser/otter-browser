@@ -21,6 +21,7 @@
 #include "OperaBookmarksImporter.h"
 #include "../../../core/BookmarksModel.h"
 
+#include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 #include <QtCore/QUrl>
 
@@ -123,6 +124,7 @@ bool OperaBookmarksImporter::import()
 
 	BookmarksItem *bookmark = NULL;
 	OperaBookmarkEntry type = NoEntry;
+	const QRegularExpression expression(QLatin1String("[\x02]"));
 	bool isHeader = true;
 
 	handleOptions();
@@ -178,6 +180,8 @@ bool OperaBookmarksImporter::import()
 		}
 		else if (line.startsWith(QLatin1String("\tDESCRIPTION=")) && bookmark)
 		{
+			line.remove(expression);
+
 			bookmark->setData(line.section(QLatin1Char('='), 1, -1), BookmarksModel::DescriptionRole);
 		}
 		else if (line.startsWith(QLatin1String("\tSHORT NAME=")) && bookmark)
