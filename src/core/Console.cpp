@@ -55,6 +55,11 @@ void Console::addMessage(const QString &note, MessageCategory category, MessageL
 
 	m_messages.append(message);
 
+	if (m_messages.count() > 1000)
+	{
+		m_messages.removeFirst();
+	}
+
 	emit m_instance->messageAdded(message);
 }
 
