@@ -22,6 +22,7 @@
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
+#include "../../../../core/Console.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -41,6 +42,7 @@
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
+#include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
 #include <QtNetwork/QAbstractNetworkCache>
@@ -334,6 +336,26 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 			}
 
 			device->deleteLater();
+		}
+		else if (!m_hitResult.imageUrl().isEmpty() && m_hitResult.imageUrl().url().contains(QLatin1String(";base64,")))
+		{
+			const QString imageUrl = m_hitResult.imageUrl().url();
+			const QString imageType = imageUrl.mid(11, imageUrl.indexOf(QLatin1Char(';')) - 11);
+			const QString path = TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType);
+
+			if (path.isEmpty())
+			{
+				return;
+			}
+
+			QImageWriter writer(path);
+
+			if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
+			{
+				Console::addMessage(tr("Failed to save image %0: %1").arg(path).arg(writer.errorString()), OtherMessageCategory, ErrorMessageLevel);
+			}
+
+			return;
 		}
 
 		QNetworkRequest mutableRequest(request);
@@ -639,6 +661,22 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			}
 
 			break;
+		case SaveImageToDiskAction:
+			if (m_hitResult.imageUrl().isValid())
+			{
+				emit downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
+			}
+
+			break;
+#if QTWEBKIT_VERSION >= 0x050200
+		case SaveMediaToDiskAction:
+			if (m_hitResult.mediaUrl().isValid())
+			{
+				emit downloadFile(QNetworkRequest(m_hitResult.mediaUrl()));
+			}
+
+			break;
+#endif
 		case InspectPageAction:
 			if (!m_inspector)
 			{
@@ -1240,6 +1278,15 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveLinkToDownloads"), this), actionObject);
 
 			break;
+
+		case SaveImageToDiskAction:
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveImageToDisk"), this), actionObject);
+
+			break;
+		case SaveMediaToDiskAction:
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveMediaToDisk"), this), actionObject);
+
+			break;
 		case RewindAction:
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Rewind"), this), actionObject, true);
 
@@ -1620,8 +1667,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 			return QWebPage::DownloadLinkToDisk;
 		case OpenImageInNewTabAction:
 			return QWebPage::OpenImageInNewWindow;
-		case SaveImageToDiskAction:
-			return QWebPage::DownloadImageToDisk;
 		case CopyImageToClipboardAction:
 			return QWebPage::CopyImageToClipboard;
 		case CopyImageUrlToClipboardAction:
@@ -1651,8 +1696,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 		case RedoAction:
 			return QWebPage::Redo;
 #if QTWEBKIT_VERSION >= 0x050200
-		case SaveMediaToDiskAction:
-			return QWebPage::DownloadMediaToDisk;
 		case CopyMediaUrlToClipboardAction:
 			return QWebPage::CopyMediaUrlToClipboard;
 		case ToggleMediaControlsAction:
