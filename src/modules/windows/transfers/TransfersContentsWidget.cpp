@@ -61,6 +61,9 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
 	m_ui->redownloadButton->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
+	
+	//In order for the sizeHint methd to be called, the ResizeToContents needs to be set up.
+	m_ui->transfersView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
 	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
 

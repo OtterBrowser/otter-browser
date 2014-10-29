@@ -45,4 +45,12 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 	return new QKeySequenceEdit(QKeySequence(index.data().toString()), parent);
 }
 
+QSize KeyboardShortcutDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize result = index.data(Qt::SizeHintRole).toSize();
+	result.setHeight(option.fontMetrics.height());
+	
+	return result;
+}
+
 }
