@@ -303,6 +303,8 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->keywordLabelWidget->setText(index.data(BookmarksModel::KeywordRole).toString());
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark);
+
+	getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
