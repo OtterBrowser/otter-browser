@@ -42,8 +42,6 @@ public:
 	explicit SidebarWidget(QWidget *parent = NULL);
 	~SidebarWidget();
 
-	QSize sizeHint() const;
-
 public slots:
 	void locationChanged(Qt::DockWidgetArea area);
 

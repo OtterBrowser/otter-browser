@@ -77,15 +77,6 @@ void SidebarWidget::locationChanged(Qt::DockWidgetArea area)
 	{
 		qobject_cast<QBoxLayout*>(layout())->setDirection(QBoxLayout::LeftToRight);
 	}
-
-	if (area == Qt::LeftDockWidgetArea || area == Qt::RightDockWidgetArea)
-	{
-		setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-	}
-	else
-	{
-		setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-	}
 }
 
 void SidebarWidget::openPanel()
@@ -94,7 +85,7 @@ void SidebarWidget::openPanel()
 
 	if (action)
 	{
-		SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), (action->data().toString() == m_currentPanel ? QString() : action->data().toString()));
+		SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), ((action->data().toString() == m_currentPanel) ? QString() : action->data().toString()));
 	}
 }
 
@@ -217,11 +208,6 @@ void SidebarWidget::registerPanel(const QString &identifier)
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
-}
-
-QSize SidebarWidget::sizeHint() const
-{
-	return QSize((m_currentWidget ? SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt() : 1), 100);
 }
 
 }

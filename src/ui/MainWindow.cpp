@@ -83,8 +83,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_ui->statusBar->setup();
 
-	setStyleSheet(QLatin1String("QMainWindow::separator {width:0;height:0;}"));
-
 	m_ui->tabsDockWidget->setup(m_closedWindowsMenu);
 	m_ui->tabsDockWidget->setFloating(true);
 	m_ui->tabsDockWidget->adjustSize();
