@@ -322,7 +322,7 @@ void CookiesContentsWidget::updateActions()
 		const QModelIndex index = indexes.first();
 		QUrl url;
 		url.setScheme(QLatin1String("http"));
-		url.setHost(index.parent().data(Qt::DisplayRole).toString());
+		url.setHost(index.parent().data(Qt::ToolTipRole).toString());
 		url.setPath(index.data(Qt::UserRole).toString());
 
 		const QList<QNetworkCookie> cookies = NetworkManagerFactory::getCookieJar()->cookiesForUrl(url);
