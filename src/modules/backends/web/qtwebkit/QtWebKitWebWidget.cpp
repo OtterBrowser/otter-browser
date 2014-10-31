@@ -414,7 +414,7 @@ void QtWebKitWebWidget::markPageRealoded()
 	m_isReloading = true;
 }
 
-void QtWebKitWebWidget::openUrl(QUrl url, OpenHints hints)
+void QtWebKitWebWidget::openUrl(const QUrl &url, OpenHints hints)
 {
 	WebWidget *widget = clone(false);
 	widget->setRequestedUrl(url);
@@ -1042,24 +1042,24 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 	m_isTyped = typed;
 
+	QUrl targetUrl(url);
+
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
 		QUrl httpUrl = url;
 		httpUrl.setScheme(QLatin1String("http"));
 
-		m_webView->load(httpUrl);
+		targetUrl = httpUrl;
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
 	{
 		QUrl localUrl = url;
 		localUrl.setScheme(QLatin1String("file"));
 
-		m_webView->load(localUrl);
+		targetUrl = localUrl;
 	}
-	else
-	{
-		m_webView->load(url);
-	}
+
+	m_webView->load(targetUrl);
 
 	notifyTitleChanged();
 	notifyIconChanged();

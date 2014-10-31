@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>661</width>
-    <height>583</height>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1421,7 +1421,7 @@
              <x>10</x>
              <y>30</y>
              <width>431</width>
-             <height>81</height>
+             <height>101</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="contentVerticalLayout">
@@ -2267,7 +2267,7 @@
              <x>10</x>
              <y>30</y>
              <width>441</width>
-             <height>21</height>
+             <height>27</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="otherGeneralVerticalLayout">
@@ -2292,7 +2292,7 @@
      <item>
       <widget class="QPushButton" name="allSettingsButton">
        <property name="text">
-        <string>All settings</string>
+        <string>All Settings</string>
        </property>
       </widget>
      </item>
