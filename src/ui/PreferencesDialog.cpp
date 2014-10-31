@@ -35,6 +35,7 @@
 #include "../core/ShortcutsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
+#include "../ui/MainWindow.h"
 
 #include "ui_PreferencesDialog.h"
 
@@ -252,6 +253,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 
+	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
+
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
@@ -387,6 +390,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->allSettingsButton, SIGNAL(clicked()), this, SLOT(openConfigurationManager()));
 	connect(m_ui->useCurrentAsStartPageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsStartPage()));
 	connect(m_ui->restoreStartPageButton, SIGNAL(clicked()), this, SLOT(restoreStartPage()));
 	connect(m_ui->fontsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentFontChanged(int,int,int,int)));
@@ -1154,6 +1158,11 @@ void PreferencesDialog::markModified()
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
 }
 
+void PreferencesDialog::openConfigurationManager()
+{
+	Application::getInstance()->getWindow()->openUrl(QLatin1String("about:config"));
+}
+
 void PreferencesDialog::save()
 {
 	const int startupBehaviorIndex = m_ui->startupBehaviorComboBox->currentIndex();
@@ -1256,6 +1265,8 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Search/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
 
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
+
+	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
 
 	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());

@@ -1322,6 +1322,11 @@
            <string>Keyboard</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Other</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -2236,6 +2241,46 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="otherPage">
+          <widget class="QLabel" name="otherGeneralHeader">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>442</width>
+             <height>13</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>General</string>
+           </property>
+          </widget>
+          <widget class="QWidget" name="otherGeneralVerticalLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>441</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="otherGeneralVerticalLayout">
+            <item>
+             <widget class="QCheckBox" name="enableTrayIconCheckBox">
+              <property name="text">
+               <string>Show tray icon</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -2243,11 +2288,22 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="menuHorizontalLayout">
+     <item>
+      <widget class="QPushButton" name="allSettingsButton">
+       <property name="text">
+        <string>All settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
