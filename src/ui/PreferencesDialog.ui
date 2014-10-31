@@ -1304,6 +1304,11 @@
          </item>
          <item>
           <property name="text">
+           <string>Content</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Network</string>
           </property>
          </item>
@@ -1384,6 +1389,80 @@
             </spacer>
            </item>
           </layout>
+         </widget>
+         <widget class="QWidget" name="contentPage">
+          <widget class="QLabel" name="contentGeneralHeader">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>442</width>
+             <height>13</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>General</string>
+           </property>
+          </widget>
+          <widget class="QWidget" name="verticalLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>431</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="contentVerticalLayout">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="enableImagesCheckBox">
+              <property name="text">
+               <string>Enable images</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="contentHorizontalLayout" stretch="0,0">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="enableJavaScriptCheckBox">
+                <property name="text">
+                 <string>Enable JavaScript</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="advancedJavaScriptButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>JavaScript options...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="enableJavaCheckBox">
+              <property name="text">
+               <string>Enable Java</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
          <widget class="QWidget" name="networkPage">
           <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,1">
