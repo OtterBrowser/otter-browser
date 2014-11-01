@@ -516,6 +516,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	const QString userAgent(getOption(QLatin1String("Network/UserAgent"), url).toString());
 
 	m_page->setUserAgent(userAgent, NetworkManagerFactory::getUserAgent(userAgent).value);
+	m_page->updatePageStyleSheets();
 }
 
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)

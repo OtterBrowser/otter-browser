@@ -94,9 +94,18 @@ void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
 
 void QtWebKitWebPage::updatePageStyleSheets()
 {
-	const QString userStyleSheets = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
+	const QString userSyleSheet = (m_webWidget ? m_webWidget->getOption(QLatin1String("Content/UserStyleSheet"), mainFrame()->url()).toString() : QString());
+	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
 
-	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + userStyleSheets.toUtf8().toBase64()));
+	if (!userSyleSheet.isEmpty())
+	{
+		QFile file(userSyleSheet);
+		file.open(QIODevice::ReadOnly);
+
+		styleSheet.append(file.readAll());
+	}
+
+	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + styleSheet.toUtf8().toBase64()));
 }
 
 void QtWebKitWebPage::updateBlockedPageElements(const QStringList domainList, const bool isException)

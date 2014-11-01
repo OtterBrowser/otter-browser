@@ -62,7 +62,6 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 		m_ui->addressWidget->setWindow(this);
 	}
 
-
 	connect(m_ui->addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
 	connect(m_ui->addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
 	connect(m_ui->searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(handleSearchRequest(QString,QString)));

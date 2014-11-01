@@ -39,6 +39,7 @@ class QtWebKitWebPage : public QWebPage
 public:
 	explicit QtWebKitWebPage(QtWebKitWebWidget *parent);
 
+	void updatePageStyleSheets();
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
 	void setUserAgent(const QString &identifier, const QString &value, bool manual = true);
@@ -60,7 +61,6 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void clearIgnoreJavaScriptPopups();
-	void updatePageStyleSheets();
 	void pageLoadFinished();
 
 private:
