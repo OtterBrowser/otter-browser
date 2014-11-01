@@ -1398,7 +1398,7 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 
 			break;
 		case WebsitePreferencesAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, true);
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, false);
 
 			break;
 		case ZoomInAction:

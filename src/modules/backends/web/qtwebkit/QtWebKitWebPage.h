@@ -39,7 +39,6 @@ class QtWebKitWebPage : public QWebPage
 public:
 	explicit QtWebKitWebPage(QtWebKitWebWidget *parent);
 
-	void updatePageStyleSheets();
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
 	void setUserAgent(const QString &identifier, const QString &value, bool manual = true);
@@ -47,6 +46,9 @@ public:
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
+
+public slots:
+	void updatePageStyleSheets();
 
 protected:
 	void updateBlockedPageElements(const QStringList domainList, const bool isException);
