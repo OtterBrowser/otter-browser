@@ -51,6 +51,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	}
 
 	setFocusPolicy(Qt::StrongFocus);
+	setStyleSheet(QLatin1String("workaround"));
 
 	m_ui->setupUi(this);
 	m_ui->findWidget->hide();
