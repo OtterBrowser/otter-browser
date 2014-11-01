@@ -101,6 +101,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void updateQuickSearchAction();
+	void updateOptions(const QUrl &url);
 	void showContextMenu(const QPoint &position = QPoint());
 
 private:

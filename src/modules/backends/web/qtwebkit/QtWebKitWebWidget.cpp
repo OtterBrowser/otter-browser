@@ -171,6 +171,7 @@ void QtWebKitWebWidget::search(const QString &query, const QString &engine)
 	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
 	{
 		setRequestedUrl(request.url(), false, true);
+		updateOptions(request.url());
 
 		m_webView->page()->mainFrame()->load(request, method, body);
 	}
@@ -448,6 +449,7 @@ void QtWebKitWebWidget::notifyTitleChanged()
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
+	updateOptions(url);
 	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
 	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
 
@@ -482,6 +484,21 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 	}
 
 	getAction(SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+}
+
+void QtWebKitWebWidget::updateOptions(const QUrl &url)
+{
+	QWebSettings *settings = m_webView->page()->settings();
+	settings->setAttribute(QWebSettings::AutoLoadImages, SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
+	settings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toBool());
+	settings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanCloseWindows"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
+	settings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
+	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
+	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
 }
 
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
@@ -1008,6 +1025,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
 
+	updateOptions(m_webView->page()->history()->itemAt(history.index).url());
+
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
@@ -1058,6 +1077,8 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 		targetUrl = localUrl;
 	}
+
+	updateOptions(targetUrl);
 
 	m_webView->load(targetUrl);
 

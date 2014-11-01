@@ -96,7 +96,7 @@ protected:
 	void parseRules();
 	void loadRuleFile();
 	void clear();
-	void parseRuleLine(QString &line);
+	void parseRuleLine(QString line);
 	void resolveRuleOptions(const ContentBlockingRule &rule, const QNetworkRequest &request, bool &isBlocked);
 	void parseCssRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(const ContentBlockingRule &rule);

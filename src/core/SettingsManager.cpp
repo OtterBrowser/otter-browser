@@ -26,12 +26,14 @@ namespace Otter
 {
 
 SettingsManager* SettingsManager::m_instance = NULL;
-QString SettingsManager::m_path;
+QString SettingsManager::m_globalPath;
+QString SettingsManager::m_overridePath;
 QHash<QString, QVariant> SettingsManager::m_defaults;
 
 SettingsManager::SettingsManager(const QString &path, QObject *parent) : QObject(parent)
 {
-	m_path = path;
+	m_globalPath = path + QLatin1String("/otter.conf");
+	m_overridePath = path + QLatin1String("/override.ini");
 }
 
 void SettingsManager::createInstance(const QString &path, QObject *parent)
@@ -41,7 +43,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 
 void SettingsManager::registerOption(const QString &key)
 {
-	QSettings(m_path, QSettings::IniFormat).remove(key);
+	QSettings(m_globalPath, QSettings::IniFormat).remove(key);
 
 	emit m_instance->valueChanged(key, getValue(key));
 }
@@ -53,11 +55,18 @@ void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
 	emit m_instance->valueChanged(key, getValue(key));
 }
 
-void SettingsManager::setValue(const QString &key, const QVariant &value)
+void SettingsManager::setValue(const QString &key, const QVariant &value, const QUrl &url)
 {
+	if (!url.isEmpty())
+	{
+		QSettings(m_overridePath, QSettings::IniFormat).setValue((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, value);
+
+		return;
+	}
+
 	if (getValue(key) != value)
 	{
-		QSettings(m_path, QSettings::IniFormat).setValue(key, value);
+		QSettings(m_globalPath, QSettings::IniFormat).setValue(key, value);
 
 		emit m_instance->valueChanged(key, value);
 	}
@@ -73,9 +82,14 @@ QVariant SettingsManager::getDefaultValue(const QString &key)
 	return m_defaults[key];
 }
 
-QVariant SettingsManager::getValue(const QString &key)
+QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 {
-	return QSettings(m_path, QSettings::IniFormat).value(key, getDefaultValue(key));
+	if (!url.isEmpty())
+	{
+		return QSettings(m_overridePath, QSettings::IniFormat).value((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, getValue(key));
+	}
+
+	return QSettings(m_globalPath, QSettings::IniFormat).value(key, getDefaultValue(key));
 }
 
 }

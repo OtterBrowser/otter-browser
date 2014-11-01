@@ -157,7 +157,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	Console::createInstance(this);
 
-	SettingsManager::createInstance(profilePath + QLatin1String("/otter.conf"), this);
+	SettingsManager::createInstance(profilePath, this);
 
 	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
 	const QStringList groups = defaults.childGroups();

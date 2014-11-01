@@ -132,7 +132,7 @@ void ContentBlockingList::loadRuleFile()
 	rulesFile.close();
 }
 
-void ContentBlockingList::parseRuleLine(QString &line)
+void ContentBlockingList::parseRuleLine(QString line)
 {
 	if (line.indexOf(QLatin1Char('!')) == 0 || line.isEmpty())
 	{

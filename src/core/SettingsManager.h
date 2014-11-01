@@ -21,6 +21,7 @@
 #define OTTER_SETTINGSMANAGER_H
 
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 #include <QtCore/QVariant>
 
 namespace Otter
@@ -34,17 +35,18 @@ public:
 	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void registerOption(const QString &key);
 	static void setDefaultValue(const QString &key, const QVariant &value);
-	static void setValue(const QString &key, const QVariant &value);
+	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QVariant getDefaultValue(const QString &key);
-	static QVariant getValue(const QString &key);
+	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
 
 protected:
 	explicit SettingsManager(const QString &path, QObject *parent = NULL);
 
 private:
 	static SettingsManager *m_instance;
-	static QString m_path;
+	static QString m_globalPath;
+	static QString m_overridePath;
 	static QHash<QString, QVariant> m_defaults;
 
 signals:
