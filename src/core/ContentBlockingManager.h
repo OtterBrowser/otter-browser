@@ -37,7 +37,7 @@ public:
 	static void updateLists();
 	static ContentBlockingManager* getInstance();
 	static QByteArray getStyleSheetHidingRules();
-	static QStringList createSubdomainList(const QString domain);
+	static QStringList createSubdomainList(const QString &domain);
 	static QList<ContentBlockingList*> getBlockingDefinitions();
 	static QMultiHash<QString, QString> getSpecificDomainHidingRules();
 	static QMultiHash<QString, QString> getHidingRulesExceptions();

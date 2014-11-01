@@ -199,7 +199,7 @@ QByteArray ContentBlockingManager::getStyleSheetHidingRules()
 	return m_hidingRules;
 }
 
-QStringList ContentBlockingManager::createSubdomainList(const QString domain)
+QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 {
 	QStringList subdomainList;
 	int dotPosition = domain.lastIndexOf(QLatin1Char('.'));

@@ -1,2 +1,2 @@
 [Adblock Plus 2.0]
-! URL: https://github.com/tomasko126/easylistczechandslovak/blob/master/filters.txt
+! URL: https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt

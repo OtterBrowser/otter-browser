@@ -71,9 +71,9 @@ public:
 	};
 
 	void setEnabled(const bool enabled);
-	void setFile(const QString path, const QString name);
-	void setListName(const QString title);
-	void setConfigListName(const QString name);
+	void setFile(const QString &path, const QString &name);
+	void setListName(const QString &title);
+	void setConfigListName(const QString &name);
 	QString getFileName() const;
 	QString getListName() const;
 	QString getConfigListName() const;
@@ -96,15 +96,15 @@ protected:
 	void parseRules();
 	void loadRuleFile();
 	void clear();
-	void parseRuleLine(QString line);
-	void resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked);
-	void parseCssRule(const QStringList line, QMultiHash<QString, QString> &list);
-	void addRule(const ContentBlockingRule rule);
+	void parseRuleLine(QString &line);
+	void resolveRuleOptions(const ContentBlockingRule &rule, const QNetworkRequest &request, bool &isBlocked);
+	void parseCssRule(const QStringList &line, QMultiHash<QString, QString> &list);
+	void addRule(const ContentBlockingRule &rule);
 	void deleteNode(Node *node);
 	void downloadUpdate();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-	bool checkUrlSubstring(const QString subString, const QNetworkRequest &request);
-	bool checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request);
+	bool checkUrlSubstring(const QString &subString, const QNetworkRequest &request);
+	bool checkRuleMatch(const ContentBlockingRule &rule, const QNetworkRequest &request);
 
 private slots:
 	void updateDownloaded(QNetworkReply *reply);

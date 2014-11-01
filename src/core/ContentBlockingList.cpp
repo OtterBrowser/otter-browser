@@ -132,7 +132,7 @@ void ContentBlockingList::loadRuleFile()
 	rulesFile.close();
 }
 
-void ContentBlockingList::parseRuleLine(QString line)
+void ContentBlockingList::parseRuleLine(QString &line)
 {
 	if (line.indexOf(QLatin1Char('!')) == 0 || line.isEmpty())
 	{
@@ -284,7 +284,7 @@ void ContentBlockingList::parseRuleLine(QString line)
 	return;
 }
 
-void ContentBlockingList::parseCssRule(const QStringList line, QMultiHash<QString, QString> &list)
+void ContentBlockingList::parseCssRule(const QStringList &line, QMultiHash<QString, QString> &list)
 {
 	const QStringList domains = line.at(0).split(QLatin1Char(','));
 
@@ -294,7 +294,7 @@ void ContentBlockingList::parseCssRule(const QStringList line, QMultiHash<QStrin
 	}
 }
 
-void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule rule, const QNetworkRequest &request, bool &isBlocked)
+void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule &rule, const QNetworkRequest &request, bool &isBlocked)
 {
 	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
@@ -382,7 +382,7 @@ void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule rule, con
 	}
 }
 
-void ContentBlockingList::setFile(const QString path, const QString name)
+void ContentBlockingList::setFile(const QString &path, const QString &name)
 {
 	m_fileName = name;
 	m_fullFilePath = path + name;
@@ -402,7 +402,7 @@ void ContentBlockingList::setEnabled(const bool enabled)
 	}
 }
 
-void ContentBlockingList::addRule(const ContentBlockingRule rule)
+void ContentBlockingList::addRule(const ContentBlockingRule &rule)
 {
 	Node *node = m_root;
 	const QString ruleString = rule.rule;
@@ -468,7 +468,7 @@ void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 
 	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0").arg(m_fullFilePath), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0.\nError: %1").arg(m_fullFilePath).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
@@ -517,12 +517,12 @@ void ContentBlockingList::clear()
 	m_cssSpecificDomainHidingRules.clear();
 }
 
-void ContentBlockingList::setListName(const QString title)
+void ContentBlockingList::setListName(const QString &title)
 {
 	m_listName = title;
 }
 
-void ContentBlockingList::setConfigListName(const QString name)
+void ContentBlockingList::setConfigListName(const QString &name)
 {
 	m_configListName = name;
 }
@@ -570,7 +570,7 @@ bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStr
 	return false;
 }
 
-bool ContentBlockingList::checkUrlSubstring(const QString subString, const QNetworkRequest &request)
+bool ContentBlockingList::checkUrlSubstring(const QString &subString, const QNetworkRequest &request)
 {
 	Node *node = m_root;
 
@@ -599,7 +599,7 @@ bool ContentBlockingList::checkUrlSubstring(const QString subString, const QNetw
 	return false;
 }
 
-bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule rule, const QNetworkRequest &request)
+bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule &rule, const QNetworkRequest &request)
 {
 	bool isBlocked = false;
 
