@@ -25,6 +25,7 @@
 #include "NetworkCache.h"
 #include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
+#include "SettingsManager.h"
 #include "Utils.h"
 #include "../ui/AuthenticationDialog.h"
 #include "../ui/ContentsDialog.h"
@@ -246,26 +247,51 @@ void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &prox
 
 void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
 {
-	QStringList messages;
-
-	for (int i = 0; i < errors.count(); ++i)
-	{
-		if (errors.at(i).error() != QSslError::NoError)
-		{
-			messages.append(errors.at(i).errorString());
-		}
-	}
-
-	if (messages.isEmpty())
+	if (errors.isEmpty())
 	{
 		reply->ignoreSslErrors(errors);
 
 		return;
 	}
 
+	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), m_mainUrl).toStringList();
+	QStringList messages;
+	QList<QSslError> errorsToIgnore;
+
+	for (int i = 0; i < errors.count(); ++i)
+	{
+		if (errors.at(i).error() != QSslError::NoError)
+		{
+			if (ignoredErrors.contains(errors.at(i).certificate().digest().toBase64()))
+			{
+				errorsToIgnore.append(errors.at(i));
+			}
+			else
+			{
+				messages.append(errors.at(i).errorString());
+			}
+		}
+	}
+
+	if (!errorsToIgnore.isEmpty())
+	{
+		reply->ignoreSslErrors(errorsToIgnore);
+	}
+
+	if (messages.isEmpty())
+	{
+		return;
+	}
+
 	if (m_widget)
 	{
 		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
+
+		if (!m_mainUrl.isEmpty())
+		{
+			dialog.setCheckBox(tr("Do not show this message again"), false);
+		}
+
 		QEventLoop eventLoop;
 
 		m_widget->showDialog(&dialog);
@@ -280,6 +306,21 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		if (dialog.isAccepted())
 		{
 			reply->ignoreSslErrors(errors);
+
+			if (!m_mainUrl.isEmpty() && dialog.getCheckBoxState())
+			{
+				for (int i = 0; i < errors.count(); ++i)
+				{
+					const QString digest = errors.at(i).certificate().digest().toBase64();
+
+					if (!ignoredErrors.contains(digest))
+					{
+						ignoredErrors.append(digest);
+					}
+				}
+
+				SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_mainUrl);
+			}
 		}
 	}
 	else if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
@@ -355,6 +396,8 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 	if (!m_mainReply)
 	{
 		m_mainReply = reply;
+
+		m_mainUrl = m_mainReply->url();
 	}
 
 	if (!m_useSimpleMode)

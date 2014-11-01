@@ -20,6 +20,7 @@
 #ifndef OTTER_NETWORKMANAGER_H
 #define OTTER_NETWORKMANAGER_H
 
+#include <QtCore/QUrl>
 #include <QtNetwork/QNetworkAccessManager>
 
 namespace Otter
@@ -58,6 +59,7 @@ private:
 	QNetworkReply *m_mainReply;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
+	QUrl m_mainUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
