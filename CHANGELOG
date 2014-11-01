@@ -1,8 +1,10 @@
-0.9.03 (--.--.2014):
+0.9.03 (01.11.2014):
 - initial version of sidebar;
 - added possibility to set Otter Browser as default under Windows;
+- added initial versions of Website Preferences and Quick Preferences (F12);
 - added Trash to Bookmarks Manager;
 - added Ctrl+Tab tabs switching;
+- added option to set user style sheet;
 - added tray icon;
 - allow to customize menu bar (JSON file);
 - various minor fixes and improvements.
