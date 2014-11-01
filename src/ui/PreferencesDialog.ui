@@ -373,6 +373,9 @@
          </property>
          <item row="0" column="0">
           <widget class="QLabel" name="popupsLabel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Pop-ups:</string>
            </property>
@@ -902,7 +905,7 @@
               </item>
               <item>
                <widget class="QWidget" name="cookiesWidget" native="true">
-                <layout class="QFormLayout" name="s">
+                <layout class="QFormLayout" name="cookiesLayout">
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -1770,18 +1773,7 @@
                    </widget>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="browseAutomaticProxyConfigurationLayout_">
-                    <item>
-                     <widget class="QLineEdit" name="automaticProxyConfigurationLineEdit"/>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="automaticProxyConfigurationButton">
-                      <property name="text">
-                       <string>Browse...</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                   <widget class="Otter::FilePathWidget" name="automaticProxyConfigurationFilePathWidget" native="true"/>
                   </item>
                  </layout>
                 </widget>
@@ -2309,15 +2301,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::TableViewWidget</class>
+   <extends>QTableView</extends>
+   <header>src/ui/TableViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

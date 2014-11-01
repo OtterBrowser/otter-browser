@@ -131,6 +131,7 @@ set(otter_src
 	src/ui/TextLabelWidget.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp
+	src/ui/WebsitePreferencesDialog.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
@@ -176,6 +177,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SidebarWidget.ui
 	src/ui/StartupDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
+	src/ui/WebsitePreferencesDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui

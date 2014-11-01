@@ -68,10 +68,6 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 			setUserAgent(value.toString(), NetworkManagerFactory::getUserAgent(value.toString()).value, false);
 		}
 	}
-	else if (option == QLatin1String("Content/ZoomTextOnly"))
-	{
-		settings()->setAttribute(QWebSettings::ZoomTextOnly, value.toBool());
-	}
 	else if (option.startsWith(QLatin1String("Content/")))
 	{
 		updatePageStyleSheets();

@@ -17,41 +17,36 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SETTINGSMANAGER_H
-#define OTTER_SETTINGSMANAGER_H
+#ifndef OTTER_WEBSITEPREFERENCESDIALOG_H
+#define OTTER_WEBSITEPREFERENCESDIALOG_H
 
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
-#include <QtCore/QVariant>
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
-class SettingsManager : public QObject
+namespace Ui
+{
+	class WebsitePreferencesDialog;
+}
+
+class WebsitePreferencesDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	static void createInstance(const QString &path, QObject *parent = NULL);
-	static void registerOption(const QString &key);
-	static void removeOverride(const QUrl &url);
-	static void setDefaultValue(const QString &key, const QVariant &value);
-	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
-	static SettingsManager* getInstance();
-	static QVariant getDefaultValue(const QString &key);
-	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
+	explicit WebsitePreferencesDialog(const QUrl &url, QWidget *parent = 0);
+	~WebsitePreferencesDialog();
 
 protected:
-	explicit SettingsManager(const QString &path, QObject *parent = NULL);
+	void changeEvent(QEvent *event);
+
+protected slots:
+	void buttonClicked(QAbstractButton *button);
 
 private:
-	static SettingsManager *m_instance;
-	static QString m_globalPath;
-	static QString m_overridePath;
-	static QHash<QString, QVariant> m_defaults;
-
-signals:
-	void valueChanged(QString key, QVariant value);
+	Ui::WebsitePreferencesDialog *m_ui;
 };
 
 }

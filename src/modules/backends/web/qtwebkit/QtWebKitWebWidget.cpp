@@ -36,6 +36,7 @@
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/MainWindow.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
+#include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
@@ -192,7 +193,7 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 	{
 		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
-		if (value.toBool())
+		if (value.toBool() || SettingsManager::getValue(option, getUrl()).toBool())
 		{
 			connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 		}
@@ -499,6 +500,22 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
+	settings->setDefaultTextEncoding(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString());
+
+	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+
+	if (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool())
+	{
+		connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+	}
+	else
+	{
+		setStatusMessage(QString());
+	}
+
+	const QString userAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent"), url).toString());
+
+	m_page->setUserAgent(userAgent, NetworkManagerFactory::getUserAgent(userAgent).value);
 }
 
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
@@ -968,6 +985,17 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
+		case WebsitePreferencesAction:
+			{
+				WebsitePreferencesDialog dialog(getUrl(), this);
+
+				if (dialog.exec() == QDialog::Accepted)
+				{
+					updateOptions(getUrl());
+				}
+			}
+
+			break;
 		default:
 			break;
 	}
@@ -1329,7 +1357,6 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 				ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
 
 				actionObject->setMenu(getReloadTimeMenu());
-//				actionObject->setEnabled(false);
 			}
 
 			break;
@@ -1364,8 +1391,6 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			break;
 		case WebsitePreferencesAction:
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, true);
-
-			actionObject->setEnabled(false);
 
 			break;
 		case ZoomInAction:

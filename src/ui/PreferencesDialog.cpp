@@ -314,7 +314,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpsPort")).toInt());
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
-	m_ui->automaticProxyConfigurationLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+	m_ui->automaticProxyConfigurationFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
 	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")).toBool());
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
@@ -413,7 +413,6 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
-	connect(m_ui->automaticProxyConfigurationButton, SIGNAL(clicked()), this, SLOT(browseAutomaticProxyPath()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
@@ -772,14 +771,12 @@ void PreferencesDialog::proxyModeChanged(int index)
 	if (index == 3)
 	{
 		m_ui->automaticProxyConfigurationWidget->setEnabled(true);
-		m_ui->automaticProxyConfigurationLineEdit->setEnabled(true);
-		m_ui->automaticProxyConfigurationButton->setEnabled(true);
+		m_ui->automaticProxyConfigurationFilePathWidget->setEnabled(true);
 	}
 	else
 	{
 		m_ui->automaticProxyConfigurationWidget->setEnabled(false);
-		m_ui->automaticProxyConfigurationLineEdit->setEnabled(false);
-		m_ui->automaticProxyConfigurationButton->setEnabled(false);
+		m_ui->automaticProxyConfigurationFilePathWidget->setEnabled(false);
 	}
 
 	if (index == 0)
@@ -790,16 +787,6 @@ void PreferencesDialog::proxyModeChanged(int index)
 	else
 	{
 		m_ui->proxySystemAuthentication->setEnabled(true);
-	}
-}
-
-void PreferencesDialog::browseAutomaticProxyPath()
-{
-	const QString path = QFileDialog::getOpenFileName(this, tr("Select Proxy Automatic Configuration File"), QString(), tr("PAC files (*.pac)"));
-
-	if (!path.isEmpty())
-	{
-		m_ui->automaticProxyConfigurationLineEdit->setText(path);
 	}
 }
 
@@ -1328,7 +1315,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Proxy/HttpsPort"), m_ui->httpsProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
 
 	if (m_userAgentsModified)

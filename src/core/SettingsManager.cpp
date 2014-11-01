@@ -48,6 +48,11 @@ void SettingsManager::registerOption(const QString &key)
 	emit m_instance->valueChanged(key, getValue(key));
 }
 
+void SettingsManager::removeOverride(const QUrl &url)
+{
+	QSettings(m_overridePath, QSettings::IniFormat).remove(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+}
+
 void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
 {
 	m_defaults[key] = value;
@@ -59,7 +64,14 @@ void SettingsManager::setValue(const QString &key, const QVariant &value, const 
 {
 	if (!url.isEmpty())
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).setValue((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, value);
+		if (value.isNull())
+		{
+			QSettings(m_overridePath, QSettings::IniFormat).remove((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+		}
+		else
+		{
+			QSettings(m_overridePath, QSettings::IniFormat).setValue((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, value);
+		}
 
 		return;
 	}

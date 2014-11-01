@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Otter::WebsitePreferencesDialog</class>
+ <widget class="QDialog" name="Otter::WebsitePreferencesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>611</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Website Preferences</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="generalLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="websiteLabel">
+       <property name="text">
+        <string>Website:</string>
+       </property>
+       <property name="buddy">
+        <cstring>websiteLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="websiteLineEdit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="contentTab">
+      <attribute name="title">
+       <string>Content</string>
+      </attribute>
+      <layout class="QFormLayout" name="contentLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="encodingLabel">
+         <property name="text">
+          <string>Encoding:</string>
+         </property>
+         <property name="buddy">
+          <cstring>encodingComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="encodingComboBox"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="popupsLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Pop-ups:</string>
+         </property>
+         <property name="buddy">
+          <cstring>popupsComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="popupsComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Block all pop-ups</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Open all pop-ups</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Open all pop-ups in background</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="enableJavaCheckBox">
+         <property name="text">
+          <string>Enable Java</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="enablePluginsCheckBox">
+         <property name="text">
+          <string>Enable plugins</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <layout class="QHBoxLayout" name="enablePluginsLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="enablePluginsOnlyOnDemandCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Enable plugins only on demand</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="userStyleSheetLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>User style sheet:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="enableImagesCheckBox">
+         <property name="text">
+          <string>Enable images</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="privacyTab">
+      <attribute name="title">
+       <string>Privacy</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="privacyLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="doNotTrackLabel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Do Not Track:</string>
+           </property>
+           <property name="buddy">
+            <cstring>doNotTrackComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="doNotTrackComboBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Inform website that I do not want to be tracked</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Inform website that I allow tracking</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Do not inform website about my preference</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="rememberBrowsingHistoryCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Remember browsing history</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="acceptCookiesCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Accept cookies</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="cookiesDetailsLayout">
+         <item>
+          <spacer name="cookiesDetailsSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="cookiesWidget" native="true">
+           <layout class="QFormLayout" name="cookiesLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="thirdPartyCookiesLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Accept third-party cookies:</string>
+              </property>
+              <property name="buddy">
+               <cstring>thirdPartyCookiesComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="keepCookiesUntilLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Keep until:</string>
+              </property>
+              <property name="buddy">
+               <cstring>keepCookiesUntilComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="thirdPartyCookiesComboBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>Always</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Only existing</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Never</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="keepCookiesUntilComboBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>Expires</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Current session is closed</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Always ask</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="cookiesTableLayout">
+         <item>
+          <widget class="QTableView" name="cookiesTableView">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="cookiesButtonsLayout">
+           <item>
+            <widget class="QPushButton" name="addCookieButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Add...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="editCookieButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Edit...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteCookieButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Delete</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="cookiesSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="scriptingTab">
+      <attribute name="title">
+       <string>Scripting</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="scriptingLayout">
+       <item>
+        <widget class="QCheckBox" name="enableJavaScriptCheckBox">
+         <property name="text">
+          <string>Enable JavaScript</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Allow moving and resizing of windows</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesCheckBox">
+         <property name="text">
+          <string>Allow changing of status field</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="javaScriptCanHideAddressBarCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Allow script to hide address bar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="javaSriptCanAccessClipboardCheckBox">
+         <property name="text">
+          <string>Allow access to clipboard</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="scriptingSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="networkTab">
+      <attribute name="title">
+       <string>Network</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="sendReferrerCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Send referrer information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="userAgentLabel">
+           <property name="text">
+            <string>User Agent:</string>
+           </property>
+           <property name="buddy">
+            <cstring>userAgentComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="userAgentComboBox"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="proxyModeLabel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Proxy mode:</string>
+           </property>
+           <property name="buddy">
+            <cstring>proxyModeComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="proxyModeComboBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Global settings</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>No proxy</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>System configuration</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Manual configuration</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Automatic configuration (PAC)</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="proxyConfigurationLayout">
+         <item>
+          <spacer name="proxyConfigurationSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="proxyConfigurationModesLayout">
+           <item>
+            <widget class="QWidget" name="manualProxyConfigurationWidget" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <layout class="QGridLayout" name="manualProxyConfigurationLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="httpProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QSpinBox" name="httpProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QSpinBox" name="httpsProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="httpsProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QSpinBox" name="socksProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QSpinBox" name="ftpProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="proxyPortLabel">
+                <property name="text">
+                 <string>Port</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="proxyServerLabel">
+                <property name="text">
+                 <string>Servers</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="ftpProxyCheckBox">
+                <property name="text">
+                 <string>FTP</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="socksProxyCheckBox">
+                <property name="text">
+                 <string>SOCKS5</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="httpProxyCheckBox">
+                <property name="text">
+                 <string>HTTP</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="socksProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="httpsProxyCheckBox">
+                <property name="text">
+                 <string>HTTPS</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="ftpProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="allProxyCheckBox">
+                <property name="text">
+                 <string>All</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="allProxyServersLineEdit"/>
+              </item>
+              <item row="1" column="2">
+               <widget class="QSpinBox" name="allProxyPortSpinBox">
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="proxyProtocolabel">
+                <property name="text">
+                 <string>Protocol</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="automaticProxyConfigurationWidget" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="automaticProxyConfigurationLabel">
+                <property name="text">
+                 <string>Path to PAC file:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Otter::FilePathWidget" name="widget" native="true"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="networkSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+      <zorder>sendReferrerCheckBox</zorder>
+      <zorder>networkSpacer</zorder>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>websiteLineEdit</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>encodingComboBox</tabstop>
+  <tabstop>popupsComboBox</tabstop>
+  <tabstop>enableImagesCheckBox</tabstop>
+  <tabstop>enableJavaCheckBox</tabstop>
+  <tabstop>enablePluginsCheckBox</tabstop>
+  <tabstop>enablePluginsOnlyOnDemandCheckBox</tabstop>
+  <tabstop>doNotTrackComboBox</tabstop>
+  <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
+  <tabstop>acceptCookiesCheckBox</tabstop>
+  <tabstop>thirdPartyCookiesComboBox</tabstop>
+  <tabstop>keepCookiesUntilComboBox</tabstop>
+  <tabstop>cookiesTableView</tabstop>
+  <tabstop>addCookieButton</tabstop>
+  <tabstop>editCookieButton</tabstop>
+  <tabstop>deleteCookieButton</tabstop>
+  <tabstop>enableJavaScriptCheckBox</tabstop>
+  <tabstop>javaScriptCanChangeWndowGeometryCheckBox</tabstop>
+  <tabstop>javaScriptCanShowStatusMessagesCheckBox</tabstop>
+  <tabstop>javaScriptCanHideAddressBarCheckBox</tabstop>
+  <tabstop>javaSriptCanAccessClipboardCheckBox</tabstop>
+  <tabstop>sendReferrerCheckBox</tabstop>
+  <tabstop>userAgentComboBox</tabstop>
+  <tabstop>proxyModeComboBox</tabstop>
+  <tabstop>allProxyCheckBox</tabstop>
+  <tabstop>allProxyServersLineEdit</tabstop>
+  <tabstop>allProxyPortSpinBox</tabstop>
+  <tabstop>httpProxyCheckBox</tabstop>
+  <tabstop>httpProxyServersLineEdit</tabstop>
+  <tabstop>httpProxyPortSpinBox</tabstop>
+  <tabstop>httpsProxyCheckBox</tabstop>
+  <tabstop>httpsProxyServersLineEdit</tabstop>
+  <tabstop>httpsProxyPortSpinBox</tabstop>
+  <tabstop>ftpProxyCheckBox</tabstop>
+  <tabstop>ftpProxyServersLineEdit</tabstop>
+  <tabstop>ftpProxyPortSpinBox</tabstop>
+  <tabstop>socksProxyCheckBox</tabstop>
+  <tabstop>socksProxyServersLineEdit</tabstop>
+  <tabstop>socksProxyPortSpinBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

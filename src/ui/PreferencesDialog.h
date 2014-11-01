@@ -62,7 +62,6 @@ protected slots:
 	void updateSearchActions();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
-	void browseAutomaticProxyPath();
 	void addCipher(QAction *action);
 	void removeCipher();
 	void updateCiphersActions();
