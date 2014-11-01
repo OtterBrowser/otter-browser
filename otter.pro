@@ -15,8 +15,8 @@ win32: LIBS += -lOle32 -lshell32
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
-OTTER_VERSION_MAIN = 0.9.03
-OTTER_VERSION_CONTEXT = " beta 3"
+OTTER_VERSION_MAIN = 0.9.04
+OTTER_VERSION_CONTEXT = -dev
 
 isEmpty(PREFIX): PREFIX = /usr/local
 

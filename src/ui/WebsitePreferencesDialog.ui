@@ -746,17 +746,9 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
         </spacer>
        </item>
       </layout>
-      <zorder>sendReferrerCheckBox</zorder>
-      <zorder>networkSpacer</zorder>
      </widget>
     </widget>
    </item>
