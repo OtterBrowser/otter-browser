@@ -100,12 +100,13 @@ enum ActionIdentifier
 	PasteAndGoAction,
 	ActivateTabOnLeftAction,
 	ActivateTabOnRightAction,
-	ScrollToStart,
-	ScrollToEnd,
-	ScrollPageUp,
-	ScrollPageDown,
-	ScrollPageLeft,
-	ScrollPageRight
+	ScrollToStartAction,
+	ScrollToEndAction,
+	ScrollPageUpAction,
+	ScrollPageDownAction,
+	ScrollPageLeftAction,
+	ScrollPageRightAction,
+	QuickPreferencesAction
 };
 
 enum ActionScope

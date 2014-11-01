@@ -183,28 +183,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("ShowMenuBar")), SIGNAL(toggled(bool)), this, SLOT(actionShowMenuBar(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("Exit")), SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
-	connect(m_actionsManager->getAction(QLatin1String("Undo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Redo")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Cut")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Copy")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Paste")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Delete")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("SelectAll")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Find")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("FindNext")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("FindPrevious")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("ZoomIn")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("ZoomOut")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("ZoomOriginal")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(QLatin1String("FullScreen")), SIGNAL(triggered()), this, SLOT(actionFullScreen()));
-	connect(m_actionsManager->getAction(QLatin1String("ViewSource")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("InspectPage")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Reload")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Stop")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("GoBack")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("GoForward")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("Rewind")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QLatin1String("FastForward")), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 	connect(m_actionsManager->getAction(QLatin1String("ViewHistory")), SIGNAL(triggered()), this, SLOT(actionViewHistory()));
 	connect(m_actionsManager->getAction(QLatin1String("ClearHistory")), SIGNAL(triggered()), this, SLOT(actionClearHistory()));
 	connect(m_actionsManager->getAction(QLatin1String("AddBookmark")), SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
@@ -219,12 +198,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("AboutApplication")), SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_actionsManager->getAction(QLatin1String("AboutQt")), SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
-	connect(m_actionsManager->getAction(CopyAsPlainTextAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(ActivateAddressFieldAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(ActivateTabOnLeftAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
-	connect(m_actionsManager->getAction(ActivateTabOnRightAction), SIGNAL(triggered()), this, SLOT(triggerWindowAction()));
 
 	m_windowsManager->restore(windows);
 
@@ -1066,16 +1039,6 @@ void MainWindow::openBookmark()
 	}
 
 	m_currentBookmark = QString();
-}
-
-void MainWindow::triggerWindowAction()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		m_windowsManager->triggerAction(static_cast<ActionIdentifier>(action->data().toInt()), action->isChecked());
-	}
 }
 
 void MainWindow::updateClosedWindows()

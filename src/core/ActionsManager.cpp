@@ -123,7 +123,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ReloadTime"), QT_TRANSLATE_NOOP("actions", "Reload Each"));
 		registerAction(QLatin1String("CopyAddress"), QT_TRANSLATE_NOOP("actions", "Copy Address"));
 		registerAction(QLatin1String("Validate"), QT_TRANSLATE_NOOP("actions", "Validate"));
-		registerAction(QLatin1String("WebsitePreferences"), QT_TRANSLATE_NOOP("actions", "Website Preferences..."));
+		registerAction(QLatin1String("WebsitePreferences"), QT_TRANSLATE_NOOP("actions", "Website Preferences..."), QString(), QIcon(), true, false, false, WebsitePreferencesAction);
 		registerAction(QLatin1String("ImageProperties"), QT_TRANSLATE_NOOP("actions", "Image Properties..."));
 		registerAction(QLatin1String("OpenImageInNewTab"), QT_TRANSLATE_NOOP("actions", "Open Image"));
 		registerAction(QLatin1String("SaveImageToDisk"), QT_TRANSLATE_NOOP("actions", "Save Image..."));
@@ -149,24 +149,13 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("PasteAndGo"), QT_TRANSLATE_NOOP("actions", "Paste and Go"), QString(), QIcon(), true, false, false, PasteAndGoAction);
 		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"), QString(), QIcon(), true, false, false, ActivateTabOnLeftAction);
 		registerAction(QLatin1String("ActivateTabOnRight"), QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"), QString(), QIcon(), true, false, false, ActivateTabOnRightAction);
-		registerAction(QLatin1String("ScrollToStart"), QT_TRANSLATE_NOOP("actions", "Go to Start of the Page"), QString(), QIcon(), true, false, false, ScrollToStart);
-		registerAction(QLatin1String("ScrollToEnd"), QT_TRANSLATE_NOOP("actions", "Go to the End of the Page"), QString(), QIcon(), true, false, false, ScrollToEnd);
-		registerAction(QLatin1String("ScrollPageUp"), QT_TRANSLATE_NOOP("actions", "Page Up"), QString(), QIcon(), true, false, false, ScrollPageUp);
-		registerAction(QLatin1String("ScrollPageDown"), QT_TRANSLATE_NOOP("actions", "Page Down"), QString(), QIcon(), true, false, false, ScrollPageDown);
-		registerAction(QLatin1String("ScrollPageLeft"), QT_TRANSLATE_NOOP("actions", "Page Left"), QString(), QIcon(), true, false, false, ScrollPageLeft);
-		registerAction(QLatin1String("ScrollPageRight"), QT_TRANSLATE_NOOP("actions", "Page Right"), QString(), QIcon(), true, false, false, ScrollPageRight);
-	}
-
-	const QList<QAction*> windowActions = m_window->actions();
-
-	for (int i = 0; i < windowActions.count(); ++i)
-	{
-		if (!windowActions.at(i)->objectName().isEmpty())
-		{
-			windowActions.at(i)->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-
-			m_actions[windowActions.at(i)->objectName().mid(6)] = windowActions.at(i);
-		}
+		registerAction(QLatin1String("ScrollToStart"), QT_TRANSLATE_NOOP("actions", "Go to Start of the Page"), QString(), QIcon(), true, false, false, ScrollToStartAction);
+		registerAction(QLatin1String("ScrollToEnd"), QT_TRANSLATE_NOOP("actions", "Go to the End of the Page"), QString(), QIcon(), true, false, false, ScrollToEndAction);
+		registerAction(QLatin1String("ScrollPageUp"), QT_TRANSLATE_NOOP("actions", "Page Up"), QString(), QIcon(), true, false, false, ScrollPageUpAction);
+		registerAction(QLatin1String("ScrollPageDown"), QT_TRANSLATE_NOOP("actions", "Page Down"), QString(), QIcon(), true, false, false, ScrollPageDownAction);
+		registerAction(QLatin1String("ScrollPageLeft"), QT_TRANSLATE_NOOP("actions", "Page Left"), QString(), QIcon(), true, false, false, ScrollPageLeftAction);
+		registerAction(QLatin1String("ScrollPageRight"), QT_TRANSLATE_NOOP("actions", "Page Right"), QString(), QIcon(), true, false, false, ScrollPageRightAction);
+		registerAction(QLatin1String("QuickPreferences"), QT_TRANSLATE_NOOP("actions", "Quick Preferences"), QString(), QIcon(), true, false, false, QuickPreferencesAction);
 	}
 
 	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
@@ -187,6 +176,8 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 			action->setData(definitionsIterator.value().identifier);
 
 			m_standardActions[definitionsIterator.value().identifier] = action;
+
+			connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 		}
 
 		m_actions[definitionsIterator.key()] = action;
@@ -217,6 +208,16 @@ void ActionsManager::updateActions()
 				m_actions[definitionsIterator.key()]->setShortcut(QKeySequence());
 			}
 		}
+	}
+}
+
+void ActionsManager::triggerAction()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		m_window->getWindowsManager()->triggerAction(static_cast<ActionIdentifier>(action->data().toInt()), action->isChecked());
 	}
 }
 

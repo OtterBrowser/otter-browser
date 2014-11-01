@@ -249,6 +249,59 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 			updateFind(action == FindPreviousAction);
 		}
 	}
+	else if (action == QuickPreferencesAction)
+	{
+		QActionGroup popupsGroup(this);
+		popupsGroup.setExclusive(true);
+		popupsGroup.setEnabled(false);
+
+		QMenu menu;
+
+		popupsGroup.addAction(menu.addAction(tr("Open all pop-ups")));
+		popupsGroup.addAction(menu.addAction(tr("Open pop-ups in background")));
+		popupsGroup.addAction(menu.addAction(tr("Block all pop-ups")));
+
+		menu.addSeparator();
+
+		QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
+		enableJavaScriptAction->setCheckable(true);
+		enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
+		enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
+
+		QAction *enableJavaAction = menu.addAction(tr("Enable Java"));
+		enableJavaAction->setCheckable(true);
+		enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
+		enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
+
+		QAction *enablePluginsAction = menu.addAction(tr("Enable Plugins"));
+		enablePluginsAction->setCheckable(true);
+		enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toBool());
+		enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
+
+		menu.addSeparator();
+
+		QAction *enableCookiesAction = menu.addAction(tr("Enable Cookies"));
+		enableCookiesAction->setCheckable(true);
+		enableCookiesAction->setEnabled(false);
+
+		QAction *enableReferrerAction = menu.addAction(tr("Enable Referrer"));
+		enableReferrerAction->setCheckable(true);
+		enableReferrerAction->setEnabled(false);
+
+		QAction *enableProxyAction = menu.addAction(tr("Enable Proxy"));
+		enableProxyAction->setCheckable(true);
+		enableProxyAction->setEnabled(false);
+
+		menu.addSeparator();
+		menu.addAction(ActionsManager::getAction(WebsitePreferencesAction, parent()));
+
+		QAction *triggeredAction = menu.exec(QCursor::pos());
+
+		if (triggeredAction && triggeredAction->data().isValid())
+		{
+			m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
+		}
+	}
 	else
 	{
 		m_webWidget->triggerAction(action, checked);

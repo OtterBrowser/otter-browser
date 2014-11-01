@@ -77,6 +77,7 @@ public:
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
+	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;
 	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
@@ -96,6 +97,7 @@ public:
 public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
+	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
@@ -127,6 +129,7 @@ private:
 	QString m_quickSearchEngine;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
+	QVariantHash m_options;
 	int m_reloadTime;
 	int m_reloadTimer;
 

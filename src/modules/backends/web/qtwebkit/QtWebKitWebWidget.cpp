@@ -490,21 +490,21 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	QWebSettings *settings = m_webView->page()->settings();
-	settings->setAttribute(QWebSettings::AutoLoadImages, SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
-	settings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toBool());
-	settings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanCloseWindows"), url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
-	settings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
-	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
-	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
-	settings->setDefaultTextEncoding(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString());
+	settings->setAttribute(QWebSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
+	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(QLatin1String("Browser/EnablePlugins"), url).toBool());
+	settings->setAttribute(QWebSettings::JavaEnabled, getOption(QLatin1String("Browser/EnableJava"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, getOption(QLatin1String("Browser/JavaSriptCanCloseWindows"), url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
+	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
+	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
+	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
+	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultEncoding"), url).toString());
 
 	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
-	if (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool())
+	if (getOption(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool())
 	{
 		connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 	}
@@ -513,7 +513,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 		setStatusMessage(QString());
 	}
 
-	const QString userAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent"), url).toString());
+	const QString userAgent(getOption(QLatin1String("Network/UserAgent"), url).toString());
 
 	m_page->setUserAgent(userAgent, NetworkManagerFactory::getUserAgent(userAgent).value);
 }
@@ -961,27 +961,27 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			}
 
 			break;
-		case ScrollToStart:
+		case ScrollToStartAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), 0));
 
 			break;
-		case ScrollToEnd:
+		case ScrollToEndAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 
 			break;
-		case ScrollPageUp:
+		case ScrollPageUpAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMax(0, (m_webView->page()->mainFrame()->scrollPosition().y() - m_webView->height()))));
 
 			break;
-		case ScrollPageDown:
+		case ScrollPageDownAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical), (m_webView->page()->mainFrame()->scrollPosition().y() + m_webView->height()))));
 
 			break;
-		case ScrollPageLeft:
+		case ScrollPageLeftAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMax(0, (m_webView->page()->mainFrame()->scrollPosition().x() - m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
-		case ScrollPageRight:
+		case ScrollPageRightAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
@@ -999,6 +999,13 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 		default:
 			break;
 	}
+}
+
+void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
+{
+	WebWidget::setOption(key, value);
+
+	updateOptions(getUrl());
 }
 
 void QtWebKitWebWidget::setDefaultCharacterEncoding(const QString &encoding)

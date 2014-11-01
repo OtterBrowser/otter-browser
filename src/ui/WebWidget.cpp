@@ -351,6 +351,18 @@ void WebWidget::updateQuickSearch()
 	}
 }
 
+void WebWidget::setOption(const QString &key, const QVariant &value)
+{
+	if (value.isNull())
+	{
+		m_options.remove(key);
+	}
+	else
+	{
+		m_options[key] = value;
+	}
+}
+
 void WebWidget::setReloadTime(int time)
 {
 	if (time != m_reloadTime)
@@ -490,6 +502,16 @@ QString WebWidget::getSelectedText() const
 QString WebWidget::getStatusMessage() const
 {
 	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
+}
+
+QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
+{
+	if (m_options.contains(key))
+	{
+		return m_options[key];
+	}
+
+	return SettingsManager::getValue(key, (url.isEmpty() ? getUrl() : url));
 }
 
 QUrl WebWidget::getRequestedUrl() const

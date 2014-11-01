@@ -100,7 +100,6 @@ protected slots:
 	void menuClosedWindowsAboutToShow();
 	void menuBookmarksAboutToShow();
 	void openBookmark();
-	void triggerWindowAction();
 	void updateClosedWindows();
 	void updateBookmarks();
 	void updateActions();

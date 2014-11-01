@@ -70,6 +70,9 @@ public slots:
 protected:
 	static ActionsManager* findManager(QObject *parent);
 
+protected slots:
+	void triggerAction();
+
 private:
 	MainWindow *m_window;
 	QHash<QString, QAction*> m_actions;
