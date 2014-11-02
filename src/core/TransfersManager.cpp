@@ -304,7 +304,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	}
 
 	QPointer<QNetworkReply> replyPointer = reply;
-	QTemporaryFile temporaryFile(QLatin1String("otter-download-XXXXXX.dat"), m_instance);
+	QTemporaryFile temporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/otter-download-XXXXXX.dat"), m_instance);
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
