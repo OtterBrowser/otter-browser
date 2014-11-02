@@ -27,6 +27,7 @@
 #include <QtCore/QRegularExpression>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
 #include <QtWidgets/QFileDialog>
