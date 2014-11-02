@@ -71,7 +71,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && ((window->getUrl().scheme() == QLatin1String("about") && window->isUrlEmpty()) || url.scheme() == QLatin1String("javascript")))))
 	{
-		if (window->isPrivate() == (hints & PrivateOpen))
+		if (window->isPrivate() == hints.testFlag(PrivateOpen))
 		{
 			window->getContentsWidget()->setHistory(WindowHistoryInformation());
 			window->setUrl(url, false);
