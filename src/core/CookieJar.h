@@ -51,16 +51,16 @@ public:
 	void clearCookies(int period = 0);
 	CookieJar* clone(QObject *parent = NULL);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
-	QList<QNetworkCookie> getCookies() const;
+	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;
 	KeepCookiesPolicy getKeepCookiesPolicy() const;
 	ThirdPartyCookiesAcceptPolicy getThirdPartyCookiesAcceptPolicy() const;
+	bool insertCookie(const QNetworkCookie &cookie);
+	bool deleteCookie(const QNetworkCookie &cookie);
+	bool updateCookie(const QNetworkCookie &cookie);
 
 protected:
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
-	bool insertCookie(const QNetworkCookie &cookie);
-	bool deleteCookie(const QNetworkCookie &cookie);
-	bool updateCookie(const QNetworkCookie &cookie);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

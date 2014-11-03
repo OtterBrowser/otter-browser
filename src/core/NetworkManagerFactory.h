@@ -59,7 +59,7 @@ public:
 	static void loadUserAgents();
 	static NetworkManager* createManager(bool isPrivate = false, bool useSimpleMode = false, ContentsWidget *widget = NULL);
 	static NetworkManagerFactory* getInstance();
-	static QNetworkCookieJar* getCookieJar();
+	static CookieJar* getCookieJar();
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
 	static QStringList getUserAgents();

@@ -23,12 +23,13 @@
 
 #include "ui_WebsitePreferencesDialog.h"
 
+#include <QtCore/QDateTime>
 #include <QtCore/QTextCodec>
 
 namespace Otter
 {
 
-WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, QWidget *parent) : QDialog(parent),
+WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
 	QList<int> textCodecs;
@@ -60,6 +61,25 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, QWidget *par
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool());
+
+	QStringList cookiesLabels;
+	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
+
+	QStandardItemModel *cookiesModel = new QStandardItemModel(this);
+	cookiesModel->setHorizontalHeaderLabels(cookiesLabels);
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(cookies.at(i).domain()));
+		items.append(new QStandardItem(cookies.at(i).path()));
+		items.append(new QStandardItem(QString(cookies.at(i).value())));
+		items.append(new QStandardItem(cookies.at(i).expirationDate().toString()));
+
+		cookiesModel->appendRow(items);
+	}
+
+	m_ui->cookiesTableWidget->setModel(cookiesModel);
 
 	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
 

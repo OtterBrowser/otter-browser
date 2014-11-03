@@ -27,6 +27,7 @@ namespace Otter
 {
 
 class ContentsWidget;
+class CookieJar;
 
 class NetworkManager : public QNetworkAccessManager
 {
@@ -38,6 +39,7 @@ public:
 	void resetStatistics();
 	void setUserAgent(const QString &identifier, const QString &value);
 	NetworkManager* clone(ContentsWidget *parent);
+	CookieJar* getCookieJar();
 	QPair<QString, QString> getUserAgent() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
@@ -56,6 +58,7 @@ protected slots:
 
 private:
 	ContentsWidget *m_widget;
+	CookieJar *m_cookieJar;
 	QNetworkReply *m_mainReply;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;

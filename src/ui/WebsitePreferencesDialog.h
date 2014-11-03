@@ -20,6 +20,7 @@
 #ifndef OTTER_WEBSITEPREFERENCESDIALOG_H
 #define OTTER_WEBSITEPREFERENCESDIALOG_H
 
+#include <QtNetwork/QNetworkCookie>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QDialog>
 
@@ -36,7 +37,7 @@ class WebsitePreferencesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit WebsitePreferencesDialog(const QUrl &url, QWidget *parent = 0);
+	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = 0);
 	~WebsitePreferencesDialog();
 
 protected:

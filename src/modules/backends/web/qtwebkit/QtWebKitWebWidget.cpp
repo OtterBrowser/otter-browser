@@ -23,6 +23,7 @@
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
+#include "../../../../core/CookieJar.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -988,7 +989,8 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			break;
 		case WebsitePreferencesAction:
 			{
-				WebsitePreferencesDialog dialog(getUrl(), this);
+				const QUrl url(getUrl());
+				WebsitePreferencesDialog dialog(url, m_networkManager->getCookieJar()->getCookies(url.host()), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{

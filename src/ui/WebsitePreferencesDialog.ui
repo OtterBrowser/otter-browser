@@ -336,10 +336,31 @@
        <item>
         <layout class="QHBoxLayout" name="cookiesTableLayout">
          <item>
-          <widget class="QTableView" name="cookiesTableView">
-           <property name="enabled">
+          <widget class="Otter::TableViewWidget" name="cookiesTableWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="showGrid">
             <bool>false</bool>
            </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
           </widget>
          </item>
          <item>
@@ -746,6 +767,12 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
         </spacer>
        </item>
       </layout>
@@ -771,6 +798,11 @@
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Otter::TableViewWidget</class>
+   <extends>QTableView</extends>
+   <header>src/ui/TableViewWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>websiteLineEdit</tabstop>
@@ -786,7 +818,7 @@
   <tabstop>acceptCookiesCheckBox</tabstop>
   <tabstop>thirdPartyCookiesComboBox</tabstop>
   <tabstop>keepCookiesUntilComboBox</tabstop>
-  <tabstop>cookiesTableView</tabstop>
+  <tabstop>cookiesTableWidget</tabstop>
   <tabstop>addCookieButton</tabstop>
   <tabstop>editCookieButton</tabstop>
   <tabstop>deleteCookieButton</tabstop>

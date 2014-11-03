@@ -42,6 +42,7 @@ namespace Otter
 
 NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
+	m_cookieJar(NULL),
 	m_mainReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -54,11 +55,11 @@ NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidge
 {
 	if (!isPrivate)
 	{
-		QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
+		m_cookieJar = NetworkManagerFactory::getCookieJar();
 
-		setCookieJar(cookieJar);
+		setCookieJar(m_cookieJar);
 
-		cookieJar->setParent(QCoreApplication::instance());
+		m_cookieJar->setParent(QCoreApplication::instance());
 
 		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
 
@@ -68,7 +69,9 @@ NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidge
 	}
 	else
 	{
-		setCookieJar(new CookieJar(true, this));
+		m_cookieJar = new CookieJar(true, this);
+
+		setCookieJar(m_cookieJar);
 	}
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
@@ -338,9 +341,14 @@ void NetworkManager::setUserAgent(const QString &identifier, const QString &valu
 NetworkManager* NetworkManager::clone(ContentsWidget *parent)
 {
 	NetworkManager *manager = NetworkManagerFactory::createManager((cache() == NULL), m_useSimpleMode, parent);
-	manager->setCookieJar(qobject_cast<CookieJar*>(cookieJar())->clone(manager));
+	manager->setCookieJar(m_cookieJar->clone(manager));
 
 	return manager;
+}
+
+CookieJar* NetworkManager::getCookieJar()
+{
+	return m_cookieJar;
 }
 
 QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)

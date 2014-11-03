@@ -189,12 +189,12 @@ NetworkManager* NetworkManagerFactory::createManager(bool isPrivate, bool useSim
 	return new NetworkManager(isPrivate, useSimpleMode, widget);
 }
 
-NetworkManagerFactory *NetworkManagerFactory::getInstance()
+NetworkManagerFactory* NetworkManagerFactory::getInstance()
 {
 	return m_instance;
 }
 
-QNetworkCookieJar* NetworkManagerFactory::getCookieJar()
+CookieJar* NetworkManagerFactory::getCookieJar()
 {
 	if (!m_cookieJar)
 	{
