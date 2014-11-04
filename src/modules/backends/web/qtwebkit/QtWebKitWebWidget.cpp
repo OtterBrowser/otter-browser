@@ -425,23 +425,6 @@ void QtWebKitWebWidget::openUrl(const QUrl &url, OpenHints hints)
 	emit requestedNewWindow(widget, hints);
 }
 
-void QtWebKitWebWidget::setNetworkManager(NetworkManager *manager)
-{
-	if (m_networkManager)
-	{
-		m_networkManager->deleteLater();
-	}
-
-	m_networkManager = manager;
-	m_networkManager->setParent(m_page);
-
-	m_page->setNetworkAccessManager(m_networkManager);
-	m_page->setForwardUnsupportedContent(true);
-
-	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
-	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
-}
-
 void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -1004,126 +987,6 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 	}
 }
 
-void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
-{
-	WebWidget::setOption(key, value);
-
-	updateOptions(getUrl());
-}
-
-void QtWebKitWebWidget::setDefaultCharacterEncoding(const QString &encoding)
-{
-	m_webView->settings()->setDefaultTextEncoding(encoding);
-	m_webView->reload();
-}
-
-void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
-{
-	m_page->setUserAgent(identifier, value);
-
-	SessionsManager::markSessionModified();
-}
-
-void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
-{
-	if (history.entries.count() == 0)
-	{
-		m_webView->page()->history()->clear();
-
-		getAction(GoBackAction)->setEnabled(false);
-		getAction(GoForwardAction)->setEnabled(false);
-		getAction(RewindAction)->setEnabled(false);
-		getAction(FastForwardAction)->setEnabled(false);
-
-		emit actionsChanged();
-
-		return;
-	}
-
-	qint64 documentSequence = 0;
-	qint64 itemSequence = 0;
-	QByteArray data;
-	QDataStream stream(&data, QIODevice::ReadWrite);
-	stream << int(2) << history.entries.count() << history.index;
-
-	for (int i = 0; i < history.entries.count(); ++i)
-	{
-		stream << QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray(":/#?&+=@%*"))) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
-	}
-
-	stream.device()->reset();
-	stream >> *(m_webView->page()->history());
-
-	for (int i = 0; i < history.entries.count(); ++i)
-	{
-		QVariantHash data;
-		data[QLatin1String("position")] = history.entries.at(i).position;
-		data[QLatin1String("zoom")] = history.entries.at(i).zoom;
-
-		m_webView->page()->history()->itemAt(i).setUserData(data);
-	}
-
-	updateOptions(m_webView->page()->history()->itemAt(history.index).url());
-
-	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
-}
-
-void QtWebKitWebWidget::setZoom(int zoom)
-{
-	if (zoom != getZoom())
-	{
-		m_webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
-
-		SessionsManager::markSessionModified();
-
-		emit zoomChanged(zoom);
-		emit progressBarGeometryChanged();
-	}
-}
-
-void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
-{
-	if (url.scheme() == QLatin1String("javascript"))
-	{
-		evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
-
-		return;
-	}
-
-	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
-	{
-		m_webView->page()->mainFrame()->scrollToAnchor(url.fragment());
-
-		return;
-	}
-
-	m_isTyped = typed;
-
-	QUrl targetUrl(url);
-
-	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
-	{
-		QUrl httpUrl = url;
-		httpUrl.setScheme(QLatin1String("http"));
-
-		targetUrl = httpUrl;
-	}
-	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
-	{
-		QUrl localUrl = url;
-		localUrl.setScheme(QLatin1String("file"));
-
-		targetUrl = localUrl;
-	}
-
-	updateOptions(targetUrl);
-
-	m_webView->load(targetUrl);
-
-	notifyTitleChanged();
-	notifyIconChanged();
-}
-
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
 	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().isEmpty() || m_hotclickPosition.isNull())))
@@ -1241,11 +1104,156 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 }
 
+void QtWebKitWebWidget::setDefaultCharacterEncoding(const QString &encoding)
+{
+	m_webView->settings()->setDefaultTextEncoding(encoding);
+	m_webView->reload();
+}
+
+void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
+{
+	m_page->setUserAgent(identifier, value);
+
+	SessionsManager::markSessionModified();
+}
+
+void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
+{
+	if (history.entries.count() == 0)
+	{
+		m_webView->page()->history()->clear();
+
+		getAction(GoBackAction)->setEnabled(false);
+		getAction(GoForwardAction)->setEnabled(false);
+		getAction(RewindAction)->setEnabled(false);
+		getAction(FastForwardAction)->setEnabled(false);
+
+		emit actionsChanged();
+
+		return;
+	}
+
+	qint64 documentSequence = 0;
+	qint64 itemSequence = 0;
+	QByteArray data;
+	QDataStream stream(&data, QIODevice::ReadWrite);
+	stream << int(2) << history.entries.count() << history.index;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		stream << QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray(":/#?&+=@%*"))) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
+	}
+
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		QVariantHash data;
+		data[QLatin1String("position")] = history.entries.at(i).position;
+		data[QLatin1String("zoom")] = history.entries.at(i).zoom;
+
+		m_webView->page()->history()->itemAt(i).setUserData(data);
+	}
+
+	updateOptions(m_webView->page()->history()->itemAt(history.index).url());
+
+	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
+}
+
+void QtWebKitWebWidget::setZoom(int zoom)
+{
+	if (zoom != getZoom())
+	{
+		m_webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+
+		SessionsManager::markSessionModified();
+
+		emit zoomChanged(zoom);
+		emit progressBarGeometryChanged();
+	}
+}
+
+void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
+{
+	if (url.scheme() == QLatin1String("javascript"))
+	{
+		evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
+
+		return;
+	}
+
+	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
+	{
+		m_webView->page()->mainFrame()->scrollToAnchor(url.fragment());
+
+		return;
+	}
+
+	m_isTyped = typed;
+
+	QUrl targetUrl(url);
+
+	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
+	{
+		QUrl httpUrl = url;
+		httpUrl.setScheme(QLatin1String("http"));
+
+		targetUrl = httpUrl;
+	}
+	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
+	{
+		QUrl localUrl = url;
+		localUrl.setScheme(QLatin1String("file"));
+
+		targetUrl = localUrl;
+	}
+
+	updateOptions(targetUrl);
+
+	m_webView->load(targetUrl);
+
+	notifyTitleChanged();
+	notifyIconChanged();
+}
+
+void QtWebKitWebWidget::setNetworkManager(NetworkManager *manager)
+{
+	if (m_networkManager)
+	{
+		m_networkManager->deleteLater();
+	}
+
+	m_networkManager = manager;
+	m_networkManager->setParent(m_page);
+
+	m_page->setNetworkAccessManager(m_networkManager);
+	m_page->setForwardUnsupportedContent(true);
+
+	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
+	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
+}
+
+void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
+{
+	WebWidget::setOption(key, value);
+
+	updateOptions(getUrl());
+}
+
+void QtWebKitWebWidget::setOptions(const QVariantHash &options)
+{
+	WebWidget::setOptions(options);
+
+	updateOptions(getUrl());
+}
+
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
 	const QPair<QString, QString> userAgent = getUserAgent();
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setNetworkManager(m_networkManager->clone(NULL));
+	widget->setOptions(getOptions());
 	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());

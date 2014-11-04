@@ -84,6 +84,7 @@ protected:
 	void markPageRealoded();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void setNetworkManager(NetworkManager *manager);
+	void setOptions(const QVariantHash &options);
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(ActionIdentifier action) const;
 

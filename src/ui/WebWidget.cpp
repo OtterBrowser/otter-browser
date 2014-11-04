@@ -321,16 +321,6 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	menu.exec(mapToGlobal(position));
 }
 
-void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
-{
-	m_requestedUrl = url;
-
-	if (!onlyUpdate)
-	{
-		setUrl(url, typed);
-	}
-}
-
 void WebWidget::updateQuickSearch()
 {
 	if (m_quickSearchMenu && sender() == SearchesManager::getInstance())
@@ -360,6 +350,21 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 	else
 	{
 		m_options[key] = value;
+	}
+}
+
+void WebWidget::setOptions(const QVariantHash &options)
+{
+	m_options = options;
+}
+
+void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
+{
+	m_requestedUrl = url;
+
+	if (!onlyUpdate)
+	{
+		setUrl(url, typed);
 	}
 }
 
@@ -517,6 +522,11 @@ QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
 QUrl WebWidget::getRequestedUrl() const
 {
 	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
+}
+
+QVariantHash WebWidget::getOptions() const
+{
+	return m_options;
 }
 
 int WebWidget::getReloadTime() const

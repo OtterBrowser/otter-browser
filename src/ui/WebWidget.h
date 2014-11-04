@@ -97,6 +97,7 @@ public:
 public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
+	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
@@ -104,7 +105,6 @@ public slots:
 	virtual void setReloadTime(int time);
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
-	void showContextMenu(const QPoint &position, MenuFlags flags);
 	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
 
 protected:
@@ -112,6 +112,8 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void startReloadTimer();
+	virtual void setOptions(const QVariantHash &options);
+	QVariantHash getOptions() const;
 
 protected slots:
 	void reloadTimeMenuAboutToShow();
