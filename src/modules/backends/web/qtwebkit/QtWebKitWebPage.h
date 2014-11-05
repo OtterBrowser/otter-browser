@@ -73,6 +73,9 @@ private:
 	bool m_ignoreJavaScriptPopups;
 	bool m_isGlobalUserAgent;
 
+	static QString m_defaultUserAgent;
+	static QHash<QString, QString> m_userAgentComponents;
+
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 };

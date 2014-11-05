@@ -45,6 +45,9 @@
 namespace Otter
 {
 
+QString QtWebKitWebPage::m_defaultUserAgent;
+QHash<QString, QString> QtWebKitWebPage::m_userAgentComponents;
+
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent),
 	m_ignoreJavaScriptPopups(false),
@@ -236,7 +239,31 @@ QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
 		return m_userAgentParsed;
 	}
 
-	return QWebPage::userAgentForUrl(url);
+	if (m_defaultUserAgent.isEmpty())
+	{
+		const QList<QString> userAgentSplited = QWebPage::userAgentForUrl(url).split(QLatin1Char(' '));
+
+		for (int i = 1; i < userAgentSplited.count(); ++i)
+		{
+			m_userAgentComponents[QLatin1String("Platform")] += userAgentSplited.at(i);
+
+			if (userAgentSplited.at(i).endsWith(QLatin1Char(')')))
+			{
+				break;
+			}
+			else
+			{
+				m_userAgentComponents[QLatin1String("Platform")] += QLatin1Char(' ');
+			}
+		}
+
+		m_userAgentComponents[QLatin1String("EngineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
+		m_userAgentComponents[QLatin1String("ApplicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
+
+		m_defaultUserAgent = QLatin1String("Mozilla/5.0 ") + m_userAgentComponents[QLatin1String("Platform")] + QLatin1Char(' ') + m_userAgentComponents[QLatin1String("EngineVersion")] + QLatin1String(" (KHTML, like Gecko) ") + m_userAgentComponents[QLatin1String("ApplicationVersion")];
+	}
+
+	return m_defaultUserAgent;
 }
 
 QPair<QString, QString> QtWebKitWebPage::getUserAgent() const
