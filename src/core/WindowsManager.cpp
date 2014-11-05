@@ -569,7 +569,8 @@ void WindowsManager::closeWindow(Window *window)
 
 			return;
 		}
-		else if (lastTabClosingAction == QLatin1String("openTab"))
+
+		if (lastTabClosingAction == QLatin1String("openTab"))
 		{
 			window = getWindow(0);
 
@@ -582,6 +583,8 @@ void WindowsManager::closeWindow(Window *window)
 		}
 		else
 		{
+			ActionsManager::getAction(QLatin1String("CloneTab"), m_mdi)->setEnabled(false);
+
 			emit windowTitleChanged(QString());
 		}
 	}
@@ -707,6 +710,8 @@ void WindowsManager::setActiveWindow(int index)
 		connect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
 		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
 	}
+
+	ActionsManager::getAction(QLatin1String("CloneTab"), m_mdi)->setEnabled(window && window->canClone());
 
 	emit actionsChanged();
 	emit currentWindowChanged(index);

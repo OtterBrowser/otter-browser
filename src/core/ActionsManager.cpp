@@ -58,6 +58,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("NewWindowPrivate"), QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")));
 		registerAction(QLatin1String("Open"), QT_TRANSLATE_NOOP("actions", "Open..."), QString(), Utils::getIcon(QLatin1String("document-open")));
 		registerAction(QLatin1String("Save"), QT_TRANSLATE_NOOP("actions", "Save..."), QString(), Utils::getIcon(QLatin1String("document-save")), false);
+		registerAction(QLatin1String("CloneTab"), QT_TRANSLATE_NOOP("actions", "Clone Tab"));
 		registerAction(QLatin1String("CloseTab"), QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
 		registerAction(QLatin1String("SaveSession"), QT_TRANSLATE_NOOP("actions", "Save Current Session..."));
 		registerAction(QLatin1String("ManageSessions"), QT_TRANSLATE_NOOP("actions", "Manage Sessions..."));
