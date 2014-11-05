@@ -22,11 +22,12 @@
 
 #include <QtCore/QPropertyAnimation>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QFrame>
 
 namespace Otter
 {
 
-class PreviewWidget : public QWidget
+class PreviewWidget : public QFrame
 {
 	Q_OBJECT
 
