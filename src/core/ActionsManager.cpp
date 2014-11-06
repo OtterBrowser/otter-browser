@@ -121,7 +121,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("SaveLinkToDisk"), QT_TRANSLATE_NOOP("actions", "Save Link Target As..."));
 		registerAction(QLatin1String("SaveLinkToDownloads"), QT_TRANSLATE_NOOP("actions", "Save to Downloads"));
 		registerAction(QLatin1String("BookmarkLink"), QT_TRANSLATE_NOOP("actions", "Bookmark Link..."), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
-		registerAction(QLatin1String("ReloadTime"), QT_TRANSLATE_NOOP("actions", "Reload Each"));
+		registerAction(QLatin1String("ReloadTime"), QT_TRANSLATE_NOOP("actions", "Reload Every"));
 		registerAction(QLatin1String("CopyAddress"), QT_TRANSLATE_NOOP("actions", "Copy Address"));
 		registerAction(QLatin1String("Validate"), QT_TRANSLATE_NOOP("actions", "Validate"));
 		registerAction(QLatin1String("WebsitePreferences"), QT_TRANSLATE_NOOP("actions", "Website Preferences..."), QString(), QIcon(), true, false, false, WebsitePreferencesAction);
