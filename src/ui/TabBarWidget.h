@@ -52,7 +52,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
+	void mousePressEvent (QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);
