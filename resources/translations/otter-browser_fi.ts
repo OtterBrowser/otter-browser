@@ -145,12 +145,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Kansion nimi</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Valitse uuden kansion nimi:</translation>
     </message>
 </context>
 <context>
@@ -158,7 +158,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -178,7 +178,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Avainsana:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -220,7 +220,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="210"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Tyhjennä roskis</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
@@ -250,12 +250,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="240"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="259"/>
         <source>Restore Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Palauta kirjanmerkki</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="263"/>
@@ -288,12 +288,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>Uusi</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Salli toistot kirjanmerkeissä</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -316,12 +316,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="216"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Roskis</translation>
     </message>
 </context>
 <context>
@@ -329,7 +329,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
@@ -424,17 +424,17 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Poista yksikkö</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Poista kaikki tämän nimipalvelimen yksiköt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="456"/>
@@ -520,7 +520,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="82"/>
@@ -558,7 +558,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
         <source>Current tab and unspecified</source>
-        <translation type="unfinished"/>
+        <translation>Nykyinen välilehti ja määrittelemätön</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
@@ -582,7 +582,7 @@ Haluatko silti avata tämän istunnon?</translation>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Muu</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="121"/>
@@ -651,12 +651,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Nimipalvelin:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="112"/>
@@ -682,12 +682,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="173"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Turvallinen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
         <source>HTTP only</source>
-        <translation type="unfinished"/>
+        <translation>Vain HTTP</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
@@ -712,7 +712,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="258"/>
         <source>Remove All Cookies from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Poista kaikki tämän nimipalvelimen evästeet</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="407"/>
@@ -743,7 +743,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
@@ -778,7 +778,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Older</source>
-        <translation type="unfinished"/>
+        <translation>Vanhemmat</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
@@ -839,12 +839,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Poista yksikkö</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
         <source>Remove All Entries from This Domain</source>
-        <translation type="unfinished"/>
+        <translation>Poista kaikki tämän nimipalvelimen yksiköt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
@@ -857,7 +857,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="174"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>HTML-kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
@@ -1006,12 +1006,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="43"/>
         <source>System</source>
-        <translation type="unfinished"/>
+        <translation>Järjestelmä</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="48"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Ḿukautettu</translation>
     </message>
 </context>
 <context>
@@ -1024,12 +1024,12 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="149"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Tuo Operan kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="150"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Tuo HTML-kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="308"/>
@@ -1057,7 +1057,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="340"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Olet lopettamassa Otter-istunnon</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="505"/>
@@ -1084,7 +1084,7 @@ Haluatko silti jatkaa?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="722"/>
         <source>Web backend: %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>Web-tausta: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="726"/>
@@ -1107,7 +1107,7 @@ Haluatko silti jatkaa?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="780"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n välilehteä))</numerusform><numerusform>%1 (%n välilehteä)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="811"/>
@@ -1117,7 +1117,7 @@ Haluatko silti jatkaa?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="833"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Mukautettu</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="863"/>
@@ -1186,7 +1186,7 @@ Haluatko silti jatkaa?</translation>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="268"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>SSL virheitä. Haluatko jatkaa?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="285"/>
@@ -1195,7 +1195,11 @@ Haluatko silti jatkaa?</translation>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Sattui SSL virheitä:
+
+%1
+
+Haluatko jatkaa?</translation>
     </message>
 </context>
 <context>
@@ -1219,7 +1223,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="14"/>
         <source>Go to Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Mene kirjanmerkkiin</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
@@ -1232,7 +1236,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="89"/>
         <source>Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Opera-kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="94"/>
@@ -1258,7 +1262,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation>Ominaisuudet</translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
@@ -1394,7 +1398,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Suodatus</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
@@ -1460,7 +1464,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>Normaalifontin oletuskoko:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="494"/>
@@ -1507,22 +1511,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>Älä seuraa</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="670"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Kerro sivustoille, että en halua seurantaa</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="675"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Salli seuranta</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="680"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Älä kerro sivustoille valintaani</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
@@ -1557,7 +1561,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="798"/>
         <source>Template...</source>
-        <translation type="unfinished"/>
+        <translation>Malli...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="809"/>
@@ -1577,27 +1581,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
         <source>Keep until:</source>
-        <translation type="unfinished"/>
+        <translation>Pidä kunnes:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="904"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Aina</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Vain olemassaolevat</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="914"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Ei koskaan</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="926"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Voimassaoloajan loppuun asti</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="931"/>
@@ -1607,7 +1611,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Kysy aina</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="951"/>
@@ -1648,12 +1652,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Haku</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1096"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1147"/>
@@ -1729,17 +1733,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Ehdota kirjanmerkeistä</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
         <source>Suggest history</source>
-        <translation type="unfinished"/>
+        <translation>Ehdota historiasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>Ehdota hauista</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
@@ -1839,7 +1843,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1695"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>SSL avaimet</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1746"/>
@@ -1851,7 +1855,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1830"/>
         <source>Action Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Pikanäppäimet</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1895"/>
@@ -1862,7 +1866,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1975"/>
         <source>Action Macros</source>
-        <translation type="unfinished"/>
+        <translation>Toimintomakrot</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
@@ -1887,12 +1891,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Cursive font</source>
-        <translation>Kursiivi kirjasin</translation>
+        <translation>Kursiivikirjasin</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
         <source>Fantasy font</source>
-        <translation type="unfinished"/>
+        <translation>Fantasy-kirjasin</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="132"/>
@@ -2019,12 +2023,12 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="86"/>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="113"/>
         <source>Time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Aika: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="103"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Elementtejä: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="104"/>
@@ -2042,12 +2046,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="109"/>
         <source>WebKit Backend</source>
-        <translation type="unfinished"/>
+        <translation>WebKit tausta</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="114"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Taustan käytössa QtWebKit </translation>
     </message>
 </context>
 <context>
@@ -2099,12 +2103,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="447"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 virhe #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation>Sivulla olevassa skriptissä vaikuttaisi olevan ongelma.</translation>
+        <translation>Sivun skriptissä näyttää olevan ongelma.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
@@ -2127,7 +2131,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="456"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Haku</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="457"/>
@@ -2172,12 +2176,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1086"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi videon URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1086"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi audion URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1087"/>
@@ -2187,12 +2191,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1088"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Toisto</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1090"/>
         <source>Play</source>
-        <translation>Toista</translation>
+        <translation>Soita</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1090"/>
@@ -2503,12 +2507,12 @@ Haluatko silti avata tämän istunnon?</translation>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="44"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>Toiminnot</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Hae...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
@@ -2556,12 +2560,12 @@ Haluatko silti avata tämän istunnon?</translation>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="51"/>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="154"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Nimetön)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="68"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Toiminto</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
@@ -2576,7 +2580,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
         <source>Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Pikanäppäin</translation>
     </message>
 </context>
 <context>
@@ -2584,32 +2588,32 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="172"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="177"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Puskuri</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="182"/>
         <source>Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="187"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Evästeet</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="192"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historia</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="197"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Lataukset</translation>
     </message>
 </context>
 <context>
@@ -2678,32 +2682,32 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="100"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Vapauta välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="100"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Kiinnitä välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="102"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>Irrota välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sulje välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Sulje muut välilehdet</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="368"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Nimetön)</translation>
     </message>
 </context>
 <context>
@@ -2711,7 +2715,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download...</source>
-        <translation type="unfinished"/>
+        <translation>Pikalataus...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="123"/>
@@ -2918,47 +2922,47 @@ Valitse uusi sijainti.</translation>
         <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Näytä ikkunat</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uusi välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uusi yksityinen välilehti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Lataukset</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historia</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="48"/>
         <source>Otter Browser</source>
-        <translation type="unfinished"/>
+        <translation>Otter selain</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Hide Windows</source>
-        <translation type="unfinished"/>
+        <translation>Peitä ikkunat</translation>
     </message>
 </context>
 <context>
@@ -3014,12 +3018,12 @@ Valitse uusi sijainti.</translation>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>Korosta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="126"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Kirjainkoon tunnistus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="139"/>
@@ -3104,547 +3108,547 @@ Valitse uusi sijainti.</translation>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Tiedosto</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Istunnot</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Tuonti ja vienti</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Muokkaa</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Näytä</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Selaintunniste</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Merkkikoodaus</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historia</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Closed Windows</source>
-        <translation type="unfinished"/>
+        <translation>Suljetut ikkunat</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Kirjanmerkit</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Työkalut</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Ohje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uusi välilehti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Uusi yksityinen välilehti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Uusi ikkuna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Uusi yksityinen ikkuna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Avaa...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sulje välilehti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna nykyinen istunto...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Istuntojen hallinta...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Tulosta...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Tulostuksen esikatselu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Toimi ilman verkkoyhteyttä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Näytä valikkorivi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Kumoa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="57"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Tee uudelleen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Leikkaa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Liitä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Valitse kaikki</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Etsi...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Etsi seuraava</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Etsi edellinen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Pysäytä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Lähennä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Loitonna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Alkuperäinen koko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Kokoruututila</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Näytä lähdekoodi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Tarkista sivu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Show Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Näytä paneeli</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Edellinen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Seuraava</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Alkuun</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Pikakelaus</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Näytä historia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Tyhjennä historia...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Lisää kirjanmerkki...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Hallitse kirjanmerkkejä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Lataukset...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Evästeet...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Suodata sisältöä...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Virhekonsoli</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Asetukset...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Switch Application Language...</source>
-        <translation type="unfinished"/>
+        <translation>Vaihda ohjelman käyttökieltä...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>About Otter...</source>
-        <translation type="unfinished"/>
+        <translation>Tietoja Otterista...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="90"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Tietoja Qt:sta...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="91"/>
         <source>Close Window</source>
-        <translation type="unfinished"/>
+        <translation>Sulje ikkuna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="92"/>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Avaa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa tässä välilehdessä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa uudessa välilehdessä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa taustalla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Avaa uudessa ikkunassa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Avaa uudessa taustaikkunassa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa suljettu välilehti uudelleen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="99"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa freimi tässä välilehdessä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa freimi uudessa välilehdessä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Avaa freimi taustalla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi freimin URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Päivitä freimi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Päivitä kuva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna kohde nimellä...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna latauskansioon</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Lisää linkki kirjanmerkkeihin...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Päivitä jokainen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi osoite</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
         <source>Validate</source>
-        <translation type="unfinished"/>
+        <translation>Validoi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Sivukohtaiset asetukset...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Kuvan ominaisuudet...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Avaa kuva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="116"/>
         <source>Save Image...</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna kuva...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi kuva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi kuvan osoite</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Haku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Hae käyttäen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Mene tähän osoitteeseen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Tyhjennä kaikki</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Tarkista oikeinkirjoitus</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Luo hakutyyppi...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Inspect Element...</source>
-        <translation type="unfinished"/>
+        <translation>Tarkista elementti...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna video...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi median URL leikepöydälle</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Näytä ohjaimet</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="129"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Toisto</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="130"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Soita</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Mykistä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="132"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Kirjanmerkin pikalataus</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="133"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Pikahaku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Aktivoi osoitekenttä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi pelkkänä tekstinä</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="136"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Liitä ja mene</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Siirry välilehteen vasemmalla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Siirry välilehteen oikealla</translation>
     </message>
 </context>
 <context>

@@ -861,7 +861,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation type="unfinished"/>
+        <translation>Uvozi zaznamke iz HTML datoteke (Netscape format).</translation>
     </message>
 </context>
 <context>
@@ -1357,22 +1357,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="224"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Ob zapiranju zavihka:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="238"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>aktiviraj zadnji aktivni zavihek</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="243"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>aktiviraj naslednji zavihek</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="248"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>aktiviraj prvi zavihek, odprt s tega zavihka</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="264"/>

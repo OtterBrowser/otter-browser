@@ -150,7 +150,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Select name of new folder:</source>
-        <translation>Выбрать имя папки:</translation>
+        <translation>Введите имя папки:</translation>
     </message>
 </context>
 <context>
@@ -270,7 +270,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="353"/>
         <source>Bookmarks Manager</source>
-        <translation>Управлять закладками</translation>
+        <translation>Закладки</translation>
     </message>
 </context>
 <context>
@@ -278,7 +278,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation>Удалить имеющиеся закладки</translation>
+        <translation>Удалить дубликаты</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
@@ -452,7 +452,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>Удалить историю</translation>
+        <translation>Удаление личных данных</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
@@ -502,7 +502,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation>Удалить постоянное хранилище</translation>
+        <translation>Очистить постоянное хранилище</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
@@ -600,7 +600,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation>Блокирование содержимого</translation>
+        <translation>Блокируемое содержимое</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
@@ -620,7 +620,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation>Правка</translation>
+        <translation>Изменить</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
@@ -630,7 +630,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
@@ -758,22 +758,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Week</source>
-        <translation>Ранее на этой неделе</translation>
+        <translation>На этой неделе</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Previous Week</source>
-        <translation>Предыдущая неделя</translation>
+        <translation>На предыдущей неделе</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Month</source>
-        <translation>Ранее в этом месяце</translation>
+        <translation>В этом месяце</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Year</source>
-        <translation>Ранее в этом году</translation>
+        <translation>В этом году</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
@@ -862,7 +862,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation>Импортирует закладки из HTML файла (формат Netscape).</translation>
+        <translation>Импортирует закладки из HTML-файла (формат Netscape).</translation>
     </message>
 </context>
 <context>
@@ -925,13 +925,13 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадре</numerusform><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадрах</numerusform><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадрах</numerusform></translation>
+        <translation><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадре</numerusform><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадрах</numerusform><numerusform>%1 x %2 &lt;numerusform&gt;пиксель&lt;/numerusform&gt;&lt;numerusform&gt;пикселя&lt;/numerusform&gt;&lt;numerusform&gt;пикселей&lt;/numerusform&gt; @ %3 &lt;numerusform&gt;бит&lt;/numerusform&gt;&lt;numerusform&gt;бита&lt;/numerusform&gt;&lt;numerusform&gt;бит&lt;/numerusform&gt; на пиксель в %n &lt;numerusform&gt;кадре&lt;/numerusform&gt;&lt;numerusform&gt;кадрах&lt;/numerusform&gt;&lt;numerusform&gt;кадрах&lt;/numerusform&gt;</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation>%1 x %2 пикселей @ %3 битов на пиксель</translation>
+        <translation>%1 x %2 &lt;numerusform&gt;пиксель&lt;/numerusform&gt;&lt;numerusform&gt;пикселя&lt;/numerusform&gt;&lt;numerusform&gt;пикселей&lt;/numerusform&gt; @ %3 &lt;numerusform&gt;бит&lt;/numerusform&gt;&lt;numerusform&gt;бита&lt;/numerusform&gt;&lt;numerusform&gt;бит&lt;/numerusform&gt; на пиксель</translation>
     </message>
 </context>
 <context>
@@ -950,7 +950,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="76"/>
         <source>Unable to import selected type.</source>
-        <translation>Не удалось импортировать выбранный тип.</translation>
+        <translation>Не удалось импортировать выбранный тип файла закладок.</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="93"/>
@@ -1024,12 +1024,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="149"/>
         <source>Import Opera Bookmarks</source>
-        <translation>Импортировать закладки Opera</translation>
+        <translation>Импортировать закладки Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="150"/>
         <source>Import HTML Bookmarks</source>
-        <translation>Импортировать закладки HTML</translation>
+        <translation>Импортировать закладки HTML...</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="308"/>
@@ -1040,7 +1040,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="309"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Вы выходите во время загрузки %n файла.</numerusform><numerusform>Вы выходите во время загрузки %n файлов.</numerusform><numerusform>Вы выходите во время загрузки %n файлов.</numerusform></translation>
+        <translation><numerusform>Вы выходите во время загрузки %n файла.</numerusform><numerusform>Вы выходите во время загрузки %n файлов.</numerusform><numerusform>Вы выходите во время загрузки %n &lt;numerusform&gt;файл&lt;/numerusform&gt;&lt;numerusform&gt;файла&lt;/numerusform&gt;&lt;numerusform&gt;файлов&lt;/numerusform&gt;.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="310"/>
@@ -1093,7 +1093,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="730"/>
         <source>SSL library not available.</source>
-        <translation>Библиотека SSL не доступна.</translation>
+        <translation>Библиотека SSL недоступна.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="765"/>
@@ -1106,7 +1106,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="780"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n закладка)</numerusform><numerusform>%1 (%n закладки)</numerusform><numerusform>%1 (%n закладок)</numerusform></translation>
+        <translation><numerusform>%1 (%n закладка)</numerusform><numerusform>%1 (%n закладки)</numerusform><numerusform>%1 (%n &lt;numerusform&gt;закладок&lt;/numerusform&gt;&lt;numerusform&gt;закладка&lt;/numerusform&gt;&lt;numerusform&gt;закладки&lt;/numerusform&gt;)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="811"/>
@@ -1214,7 +1214,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation>Не удалось установить прокси через авто-настройку (PAC)</translation>
+        <translation>Не удалось установить прокси через автонастройку (PAC)</translation>
     </message>
 </context>
 <context>
@@ -1227,7 +1227,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Ввести ключевое слово закладки:</translation>
+        <translation>Введите ключевое слово закладки:</translation>
     </message>
 </context>
 <context>
@@ -1240,7 +1240,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="94"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation>Импортирует закладки из браузера Opera версии 12 или старше</translation>
+        <translation>Импортирует закладки из браузера Opera версии 12 и ниже</translation>
     </message>
 </context>
 <context>
@@ -1470,7 +1470,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.ui" line="530"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="549"/>
         <source> px</source>
-        <translation>пикс</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="510"/>
@@ -1931,7 +1931,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
         <source>Keyword</source>
-        <translation>Ключевое слово</translation>
+        <translation>Клавиша</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
@@ -1965,7 +1965,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation>Ввести уникальный идентификатор поискового движка:</translation>
+        <translation>Введите уникальный идентификатор службы поиска:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
@@ -2008,7 +2008,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation>Ввести уникальный идентификатор профиля:</translation>
+        <translation>Введите уникальный идентификатор профиля:</translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2150,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation>Ввести уникальный идентификатор поискового движка:</translation>
+        <translation>Введите уникальный идентификатор службы поиска:</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1070"/>
@@ -2310,7 +2310,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Keyword:</source>
-        <translation>Ключевое слово:</translation>
+        <translation>Клавиша:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
@@ -2356,7 +2356,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="200"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="308"/>
         <source>multipart/form-data</source>
-        <translation type="unfinished"/>
+        <translation>multipart/form-data</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
@@ -2626,7 +2626,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
         <source>Continue session</source>
-        <translation>Продолжить сеанс</translation>
+        <translation>Продолжить с места разъединения</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
@@ -2696,7 +2696,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="107"/>
         <source>Close Tab</source>
-        <translation>Закрыть вкладку</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="120"/>
@@ -2819,7 +2819,7 @@ Progress: %5&lt;/pre&gt;</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="422"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="423"/>
         <source>%1 (%n B)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n б)</numerusform><numerusform>%1 (%n б)</numerusform><numerusform>%1 (%n б)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="371"/>
@@ -2961,7 +2961,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Hide Windows</source>
-        <translation>Спрятать окна</translation>
+        <translation>Скрыть окна</translation>
     </message>
 </context>
 <context>
@@ -3007,7 +3007,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
         <source>Find Next</source>
-        <translation>Найти следующее</translation>
+        <translation>Найти далее</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
@@ -3043,7 +3043,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/Window.ui" line="68"/>
         <source>Enter address or search...</source>
-        <translation>Введите адрес или запрос…</translation>
+        <translation>Введите адрес или запрос для поиска...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="222"/>
@@ -3059,7 +3059,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/Window.cpp" line="290"/>
         <source>Enter User Agent:</source>
-        <translation>Ввести идентификатор браузера:</translation>
+        <translation>Введите идентификатор браузера:</translation>
     </message>
 </context>
 <context>
@@ -3137,7 +3137,7 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Character Encoding</source>
-        <translation>Кодировка символов</translation>
+        <translation>Кодировка</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
@@ -3222,12 +3222,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Work Offline</source>
-        <translation>Hаботать в автономном режиме</translation>
+        <translation>Работать автономно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Show Menubar</source>
-        <translation>Показать панель меню</translation>
+        <translation>Показывать меню</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="55"/>
@@ -3267,17 +3267,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Select All</source>
-        <translation>Выделить всё</translation>
+        <translation>Выбрать всё</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Find...</source>
-        <translation>Найти на странице...</translation>
+        <translation>Найти...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation>Найти следующее</translation>
+        <translation>Найти далее</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
@@ -3298,12 +3298,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Zoom In</source>
-        <translation>Приблизить</translation>
+        <translation>Увеличить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Zoom Out</source>
-        <translation>Отдалить</translation>
+        <translation>Уменьшить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
@@ -3319,12 +3319,12 @@ Select another one.</source>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>View Source</source>
-        <translation>Просмотреть исходный код</translation>
+        <translation>Исходный код</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Inspect Page</source>
-        <translation>Инспектировать страницу</translation>
+        <translation>Проинспектировать страницу</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
@@ -3344,12 +3344,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Rewind</source>
-        <translation>В конец</translation>
+        <translation>Вернуться</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Fast Forward</source>
-        <translation>В начало</translation>
+        <translation>Быстро перейти</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
@@ -3359,7 +3359,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Clear History...</source>
-        <translation>Очистить историю...</translation>
+        <translation>Удалить личные данные...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
@@ -3369,7 +3369,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Manage Bookmarks...</source>
-        <translation>Управлять закладками...</translation>
+        <translation>Управление закладками...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
@@ -3384,7 +3384,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation>Блокировка содержимого...</translation>
+        <translation>Блокировать содержимое...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
@@ -3404,7 +3404,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>About Otter...</source>
-        <translation>О Otter...</translation>
+        <translation>О программе...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="90"/>
@@ -3437,7 +3437,7 @@ Select another one.</source>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation>Открыть в новой фоновой вкладке</translation>
+        <translation>Открыть в фоновой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
@@ -3447,7 +3447,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation>Открыть в новом фоновом окне</translation>
+        <translation>Открыть в фоновом окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
@@ -3462,27 +3462,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation>Открыть фрейм в этой вкладе</translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation>Открыть фрейм в новой вкладе</translation>
+        <translation>Открыть в новой вкладе</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation>Открыть фрейм в новой фоновой вкладке</translation>
+        <translation>Открыть в фоновой вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Копировать адрес фрейма в буфер обмена</translation>
+        <translation>Копировать адрес</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation>Обновить фрейм</translation>
+        <translation>Обновит</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
@@ -3492,22 +3492,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Save Link Target As...</source>
-        <translation>Сохранить по ссылке как...</translation>
+        <translation>Сохранить по ссылк...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Save to Downloads</source>
-        <translation>Сохранить в папку загрузок</translation>
+        <translation>Сохранить в папку загрузки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation>Ссылка закладки...</translation>
+        <translation>Создать закладку ссылки...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Reload Each</source>
-        <translation>Перезагружать каждые</translation>
+        <translation>Обновлять каждые</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
@@ -3517,12 +3517,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
         <source>Validate</source>
-        <translation>Проверить</translation>
+        <translation>Соблюдены ли веб-стандарты</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation>Предпочтения сайта...</translation>
+        <translation>Настройки для сайта...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
@@ -3542,12 +3542,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Copy Image to Clipboard</source>
-        <translation>Копировать изображение в буфер обмена</translation>
+        <translation>Копировать изображение</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation>Копировать адрес изображения в буфер обмена</translation>
+        <translation>Копировать адрес изображения</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
@@ -3567,12 +3567,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Clear All</source>
-        <translation>Очистить всё</translation>
+        <translation>Удалить всё</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Check Spelling</source>
-        <translation>Проверка орфографии</translation>
+        <translation>Проверять орфографию</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="124"/>
@@ -3582,7 +3582,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Inspect Element...</source>
-        <translation>Инспектировать элемент...</translation>
+        <translation>Проинспектировать элемент…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
@@ -3592,7 +3592,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation>Копировать ссылку на медиа в буфер обмена</translation>
+        <translation>Копировать ссылку на медиа</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
@@ -3612,7 +3612,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Mute</source>
-        <translation>Приглушить звук</translation>
+        <translation>Приглушит</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="132"/>
@@ -3632,7 +3632,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Copy as Plain Text</source>
-        <translation>Копировать как обычный текст</translation>
+        <translation>Копировать как простой текст</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="136"/>
@@ -3690,7 +3690,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="87"/>
         <source>Loaded adblock file is not valid: %0</source>
-        <translation>Загруженный файл adblock не годен: %0</translation>
+        <translation>Загруженный файл adblock некорректный: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="459"/>
@@ -3700,12 +3700,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="467"/>
         <source>Unable to download update for content blocking: %0</source>
-        <translation>Не удалось загрузить обновление для блокирования содержимого: %0</translation>
+        <translation>Не удалось загрузить обновление для блокировщика содержимого: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="478"/>
         <source>Unable to write downloaded content blocking file: %0</source>
-        <translation>Не удалось записать загруженный файл с фильтрами блокирования: %0</translation>
+        <translation>Не удалось записать загруженный файл с фильтрами блокировщика содержимого: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
@@ -3717,7 +3717,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="319"/>
         <source>Blocked content: %0</source>
-        <translation>Заблокированное содержимое: %0</translation>
+        <translation>Блокируемое содержимое: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="73"/>
