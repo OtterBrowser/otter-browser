@@ -263,6 +263,11 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		menu.addSeparator();
 
+		QAction *enableImagesAction = menu.addAction(tr("Enable Images"));
+		enableImagesAction->setCheckable(true);
+		enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
+		enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
+
 		QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
 		enableJavaScriptAction->setCheckable(true);
 		enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
