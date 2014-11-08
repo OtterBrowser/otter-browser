@@ -154,6 +154,11 @@ void WebWidget::quickSearchMenuAboutToShow()
 	}
 }
 
+void WebWidget::clearOptions()
+{
+	m_options.clear();
+}
+
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
 	QMenu menu;

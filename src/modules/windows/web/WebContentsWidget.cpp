@@ -298,6 +298,8 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		enableProxyAction->setEnabled(false);
 
 		menu.addSeparator();
+		menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
+		menu.addSeparator();
 		menu.addAction(ActionsManager::getAction(WebsitePreferencesAction, parent()));
 
 		QAction *triggeredAction = menu.exec(QCursor::pos());

@@ -66,6 +66,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void clearOptions();
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
