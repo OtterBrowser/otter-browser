@@ -94,7 +94,8 @@ private:
 	ProgressBarWidget *m_progressBarWidget;
 	int m_progressBarTimer;
 	int m_quickFindTimer;
-	bool m_showProgressBar;
+	bool m_isProgressBarEnabled;
+	bool m_isTabPreferencesMenuVisible;
 	Ui::WebContentsWidget *m_ui;
 
 	static QString m_quickFindQuery;
