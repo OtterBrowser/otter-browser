@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-PreviewWidget::PreviewWidget(QWidget *parent) : QWidget(parent),
+PreviewWidget::PreviewWidget(QWidget *parent) : QFrame(parent),
 	m_textLabel(new QLabel(this)),
 	m_pixmapLabel(new QLabel(this)),
 	m_moveAnimation(NULL)
@@ -52,6 +52,10 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QWidget(parent),
 	m_pixmapLabel->setFixedWidth(260);
 	m_pixmapLabel->setAlignment(Qt::AlignCenter);
 	m_pixmapLabel->setPalette(palette);
+	m_pixmapLabel->setStyleSheet("border-width: 1px; border-style: solid; border-color: gray; border-radius: 0px");
+
+	this->setObjectName("previewWidget");
+	this->setStyleSheet("#previewWidget {border-width: 1px; border-style: solid; border-color: #B3B3B3; border-radius: 4px}");
 }
 
 void PreviewWidget::setPosition(const QPoint &position)
