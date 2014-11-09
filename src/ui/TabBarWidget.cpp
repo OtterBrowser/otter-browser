@@ -149,9 +149,9 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
-void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
+void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
-	QTabBar::mouseReleaseEvent(event);
+	QTabBar::mousePressEvent(event);
 
 	if (event->button() == Qt::MidButton)
 	{

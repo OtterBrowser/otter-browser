@@ -60,7 +60,7 @@ void FilePathWidget::selectPath()
 
 	if (!path.isEmpty())
 	{
-		m_lineEdit->setText(path);
+		m_lineEdit->setText(QDir::toNativeSeparators(path));
 	}
 }
 
