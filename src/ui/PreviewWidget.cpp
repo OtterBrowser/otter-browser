@@ -43,6 +43,8 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QFrame(parent),
 	setPalette(palette);
 	setLayout(layout);
 	setWindowFlags(windowFlags() | Qt::ToolTip);
+	setObjectName(QLatin1String("previewWidget"));
+	setStyleSheet(QLatin1String("#previewWidget {border:1px solid #B3B3B3;border-radius:4px;}"));
 
 	m_textLabel->setFixedWidth(260);
 	m_textLabel->setAlignment(Qt::AlignCenter);
@@ -52,10 +54,7 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QFrame(parent),
 	m_pixmapLabel->setFixedWidth(260);
 	m_pixmapLabel->setAlignment(Qt::AlignCenter);
 	m_pixmapLabel->setPalette(palette);
-	m_pixmapLabel->setStyleSheet("border-width: 1px; border-style: solid; border-color: gray; border-radius: 0px");
-
-	this->setObjectName("previewWidget");
-	this->setStyleSheet("#previewWidget {border-width: 1px; border-style: solid; border-color: #B3B3B3; border-radius: 4px}");
+	m_pixmapLabel->setStyleSheet(QLatin1String("border:1px solid gray;"));
 }
 
 void PreviewWidget::setPosition(const QPoint &position)
