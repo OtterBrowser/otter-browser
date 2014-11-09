@@ -56,6 +56,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -265,8 +266,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 			messageBox.setDefaultButton(QMessageBox::Cancel);
 			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+			QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
 
-			if (messageBox.exec() == QMessageBox::Yes)
+			int execRet = messageBox.exec();
+			if (messageBox.clickedButton() == hideButton)
+			{
+				Application *application = Application::getInstance();
+				application->setHidden(!application->isHidden());
+
+				event->ignore();
+
+				return;
+			}
+			else if (execRet == QMessageBox::Yes)
 			{
 				runningTransfers = 0;
 				transfersDialog = true;
@@ -296,9 +308,20 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 				messageBox.setDefaultButton(QMessageBox::Yes);
 				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+				QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
 
-				if (messageBox.exec() == QMessageBox::Cancel)
+				int execRet = messageBox.exec();
+				if (execRet == QMessageBox::Cancel)
 				{
+					event->ignore();
+
+					return;
+				}
+				else if (messageBox.clickedButton() == hideButton)
+				{
+					Application *application = Application::getInstance();
+					application->setHidden(!application->isHidden());
+
 					event->ignore();
 
 					return;
