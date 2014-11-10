@@ -20,10 +20,12 @@
 
 #include "PreferencesDialog.h"
 #include "ClearHistoryDialog.h"
+#include "MainWindow.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
 #include "UserAgentsManagerDialog.h"
+#include "preferences/JavaScriptPreferencesDialog.h"
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/Application.h"
@@ -35,8 +37,6 @@
 #include "../core/ShortcutsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
-#include "../ui/JavaScriptPreferencesDialog.h"
-#include "../ui/MainWindow.h"
 
 #include "ui_PreferencesDialog.h"
 

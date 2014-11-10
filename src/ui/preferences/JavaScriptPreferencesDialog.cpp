@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "JavaScriptPreferencesDialog.h"
-#include "../core/SettingsManager.h"
+#include "../../core/SettingsManager.h"
 
 #include "ui_JavaScriptPreferencesDialog.h"
 
@@ -29,7 +29,6 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(QWidget *parent) : QDia
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-
 	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard")).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
 

@@ -107,7 +107,6 @@ set(otter_src
 	src/ui/FilePathWidget.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
-	src/ui/JavaScriptPreferencesDialog.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
 	src/ui/MdiWidget.cpp
@@ -136,6 +135,7 @@ set(otter_src
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
+	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
@@ -167,7 +167,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui
 	src/ui/ImportDialog.ui
-  	src/ui/JavaScriptPreferencesDialog.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
 	src/ui/OpenBookmarkDialog.ui
@@ -182,6 +181,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/Window.ui
 	src/ui/preferences/ContentBlockingDialog.ui
+	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
