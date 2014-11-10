@@ -35,6 +35,7 @@
 #include "../core/ShortcutsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
+#include "../ui/JavaScriptPreferencesDialog.h"
 #include "../ui/MainWindow.h"
 
 #include "ui_PreferencesDialog.h"
@@ -413,6 +414,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
+	connect(m_ui->advancedJavaScriptButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
@@ -1105,6 +1107,13 @@ void PreferencesDialog::updateMacrosProfleActions()
 	m_ui->actionMacrosRemoveButton->setEnabled(isSelected);
 }
 
+void PreferencesDialog::updateJavaScriptOptions()
+{
+	JavaScriptPreferencesDialog dialog(this);
+
+	dialog.exec();
+}
+
 void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
 {
 	QStringList labels;
@@ -1258,7 +1267,6 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
-
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Network/UserAgent"), m_ui->userAgentComboBox->currentData().toString());

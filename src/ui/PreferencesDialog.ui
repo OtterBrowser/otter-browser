@@ -1440,10 +1440,10 @@
                <item>
                 <widget class="QPushButton" name="advancedJavaScriptButton">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
-                  <string>JavaScript options...</string>
+                  <string>JavaScript Options...</string>
                  </property>
                 </widget>
                </item>
