@@ -46,8 +46,11 @@ public slots:
 	void locationChanged(Qt::DockWidgetArea area);
 
 protected:
+	void resizeEvent(QResizeEvent *event);
+	void showEvent(QShowEvent *event);
 	void openPanel(const QString &identifier);
 	void registerPanel(const QString &identifier);
+	void updateSize();
 
 protected slots:
 	void openPanel();

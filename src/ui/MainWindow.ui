@@ -18,6 +18,12 @@
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QDockWidget" name="sidebarDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
    </property>
