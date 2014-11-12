@@ -1218,6 +1218,8 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 	updateOptions(targetUrl);
 
+	m_networkManager->resetStatistics();
+
 	m_webView->load(targetUrl);
 
 	notifyTitleChanged();

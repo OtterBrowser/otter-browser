@@ -232,7 +232,7 @@ QMultiHash<QString, QString> ContentBlockingManager::getHidingRulesExceptions()
 	return m_hidingRulesExceptions;
 }
 
-bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)
+bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
 {
 	const QString scheme = request.url().scheme();
 
@@ -245,7 +245,7 @@ bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request)
 	{
 		if (m_blockingLists.at(i)->isEnabled())
 		{
-			if (m_blockingLists.at(i)->isUrlBlocked(request))
+			if (m_blockingLists.at(i)->isUrlBlocked(request, baseUrl))
 			{
 				return true;
 			}

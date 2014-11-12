@@ -95,6 +95,7 @@ void NetworkManager::resetStatistics()
 	m_updateTimer = 0;
 	m_replies.clear();
 	m_mainReply = NULL;
+	m_mainUrl.clear();
 	m_speed = 0;
 	m_bytesReceivedDifference = 0;
 	m_bytesReceived = 0;
@@ -120,6 +121,7 @@ void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 		if (m_mainReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
 			m_mainReply = NULL;
+			m_mainUrl.clear();
 		}
 		else
 		{
@@ -363,7 +365,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		return new LocalListingNetworkReply(this, request);
 	}
 
-	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request))
+	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_mainUrl))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
 

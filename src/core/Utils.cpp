@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,6 +75,11 @@ QString formatTime(int value)
 	}
 
 	return time.toString(QLatin1String("mm:ss"));
+}
+
+QString formatDateTime(const QDateTime &dateTime, const QString &format)
+{
+	return (format.isEmpty() ? QLocale().toString(dateTime, QLocale::ShortFormat) : QLocale().toString(dateTime, format));
 }
 
 QString formatUnit(qint64 value, bool isSpeed, int precision)

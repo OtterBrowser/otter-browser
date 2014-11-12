@@ -41,7 +41,7 @@ public:
 	static QList<ContentBlockingList*> getBlockingDefinitions();
 	static QMultiHash<QString, QString> getSpecificDomainHidingRules();
 	static QMultiHash<QString, QString> getHidingRulesExceptions();
-	static bool isUrlBlocked(const QNetworkRequest &request);
+	static bool isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl);
 	static bool isContentBlockingEnabled();
 
 protected:

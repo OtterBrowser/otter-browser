@@ -24,6 +24,7 @@
 #include "NetworkManager.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QUrl>
 
 namespace Otter
@@ -78,10 +79,11 @@ public:
 	QString getListName() const;
 	QString getConfigListName() const;
 	QString getCssRules() const;
+	QDateTime getLastUpdate() const;
 	QMultiHash<QString, QString> getSpecificDomainHidingRules() const;
 	QMultiHash<QString, QString> getHidingRulesExceptions() const;
 	bool isEnabled() const;
-	bool isUrlBlocked(const QNetworkRequest &request);
+	bool isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl);
 
 protected:
 	struct Node
@@ -117,10 +119,13 @@ private:
 	QString m_listName;
 	QString m_configListName;
 	QString m_cssHidingRules;
+	QUrl m_baseUrl;
 	QUrl m_updateUrl;
 	NetworkManager m_networkManager;
 	QMultiHash<QString, QString> m_cssSpecificDomainHidingRules;
 	QMultiHash<QString, QString> m_cssHidingRulesExceptions;
+	QRegularExpression m_domainExpression;
+	QStringList m_requestSubdomainList;
 	int m_daysToExpire;
 	bool m_isUpdated;
 	bool m_isEnabled;
