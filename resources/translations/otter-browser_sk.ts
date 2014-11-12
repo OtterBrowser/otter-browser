@@ -1283,17 +1283,17 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>Continue previous session</source>
-        <translation>Pokračovať predchádzajúcu reláciu</translation>
+        <translation>Obnoviť predchádzajúcu reláciu</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="67"/>
         <source>Show startup dialog</source>
-        <translation>Ukázať dialóg pri spustení</translation>
+        <translation>Zobraziť úvodný dialóg</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="72"/>
         <source>Show home page</source>
-        <translation>Ukázať domovskú stránku</translation>
+        <translation>Zobraziť domovskú stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="77"/>
@@ -1333,7 +1333,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="174"/>
         <source>Always ask me where to save files</source>
-        <translation>Vždy sa pýtať, kam súbory uložiť</translation>
+        <translation>Vždy sa opýtať, kam súbory uložiť</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
@@ -1343,12 +1343,12 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="194"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Otvoriť nové okno radšej v novej karte</translation>
+        <translation>Preferovať otvorenie stránky v novej karte</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="201"/>
         <source>Delay loading of tabs until selected</source>
-        <translation>Nenačítavať karty dokedy nie sú vybrané</translation>
+        <translation>Nenačítavať karty, pokiaľ nie sú vybrané</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="208"/>
@@ -1611,7 +1611,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
         <source>Always ask</source>
-        <translation>Vždy sa pýtať</translation>
+        <translation>Vždy sa opýtať</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="951"/>
@@ -1703,7 +1703,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation>Pokročílé</translation>
+        <translation>Pokročilé</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>

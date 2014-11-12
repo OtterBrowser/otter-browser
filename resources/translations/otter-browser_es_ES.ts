@@ -145,12 +145,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nombre de carpeta</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Select name of new folder:</source>
-        <translation type="unfinished"/>
+        <translation>Selecciona nombre de la nueva carpeta:</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Palabra clave: </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -220,7 +220,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="210"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Vaciar la papelera</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="222"/>
@@ -255,7 +255,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="259"/>
         <source>Restore Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar marcador</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="263"/>
@@ -288,12 +288,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>Nuevo</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Permitir duplicar marcadores ya existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -316,12 +316,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="216"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Papelera</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="174"/>
         <source>HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores HTML</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
@@ -1024,12 +1024,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="149"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores de Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="150"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="308"/>
@@ -1057,7 +1057,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="340"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Estás a punto de salir de la sesión actual de Otter Browser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="505"/>
@@ -1236,7 +1236,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="89"/>
         <source>Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores de Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="94"/>
@@ -2103,7 +2103,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="447"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>Error de %1 #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
@@ -2588,32 +2588,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="172"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="177"/>
         <source>Cache</source>
-        <translation type="unfinished"/>
+        <translation>Caché</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="182"/>
         <source>Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="187"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>&quot;Cookies&quot;</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="192"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historial</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="197"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Transferencias</translation>
     </message>
 </context>
 <context>
@@ -2922,47 +2922,47 @@ Elige otro distinto.</translation>
         <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar ventanas</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nueva pestaña</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nueva pestaña privada</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Transferencias</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historial</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Salir</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="48"/>
         <source>Otter Browser</source>
-        <translation type="unfinished"/>
+        <translation>Navegador Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
         <source>Hide Windows</source>
-        <translation type="unfinished"/>
+        <translation>Ocultar ventanas</translation>
     </message>
 </context>
 <context>
@@ -3008,12 +3008,12 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="66"/>
         <source>Find Next</source>
-        <translation>Buscar próximo </translation>
+        <translation>Buscar siguiente </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="80"/>
         <source>Find Previous</source>
-        <translation>Buscar previo </translation>
+        <translation>Buscar anterior </translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.ui" line="107"/>
@@ -3109,547 +3109,547 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Archivo</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Sesiones</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Importar y exportar</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Ver</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Agente de usuario</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Character Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Codificación de caracteres</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Historial</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Closed Windows</source>
-        <translation type="unfinished"/>
+        <translation>Ventanas cerradas</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Herramientas</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nueva pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>Nueva pestaña privada</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Nueva ventana</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Nueva ventana privada</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Open...</source>
-        <translation type="unfinished"/>
+        <translation>Abrir..</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Save...</source>
-        <translation type="unfinished"/>
+        <translation>Guardar...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Cerrar pestaña </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Save Current Session...</source>
-        <translation type="unfinished"/>
+        <translation>Guardar sesión actual..</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Manage Sessions...</source>
-        <translation type="unfinished"/>
+        <translation>Gestionar sesiones...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Print...</source>
-        <translation type="unfinished"/>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Vista previa de impresión</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>Trabajar desconectado</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar barra de menús</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Salir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="56"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Deshacer</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="57"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Rehacer</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="58"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Cortar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Pegar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Seleccionar todo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Buscar...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Buscar siguiente</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Buscar anterior</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Parar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Acercar zoom</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Alejar zoom</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Zoom Original</source>
-        <translation type="unfinished"/>
+        <translation>Restablecer zoom original</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Pantalla completa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>Ver código fuente</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Inspect Page</source>
-        <translation type="unfinished"/>
+        <translation>Inspeccionar página...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Show Sidebar</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar barra lateral</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atrás</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Adelante</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>Rebobinar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>Avance rápido</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>Ver historial</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Clear History...</source>
-        <translation type="unfinished"/>
+        <translation>Limpiar historial...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Add Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Añadir marcador..</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Manage Bookmarks...</source>
-        <translation type="unfinished"/>
+        <translation>Gestionar marcadores...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Transfers...</source>
-        <translation type="unfinished"/>
+        <translation>Transferencias...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>&quot;Cookies&quot;...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Content Blocking...</source>
-        <translation type="unfinished"/>
+        <translation>Bloqueo de contenido...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Consola de errores</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Preferencias..</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Switch Application Language...</source>
-        <translation type="unfinished"/>
+        <translation>Cambiar el lenguaje de la aplicación...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>About Otter...</source>
-        <translation type="unfinished"/>
+        <translation>Sobre Otter...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="90"/>
         <source>About Qt...</source>
-        <translation type="unfinished"/>
+        <translation>Sobre Qt...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="91"/>
         <source>Close Window</source>
-        <translation type="unfinished"/>
+        <translation>Cerrar ventana</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="92"/>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir en esta pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir en pestaña nueva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir en pestaña nueva en segundo plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir en ventana nueva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Abrir en ventana nueva en segundo plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Reabrir pestaña cerrada previamente</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="99"/>
         <source>Copy Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar enlace al portapapeles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir marco en esta pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir marco en pestaña nueva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir marco en pestaña nueva en segundo plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar enlace a marco al portapapeles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar marco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar imagen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Save Link Target As...</source>
-        <translation type="unfinished"/>
+        <translation>Guardar destino del enlace como...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Guardar en Descargas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Enlace a marcador...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Reload Each</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar cada</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
         <source>Copy Address</source>
-        <translation type="unfinished"/>
+        <translation>Copiar dirección</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
         <source>Validate</source>
-        <translation type="unfinished"/>
+        <translation>Validar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation type="unfinished"/>
+        <translation>Preferencias de sitio web...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Image Properties...</source>
-        <translation type="unfinished"/>
+        <translation>Propiedades de la imagen...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
         <source>Open Image</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="116"/>
         <source>Save Image...</source>
-        <translation type="unfinished"/>
+        <translation>Guardar imagen...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar imagen al portapapeles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Copy Image Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar enlace de imagen al portapapeles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Search Using</source>
-        <translation type="unfinished"/>
+        <translation>Buscar usando</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Go to This Address</source>
-        <translation type="unfinished"/>
+        <translation>Ir a esta dirección</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Limpiar todo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Revisar ortografía</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Create Search...</source>
-        <translation type="unfinished"/>
+        <translation>Crear búsqueda...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Inspect Element...</source>
-        <translation type="unfinished"/>
+        <translation>Inspeccionar elemento ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
         <source>Save Media...</source>
-        <translation type="unfinished"/>
+        <translation>Guardar medios...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Copy Media Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar enlace a medios al portapapeles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
         <source>Show Controls</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar controles</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="129"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Repetir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="130"/>
         <source>Play</source>
-        <translation type="unfinished"/>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Sin sonido</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="132"/>
         <source>Quick Bookmark Access</source>
-        <translation type="unfinished"/>
+        <translation>Acceso rápido a marcadores </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="133"/>
         <source>Quick Find</source>
-        <translation type="unfinished"/>
+        <translation>Búsqueda rápida </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Activate Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Activar el campo de dirección </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Copy as Plain Text</source>
-        <translation type="unfinished"/>
+        <translation>Copiar como texto simple</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="136"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Pegar e ir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation type="unfinished"/>
+        <translation>Ir a la pestaña de la izquierda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation type="unfinished"/>
+        <translation>Ir a la pestaña de la derecha</translation>
     </message>
 </context>
 <context>
