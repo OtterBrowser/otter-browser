@@ -43,7 +43,7 @@ namespace Otter
 NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
 	m_widget(widget),
 	m_cookieJar(NULL),
-	m_mainReply(NULL),
+	m_baseReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -94,8 +94,8 @@ void NetworkManager::resetStatistics()
 
 	m_updateTimer = 0;
 	m_replies.clear();
-	m_mainReply = NULL;
-	m_mainUrl.clear();
+	m_baseReply = NULL;
+	m_baseUrl.clear();
 	m_speed = 0;
 	m_bytesReceivedDifference = 0;
 	m_bytesReceived = 0;
@@ -116,12 +116,12 @@ void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
 
-	if (reply && reply == m_mainReply)
+	if (reply && reply == m_baseReply)
 	{
-		if (m_mainReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
+		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
-			m_mainReply = NULL;
-			m_mainUrl.clear();
+			m_baseReply = NULL;
+			m_baseUrl.clear();
 		}
 		else
 		{
@@ -259,7 +259,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), m_mainUrl).toStringList();
+	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), m_baseUrl).toStringList();
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
@@ -292,7 +292,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 	{
 		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
 
-		if (!m_mainUrl.isEmpty())
+		if (!m_baseUrl.isEmpty())
 		{
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 		}
@@ -312,7 +312,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		{
 			reply->ignoreSslErrors(errors);
 
-			if (!m_mainUrl.isEmpty() && dialog.getCheckBoxState())
+			if (!m_baseUrl.isEmpty() && dialog.getCheckBoxState())
 			{
 				for (int i = 0; i < errors.count(); ++i)
 				{
@@ -324,7 +324,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 					}
 				}
 
-				SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_mainUrl);
+				SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_baseUrl);
 			}
 		}
 	}
@@ -365,7 +365,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 		return new LocalListingNetworkReply(this, request);
 	}
 
-	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_mainUrl))
+	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_baseUrl))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
 
@@ -403,11 +403,11 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
-	if (!m_mainReply)
+	if (!m_baseReply)
 	{
-		m_mainReply = reply;
+		m_baseReply = reply;
 
-		m_mainUrl = m_mainReply->url();
+		m_baseUrl = m_baseReply->url();
 	}
 
 	if (!m_useSimpleMode)
@@ -434,9 +434,9 @@ QHash<QByteArray, QByteArray> NetworkManager::getHeaders() const
 {
 	QHash<QByteArray, QByteArray> headers;
 
-	if (m_mainReply)
+	if (m_baseReply)
 	{
-		const QList<QNetworkReply::RawHeaderPair> rawHeaders = m_mainReply->rawHeaderPairs();
+		const QList<QNetworkReply::RawHeaderPair> rawHeaders = m_baseReply->rawHeaderPairs();
 
 		for (int i = 0; i < rawHeaders.count(); ++i)
 		{

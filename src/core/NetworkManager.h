@@ -59,10 +59,10 @@ protected slots:
 private:
 	ContentsWidget *m_widget;
 	CookieJar *m_cookieJar;
-	QNetworkReply *m_mainReply;
+	QNetworkReply *m_baseReply;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
-	QUrl m_mainUrl;
+	QUrl m_baseUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;

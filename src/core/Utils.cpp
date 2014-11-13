@@ -39,9 +39,7 @@ QString elideText(const QString &text, QWidget *widget, int width)
 		width = (QApplication::desktop()->screenGeometry().width() / 4);
 	}
 
-	const QFontMetrics fontMetrics = (widget ? widget->fontMetrics() : QApplication::fontMetrics());
-
-	return fontMetrics.elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), qMax(100, width));
+	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), qMax(100, width));
 }
 
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote)
