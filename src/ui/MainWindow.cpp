@@ -1137,6 +1137,30 @@ void MainWindow::updateWindowTitle(const QString &title)
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
+MainWindow *MainWindow::findMainWindow(QObject *parent)
+{
+	MainWindow *window = NULL;
+
+	while (parent)
+	{
+		if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
+		{
+			window = qobject_cast<MainWindow*>(parent);
+
+			break;
+		}
+
+		parent = parent->parent();
+	}
+
+	if (!window)
+	{
+		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
+	}
+
+	return window;
+}
+
 Menu* MainWindow::getMenu(const QString &identifier)
 {
 	if (!m_menuBar)

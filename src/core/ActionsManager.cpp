@@ -285,24 +285,7 @@ void ActionsManager::setupLocalAction(QAction *globalAction, QAction *localActio
 
 ActionsManager* ActionsManager::findManager(QObject *parent)
 {
-	MainWindow *window = NULL;
-
-	while (parent)
-	{
-		if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
-		{
-			window = qobject_cast<MainWindow*>(parent);
-
-			break;
-		}
-
-		parent = parent->parent();
-	}
-
-	if (!window)
-	{
-		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
-	}
+	MainWindow *window = MainWindow::findMainWindow(parent);
 
 	return (window ? window->getActionsManager() : NULL);
 }
