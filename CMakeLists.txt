@@ -105,6 +105,8 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/FilePathWidget.cpp
+	src/ui/GoBackActionWidget.cpp
+	src/ui/GoForwardActionWidget.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/LocaleDialog.cpp
@@ -179,7 +181,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/StartupDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
 	src/ui/WebsitePreferencesDialog.ui
-	src/ui/Window.ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui

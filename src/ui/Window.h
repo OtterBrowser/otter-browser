@@ -32,11 +32,6 @@
 namespace Otter
 {
 
-namespace Ui
-{
-	class Window;
-}
-
 enum WindowLoadingState
 {
 	DelayedState = 0,
@@ -44,7 +39,9 @@ enum WindowLoadingState
 	LoadedState = 2
 };
 
+class AddressWidget;
 class ContentsWidget;
+class SearchWidget;
 
 class Window : public QWidget
 {
@@ -61,7 +58,6 @@ class Window : public QWidget
 
 public:
 	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
-	~Window();
 
 	void clear();
 	void close();
@@ -95,27 +91,25 @@ public slots:
 	void setPinned(bool pinned);
 
 protected:
-	void changeEvent(QEvent *event);
 	void showEvent(QShowEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
-	void goToHistoryIndex(QAction *action);
 	void handleSearchRequest(const QString &query, const QString &engine);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
 	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
-	void updateGoBackMenu();
-	void updateGoForwardMenu();
 
 private:
+	QWidget *m_navigationBar;
+	AddressWidget *m_addressWidget;
+	SearchWidget *m_searchWidget;
 	ContentsWidget *m_contentsWidget;
 	SessionWindow m_session;
 	qint64 m_identifier;
 	bool m_isPinned;
 	bool m_isPrivate;
-	Ui::Window *m_ui;
 
 	static qint64 m_identifierCounter;
 

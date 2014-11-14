@@ -44,7 +44,7 @@
 namespace Otter
 {
 
-AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
+AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
@@ -59,6 +59,8 @@ AddressWidget::AddressWidget(QWidget *parent) : QLineEdit(parent),
 
 	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
+	setWindow(window);
+	setPlaceholderText(tr("Enter address or search..."));
 	setCompleter(m_completer);
 	setMinimumWidth(100);
 	setMouseTracking(true);
