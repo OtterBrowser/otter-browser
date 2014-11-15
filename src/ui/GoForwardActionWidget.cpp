@@ -28,12 +28,10 @@
 namespace Otter
 {
 
-GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : QToolButton(parent),
+GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : ActionWidget(GoForwardAction, window, parent),
 	m_window(window)
 {
-	setWindow(window);
 	setMenu(new QMenu(this));
-	setAutoRaise(true);
 	setPopupMode(QToolButton::DelayedPopup);
 
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
@@ -65,20 +63,6 @@ void GoForwardActionWidget::updateMenu()
 		QString title = history.entries.at(i).title;
 
 		menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))))->setData(i);
-	}
-}
-
-void GoForwardActionWidget::setWindow(Window *window)
-{
-	m_window = window;
-
-	if (window)
-	{
-		setDefaultAction(window->getContentsWidget()->getAction(GoForwardAction));
-	}
-	else
-	{
-		setDefaultAction(ActionsManager::getAction(GoForwardAction, this));
 	}
 }
 

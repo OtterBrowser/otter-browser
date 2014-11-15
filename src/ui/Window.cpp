@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Window.h"
+#include "ActionWidget.h"
 #include "AddressWidget.h"
 #include "GoBackActionWidget.h"
 #include "GoForwardActionWidget.h"
@@ -355,10 +356,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	{
 		m_navigationBar = new QWidget(this);
 
-		QToolButton *reloadOrStopButton = new QToolButton(this);
-		reloadOrStopButton->setDefaultAction(m_contentsWidget->getAction(ReloadOrStopAction));
-		reloadOrStopButton->setAutoRaise(true);
-
 		m_addressWidget = new AddressWidget(this, this);
 		m_addressWidget->setUrl(m_contentsWidget->getUrl());
 
@@ -368,7 +365,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		navigationLayout->setContentsMargins(0, 0, 0, 0);
 		navigationLayout->addWidget(new GoBackActionWidget(this, m_navigationBar));
 		navigationLayout->addWidget(new GoForwardActionWidget(this, m_navigationBar));
-		navigationLayout->addWidget(reloadOrStopButton);
+		navigationLayout->addWidget(new ActionWidget(ReloadOrStopAction, this, m_navigationBar));
 		navigationLayout->addWidget(m_addressWidget, 3);
 		navigationLayout->addWidget(m_searchWidget);
 

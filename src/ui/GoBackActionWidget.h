@@ -20,22 +20,17 @@
 #ifndef OTTER_GOBACKACTIONWIDGET_H
 #define OTTER_GOBACKACTIONWIDGET_H
 
-#include <QtWidgets/QToolButton>
+#include "ActionWidget.h"
 
 namespace Otter
 {
 
-class Window;
-
-class GoBackActionWidget : public QToolButton
+class GoBackActionWidget : public ActionWidget
 {
 	Q_OBJECT
 
 public:
 	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
-
-public slots:
-	void setWindow(Window *window);
 
 protected slots:
 	void goToHistoryIndex(QAction *action);

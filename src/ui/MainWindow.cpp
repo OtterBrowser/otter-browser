@@ -1137,7 +1137,7 @@ void MainWindow::updateWindowTitle(const QString &title)
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
-MainWindow *MainWindow::findMainWindow(QObject *parent)
+MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
 	MainWindow *window = NULL;
 

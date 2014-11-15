@@ -17,29 +17,25 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_GOFORWARDACTIONWIDGET_H
-#define OTTER_GOFORWARDACTIONWIDGET_H
-
 #include "ActionWidget.h"
+#include "ContentsWidget.h"
+#include "Window.h"
 
 namespace Otter
 {
 
-class GoForwardActionWidget : public ActionWidget
+ActionWidget::ActionWidget(ActionIdentifier identifier, Window *window, QWidget *parent) : QToolButton(parent)
 {
-	Q_OBJECT
+	setAutoRaise(true);
 
-public:
-	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
-
-protected slots:
-	void goToHistoryIndex(QAction *action);
-	void updateMenu();
-
-protected:
-	Window *m_window;
-};
-
+	if (window)
+	{
+		setDefaultAction(window->getContentsWidget()->getAction(identifier));
+	}
+	else
+	{
+		setDefaultAction(ActionsManager::getAction(identifier, this));
+	}
 }
 
-#endif
+}
