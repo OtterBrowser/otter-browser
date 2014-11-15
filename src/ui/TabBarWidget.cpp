@@ -96,7 +96,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
 
-		menu.addAction(ActionsManager::getAction(QLatin1String("CloneTab"), parentWidget()));
+		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
 		menu.addSeparator();
 		menu.addAction(tr("Detach Tab"), this, SLOT(detachTab()))->setEnabled(count() > 1);

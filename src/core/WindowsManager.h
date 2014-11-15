@@ -79,6 +79,7 @@ public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine);
+	void clone();
 	void close(int index = -1);
 	void closeAll();
 	void closeOther(int index = -1);

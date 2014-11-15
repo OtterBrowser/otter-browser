@@ -85,6 +85,7 @@ public:
 	virtual QPixmap getThumbnail() = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
 	virtual QPair<QString, QString> getUserAgent() const = 0;
@@ -95,6 +96,7 @@ public:
 	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
 
 public slots:
+	virtual void clearOptions();
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
@@ -113,7 +115,6 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void startReloadTimer();
 	virtual void setOptions(const QVariantHash &options);
-	QVariantHash getOptions() const;
 
 protected slots:
 	void reloadTimeMenuAboutToShow();

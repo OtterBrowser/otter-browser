@@ -71,6 +71,8 @@ SOURCES += src/main.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/FilePathWidget.cpp \
+    src/ui/GoBackActionWidget.cpp \
+    src/ui/GoForwardActionWidget.cpp \
     src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/LocaleDialog.cpp \
@@ -101,6 +103,7 @@ SOURCES += src/main.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
+    src/ui/preferences/JavaScriptPreferencesDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
@@ -163,6 +166,8 @@ HEADERS += src/core/Action.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/FilePathWidget.h \
+    src/ui/GoBackActionWidget.h \
+    src/ui/GoForwardActionWidget.h \
     src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
     src/ui/LocaleDialog.h \
@@ -193,6 +198,7 @@ HEADERS += src/core/Action.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
     src/ui/preferences/ContentBlockingDialog.h \
+    src/ui/preferences/JavaScriptPreferencesDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
@@ -232,8 +238,8 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/StartupDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/WebsitePreferencesDialog.ui \
-    src/ui/Window.ui \
     src/ui/preferences/ContentBlockingDialog.ui \
+    src/ui/preferences/JavaScriptPreferencesDialog.ui \
     src/ui/preferences/ShortcutsProfileDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/cache/CacheContentsWidget.ui \

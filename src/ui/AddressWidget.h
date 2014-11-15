@@ -36,7 +36,7 @@ class AddressWidget : public QLineEdit
 	Q_OBJECT
 
 public:
-	explicit AddressWidget(QWidget *parent = NULL);
+	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
 	void handleUserInput(const QString &text);
 	void setWindow(Window *window);

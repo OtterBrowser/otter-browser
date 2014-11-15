@@ -23,6 +23,8 @@
 
 #include "ui_SidebarWidget.h"
 
+#include <QtWidgets/QDockWidget>
+
 namespace Otter
 {
 
@@ -34,6 +36,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
+	updateSize();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
@@ -41,6 +44,23 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 SidebarWidget::~SidebarWidget()
 {
 	delete m_ui;
+}
+
+void SidebarWidget::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+
+	if (m_currentWidget)
+	{
+		SettingsManager::setValue(QLatin1String("Window/SidebarWidth"), width());
+	}
+}
+
+void SidebarWidget::showEvent(QShowEvent *event)
+{
+	updateSize();
+
+	QWidget::showEvent(event);
 }
 
 void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
@@ -118,9 +138,13 @@ void SidebarWidget::openPanel(const QString &identifier)
 
 	if (m_currentWidget)
 	{
-		m_ui->currentLayout->removeWidget(m_currentWidget);
+		QWidget *currentWidget = m_currentWidget;
 
-		m_currentWidget->deleteLater();
+		m_currentWidget = NULL;
+
+		layout()->removeWidget(currentWidget);
+
+		currentWidget->deleteLater();
 	}
 
 	if (m_buttons.contains(m_currentPanel) && m_buttons[m_currentPanel])
@@ -130,7 +154,7 @@ void SidebarWidget::openPanel(const QString &identifier)
 
 	if (widget)
 	{
-		m_ui->currentLayout->addWidget(widget);
+		layout()->addWidget(widget);
 
 		if (m_buttons.contains(identifier) && m_buttons[identifier])
 		{
@@ -140,6 +164,8 @@ void SidebarWidget::openPanel(const QString &identifier)
 
 	m_currentPanel = identifier;
 	m_currentWidget = widget;
+
+	updateSize();
 }
 
 void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
@@ -208,6 +234,28 @@ void SidebarWidget::registerPanel(const QString &identifier)
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
+}
+
+void SidebarWidget::updateSize()
+{
+	QDockWidget *dockWidget = qobject_cast<QDockWidget*>(parentWidget());
+
+	if (dockWidget)
+	{
+		if (m_currentWidget)
+		{
+			dockWidget->setMaximumWidth(QWIDGETSIZE_MAX);
+
+			resize(SettingsManager::getValue(QLatin1String("Window/SidebarWidth")).toInt(), height());
+			setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+		}
+		else
+		{
+			dockWidget->setMaximumWidth(m_ui->buttonsLayout->contentsRect().width());
+
+			setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+		}
+	}
 }
 
 }

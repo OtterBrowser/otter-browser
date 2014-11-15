@@ -38,7 +38,8 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_progressBarWidget(NULL),
 	m_progressBarTimer(0),
 	m_quickFindTimer(0),
-	m_showProgressBar(true),
+	m_isProgressBarEnabled(true),
+	m_isTabPreferencesMenuVisible(false),
 	m_ui(new Ui::WebContentsWidget)
 {
 	if (m_webWidget)
@@ -148,7 +149,7 @@ void WebContentsWidget::focusInEvent(QFocusEvent *event)
 
 void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
-	if (m_showProgressBar)
+	if (m_isProgressBarEnabled)
 	{
 		scheduleGeometryUpdate();
 	}
@@ -160,15 +161,15 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 {
 	if (option == QLatin1String("Browser/ShowDetailedProgressBar"))
 	{
-		m_showProgressBar = value.toBool();
+		m_isProgressBarEnabled = value.toBool();
 
-		if (!m_showProgressBar && m_progressBarWidget)
+		if (!m_isProgressBarEnabled && m_progressBarWidget)
 		{
 			m_progressBarWidget->deleteLater();
 			m_progressBarWidget = NULL;
 		}
 
-		if (m_showProgressBar)
+		if (m_isProgressBarEnabled)
 		{
 			connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 		}
@@ -251,6 +252,13 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 	}
 	else if (action == QuickPreferencesAction)
 	{
+		if (m_isTabPreferencesMenuVisible)
+		{
+			return;
+		}
+
+		m_isTabPreferencesMenuVisible = true;
+
 		QActionGroup popupsGroup(this);
 		popupsGroup.setExclusive(true);
 		popupsGroup.setEnabled(false);
@@ -262,6 +270,11 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		popupsGroup.addAction(menu.addAction(tr("Block all pop-ups")));
 
 		menu.addSeparator();
+
+		QAction *enableImagesAction = menu.addAction(tr("Enable Images"));
+		enableImagesAction->setCheckable(true);
+		enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
+		enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
 
 		QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
 		enableJavaScriptAction->setCheckable(true);
@@ -293,6 +306,8 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		enableProxyAction->setEnabled(false);
 
 		menu.addSeparator();
+		menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
+		menu.addSeparator();
 		menu.addAction(ActionsManager::getAction(WebsitePreferencesAction, parent()));
 
 		QAction *triggeredAction = menu.exec(QCursor::pos());
@@ -301,6 +316,8 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		{
 			m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
 		}
+
+		m_isTabPreferencesMenuVisible = false;
 	}
 	else
 	{
@@ -440,7 +457,7 @@ void WebContentsWidget::updateFindHighlight()
 
 void WebContentsWidget::setLoading(bool loading)
 {
-	if (!m_showProgressBar)
+	if (!m_isProgressBarEnabled)
 	{
 		return;
 	}

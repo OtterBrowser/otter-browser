@@ -20,10 +20,12 @@
 
 #include "PreferencesDialog.h"
 #include "ClearHistoryDialog.h"
+#include "MainWindow.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
 #include "UserAgentsManagerDialog.h"
+#include "preferences/JavaScriptPreferencesDialog.h"
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/Application.h"
@@ -35,7 +37,6 @@
 #include "../core/ShortcutsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
-#include "../ui/MainWindow.h"
 
 #include "ui_PreferencesDialog.h"
 
@@ -255,6 +256,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
+	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
@@ -412,6 +414,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
+	connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
+	connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
@@ -1105,6 +1109,13 @@ void PreferencesDialog::updateMacrosProfleActions()
 	m_ui->actionMacrosRemoveButton->setEnabled(isSelected);
 }
 
+void PreferencesDialog::updateJavaScriptOptions()
+{
+	JavaScriptPreferencesDialog dialog(this);
+
+	dialog.exec();
+}
+
 void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
 {
 	QStringList labels;
@@ -1258,7 +1269,6 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
-
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Network/UserAgent"), m_ui->userAgentComboBox->currentData().toString());

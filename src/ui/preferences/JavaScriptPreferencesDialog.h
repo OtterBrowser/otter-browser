@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,51 +17,35 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SIDEBARWIDGET_H
-#define OTTER_SIDEBARWIDGET_H
+#ifndef OTTER_JAVASCRIPTPREFERENCESDIALOG_H
+#define OTTER_JAVASCRIPTPREFERENCESDIALOG_H
 
-#include "Window.h"
-
-#include <QtGui/QIcon>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class SidebarWidget;
+	class JavaScriptPreferencesDialog;
 }
 
-class SidebarWidget : public QWidget
+class JavaScriptPreferencesDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit SidebarWidget(QWidget *parent = NULL);
-	~SidebarWidget();
-
-public slots:
-	void locationChanged(Qt::DockWidgetArea area);
+	explicit JavaScriptPreferencesDialog(QWidget *parent = 0);
+	~JavaScriptPreferencesDialog();
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void showEvent(QShowEvent *event);
-	void openPanel(const QString &identifier);
-	void registerPanel(const QString &identifier);
-	void updateSize();
+	void changeEvent(QEvent *event);
 
 protected slots:
-	void openPanel();
-	void openUrl(const QUrl &url, OpenHints);
-	void optionChanged(const QString &option, const QVariant &value);
+	void save();
 
 private:
-	QWidget *m_currentWidget;
-	QString m_currentPanel;
-	QHash<QString, QToolButton*> m_buttons;
-	Ui::SidebarWidget *m_ui;
+	Ui::JavaScriptPreferencesDialog *m_ui;
 };
 
 }

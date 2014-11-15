@@ -503,6 +503,13 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	m_page->updatePageStyleSheets();
 }
 
+void QtWebKitWebWidget::clearOptions()
+{
+	WebWidget::clearOptions();
+
+	updateOptions(getUrl());
+}
+
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
 {
 	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
@@ -1210,6 +1217,8 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 	}
 
 	updateOptions(targetUrl);
+
+	m_networkManager->resetStatistics();
 
 	m_webView->load(targetUrl);
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,51 +17,32 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SIDEBARWIDGET_H
-#define OTTER_SIDEBARWIDGET_H
+#ifndef OTTER_GOBACKACTIONWIDGET_H
+#define OTTER_GOBACKACTIONWIDGET_H
 
-#include "Window.h"
-
-#include <QtGui/QIcon>
 #include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
-namespace Ui
-{
-	class SidebarWidget;
-}
+class Window;
 
-class SidebarWidget : public QWidget
+class GoBackActionWidget : public QToolButton
 {
 	Q_OBJECT
 
 public:
-	explicit SidebarWidget(QWidget *parent = NULL);
-	~SidebarWidget();
+	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
 
 public slots:
-	void locationChanged(Qt::DockWidgetArea area);
-
-protected:
-	void resizeEvent(QResizeEvent *event);
-	void showEvent(QShowEvent *event);
-	void openPanel(const QString &identifier);
-	void registerPanel(const QString &identifier);
-	void updateSize();
+	void setWindow(Window *window);
 
 protected slots:
-	void openPanel();
-	void openUrl(const QUrl &url, OpenHints);
-	void optionChanged(const QString &option, const QVariant &value);
+	void goToHistoryIndex(QAction *action);
+	void updateMenu();
 
-private:
-	QWidget *m_currentWidget;
-	QString m_currentPanel;
-	QHash<QString, QToolButton*> m_buttons;
-	Ui::SidebarWidget *m_ui;
+protected:
+	Window *m_window;
 };
 
 }

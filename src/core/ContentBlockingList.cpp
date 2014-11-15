@@ -33,7 +33,6 @@ namespace Otter
 {
 
 ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
-	m_lastUpdate(QDateTime::currentDateTime()),
 	m_daysToExpire(4),
 	m_isUpdated(false),
 	m_isEnabled(false)
@@ -79,7 +78,8 @@ void ContentBlockingList::parseRules()
 		}
 		else if (headerLine.contains(QLatin1String("!Lastmodified:")))
 		{
-			m_lastUpdate = QLocale().toDateTime(headerLine.remove(QLatin1String("!Lastmodified:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm")).toUTC();
+			m_lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(headerLine.remove(QLatin1String("!Lastmodified:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
+			m_lastUpdate.setTimeSpec(Qt::UTC);
 		}
 	}
 
@@ -105,6 +105,7 @@ void ContentBlockingList::parseRules()
 void ContentBlockingList::loadRuleFile()
 {
 	m_root = new Node();
+	m_domainExpression = QRegularExpression(QLatin1String("[:\?&/=]"));
 
 	QFile rulesFile(m_fullFilePath);
 
@@ -202,7 +203,7 @@ void ContentBlockingList::parseRuleLine(QString line)
 				rule.ruleOption |= ObjectOption;
 				rule.exceptionRuleOption |= optionException ? ObjectOption : NoOption;
 			}
-			else if (options.at(i).contains(QLatin1String("object-subrequest")) ||options.at(i).contains(QLatin1String("object_subrequest")))
+			else if (options.at(i).contains(QLatin1String("object-subrequest")) || options.at(i).contains(QLatin1String("object_subrequest")))
 			{
 				rule.ruleOption |= ObjectSubRequestOption;
 				rule.exceptionRuleOption |= optionException ? ObjectSubRequestOption : NoOption;
@@ -298,14 +299,18 @@ void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule &rule, co
 {
 	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
-	const QString referer = QString(request.rawHeader(QByteArray("Referer")));
+	const QString baseUrlHost = m_baseUrl.host();
 
-	isBlocked = (rule.allowedDomains.count() > 0 ? (!resolveDomainExceptions(referer, rule.allowedDomains)) : isBlocked);
-	isBlocked = (rule.blockedDomains.count() > 0 ? (resolveDomainExceptions(referer, rule.blockedDomains)) : isBlocked);
+	isBlocked = (rule.allowedDomains.count() > 0 ? (!resolveDomainExceptions(baseUrlHost, rule.allowedDomains)) : isBlocked);
+	isBlocked = (rule.blockedDomains.count() > 0 ? (resolveDomainExceptions(baseUrlHost, rule.blockedDomains)) : isBlocked);
 
 	if (rule.ruleOption & ThirdPartyOption)
 	{
-		if (request.url().host().contains(referer))
+		if (baseUrlHost.isEmpty() || m_requestSubdomainList.contains(baseUrlHost))
+		{
+			isBlocked = (rule.exceptionRuleOption & ThirdPartyOption);
+		}
+		else
 		{
 			isBlocked = !(rule.exceptionRuleOption & ThirdPartyOption);
 		}
@@ -547,6 +552,11 @@ QString ContentBlockingList::getConfigListName() const
 	return m_configListName;
 }
 
+QDateTime ContentBlockingList::getLastUpdate() const
+{
+	return m_lastUpdate.toLocalTime();
+}
+
 QMultiHash<QString, QString> ContentBlockingList::getSpecificDomainHidingRules() const
 {
 	return m_cssSpecificDomainHidingRules;
@@ -607,12 +617,24 @@ bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule &rule, const 
 	{
 		if (request.url().url().contains(rule.rule))
 		{
-			if (rule.needsDomainCheck && !ContentBlockingManager::createSubdomainList(request.url().host()).contains(rule.rule.left(rule.rule.indexOf(QRegExp(QLatin1String("[:\?&/=]"))))))
+			m_requestSubdomainList = ContentBlockingManager::createSubdomainList(request.url().host());
+
+			if (rule.needsDomainCheck)
 			{
-				return false;
+				if (!m_requestSubdomainList.contains(rule.rule.left(rule.rule.indexOf(m_domainExpression))))
+				{
+					return false;
+				}
+				else
+				{
+					isBlocked = true;
+				}
 			}
 
-			isBlocked = !rule.isException;
+			if (isBlocked)
+			{
+				isBlocked = !rule.isException;
+			}
 
 			resolveRuleOptions(rule, request, isBlocked);
 		}
@@ -626,10 +648,12 @@ bool ContentBlockingList::isEnabled() const
 	return m_isEnabled;
 }
 
-bool ContentBlockingList::isUrlBlocked(const QNetworkRequest &request)
+bool ContentBlockingList::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
 {
 	const QString url = request.url().url();
 	const int urlLenght = url.length();
+
+	m_baseUrl = baseUrl;
 
 	for (int i = 0; i < urlLenght; ++i)
 	{

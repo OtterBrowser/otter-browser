@@ -47,6 +47,7 @@ public:
 	explicit MainWindow(bool isPrivate = false, const SessionMainWindow &windows = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
+	static MainWindow* findMainWindow(QObject *parent);
 	ActionsManager* getActionsManager();
 	WindowsManager* getWindowsManager();
 	bool eventFilter(QObject *object, QEvent *event);

@@ -293,7 +293,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bereits existierende Lesezeichen doppelt eintragen</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -1057,7 +1057,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="340"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Sie sind dabei, die aktuelle Browser-Sitzung zu beenden.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="505"/>
@@ -1703,7 +1703,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
@@ -1713,7 +1713,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
         <source>Network</source>
-        <translation>zwerk</translation>
+        <translation>Netzwerk</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1265"/>
@@ -1966,7 +1966,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie einen einzigartigen Suchmaschinenidentifikator ein:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
@@ -2009,7 +2009,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie einen einzigartigen Profilidentifikator ein:</translation>
     </message>
 </context>
 <context>
@@ -2051,7 +2051,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="114"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Backend verwendet das QtWebKit-Modul</translation>
     </message>
 </context>
 <context>
@@ -2151,7 +2151,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie einen einzigartigen Suchmaschinenidentifikator ein:</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1070"/>
@@ -2575,7 +2575,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Enter Unique Macro Identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie einen einzigartigen Makroidentifikator ein:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
@@ -2926,12 +2926,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation>Neues Unterfenster</translation>
+        <translation>Neuer Tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation>Neues, privates Unterfenster</translation>
+        <translation>Neuer, privater Tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
@@ -3167,12 +3167,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Neuer Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation>Neues, privates Unterfenster</translation>
+        <translation>Neuer, privater Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
@@ -3197,7 +3197,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tab schließen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
@@ -3277,12 +3277,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Nächstes finden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Vorheriges finden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
@@ -3425,19 +3425,19 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Open in This Tab</source>
-        <translation>In diesem Unterfenster öffnen</translation>
+        <translation>In diesem Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open in New Tab</source>
-        <translation>In neuem Unterfenster öffnen</translation>
+        <translation>In neuem Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open in New Background Tab</source>
-        <translation>In neuem Hintergrund Unterfenster öffnen</translation>
+        <translation>In neuem Hintergrund-Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="96"/>
@@ -3452,7 +3452,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Reopen Previously Closed Tab</source>
-        <translation type="unfinished"/>
+        <translation>Zuletzt geschlossenen Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="99"/>
@@ -3462,27 +3462,27 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Frame in diesem Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Frame in neuem Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Frame in Hintergrund-Tab öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Frame-Link in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Frame neu laden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="105"/>
@@ -3497,12 +3497,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Save to Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Im Download-Ordner speichern</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>Bookmark Link...</source>
-        <translation type="unfinished"/>
+        <translation>Link als Lesezeichen speichern...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
@@ -3517,7 +3517,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="112"/>
         <source>Validate</source>
-        <translation type="unfinished"/>
+        <translation>Überprüfen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
@@ -3602,7 +3602,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="129"/>
         <source>Looping</source>
-        <translation type="unfinished"/>
+        <translation>Endloswiedergabe</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="130"/>
@@ -3642,12 +3642,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Go to Tab on Left</source>
-        <translation>Zum linken Unterfenster</translation>
+        <translation>Zum linken Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Go to Tab on Right</source>
-        <translation>Zum rechten Unterfenster</translation>
+        <translation>Zum rechten Tab</translation>
     </message>
 </context>
 <context>
@@ -3700,12 +3700,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="467"/>
         <source>Unable to download update for content blocking: %0</source>
-        <translation type="unfinished"/>
+        <translation>Kann Update für Inhaltblockierung nicht herunterladen: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingList.cpp" line="478"/>
         <source>Unable to write downloaded content blocking file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Kann heruntergeladene Inhaltblockierungsdatei nicht schreiben: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>

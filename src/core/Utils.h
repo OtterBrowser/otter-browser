@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,6 +34,7 @@ QString elideText(const QString &text, QWidget *widget = NULL, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
+QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QIcon getIcon(const QLatin1String &name, bool fromTheme = true);
 
 }

@@ -75,6 +75,7 @@ protected slots:
 	void cloneMacrosProfile();
 	void removeMacrosProfile();
 	void updateMacrosProfleActions();
+	void updateJavaScriptOptions();
 	void openConfigurationManager();
 	void markModified();
 	void save();

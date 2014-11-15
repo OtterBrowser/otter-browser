@@ -54,6 +54,9 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 		items[0]->setCheckable(true);
 		items[0]->setCheckState(definitions.at(i)->isEnabled() ? Qt::Checked : Qt::Unchecked);
 
+		items.append(new QStandardItem(Utils::formatDateTime(definitions.at(i)->getLastUpdate())));
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
 		model->appendRow(items);
 	}
 

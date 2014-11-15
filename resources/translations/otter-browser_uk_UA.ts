@@ -540,7 +540,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="201"/>
         <source>Configuration Manager</source>
-        <translation>Менеджер настройок</translation>
+        <translation>Менеджер налаштувань</translation>
     </message>
 </context>
 <context>
@@ -1308,7 +1308,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="113"/>
         <source>Use Current Page</source>
-        <translation>Використати поточну сторінку</translation>
+        <translation>Використати поточну</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="123"/>
@@ -1703,7 +1703,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation>Розширено</translation>
+        <translation>Додатково</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
@@ -3128,7 +3128,7 @@ Select another one.</source>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>
         <source>View</source>
-        <translation>Переглянути</translation>
+        <translation>Перегляд</translation>
     </message>
     <message>
         <location filename="../../resources/other/menuBar.json" line="1"/>

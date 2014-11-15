@@ -175,6 +175,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("NewWindow")), SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
 	connect(m_actionsManager->getAction(QLatin1String("NewWindowPrivate")), SIGNAL(triggered()), this, SLOT(actionNewWindowPrivate()));
 	connect(m_actionsManager->getAction(QLatin1String("Open")), SIGNAL(triggered()), this, SLOT(actionOpen()));
+	connect(m_actionsManager->getAction(QLatin1String("CloneTab")), SIGNAL(triggered()), m_windowsManager, SLOT(clone()));
 	connect(m_actionsManager->getAction(QLatin1String("CloseTab")), SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_actionsManager->getAction(QLatin1String("SaveSession")), SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_actionsManager->getAction(QLatin1String("ManageSessions")), SIGNAL(triggered()), this, SLOT(actionManageSessions()));
@@ -1134,6 +1135,30 @@ void MainWindow::updateActions()
 void MainWindow::updateWindowTitle(const QString &title)
 {
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
+}
+
+MainWindow *MainWindow::findMainWindow(QObject *parent)
+{
+	MainWindow *window = NULL;
+
+	while (parent)
+	{
+		if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
+		{
+			window = qobject_cast<MainWindow*>(parent);
+
+			break;
+		}
+
+		parent = parent->parent();
+	}
+
+	if (!window)
+	{
+		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
+	}
+
+	return window;
 }
 
 Menu* MainWindow::getMenu(const QString &identifier)

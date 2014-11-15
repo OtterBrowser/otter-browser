@@ -219,6 +219,11 @@ void WindowsManager::search(const QString &query, const QString &engine)
 	}
 }
 
+void WindowsManager::clone()
+{
+	cloneWindow(m_tabBar->currentIndex());
+}
+
 void WindowsManager::close(int index)
 {
 	if (index < 0)
