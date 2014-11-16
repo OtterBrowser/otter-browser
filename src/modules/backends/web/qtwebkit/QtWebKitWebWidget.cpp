@@ -1844,6 +1844,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::ToolTip)
 		{
+			const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
 			const QPoint position = QCursor::pos();
 			const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(position));
 			QString link = result.linkUrl().toString();
@@ -1866,25 +1867,31 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				}
 			}
 
-			if (SettingsManager::getValue(QLatin1String("Browser/ShowAddressToolTips")).toBool())
+			if (toolTipsMode != QLatin1String("disabled"))
 			{
-				if (!link.isEmpty())
+				if (toolTipsMode == QLatin1String("extended"))
 				{
-					text = (result.title().isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(result.title()).arg(link));
+					if (!link.isEmpty())
+					{
+						text = (result.title().isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(result.title()).arg(link));
+					}
+					else if (!result.title().isEmpty())
+					{
+						text = result.title();
+					}
 				}
-				else if (!result.title().isEmpty())
+				else
 				{
 					text = result.title();
 				}
 			}
-			else
+
+			if (!text.isEmpty())
 			{
-				text = result.title();
+				QToolTip::showText(position, text, m_webView);
 			}
 
 			setStatusMessage(link, true);
-
-			QToolTip::showText(position, text, m_webView);
 
 			event->accept();
 
