@@ -74,11 +74,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_actionsManager = new ActionsManager(this);
 
-	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
-	{
-		createMenuBar();
-	}
-
 	SessionsManager::setActiveWindow(this);
 
 	m_ui->statusBar->setup();
@@ -103,58 +98,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
 	m_actionsManager->getAction(QLatin1String("AboutApplication"))->setMenuRole(QAction::AboutRole);
 
-	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
-
-	if (bookmarksMenu)
+	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
 	{
-		bookmarksMenu->installEventFilter(this);
-
-		connect(bookmarksMenu, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
-	}
-
-	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
-
-	if (closedWindowsMenu)
-	{
-		closedWindowsMenu->setIcon(Utils::getIcon(QLatin1String("user-trash")));
-		closedWindowsMenu->setEnabled(false);
-
-		connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), closedWindowsMenu, SLOT(setEnabled(bool)));
-		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
-	}
-
-	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
-
-	if (sessionsMenu)
-	{
-		connect(sessionsMenu, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
-		connect(sessionsMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
-	}
-
-	Menu *importExportMenu = getMenu(QLatin1String("MenuImportExport"));
-
-	if (importExportMenu)
-	{
-		importExportMenu->addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
-		importExportMenu->addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
-
-		connect(importExportMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionImport(QAction*)));
-	}
-
-	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
-
-	if (userAgentMenu)
-	{
-		connect(userAgentMenu, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
-		connect(userAgentMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
-	}
-
-	Menu *characterEncodingMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
-
-	if (characterEncodingMenu)
-	{
-		connect(characterEncodingMenu, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
-		connect(characterEncodingMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
+		createMenuBar();
 	}
 
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
@@ -377,6 +323,60 @@ void MainWindow::createMenuBar()
 	for (int i = 0; i < menuBar.count(); ++i)
 	{
 		m_menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_menuBar));
+	}
+
+	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
+
+	if (bookmarksMenu)
+	{
+		bookmarksMenu->installEventFilter(this);
+
+		connect(bookmarksMenu, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
+	}
+
+	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
+
+	if (closedWindowsMenu)
+	{
+		closedWindowsMenu->setIcon(Utils::getIcon(QLatin1String("user-trash")));
+		closedWindowsMenu->setEnabled(false);
+
+		connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), closedWindowsMenu, SLOT(setEnabled(bool)));
+		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
+	}
+
+	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
+
+	if (sessionsMenu)
+	{
+		connect(sessionsMenu, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
+		connect(sessionsMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
+	}
+
+	Menu *importExportMenu = getMenu(QLatin1String("MenuImportExport"));
+
+	if (importExportMenu)
+	{
+		importExportMenu->addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
+		importExportMenu->addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
+
+		connect(importExportMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionImport(QAction*)));
+	}
+
+	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
+
+	if (userAgentMenu)
+	{
+		connect(userAgentMenu, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
+		connect(userAgentMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
+	}
+
+	Menu *characterEncodingMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
+
+	if (characterEncodingMenu)
+	{
+		connect(characterEncodingMenu, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
+		connect(characterEncodingMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
 	}
 }
 
