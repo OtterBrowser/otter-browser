@@ -158,28 +158,32 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	const QString shortcut = QKeySequence(QKeySequence::Paste).toString(QKeySequence::NativeText);
 	QMenu *menu = createStandardContextMenu();
-	bool found = false;
 
-	if (!shortcut.isEmpty())
+	if (!m_simpleMode)
 	{
-		for (int i = 0; i < menu->actions().count(); ++i)
+		const QString shortcut = QKeySequence(QKeySequence::Paste).toString(QKeySequence::NativeText);
+		bool found = false;
+
+		if (!shortcut.isEmpty())
 		{
-			if (menu->actions().at(i)->text().endsWith(shortcut))
+			for (int i = 0; i < menu->actions().count(); ++i)
 			{
-				menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(PasteAndGoAction, this));
+				if (menu->actions().at(i)->text().endsWith(shortcut))
+				{
+					menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(PasteAndGoAction, this));
 
-				found = true;
+					found = true;
 
-				break;
+					break;
+				}
 			}
 		}
-	}
 
-	if (!found)
-	{
-		menu->insertAction(menu->actions().at(6), ActionsManager::getAction(PasteAndGoAction, this));
+		if (!found)
+		{
+			menu->insertAction(menu->actions().at(6), ActionsManager::getAction(PasteAndGoAction, this));
+		}
 	}
 
 	menu->exec(event->globalPos());
