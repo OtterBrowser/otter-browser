@@ -356,7 +356,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	{
 		m_navigationBar = new QWidget(this);
 
-		m_addressWidget = new AddressWidget(this, this);
+		m_addressWidget = new AddressWidget(this, false, this);
 		m_addressWidget->setUrl(m_contentsWidget->getUrl());
 
 		m_searchWidget = new SearchWidget(this);

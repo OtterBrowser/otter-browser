@@ -80,6 +80,7 @@ SOURCES += src/main.cpp \
     src/ui/MainWindow.cpp \
     src/ui/MdiWidget.cpp \
     src/ui/Menu.cpp \
+    src/ui/OpenAddressDialog.cpp \
     src/ui/OpenBookmarkDialog.cpp \
     src/ui/OptionDelegate.cpp \
     src/ui/OptionWidget.cpp \
@@ -176,6 +177,7 @@ HEADERS += src/core/Action.h \
     src/ui/MainWindow.h \
     src/ui/MdiWidget.h \
     src/ui/Menu.h \
+    src/ui/OpenAddressDialog.h \
     src/ui/OpenBookmarkDialog.h \
     src/ui/OptionDelegate.h \
     src/ui/OptionWidget.h \
@@ -230,6 +232,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/ImportDialog.ui \
     src/ui/LocaleDialog.ui \
     src/ui/MainWindow.ui \
+    src/ui/OpenAddressDialog.ui \
     src/ui/OpenBookmarkDialog.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/ReloadTimeDialog.ui \

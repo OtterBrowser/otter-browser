@@ -17,12 +17,11 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_OPENBOOKMARKDIALOG_H
-#define OTTER_OPENBOOKMARKDIALOG_H
+#ifndef OTTER_OPENADDRESSDIALOG_H
+#define OTTER_OPENADDRESSDIALOG_H
 
-#include "../core/BookmarksManager.h"
+#include "../core/WindowsManager.h"
 
-#include <QtWidgets/QCompleter>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -30,30 +29,34 @@ namespace Otter
 
 namespace Ui
 {
-	class OpenBookmarkDialog;
+	class OpenAddressDialog;
 }
 
-class OpenBookmarkDialog : public QDialog
+class AddressWidget;
+
+class OpenAddressDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit OpenBookmarkDialog(QWidget *parent = NULL);
-	~OpenBookmarkDialog();
+	explicit OpenAddressDialog(QWidget *parent = NULL);
+	~OpenAddressDialog();
+
+protected slots:
+	void handleInput();
+	void openUrl(const QUrl &url);
+	void openSearch(const QString &query, const QString &engine);
 
 protected:
 	void changeEvent(QEvent *event);
 
-protected slots:
-	void openBookmark();
-	void setCompletion(const QString &text);
-
 private:
-	QCompleter *m_completer;
-	Ui::OpenBookmarkDialog *m_ui;
+	AddressWidget *m_addressWidget;
+	Ui::OpenAddressDialog *m_ui;
 
 signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark);
+	void requestedLoadUrl(QUrl url, OpenHints hints);
+	void requestedSearch(QString query, QString engine);
 };
 
 }

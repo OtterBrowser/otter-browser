@@ -95,6 +95,8 @@ protected slots:
 	void actionPreferences();
 	void actionSwitchApplicationLanguage();
 	void actionAboutApplication();
+	void actionGoToPage();
+	void actionQuickBookmarkAccess();
 	void menuSessionsAboutToShow();
 	void menuUserAgentAboutToShow();
 	void menuCharacterEncodingAboutToShow();

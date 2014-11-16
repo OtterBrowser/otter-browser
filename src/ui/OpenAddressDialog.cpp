@@ -17,36 +17,45 @@
 *
 **************************************************************************/
 
-#include "OpenBookmarkDialog.h"
+#include "OpenAddressDialog.h"
+#include "AddressWidget.h"
 
-#include "ui_OpenBookmarkDialog.h"
-
-#include <QtCore/QStringListModel>
+#include "ui_OpenAddressDialog.h"
 
 namespace Otter
 {
 
-OpenBookmarkDialog::OpenBookmarkDialog(QWidget *parent) : QDialog(parent),
-	m_completer(NULL),
-	m_ui(new Ui::OpenBookmarkDialog)
+OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
+	m_addressWidget(NULL),
+	m_ui(new Ui::OpenAddressDialog)
 {
 	m_ui->setupUi(this);
 
-	m_completer = new QCompleter(new QStringListModel(BookmarksManager::getKeywords()), m_ui->lineEdit);
-	m_completer->setCaseSensitivity(Qt::CaseSensitive);
-	m_completer->setCompletionMode(QCompleter::InlineCompletion);
-	m_completer->setFilterMode(Qt::MatchStartsWith);
+	m_addressWidget = new AddressWidget(NULL, true, this);
+	m_addressWidget->setFocus();
 
-	connect(this, SIGNAL(accepted()), this, SLOT(openBookmark()));
-	connect(m_ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
+	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
+	m_ui->label->setBuddy(m_addressWidget);
+
+	connect(m_addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(openUrl(QUrl)));
+	connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(openSearch(QString,QString)));
+	connect(this, SIGNAL(accepted()), this, SLOT(handleInput()));
 }
 
-OpenBookmarkDialog::~OpenBookmarkDialog()
+OpenAddressDialog::~OpenAddressDialog()
 {
 	delete m_ui;
 }
 
-void OpenBookmarkDialog::changeEvent(QEvent *event)
+void OpenAddressDialog::handleInput()
+{
+	if (!m_addressWidget->text().trimmed().isEmpty())
+	{
+		m_addressWidget->handleUserInput(m_addressWidget->text());
+	}
+}
+
+void OpenAddressDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
@@ -61,21 +70,18 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 	}
 }
 
-void OpenBookmarkDialog::openBookmark()
+void OpenAddressDialog::openUrl(const QUrl &url)
 {
-	emit requestedOpenBookmark(BookmarksManager::getBookmark(m_ui->lineEdit->text()));
+	emit requestedLoadUrl(url, NewTabOpen);
+
+	close();
 }
 
-void OpenBookmarkDialog::setCompletion(const QString &text)
+void OpenAddressDialog::openSearch(const QString &query, const QString &engine)
 {
-	m_completer->setCompletionPrefix(text);
+	emit requestedSearch(query, engine);
 
-	if (m_completer->completionCount() == 1)
-	{
-		emit requestedOpenBookmark(BookmarksManager::getBookmark(m_completer->currentCompletion()));
-
-		close();
-	}
+	close();
 }
 
 }

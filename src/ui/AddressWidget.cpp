@@ -44,32 +44,38 @@
 namespace Otter
 {
 
-AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent),
+AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
 	m_urlIconLabel(NULL),
 	m_lookupIdentifier(0),
-	m_lookupTimer(0)
+	m_lookupTimer(0),
+	m_simpleMode(simpleMode)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
-	optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
-	optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 	setWindow(window);
-	setPlaceholderText(tr("Enter address or search..."));
 	setCompleter(m_completer);
 	setMinimumWidth(100);
-	setMouseTracking(true);
 	installEventFilter(this);
+
+	if (!m_simpleMode)
+	{
+		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
+		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
+		setPlaceholderText(tr("Enter address or search..."));
+		setMouseTracking(true);
+
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	}
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void AddressWidget::timerEvent(QTimerEvent *event)
@@ -91,6 +97,11 @@ void AddressWidget::timerEvent(QTimerEvent *event)
 void AddressWidget::paintEvent(QPaintEvent *event)
 {
 	QLineEdit::paintEvent(event);
+
+	if (m_simpleMode)
+	{
+		return;
+	}
 
 	QColor badgeColor = QColor(245, 245, 245);
 	QStyleOptionFrame panel;
@@ -179,13 +190,16 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QLineEdit::mouseMoveEvent(event);
 
-	if (m_securityBadgeRectangle.contains(event->pos()))
+	if (!m_simpleMode)
 	{
-		setCursor(Qt::ArrowCursor);
-	}
-	else
-	{
-		setCursor(Qt::IBeamCursor);
+		if (m_securityBadgeRectangle.contains(event->pos()))
+		{
+			setCursor(Qt::ArrowCursor);
+		}
+		else
+		{
+			setCursor(Qt::IBeamCursor);
+		}
 	}
 }
 
@@ -279,7 +293,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 	const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
 
-	if (url.isValid() && lookupTimeout > 0)
+	if (!m_simpleMode && url.isValid() && lookupTimeout > 0)
 	{
 		if (text == m_lookupQuery)
 		{
@@ -471,7 +485,7 @@ QUrl AddressWidget::getUrl() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_bookmarkLabel && m_bookmarkLabel && event->type() == QEvent::MouseButtonPress)
+	if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 

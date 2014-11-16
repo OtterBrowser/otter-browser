@@ -25,6 +25,8 @@
 #include "ImportDialog.h"
 #include "MdiWidget.h"
 #include "Menu.h"
+#include "OpenAddressDialog.h"
+#include "OpenBookmarkDialog.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
@@ -145,6 +147,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("AboutApplication")), SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_actionsManager->getAction(QLatin1String("AboutQt")), SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
+	connect(m_actionsManager->getAction(QLatin1String("GoToPage")), SIGNAL(triggered()), this, SLOT(actionGoToPage()));
+	connect(m_actionsManager->getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(actionQuickBookmarkAccess()));
 
 	m_windowsManager->restore(windows);
 
@@ -724,6 +728,25 @@ void MainWindow::actionAboutApplication()
 	}
 
 	QMessageBox::about(this, QLatin1String("Otter"), about);
+}
+
+void MainWindow::actionGoToPage()
+{
+	OpenAddressDialog dialog(this);
+
+	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
+	connect(&dialog, SIGNAL(requestedSearch(QString,QString)), m_windowsManager, SLOT(search(QString,QString)));
+
+	dialog.exec();
+}
+
+void MainWindow::actionQuickBookmarkAccess()
+{
+	OpenBookmarkDialog dialog(this);
+
+	connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), m_windowsManager, SLOT(open(BookmarksItem*)));
+
+	dialog.exec();
 }
 
 void MainWindow::menuSessionsAboutToShow()

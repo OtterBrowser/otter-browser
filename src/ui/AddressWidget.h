@@ -36,7 +36,7 @@ class AddressWidget : public QLineEdit
 	Q_OBJECT
 
 public:
-	explicit AddressWidget(Window *window, QWidget *parent = NULL);
+	explicit AddressWidget(Window *window, bool simpleMode = false, QWidget *parent = NULL);
 
 	void handleUserInput(const QString &text);
 	void setWindow(Window *window);
@@ -74,6 +74,7 @@ private:
 	QString m_lookupQuery;
 	int m_lookupIdentifier;
 	int m_lookupTimer;
+	bool m_simpleMode;
 
 signals:
 	void requestedLoadUrl(QUrl url);

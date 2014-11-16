@@ -143,6 +143,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ToggleMediaLoop"), QT_TRANSLATE_NOOP("actions", "Looping"));
 		registerAction(QLatin1String("ToggleMediaPlayPause"), QT_TRANSLATE_NOOP("actions", "Play"));
 		registerAction(QLatin1String("ToggleMediaMute"), QT_TRANSLATE_NOOP("actions", "Mute"));
+		registerAction(QLatin1String("GoToPage"), QT_TRANSLATE_NOOP("actions", "Go to Page or Search"));
 		registerAction(QLatin1String("QuickBookmarkAccess"), QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 		registerAction(QLatin1String("QuickFind"), QT_TRANSLATE_NOOP("actions", "Quick Find"), QString(), QIcon(), true, false, false, QuickFindAction);
 		registerAction(QLatin1String("ActivateAddressField"), QT_TRANSLATE_NOOP("actions", "Activate Address Field"), QString(), QIcon(), true, false, false, ActivateAddressFieldAction);
