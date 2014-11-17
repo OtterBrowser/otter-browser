@@ -41,8 +41,8 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 	m_model = new QStandardItemModel(this);
 	m_model->setHorizontalHeaderLabels(labels);
 
-	m_ui->chosenLanguagesViewWidget->setModel(m_model);
-	m_ui->chosenLanguagesViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->languagesViewWidget->setModel(m_model);
+	m_ui->languagesViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
 	QStringList chosenLanguages = SettingsManager::getValue("Network/AcceptLanguage").toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 
@@ -78,10 +78,13 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
-	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->chosenLanguagesViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->chosenLanguagesViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->chosenLanguagesViewWidget, SLOT(removeRow()));
-	connect(m_ui->chooseLanguageButton, SIGNAL(clicked()), this, SLOT(languageFromComboBox()));
+	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(removeRow()));
+	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(languageFromComboBox()));
+	connect(m_ui->languagesViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->languagesViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->languagesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 }
 
 AcceptLanguageDialog::~AcceptLanguageDialog()
@@ -137,6 +140,13 @@ void AcceptLanguageDialog::chooseLanguage(const QString &languageCode)
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_model->appendRow(items);
+}
+
+void AcceptLanguageDialog::updateActions()
+{
+	const int currentRow = m_ui->languagesViewWidget->getCurrentRow();
+
+	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->languagesViewWidget->getRowCount());
 }
 
 QString AcceptLanguageDialog::getLanguageList()

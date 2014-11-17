@@ -2303,15 +2303,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::TableViewWidget</class>
+   <extends>QTableView</extends>
+   <header>src/ui/TableViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -48,6 +48,7 @@ protected:
 
 protected slots:
 	void languageFromComboBox();
+	void updateActions();
 
 private:
 	QStandardItemModel *m_model;
