@@ -62,10 +62,10 @@ public:
 	static NetworkManagerFactory* getInstance();
 	static CookieJar* getCookieJar();
 	static NetworkCache* getCache();
-	static UserAgentInformation getUserAgent(const QString &identifier);
 	static QString getAcceptLanguage();
 	static QStringList getUserAgents();
 	static QList<QSslCipher> getDefaultCiphers();
+	static UserAgentInformation getUserAgent(const QString &identifier);
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();

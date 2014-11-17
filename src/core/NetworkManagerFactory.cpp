@@ -221,25 +221,6 @@ NetworkCache* NetworkManagerFactory::getCache()
 	return m_cache;
 }
 
-UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
-{
-	if (!m_isInitialized)
-	{
-		m_instance->initialize();
-	}
-
-	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
-	{
-		UserAgentInformation userAgent;
-		userAgent.identifier = QLatin1String("default");
-		userAgent.title = tr("Default");
-
-		return userAgent;
-	}
-
-	return m_userAgents[identifier];
-}
-
 QString NetworkManagerFactory::getAcceptLanguage()
 {
 	return m_acceptLanguage;
@@ -258,6 +239,25 @@ QStringList NetworkManagerFactory::getUserAgents()
 QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
 {
 	return m_defaultCiphers;
+}
+
+UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
+{
+	if (!m_isInitialized)
+	{
+		m_instance->initialize();
+	}
+
+	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = QLatin1String("default");
+		userAgent.title = tr("Default");
+
+		return userAgent;
+	}
+
+	return m_userAgents[identifier];
 }
 
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::getDoNotTrackPolicy()
