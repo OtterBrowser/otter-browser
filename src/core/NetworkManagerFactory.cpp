@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,6 +38,7 @@ namespace Otter
 NetworkManagerFactory* NetworkManagerFactory::m_instance = NULL;
 CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
+QString NetworkManagerFactory::m_acceptLanguage;
 QStringList NetworkManagerFactory::m_userAgentsOrder;
 QHash<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
@@ -78,6 +80,7 @@ void NetworkManagerFactory::initialize()
 #endif
 
 	loadUserAgents();
+	optionChanged(QLatin1String("Network/AcceptLanguage"), SettingsManager::getValue(QLatin1String("Network/AcceptLanguage")));
 	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
 	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
 	optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
@@ -89,7 +92,11 @@ void NetworkManagerFactory::initialize()
 
 void NetworkManagerFactory::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Network/DoNotTrackPolicy"))
+	if (option == QLatin1String("Network/AcceptLanguage"))
+	{
+		m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
+	}
+	else if (option == QLatin1String("Network/DoNotTrackPolicy"))
 	{
 		const QString policyValue = value.toString();
 
@@ -231,6 +238,11 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 	}
 
 	return m_userAgents[identifier];
+}
+
+QString NetworkManagerFactory::getAcceptLanguage()
+{
+	return m_acceptLanguage;
 }
 
 QStringList NetworkManagerFactory::getUserAgents()

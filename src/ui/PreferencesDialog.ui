@@ -268,19 +268,19 @@
        <item>
         <layout class="QFormLayout" name="languageLayout">
          <item row="0" column="0">
-          <widget class="QLabel" name="languageLabel">
+          <widget class="QLabel" name="acceptLanguageLabel">
            <property name="text">
-            <string>Preferred language:</string>
+            <string>Preferred Webpage Language:</string>
            </property>
            <property name="buddy">
-            <cstring>languageLineEdit</cstring>
+            <cstring>acceptLanguageButton</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="languageLineEdit">
-           <property name="enabled">
-            <bool>false</bool>
+          <widget class="QPushButton" name="acceptLanguageButton">
+           <property name="text">
+            <string>Edit...</string>
            </property>
           </widget>
          </item>
@@ -2327,7 +2327,6 @@
   <tabstop>reuseCurrentTabCheckBox</tabstop>
   <tabstop>openNextToActiveheckBox</tabstop>
   <tabstop>closingTabComboBox</tabstop>
-  <tabstop>languageLineEdit</tabstop>
   <tabstop>popupsComboBox</tabstop>
   <tabstop>defaultZoomSpinBox</tabstop>
   <tabstop>zoomTextOnlyCheckBox</tabstop>

@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,6 +26,7 @@
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
 #include "UserAgentsManagerDialog.h"
+#include "preferences/AcceptLanguageDialog.h"
 #include "preferences/JavaScriptPreferencesDialog.h"
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
@@ -446,6 +448,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), this, SLOT(removeMacrosProfile()));
 	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(manageAcceptLanguage()));
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -552,6 +555,16 @@ void PreferencesDialog::setupClearHistory()
 
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
 	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
+}
+
+void PreferencesDialog::manageAcceptLanguage()
+{
+	AcceptLanguageDialog dialog(this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		SettingsManager::setValue(QLatin1String("Network/AcceptLanguage"), dialog.getLanguageList());
+	}
 }
 
 void PreferencesDialog::addSearch()

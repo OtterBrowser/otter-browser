@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,6 +58,7 @@ protected slots:
 	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void colorChanged(QWidget *editor);
 	void setupClearHistory();
+	void manageAcceptLanguage();
 	void addSearch();
 	void editSearch();
 	void updateSearchActions();

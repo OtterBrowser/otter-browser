@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -62,6 +63,7 @@ public:
 	static CookieJar* getCookieJar();
 	static NetworkCache* getCache();
 	static UserAgentInformation getUserAgent(const QString &identifier);
+	static QString getAcceptLanguage();
 	static QStringList getUserAgents();
 	static QList<QSslCipher> getDefaultCiphers();
 	static DoNotTrackPolicy getDoNotTrackPolicy();
@@ -81,6 +83,7 @@ private:
 	static NetworkManagerFactory *m_instance;
 	static CookieJar *m_cookieJar;
 	static NetworkCache *m_cache;
+	static QString m_acceptLanguage;
 	static QStringList m_userAgentsOrder;
 	static QHash<QString, UserAgentInformation> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
