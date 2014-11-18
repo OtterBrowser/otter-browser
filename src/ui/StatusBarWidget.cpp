@@ -23,6 +23,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QStyleOptionSlider>
 #include <QtWidgets/QToolButton>
+#include <QtWidgets/QSpinBox>
 
 namespace Otter
 {
@@ -34,8 +35,9 @@ StatusBarWidget::StatusBarWidget(QWidget *parent) : QStatusBar(parent),
 
 void StatusBarWidget::setup()
 {
+	int maximumZoom = 250;
 	m_zoomSlider = new QSlider(this);
-	m_zoomSlider->setRange(10, 250);
+	m_zoomSlider->setRange(10, maximumZoom);
 	m_zoomSlider->setTracking(true);
 	m_zoomSlider->setOrientation(Qt::Horizontal);
 	m_zoomSlider->setFocusPolicy(Qt::TabFocus);
@@ -49,10 +51,19 @@ void StatusBarWidget::setup()
 	QToolButton *zoomInButton = new QToolButton(this);
 	zoomInButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomIn"), this));
 	zoomInButton->setAutoRaise(true);
+	
+	QSpinBox *zoomPercentage = new QSpinBox(this);
+	zoomPercentage->setValue(m_zoomSlider->value());
+	zoomPercentage->setSuffix("%");
+	zoomPercentage->setButtonSymbols(QAbstractSpinBox::NoButtons);
+	zoomPercentage->setMaximum(maximumZoom);
+	connect(m_zoomSlider, SIGNAL(valueChanged(int)), zoomPercentage, SLOT(setValue(int)));
+	connect(zoomPercentage, SIGNAL(valueChanged(int)), this, SIGNAL(requestedZoomChange(int)));
 
 	addPermanentWidget(zoomOutButton);
 	addPermanentWidget(m_zoomSlider);
 	addPermanentWidget(zoomInButton);
+	addPermanentWidget(zoomPercentage);
 	setZoom(100);
 
 	connect(m_zoomSlider, SIGNAL(valueChanged(int)), this, SIGNAL(requestedZoomChange(int)));
