@@ -59,7 +59,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_isHidden(false)
 {
 	setApplicationName(QLatin1String("Otter"));
-	setApplicationVersion(QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT));
+	setApplicationVersion(OTTER_VERSION_MAIN);
 	setWindowIcon(QIcon::fromTheme(QLatin1String("otter-browser"), QIcon(QLatin1String(":/icons/otter-browser.png"))));
 
 	m_instance = this;
@@ -437,6 +437,11 @@ QCommandLineParser* Application::getParser() const
 	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
 
 	return parser;
+}
+
+QString Application::getFullVersion() const
+{
+	return QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT);
 }
 
 QString Application::getLocalePath() const

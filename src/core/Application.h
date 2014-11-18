@@ -48,6 +48,7 @@ public:
 	MainWindow* getWindow();
 	PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getParser() const;
+	QString getFullVersion() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;
 	bool isHidden() const;
