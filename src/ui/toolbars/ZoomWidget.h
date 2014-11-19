@@ -17,32 +17,26 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_STATUSBARWIDGET_H
-#define OTTER_STATUSBARWIDGET_H
+#ifndef OTTER_ZOOMWIDGET_H
+#define OTTER_ZOOMWIDGET_H
 
 #include <QtWidgets/QSlider>
-#include <QtWidgets/QStatusBar>
 
 namespace Otter
 {
 
-class ZoomWidget;
-
-class StatusBarWidget : public QStatusBar
+class ZoomWidget : public QSlider
 {
 	Q_OBJECT
 
 public:
-	explicit StatusBarWidget(QWidget *parent = NULL);
-
-	void setup();
+	explicit ZoomWidget(QWidget *parent = NULL);
 
 public slots:
 	void setZoom(int zoom);
-	void setZoomEnabled(bool enabled);
 
-private:
-	ZoomWidget *m_zoomSlider;
+protected:
+	void mousePressEvent(QMouseEvent *event);
 
 signals:
 	void requestedZoomChange(int zoom);

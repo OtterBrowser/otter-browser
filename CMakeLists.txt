@@ -189,6 +189,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui
+	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui

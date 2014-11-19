@@ -18,11 +18,9 @@
 **************************************************************************/
 
 #include "StatusBarWidget.h"
+#include "ActionWidget.h"
+#include "toolbars/ZoomWidget.h"
 #include "../core/ActionsManager.h"
-
-#include <QtGui/QMouseEvent>
-#include <QtWidgets/QStyleOptionSlider>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
@@ -34,76 +32,23 @@ StatusBarWidget::StatusBarWidget(QWidget *parent) : QStatusBar(parent),
 
 void StatusBarWidget::setup()
 {
-	m_zoomSlider = new QSlider(this);
-	m_zoomSlider->setRange(10, 250);
-	m_zoomSlider->setTracking(true);
-	m_zoomSlider->setOrientation(Qt::Horizontal);
-	m_zoomSlider->setFocusPolicy(Qt::TabFocus);
-	m_zoomSlider->setMaximumWidth(100);
-	m_zoomSlider->installEventFilter(this);
+	m_zoomSlider = new ZoomWidget(this);
 
-	QToolButton *zoomOutButton = new QToolButton(this);
-	zoomOutButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomOut"), this));
-	zoomOutButton->setAutoRaise(true);
-
-	QToolButton *zoomInButton = new QToolButton(this);
-	zoomInButton->setDefaultAction(ActionsManager::getAction(QLatin1String("ZoomIn"), this));
-	zoomInButton->setAutoRaise(true);
-
-	addPermanentWidget(zoomOutButton);
+	addPermanentWidget(new ActionWidget(ZoomOutAction, NULL, this));
 	addPermanentWidget(m_zoomSlider);
-	addPermanentWidget(zoomInButton);
-	setZoom(100);
+	addPermanentWidget(new ActionWidget(ZoomInAction, NULL, this));
 
-	connect(m_zoomSlider, SIGNAL(valueChanged(int)), this, SIGNAL(requestedZoomChange(int)));
+	connect(m_zoomSlider, SIGNAL(requestedZoomChange(int)), this, SIGNAL(requestedZoomChange(int)));
 }
 
 void StatusBarWidget::setZoom(int zoom)
 {
-	m_zoomSlider->setValue(zoom);
-	m_zoomSlider->setToolTip(tr("Zoom %1%").arg(zoom));
+	m_zoomSlider->setZoom(zoom);
 }
 
 void StatusBarWidget::setZoomEnabled(bool enabled)
 {
 	m_zoomSlider->setEnabled(enabled);
-}
-
-bool StatusBarWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (m_zoomSlider && object == m_zoomSlider && m_zoomSlider->isEnabled() && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-		QStyleOptionSlider option;
-		option.initFrom(m_zoomSlider);
-		option.minimum = m_zoomSlider->minimum();
-		option.maximum = m_zoomSlider->maximum();
-		option.sliderPosition = m_zoomSlider->value();
-		option.sliderValue = m_zoomSlider->value();
-
-		const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, m_zoomSlider);
-
-		if (!handle.contains(mouseEvent->pos()))
-		{
-			const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, m_zoomSlider);
-			int value = 0;
-
-			if (m_zoomSlider->orientation() == Qt::Horizontal)
-			{
-				value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
-			}
-			else
-			{
-				value = QStyle::sliderValueFromPosition(m_zoomSlider->minimum(), m_zoomSlider->maximum(), (mouseEvent->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
-			}
-
-			m_zoomSlider->setValue(value);
-
-			return true;
-		}
-	}
-
-	return QWidget::eventFilter(object, event);
 }
 
 }
