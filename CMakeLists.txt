@@ -144,6 +144,7 @@ set(otter_src
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
+	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
@@ -189,7 +190,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui
-	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui
