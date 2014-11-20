@@ -390,14 +390,9 @@ void MainWindow::openUrl(const QString &input)
 
 	if (bookmark)
 	{
-		WindowsManager *windowsManager = SessionsManager::getWindowsManager();
+		m_windowsManager->open(bookmark);
 
-		if (windowsManager)
-		{
-			windowsManager->open(bookmark);
-
-			return;
-		}
+		return;
 	}
 
 	if (input == QString(QLatin1Char('~')) || input.startsWith(QLatin1Char('~') + QDir::separator()))

@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "SidebarWidget.h"
+#include "MainWindow.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
@@ -170,11 +171,11 @@ void SidebarWidget::openPanel(const QString &identifier)
 
 void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
 {
-	WindowsManager *manager = SessionsManager::getWindowsManager();
+	MainWindow *window = MainWindow::findMainWindow(parent());
 
-	if (manager)
+	if (window)
 	{
-		manager->open(url, hints);
+		window->getWindowsManager()->open(url, hints);
 	}
 }
 

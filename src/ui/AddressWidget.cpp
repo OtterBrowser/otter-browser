@@ -21,6 +21,7 @@
 
 #include "AddressWidget.h"
 #include "BookmarkPropertiesDialog.h"
+#include "MainWindow.h"
 #include "Window.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
@@ -241,11 +242,11 @@ void AddressWidget::handleUserInput(const QString &text)
 
 	if (bookmark)
 	{
-		WindowsManager *windowsManager = SessionsManager::getWindowsManager();
+		MainWindow *window = MainWindow::findMainWindow(parent());
 
-		if (windowsManager)
+		if (window)
 		{
-			windowsManager->open(bookmark);
+			window->getWindowsManager()->open(bookmark);
 
 			return;
 		}
