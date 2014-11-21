@@ -85,7 +85,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("FullScreen"), QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), Utils::getIcon(QLatin1String("view-fullscreen")));
 		registerAction(QLatin1String("ViewSource"), QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), false, false, false, ViewSourceAction);
 		registerAction(QLatin1String("InspectPage"), QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false, InspectPageAction);
-		registerAction(QLatin1String("Sidebar"), QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
+                registerAction(QLatin1String("Sidebar"), QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), Utils::getIcon(QLatin1String("task-delegate")), true, true, false);
 		registerAction(QLatin1String("GoBack"), QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), true, false, false, GoBackAction);
 		registerAction(QLatin1String("GoForward"), QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), true, false, false, GoForwardAction);
 		registerAction(QLatin1String("Rewind"), QT_TRANSLATE_NOOP("actions", "Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")), true, false, false, RewindAction);
