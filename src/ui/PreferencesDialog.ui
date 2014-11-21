@@ -778,16 +778,7 @@
          <item>
           <widget class="QWidget" name="historyWidget" native="true">
            <layout class="QVBoxLayout" name="historyWidgetLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -906,16 +897,7 @@
               <item>
                <widget class="QWidget" name="cookiesWidget" native="true">
                 <layout class="QFormLayout" name="cookiesLayout">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
+                 <property name="margin">
                   <number>0</number>
                  </property>
                  <item row="0" column="0">
@@ -1446,6 +1428,20 @@
             </widget>
            </item>
            <item>
+            <layout class="QHBoxLayout" name="pluginsLayout">
+             <item>
+              <widget class="QLabel" name="pluginsLabel">
+               <property name="text">
+                <string>Plugins:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="pluginsComboBox"/>
+             </item>
+            </layout>
+           </item>
+           <item>
             <layout class="QHBoxLayout" name="userStyleSheetLayout">
              <item>
               <widget class="QLabel" name="userStyleSheetWidget">
@@ -1600,16 +1596,7 @@
                   <bool>false</bool>
                  </property>
                  <layout class="QGridLayout" name="manualProxyConfigurationLayout">
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
+                  <property name="margin">
                    <number>0</number>
                   </property>
                   <item row="2" column="1">
@@ -1755,16 +1742,7 @@
                   <bool>false</bool>
                  </property>
                  <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
+                  <property name="margin">
                    <number>0</number>
                   </property>
                   <item>
@@ -2361,6 +2339,57 @@
   <tabstop>suggestHistoryCheckBox</tabstop>
   <tabstop>suggestSearchCheckBox</tabstop>
   <tabstop>buttonBox</tabstop>
+  <tabstop>setDefaultButton</tabstop>
+  <tabstop>searchViewWidget</tabstop>
+  <tabstop>moveUpSearchButton</tabstop>
+  <tabstop>moveDownSearchButton</tabstop>
+  <tabstop>searchSuggestionsCheckBox</tabstop>
+  <tabstop>enableImagesCheckBox</tabstop>
+  <tabstop>enableJavaScriptCheckBox</tabstop>
+  <tabstop>javaScriptOptionsButton</tabstop>
+  <tabstop>enableJavaCheckBox</tabstop>
+  <tabstop>pluginsComboBox</tabstop>
+  <tabstop>sendReferrerCheckBox</tabstop>
+  <tabstop>userAgentComboBox</tabstop>
+  <tabstop>userAgentButton</tabstop>
+  <tabstop>proxyModeComboBox</tabstop>
+  <tabstop>httpProxyServersLineEdit</tabstop>
+  <tabstop>httpProxyPortSpinBox</tabstop>
+  <tabstop>httpsProxyPortSpinBox</tabstop>
+  <tabstop>httpsProxyServersLineEdit</tabstop>
+  <tabstop>socksProxyPortSpinBox</tabstop>
+  <tabstop>ftpProxyPortSpinBox</tabstop>
+  <tabstop>ftpProxyCheckBox</tabstop>
+  <tabstop>socksProxyCheckBox</tabstop>
+  <tabstop>httpProxyCheckBox</tabstop>
+  <tabstop>socksProxyServersLineEdit</tabstop>
+  <tabstop>httpsProxyCheckBox</tabstop>
+  <tabstop>ftpProxyServersLineEdit</tabstop>
+  <tabstop>allProxyCheckBox</tabstop>
+  <tabstop>allProxyServersLineEdit</tabstop>
+  <tabstop>allProxyPortSpinBox</tabstop>
+  <tabstop>proxySystemAuthentication</tabstop>
+  <tabstop>ciphersViewWidget</tabstop>
+  <tabstop>ciphersAddButton</tabstop>
+  <tabstop>ciphersRemoveButton</tabstop>
+  <tabstop>ciphersMoveUpButton</tabstop>
+  <tabstop>ciphersMoveDownButton</tabstop>
+  <tabstop>actionShortcutsViewWidget</tabstop>
+  <tabstop>actionShortcutsAddButton</tabstop>
+  <tabstop>actionShortcutsEditButton</tabstop>
+  <tabstop>actionShortcutsCloneButton</tabstop>
+  <tabstop>actionShortcutsRemoveButton</tabstop>
+  <tabstop>actionShortcutsMoveUpButton</tabstop>
+  <tabstop>actionShortcutsMoveDownButton</tabstop>
+  <tabstop>actionMacrosViewWidget</tabstop>
+  <tabstop>actionMacrosAddButton</tabstop>
+  <tabstop>actionMacrosEditButton</tabstop>
+  <tabstop>actionMacrosCloneButton</tabstop>
+  <tabstop>actionMacrosRemoveButton</tabstop>
+  <tabstop>actionMacrosMoveUpButton</tabstop>
+  <tabstop>actionMacrosMoveDownButton</tabstop>
+  <tabstop>enableTrayIconCheckBox</tabstop>
+  <tabstop>allSettingsButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

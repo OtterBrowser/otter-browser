@@ -147,6 +147,7 @@ set(otter_src
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
+	src/modules/backends/web/qtwebkit/QtWebKitWebPluginFactory.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
@@ -160,6 +161,7 @@ set(otter_src
 	src/modules/windows/web/ImagePropertiesDialog.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
+	src/modules/windows/web/qtwebkit/LoadPluginWidget.cpp
 )
 
 qt5_add_resources(otter_res

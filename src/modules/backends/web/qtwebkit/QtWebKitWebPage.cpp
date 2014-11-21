@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebPage.h"
+#include "QtWebKitWebPluginFactory.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
@@ -56,6 +57,9 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	optionChanged(QLatin1String("Network/UserAgent"), SettingsManager::getValue(QLatin1String("Network/UserAgent")));
 	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
+
+	m_pluginFactory = new QtWebKitWebPluginFactory(this);
+	setPluginFactory(m_pluginFactory);
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
@@ -339,6 +343,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		m_webWidget->markPageRealoded();
 	}
 
+	m_pluginFactory->setPageURL(request.url());
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 
