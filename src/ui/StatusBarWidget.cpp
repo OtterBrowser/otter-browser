@@ -34,6 +34,10 @@ void StatusBarWidget::setup()
 {
 	m_zoomSlider = new ZoomWidget(this);
 
+	QToolButton *sidebarButton = new QToolButton(this);
+	sidebarButton->setDefaultAction(ActionsManager::getAction(QLatin1String("Sidebar"), this));
+	addWidget(sidebarButton);
+
 	addPermanentWidget(new ActionWidget(ZoomOutAction, NULL, this));
 	addPermanentWidget(m_zoomSlider);
 	addPermanentWidget(new ActionWidget(ZoomInAction, NULL, this));
