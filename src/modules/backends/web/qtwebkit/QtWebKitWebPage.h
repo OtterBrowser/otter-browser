@@ -21,7 +21,6 @@
 #ifndef OTTER_QTWEBKITWEBPAGE_H
 #define OTTER_QTWEBKITWEBPAGE_H
 
-#include "QtWebKitWebPluginFactory.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/WindowsManager.h"
 
@@ -30,6 +29,7 @@
 namespace Otter
 {
 
+class QtWebKitWebPluginFactory;
 class QtWebKitWebWidget;
 class WebWidget;
 
@@ -67,8 +67,8 @@ protected slots:
 	void pageLoadFinished();
 
 private:
-	QtWebKitWebPluginFactory *m_pluginFactory;
 	QtWebKitWebWidget *m_webWidget;
+	QtWebKitWebPluginFactory *m_pluginFactory;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
 	QString m_userAgentParsed;

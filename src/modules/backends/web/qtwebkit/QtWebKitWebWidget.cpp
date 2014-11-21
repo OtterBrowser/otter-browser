@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
+#include "QtWebKitWebPage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
@@ -475,7 +475,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	QWebSettings *settings = m_webView->page()->settings();
 	settings->setAttribute(QWebSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
-	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(QLatin1String("Browser/EnablePlugins"), url).toString() != "disabled");
+	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(QLatin1String("Browser/EnablePlugins"), url).toString() != QLatin1String("disabled"));
 	settings->setAttribute(QWebSettings::JavaEnabled, getOption(QLatin1String("Browser/EnableJava"), url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());

@@ -23,40 +23,36 @@
 #ifndef OTTER_QTWEBKITWEBPLUGINFACTORY_H
 #define OTTER_QTWEBKITWEBPLUGINFACTORY_H
 
-#include "../../../windows/web/qtwebkit/LoadPluginWidget.h"
-
 #include <QtCore/QList>
+#include <QtCore/QUrl>
 #include <QtWebKit/QWebPluginFactory>
+#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
-	class QtWebKitWebPluginFactory : public QWebPluginFactory
-	{
-		Q_OBJECT
 
-		public:
-			explicit QtWebKitWebPluginFactory(QObject *parent);
+class QtWebKitWebPluginFactory : public QWebPluginFactory
+{
+	Q_OBJECT
 
-			virtual QObject *create(
-					const QString &mimeType,
-					const QUrl &url,
-					const QStringList &argumentNames,
-					const QStringList &argumentValues) const;
+public:
+	explicit QtWebKitWebPluginFactory(QWebPage *parent);
 
-			virtual void setPageURL(const QUrl url);
-			virtual QList<QWebPluginFactory::Plugin> plugins() const;
+	void setBaseUrl(const QUrl url);
+	QObject* create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const;
+	QList<QWebPluginFactory::Plugin> plugins() const;
 
-		signals:
-			void signalLoadPlugin(bool) const;
+protected slots:
+	void setPluginIsLoaded(bool isLoaded = true);
 
-		public slots:
-			void setLoadClickToPlugin(bool load);
+private:
+	QWebPage *m_page;
+	QUrl m_baseUrl;
+	bool m_pluginIsLoaded;
 
-		private:
-			QList<QWebPluginFactory::Plugin> m_pluginList;
-			bool m_loadPluginClicked;
-			QUrl m_mainPageUrl;
-	};
+signals:
+	void pluginIsLoaded(bool isLoaded) const;
+};
 
 }
 

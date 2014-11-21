@@ -10,7 +10,6 @@ Release schedule of planned main features (it's not a full list), note that spec
 
 1.0.01 (first stable release):
 - passwords manager
-- delayed loading of Flash objects
 - feeds reader (as module)
 - fine-tune UI (sizes, margins and other details)
 - support for tab thumbnails embedded in tab bar

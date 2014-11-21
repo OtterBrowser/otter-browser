@@ -21,51 +21,54 @@
 **************************************************************************/
 
 #include "QtWebKitWebPluginFactory.h"
+#include "LoadPluginWidget.h"
 #include "../../../../core/SettingsManager.h"
-
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
-	QtWebKitWebPluginFactory::QtWebKitWebPluginFactory(QObject *parent)
-		: QWebPluginFactory(parent)
+
+QtWebKitWebPluginFactory::QtWebKitWebPluginFactory(QWebPage *parent) : QWebPluginFactory(parent),
+	m_page(parent),
+	m_pluginIsLoaded(false)
+{
+	connect(this, SIGNAL(pluginIsLoaded(bool)), this, SLOT(setPluginIsLoaded(bool)));
+}
+
+void QtWebKitWebPluginFactory::setPluginIsLoaded(bool isLoaded)
+{
+	m_pluginIsLoaded = isLoaded;
+}
+
+void QtWebKitWebPluginFactory::setBaseUrl(const QUrl url)
+{
+	m_baseUrl = url;
+}
+
+QObject* QtWebKitWebPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
+{
+	Q_UNUSED(argumentNames);
+	Q_UNUSED(argumentValues);
+
+	//TODO: add support to recognize unsupported plugins and show apropriate message
+	if (SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), m_baseUrl).toString() == QLatin1String("onDemand") && !m_pluginIsLoaded)
 	{
-		m_loadPluginClicked = false;
-		connect(this, SIGNAL(signalLoadPlugin(bool)), SLOT(setLoadClickToPlugin(bool)));
-	}
+		LoadPluginWidget *plugin = new LoadPluginWidget(m_page, mimeType, url);
 
-	void QtWebKitWebPluginFactory::setLoadClickToPlugin(bool load)
+		connect(plugin, SIGNAL(pluginLoaded()), this, SLOT(setPluginIsLoaded()));
+
+		return plugin;
+	}
+	else
 	{
-		m_loadPluginClicked = load;
+		emit pluginIsLoaded(false);
 	}
 
-	QObject *QtWebKitWebPluginFactory::create(
-			const QString &mimeType,
-			const QUrl &url,
-			const QStringList &argumentNames,
-			const QStringList &argumentValues) const {
+	return NULL;
+}
 
-		Q_UNUSED(argumentNames);
-		Q_UNUSED(argumentValues);
+QList<QWebPluginFactory::Plugin> QtWebKitWebPluginFactory::plugins() const
+{
+	return QList<QWebPluginFactory::Plugin>();
+}
 
-		//TODO: add support to recognize unsupported plugins and show apropriate message
-		if (SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), m_mainPageUrl).toString() == "onDemand" && !m_loadPluginClicked)
-		{
-			LoadPluginWidget * plugin = new LoadPluginWidget(mimeType, url);
-			connect(plugin, SIGNAL(signalLoadPlugin(bool)), this, SLOT(setLoadClickToPlugin(bool)));
-			return plugin;
-		} else {
-			emit signalLoadPlugin(false);
-			return 0;
-		}
-	}
-
-	QList<QWebPluginFactory::Plugin> QtWebKitWebPluginFactory::plugins() const {
-		return m_pluginList;
-	}
-
-	void QtWebKitWebPluginFactory::setPageURL(const QUrl url) {
-		m_mainPageUrl = url;
-	}
 }

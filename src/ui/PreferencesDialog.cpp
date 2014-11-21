@@ -261,15 +261,17 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
 
-	QString plugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString();
-	m_ui->pluginsComboBox->addItem(tr("Enabled"), "enabled");
-	m_ui->pluginsComboBox->addItem(tr("On Demand"), "onDemand");
-	m_ui->pluginsComboBox->addItem(tr("Disabled"), "disabled");
-	if (plugins == "disabled")
+	const QString enablePlugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString();
+
+	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
+	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
+	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
+
+	if (enablePlugins == QLatin1String("disabled"))
 	{
 		m_ui->pluginsComboBox->setCurrentIndex(2);
 	}
-	else if (plugins == "onDemand")
+	else if (enablePlugins == QLatin1String("onDemand"))
 	{
 		m_ui->pluginsComboBox->setCurrentIndex(1);
 	}

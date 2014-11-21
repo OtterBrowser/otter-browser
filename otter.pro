@@ -111,6 +111,7 @@ SOURCES += src/main.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
+    src/modules/backends/web/qtwebkit/LoadPluginWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebPluginFactory.cpp \
@@ -126,8 +127,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
-    src/modules/windows/web/WebContentsWidget.cpp \
-    src/modules/windows/web/qtwebkit/LoadPluginWidget.cpp
+    src/modules/windows/web/WebContentsWidget.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
@@ -212,6 +212,7 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
     src/ui/toolbars/ZoomWidget.h \
+    src/modules/backends/web/qtwebkit/LoadPluginWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebPluginFactory.h \
@@ -227,8 +228,7 @@ HEADERS += src/core/Action.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
-    src/modules/windows/web/WebContentsWidget.h \
-    src/modules/windows/web/qtwebkit/LoadPluginWidget.h
+    src/modules/windows/web/WebContentsWidget.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 

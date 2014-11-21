@@ -51,15 +51,14 @@ QHash<QString, QString> QtWebKitWebPage::m_userAgentComponents;
 
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_webWidget(parent),
+	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
 	m_ignoreJavaScriptPopups(false),
 	m_isGlobalUserAgent(true)
 {
+	setPluginFactory(m_pluginFactory);
 	optionChanged(QLatin1String("Network/UserAgent"), SettingsManager::getValue(QLatin1String("Network/UserAgent")));
 	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
-
-	m_pluginFactory = new QtWebKitWebPluginFactory(this);
-	setPluginFactory(m_pluginFactory);
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
@@ -343,7 +342,8 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		m_webWidget->markPageRealoded();
 	}
 
-	m_pluginFactory->setPageURL(request.url());
+	m_pluginFactory->setBaseUrl(request.url());
+
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }
 

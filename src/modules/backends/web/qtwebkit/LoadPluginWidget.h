@@ -25,30 +25,32 @@
 
 #include <QtCore/QUrl>
 #include <QtWebKit/QWebElement>
+#include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
 {
-	class LoadPluginWidget : public QToolButton
-	{
-		Q_OBJECT
-			Q_PROPERTY(bool swapping READ swapping)
 
-		public:
-			explicit LoadPluginWidget(const QString & mimeType,
-					const QUrl & url,
-					QWidget *parent = 0);
-			bool swapping() const;
+class LoadPluginWidget : public QToolButton
+{
+	Q_OBJECT
+	Q_PROPERTY(bool isSwapping READ isSwapping)
 
-		signals:
-			void signalLoadPlugin(bool);
+public:
+	explicit LoadPluginWidget(QWebPage *page, const QString &mimeType, const QUrl &url, QWidget *parent = NULL);
+	bool isSwapping() const;
 
-		public slots:
-			void loadPlugin();
+public slots:
+	void loadPlugin();
 
-		private:
-			bool m_swapping;
-	};
+private:
+	QWebPage *m_page;
+	bool m_isSwapping;
+
+signals:
+	void pluginLoaded();
+};
+
 }
 
-#endif // LOADPLUGINWIDGET_H
+#endif

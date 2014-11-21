@@ -55,16 +55,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString())));
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
-	
-	QString plugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString();
-	m_ui->pluginsComboBox->addItem(tr("Enabled"), "enabled");
-	m_ui->pluginsComboBox->addItem(tr("On Demand"), "onDemand");
-	m_ui->pluginsComboBox->addItem(tr("Disabled"), "disabled");
-	if (plugins == "disabled")
+
+	const QString enablePlugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString();
+
+	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
+	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
+	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
+
+	if (enablePlugins == QLatin1String("disabled"))
 	{
 		m_ui->pluginsComboBox->setCurrentIndex(2);
 	}
-	else if (plugins == "onDemand")
+	else if (enablePlugins == QLatin1String("onDemand"))
 	{
 		m_ui->pluginsComboBox->setCurrentIndex(1);
 	}
