@@ -21,7 +21,6 @@
 
 #include "AddressWidget.h"
 #include "BookmarkPropertiesDialog.h"
-#include "MainWindow.h"
 #include "Window.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
@@ -89,7 +88,7 @@ void AddressWidget::timerEvent(QTimerEvent *event)
 
 		m_lookupTimer = 0;
 
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), m_hints);
 
 		m_lookupQuery.clear();
 	}
@@ -236,7 +235,7 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
-void AddressWidget::handleUserInput(const QString &text)
+void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 {
 	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
 
@@ -258,7 +257,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 		if (!locations.isEmpty())
 		{
-			emit requestedLoadUrl(QUrl(locations.first() + text.mid(1)));
+			emit requestedOpenUrl(locations.first() + text.mid(1), hints);
 
 			return;
 		}
@@ -266,7 +265,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 	if (QFileInfo(text).exists())
 	{
-		emit requestedLoadUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()));
+		emit requestedOpenUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()), hints);
 
 		return;
 	}
@@ -275,7 +274,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
 	{
-		emit requestedLoadUrl(url);
+		emit requestedOpenUrl(url, hints);
 
 		return;
 	}
@@ -290,7 +289,7 @@ void AddressWidget::handleUserInput(const QString &text)
 
 		if (engine && keyword == engine->keyword)
 		{
-			emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier);
+			emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier, hints);
 
 			return;
 		}
@@ -306,6 +305,7 @@ void AddressWidget::handleUserInput(const QString &text)
 		}
 
 		m_lookupQuery = text;
+		m_hints = hints;
 
 		if (m_lookupTimer != 0)
 		{
@@ -322,7 +322,7 @@ void AddressWidget::handleUserInput(const QString &text)
 		return;
 	}
 
-	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
+	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), hints);
 }
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
@@ -397,11 +397,11 @@ void AddressWidget::verifyLookup(const QHostInfo &host)
 
 	if (host.error() == QHostInfo::NoError)
 	{
-		emit requestedLoadUrl(getUrl());
+		emit requestedOpenUrl(getUrl(), m_hints);
 	}
 	else
 	{
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
+		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), m_hints);
 	}
 
 	m_lookupQuery.clear();
@@ -560,6 +560,23 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			else
 			{
 				m_window->setFocus();
+			}
+		}
+	}
+
+	if (object == this && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) && keyEvent->modifiers() & Qt::ShiftModifier)
+		{
+			const QString input = text().trimmed();
+
+			if (!input.isEmpty())
+			{
+				handleUserInput(input, NewTabOpen);
+
+				return true;
 			}
 		}
 	}

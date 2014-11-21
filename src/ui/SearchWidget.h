@@ -21,6 +21,8 @@
 #ifndef OTTER_SEARCHWIDGET_H
 #define OTTER_SEARCHWIDGET_H
 
+#include "../core/WindowsManager.h"
+
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
 
@@ -38,6 +40,7 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setCurrentSearchEngine(const QString &engine = QString());
@@ -72,7 +75,7 @@ private:
 	bool m_popupUpdated;
 
 signals:
-	void requestedSearch(QString query, QString engine);
+	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 
 }

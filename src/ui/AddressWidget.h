@@ -20,6 +20,8 @@
 #ifndef OTTER_ADDRESSWIDGET_H
 #define OTTER_ADDRESSWIDGET_H
 
+#include "MainWindow.h"
+
 #include <QtCore/QUrl>
 #include <QtNetwork/QHostInfo>
 #include <QtWidgets/QCompleter>
@@ -38,7 +40,7 @@ class AddressWidget : public QLineEdit
 public:
 	explicit AddressWidget(Window *window, bool simpleMode = false, QWidget *parent = NULL);
 
-	void handleUserInput(const QString &text);
+	void handleUserInput(const QString &text, OpenHints hints = DefaultOpen);
 	void setWindow(Window *window);
 	QUrl getUrl() const;
 	bool eventFilter(QObject *object, QEvent *event);
@@ -72,13 +74,14 @@ private:
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;
 	QString m_lookupQuery;
+	OpenHints m_hints;
 	int m_lookupIdentifier;
 	int m_lookupTimer;
 	bool m_simpleMode;
 
 signals:
-	void requestedLoadUrl(QUrl url);
-	void requestedSearch(QString query, QString engine);
+	void requestedOpenUrl(QUrl url, OpenHints hints = DefaultOpen);
+	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
 };
 
 }

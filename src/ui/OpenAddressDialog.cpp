@@ -37,7 +37,7 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
-	connect(m_addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(openUrl(QUrl)));
+	connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl)), this, SLOT(openUrl(QUrl)));
 	connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(openSearch(QString,QString)));
 	connect(this, SIGNAL(accepted()), this, SLOT(handleInput()));
 }
@@ -79,7 +79,7 @@ void OpenAddressDialog::openUrl(const QUrl &url)
 
 void OpenAddressDialog::openSearch(const QString &query, const QString &engine)
 {
-	emit requestedSearch(query, engine);
+	emit requestedSearch(query, engine, NewTabOpen);
 
 	close();
 }

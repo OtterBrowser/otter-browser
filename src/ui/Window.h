@@ -96,10 +96,10 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
-	void handleSearchRequest(const QString &query, const QString &engine);
+	void handleSearchRequest(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
-	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
+	void handleOpenUrlRequest(const QUrl &url, OpenHints hints);
 
 private:
 	QWidget *m_navigationBar;
@@ -119,7 +119,7 @@ signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString engine);
+	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message);

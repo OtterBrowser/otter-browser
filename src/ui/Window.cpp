@@ -157,15 +157,15 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 	getContentsWidget()->triggerAction(action, checked);
 }
 
-void Window::handleSearchRequest(const QString &query, const QString &engine)
+void Window::handleSearchRequest(const QString &query, const QString &engine, OpenHints hints)
 {
-	if (getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && isUrlEmpty())
+	if ((getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && isUrlEmpty()) || (hints == DefaultOpen || hints == CurrentTabOpen))
 	{
 		search(query, engine);
 	}
 	else
 	{
-		emit requestedSearch(query, engine);
+		emit requestedSearch(query, engine, hints);
 	}
 }
 
@@ -179,8 +179,15 @@ void Window::notifyRequestedCloseWindow()
 	emit requestedCloseWindow(this);
 }
 
-void Window::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
+void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
 {
+	if (hints == DefaultOpen || hints == CurrentTabOpen)
+	{
+		setUrl(url);
+
+		return;
+	}
+
 	if (isPrivate())
 	{
 		hints |= PrivateOpen;
@@ -374,9 +381,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		layout()->addWidget(m_navigationBar);
 
 		connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_addressWidget, SLOT(setUrl(QUrl)));
-		connect(m_addressWidget, SIGNAL(requestedLoadUrl(QUrl)), this, SLOT(setUrl(QUrl)));
-		connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(search(QString,QString)));
-		connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(handleSearchRequest(QString,QString)));
+		connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+		connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 	}
 	else if (m_contentsWidget->getType() != QLatin1String("web") && m_navigationBar)
 	{

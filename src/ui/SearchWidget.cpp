@@ -45,6 +45,8 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
+	installEventFilter(this);
+
 	setEditable(true);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
@@ -259,7 +261,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString());
+		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? DefaultOpen : NewTabOpen));
 	}
 }
 
@@ -334,6 +336,33 @@ bool SearchWidget::setPlaceholderText(int index)
 	lineEdit()->setText(m_query);
 
 	return true;
+}
+
+bool SearchWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == this && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) && keyEvent->modifiers() & Qt::ShiftModifier)
+		{
+			const QString input = lineEdit()->text().trimmed();
+
+			if (!input.isEmpty())
+			{
+				m_query = input;
+			}
+
+			if (!m_query.isEmpty())
+			{
+				emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), NewTabOpen);
+			}
+
+			return true;
+		}
+	}
+
+	return QComboBox::eventFilter(object, event);
 }
 
 }

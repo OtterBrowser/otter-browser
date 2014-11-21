@@ -56,7 +56,7 @@ private:
 
 signals:
 	void requestedLoadUrl(QUrl url, OpenHints hints);
-	void requestedSearch(QString query, QString engine);
+	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 
 }
