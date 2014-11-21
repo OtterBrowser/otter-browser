@@ -260,6 +260,24 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
+
+	QString plugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString();
+	m_ui->pluginsComboBox->addItem(tr("Enabled"), "enabled");
+	m_ui->pluginsComboBox->addItem(tr("On Demand"), "onDemand");
+	m_ui->pluginsComboBox->addItem(tr("Disabled"), "disabled");
+	if (plugins == "disabled")
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(2);
+	}
+	else if (plugins == "onDemand")
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(1);
+	}
+	else
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(0);
+	}
+
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
@@ -1281,6 +1299,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());

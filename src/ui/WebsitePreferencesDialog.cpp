@@ -55,9 +55,25 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString())));
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
-	m_ui->enablePluginsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toBool());
-	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), url).toString());
+	
+	QString plugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString();
+	m_ui->pluginsComboBox->addItem(tr("Enabled"), "enabled");
+	m_ui->pluginsComboBox->addItem(tr("On Demand"), "onDemand");
+	m_ui->pluginsComboBox->addItem(tr("Disabled"), "disabled");
+	if (plugins == "disabled")
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(2);
+	}
+	else if (plugins == "onDemand")
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(1);
+	}
+	else
+	{
+		m_ui->pluginsComboBox->setCurrentIndex(0);
+	}
 
+	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), url).toString());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool());
@@ -130,7 +146,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Content/DefaultEncoding"), ((m_ui->encodingComboBox->currentIndex() == 0) ? QString() : m_ui->encodingComboBox->currentText()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->enablePluginsCheckBox->isChecked(), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString(), url);
 			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath(), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(), url);

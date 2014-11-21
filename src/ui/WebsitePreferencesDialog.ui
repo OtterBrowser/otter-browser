@@ -92,6 +92,13 @@
          </item>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="enableImagesCheckBox">
+         <property name="text">
+          <string>Enable images</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="enableJavaCheckBox">
          <property name="text">
@@ -100,44 +107,14 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QCheckBox" name="enablePluginsCheckBox">
+        <widget class="QLabel" name="pluginsLabel">
          <property name="text">
-          <string>Enable plugins</string>
+          <string>Plugins:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <layout class="QHBoxLayout" name="enablePluginsLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="enablePluginsOnlyOnDemandCheckBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Enable plugins only on demand</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="pluginsComboBox"/>
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="userStyleSheetLabel">
@@ -148,13 +125,6 @@
        </item>
        <item row="6" column="1">
         <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="enableImagesCheckBox">
-         <property name="text">
-          <string>Enable images</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -246,16 +216,7 @@
          <item>
           <widget class="QWidget" name="cookiesWidget" native="true">
            <layout class="QFormLayout" name="cookiesLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item row="0" column="0">
@@ -578,16 +539,7 @@
               <bool>false</bool>
              </property>
              <layout class="QGridLayout" name="manualProxyConfigurationLayout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item row="2" column="1">
@@ -733,16 +685,7 @@
               <bool>false</bool>
              </property>
              <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -811,8 +754,7 @@
   <tabstop>popupsComboBox</tabstop>
   <tabstop>enableImagesCheckBox</tabstop>
   <tabstop>enableJavaCheckBox</tabstop>
-  <tabstop>enablePluginsCheckBox</tabstop>
-  <tabstop>enablePluginsOnlyOnDemandCheckBox</tabstop>
+  <tabstop>pluginsComboBox</tabstop>
   <tabstop>doNotTrackComboBox</tabstop>
   <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
   <tabstop>acceptCookiesCheckBox</tabstop>
@@ -845,6 +787,7 @@
   <tabstop>socksProxyCheckBox</tabstop>
   <tabstop>socksProxyServersLineEdit</tabstop>
   <tabstop>socksProxyPortSpinBox</tabstop>
+  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
