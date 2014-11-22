@@ -26,12 +26,11 @@
 #include <QtCore/QUrl>
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebPage>
-#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
-class LoadPluginWidget : public QToolButton
+class LoadPluginWidget : public QWidget
 {
 	Q_OBJECT
 	Q_PROPERTY(bool isSwapping READ isSwapping)
@@ -43,8 +42,15 @@ public:
 public slots:
 	void loadPlugin();
 
+protected:
+	void paintEvent(QPaintEvent *event);
+	void enterEvent(QEvent *event);
+	void leaveEvent(QEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+
 private:
 	QWebPage *m_page;
+	bool m_isHovered;
 	bool m_isSwapping;
 
 signals:

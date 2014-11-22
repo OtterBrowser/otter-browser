@@ -28,15 +28,77 @@
 namespace Otter
 {
 
-LoadPluginWidget::LoadPluginWidget(QWebPage *page, const QString &mimeType, const QUrl &url, QWidget *parent) : QToolButton(parent),
+LoadPluginWidget::LoadPluginWidget(QWebPage *page, const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
 	m_page(page),
+	m_isHovered(false),
 	m_isSwapping(false)
 {
-	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	setText(tr("Load plugin (%1)").arg(mimeType));
-	setToolTip(tr("Load plugin (%1) from %2").arg(mimeType).arg(url.toDisplayString()));
+	setToolTip(tr("Click to load content (%1) handled by plugin from: %2").arg(mimeType).arg(url.toDisplayString()));
+}
 
-	connect(this, SIGNAL(clicked()), this, SLOT(loadPlugin()));
+void LoadPluginWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	int size = 0;
+
+	if (width() > height())
+	{
+		size = height();
+	}
+	else
+	{
+		size = width();
+	}
+
+	const QRect rectangle(((width() - size) / 2), ((height() - size) / 2), size, size);
+
+	QPainter painter(this);
+	painter.setRenderHints(QPainter::Antialiasing);
+	painter.fillRect(rect(), Qt::transparent);
+
+	if (m_isHovered)
+	{
+		painter.setPen(QColor(215, 215, 215));
+		painter.drawRect(rect());
+	}
+
+	painter.setBrush(QColor(215, 215, 215));
+	painter.setPen(Qt::transparent);
+	painter.drawEllipse(rectangle);
+
+	QPainterPath path;
+	path.moveTo(rectangle.topLeft() + QPoint((size / 3), (size / 4)));
+	path.lineTo(rectangle.topLeft() + QPoint(((size / 4) * 3), (size / 2)));
+	path.lineTo(rectangle.topLeft() + QPoint((size / 3), ((size / 4) * 3)));
+	path.lineTo(rectangle.topLeft() + QPoint((size / 3), (size / 4)));
+
+	painter.fillPath(path, QColor(255, 255, 255));
+}
+
+void LoadPluginWidget::enterEvent(QEvent *event)
+{
+	QWidget::enterEvent(event);
+
+	m_isHovered = true;
+
+	update();
+}
+
+void LoadPluginWidget::leaveEvent(QEvent *event)
+{
+	QWidget::leaveEvent(event);
+
+	m_isHovered = false;
+
+	update();
+}
+
+void LoadPluginWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+
+	loadPlugin();
 }
 
 void LoadPluginWidget::loadPlugin()
