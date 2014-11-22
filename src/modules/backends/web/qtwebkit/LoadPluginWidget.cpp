@@ -22,6 +22,7 @@
 
 #include "LoadPluginWidget.h"
 
+#include <QtGui/QMouseEvent>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKitWidgets/QWebView>
 
@@ -98,7 +99,12 @@ void LoadPluginWidget::mousePressEvent(QMouseEvent *event)
 {
 	QWidget::mousePressEvent(event);
 
-	loadPlugin();
+	if (event->button() == Qt::LeftButton)
+	{
+		loadPlugin();
+
+		event->accept();
+	}
 }
 
 void LoadPluginWidget::loadPlugin()
