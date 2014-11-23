@@ -288,7 +288,7 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		QAction *enablePluginsAction = menu.addAction(tr("Enable Plugins"));
 		enablePluginsAction->setCheckable(true);
-		enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toBool());
+		enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString() == QLatin1String("enabled"));
 		enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
 
 		menu.addSeparator();
@@ -314,7 +314,14 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		if (triggeredAction && triggeredAction->data().isValid())
 		{
-			m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
+			if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
+			{
+				m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
+			}
+			else
+			{
+				m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
+			}
 		}
 
 		m_isTabPreferencesMenuVisible = false;
