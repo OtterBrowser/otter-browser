@@ -925,13 +925,13 @@ Haluatko silti avata tämän istunnon?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 pikseliä @ %3 bittiä pikseliä kohti %n freimissä</numerusform><numerusform>%1 x %2 pikseliä @ %3 bittiä pikseliä kohti %n freimissä</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pikseliä @ %3 bittiä pikseliä kohti</translation>
     </message>
 </context>
 <context>
@@ -3330,7 +3330,7 @@ Valitse uusi sijainti.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Show Sidebar</source>
-        <translation>Näytä paneeli</translation>
+        <translation>Näytä sivupalkki</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>

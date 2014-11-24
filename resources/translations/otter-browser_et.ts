@@ -1838,7 +1838,7 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1665"/>
         <source>Use system authentication</source>
-        <translation>Kasuta süsteemi tuvastus</translation>
+        <translation>Kasuta süsteemi tuvastust</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1695"/>
@@ -2321,7 +2321,7 @@ Kas tahad üle kirjutada?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="107"/>
         <source>Results Query</source>
-        <translation type="unfinished"/>
+        <translation>Tulemuste päring</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="115"/>
@@ -2333,13 +2333,13 @@ Kas tahad üle kirjutada?</translation>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="128"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="239"/>
         <source>Query:</source>
-        <translation type="unfinished"/>
+        <translation>Päring:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="143"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="251"/>
         <source>POST Method</source>
-        <translation type="unfinished"/>
+        <translation>POST meetod</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="184"/>

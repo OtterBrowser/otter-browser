@@ -1262,7 +1262,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="17"/>
         <source>Preferences</source>
-        <translation>優先</translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
@@ -1428,7 +1428,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
         <source>Default zoom:</source>
-        <translation>拡大率をデフォルトに:</translation>
+        <translation>標準の拡大率:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
@@ -1438,7 +1438,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
         <source>Zoom text only</source>
-        <translation>テキストのみを編集</translation>
+        <translation>テキストのみを拡大、縮小させる</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
@@ -1526,7 +1526,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="680"/>
         <source>Do not inform websites about my preference</source>
-        <translation>好みのウェブサイトを通知しない</translation>
+        <translation>任意のウェブサイトを通知しない</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
@@ -1703,7 +1703,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
         <source>Advanced</source>
-        <translation>高度な</translation>
+        <translation>詳細設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
@@ -1728,22 +1728,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
         <source>Suggestions</source>
-        <translation>提案</translation>
+        <translation>候補の表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
         <source>Suggest bookmarks</source>
-        <translation>提案ブックマーク</translation>
+        <translation>ブックマーク候補を表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
         <source>Suggest history</source>
-        <translation>提案履歴</translation>
+        <translation>履歴の候補を表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
         <source>Suggest search results</source>
-        <translation>検索結果の提案</translation>
+        <translation>検索結果の候補を表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
@@ -1961,12 +1961,12 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Select Identifier</source>
-        <translation>識別子を選択</translation>
+        <translation>処理を選択</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
         <source>Enter Unique Search Engine Identifier:</source>
-        <translation>検索エンジンのユニークな識別子を入力してください：</translation>
+        <translation>検索エンジンのユニークな処理を入力してください：</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
@@ -2004,12 +2004,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
         <source>Identifier</source>
-        <translation>識別子</translation>
+        <translation>処理</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
         <source>Enter Unique Profile Identifier:</source>
-        <translation>ユニークプロファイルの識別子を入力してください：</translation>
+        <translation>ユニークプロファイルの処理を入力してください：</translation>
     </message>
 </context>
 <context>
@@ -2256,7 +2256,7 @@ Address: %2</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation>セッションの識別子:</translation>
+        <translation>セッションの処理:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
@@ -2272,7 +2272,7 @@ Address: %2</source>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation>指定された識別子とのセッションは既に存在します。
+        <translation>指定された処理とのセッションは既に存在します。
 あなたは、それを上書きしますか？</translation>
     </message>
     <message>
@@ -2362,7 +2362,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
         <source>Suggestions Query</source>
-        <translation>提案クエリ</translation>
+        <translation>候補クエリ</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="95"/>
@@ -2435,7 +2435,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
         <source>Identifier</source>
-        <translation>識別子</translation>
+        <translation>処理</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
@@ -2570,12 +2570,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Select Identifier</source>
-        <translation>識別子を選択</translation>
+        <translation>処理を選択</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="144"/>
         <source>Enter Unique Macro Identifier:</source>
-        <translation>マクロのユニーク識別子を入力してください：</translation>
+        <translation>マクロのユニーク処理を入力してください：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="179"/>
@@ -2613,7 +2613,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="197"/>
         <source>Transfers</source>
-        <translation>転送</translation>
+        <translation>ダウンロード</translation>
     </message>
 </context>
 <context>
@@ -2799,7 +2799,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
-        <translation>この転送はまだ実行されています。
+        <translation>このダウンロードはまだ実行されています。
 本当に削除しますか？</translation>
     </message>
     <message>
@@ -2841,7 +2841,7 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="377"/>
         <source>Copy Transfer Information</source>
-        <translation>コピー転送情報</translation>
+        <translation>ダウンロード情報をコピー</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
@@ -2851,12 +2851,12 @@ Progress: %5&lt;/pre&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
         <source>Clear Finished Transfers</source>
-        <translation>仕上がり転送</translation>
+        <translation>ダウンロードをクリア</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="533"/>
         <source>Transfers Manager</source>
-        <translation>転送管理</translation>
+        <translation>ダウンロードマネージャー</translation>
     </message>
 </context>
 <context>
@@ -2905,7 +2905,7 @@ Do you want to overwrite it?
         <location filename="../../src/core/TransfersManager.cpp" line="554"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
-        <translation>ターゲットのパスは、すでに別の転送で使用されています。
+        <translation>ターゲットのパスは、すでに別のダウンロードで使用されています。
 別のものを選択してください。</translation>
     </message>
     <message>
@@ -2942,7 +2942,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
         <source>Transfers</source>
-        <translation>転送</translation>
+        <translation>ダウンロード</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
@@ -3375,7 +3375,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Transfers...</source>
-        <translation>転送</translation>
+        <translation>ダウンロード...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
@@ -3395,7 +3395,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation>優先</translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
@@ -3523,7 +3523,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Website Preferences...</source>
-        <translation>WEBサイトを優先...</translation>
+        <translation>WEBサイトの設定...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>

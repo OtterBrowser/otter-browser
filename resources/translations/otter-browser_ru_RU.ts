@@ -4,12 +4,12 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="421"/>
         <source>Remove Bookmark</source>
-        <translation>Удалить закладку</translation>
+        <translation>Удалить из закладок</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="421"/>
         <source>Add Bookmark</source>
-        <translation>Добавить закладку</translation>
+        <translation>Добавить в закладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="511"/>
@@ -260,7 +260,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="263"/>
         <source>Remove Bookmark</source>
-        <translation>Удалить закладку</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="267"/>
@@ -920,18 +920,18 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation>%1 &lt;numerusform&gt;байт&lt;/numerusform&gt;&lt;numerusform&gt;байта&lt;/numerusform&gt;&lt;numerusform&gt;байтов&lt;/numerusform&gt;</translation>
+        <translation>%1 Б.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадре</numerusform><numerusform>%1 x %2 пикселей @ %3 битов на пиксель в %n кадрах</numerusform><numerusform>%1 x %2 &lt;numerusform&gt;пиксель&lt;/numerusform&gt;&lt;numerusform&gt;пикселя&lt;/numerusform&gt;&lt;numerusform&gt;пикселей&lt;/numerusform&gt; @ %3 &lt;numerusform&gt;бит&lt;/numerusform&gt;&lt;numerusform&gt;бита&lt;/numerusform&gt;&lt;numerusform&gt;бит&lt;/numerusform&gt; на пиксель в %n &lt;numerusform&gt;кадре&lt;/numerusform&gt;&lt;numerusform&gt;кадрах&lt;/numerusform&gt;&lt;numerusform&gt;кадрах&lt;/numerusform&gt;</numerusform></translation>
+        <translation><numerusform>%1 x %2 пиксель @ %3 битов на пиксель в %n кадре</numerusform><numerusform>%1 x %2 пикселя @ %3 битов на пиксель в %n кадрах</numerusform><numerusform>%1 x %2 пиксели @ %3 бит на пиксель в %n кадре</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="96"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="101"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
-        <translation>%1 x %2 &lt;numerusform&gt;пиксель&lt;/numerusform&gt;&lt;numerusform&gt;пикселя&lt;/numerusform&gt;&lt;numerusform&gt;пикселей&lt;/numerusform&gt; @ %3 &lt;numerusform&gt;бит&lt;/numerusform&gt;&lt;numerusform&gt;бита&lt;/numerusform&gt;&lt;numerusform&gt;бит&lt;/numerusform&gt; на пиксель</translation>
+        <translation>%1 x %2 пикс. @ %3 бит на пиксель</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1040,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="309"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Вы выходите во время загрузки %n файла.</numerusform><numerusform>Вы выходите во время загрузки %n файлов.</numerusform><numerusform>Вы выходите во время загрузки %n &lt;numerusform&gt;файл&lt;/numerusform&gt;&lt;numerusform&gt;файла&lt;/numerusform&gt;&lt;numerusform&gt;файлов&lt;/numerusform&gt;.</numerusform></translation>
+        <translation><numerusform>Вы выходите во время загрузки %n файла.</numerusform><numerusform>Вы выходите во время загрузки %n файлов.</numerusform><numerusform>Вы выходите во время загрузки %n файла.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="310"/>
@@ -1106,7 +1106,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/ui/MainWindow.cpp" line="780"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n закладка)</numerusform><numerusform>%1 (%n закладки)</numerusform><numerusform>%1 (%n &lt;numerusform&gt;закладок&lt;/numerusform&gt;&lt;numerusform&gt;закладка&lt;/numerusform&gt;&lt;numerusform&gt;закладки&lt;/numerusform&gt;)</numerusform></translation>
+        <translation><numerusform>%1 (%n закладка)</numerusform><numerusform>%1 (%n закладки)</numerusform><numerusform>%1 (%n закладок)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="811"/>
@@ -1402,7 +1402,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
         <source>Pop-ups:</source>
-        <translation>Всплывающие:</translation>
+        <translation>Всплывающие окна:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
@@ -1926,7 +1926,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>Служба поиска</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
@@ -2926,12 +2926,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
         <source>New Tab</source>
-        <translation>Новая вкладка</translation>
+        <translation>Создать вкладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>New Private Tab</source>
-        <translation>Новая приватная вкладка</translation>
+        <translation>Создать приватную вкладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
@@ -3167,22 +3167,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="42"/>
         <source>New Tab</source>
-        <translation>Новая вкладка</translation>
+        <translation>Создать вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="43"/>
         <source>New Private Tab</source>
-        <translation>Новая приватная вкладка</translation>
+        <translation>Создать приватную вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>New Window</source>
-        <translation>Новое окно</translation>
+        <translation>Создать окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>New Private Window</source>
-        <translation>Новое приватное окно</translation>
+        <translation>Создать приватное окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="46"/>
@@ -3202,7 +3202,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>Save Current Session...</source>
-        <translation>Сохранить текущий сеанс...</translation>
+        <translation>Сохранить этот сеанс...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="50"/>
@@ -3257,7 +3257,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Paste</source>
-        <translation>Вставаить</translation>
+        <translation>Вставить</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
@@ -3277,7 +3277,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Find Next</source>
-        <translation>Найти далее</translation>
+        <translation>Найти следующее</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="65"/>
@@ -3364,7 +3364,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Add Bookmark...</source>
-        <translation>Добавить закладку...</translation>
+        <translation>Создать закладку страницы...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="82"/>
@@ -3379,7 +3379,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="84"/>
         <source>Cookies...</source>
-        <translation>Cookies...</translation>
+        <translation>Управление cookies...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
@@ -3394,7 +3394,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Preferences...</source>
-        <translation>Настройки...</translation>
+        <translation>Общие настройки...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>

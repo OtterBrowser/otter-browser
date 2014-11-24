@@ -37,7 +37,7 @@ Ste si istý, že aj tak chete túto reláciu obnoviť?</translation>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="14"/>
         <source>Authentication Required</source>
-        <translation>Požadované overenie</translation>
+        <translation>Overenie požadované</translation>
     </message>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="22"/>
