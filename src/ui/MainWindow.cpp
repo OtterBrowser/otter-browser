@@ -1158,6 +1158,12 @@ void MainWindow::updateWindowTitle(const QString &title)
 MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
 	MainWindow *window = NULL;
+	QWidget *widget = qobject_cast<QWidget*>(parent);
+
+	if (widget && widget->window())
+	{
+		parent = widget->window();
+	}
 
 	while (parent)
 	{
