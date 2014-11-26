@@ -40,6 +40,8 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 {
 	Q_UNUSED(isPrivate)
 
+	setStyleSheet("border-top: 1px solid palette(midlight); border-bottom: 1px solid palette(midlight)");
+
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
