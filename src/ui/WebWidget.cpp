@@ -539,4 +539,9 @@ int WebWidget::getReloadTime() const
 	return m_reloadTime;
 }
 
+bool WebWidget::hasOption(const QString &key) const
+{
+	return m_options.contains(key);
+}
+
 }

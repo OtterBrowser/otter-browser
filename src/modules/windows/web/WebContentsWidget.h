@@ -47,7 +47,6 @@ public:
 	QAction* getAction(ActionIdentifier action);
 	QUndoStack* getUndoStack();
 	WebWidget* getWebWidget();
-	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getStatusMessage() const;
 	QLatin1String getType() const;
@@ -68,7 +67,6 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setUserAgent(const QString &identifier, const QString &value);
-	void setDefaultCharacterEncoding(const QString &encoding);
 	void setHistory(const WindowHistoryInformation &history);
 	void setReloadTime(int time);
 	void setZoom(int zoom);

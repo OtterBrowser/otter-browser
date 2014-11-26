@@ -570,7 +570,7 @@ void MainWindow::actionCharacterEncoding(QAction *action)
 		}
 	}
 
-	m_windowsManager->setDefaultCharacterEncoding(encoding.toLower());
+	m_windowsManager->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
 }
 
 void MainWindow::actionClearClosedWindows()
@@ -896,7 +896,7 @@ void MainWindow::menuCharacterEncodingAboutToShow()
 		}
 	}
 
-	const QString encoding = m_windowsManager->getDefaultCharacterEncoding().toLower();
+	const QString encoding = m_windowsManager->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower();
 
 	for (int i = 2; i < characterEncodignMenu->actions().count(); ++i)
 	{

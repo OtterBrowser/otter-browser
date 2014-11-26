@@ -484,7 +484,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
-	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultEncoding"), url).toString());
+	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
 
 	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
@@ -1111,12 +1111,6 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 }
 
-void QtWebKitWebWidget::setDefaultCharacterEncoding(const QString &encoding)
-{
-	m_webView->settings()->setDefaultTextEncoding(encoding);
-	m_webView->reload();
-}
-
 void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
 {
 	m_page->setUserAgent(identifier, value);
@@ -1248,6 +1242,11 @@ void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 	WebWidget::setOption(key, value);
 
 	updateOptions(getUrl());
+
+	if (key == QLatin1String("Content/DefaultCharacterEncoding"))
+	{
+		m_webView->reload();
+	}
 }
 
 void QtWebKitWebWidget::setOptions(const QVariantHash &options)
@@ -1263,7 +1262,6 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setNetworkManager(m_networkManager->clone(NULL));
 	widget->setOptions(getOptions());
-	widget->setDefaultCharacterEncoding(getDefaultCharacterEncoding());
 	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setReloadTime(getReloadTime());
@@ -1532,11 +1530,6 @@ QUndoStack* QtWebKitWebWidget::getUndoStack()
 QWebPage* QtWebKitWebWidget::getPage()
 {
 	return m_webView->page();
-}
-
-QString QtWebKitWebWidget::getDefaultCharacterEncoding() const
-{
-	return m_webView->settings()->defaultTextEncoding();
 }
 
 QString QtWebKitWebWidget::getTitle() const

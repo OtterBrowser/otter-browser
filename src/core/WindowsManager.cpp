@@ -620,13 +620,13 @@ void WindowsManager::removeStoredUrl(const QString &url)
 	}
 }
 
-void WindowsManager::setDefaultCharacterEncoding(const QString &encoding)
+void WindowsManager::setOption(const QString &key, const QVariant &value)
 {
 	Window *window = m_mdi->getActiveWindow();
 
 	if (window)
 	{
-		window->setDefaultCharacterEncoding(encoding);
+		window->setOption(key, value);
 	}
 }
 
@@ -753,11 +753,11 @@ Window* WindowsManager::getWindow(int index) const
 	return ((index >= m_tabBar->count()) ? NULL : qvariant_cast<Window*>(m_tabBar->tabData(index)));
 }
 
-QString WindowsManager::getDefaultCharacterEncoding() const
+QVariant WindowsManager::getOption(const QString &key) const
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	return (window ? window->getDefaultCharacterEncoding() : QString());
+	return (window ? window->getOption(key) : QVariant());
 }
 
 QString WindowsManager::getTitle() const

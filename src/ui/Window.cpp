@@ -27,6 +27,7 @@
 #include "../core/SettingsManager.h"
 #include "../core/WebBackend.h"
 #include "../core/WebBackendsManager.h"
+#include "../ui/WebWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
@@ -209,7 +210,7 @@ void Window::setSession(const SessionWindow &session)
 	}
 }
 
-void Window::setDefaultCharacterEncoding(const QString &encoding)
+void Window::setOption(const QString &key, const QVariant &value)
 {
 	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
@@ -217,7 +218,7 @@ void Window::setDefaultCharacterEncoding(const QString &encoding)
 
 		if (webWidget)
 		{
-			return webWidget->setDefaultCharacterEncoding(encoding);
+			webWidget->getWebWidget()->setOption(key, value);
 		}
 	}
 }
@@ -493,19 +494,19 @@ ContentsWidget* Window::getContentsWidget()
 	return m_contentsWidget;
 }
 
-QString Window::getDefaultCharacterEncoding() const
+QVariant Window::getOption(const QString &key) const
 {
 	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
 	{
 		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
-		if (webWidget)
+		if (webWidget && webWidget->getWebWidget()->hasOption(key))
 		{
-			return webWidget->getDefaultCharacterEncoding();
+			return webWidget->getWebWidget()->getOption(key);
 		}
 	}
 
-	return QString();
+	return QVariant();
 }
 
 QString Window::getSearchEngine() const

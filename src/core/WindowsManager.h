@@ -63,7 +63,7 @@ public:
 
 	QAction* getAction(ActionIdentifier action);
 	Window* getWindow(int index) const;
-	QString getDefaultCharacterEncoding() const;
+	QVariant getOption(const QString &key) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
@@ -90,7 +90,7 @@ public slots:
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void clearClosedWindows();
 	void setActiveWindow(int index);
-	void setDefaultCharacterEncoding(const QString &encoding);
+	void setOption(const QString &key, const QVariant &value);
 	void setUserAgent(const QString &identifier);
 	void setZoom(int zoom);
 

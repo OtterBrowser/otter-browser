@@ -72,7 +72,6 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setOption(const QString &key, const QVariant &value);
-	void setDefaultCharacterEncoding(const QString &encoding);
 	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);

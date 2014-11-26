@@ -73,7 +73,6 @@ public:
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString getQuickSearchEngine() const;
-	virtual QString getDefaultCharacterEncoding() const = 0;
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
@@ -91,6 +90,7 @@ public:
 	virtual QPair<QString, QString> getUserAgent() const = 0;
 	virtual int getReloadTime() const;
 	virtual int getZoom() const = 0;
+	bool hasOption(const QString &key) const;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
 	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
@@ -101,7 +101,6 @@ public slots:
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
-	virtual void setDefaultCharacterEncoding(const QString &encoding) = 0;
 	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setReloadTime(int time);
