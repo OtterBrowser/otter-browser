@@ -1843,7 +1843,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			QString link = result.linkUrl().toString();
 			QString text;
 
-			if (link.isEmpty() && result.element().tagName().toLower() == QLatin1String("input") && (result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
+			if (link.isEmpty() && (result.element().tagName().toLower() == QLatin1String("input") || result.element().tagName().toLower() == QLatin1String("button")) && (result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
 			{
 				QWebElement parentElement = result.element().parent();
 
@@ -1862,29 +1862,31 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (toolTipsMode != QLatin1String("disabled"))
 			{
+				const QString title = result.title().replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
+
 				if (toolTipsMode == QLatin1String("extended"))
 				{
 					if (!link.isEmpty())
 					{
-						text = (result.title().isEmpty() ? tr("Address: %1").arg(link) : tr("Title: %1\nAddress: %2").arg(result.title()).arg(link));
+						text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link);
 					}
-					else if (!result.title().isEmpty())
+					else if (!title.isEmpty())
 					{
-						text = result.title();
+						text = title;
 					}
 				}
 				else
 				{
-					text = result.title();
+					text = title;
 				}
 			}
 
+			setStatusMessage((link.isEmpty() ? result.title() : link), true);
+
 			if (!text.isEmpty())
 			{
-				QToolTip::showText(position, text, m_webView);
+				QToolTip::showText(position, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
 			}
-
-			setStatusMessage(link, true);
 
 			event->accept();
 
