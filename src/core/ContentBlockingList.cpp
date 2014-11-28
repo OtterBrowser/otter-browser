@@ -32,6 +32,8 @@
 namespace Otter
 {
 
+NetworkManager* ContentBlockingList::m_networkManager = NULL;
+
 ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
 	m_daysToExpire(4),
 	m_isUpdated(false),
@@ -446,18 +448,39 @@ void ContentBlockingList::deleteNode(Node *node)
 
 void ContentBlockingList::downloadUpdate()
 {
-	connect(&m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateDownloaded(QNetworkReply*)));
+	if (!m_networkManager)
+	{
+		m_networkManager = new NetworkManager(true, true, NULL);
+	}
+
+	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateDownloaded(QNetworkReply*)));
 
 	QNetworkRequest request(m_updateUrl);
 
-	m_networkManager.get(request);
+	m_networkReply = m_networkManager->get(request);
 }
 
 void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 {
+	if (m_networkReply != reply)
+	{
+		return;
+	}
+
 	const QByteArray downloadedDataHeader = reply->readLine();
 	const QByteArray downloadedDataChecksum = reply->readLine();
 	const QByteArray downloadedData = reply->readAll();
+
+	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0.\nError: %1").arg(m_fullFilePath).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
+
+		reply->deleteLater();
+
+		return;
+	}
+
+	reply->deleteLater();
 
 	if (downloadedDataChecksum.contains(QByteArray("! Checksum: ")))
 	{
@@ -470,15 +493,6 @@ void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 			return;
 		}
 	}
-
-	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
-	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0.\nError: %1").arg(m_fullFilePath).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
-
-		return;
-	}
-
-	reply->deleteLater();
 
 	QFile ruleFile(m_fullFilePath);
 

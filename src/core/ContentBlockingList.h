@@ -121,14 +121,16 @@ private:
 	QString m_cssHidingRules;
 	QUrl m_baseUrl;
 	QUrl m_updateUrl;
-	NetworkManager m_networkManager;
 	QMultiHash<QString, QString> m_cssSpecificDomainHidingRules;
 	QMultiHash<QString, QString> m_cssHidingRulesExceptions;
 	QRegularExpression m_domainExpression;
 	QStringList m_requestSubdomainList;
+	QNetworkReply *m_networkReply;
 	int m_daysToExpire;
 	bool m_isUpdated;
 	bool m_isEnabled;
+
+	static NetworkManager *m_networkManager;
 
 signals:
 	void updateCustomStyleSheets();
