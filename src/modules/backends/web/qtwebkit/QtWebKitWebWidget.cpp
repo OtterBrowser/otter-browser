@@ -2007,9 +2007,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						tagName != QLatin1String("a")) {
 
 						scrollStart();
-					}
 
-					return true;
+						return true;
+					}
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton)
