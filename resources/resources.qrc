@@ -18,6 +18,15 @@
         <file>adblock/latvian-list.txt</file>
         <file>adblock/liste_ar.txt</file>
         <file>adblock/liste_fr.txt</file>
+        <file>cursors/scroll_bottom.png</file>
+        <file>cursors/scroll_bottom_left.png</file>
+        <file>cursors/scroll_bottom_right.png</file>
+        <file>cursors/scroll_left.png</file>
+        <file>cursors/scroll_middle.png</file>
+        <file>cursors/scroll_right.png</file>
+        <file>cursors/scroll_top.png</file>
+        <file>cursors/scroll_top_left.png</file>
+        <file>cursors/scroll_top_right.png</file>
         <file>icons/application-exit.png</file>
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-left.png</file>
@@ -106,7 +115,7 @@
         <file>macros/default.ini</file>
         <file>macros/platform.ini</file>
         <file>other/adblock.ini</file>
-		<file>other/menuBar.json</file>
+        <file>other/menuBar.json</file>
         <file>other/userAgents.ini</file>
         <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>

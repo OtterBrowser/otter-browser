@@ -39,6 +39,7 @@
 #include "../../../../ui/SearchPropertiesDialog.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
+#include <QtCore/qmath.h>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
@@ -74,7 +75,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
 	m_isReloading(false),
-	m_isTyped(false)
+	m_isTyped(false),
+	m_isInScroll(false),
+	m_scrollTimer(0)
 {
 	m_splitter->addWidget(m_webView);
 	m_splitter->setChildrenCollapsible(false);
@@ -150,6 +153,45 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
+}
+
+void QtWebKitWebWidget::keyPressEvent(QKeyEvent *event)
+{
+	WebWidget::keyPressEvent(event);
+
+	if (m_isInScroll)
+	{
+		scrollStop();
+
+		m_isInScroll = false;
+	}
+}
+
+void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
+{
+	WebWidget::mousePressEvent(event);
+
+	if (m_isInScroll)
+	{
+		scrollStop();
+
+		// m_isInScroll variable uses only in keyPressEvent and
+		// wheelEvent methods because we will block showing of
+		// the context menu after mouse release event.
+		// See MouseButtonRelease event in eventFilter method
+	}
+}
+
+void QtWebKitWebWidget::wheelEvent(QWheelEvent *event)
+{
+	WebWidget::wheelEvent(event);
+
+	if (m_isInScroll)
+	{
+		scrollStop();
+
+		m_isInScroll = false;
+	}
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
@@ -1956,6 +1998,19 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					return true;
 				}
+				else if (!m_isInScroll && SettingsManager::getValue(QLatin1String("Browser/AutoScroll")).toBool())
+				{
+					const QString tagName = result.element().tagName().toLower();
+
+					if (tagName != QLatin1String("textarea") &&
+						tagName != QLatin1String("input") &&
+						tagName != QLatin1String("a")) {
+
+						scrollStart();
+					}
+
+					return true;
+				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton)
 			{
@@ -1989,7 +2044,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent->button() == Qt::MidButton)
+			if (m_isInScroll)
+			{
+				// Disable showing of the context menu after first
+				// mouse release event after scroll ending
+				m_isInScroll = false;
+
+				return true;
+			}
+			else if (mouseEvent->button() == Qt::MidButton)
 			{
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
@@ -2032,15 +2095,24 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::Wheel)
 		{
-			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-
-			if (wheelEvent->modifiers() & Qt::CTRL)
+			if (m_isInScroll)
 			{
-				setZoom(getZoom() + (wheelEvent->delta() / 16));
-
-				event->accept();
+				scrollStop();
 
 				return true;
+			}
+			else
+			{
+				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+				if (wheelEvent->modifiers() & Qt::CTRL)
+				{
+					setZoom(getZoom() + (wheelEvent->delta() / 16));
+
+					event->accept();
+
+					return true;
+				}
 			}
 
 		}
@@ -2066,6 +2138,109 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 
 	return QObject::eventFilter(object, event);
+}
+
+void QtWebKitWebWidget::scrollStart()
+{
+	// Store start scrolling position
+	QPoint pos = QCursor::pos();
+
+	m_scrollStartX = pos.x();
+	m_scrollStartY = pos.y();
+
+	grabKeyboard();
+	grabMouse();
+
+	// Cache cursors for fast switching
+	m_scrollCursors[SCROLL_CURSOR_TOP]          = QPixmap(":/cursors/scroll_top.png");
+	m_scrollCursors[SCROLL_CURSOR_TOP_RIGHT]    = QPixmap(":/cursors/scroll_top_right.png");
+	m_scrollCursors[SCROLL_CURSOR_RIGHT]        = QPixmap(":/cursors/scroll_right.png");
+	m_scrollCursors[SCROLL_CURSOR_BOTTOM_RIGHT] = QPixmap(":/cursors/scroll_bottom_right.png");
+	m_scrollCursors[SCROLL_CURSOR_BOTTOM]       = QPixmap(":/cursors/scroll_bottom.png");
+	m_scrollCursors[SCROLL_CURSOR_BOTTOM_LEFT]  = QPixmap(":/cursors/scroll_bottom_left.png");
+	m_scrollCursors[SCROLL_CURSOR_LEFT]         = QPixmap(":/cursors/scroll_left.png");
+	m_scrollCursors[SCROLL_CURSOR_TOP_LEFT]     = QPixmap(":/cursors/scroll_top_left.png");
+	m_scrollCursors[SCROLL_CURSOR_MIDDLE]       = QPixmap(":/cursors/scroll_middle.png");
+
+	QApplication::setOverrideCursor(m_scrollCursors.value(SCROLL_CURSOR_MIDDLE));
+
+	m_scrollTimer = startTimer(10);
+
+	m_isInScroll = true;
+}
+
+void QtWebKitWebWidget::scrollStop()
+{
+	killTimer(m_scrollTimer);
+	m_scrollTimer = 0;
+
+	releaseKeyboard();
+	releaseMouse();
+
+	QApplication::restoreOverrideCursor();
+
+	// Clear cursors cache
+	m_scrollCursors.clear();
+}
+
+void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_scrollTimer)
+	{
+		// Since this function is called many times per second,
+		// we use active caching of data in the variables to reduce
+		// the number of function calls and creating cursors
+		// from resources on the fly
+		QPoint pos = QCursor::pos();
+
+		int currX = pos.x();
+		int currY = pos.y();
+
+		if (currX > m_scrollStartX + SCROLL_FACTOR && currY > m_scrollStartY + SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_BOTTOM_RIGHT]);
+		}
+		else if (currX < m_scrollStartX - SCROLL_FACTOR && currY > m_scrollStartY + SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_BOTTOM_LEFT]);
+		}
+		else if (currX > m_scrollStartX + SCROLL_FACTOR && currY < m_scrollStartY - SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_TOP_RIGHT]);
+		}
+		else if (currX < m_scrollStartX - SCROLL_FACTOR && currY < m_scrollStartY - SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_TOP_LEFT]);
+		}
+		else if (currY > m_scrollStartY + SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_BOTTOM]);
+		}
+		else if (currY < m_scrollStartY - SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_TOP]);
+		}
+		else if (currX < m_scrollStartX - SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_LEFT]);
+		}
+		else if (currX > m_scrollStartX + SCROLL_FACTOR)
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_RIGHT]);
+		}
+		else
+		{
+			QApplication::changeOverrideCursor(m_scrollCursors[SCROLL_CURSOR_MIDDLE]);
+		}
+
+		int scrollDeltaX = qFloor((currX - m_scrollStartX) / SCROLL_FACTOR);
+		int scrollDeltaY = qFloor((currY - m_scrollStartY) / SCROLL_FACTOR);
+
+		QPoint currPos = m_webView->page()->mainFrame()->scrollPosition();
+		QPoint newPos = QPoint(currPos.x() + scrollDeltaX, currPos.y() + scrollDeltaY);
+
+		m_webView->page()->mainFrame()->setScrollPosition(newPos);
+	}
 }
 
 }
