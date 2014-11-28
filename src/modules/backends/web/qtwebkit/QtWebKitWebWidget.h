@@ -83,6 +83,7 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
+	void setHistory(QDataStream &stream);
 	void setNetworkManager(NetworkManager *manager);
 	void setOptions(const QVariantHash &options);
 	QWebPage* getPage();

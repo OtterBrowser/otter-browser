@@ -1162,6 +1162,14 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 }
 
+void QtWebKitWebWidget::setHistory(QDataStream &stream)
+{
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+
+	updateOptions(m_webView->page()->history()->currentItem().url());
+}
+
 void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
@@ -1268,7 +1276,11 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 
 	if (cloneHistory)
 	{
-		widget->setHistory(getHistory());
+		QByteArray data;
+		QDataStream stream(&data, QIODevice::ReadWrite);
+		stream << *(m_webView->page()->history());
+
+		widget->setHistory(stream);
 	}
 
 	widget->setZoom(getZoom());
