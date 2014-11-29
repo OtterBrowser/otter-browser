@@ -94,7 +94,6 @@ protected:
 
 	void keyPressEvent(QKeyEvent *event);
 	void mousePressEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);

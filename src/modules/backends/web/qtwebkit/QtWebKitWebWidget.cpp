@@ -182,18 +182,6 @@ void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
 	}
 }
 
-void QtWebKitWebWidget::wheelEvent(QWheelEvent *event)
-{
-	WebWidget::wheelEvent(event);
-
-	if (m_isInScroll)
-	{
-		scrollStop();
-
-		m_isInScroll = false;
-	}
-}
-
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 {
 	WebWidget::focusInEvent(event);
@@ -2098,6 +2086,8 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			if (m_isInScroll)
 			{
 				scrollStop();
+
+				m_isInScroll = false;
 
 				return true;
 			}
