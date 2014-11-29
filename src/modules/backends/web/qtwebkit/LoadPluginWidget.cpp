@@ -137,9 +137,7 @@ void LoadPluginWidget::loadPlugin()
 	while (!frames.isEmpty())
 	{
 		QWebFrame *frame = frames.takeFirst();
-		QWebElementCollection elements;
-		elements.append(frame->documentElement().findAll(QLatin1String("object")));
-		elements.append(frame->documentElement().findAll(QLatin1String("embed")));
+		const QWebElementCollection elements = frame->documentElement().findAll(QLatin1String("object, embed"));
 
 		for (int i = 0; i < elements.count(); ++i)
 		{
@@ -147,11 +145,9 @@ void LoadPluginWidget::loadPlugin()
 			{
 				hide();
 
-				const QWebElement substitute = elements.at(i).clone();
-
 				emit pluginLoaded();
 
-				elements.at(i).replace(substitute);
+				elements.at(i).replace(elements.at(i).clone());
 
 				deleteLater();
 
