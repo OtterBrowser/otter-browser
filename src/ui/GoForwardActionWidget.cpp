@@ -20,6 +20,7 @@
 #include "GoForwardActionWidget.h"
 #include "ContentsWidget.h"
 #include "Window.h"
+#include "../core/SettingsManager.h"
 #include "../core/WebBackend.h"
 #include "../core/WebBackendsManager.h"
 
@@ -32,10 +33,33 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : 
 	m_window(window)
 {
 	setMenu(new QMenu(this));
-	setPopupMode(QToolButton::DelayedPopup);
+
+	if (SettingsManager::getValue(QLatin1String("Interface/ToolButtonArrow")).toString() == QLatin1String("inside"))
+	{
+		setPopupMode(QToolButton::DelayedPopup);
+	}
+	else if (SettingsManager::getValue(QLatin1String("Interface/ToolButtonArrow")).toString() == QLatin1String("outside"))
+	{
+		setPopupMode(QToolButton::MenuButtonPopup);
+	}
 
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
+}
+
+void GoForwardActionWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Interface/ToolButtonArrow"))
+	{
+		if (value.toString() == QLatin1String("inside"))
+		{
+			setPopupMode(QToolButton::DelayedPopup);
+		}
+		else if (value.toString() == QLatin1String("outside"))
+		{
+			setPopupMode(QToolButton::MenuButtonPopup);
+		}
+	}
 }
 
 void GoForwardActionWidget::goToHistoryIndex(QAction *action)
