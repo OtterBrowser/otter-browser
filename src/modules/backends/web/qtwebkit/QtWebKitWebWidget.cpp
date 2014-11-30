@@ -567,6 +567,8 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 			break;
 		case ReloadAction:
+			emit aboutToReload();
+
 			m_webView->page()->triggerAction(QWebPage::Stop);
 			m_webView->page()->triggerAction(QWebPage::Reload);
 

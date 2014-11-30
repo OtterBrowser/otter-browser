@@ -168,6 +168,7 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	m_webWidget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
@@ -305,6 +306,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 			m_webWidget->showDialog(&dialog);
 
 			connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+			connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 			connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 			eventLoop.exec();
@@ -367,6 +369,7 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 	m_webWidget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
@@ -410,6 +413,7 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 	m_webWidget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
@@ -496,6 +500,7 @@ bool QtWebKitWebPage::shouldInterruptJavaScript()
 		m_webWidget->showDialog(&dialog);
 
 		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
+		connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();

@@ -125,6 +125,9 @@ private:
 	bool m_isReloading;
 	bool m_isTyped;
 
+signals:
+	void aboutToReload();
+
 friend class QtWebKitWebBackend;
 friend class QtWebKitWebPage;
 };
