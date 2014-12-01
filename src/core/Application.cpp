@@ -43,8 +43,10 @@
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
-#include <QtWidgets/QMessageBox>
 #include <QtNetwork/QLocalSocket>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -204,6 +206,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
 #endif
+
+	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
 
 Application::~Application()
@@ -216,9 +220,12 @@ Application::~Application()
 
 void Application::close()
 {
-	SessionsManager::saveSession();
+	if (canClose())
+	{
+		SessionsManager::saveSession();
 
-	exit();
+		exit();
+	}
 }
 
 void Application::removeWindow(MainWindow *window)
@@ -315,6 +322,35 @@ void Application::newConnection()
 	}
 
 	delete parser;
+}
+
+void Application::clearHistory()
+{
+	QStringList clearSettings = SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList();
+	clearSettings.removeAll(QString());
+
+	if (!clearSettings.isEmpty())
+	{
+		if (clearSettings.contains(QLatin1String("browsing")))
+		{
+			HistoryManager::clearHistory();
+		}
+
+		if (clearSettings.contains(QLatin1String("cookies")))
+		{
+			NetworkManagerFactory::clearCookies();
+		}
+
+		if (clearSettings.contains(QLatin1String("downloads")))
+		{
+			TransfersManager::clearTransfers();
+		}
+
+		if (clearSettings.contains(QLatin1String("cache")))
+		{
+			NetworkManagerFactory::clearCache();
+		}
+	}
 }
 
 void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
@@ -452,6 +488,105 @@ QString Application::getLocalePath() const
 QList<MainWindow*> Application::getWindows() const
 {
 	return m_windows;
+}
+
+bool Application::canClose()
+{
+	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+	int runningTransfers = 0;
+	bool transfersDialog = false;
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		if (transfers.at(i)->state == RunningTransfer)
+		{
+			++runningTransfers;
+		}
+	}
+
+	if (runningTransfers > 0 && SettingsManager::getValue(QLatin1String("Choices/WarnQuitTransfers")).toBool())
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("You are about to quit while %n files are still being downloaded.", "", runningTransfers));
+		messageBox.setInformativeText(tr("Do you want to continue?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Cancel);
+		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+		QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
+		const int result = messageBox.exec();
+
+		SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
+
+		if (messageBox.clickedButton() == hideButton)
+		{
+			setHidden(true);
+
+			return false;
+		}
+
+		if (result == QMessageBox::Yes)
+		{
+			runningTransfers = 0;
+			transfersDialog = true;
+		}
+
+		if (runningTransfers > 0)
+		{
+			return false;
+		}
+	}
+
+	const QString warnQuitMode = SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString();
+
+	if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
+	{
+		int tabsAmount = 0;
+
+		for (int i = 0; i < m_windows.count(); ++i)
+		{
+			if (m_windows.at(i))
+			{
+				tabsAmount += m_windows.at(i)->getWindowsManager()->getWindowCount();
+			}
+		}
+
+		if (warnQuitMode == QLatin1String("alwaysWarn") || (tabsAmount > 1 && warnQuitMode == QLatin1String("warnOpenTabs")))
+		{
+			QMessageBox messageBox;
+			messageBox.setWindowTitle(tr("Question"));
+			messageBox.setText(tr("You are about to quit the current Otter Browser session."));
+			messageBox.setInformativeText(tr("Do you want to continue?"));
+			messageBox.setIcon(QMessageBox::Question);
+			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+			messageBox.setDefaultButton(QMessageBox::Yes);
+			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+			QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
+			const int result = messageBox.exec();
+
+			if (messageBox.checkBox()->isChecked())
+			{
+				SettingsManager::setValue(QLatin1String("Choices/WarnQuit"), QLatin1String("noWarn"));
+			}
+
+			if (result == QMessageBox::Cancel)
+			{
+				return false;
+			}
+
+			if (messageBox.clickedButton() == hideButton)
+			{
+				setHidden(true);
+
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 bool Application::isHidden() const

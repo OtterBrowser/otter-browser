@@ -51,6 +51,7 @@ public:
 	QString getFullVersion() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;
+	bool canClose();
 	bool isHidden() const;
 	bool isRunning() const;
 
@@ -61,6 +62,7 @@ public slots:
 
 protected slots:
 	void newConnection();
+	void clearHistory();
 
 private:
 	PlatformIntegration *m_platformIntegration;
