@@ -218,8 +218,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
 			QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
-
-			int result = messageBox.exec();
+			const int result = messageBox.exec();
 
 			if (messageBox.clickedButton() == hideButton)
 			{
@@ -261,8 +260,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
 				QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
-
-				int result = messageBox.exec();
+				const int result = messageBox.exec();
 
 				if (result == QMessageBox::Cancel)
 				{
