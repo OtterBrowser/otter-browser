@@ -31,7 +31,7 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 {
 	const QByteArray localMessage = mesage.toLocal8Bit();
 
-	if (localMessage.startsWith(QLatin1String("libpng warning: iCCP: Not recognizing known sRGB profile that has been edited").data()) || localMessage.startsWith(QLatin1String("OpenType support missing for script").data()) || localMessage.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once").data()))
+	if (localMessage.startsWith(QLatin1String("libpng warning: iCCP: Not recognizing known sRGB profile that has been edited").data()) || localMessage.startsWith(QLatin1String("OpenType support missing for script").data()) || localMessage.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once").data()) || localMessage.startsWith(QLatin1String("QBasicTimer::start: QBasicTimer can only be used with threads started with QThread").data()))
 	{
 		return;
 	}
