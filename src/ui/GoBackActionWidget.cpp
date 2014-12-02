@@ -46,7 +46,7 @@ void GoBackActionWidget::enterEvent(QEvent *event)
 	{
 		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
 
-		if (history.index == 0)
+		if (history.entries.isEmpty() || history.index == 0)
 		{
 			setToolTip(tr("Back"));
 		}

@@ -46,7 +46,7 @@ void GoForwardActionWidget::enterEvent(QEvent *event)
 	{
 		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
 
-		if (history.index == (history.entries.count() - 1))
+		if (history.entries.isEmpty() || history.index == (history.entries.count() - 1))
 		{
 			setToolTip(tr("Forward"));
 		}
