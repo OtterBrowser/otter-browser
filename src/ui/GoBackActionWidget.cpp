@@ -38,6 +38,27 @@ GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : Action
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
+void GoBackActionWidget::enterEvent(QEvent *event)
+{
+	ActionWidget::enterEvent(event);
+
+	if (m_window)
+	{
+		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
+
+		if (history.index == 0)
+		{
+			setToolTip(tr("Back"));
+		}
+		else
+		{
+			QString title = history.entries.at(history.index - 1).title;
+
+			setToolTip(tr("%1 (Back)").arg(title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))));
+		}
+	}
+}
+
 void GoBackActionWidget::goToHistoryIndex(QAction *action)
 {
 	if (m_window && action && action->data().type() == QVariant::Int)

@@ -32,6 +32,9 @@ class GoForwardActionWidget : public ActionWidget
 public:
 	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
 
+protected:
+	void enterEvent(QEvent *event);
+
 protected slots:
 	void goToHistoryIndex(QAction *action);
 	void updateMenu();

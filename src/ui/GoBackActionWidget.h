@@ -32,6 +32,9 @@ class GoBackActionWidget : public ActionWidget
 public:
 	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
 
+protected:
+	void enterEvent(QEvent *event);
+
 protected slots:
 	void goToHistoryIndex(QAction *action);
 	void updateMenu();
