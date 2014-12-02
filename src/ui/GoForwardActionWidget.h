@@ -33,6 +33,7 @@ public:
 	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void goToHistoryIndex(QAction *action);
 	void updateMenu();
 
