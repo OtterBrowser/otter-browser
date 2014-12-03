@@ -116,7 +116,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="48"/>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="62"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>უცნობი</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="75"/>
@@ -144,7 +144,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
         <source>Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>დასტის სახელი</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="48"/>
@@ -287,7 +287,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New</source>
-        <translation type="unfinished"/>
+        <translation>ახალი</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -315,7 +315,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>ჩანიშვნები</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="216"/>
@@ -563,19 +563,19 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="99"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>ქსელი</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="66"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>უსაფრთხოება</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="79"/>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
         <source>JS</source>
-        <translation type="unfinished"/>
+        <translation>JS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
@@ -586,7 +586,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="121"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>გაწმენდა</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
@@ -609,17 +609,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="81"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>დამატება</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>ამოღება</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>რედაქტირება</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="111"/>
@@ -629,7 +629,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>სახელი</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
@@ -944,7 +944,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ImportDialog.cpp" line="76"/>
         <location filename="../../src/ui/ImportDialog.cpp" line="93"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>შეცდომა</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="76"/>
@@ -995,7 +995,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="22"/>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>ენა:</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.ui" line="32"/>
@@ -1180,7 +1180,7 @@ Do you want to continue?</source>
         <location filename="../../src/core/NetworkManager.cpp" line="268"/>
         <location filename="../../src/core/NetworkManager.cpp" line="285"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>ყურადღება</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="268"/>
@@ -1202,7 +1202,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="228"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>ნაგულისხმები</translation>
     </message>
 </context>
 <context>
@@ -1526,7 +1526,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>ისტორია</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="703"/>
