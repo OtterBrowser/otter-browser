@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebBackend.h"
+#include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
@@ -25,13 +27,40 @@
 #include <QtCore/QDir>
 #include <QtWebKit/QWebSettings>
 #include <QtWebKitWidgets/QWebPage>
+#include <QtWidgets/QApplication>
 
 namespace Otter
 {
 
+QString QtWebKitWebBackend::m_defaultUserAgent;
+QHash<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
+
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
+	QtWebKitWebPage *page = new QtWebKitWebPage();
+	const QList<QString> userAgentSplited = page->getDefaultUserAgent().split(QLatin1Char(' '));
+
+	for (int i = 1; i < userAgentSplited.count(); ++i)
+	{
+		m_userAgentComponents[QLatin1String("Platform")] += userAgentSplited.at(i);
+
+		if (userAgentSplited.at(i).endsWith(QLatin1Char(')')))
+		{
+			break;
+		}
+		else
+		{
+			m_userAgentComponents[QLatin1String("Platform")] += QLatin1Char(' ');
+		}
+	}
+
+	m_userAgentComponents[QLatin1String("EngineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
+	m_userAgentComponents[QLatin1String("ApplicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
+
+	m_defaultUserAgent = QLatin1String("Mozilla/5.0 ") + m_userAgentComponents[QLatin1String("Platform")] + QLatin1Char(' ') + m_userAgentComponents[QLatin1String("EngineVersion")] + QLatin1String(" (KHTML, like Gecko) ") + m_userAgentComponents[QLatin1String("ApplicationVersion")];
+
+	page->deleteLater();
 }
 
 void QtWebKitWebBackend::optionChanged(const QString &option)
@@ -123,6 +152,11 @@ QString QtWebKitWebBackend::getVersion() const
 QString QtWebKitWebBackend::getEngineVersion() const
 {
 	return qWebKitVersion();
+}
+
+QString QtWebKitWebBackend::getUserAgent() const
+{
+	return m_defaultUserAgent;
 }
 
 QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)

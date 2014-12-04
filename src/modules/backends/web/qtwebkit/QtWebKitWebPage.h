@@ -29,8 +29,10 @@
 namespace Otter
 {
 
+class QtWebKitWebBackend;
 class QtWebKitWebPluginFactory;
 class QtWebKitWebWidget;
+class WebBackend;
 class WebWidget;
 
 class QtWebKitWebPage : public QWebPage
@@ -52,11 +54,14 @@ public slots:
 	void updatePageStyleSheets();
 
 protected:
+	QtWebKitWebPage();
+
 	void updateBlockedPageElements(const QStringList domainList, const bool isException);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 	QWebPage* createWindow(WebWindowType type);
 	QString userAgentForUrl(const QUrl &url) const;
+	QString getDefaultUserAgent() const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message);
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
@@ -67,19 +72,19 @@ protected slots:
 	void pageLoadFinished();
 
 private:
-	QtWebKitWebWidget *m_webWidget;
+	QtWebKitWebWidget *m_widget;
 	QtWebKitWebPluginFactory *m_pluginFactory;
+	WebBackend *m_backend;
 	QString m_userAgentIdentifier;
 	QString m_userAgentValue;
 	QString m_userAgentParsed;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isGlobalUserAgent;
 
-	static QString m_defaultUserAgent;
-	static QHash<QString, QString> m_userAgentComponents;
-
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
+
+friend class QtWebKitWebBackend;
 };
 
 }

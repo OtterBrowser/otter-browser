@@ -37,6 +37,7 @@ public:
 	QString getDescription() const;
 	QString getVersion() const;
 	QString getEngineVersion() const;
+	QString getUserAgent() const;
 	QIcon getIconForUrl(const QUrl &url);
 
 protected slots:
@@ -44,6 +45,9 @@ protected slots:
 
 private:
 	bool m_isInitialized;
+
+	static QString m_defaultUserAgent;
+	static QHash<QString, QString> m_userAgentComponents;
 };
 
 }

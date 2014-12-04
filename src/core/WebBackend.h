@@ -42,6 +42,7 @@ public:
 	virtual QString getDescription() const = 0;
 	virtual QString getVersion() const = 0;
 	virtual QString getEngineVersion() const = 0;
+	virtual QString getUserAgent() const = 0;
 	virtual QIcon getIconForUrl(const QUrl &url) = 0;
 };
 

@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebPage.h"
+#include "QtWebKitWebBackend.h"
 #include "QtWebKitWebPluginFactory.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
@@ -26,6 +27,7 @@
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../core/WebBackendsManager.h"
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
@@ -46,12 +48,10 @@
 namespace Otter
 {
 
-QString QtWebKitWebPage::m_defaultUserAgent;
-QHash<QString, QString> QtWebKitWebPage::m_userAgentComponents;
-
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
-	m_webWidget(parent),
+	m_widget(parent),
 	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
+	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
 	m_ignoreJavaScriptPopups(false),
 	m_isGlobalUserAgent(true)
 {
@@ -63,6 +63,10 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+}
+
+QtWebKitWebPage::QtWebKitWebPage()
+{
 }
 
 void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
@@ -100,7 +104,7 @@ void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
 
 void QtWebKitWebPage::updatePageStyleSheets()
 {
-	const QString userSyleSheet = (m_webWidget ? m_webWidget->getOption(QLatin1String("Content/UserStyleSheet"), mainFrame()->url()).toString() : QString());
+	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), mainFrame()->url()).toString() : QString());
 	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
 
 	if (!userSyleSheet.isEmpty())
@@ -153,27 +157,27 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 		return;
 	}
 
-	if (!m_webWidget || !m_webWidget->parentWidget())
+	if (!m_widget || !m_widget->parentWidget())
 	{
 		QWebPage::javaScriptAlert(frame, message);
 
 		return;
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_webWidget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	QEventLoop eventLoop;
 
-	m_webWidget->showDialog(&dialog);
+	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
 
-	m_webWidget->hideDialog(&dialog);
+	m_widget->hideDialog(&dialog);
 
 	if (dialog.getCheckBoxState())
 	{
@@ -188,9 +192,9 @@ void QtWebKitWebPage::javaScriptConsoleMessage(const QString &note, int line, co
 
 void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
-	if (action == InspectElement && m_webWidget)
+	if (action == InspectElement && m_widget)
 	{
-		m_webWidget->triggerAction(InspectPageAction, true);
+		m_widget->triggerAction(InspectPageAction, true);
 	}
 
 	QWebPage::triggerAction(action, checked);
@@ -198,7 +202,7 @@ void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 
 void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 {
-	m_webWidget = parent;
+	m_widget = parent;
 
 	QWebPage::setParent(parent);
 }
@@ -217,16 +221,16 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 	{
 		QtWebKitWebWidget *widget = NULL;
 
-		if (m_webWidget)
+		if (m_widget)
 		{
-			widget = qobject_cast<QtWebKitWebWidget*>(m_webWidget->clone(false));
+			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false));
 		}
 		else
 		{
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, NULL);
 		}
 
-		widget->setRequestedUrl(m_webWidget->getRequestedUrl(), false, true);
+		widget->setRequestedUrl(m_widget->getRequestedUrl(), false, true);
 
 		emit requestedNewWindow(widget, DefaultOpen);
 
@@ -238,36 +242,19 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 
 QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
 {
+	Q_UNUSED(url)
+
 	if (!m_userAgentIdentifier.isEmpty())
 	{
 		return m_userAgentParsed;
 	}
 
-	if (m_defaultUserAgent.isEmpty())
-	{
-		const QList<QString> userAgentSplited = QWebPage::userAgentForUrl(url).split(QLatin1Char(' '));
+	return m_backend->getUserAgent();
+}
 
-		for (int i = 1; i < userAgentSplited.count(); ++i)
-		{
-			m_userAgentComponents[QLatin1String("Platform")] += userAgentSplited.at(i);
-
-			if (userAgentSplited.at(i).endsWith(QLatin1Char(')')))
-			{
-				break;
-			}
-			else
-			{
-				m_userAgentComponents[QLatin1String("Platform")] += QLatin1Char(' ');
-			}
-		}
-
-		m_userAgentComponents[QLatin1String("EngineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
-		m_userAgentComponents[QLatin1String("ApplicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
-
-		m_defaultUserAgent = QLatin1String("Mozilla/5.0 ") + m_userAgentComponents[QLatin1String("Platform")] + QLatin1Char(' ') + m_userAgentComponents[QLatin1String("EngineVersion")] + QLatin1String(" (KHTML, like Gecko) ") + m_userAgentComponents[QLatin1String("ApplicationVersion")];
-	}
-
-	return m_defaultUserAgent;
+QString QtWebKitWebPage::getDefaultUserAgent() const
+{
+	return QWebPage::userAgentForUrl(QUrl());
 }
 
 QPair<QString, QString> QtWebKitWebPage::getUserAgent() const
@@ -296,22 +283,22 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		bool cancel = false;
 		bool warn = true;
 
-		if (m_webWidget)
+		if (m_widget)
 		{
-			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_webWidget);
+			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_widget);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
 			QEventLoop eventLoop;
 
-			m_webWidget->showDialog(&dialog);
+			m_widget->showDialog(&dialog);
 
 			connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-			connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+			connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 			connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 			eventLoop.exec();
 
-			m_webWidget->hideDialog(&dialog);
+			m_widget->hideDialog(&dialog);
 
 			cancel = !dialog.isAccepted();
 			warn = !dialog.getCheckBoxState();
@@ -339,9 +326,9 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		}
 	}
 
-	if (type == QWebPage::NavigationTypeReload && m_webWidget)
+	if (type == QWebPage::NavigationTypeReload && m_widget)
 	{
-		m_webWidget->markPageRealoded();
+		m_widget->markPageRealoded();
 	}
 
 	m_pluginFactory->setBaseUrl(request.url());
@@ -356,25 +343,25 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 		return false;
 	}
 
-	if (!m_webWidget || !m_webWidget->parentWidget())
+	if (!m_widget || !m_widget->parentWidget())
 	{
 		return QWebPage::javaScriptConfirm(frame, message);
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_webWidget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	QEventLoop eventLoop;
 
-	m_webWidget->showDialog(&dialog);
+	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
 
-	m_webWidget->hideDialog(&dialog);
+	m_widget->hideDialog(&dialog);
 
 	if (dialog.getCheckBoxState())
 	{
@@ -391,12 +378,12 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 		return false;
 	}
 
-	if (!m_webWidget || !m_webWidget->parentWidget())
+	if (!m_widget || !m_widget->parentWidget())
 	{
 		return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
 	}
 
-	QWidget *widget = new QWidget(m_webWidget);
+	QWidget *widget = new QWidget(m_widget);
 	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
 	QLabel *label = new QLabel(message, widget);
 	label->setTextFormat(Qt::PlainText);
@@ -405,20 +392,20 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_webWidget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	QEventLoop eventLoop;
 
-	m_webWidget->showDialog(&dialog);
+	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
 
-	m_webWidget->hideDialog(&dialog);
+	m_widget->hideDialog(&dialog);
 
 	if (dialog.isAccepted())
 	{
@@ -492,20 +479,20 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 
 bool QtWebKitWebPage::shouldInterruptJavaScript()
 {
-	if (m_webWidget)
+	if (m_widget)
 	{
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_webWidget);
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
 		QEventLoop eventLoop;
 
-		m_webWidget->showDialog(&dialog);
+		m_widget->showDialog(&dialog);
 
 		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(m_webWidget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+		connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
 
-		m_webWidget->hideDialog(&dialog);
+		m_widget->hideDialog(&dialog);
 
 		return dialog.isAccepted();
 	}
