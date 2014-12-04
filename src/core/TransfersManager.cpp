@@ -22,6 +22,8 @@
 #include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "WebBackend.h"
+#include "WebBackendsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QRegularExpression>
@@ -281,6 +283,7 @@ TransferInformation* TransfersManager::startTransfer(const QString &source, cons
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
 	request.setUrl(QUrl(source));
 
 	return startTransfer(request, target, privateTransfer, quickTransfer, skipTransfers);
