@@ -32,6 +32,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
+#include <QtGui/QMouseEvent>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -44,6 +45,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 {
 	m_ui->setupUi(this);
 	m_ui->previewLabel->hide();
+	m_ui->cacheView->viewport()->installEventFilter(this);
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
@@ -615,6 +617,50 @@ QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const
 bool CacheContentsWidget::isLoading() const
 {
 	return m_isLoading;
+}
+
+bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->cacheView->viewport())
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton))
+		{
+			const QModelIndex entryIndex = m_ui->cacheView->currentIndex();
+
+			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
+			{
+				return ContentsWidget::eventFilter(object, event);
+			}
+
+			const QUrl url = entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl();
+
+			if (url.isValid())
+			{
+				OpenHints hints = DefaultOpen;
+
+				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
+				{
+					hints = NewTabBackgroundOpen;
+				}
+				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
+				{
+					hints = NewTabOpen;
+				}
+				else
+				{
+					return false;
+				}
+
+				emit requestedOpenUrl(url, hints);
+
+				return true;
+			}
+		}
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }

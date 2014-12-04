@@ -27,6 +27,7 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
+#include <QtGui/QMouseEvent>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -58,6 +59,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyView->expand(m_model->index(0, 0));
+	m_ui->historyView->viewport()->installEventFilter(this);
 
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
@@ -431,6 +433,50 @@ qint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 bool HistoryContentsWidget::isLoading() const
 {
 	return m_isLoading;
+}
+
+bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->historyView->viewport())
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton))
+		{
+			const QModelIndex entryIndex = m_ui->historyView->currentIndex();
+
+			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
+			{
+				return ContentsWidget::eventFilter(object, event);
+			}
+
+			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::DisplayRole).toString());
+
+			if (url.isValid())
+			{
+				OpenHints hints = DefaultOpen;
+
+				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
+				{
+					hints = NewTabBackgroundOpen;
+				}
+				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
+				{
+					hints = NewTabOpen;
+				}
+				else
+				{
+					return false;
+				}
+
+				emit requestedOpenUrl(url, hints);
+
+				return true;
+			}
+		}
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }

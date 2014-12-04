@@ -49,6 +49,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	bool isLoading() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void triggerAction(ActionIdentifier action, bool checked = false);
