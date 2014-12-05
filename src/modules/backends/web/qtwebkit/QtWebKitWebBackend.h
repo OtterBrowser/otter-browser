@@ -37,7 +37,7 @@ public:
 	QString getDescription() const;
 	QString getVersion() const;
 	QString getEngineVersion() const;
-	QString getUserAgent() const;
+	QString getUserAgent(const QString &pattern = QString()) const;
 	QIcon getIconForUrl(const QUrl &url);
 
 protected slots:

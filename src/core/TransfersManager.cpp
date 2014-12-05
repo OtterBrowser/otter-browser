@@ -614,8 +614,9 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setUrl(QUrl(transfer->source));
+	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
 	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
+	request.setUrl(QUrl(transfer->source));
 
 	if (!m_networkManager)
 	{
@@ -661,6 +662,7 @@ bool TransfersManager::restartTransfer(TransferInformation *transfer)
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
 	request.setUrl(QUrl(transfer->source));
 
 	if (!m_networkManager)

@@ -154,8 +154,21 @@ QString QtWebKitWebBackend::getEngineVersion() const
 	return qWebKitVersion();
 }
 
-QString QtWebKitWebBackend::getUserAgent() const
+QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 {
+	if (!pattern.isEmpty())
+	{
+		QString userAgent = pattern;
+		QHash<QString, QString>::iterator iterator;
+
+		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
+		{
+			userAgent = userAgent.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+		}
+
+		return userAgent;
+	}
+
 	return m_defaultUserAgent;
 }
 
