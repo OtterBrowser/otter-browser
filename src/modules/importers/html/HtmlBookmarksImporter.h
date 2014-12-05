@@ -47,7 +47,7 @@ public:
 
 public slots:
 	bool import();
-	bool setPath(const QString &path, bool isPrefix);
+	bool setPath(const QString &path);
 
 protected:
 	void handleOptions();

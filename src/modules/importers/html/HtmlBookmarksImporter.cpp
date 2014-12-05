@@ -21,6 +21,7 @@
 #include "HtmlBookmarksImporter.h"
 #include "../../../core/BookmarksModel.h"
 
+#include <QtCore/QDir>
 //TODO QtWebKit should not be used directly
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebFrame>
@@ -207,13 +208,13 @@ bool HtmlBookmarksImporter::import()
 	return true;
 }
 
-bool HtmlBookmarksImporter::setPath(const QString &path, bool isPrefix)
+bool HtmlBookmarksImporter::setPath(const QString &path)
 {
-	QUrl url(path);
+	QString fileName = path;
 
-	if (isPrefix)
+	if (QFileInfo(path).isDir())
 	{
-		url = url.resolved(QUrl(QLatin1String("bookmarks.html")));
+		fileName = QDir(path).filePath(QLatin1String("bookmarks.html"));
 	}
 
 	if (m_file)
@@ -222,7 +223,7 @@ bool HtmlBookmarksImporter::setPath(const QString &path, bool isPrefix)
 		m_file->deleteLater();
 	}
 
-	m_file = new QFile(url.url(), this);
+	m_file = new QFile(fileName, this);
 
 	return m_file->open(QIODevice::ReadOnly);
 }

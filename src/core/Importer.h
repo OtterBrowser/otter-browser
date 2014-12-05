@@ -57,7 +57,7 @@ public:
 
 public slots:
 	virtual bool import() = 0;
-	virtual bool setPath(const QString &path, bool isPrefix = false) = 0;
+	virtual bool setPath(const QString &path) = 0;
 
 signals:
 	void importProgress(int amount, int total, ImportType type);

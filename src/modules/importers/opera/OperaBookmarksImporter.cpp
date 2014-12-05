@@ -21,8 +21,8 @@
 #include "OperaBookmarksImporter.h"
 #include "../../../core/BookmarksModel.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QTextStream>
-#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -222,13 +222,13 @@ bool OperaBookmarksImporter::import()
 	return true;
 }
 
-bool OperaBookmarksImporter::setPath(const QString &path, bool isPrefix)
+bool OperaBookmarksImporter::setPath(const QString &path)
 {
-	QUrl url(path);
+	QString fileName = path;
 
-	if (isPrefix)
+	if (QFileInfo(path).isDir())
 	{
-		url = url.resolved(QUrl(QLatin1String("bookmarks.adr")));
+		fileName = QDir(path).filePath(QLatin1String("bookmarks.adr"));
 	}
 
 	if (m_file)
@@ -237,7 +237,7 @@ bool OperaBookmarksImporter::setPath(const QString &path, bool isPrefix)
 		m_file->deleteLater();
 	}
 
-	m_file = new QFile(url.url(), this);
+	m_file = new QFile(fileName, this);
 
 	return m_file->open(QIODevice::ReadOnly);
 }
