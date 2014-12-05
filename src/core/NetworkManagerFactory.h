@@ -85,7 +85,7 @@ private:
 	static NetworkCache *m_cache;
 	static QString m_acceptLanguage;
 	static QStringList m_userAgentsOrder;
-	static QHash<QString, UserAgentInformation> m_userAgents;
+	static QMap<QString, UserAgentInformation> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
 	static bool m_canSendReferrer;

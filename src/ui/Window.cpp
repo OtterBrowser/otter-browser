@@ -218,37 +218,22 @@ void Window::setOption(const QString &key, const QVariant &value)
 
 		if (webWidget)
 		{
-			webWidget->getWebWidget()->setOption(key, value);
+			if (key == QLatin1String("Network/UserAgent") && value.toString() == QLatin1String("custom"))
+			{
+				bool confirmed = false;
+				const QString userAgent = QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString()).value, &confirmed);
+
+				if (confirmed)
+				{
+					webWidget->getWebWidget()->setOption(QLatin1String("Network/UserAgent"), QLatin1String("custom;") + userAgent);
+				}
+			}
+			else
+			{
+				webWidget->getWebWidget()->setOption(key, value);
+			}
 		}
 	}
-}
-
-void Window::setUserAgent(const QString &identifier)
-{
-	WebContentsWidget *webWidget = NULL;
-
-	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
-	{
-		webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
-
-		if (!webWidget)
-		{
-			return;
-		}
-	}
-
-	QString value;
-
-	if (identifier == QLatin1String("custom"))
-	{
-		value = QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, webWidget->getUserAgent().second);
-	}
-	else
-	{
-		value = NetworkManagerFactory::getUserAgent(identifier).value;
-	}
-
-	webWidget->setUserAgent(identifier, value);
 }
 
 void Window::setSearchEngine(const QString &engine)
@@ -407,14 +392,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 			if (webWidget)
 			{
-				if (m_session.userAgent.contains(QLatin1Char(';')))
-				{
-					webWidget->setUserAgent(m_session.userAgent.section(QLatin1Char(';'), 0, 0), m_session.userAgent.section(QLatin1Char(';'), 1));
-				}
-				else
-				{
-					webWidget->setUserAgent(m_session.userAgent, NetworkManagerFactory::getUserAgent(m_session.userAgent).value);
-				}
+				webWidget->getWebWidget()->setOption(QLatin1String("Network/UserAgent"), m_session.userAgent);
 			}
 		}
 
@@ -547,10 +525,8 @@ SessionWindow Window::getSession() const
 	}
 
 	const WindowHistoryInformation history = m_contentsWidget->getHistory();
-	const QPair<QString, QString> userAgent = getUserAgent();
 	SessionWindow session;
 	session.searchEngine = getSearchEngine();
-	session.userAgent = userAgent.first + ((userAgent.first == QLatin1String("custom")) ? QLatin1Char(';') + userAgent.second : QString());
 	session.history = history.entries;
 	session.group = 0;
 	session.index = history.index;
@@ -560,28 +536,21 @@ SessionWindow Window::getSession() const
 	{
 		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
-		if (webWidget && webWidget->getReloadTime() != 1)
+		if (webWidget)
 		{
-			session.reloadTime = webWidget->getReloadTime();
+			if (webWidget->getReloadTime() != -1)
+			{
+				session.reloadTime = webWidget->getReloadTime();
+			}
+
+			if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))
+			{
+				session.userAgent = webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString();
+			}
 		}
 	}
 
 	return session;
-}
-
-QPair<QString, QString> Window::getUserAgent() const
-{
-	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
-	{
-		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
-
-		if (webWidget)
-		{
-			return webWidget->getUserAgent();
-		}
-	}
-
-	return qMakePair(QString(), QString());
 }
 
 WindowLoadingState Window::getLoadingState() const

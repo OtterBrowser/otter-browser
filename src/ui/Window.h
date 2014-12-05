@@ -73,7 +73,6 @@ public:
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
-	QPair<QString, QString> getUserAgent() const;
 	WindowLoadingState getLoadingState() const;
 	qint64 getIdentifier() const;
 	bool canClone() const;
@@ -85,7 +84,6 @@ public slots:
 	void search(const QString &query, const QString &engine);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setOption(const QString &key, const QVariant &value);
-	void setUserAgent(const QString &identifier);
 	void setSearchEngine(const QString &engine);
 	void setUrl(const QUrl &url, bool typed = true);
 	void setPinned(bool pinned);

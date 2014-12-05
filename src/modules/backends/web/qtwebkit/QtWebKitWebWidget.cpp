@@ -497,9 +497,6 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 		setStatusMessage(QString());
 	}
 
-	const QString userAgent(getOption(QLatin1String("Network/UserAgent"), url).toString());
-
-	m_page->setUserAgent(userAgent, NetworkManagerFactory::getUserAgent(userAgent).value);
 	m_page->updatePageStyleSheets();
 }
 
@@ -1113,13 +1110,6 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 }
 
-void QtWebKitWebWidget::setUserAgent(const QString &identifier, const QString &value)
-{
-	m_page->setUserAgent(identifier, value);
-
-	SessionsManager::markSessionModified();
-}
-
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
@@ -1268,11 +1258,9 @@ void QtWebKitWebWidget::setOptions(const QVariantHash &options)
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
-	const QPair<QString, QString> userAgent = getUserAgent();
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
 	widget->setNetworkManager(m_networkManager->clone(NULL));
 	widget->setOptions(getOptions());
-	widget->setUserAgent(userAgent.first, userAgent.second);
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setReloadTime(getReloadTime());
 
@@ -1588,11 +1576,6 @@ QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 QVariantHash QtWebKitWebWidget::getStatistics() const
 {
 	return m_networkManager->getStatistics();
-}
-
-QPair<QString, QString> QtWebKitWebWidget::getUserAgent() const
-{
-	return m_page->getUserAgent();
 }
 
 QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)

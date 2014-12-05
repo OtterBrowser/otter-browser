@@ -58,7 +58,6 @@ public:
 	WindowHistoryInformation getHistory() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
-	QPair<QString, QString> getUserAgent() const;
 	int getZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
@@ -72,7 +71,6 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void setOption(const QString &key, const QVariant &value);
-	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);

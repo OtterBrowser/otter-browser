@@ -26,6 +26,8 @@
 #include "NetworkProxyFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "WebBackend.h"
+#include "WebBackendsManager.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
@@ -40,7 +42,7 @@ CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
 QString NetworkManagerFactory::m_acceptLanguage;
 QStringList NetworkManagerFactory::m_userAgentsOrder;
-QHash<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
+QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
 bool NetworkManagerFactory::m_canSendReferrer = false;
@@ -170,7 +172,7 @@ void NetworkManagerFactory::loadUserAgents()
 	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"));
 	const QSettings settings((QFile::exists(path) ? path : QLatin1String(":/other/userAgents.ini")), QSettings::IniFormat);
 	const QStringList userAgentsOrder = settings.childGroups();
-	QHash<QString, UserAgentInformation> userAgents;
+	QMap<QString, UserAgentInformation> userAgents;
 
 	for (int i = 0; i < userAgentsOrder.count(); ++i)
 	{
@@ -243,6 +245,16 @@ QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
 
 UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
 {
+	if (identifier.startsWith(QLatin1String("custom;")))
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = QLatin1String("custom");
+		userAgent.title = tr("Custom");
+		userAgent.value = identifier.mid(7);
+
+		return userAgent;
+	}
+
 	if (!m_isInitialized)
 	{
 		m_instance->initialize();
@@ -253,6 +265,7 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 		UserAgentInformation userAgent;
 		userAgent.identifier = QLatin1String("default");
 		userAgent.title = tr("Default");
+		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} (KHTML, like Gecko) {applicationVersion}");
 
 		return userAgent;
 	}

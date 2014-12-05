@@ -21,6 +21,7 @@
 #include "QtWebKitWebBackend.h"
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 
@@ -32,7 +33,6 @@
 namespace Otter
 {
 
-QString QtWebKitWebBackend::m_defaultUserAgent;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 
@@ -44,7 +44,7 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 
 	for (int i = 1; i < userAgentSplited.count(); ++i)
 	{
-		m_userAgentComponents[QLatin1String("Platform")] += userAgentSplited.at(i);
+		m_userAgentComponents[QLatin1String("platform")] += userAgentSplited.at(i);
 
 		if (userAgentSplited.at(i).endsWith(QLatin1Char(')')))
 		{
@@ -52,14 +52,12 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 		}
 		else
 		{
-			m_userAgentComponents[QLatin1String("Platform")] += QLatin1Char(' ');
+			m_userAgentComponents[QLatin1String("platform")] += QLatin1Char(' ');
 		}
 	}
 
-	m_userAgentComponents[QLatin1String("EngineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
-	m_userAgentComponents[QLatin1String("ApplicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
-
-	m_defaultUserAgent = QLatin1String("Mozilla/5.0 ") + m_userAgentComponents[QLatin1String("Platform")] + QLatin1Char(' ') + m_userAgentComponents[QLatin1String("EngineVersion")] + QLatin1String(" (KHTML, like Gecko) ") + m_userAgentComponents[QLatin1String("ApplicationVersion")];
+	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
+	m_userAgentComponents[QLatin1String("applicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
 
 	page->deleteLater();
 }
@@ -177,7 +175,9 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	return m_defaultUserAgent;
+	const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
+
+	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }
 
 QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)

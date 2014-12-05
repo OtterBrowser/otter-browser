@@ -52,13 +52,10 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
 	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
-	m_ignoreJavaScriptPopups(false),
-	m_isGlobalUserAgent(true)
+	m_ignoreJavaScriptPopups(false)
 {
 	setPluginFactory(m_pluginFactory);
-	optionChanged(QLatin1String("Network/UserAgent"), SettingsManager::getValue(QLatin1String("Network/UserAgent")));
-	optionChanged(QLatin1String("Content/ZoomTextOnly"), SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")));
-	optionChanged(QLatin1String("Content/BackgroundColor"), QVariant());
+	updatePageStyleSheets();
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
@@ -71,14 +68,9 @@ QtWebKitWebPage::QtWebKitWebPage()
 
 void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Network/UserAgent"))
-	{
-		if (m_isGlobalUserAgent)
-		{
-			setUserAgent(value.toString(), NetworkManagerFactory::getUserAgent(value.toString()).value, false);
-		}
-	}
-	else if (option.startsWith(QLatin1String("Content/")))
+	Q_UNUSED(value)
+
+	if (option.startsWith(QLatin1String("Content/")))
 	{
 		updatePageStyleSheets();
 	}
@@ -207,13 +199,6 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 	QWebPage::setParent(parent);
 }
 
-void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool manual)
-{
-	m_userAgentIdentifier = identifier;
-	m_userAgentValue = value;
-	m_isGlobalUserAgent = !manual;
-}
-
 QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
@@ -241,19 +226,12 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 
 QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
 {
-	Q_UNUSED(url)
-
-	return m_backend->getUserAgent(m_userAgentValue);
+	return m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
 }
 
 QString QtWebKitWebPage::getDefaultUserAgent() const
 {
 	return QWebPage::userAgentForUrl(QUrl());
-}
-
-QPair<QString, QString> QtWebKitWebPage::getUserAgent() const
-{
-	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
 }
 
 bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)

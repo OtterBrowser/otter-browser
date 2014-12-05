@@ -54,7 +54,6 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
-	QPair<QString, QString> getUserAgent() const;
 	int getReloadTime() const;
 	int getZoom() const;
 	bool canClone() const;
@@ -66,7 +65,6 @@ public:
 public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(ActionIdentifier action, bool checked = false);
-	void setUserAgent(const QString &identifier, const QString &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setReloadTime(int time);
 	void setZoom(int zoom);

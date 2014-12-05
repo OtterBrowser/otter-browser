@@ -87,7 +87,6 @@ public:
 	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
-	virtual QPair<QString, QString> getUserAgent() const = 0;
 	virtual int getReloadTime() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;
@@ -101,7 +100,6 @@ public slots:
 	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
-	virtual void setUserAgent(const QString &identifier, const QString &value) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setReloadTime(int time);
 	virtual void setZoom(int zoom) = 0;

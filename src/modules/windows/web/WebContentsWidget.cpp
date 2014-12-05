@@ -332,11 +332,6 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 	}
 }
 
-void WebContentsWidget::setUserAgent(const QString &identifier, const QString &value)
-{
-	m_webWidget->setUserAgent(identifier, value);
-}
-
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	m_webWidget->setHistory(history);
@@ -533,11 +528,6 @@ QPixmap WebContentsWidget::getThumbnail() const
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
-}
-
-QPair<QString, QString> WebContentsWidget::getUserAgent() const
-{
-	return m_webWidget->getUserAgent();
 }
 
 int WebContentsWidget::getReloadTime() const

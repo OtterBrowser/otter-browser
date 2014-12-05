@@ -461,7 +461,7 @@ void MainWindow::actionUserAgent(QAction *action)
 {
 	if (action)
 	{
-		m_windowsManager->setUserAgent(action->data().toString());
+		m_windowsManager->setOption(QLatin1String("Network/UserAgent"), action->data().toString());
 	}
 }
 
@@ -723,7 +723,7 @@ void MainWindow::menuUserAgentAboutToShow()
 	}
 
 	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
-	const QString userAgent = m_windowsManager->getUserAgent().first.toLower();
+	const QString userAgent = m_windowsManager->getOption(QLatin1String("Network/UserAgent")).toString();
 
 	m_userAgentGroup = new QActionGroup(this);
 	m_userAgentGroup->setExclusive(true);
@@ -753,7 +753,7 @@ void MainWindow::menuUserAgentAboutToShow()
 	QAction *customAction = userAgentMenu->addAction(tr("Custom"));
 	customAction->setData(QLatin1String("custom"));
 	customAction->setCheckable(true);
-	customAction->setChecked(userAgent == QLatin1String("custom"));
+	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
 
 	m_userAgentGroup->addAction(customAction);
 

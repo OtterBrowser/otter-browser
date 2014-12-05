@@ -407,7 +407,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 			if (sessionEntry.windows.at(j).userAgent != defaultUserAgent)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).userAgent);
+				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).userAgent, true);
 			}
 
 			if (sessionEntry.windows.at(j).reloadTime != -1)

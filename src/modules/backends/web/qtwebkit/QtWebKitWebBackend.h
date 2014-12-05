@@ -46,7 +46,6 @@ protected slots:
 private:
 	bool m_isInitialized;
 
-	static QString m_defaultUserAgent;
 	static QMap<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
 };

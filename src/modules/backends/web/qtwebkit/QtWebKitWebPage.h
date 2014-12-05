@@ -44,8 +44,6 @@ public:
 
 	void triggerAction(WebAction action, bool checked = false);
 	void setParent(QtWebKitWebWidget *parent);
-	void setUserAgent(const QString &identifier, const QString &value, bool manual = true);
-	QPair<QString, QString> getUserAgent() const;
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
@@ -75,10 +73,7 @@ private:
 	QtWebKitWebWidget *m_widget;
 	QtWebKitWebPluginFactory *m_pluginFactory;
 	WebBackend *m_backend;
-	QString m_userAgentIdentifier;
-	QString m_userAgentValue;
 	bool m_ignoreJavaScriptPopups;
-	bool m_isGlobalUserAgent;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
