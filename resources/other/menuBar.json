@@ -2,7 +2,7 @@
 	{
 		"identifier": "MenuFile",
 		"type": "menu",
-		"title": "File",
+		"title": "&File",
 		"actions":
 		[
 			"NewTab",
@@ -44,7 +44,7 @@
 	{
 		"identifier": "MenuEdit",
 		"type": "menu",
-		"title": "Edit",
+		"title": "&Edit",
 		"actions":
 		[
 			"Undo",
@@ -65,7 +65,7 @@
 	{
 		"identifier": "MenuView",
 		"type": "menu",
-		"title": "View",
+		"title": "&View",
 		"actions":
 		[
 			"Reload",
@@ -101,7 +101,7 @@
 	{
 		"identifier": "MenuHistory",
 		"type": "menu",
-		"title": "History",
+		"title": "Hi&story",
 		"actions":
 		[
 			"GoBack",
@@ -126,7 +126,7 @@
 	{
 		"identifier": "MenuBookmarks",
 		"type": "menu",
-		"title": "Bookmarks",
+		"title": "&Bookmarks",
 		"actions":
 		[
 			"AddBookmark",
@@ -137,7 +137,7 @@
 	{
 		"identifier": "MenuTools",
 		"type": "menu",
-		"title": "Tools",
+		"title": "&Tools",
 		"actions":
 		[
 			"Transfers",
@@ -152,7 +152,7 @@
 	{
 		"identifier": "MenuHelp",
 		"type": "menu",
-		"title": "Help",
+		"title": "&Help",
 		"actions":
 		[
 			"SwitchApplicationLanguage",
