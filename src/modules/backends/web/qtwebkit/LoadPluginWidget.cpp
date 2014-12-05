@@ -132,6 +132,8 @@ void LoadPluginWidget::loadPlugin()
 	QList<QWebFrame*> frames;
 	frames.append(view->page()->mainFrame());
 
+	bool oldValue = view->page()->settings()->testAttribute(QWebSettings::JavascriptEnabled);
+	view->page()->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 	m_isSwapping = true;
 
 	while (!frames.isEmpty())
@@ -143,6 +145,8 @@ void LoadPluginWidget::loadPlugin()
 		{
 			if (elements.at(i).evaluateJavaScript(QLatin1String("this.isSwapping")).toBool())
 			{
+				view->page()->settings()->setAttribute(QWebSettings::JavascriptEnabled, oldValue);
+
 				hide();
 
 				emit pluginLoaded();
@@ -157,6 +161,7 @@ void LoadPluginWidget::loadPlugin()
 
 		frames.append(frame->childFrames());
 	}
+	view->page()->settings()->setAttribute(QWebSettings::JavascriptEnabled, oldValue);
 }
 
 bool LoadPluginWidget::isSwapping() const
