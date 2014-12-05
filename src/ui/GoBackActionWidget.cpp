@@ -45,16 +45,18 @@ void GoBackActionWidget::enterEvent(QEvent *event)
 	if (m_window)
 	{
 		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
+		const bool hasShortcut = (defaultAction() && !defaultAction()->shortcut().isEmpty());
 
 		if (history.entries.isEmpty() || history.index == 0)
 		{
-			setToolTip(tr("Back"));
+			setToolTip(hasShortcut ? tr("Back (%1)").arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)) : tr("Back"));
 		}
 		else
 		{
 			QString title = history.entries.at(history.index - 1).title;
+			title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
 
-			setToolTip(tr("%1 (Back)").arg(title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))));
+			setToolTip(hasShortcut ? tr("%1 (Back - %2)").arg(title).arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)) : tr("%1 (Back)").arg(title));
 		}
 	}
 }

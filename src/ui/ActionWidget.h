@@ -35,6 +35,9 @@ class ActionWidget : public QToolButton
 
 public:
 	explicit ActionWidget(ActionIdentifier identifier, Window *window, QWidget *parent = NULL);
+
+protected:
+	void enterEvent(QEvent *event);
 };
 
 }

@@ -38,4 +38,14 @@ ActionWidget::ActionWidget(ActionIdentifier identifier, Window *window, QWidget 
 	}
 }
 
+void ActionWidget::enterEvent(QEvent *event)
+{
+	QToolButton::enterEvent(event);
+
+	if (defaultAction() && !defaultAction()->shortcut().isEmpty())
+	{
+		setToolTip(QStringLiteral("%1 (%2)").arg(defaultAction()->text()).arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)));
+	}
+}
+
 }
