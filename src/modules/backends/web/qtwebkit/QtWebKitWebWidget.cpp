@@ -574,7 +574,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 			break;
 		case ReloadImageAction:
-			if ((!m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName() == QLatin1String("img")) && !m_hitResult.element().isNull())
+			if ((!m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img")) && !m_hitResult.element().isNull())
 			{
 				if (getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
@@ -1055,7 +1055,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		}
 	}
 
-	if (!m_hitResult.pixmap().isNull() || !m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName() == QLatin1String("img"))
+	if (!m_hitResult.pixmap().isNull() || !m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img"))
 	{
 		flags |= ImageMenu;
 
