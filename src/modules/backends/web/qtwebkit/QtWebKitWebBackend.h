@@ -47,7 +47,8 @@ private:
 	bool m_isInitialized;
 
 	static QString m_defaultUserAgent;
-	static QHash<QString, QString> m_userAgentComponents;
+	static QMap<QString, QString> m_userAgentComponents;
+	static QMap<QString, QString> m_userAgents;
 };
 
 }

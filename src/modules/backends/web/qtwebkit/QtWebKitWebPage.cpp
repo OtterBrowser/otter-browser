@@ -209,8 +209,7 @@ void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
 
 void QtWebKitWebPage::setUserAgent(const QString &identifier, const QString &value, bool manual)
 {
-	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() : identifier);
-	m_userAgentParsed = m_backend->getUserAgent(value);
+	m_userAgentIdentifier = identifier;
 	m_userAgentValue = value;
 	m_isGlobalUserAgent = !manual;
 }
@@ -244,12 +243,7 @@ QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
 {
 	Q_UNUSED(url)
 
-	if (!m_userAgentIdentifier.isEmpty())
-	{
-		return m_userAgentParsed;
-	}
-
-	return m_backend->getUserAgent();
+	return m_backend->getUserAgent(m_userAgentValue);
 }
 
 QString QtWebKitWebPage::getDefaultUserAgent() const

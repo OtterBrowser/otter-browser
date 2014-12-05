@@ -33,7 +33,8 @@ namespace Otter
 {
 
 QString QtWebKitWebBackend::m_defaultUserAgent;
-QHash<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
+QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
+QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
@@ -158,13 +159,20 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 {
 	if (!pattern.isEmpty())
 	{
+		if (m_userAgents.contains(pattern))
+		{
+			return (m_userAgents[pattern].isEmpty() ? pattern : m_userAgents[pattern]);
+		}
+
 		QString userAgent = pattern;
-		QHash<QString, QString>::iterator iterator;
+		QMap<QString, QString>::iterator iterator;
 
 		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
 		{
 			userAgent = userAgent.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
 		}
+
+		m_userAgents[pattern] = ((pattern == userAgent) ? QString() : userAgent);
 
 		return userAgent;
 	}
