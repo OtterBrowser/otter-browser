@@ -1024,6 +1024,8 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 					frames.append(frame->childFrames());
 				}
+
+				getAction(LoadPluginsAction)->setEnabled(false);
 			}
 
 			break;

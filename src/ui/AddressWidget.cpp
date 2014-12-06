@@ -21,6 +21,7 @@
 
 #include "AddressWidget.h"
 #include "BookmarkPropertiesDialog.h"
+#include "ContentsWidget.h"
 #include "Window.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
@@ -48,6 +49,7 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
+	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
 	m_lookupIdentifier(0),
 	m_lookupTimer(0),
@@ -135,15 +137,7 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	QLineEdit::resizeEvent(event);
 
-	if (m_bookmarkLabel)
-	{
-		m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
-	}
-
-	if (m_urlIconLabel)
-	{
-		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
-	}
+	updateIcons();
 }
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
@@ -335,15 +329,19 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_bookmarkLabel->setObjectName(QLatin1String("Bookmark"));
 			m_bookmarkLabel->setAutoFillBackground(false);
 			m_bookmarkLabel->setFixedSize(16, 16);
-			m_bookmarkLabel->move((width() - 22), 4);
 			m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
 			m_bookmarkLabel->setCursor(Qt::ArrowCursor);
+			m_bookmarkLabel->setFocusPolicy(Qt::NoFocus);
 			m_bookmarkLabel->installEventFilter(this);
+
+			updateIcons();
 		}
 		else if (!value.toBool() && m_bookmarkLabel)
 		{
 			m_bookmarkLabel->deleteLater();
 			m_bookmarkLabel = NULL;
+
+			updateIcons();
 		}
 	}
 	else if (option == QLatin1String("AddressField/ShowUrlIcon"))
@@ -355,13 +353,20 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
 			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
-			m_urlIconLabel->move(36, 4);
+			m_urlIconLabel->setFocusPolicy(Qt::NoFocus);
 			m_urlIconLabel->installEventFilter(this);
 
 			QMargins margins = textMargins();
 			margins.setLeft(52);
 
 			setTextMargins(margins);
+
+			if (m_window)
+			{
+				connect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+			}
+
+			updateIcons();
 		}
 		else
 		{
@@ -369,13 +374,33 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			{
 				m_urlIconLabel->deleteLater();
 				m_urlIconLabel = NULL;
+
+				updateIcons();
 			}
 
 			QMargins margins = textMargins();
 			margins.setLeft(30);
 
 			setTextMargins(margins);
+
+			if (m_window)
+			{
+				disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+			}
 		}
+	}
+	else if (option == QLatin1String("AddressField/ShowLoadPluginsIcon") && m_window)
+	{
+		if (value.toBool())
+		{
+			connect(m_window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+		}
+		else
+		{
+			disconnect(m_window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+		}
+
+		updateLoadPlugins();
 	}
 }
 
@@ -442,6 +467,52 @@ void AddressWidget::updateBookmark()
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
 
+void AddressWidget::updateLoadPlugins()
+{
+	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(LoadPluginsAction)->isEnabled());
+
+	if (canLoadPlugins && !m_loadPluginsLabel)
+	{
+		m_loadPluginsLabel = new QLabel(this);
+		m_loadPluginsLabel->show();
+		m_loadPluginsLabel->setObjectName(QLatin1String("LoadPlugins"));
+		m_loadPluginsLabel->setAutoFillBackground(false);
+		m_loadPluginsLabel->setFixedSize(16, 16);
+		m_loadPluginsLabel->setPixmap(Utils::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
+		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
+		m_loadPluginsLabel->setToolTip(tr("Click to load all contents handled by plugins on the page"));
+		m_loadPluginsLabel->setFocusPolicy(Qt::NoFocus);
+		m_loadPluginsLabel->installEventFilter(this);
+
+		updateIcons();
+	}
+	else if (!canLoadPlugins && m_loadPluginsLabel)
+	{
+		m_loadPluginsLabel->deleteLater();
+		m_loadPluginsLabel = NULL;
+
+		updateIcons();
+	}
+}
+
+void AddressWidget::updateIcons()
+{
+	if (m_bookmarkLabel)
+	{
+		m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
+	}
+
+	if (m_loadPluginsLabel)
+	{
+		m_loadPluginsLabel->move((width() - 22 - (m_bookmarkLabel ? 22 : 0)), ((height() - m_loadPluginsLabel->height()) / 2));
+	}
+
+	if (m_urlIconLabel)
+	{
+		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
+	}
+}
+
 void AddressWidget::setCompletion(const QString &text)
 {
 	m_completer->setCompletionPrefix(text);
@@ -472,15 +543,28 @@ void AddressWidget::setUrl(const QUrl &url)
 
 void AddressWidget::setWindow(Window *window)
 {
+	if (m_window)
+	{
+		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		disconnect(m_window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+	}
+
 	m_window = window;
 
-	if (window && m_urlIconLabel)
+	if (window)
 	{
-		setIcon(window->getIcon());
-		setUrl(window->getUrl());
+		if (m_urlIconLabel)
+		{
+			setIcon(window->getIcon());
+			setUrl(window->getUrl());
 
-		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		}
+
+		connect(window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 	}
+
+	updateLoadPlugins();
 }
 
 QUrl AddressWidget::getUrl() const
@@ -518,6 +602,22 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				updateBookmark();
 			}
 
+			event->accept();
+
+			return true;
+		}
+	}
+
+	if (object == m_loadPluginsLabel && m_loadPluginsLabel && m_window && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+		{
+			m_window->getContentsWidget()->triggerAction(LoadPluginsAction);
+
+			event->accept();
+
 			return true;
 		}
 	}
@@ -534,7 +634,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 			menu.exec(contextMenuEvent->globalPos());
 
-			contextMenuEvent->accept();
+			event->accept();
 
 			return true;
 		}

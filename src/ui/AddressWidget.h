@@ -64,6 +64,8 @@ protected slots:
 	void verifyLookup(const QHostInfo &host);
 	void notifyRequestedLoadUrl();
 	void updateBookmark();
+	void updateLoadPlugins();
+	void updateIcons();
 	void setCompletion(const QString &text);
 	void setIcon(const QIcon &icon);
 
@@ -71,6 +73,7 @@ private:
 	Window *m_window;
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
+	QLabel *m_loadPluginsLabel;
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;
 	QString m_lookupQuery;
