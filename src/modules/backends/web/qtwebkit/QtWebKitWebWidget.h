@@ -36,7 +36,7 @@ class ContentsDialog;
 class NetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitWebPage;
-class QtWebKitWebPluginFactory;
+class QtWebKitPluginFactory;
 
 class QtWebKitWebWidget : public WebWidget
 {
@@ -111,7 +111,7 @@ protected slots:
 private:
 	QWebView *m_webView;
 	QtWebKitWebPage *m_page;
-	QtWebKitWebPluginFactory *m_pluginFactory;
+	QtWebKitPluginFactory *m_pluginFactory;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
 	NetworkManager *m_networkManager;
@@ -133,7 +133,7 @@ signals:
 
 friend class QtWebKitWebBackend;
 friend class QtWebKitWebPage;
-friend class QtWebKitWebPluginFactory;
+friend class QtWebKitPluginFactory;
 };
 
 }

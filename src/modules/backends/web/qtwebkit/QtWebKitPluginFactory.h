@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_QTWEBKITWEBPLUGINFACTORY_H
-#define OTTER_QTWEBKITWEBPLUGINFACTORY_H
+#ifndef OTTER_QTWEBKITPLUGINFACTORY_H
+#define OTTER_QTWEBKITPLUGINFACTORY_H
 
 #include <QtWebKit/QWebPluginFactory>
 
@@ -28,12 +28,12 @@ namespace Otter
 
 class QtWebKitWebWidget;
 
-class QtWebKitWebPluginFactory : public QWebPluginFactory
+class QtWebKitPluginFactory : public QWebPluginFactory
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebPluginFactory(QtWebKitWebWidget *parent);
+	explicit QtWebKitPluginFactory(QtWebKitWebWidget *parent);
 
 	QObject* create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const;
 	QList<QWebPluginFactory::Plugin> plugins() const;

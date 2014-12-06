@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_QTWEBKIT_PLUGINWIDGET_H
-#define OTTER_QTWEBKIT_PLUGINWIDGET_H
+#ifndef OTTER_QTWEBKITPLUGINWIDGET_H
+#define OTTER_QTWEBKITPLUGINWIDGET_H
 
 #include <QtCore/QUrl>
 #include <QtWidgets/QWidget>
@@ -27,12 +27,12 @@
 namespace Otter
 {
 
-class PluginWidget : public QWidget
+class QtWebKitPluginWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent = NULL);
+	explicit QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent = NULL);
 
 protected:
 	void paintEvent(QPaintEvent *event);

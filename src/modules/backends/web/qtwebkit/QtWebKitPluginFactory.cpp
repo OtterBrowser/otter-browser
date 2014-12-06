@@ -18,33 +18,33 @@
 *
 **************************************************************************/
 
-#include "QtWebKitWebPluginFactory.h"
+#include "QtWebKitPluginFactory.h"
+#include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebWidget.h"
-#include "PluginWidget.h"
 #include "../../../../core/SettingsManager.h"
 
 namespace Otter
 {
 
-QtWebKitWebPluginFactory::QtWebKitWebPluginFactory(QtWebKitWebWidget *parent) : QWebPluginFactory(parent),
+QtWebKitPluginFactory::QtWebKitPluginFactory(QtWebKitWebWidget *parent) : QWebPluginFactory(parent),
 	m_widget(parent)
 {
 }
 
-QObject* QtWebKitWebPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
+QObject* QtWebKitPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
 {
 	//TODO: add support to recognize unsupported plugins and show apropriate message
 	if (SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), m_widget->getUrl()).toString() == QLatin1String("onDemand") && (!argumentNames.contains(QLatin1String("data-otter-browser")) || argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) != m_widget->getPluginToken()))
 	{
 		m_widget->clearPluginToken();
 
-		return new PluginWidget(mimeType, url, m_widget);
+		return new QtWebKitPluginWidget(mimeType, url, m_widget);
 	}
 
 	return NULL;
 }
 
-QList<QWebPluginFactory::Plugin> QtWebKitWebPluginFactory::plugins() const
+QList<QWebPluginFactory::Plugin> QtWebKitPluginFactory::plugins() const
 {
 	return QList<QWebPluginFactory::Plugin>();
 }

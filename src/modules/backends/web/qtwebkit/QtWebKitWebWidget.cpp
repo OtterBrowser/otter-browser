@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "QtWebKitWebWidget.h"
+#include "QtWebKitPluginFactory.h"
 #include "QtWebKitWebPage.h"
-#include "QtWebKitWebPluginFactory.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
@@ -67,7 +67,7 @@ namespace Otter
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(new QtWebKitWebPage(this)),
-	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
+	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(NULL),
 	m_inspectorCloseButton(NULL),
 	m_networkManager(NULL),
@@ -2004,7 +2004,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (widget && widget->metaObject()->className() == QLatin1String("Otter::PluginWidget") && (m_hitResult.element().tagName().toLower() == QLatin1String("object") || m_hitResult.element().tagName().toLower() == QLatin1String("embed")))
+				if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (m_hitResult.element().tagName().toLower() == QLatin1String("object") || m_hitResult.element().tagName().toLower() == QLatin1String("embed")))
 				{
 					m_pluginToken = QUuid::createUuid().toString();
 

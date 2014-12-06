@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "PluginWidget.h"
+#include "QtWebKitPluginWidget.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
@@ -26,13 +26,13 @@
 namespace Otter
 {
 
-PluginWidget::PluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
+QtWebKitPluginWidget::QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
 	m_isHovered(false)
 {
 	setToolTip(tr("Click to load content (%1) handled by plugin from: %2").arg(mimeType).arg(url.toDisplayString()));
 }
 
-void PluginWidget::paintEvent(QPaintEvent *event)
+void QtWebKitPluginWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
 
@@ -72,7 +72,7 @@ void PluginWidget::paintEvent(QPaintEvent *event)
 	painter.fillPath(path, QColor(255, 255, 255));
 }
 
-void PluginWidget::enterEvent(QEvent *event)
+void QtWebKitPluginWidget::enterEvent(QEvent *event)
 {
 	QWidget::enterEvent(event);
 
@@ -81,7 +81,7 @@ void PluginWidget::enterEvent(QEvent *event)
 	update();
 }
 
-void PluginWidget::leaveEvent(QEvent *event)
+void QtWebKitPluginWidget::leaveEvent(QEvent *event)
 {
 	QWidget::leaveEvent(event);
 
