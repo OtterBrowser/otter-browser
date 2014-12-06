@@ -28,6 +28,18 @@
 #include <QtWebKitWidgets/QWebView>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QToolButton>
+#include <QHash>
+
+#define SCROLL_FACTOR              20
+#define SCROLL_CURSOR_MIDDLE       0
+#define SCROLL_CURSOR_TOP          1
+#define SCROLL_CURSOR_TOP_RIGHT    2
+#define SCROLL_CURSOR_RIGHT        3
+#define SCROLL_CURSOR_BOTTOM_RIGHT 4
+#define SCROLL_CURSOR_BOTTOM       5
+#define SCROLL_CURSOR_BOTTOM_LEFT  6
+#define SCROLL_CURSOR_LEFT         7
+#define SCROLL_CURSOR_TOP_LEFT     8
 
 namespace Otter
 {
@@ -78,12 +90,17 @@ public slots:
 protected:
 	explicit QtWebKitWebWidget(bool isPrivate = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
 
+	void keyPressEvent(QKeyEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void setHistory(QDataStream &stream);
 	void setNetworkManager(NetworkManager *manager);
 	void setOptions(const QVariantHash &options);
+	void scrollStart();
+	void scrollStop();
+	void timerEvent(QTimerEvent *event);
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(ActionIdentifier action) const;
 
@@ -122,6 +139,11 @@ private:
 	bool m_isLoading;
 	bool m_isReloading;
 	bool m_isTyped;
+	bool m_isInScroll;
+	int m_scrollTimer;
+	int m_scrollStartX;
+	int m_scrollStartY;
+	QHash<int, QPixmap> m_scrollCursors;
 
 signals:
 	void aboutToReload();
