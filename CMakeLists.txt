@@ -145,7 +145,7 @@ set(otter_src
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/ui/toolbars/ZoomWidget.cpp
-	src/modules/backends/web/qtwebkit/LoadPluginWidget.cpp
+	src/modules/backends/web/qtwebkit/PluginWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebPluginFactory.cpp

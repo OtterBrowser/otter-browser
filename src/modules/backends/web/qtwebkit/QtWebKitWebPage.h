@@ -30,7 +30,6 @@ namespace Otter
 {
 
 class QtWebKitWebBackend;
-class QtWebKitWebPluginFactory;
 class QtWebKitWebWidget;
 class WebBackend;
 class WebWidget;
@@ -71,7 +70,6 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_widget;
-	QtWebKitWebPluginFactory *m_pluginFactory;
 	WebBackend *m_backend;
 	bool m_ignoreJavaScriptPopups;
 

@@ -1,9 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2009 Jakub Wieczorek <faw217@gmail.com>
-* Copyright (C) 2009 by Benjamin C. Meyer <ben@meyerhome.net>
-* Copyright (C) 2010-2011 by Matthieu Gicquel <matgic78@gmail.com>
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,35 +21,25 @@
 #ifndef OTTER_QTWEBKITWEBPLUGINFACTORY_H
 #define OTTER_QTWEBKITWEBPLUGINFACTORY_H
 
-#include <QtCore/QList>
-#include <QtCore/QUrl>
 #include <QtWebKit/QWebPluginFactory>
-#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {
+
+class QtWebKitWebWidget;
 
 class QtWebKitWebPluginFactory : public QWebPluginFactory
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebPluginFactory(QWebPage *parent);
+	explicit QtWebKitWebPluginFactory(QtWebKitWebWidget *parent);
 
-	void setBaseUrl(const QUrl url);
 	QObject* create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const;
 	QList<QWebPluginFactory::Plugin> plugins() const;
 
-protected slots:
-	void setPluginIsLoaded(bool isLoaded = true);
-
 private:
-	QWebPage *m_page;
-	QUrl m_baseUrl;
-	bool m_pluginIsLoaded;
-
-signals:
-	void pluginIsLoaded(bool isLoaded) const;
+	QtWebKitWebWidget *m_widget;
 };
 
 }

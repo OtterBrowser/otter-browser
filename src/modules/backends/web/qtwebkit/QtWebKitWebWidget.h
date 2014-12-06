@@ -36,6 +36,7 @@ class ContentsDialog;
 class NetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitWebPage;
+class QtWebKitWebPluginFactory;
 
 class QtWebKitWebWidget : public WebWidget
 {
@@ -80,10 +81,12 @@ protected:
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
+	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void setHistory(QDataStream &stream);
 	void setNetworkManager(NetworkManager *manager);
 	void setOptions(const QVariantHash &options);
+	QString getPluginToken() const;
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(ActionIdentifier action) const;
 
@@ -108,10 +111,12 @@ protected slots:
 private:
 	QWebView *m_webView;
 	QtWebKitWebPage *m_page;
+	QtWebKitWebPluginFactory *m_pluginFactory;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
 	NetworkManager *m_networkManager;
 	QSplitter *m_splitter;
+	QString m_pluginToken;
 	QPixmap m_thumbnail;
 	QPoint m_hotclickPosition;
 	QWebHitTestResult m_hitResult;
@@ -128,6 +133,7 @@ signals:
 
 friend class QtWebKitWebBackend;
 friend class QtWebKitWebPage;
+friend class QtWebKitWebPluginFactory;
 };
 
 }

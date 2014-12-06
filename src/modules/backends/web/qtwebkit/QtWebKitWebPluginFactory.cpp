@@ -1,9 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2009 Jakub Wieczorek <faw217@gmail.com>
-* Copyright (C) 2009 by Benjamin C. Meyer <ben@meyerhome.net>
-* Copyright (C) 2010-2011 by Matthieu Gicquel <matgic78@gmail.com>
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,46 +19,26 @@
 **************************************************************************/
 
 #include "QtWebKitWebPluginFactory.h"
-#include "LoadPluginWidget.h"
+#include "QtWebKitWebWidget.h"
+#include "PluginWidget.h"
 #include "../../../../core/SettingsManager.h"
 
 namespace Otter
 {
 
-QtWebKitWebPluginFactory::QtWebKitWebPluginFactory(QWebPage *parent) : QWebPluginFactory(parent),
-	m_page(parent),
-	m_pluginIsLoaded(false)
+QtWebKitWebPluginFactory::QtWebKitWebPluginFactory(QtWebKitWebWidget *parent) : QWebPluginFactory(parent),
+	m_widget(parent)
 {
-	connect(this, SIGNAL(pluginIsLoaded(bool)), this, SLOT(setPluginIsLoaded(bool)));
-}
-
-void QtWebKitWebPluginFactory::setPluginIsLoaded(bool isLoaded)
-{
-	m_pluginIsLoaded = isLoaded;
-}
-
-void QtWebKitWebPluginFactory::setBaseUrl(const QUrl url)
-{
-	m_baseUrl = url;
 }
 
 QObject* QtWebKitWebPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
 {
-	Q_UNUSED(argumentNames);
-	Q_UNUSED(argumentValues);
-
 	//TODO: add support to recognize unsupported plugins and show apropriate message
-	if (SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), m_baseUrl).toString() == QLatin1String("onDemand") && !m_pluginIsLoaded)
+	if (SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), m_widget->getUrl()).toString() == QLatin1String("onDemand") && (!argumentNames.contains(QLatin1String("data-otter-browser")) || argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) != m_widget->getPluginToken()))
 	{
-		LoadPluginWidget *plugin = new LoadPluginWidget(m_page, mimeType, url);
+		m_widget->clearPluginToken();
 
-		connect(plugin, SIGNAL(pluginLoaded()), this, SLOT(setPluginIsLoaded()));
-
-		return plugin;
-	}
-	else
-	{
-		emit pluginIsLoaded(false);
+		return new PluginWidget(mimeType, url, m_widget);
 	}
 
 	return NULL;

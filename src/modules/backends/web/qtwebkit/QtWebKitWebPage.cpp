@@ -20,7 +20,6 @@
 
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebBackend.h"
-#include "QtWebKitWebPluginFactory.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
@@ -50,11 +49,9 @@ namespace Otter
 
 QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
-	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
 	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
 	m_ignoreJavaScriptPopups(false)
 {
-	setPluginFactory(m_pluginFactory);
 	updatePageStyleSheets();
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
@@ -302,8 +299,6 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 	{
 		m_widget->markPageRealoded();
 	}
-
-	m_pluginFactory->setBaseUrl(request.url());
 
 	return QWebPage::acceptNavigationRequest(frame, request, type);
 }

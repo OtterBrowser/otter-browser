@@ -19,6 +19,7 @@
 
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitWebPage.h"
+#include "QtWebKitWebPluginFactory.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
@@ -43,6 +44,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
+#include <QtCore/QUuid>
 #include <QtGui/QClipboard>
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
@@ -65,6 +67,7 @@ namespace Otter
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(new QtWebKitWebPage(this)),
+	m_pluginFactory(new QtWebKitWebPluginFactory(this)),
 	m_inspector(NULL),
 	m_inspectorCloseButton(NULL),
 	m_networkManager(NULL),
@@ -93,6 +96,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
+
+	m_page->setPluginFactory(m_pluginFactory);
 
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Cut"), this), getAction(CutAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Copy"), this), getAction(CopyAction));
@@ -415,6 +420,11 @@ void QtWebKitWebWidget::linkHovered(const QString &link)
 void QtWebKitWebWidget::markPageRealoded()
 {
 	m_isReloading = true;
+}
+
+void QtWebKitWebWidget::clearPluginToken()
+{
+	m_pluginToken = QString();
 }
 
 void QtWebKitWebWidget::openUrl(const QUrl &url, OpenHints hints)
@@ -1256,6 +1266,11 @@ void QtWebKitWebWidget::setOptions(const QVariantHash &options)
 	updateOptions(getUrl());
 }
 
+QString QtWebKitWebWidget::getPluginToken() const
+{
+	return m_pluginToken;
+}
+
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
@@ -1981,6 +1996,25 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				if (m_hitResult.linkUrl().isValid())
 				{
 					return true;
+				}
+			}
+			else if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
+			{
+				QWidget *widget = childAt(mouseEvent->pos());
+
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (widget && widget->metaObject()->className() == QLatin1String("Otter::PluginWidget") && (m_hitResult.element().tagName().toLower() == QLatin1String("object") || m_hitResult.element().tagName().toLower() == QLatin1String("embed")))
+				{
+					m_pluginToken = QUuid::createUuid().toString();
+
+					m_hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
+
+					QWebElement element = m_hitResult.element().clone();
+
+					m_hitResult.element().replace(element);
+
+					element.removeAttribute(QLatin1String("data-otter-browser"));
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))

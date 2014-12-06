@@ -1,9 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2009 Jakub Wieczorek <faw217@gmail.com>
-* Copyright (C) 2009 by Benjamin C. Meyer <ben@meyerhome.net>
-* Copyright (C) 2010-2011 by Matthieu Gicquel <matgic78@gmail.com>
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
+* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,24 +18,21 @@
 *
 **************************************************************************/
 
-#include "LoadPluginWidget.h"
+#include "PluginWidget.h"
 
 #include <QtGui/QMouseEvent>
-#include <QtWebKitWidgets/QWebFrame>
-#include <QtWebKitWidgets/QWebView>
+#include <QtGui/QPainter>
 
 namespace Otter
 {
 
-LoadPluginWidget::LoadPluginWidget(QWebPage *page, const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
-	m_page(page),
-	m_isHovered(false),
-	m_isSwapping(false)
+PluginWidget::PluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
+	m_isHovered(false)
 {
 	setToolTip(tr("Click to load content (%1) handled by plugin from: %2").arg(mimeType).arg(url.toDisplayString()));
 }
 
-void LoadPluginWidget::paintEvent(QPaintEvent *event)
+void PluginWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
 
@@ -77,7 +72,7 @@ void LoadPluginWidget::paintEvent(QPaintEvent *event)
 	painter.fillPath(path, QColor(255, 255, 255));
 }
 
-void LoadPluginWidget::enterEvent(QEvent *event)
+void PluginWidget::enterEvent(QEvent *event)
 {
 	QWidget::enterEvent(event);
 
@@ -86,82 +81,13 @@ void LoadPluginWidget::enterEvent(QEvent *event)
 	update();
 }
 
-void LoadPluginWidget::leaveEvent(QEvent *event)
+void PluginWidget::leaveEvent(QEvent *event)
 {
 	QWidget::leaveEvent(event);
 
 	m_isHovered = false;
 
 	update();
-}
-
-void LoadPluginWidget::mousePressEvent(QMouseEvent *event)
-{
-	QWidget::mousePressEvent(event);
-
-	if (event->button() == Qt::LeftButton)
-	{
-		loadPlugin();
-
-		event->accept();
-	}
-}
-
-void LoadPluginWidget::loadPlugin()
-{
-	QWidget *parent = m_page->view();
-	QWebView *view = NULL;
-
-	while (parent)
-	{
-		view = qobject_cast<QWebView*>(parent);
-
-		if (view)
-		{
-			break;
-		}
-
-		parent = parent->parentWidget();
-	}
-
-	if (!view)
-	{
-		return;
-	}
-
-	QList<QWebFrame*> frames;
-	frames.append(view->page()->mainFrame());
-
-	m_isSwapping = true;
-
-	while (!frames.isEmpty())
-	{
-		QWebFrame *frame = frames.takeFirst();
-		const QWebElementCollection elements = frame->documentElement().findAll(QLatin1String("object, embed"));
-
-		for (int i = 0; i < elements.count(); ++i)
-		{
-			if (elements.at(i).evaluateJavaScript(QLatin1String("this.isSwapping")).toBool())
-			{
-				hide();
-
-				emit pluginLoaded();
-
-				elements.at(i).replace(elements.at(i).clone());
-
-				deleteLater();
-
-				return;
-			}
-		}
-
-		frames.append(frame->childFrames());
-	}
-}
-
-bool LoadPluginWidget::isSwapping() const
-{
-	return m_isSwapping;
 }
 
 }
