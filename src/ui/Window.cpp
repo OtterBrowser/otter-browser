@@ -155,7 +155,14 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 		}
 	}
 
-	getContentsWidget()->triggerAction(action, checked);
+	if (action == GoToParentDirectory && getContentsWidget()->getType() == QLatin1String("web"))
+	{
+		getContentsWidget()->setUrl(getContentsWidget()->getUrl().resolved(QUrl(QLatin1String(".."))));
+	}
+	else
+	{
+		getContentsWidget()->triggerAction(action, checked);
+	}
 }
 
 void Window::handleSearchRequest(const QString &query, const QString &engine, OpenHints hints)

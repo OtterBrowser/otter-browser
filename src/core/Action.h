@@ -48,6 +48,7 @@ enum ActionIdentifier
 	ImagePropertiesAction,
 	GoBackAction,
 	GoForwardAction,
+	GoToParentDirectory,
 	RewindAction,
 	FastForwardAction,
 	StopAction,

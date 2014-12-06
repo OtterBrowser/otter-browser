@@ -88,6 +88,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("Sidebar"), QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
 		registerAction(QLatin1String("GoBack"), QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), true, false, false, GoBackAction);
 		registerAction(QLatin1String("GoForward"), QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), true, false, false, GoForwardAction);
+		registerAction(QLatin1String("GoToParentDirectory"), QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), QString(), QIcon(), true, false, false, GoToParentDirectory);
 		registerAction(QLatin1String("Rewind"), QT_TRANSLATE_NOOP("actions", "Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")), true, false, false, RewindAction);
 		registerAction(QLatin1String("FastForward"), QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), Utils::getIcon(QLatin1String("go-last")), true, false, false, FastForwardAction);
 		registerAction(QLatin1String("ViewHistory"), QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
