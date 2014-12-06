@@ -33,14 +33,14 @@ QtWebKitPluginFactory::QtWebKitPluginFactory(QtWebKitWebWidget *parent) : QWebPl
 QObject* QtWebKitPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
 {
 	//TODO: add support to recognize unsupported plugins and show apropriate message
-	if (m_widget->getOption(QLatin1String("Browser/EnablePlugins"), m_widget->getUrl()).toString() == QLatin1String("onDemand") && (!argumentNames.contains(QLatin1String("data-otter-browser")) || argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) != m_widget->getPluginToken()))
+	if (m_widget->canLoadPlugins() || (argumentNames.contains(QLatin1String("data-otter-browser")) && argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) == m_widget->getPluginToken()))
 	{
-		m_widget->clearPluginToken();
-
-		return new QtWebKitPluginWidget(mimeType, url, m_widget);
+		return NULL;
 	}
 
-	return NULL;
+	m_widget->clearPluginToken();
+
+	return new QtWebKitPluginWidget(mimeType, url, m_widget);
 }
 
 QList<QWebPluginFactory::Plugin> QtWebKitPluginFactory::plugins() const

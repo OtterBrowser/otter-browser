@@ -48,7 +48,7 @@ enum ActionIdentifier
 	ImagePropertiesAction,
 	GoBackAction,
 	GoForwardAction,
-	GoToParentDirectory,
+	GoToParentDirectoryAction,
 	RewindAction,
 	FastForwardAction,
 	StopAction,
@@ -107,7 +107,8 @@ enum ActionIdentifier
 	ScrollPageDownAction,
 	ScrollPageLeftAction,
 	ScrollPageRightAction,
-	QuickPreferencesAction
+	QuickPreferencesAction,
+	LoadPluginsAction
 };
 
 enum ActionScope

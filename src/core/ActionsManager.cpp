@@ -88,7 +88,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("Sidebar"), QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
 		registerAction(QLatin1String("GoBack"), QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), true, false, false, GoBackAction);
 		registerAction(QLatin1String("GoForward"), QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), true, false, false, GoForwardAction);
-		registerAction(QLatin1String("GoToParentDirectory"), QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), QString(), QIcon(), true, false, false, GoToParentDirectory);
+		registerAction(QLatin1String("GoToParentDirectory"), QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"), QString(), QIcon(), true, false, false, GoToParentDirectoryAction);
 		registerAction(QLatin1String("Rewind"), QT_TRANSLATE_NOOP("actions", "Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")), true, false, false, RewindAction);
 		registerAction(QLatin1String("FastForward"), QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), Utils::getIcon(QLatin1String("go-last")), true, false, false, FastForwardAction);
 		registerAction(QLatin1String("ViewHistory"), QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
@@ -159,6 +159,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ScrollPageLeft"), QT_TRANSLATE_NOOP("actions", "Page Left"), QString(), QIcon(), true, false, false, ScrollPageLeftAction);
 		registerAction(QLatin1String("ScrollPageRight"), QT_TRANSLATE_NOOP("actions", "Page Right"), QString(), QIcon(), true, false, false, ScrollPageRightAction);
 		registerAction(QLatin1String("QuickPreferences"), QT_TRANSLATE_NOOP("actions", "Quick Preferences"), QString(), QIcon(), true, false, false, QuickPreferencesAction);
+		registerAction(QLatin1String("LoadPlugins"), QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), Utils::getIcon(QLatin1String("preferences-plugin")), true, false, false, LoadPluginsAction);
 	}
 
 	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;

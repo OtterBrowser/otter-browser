@@ -89,6 +89,7 @@ protected:
 	QString getPluginToken() const;
 	QWebPage* getPage();
 	QWebPage::WebAction mapAction(ActionIdentifier action) const;
+	bool canLoadPlugins() const;
 
 protected slots:
 	void triggerAction();
@@ -122,6 +123,7 @@ private:
 	QWebHitTestResult m_hitResult;
 	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
+	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;

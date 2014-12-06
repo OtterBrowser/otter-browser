@@ -155,7 +155,7 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 		}
 	}
 
-	if (action == GoToParentDirectory && getContentsWidget()->getType() == QLatin1String("web"))
+	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
 	{
 		getContentsWidget()->setUrl(getContentsWidget()->getUrl().resolved(QUrl(QLatin1String(".."))));
 	}

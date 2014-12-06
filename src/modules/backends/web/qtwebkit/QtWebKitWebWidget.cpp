@@ -19,6 +19,7 @@
 
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitPluginFactory.h"
+#include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebPage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
@@ -73,6 +74,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	m_networkManager(NULL),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
+	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
@@ -224,12 +226,13 @@ void QtWebKitWebWidget::pageLoadStarted()
 		return;
 	}
 
+	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("enabled"));
 	m_isLoading = true;
-
 	m_thumbnail = QPixmap();
 
 	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
 	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
 	QAction *action = getAction(ReloadOrStopAction);
 
@@ -279,6 +282,8 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
+
+	getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
 	if (!isPrivate())
 	{
@@ -508,6 +513,8 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	}
 
 	m_page->updatePageStyleSheets();
+
+	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), url).toString() == QLatin1String("enabled"));
 }
 
 void QtWebKitWebWidget::clearOptions()
@@ -994,6 +1001,28 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					updateOptions(getUrl());
+				}
+			}
+
+			break;
+		case LoadPluginsAction:
+			{
+				m_canLoadPlugins = true;
+
+				QList<QWebFrame*> frames;
+				frames.append(m_page->mainFrame());
+
+				while (!frames.isEmpty())
+				{
+					QWebFrame *frame = frames.takeFirst();
+					const QWebElementCollection elements = frame->documentElement().findAll(QLatin1String("object, embed"));
+
+					for (int i = 0; i < elements.count(); ++i)
+					{
+						elements.at(i).replace(elements.at(i).clone());
+					}
+
+					frames.append(frame->childFrames());
 				}
 			}
 
@@ -1524,6 +1553,13 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 			actionObject->setEnabled(true);
 
 			break;
+		case LoadPluginsAction:
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("LoadPlugins"), this), actionObject);
+
+			actionObject->setEnabled(false);
+			actionObject->setShortcut(QKeySequence());
+
+			break;
 		default:
 			actionObject->deleteLater();
 			actionObject = NULL;
@@ -1792,6 +1828,11 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 	return QWebPage::NoWebAction;
 }
 
+bool QtWebKitWebWidget::canLoadPlugins() const
+{
+	return m_canLoadPlugins;
+}
+
 int QtWebKitWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
@@ -2015,6 +2056,8 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					m_hitResult.element().replace(element);
 
 					element.removeAttribute(QLatin1String("data-otter-browser"));
+
+					getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
