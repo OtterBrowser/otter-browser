@@ -142,6 +142,11 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
 {
+	if (event->reason() == Qt::MouseFocusReason && childAt(mapFromGlobal(QCursor::pos())))
+	{
+		return;
+	}
+
 	QLineEdit::focusInEvent(event);
 
 	if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
