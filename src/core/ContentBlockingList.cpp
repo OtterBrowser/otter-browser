@@ -163,107 +163,17 @@ void ContentBlockingList::parseRuleLine(QString line)
 		return;
 	}
 
-	ContentBlockingRule rule;
-	rule.isException = false;
-	rule.needsDomainCheck = false;
-	rule.ruleType = StandardFilterRule;
-	rule.ruleOption = NoOption;
-	rule.exceptionRuleOption = NoOption;
-
-	int optionSeparator = line.indexOf(QLatin1Char('$'));
+	const int optionSeparator = line.indexOf(QLatin1Char('$'));
+	QStringList options;
 
 	if (optionSeparator >= 0)
 	{
-		QStringList options = line.mid(optionSeparator + 1).split(QLatin1Char(','), QString::SkipEmptyParts);
-
-		for (int i = 0; i < options.count(); ++i)
-		{
-			const bool optionException = options.at(i).startsWith(QLatin1Char('~'));
-
-			if (options.at(i).contains(QLatin1String("third-party")))
-			{
-				rule.ruleOption |= ThirdPartyOption;
-				rule.exceptionRuleOption |= optionException ? ThirdPartyOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("stylesheet")))
-			{
-				rule.ruleOption |= StyleSheetOption;
-				rule.exceptionRuleOption |= optionException ? StyleSheetOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("image")))
-			{
-				rule.ruleOption |= ImageOption;
-				rule.exceptionRuleOption |= optionException ? ImageOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("script")))
-			{
-				rule.ruleOption |= ScriptOption;
-				rule.exceptionRuleOption |= optionException ? ScriptOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("object")))
-			{
-				rule.ruleOption |= ObjectOption;
-				rule.exceptionRuleOption |= optionException ? ObjectOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("object-subrequest")) || options.at(i).contains(QLatin1String("object_subrequest")))
-			{
-				rule.ruleOption |= ObjectSubRequestOption;
-				rule.exceptionRuleOption |= optionException ? ObjectSubRequestOption : NoOption;
-				// TODO
-				return;
-			}
-			else if (options.at(i).contains(QLatin1String("subdocument")))
-			{
-				rule.ruleOption |= SubDocumentOption;
-				rule.exceptionRuleOption |= optionException ? SubDocumentOption : NoOption;
-				// TODO
-				return;
-			}
-			else if (options.at(i).contains(QLatin1String("xmlhttprequest")))
-			{
-				rule.ruleOption |= XmlHttpRequestOption;
-				rule.exceptionRuleOption |= optionException ? XmlHttpRequestOption : NoOption;
-			}
-			else if (options.at(i).contains(QLatin1String("domain")))
-			{
-				const QStringList parsedDomains = options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), QString::SkipEmptyParts);
-
-				for (int j = 0; j < parsedDomains.count(); ++j)
-				{
-					if (parsedDomains.at(j).startsWith(QLatin1Char('~')))
-					{
-						rule.allowedDomains.append(parsedDomains.at(j).mid(1));
-
-						continue;
-					}
-
-					rule.blockedDomains.append(parsedDomains.at(j));
-				}
-			}
-			else
-			{
-				return;
-			}
-		}
+		options = line.mid(optionSeparator + 1).split(QLatin1Char(','), QString::SkipEmptyParts);
 
 		line = line.left(optionSeparator);
 	}
 
-	if (line.startsWith(QLatin1String("@@")))
-	{
-		line = line.mid(2);
-
-		rule.isException = true;
-	}
-
-	if (line.startsWith(QLatin1String("||")))
-	{
-		line = line.mid(2);
-
-		rule.needsDomainCheck = true;
-	}
-
-	if (line.endsWith(QLatin1Char('|')) || line.endsWith(QLatin1Char('*')) || line.endsWith(QLatin1Char('^')))
+	while (line.endsWith(QLatin1Char('|')) || line.endsWith(QLatin1Char('*')) || line.endsWith(QLatin1Char('^')))
 	{
 		line = line.left(line.length() - 1);
 	}
@@ -273,16 +183,110 @@ void ContentBlockingList::parseRuleLine(QString line)
 		line = line.mid(1);
 	}
 
-	if (line.contains(QLatin1Char('*')) || line.contains(QLatin1Char('^')) || line.contains(QLatin1Char('|')))
+	if (line.contains(QLatin1Char('*')) || line.contains(QLatin1Char('^')))
 	{
 		// TODO
-
 		return;
 	}
 
-	rule.rule = line;
+	ContentBlockingRule *rule = new ContentBlockingRule();
+	rule->ruleOption = NoOption;
+	rule->exceptionRuleOption = NoOption;
+	rule->isException = false;
+	rule->needsDomainCheck = false;
 
-	addRule(rule);
+	if (line.startsWith(QLatin1String("@@")))
+	{
+		line = line.mid(2);
+
+		rule->isException = true;
+	}
+
+	if (line.startsWith(QLatin1String("||")))
+	{
+		line = line.mid(2);
+
+		rule->needsDomainCheck = true;
+	}
+
+	for (int i = 0; i < options.count(); ++i)
+	{
+		const bool optionException = options.at(i).startsWith(QLatin1Char('~'));
+
+		if (options.at(i).contains(QLatin1String("third-party")))
+		{
+			rule->ruleOption |= ThirdPartyOption;
+			rule->exceptionRuleOption |= (optionException ? ThirdPartyOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("stylesheet")))
+		{
+			rule->ruleOption |= StyleSheetOption;
+			rule->exceptionRuleOption |= (optionException ? StyleSheetOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("image")))
+		{
+			rule->ruleOption |= ImageOption;
+			rule->exceptionRuleOption |= (optionException ? ImageOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("script")))
+		{
+			rule->ruleOption |= ScriptOption;
+			rule->exceptionRuleOption |= (optionException ? ScriptOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("object")))
+		{
+			rule->ruleOption |= ObjectOption;
+			rule->exceptionRuleOption |= (optionException ? ObjectOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("object-subrequest")) || options.at(i).contains(QLatin1String("object_subrequest")))
+		{
+			rule->ruleOption |= ObjectSubRequestOption;
+			rule->exceptionRuleOption |= (optionException ? ObjectSubRequestOption : NoOption);
+			// TODO
+			delete rule;
+
+			return;
+		}
+		else if (options.at(i).contains(QLatin1String("subdocument")))
+		{
+			rule->ruleOption |= SubDocumentOption;
+			rule->exceptionRuleOption |= (optionException ? SubDocumentOption : NoOption);
+			// TODO
+			delete rule;
+
+			return;
+		}
+		else if (options.at(i).contains(QLatin1String("xmlhttprequest")))
+		{
+			rule->ruleOption |= XmlHttpRequestOption;
+			rule->exceptionRuleOption |= (optionException ? XmlHttpRequestOption : NoOption);
+		}
+		else if (options.at(i).contains(QLatin1String("domain")))
+		{
+			const QStringList parsedDomains = options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), QString::SkipEmptyParts);
+
+			for (int j = 0; j < parsedDomains.count(); ++j)
+			{
+				if (parsedDomains.at(j).startsWith(QLatin1Char('~')))
+				{
+					rule->allowedDomains.append(parsedDomains.at(j).mid(1));
+
+					continue;
+				}
+
+				rule->blockedDomains.append(parsedDomains.at(j));
+			}
+		}
+		else
+		{
+			// TODO - document, elemhide
+			delete rule;
+
+			return;
+		}
+	}
+
+	addRule(rule, line);
 
 	return;
 }
@@ -297,94 +301,94 @@ void ContentBlockingList::parseCssRule(const QStringList &line, QMultiHash<QStri
 	}
 }
 
-void ContentBlockingList::resolveRuleOptions(const ContentBlockingRule &rule, const QNetworkRequest &request, bool &isBlocked)
+void ContentBlockingList::resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked)
 {
 	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
 	const QString baseUrlHost = m_baseUrl.host();
 
-	isBlocked = (rule.allowedDomains.count() > 0 ? (!resolveDomainExceptions(baseUrlHost, rule.allowedDomains)) : isBlocked);
-	isBlocked = (rule.blockedDomains.count() > 0 ? (resolveDomainExceptions(baseUrlHost, rule.blockedDomains)) : isBlocked);
+	isBlocked = ((rule->allowedDomains.count() > 0) ? !resolveDomainExceptions(baseUrlHost, rule->allowedDomains) : isBlocked);
+	isBlocked = ((rule->blockedDomains.count() > 0) ? resolveDomainExceptions(baseUrlHost, rule->blockedDomains) : isBlocked);
 
-	if (rule.ruleOption & ThirdPartyOption)
+	if (rule->ruleOption & ThirdPartyOption)
 	{
 		if (baseUrlHost.isEmpty() || m_requestSubdomainList.contains(baseUrlHost))
 		{
-			isBlocked = (rule.exceptionRuleOption & ThirdPartyOption);
+			isBlocked = (rule->exceptionRuleOption & ThirdPartyOption);
 		}
 		else
 		{
-			isBlocked = !(rule.exceptionRuleOption & ThirdPartyOption);
+			isBlocked = !(rule->exceptionRuleOption & ThirdPartyOption);
 		}
 	}
 
-	if (rule.ruleOption & ImageOption)
+	if (rule->ruleOption & ImageOption)
 	{
 		if (requestHeader.contains(QByteArray("image/")) || url.endsWith(QLatin1String(".png")) || url.endsWith(QLatin1String(".jpg")) || url.endsWith(QLatin1String(".gif")))
 		{
-			isBlocked = (isBlocked ? !(rule.exceptionRuleOption & ImageOption) : isBlocked);
+			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ImageOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule.exceptionRuleOption & ImageOption) : isBlocked);
+			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ImageOption) : isBlocked);
 		}
 	}
 
-	if (rule.ruleOption & ScriptOption)
+	if (rule->ruleOption & ScriptOption)
 	{
 		if (requestHeader.contains(QByteArray("script/")) || url.endsWith(QLatin1String(".js")))
 		{
-			isBlocked = (isBlocked ? !(rule.exceptionRuleOption & ScriptOption) : isBlocked);
+			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ScriptOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule.exceptionRuleOption & ScriptOption) : isBlocked);
+			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ScriptOption) : isBlocked);
 		}
 	}
 
-	if (rule.ruleOption & StyleSheetOption)
+	if (rule->ruleOption & StyleSheetOption)
 	{
 		if (requestHeader.contains(QByteArray("text/css")) || url.endsWith(QLatin1String(".css")))
 		{
-			isBlocked = (isBlocked ? !(rule.exceptionRuleOption & StyleSheetOption) : isBlocked);
+			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & StyleSheetOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule.exceptionRuleOption & StyleSheetOption) : isBlocked);
+			isBlocked = (isBlocked ? (rule->exceptionRuleOption & StyleSheetOption) : isBlocked);
 		}
 	}
 
-	if (rule.ruleOption & ObjectOption)
+	if (rule->ruleOption & ObjectOption)
 	{
 		if (requestHeader.contains(QByteArray("object")))
 		{
-			isBlocked = (isBlocked ? !(rule.exceptionRuleOption & ObjectOption) : isBlocked);
+			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ObjectOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule.exceptionRuleOption & ObjectOption) : isBlocked);
+			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ObjectOption) : isBlocked);
 		}
 	}
 
-	if (rule.ruleOption & SubDocumentOption)
+	if (rule->ruleOption & SubDocumentOption)
 	{
 		// TODO
 	}
 
-	if (rule.ruleOption & ObjectSubRequestOption)
+	if (rule->ruleOption & ObjectSubRequestOption)
 	{
 		// TODO
 	}
 
-	if (rule.ruleOption & XmlHttpRequestOption)
+	if (rule->ruleOption & XmlHttpRequestOption)
 	{
 		if (request.rawHeader(QByteArray("X-Requested-With")) == QByteArray("XMLHttpRequest"))
 		{
-			isBlocked = (isBlocked ? !(rule.exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
+			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule.exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
+			isBlocked = (isBlocked ? (rule->exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
 		}
 	}
 }
@@ -409,24 +413,38 @@ void ContentBlockingList::setEnabled(const bool enabled)
 	}
 }
 
-void ContentBlockingList::addRule(const ContentBlockingRule &rule)
+void ContentBlockingList::addRule(ContentBlockingRule *rule, const QString ruleString)
 {
 	Node *node = m_root;
-	const QString ruleString = rule.rule;
 
 	for (int i = 0; i < ruleString.length(); ++i)
 	{
 		const QChar value = ruleString.at(i);
+		bool childrenExists = false;
 
-		if (!node->children.contains(value))
+		for (int j = 0; j < node->children.count(); ++j)
+		{
+			Node *nextNode = node->children.at(j);
+
+			if (nextNode->value == value)
+			{
+				node = nextNode;
+
+				childrenExists = true;
+
+				break;
+			}
+		}
+
+		if (!childrenExists)
 		{
 			Node *newNode = new Node;
 			newNode->value = value;
 
-			node->children[value] = newNode;
-		}
+			node->children.append(newNode);
 
-		node = node->children[value];
+			node = newNode;
+		}
 	}
 
 	node->rule = rule;
@@ -434,15 +452,12 @@ void ContentBlockingList::addRule(const ContentBlockingRule &rule)
 
 void ContentBlockingList::deleteNode(Node *node)
 {
-	QHashIterator<QChar, Node*> iterator(node->children);
-
-	while (iterator.hasNext())
+	for (int j = 0; j < node->children.count(); ++j)
 	{
-		iterator.next();
-
-		deleteNode(iterator.value());
+		deleteNode(node->children.at(j));
 	}
 
+	delete node->rule;
 	delete node;
 }
 
@@ -597,25 +612,42 @@ bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStr
 bool ContentBlockingList::checkUrlSubstring(const QString &subString, const QNetworkRequest &request)
 {
 	Node *node = m_root;
+	m_currentRule.clear();
 
 	for (int i = 0; i < subString.length(); ++i)
 	{
 		const QChar treeChar = subString.at(i);
 
-		if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
+		if (node->rule && checkRuleMatch(node->rule, request))
 		{
 			return true;
 		}
 
-		if (!node->children.contains(treeChar))
+		bool childrenExists = false;
+
+		for (int j = 0; j < node->children.count(); ++j)
+		{
+			Node *nextNode = node->children.at(j);
+
+			if (nextNode->value == treeChar)
+			{
+				node = nextNode;
+
+				childrenExists = true;
+
+				break;
+			}
+		}
+
+		if (!childrenExists)
 		{
 			return false;
 		}
 
-		node = node->children[treeChar];
+		m_currentRule += treeChar;
 	}
 
-	if (!node->rule.rule.isEmpty() && checkRuleMatch(node->rule, request))
+	if (node->rule && checkRuleMatch(node->rule, request))
 	{
 		return true;
 	}
@@ -623,35 +655,32 @@ bool ContentBlockingList::checkUrlSubstring(const QString &subString, const QNet
 	return false;
 }
 
-bool ContentBlockingList::checkRuleMatch(const ContentBlockingRule &rule, const QNetworkRequest &request)
+bool ContentBlockingList::checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request)
 {
 	bool isBlocked = false;
 
-	if (rule.ruleType == StandardFilterRule)
+	if (request.url().url().contains(m_currentRule))
 	{
-		if (request.url().url().contains(rule.rule))
+		m_requestSubdomainList = ContentBlockingManager::createSubdomainList(request.url().host());
+
+		if (rule->needsDomainCheck)
 		{
-			m_requestSubdomainList = ContentBlockingManager::createSubdomainList(request.url().host());
-
-			if (rule.needsDomainCheck)
+			if (!m_requestSubdomainList.contains(m_currentRule.left(m_currentRule.indexOf(m_domainExpression))))
 			{
-				if (!m_requestSubdomainList.contains(rule.rule.left(rule.rule.indexOf(m_domainExpression))))
-				{
-					return false;
-				}
-				else
-				{
-					isBlocked = true;
-				}
+				return false;
 			}
-
-			if (isBlocked)
+			else
 			{
-				isBlocked = !rule.isException;
+				isBlocked = true;
 			}
-
-			resolveRuleOptions(rule, request, isBlocked);
 		}
+
+		if (isBlocked)
+		{
+			isBlocked = !rule->isException;
+		}
+
+		resolveRuleOptions(rule, request, isBlocked);
 	}
 
 	return isBlocked;

@@ -37,13 +37,6 @@ class ContentBlockingList : public QObject
 public:
 	explicit ContentBlockingList(QObject *parent = NULL);
 
-	enum RuleType
-	{
-		StandardFilterRule = 1,
-		ElementHidingRule = 2,
-		ExceptionRule = 4,
-	};
-
 	enum RuleOption
 	{
 		NoOption = 0,
@@ -61,10 +54,8 @@ public:
 
 	struct ContentBlockingRule
 	{
-		QString rule;
 		QStringList blockedDomains;
 		QStringList allowedDomains;
-		RuleType ruleType;
 		RuleOptions ruleOption;
 		RuleOptions exceptionRuleOption;
 		bool isException;
@@ -89,24 +80,24 @@ protected:
 	struct Node
 	{
 		QChar value;
-		ContentBlockingRule rule;
-		QHash<QChar, Node*> children;
+		ContentBlockingRule *rule;
+		QVarLengthArray<Node*, 5> children;
 
-		Node() : value(0) {}
+		Node() : value(0), rule(NULL) {}
 	};
 
 	void parseRules();
 	void loadRuleFile();
 	void clear();
 	void parseRuleLine(QString line);
-	void resolveRuleOptions(const ContentBlockingRule &rule, const QNetworkRequest &request, bool &isBlocked);
+	void resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked);
 	void parseCssRule(const QStringList &line, QMultiHash<QString, QString> &list);
-	void addRule(const ContentBlockingRule &rule);
+	void addRule(ContentBlockingRule *rule, const QString ruleString);
 	void deleteNode(Node *node);
 	void downloadUpdate();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
 	bool checkUrlSubstring(const QString &subString, const QNetworkRequest &request);
-	bool checkRuleMatch(const ContentBlockingRule &rule, const QNetworkRequest &request);
+	bool checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request);
 
 private slots:
 	void updateDownloaded(QNetworkReply *reply);
@@ -119,6 +110,7 @@ private:
 	QString m_listName;
 	QString m_configListName;
 	QString m_cssHidingRules;
+	QString m_currentRule;
 	QUrl m_baseUrl;
 	QUrl m_updateUrl;
 	QMultiHash<QString, QString> m_cssSpecificDomainHidingRules;
