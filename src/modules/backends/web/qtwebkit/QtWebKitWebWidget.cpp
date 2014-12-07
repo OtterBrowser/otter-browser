@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebWidget.h"
+#include "QtWebKitNetworkManager.h"
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
 #include "QtWebKitWebPage.h"
@@ -91,7 +92,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
-	setNetworkManager(NetworkManagerFactory::createManager(isPrivate, false, parent));
+	setNetworkManager(new QtWebKitNetworkManager(isPrivate, this));
 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -1261,7 +1262,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 	notifyIconChanged();
 }
 
-void QtWebKitWebWidget::setNetworkManager(NetworkManager *manager)
+void QtWebKitWebWidget::setNetworkManager(QtWebKitNetworkManager *manager)
 {
 	if (m_networkManager)
 	{
@@ -1304,8 +1305,8 @@ QString QtWebKitWebWidget::getPluginToken() const
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), NULL);
-	widget->setNetworkManager(m_networkManager->clone(NULL));
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend());
+	widget->setNetworkManager(m_networkManager->clone(widget));
 	widget->setOptions(getOptions());
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setReloadTime(getReloadTime());

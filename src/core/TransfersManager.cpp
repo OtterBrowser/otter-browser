@@ -19,7 +19,6 @@
 
 #include "TransfersManager.h"
 #include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "WebBackend.h"
@@ -293,7 +292,7 @@ TransferInformation* TransfersManager::startTransfer(const QNetworkRequest &requ
 {
 	if (!m_networkManager)
 	{
-		m_networkManager = NetworkManagerFactory::createManager(true, true, NULL);
+		m_networkManager = new NetworkManager(true, m_instance);
 		m_networkManager->setParent(m_instance);
 	}
 
@@ -620,7 +619,7 @@ bool TransfersManager::resumeTransfer(TransferInformation *transfer)
 
 	if (!m_networkManager)
 	{
-		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager = new NetworkManager(true, m_instance);
 		m_networkManager->setParent(m_instance);
 	}
 
@@ -667,7 +666,7 @@ bool TransfersManager::restartTransfer(TransferInformation *transfer)
 
 	if (!m_networkManager)
 	{
-		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager = new NetworkManager(true, m_instance);
 		m_networkManager->setParent(m_instance);
 	}
 

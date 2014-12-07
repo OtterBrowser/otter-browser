@@ -33,7 +33,7 @@ namespace Otter
 {
 
 class ContentsDialog;
-class NetworkManager;
+class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitWebPage;
 class QtWebKitPluginFactory;
@@ -84,7 +84,7 @@ protected:
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void setHistory(QDataStream &stream);
-	void setNetworkManager(NetworkManager *manager);
+	void setNetworkManager(QtWebKitNetworkManager *manager);
 	void setOptions(const QVariantHash &options);
 	QString getPluginToken() const;
 	QWebPage* getPage();
@@ -115,7 +115,7 @@ private:
 	QtWebKitPluginFactory *m_pluginFactory;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
-	NetworkManager *m_networkManager;
+	QtWebKitNetworkManager *m_networkManager;
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;

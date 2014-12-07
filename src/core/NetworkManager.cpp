@@ -19,8 +19,6 @@
 **************************************************************************/
 
 #include "NetworkManager.h"
-#include "ContentBlockingManager.h"
-#include "Console.h"
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "NetworkCache.h"
@@ -29,11 +27,8 @@
 #include "SettingsManager.h"
 #include "Utils.h"
 #include "../ui/AuthenticationDialog.h"
-#include "../ui/ContentsDialog.h"
-#include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
 
-#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtWidgets/QMessageBox>
 #include <QtNetwork/QNetworkProxy>
@@ -41,19 +36,11 @@
 namespace Otter
 {
 
-NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget) : QNetworkAccessManager(widget),
-	m_widget(widget),
-	m_cookieJar(NULL),
-	m_baseReply(NULL),
-	m_speed(0),
-	m_bytesReceivedDifference(0),
-	m_bytesReceived(0),
-	m_bytesTotal(0),
-	m_finishedRequests(0),
-	m_startedRequests(0),
-	m_updateTimer(0),
-	m_useSimpleMode(useSimpleMode)
+NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccessManager(parent),
+	m_cookieJar(NULL)
 {
+	NetworkManagerFactory::initialize();
+
 	if (!isPrivate)
 	{
 		m_cookieJar = NetworkManagerFactory::getCookieJar();
@@ -75,144 +62,15 @@ NetworkManager::NetworkManager(bool isPrivate, bool useSimpleMode, ContentsWidge
 		setCookieJar(m_cookieJar);
 	}
 
-	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
-void NetworkManager::timerEvent(QTimerEvent *event)
-{
-	Q_UNUSED(event)
-
-	updateStatus();
-}
-
-void NetworkManager::resetStatistics()
-{
-	killTimer(m_updateTimer);
-	updateStatus();
-
-	m_updateTimer = 0;
-	m_replies.clear();
-	m_baseReply = NULL;
-	m_baseUrl.clear();
-	m_speed = 0;
-	m_bytesReceivedDifference = 0;
-	m_bytesReceived = 0;
-	m_bytesTotal = 0;
-	m_finishedRequests = 0;
-	m_startedRequests = 0;
-}
-
-void NetworkManager::updateStatus()
-{
-	m_speed = (m_bytesReceivedDifference * 2);
-	m_bytesReceivedDifference = 0;
-
-	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
-}
-
-void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
-{
-	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-
-	if (reply && reply == m_baseReply)
-	{
-		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
-		{
-			m_baseReply = NULL;
-			m_baseUrl.clear();
-		}
-		else
-		{
-			if (bytesTotal > 0)
-			{
-				emit documentLoadProgressChanged(((bytesReceived * 1.0) / bytesTotal) * 100);
-			}
-			else
-			{
-				emit documentLoadProgressChanged(-1);
-			}
-		}
-	}
-
-	if (!reply || !m_replies.contains(reply))
-	{
-		return;
-	}
-
-	const qint64 difference = (bytesReceived - m_replies[reply].first);
-
-	m_replies[reply].first = bytesReceived;
-
-	if (!m_replies[reply].second && bytesTotal > 0)
-	{
-		m_replies[reply].second = true;
-
-		m_bytesTotal += bytesTotal;
-	}
-
-	if (difference <= 0)
-	{
-		return;
-	}
-
-	m_bytesReceived += difference;
-	m_bytesReceivedDifference += difference;
-}
-
-void NetworkManager::requestFinished(QNetworkReply *reply)
-{
-	if (!m_useSimpleMode)
-	{
-		m_replies.remove(reply);
-
-		if (m_replies.isEmpty())
-		{
-			killTimer(m_updateTimer);
-
-			m_updateTimer = 0;
-
-			updateStatus();
-		}
-
-		++m_finishedRequests;
-	}
-
-	if (!m_useSimpleMode && reply)
-	{
-		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-	}
-}
-
 void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
-	if (m_widget)
-	{
-		AuthenticationDialog *authenticationDialog = new AuthenticationDialog(reply->url(), authenticator, m_widget);
-		authenticationDialog->setButtonsVisible(false);
-
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
-
-		connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-		QEventLoop eventLoop;
-
-		m_widget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_widget->hideDialog(&dialog);
-	}
-	else
-	{
-		AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
-		dialog.exec();
-	}
+	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
+	dialog.exec();
 }
 
 void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
@@ -224,31 +82,8 @@ void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &prox
 		return;
 	}
 
-	if (m_widget)
-	{
-		AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);
-		authenticationDialog->setButtonsVisible(false);
-
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
-
-		connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-		QEventLoop eventLoop;
-
-		m_widget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_widget->hideDialog(&dialog);
-	}
-	else
-	{
-		AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, SessionsManager::getActiveWindow());
-		dialog.exec();
-	}
+	AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, SessionsManager::getActiveWindow());
+	dialog.exec();
 }
 
 void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
@@ -260,7 +95,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), m_baseUrl).toStringList();
+	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), reply->url()).toStringList();
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
@@ -289,64 +124,10 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	if (m_widget)
-	{
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
-
-		if (!m_baseUrl.isEmpty())
-		{
-			dialog.setCheckBox(tr("Do not show this message again"), false);
-		}
-
-		QEventLoop eventLoop;
-
-		m_widget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-
-		m_widget->hideDialog(&dialog);
-
-		if (dialog.isAccepted())
-		{
-			reply->ignoreSslErrors(errors);
-
-			if (!m_baseUrl.isEmpty() && dialog.getCheckBoxState())
-			{
-				for (int i = 0; i < errors.count(); ++i)
-				{
-					const QString digest = errors.at(i).certificate().digest().toBase64();
-
-					if (!ignoredErrors.contains(digest))
-					{
-						ignoredErrors.append(digest);
-					}
-				}
-
-				SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_baseUrl);
-			}
-		}
-	}
-	else if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}
-}
-
-void NetworkManager::setUserAgent(const QString &identifier, const QString &value)
-{
-	m_userAgentIdentifier = ((identifier == QLatin1String("default")) ? QString() : identifier);
-	m_userAgentValue = value;
-}
-
-NetworkManager* NetworkManager::clone(ContentsWidget *parent)
-{
-	NetworkManager *manager = NetworkManagerFactory::createManager((cache() == NULL), m_useSimpleMode, parent);
-	manager->setCookieJar(m_cookieJar->clone(manager));
-
-	return manager;
 }
 
 CookieJar* NetworkManager::getCookieJar()
@@ -356,32 +137,12 @@ CookieJar* NetworkManager::getCookieJar()
 
 QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-	if (!m_useSimpleMode)
-	{
-		++m_startedRequests;
-	}
-
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
 		return new LocalListingNetworkReply(this, request);
 	}
 
-	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_baseUrl))
-	{
-		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
-
-		QUrl url = QUrl();
-		url.setScheme(QLatin1String("http"));
-
-		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
-	}
-
 	QNetworkRequest mutableRequest(request);
-
-	if (!m_userAgentIdentifier.isEmpty())
-	{
-		mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgentValue);
-	}
 
 	if (!NetworkManagerFactory::canSendReferrer())
 	{
@@ -404,62 +165,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), NetworkManagerFactory::getAcceptLanguage().toLatin1());
 
-	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
-
-	if (!m_baseReply)
-	{
-		m_baseReply = reply;
-
-		m_baseUrl = m_baseReply->url();
-	}
-
-	if (!m_useSimpleMode)
-	{
-		m_replies[reply] = qMakePair(0, false);
-
-		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-
-		if (m_updateTimer == 0)
-		{
-			m_updateTimer = startTimer(500);
-		}
-	}
-
-	return reply;
-}
-
-QPair<QString, QString> NetworkManager::getUserAgent() const
-{
-	return qMakePair(m_userAgentIdentifier, m_userAgentValue);
-}
-
-QHash<QByteArray, QByteArray> NetworkManager::getHeaders() const
-{
-	QHash<QByteArray, QByteArray> headers;
-
-	if (m_baseReply)
-	{
-		const QList<QNetworkReply::RawHeaderPair> rawHeaders = m_baseReply->rawHeaderPairs();
-
-		for (int i = 0; i < rawHeaders.count(); ++i)
-		{
-			headers[rawHeaders.at(i).first] = rawHeaders.at(i).second;
-		}
-	}
-
-	return headers;
-}
-
-QVariantHash NetworkManager::getStatistics() const
-{
-	QVariantHash statistics;
-	statistics[QLatin1String("finishedRequests")] = m_finishedRequests;
-	statistics[QLatin1String("startedRequests")] = m_startedRequests;
-	statistics[QLatin1String("bytesReceived")] = m_bytesReceived;
-	statistics[QLatin1String("bytesTotal")] = m_bytesTotal;
-	statistics[QLatin1String("speed")] = m_speed;
-
-	return statistics;
+	return QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 }
 
 }

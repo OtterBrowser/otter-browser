@@ -111,6 +111,7 @@ SOURCES += src/main.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
@@ -212,6 +213,7 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
     src/ui/toolbars/ZoomWidget.h \
+    src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.h \
     src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \

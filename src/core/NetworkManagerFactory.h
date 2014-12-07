@@ -58,7 +58,6 @@ public:
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static void loadUserAgents();
-	static NetworkManager* createManager(bool isPrivate = false, bool useSimpleMode = false, ContentsWidget *widget = NULL);
 	static NetworkManagerFactory* getInstance();
 	static CookieJar* getCookieJar();
 	static NetworkCache* getCache();
@@ -74,7 +73,7 @@ public:
 protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
 
-	void initialize();
+	static void initialize();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -92,6 +91,8 @@ private:
 	static bool m_isWorkingOffline;
 	static bool m_isInitialized;
 	static bool m_isUsingSystemProxyAuthentication;
+
+friend class NetworkManager;
 };
 
 }

@@ -65,6 +65,11 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 
 void NetworkManagerFactory::initialize()
 {
+	if (m_isInitialized)
+	{
+		return;
+	}
+
 	m_isInitialized = true;
 
 #if QT_VERSION < 0x050300
@@ -82,14 +87,15 @@ void NetworkManagerFactory::initialize()
 #endif
 
 	loadUserAgents();
-	optionChanged(QLatin1String("Network/AcceptLanguage"), SettingsManager::getValue(QLatin1String("Network/AcceptLanguage")));
-	optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
-	optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
-	optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
-	optionChanged(QLatin1String("Proxy/UseSystemAuthentication"), SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")));
-	optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	m_instance->optionChanged(QLatin1String("Network/AcceptLanguage"), SettingsManager::getValue(QLatin1String("Network/AcceptLanguage")));
+	m_instance->optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
+	m_instance->optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
+	m_instance->optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
+	m_instance->optionChanged(QLatin1String("Proxy/UseSystemAuthentication"), SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")));
+	m_instance->optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString,QVariant)));
 }
 
 void NetworkManagerFactory::optionChanged(const QString &option, const QVariant &value)
@@ -186,16 +192,6 @@ void NetworkManagerFactory::loadUserAgents()
 
 	m_userAgentsOrder = userAgentsOrder;
 	m_userAgents = userAgents;
-}
-
-NetworkManager* NetworkManagerFactory::createManager(bool isPrivate, bool useSimpleMode, ContentsWidget *widget)
-{
-	if (!m_isInitialized)
-	{
-		m_instance->initialize();
-	}
-
-	return new NetworkManager(isPrivate, useSimpleMode, widget);
 }
 
 NetworkManagerFactory* NetworkManagerFactory::getInstance()

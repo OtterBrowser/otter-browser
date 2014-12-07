@@ -465,7 +465,7 @@ void ContentBlockingList::downloadUpdate()
 {
 	if (!m_networkManager)
 	{
-		m_networkManager = new NetworkManager(true, true, NULL);
+		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
 	}
 
 	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateDownloaded(QNetworkReply*)));
