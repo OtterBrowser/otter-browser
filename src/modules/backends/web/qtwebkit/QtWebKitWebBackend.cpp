@@ -130,7 +130,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
 
-	return new QtWebKitWebWidget(isPrivate, this, parent);
+	return new QtWebKitWebWidget(isPrivate, this, NULL, parent);
 }
 
 QString QtWebKitWebBackend::getTitle() const

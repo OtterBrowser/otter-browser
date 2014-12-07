@@ -66,13 +66,13 @@
 namespace Otter
 {
 
-QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
+QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
-	m_page(new QtWebKitWebPage(this)),
+	m_page(NULL),
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(NULL),
 	m_inspectorCloseButton(NULL),
-	m_networkManager(NULL),
+	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_historyEntry(-1),
 	m_canLoadPlugins(false),
@@ -92,15 +92,24 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 
 	setLayout(layout);
 	setFocusPolicy(Qt::StrongFocus);
-	setNetworkManager(new QtWebKitNetworkManager(isPrivate, this));
+
+	if (m_networkManager)
+	{
+		m_networkManager->setWidget(this);
+	}
+	else
+	{
+		m_networkManager = new QtWebKitNetworkManager(isPrivate, this);
+	}
+
+	m_page = new QtWebKitWebPage(m_networkManager, this);
+	m_page->setPluginFactory(m_pluginFactory);
 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
-
-	m_page->setPluginFactory(m_pluginFactory);
 
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Cut"), this), getAction(CutAction));
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Copy"), this), getAction(CopyAction));
@@ -157,6 +166,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, Conten
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
+	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 }
 
@@ -439,6 +450,45 @@ void QtWebKitWebWidget::openUrl(const QUrl &url, OpenHints hints)
 	widget->setRequestedUrl(url);
 
 	emit requestedNewWindow(widget, hints);
+}
+
+void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
+{
+	m_formRequestUrl = url;
+	m_formRequestOperation = operation;
+	m_formRequestBody = (outgoingData ? outgoingData->readAll() : QByteArray());
+
+	if (outgoingData)
+	{
+		outgoingData->close();
+		outgoingData->deleteLater();
+	}
+
+	setRequestedUrl(m_formRequestUrl, false, true);
+	updateOptions(m_formRequestUrl);
+
+	QTimer::singleShot(50, this, SLOT(openFormRequest()));
+}
+
+void QtWebKitWebWidget::openFormRequest()
+{
+	m_webView->page()->mainFrame()->load(QNetworkRequest(m_formRequestUrl), m_formRequestOperation, m_formRequestBody);
+
+	m_formRequestUrl = QUrl();
+	m_formRequestBody = QByteArray();
+}
+
+void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
+{
+	m_webView->stop();
+
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
+	widget->setOptions(getOptions());
+	widget->setQuickSearchEngine(getQuickSearchEngine());
+	widget->setZoom(getZoom());
+	widget->openRequest(url, operation, outgoingData);
+
+	emit requestedNewWindow(widget, NewTabOpen);
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()
@@ -1262,23 +1312,6 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 	notifyIconChanged();
 }
 
-void QtWebKitWebWidget::setNetworkManager(QtWebKitNetworkManager *manager)
-{
-	if (m_networkManager)
-	{
-		m_networkManager->deleteLater();
-	}
-
-	m_networkManager = manager;
-	m_networkManager->setParent(m_page);
-
-	m_page->setNetworkAccessManager(m_networkManager);
-	m_page->setForwardUnsupportedContent(true);
-
-	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
-	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
-}
-
 void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 {
 	WebWidget::setOption(key, value);
@@ -1305,8 +1338,7 @@ QString QtWebKitWebWidget::getPluginToken() const
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend());
-	widget->setNetworkManager(m_networkManager->clone(widget));
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
 	widget->setOptions(getOptions());
 	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setReloadTime(getReloadTime());

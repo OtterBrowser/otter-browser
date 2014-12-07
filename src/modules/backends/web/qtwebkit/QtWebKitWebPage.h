@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-class QtWebKitWebBackend;
+class QtWebKitNetworkManager;
 class QtWebKitWebWidget;
 class WebBackend;
 class WebWidget;
@@ -39,10 +39,9 @@ class QtWebKitWebPage : public QWebPage
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebPage(QtWebKitWebWidget *parent);
+	explicit QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 
 	void triggerAction(WebAction action, bool checked = false);
-	void setParent(QtWebKitWebWidget *parent);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
@@ -71,6 +70,7 @@ protected slots:
 private:
 	QtWebKitWebWidget *m_widget;
 	WebBackend *m_backend;
+	QtWebKitNetworkManager *m_networkManager;
 	bool m_ignoreJavaScriptPopups;
 
 signals:

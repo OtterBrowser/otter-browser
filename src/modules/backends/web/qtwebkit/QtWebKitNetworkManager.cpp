@@ -199,14 +199,6 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_startedRequests = 0;
 }
 
-void QtWebKitNetworkManager::updateStatus()
-{
-	m_speed = (m_bytesReceivedDifference * 2);
-	m_bytesReceivedDifference = 0;
-
-	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
-}
-
 void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
@@ -276,9 +268,27 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 	}
 }
 
-QtWebKitNetworkManager* QtWebKitNetworkManager::clone(QtWebKitWebWidget *widget)
+void QtWebKitNetworkManager::updateStatus()
 {
-	QtWebKitNetworkManager *manager = new QtWebKitNetworkManager((cache() == NULL), widget);
+	m_speed = (m_bytesReceivedDifference * 2);
+	m_bytesReceivedDifference = 0;
+
+	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
+}
+
+void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
+{
+	m_formRequestUrl = url;
+}
+
+void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
+{
+	m_widget = widget;
+}
+
+QtWebKitNetworkManager* QtWebKitNetworkManager::clone()
+{
+	QtWebKitNetworkManager *manager = new QtWebKitNetworkManager((cache() == NULL), NULL);
 	manager->setCookieJar(getCookieJar()->clone(manager));
 
 	return manager;
@@ -286,6 +296,15 @@ QtWebKitNetworkManager* QtWebKitNetworkManager::clone(QtWebKitWebWidget *widget)
 
 QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
 {
+	if (request.url() == m_formRequestUrl)
+	{
+		m_formRequestUrl = QUrl();
+
+		m_widget->openFormRequest(request.url(), operation, outgoingData);
+
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
+	}
+
 	++m_startedRequests;
 
 	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_widget->getUrl()))

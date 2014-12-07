@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebPage.h"
+#include "QtWebKitNetworkManager.h"
 #include "QtWebKitWebBackend.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/Console.h"
@@ -47,11 +48,14 @@
 namespace Otter
 {
 
-QtWebKitWebPage::QtWebKitWebPage(QtWebKitWebWidget *parent) : QWebPage(parent),
+QtWebKitWebPage::QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
+	m_networkManager(networkManager),
 	m_ignoreJavaScriptPopups(false)
 {
+	setNetworkAccessManager(m_networkManager);
+	setForwardUnsupportedContent(true);
 	updatePageStyleSheets();
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
@@ -189,13 +193,6 @@ void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 	QWebPage::triggerAction(action, checked);
 }
 
-void QtWebKitWebPage::setParent(QtWebKitWebWidget *parent)
-{
-	m_widget = parent;
-
-	QWebPage::setParent(parent);
-}
-
 QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
@@ -245,6 +242,11 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		QDesktopServices::openUrl(request.url());
 
 		return false;
+	}
+
+	if (type == QWebPage::NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers() & Qt::ShiftModifier)
+	{
+		m_networkManager->setFormRequest(request.url());
 	}
 
 	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())

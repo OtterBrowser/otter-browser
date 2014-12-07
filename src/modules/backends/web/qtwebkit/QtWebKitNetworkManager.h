@@ -22,6 +22,8 @@
 
 #include "../../../../core/NetworkManager.h"
 
+#include <QtNetwork/QNetworkRequest>
+
 namespace Otter
 {
 
@@ -34,14 +36,16 @@ class QtWebKitNetworkManager : public NetworkManager
 public:
 	explicit QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget *widget);
 
-	void resetStatistics();
-	QtWebKitNetworkManager *clone(QtWebKitWebWidget *widget);
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void resetStatistics();
 	void updateStatus();
+	void setFormRequest(const QUrl &url);
+	void setWidget(QtWebKitWebWidget *widget);
+	QtWebKitNetworkManager *clone();
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected slots:
@@ -54,6 +58,7 @@ protected slots:
 private:
 	QtWebKitWebWidget *m_widget;
 	QNetworkReply *m_baseReply;
+	QUrl m_formRequestUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
@@ -67,6 +72,9 @@ signals:
 	void messageChanged(const QString &message = QString());
 	void documentLoadProgressChanged(int progress);
 	void statusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
+
+friend class QtWebKitWebPage;
+friend class QtWebKitWebWidget;
 };
 
 }

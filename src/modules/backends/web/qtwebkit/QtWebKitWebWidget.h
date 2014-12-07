@@ -77,14 +77,15 @@ public slots:
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
-	explicit QtWebKitWebWidget(bool isPrivate = false, WebBackend *backend = NULL, ContentsWidget *parent = NULL);
+	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
 	void markPageRealoded();
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
+	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
+	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void setHistory(QDataStream &stream);
-	void setNetworkManager(QtWebKitNetworkManager *manager);
 	void setOptions(const QVariantHash &options);
 	QString getPluginToken() const;
 	QWebPage* getPage();
@@ -102,6 +103,7 @@ protected slots:
 	void restoreState(QWebFrame *frame);
 	void hideInspector();
 	void linkHovered(const QString &link);
+	void openFormRequest();
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
@@ -121,8 +123,11 @@ private:
 	QPixmap m_thumbnail;
 	QPoint m_hotclickPosition;
 	QWebHitTestResult m_hitResult;
+	QUrl m_formRequestUrl;
+	QByteArray m_formRequestBody;
 	QHash<ActionIdentifier, QAction*> m_actions;
 	qint64 m_historyEntry;
+	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_isUsingRockerNavigation;
@@ -133,9 +138,10 @@ private:
 signals:
 	void aboutToReload();
 
+friend class QtWebKitNetworkManager;
+friend class QtWebKitPluginFactory;
 friend class QtWebKitWebBackend;
 friend class QtWebKitWebPage;
-friend class QtWebKitPluginFactory;
 };
 
 }
