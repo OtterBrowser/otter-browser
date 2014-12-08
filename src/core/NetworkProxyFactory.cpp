@@ -77,7 +77,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 		const bool useCommon = SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool();
 		QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes;
-		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")) << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("Proxy/Socks"));
+		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")) << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("socks"));
 
 		for (int i = 0; i < proxyTypes.count(); ++i)
 		{
@@ -121,9 +121,9 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 	{
 		const QString protocol = query.protocolTag().toLower();
 
-		if (m_proxies.contains(QLatin1String("Proxy/Socks")))
+		if (m_proxies.contains(QLatin1String("socks")))
 		{
-			return m_proxies[QLatin1String("Proxy/Socks")];
+			return m_proxies[QLatin1String("socks")];
 		}
 		else if ((protocol == QLatin1String("http")) && m_proxies.contains(protocol))
 		{
