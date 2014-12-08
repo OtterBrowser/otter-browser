@@ -354,6 +354,7 @@ void WindowsManager::printPreview(int index)
 	m_printedWindow = index;
 
 	QPrintPreviewDialog printPreviewtDialog(m_mdi);
+	printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 	printPreviewtDialog.setWindowTitle(tr("Print Preview"));
 
 	connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printPreview(QPrinter*)));
