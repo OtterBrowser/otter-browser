@@ -92,6 +92,14 @@ void TabBarDockWidget::setup(QMenu *closedWindowsMenu)
 	m_newTabButton->raise();
 	m_newTabButton->move(m_tabBar->geometry().topRight());
 
+#ifdef Q_OS_WIN
+	m_tabBar->installEventFilter(this);
+
+	updateSize();
+
+	connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(updateSize()));
+#endif
+
 	connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_tabBar, SLOT(setOrientation(Qt::DockWidgetArea)));
 	connect(m_tabBar, SIGNAL(moveNewTabButton(int)), this, SLOT(moveNewTabButton(int)));
 }
@@ -106,15 +114,48 @@ void TabBarDockWidget::moveNewTabButton(int position)
 	}
 }
 
+#ifdef Q_OS_WIN
+void TabBarDockWidget::updateSize()
+{
+	if (!m_tabBar)
+	{
+		return;
+	}
+
+	const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
+
+	m_tabBar->removeEventFilter(this);
+
+	disconnect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(updateSize()));
+
+	setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : ((m_tabBar->width() > 0) ? m_tabBar->width() : 24)), (isHorizontal ? ((m_tabBar->height() > 0) ? m_tabBar->height() : 24) : QWIDGETSIZE_MAX));
+
+	connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(updateSize()));
+
+	m_tabBar->installEventFilter(this);
+}
+#endif
+
 void TabBarDockWidget::setClosedWindowsMenuEnabled(bool enabled)
 {
 	m_trashButton->setEnabled(enabled);
 }
 
-
 TabBarWidget* TabBarDockWidget::getTabBar()
 {
 	return m_tabBar;
 }
+
+#ifdef Q_OS_WIN
+bool TabBarDockWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_tabBar && event->type() == QEvent::Resize)
+	{
+		updateSize();
+	}
+
+	return QObject::eventFilter(object, event);
+}
+#endif
 
 }

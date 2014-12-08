@@ -38,12 +38,18 @@ public:
 
 	void setup(QMenu *closedWindowsMenu);
 	TabBarWidget* getTabBar();
+#ifdef Q_OS_WIN
+	bool eventFilter(QObject *object, QEvent *event);
+#endif
 
 public slots:
+#ifdef Q_OS_WIN
+	void updateSize();
+#endif
 	void setClosedWindowsMenuEnabled(bool enabled);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+	void paintEvent(QPaintEvent *event);
 
 protected slots:
 	void moveNewTabButton(int position);
