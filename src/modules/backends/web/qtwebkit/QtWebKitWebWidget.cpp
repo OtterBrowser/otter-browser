@@ -623,6 +623,44 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 	switch (action)
 	{
+		case OpenLinkAction:
+			{
+				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_hitResult.boundingRect().center()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(m_hitResult.boundingRect().center()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
+				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
+			}
+
+			break;
+		case OpenLinkInNewTabAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewTabOpen);
+			}
+
+			break;
+		case OpenLinkInNewTabBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewTabBackgroundOpen);
+			}
+
+			break;
+		case OpenLinkInNewWindowAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewWindowOpen);
+			}
+
+			break;
+		case OpenLinkInNewWindowBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewWindowBackgroundOpen);
+			}
+
+			break;
 		case RewindAction:
 			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
 
@@ -689,34 +727,6 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			else
 			{
 				triggerAction(ReloadAction);
-			}
-
-			break;
-		case OpenLinkInNewTabAction:
-			if (m_hitResult.linkUrl().isValid())
-			{
-				openUrl(m_hitResult.linkUrl(), NewTabOpen);
-			}
-
-			break;
-		case OpenLinkInNewTabBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
-			{
-				openUrl(m_hitResult.linkUrl(), NewTabBackgroundOpen);
-			}
-
-			break;
-		case OpenLinkInNewWindowAction:
-			if (m_hitResult.linkUrl().isValid())
-			{
-				openUrl(m_hitResult.linkUrl(), NewWindowOpen);
-			}
-
-			break;
-		case OpenLinkInNewWindowBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
-			{
-				openUrl(m_hitResult.linkUrl(), NewWindowBackgroundOpen);
 			}
 
 			break;
@@ -1383,6 +1393,10 @@ QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
 
 	switch (action)
 	{
+		case OpenLinkAction:
+			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLink"), this), actionObject, true);
+
+			break;
 		case OpenLinkInNewTabAction:
 			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewTab"), this), actionObject, true);
 
@@ -1806,8 +1820,6 @@ QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
 {
 	switch (action)
 	{
-		case OpenLinkAction:
-			return QWebPage::OpenLink;
 		case OpenLinkInThisTabAction:
 			return QWebPage::OpenLinkInThisWindow;
 		case OpenFrameInNewTabAction:

@@ -104,7 +104,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("AboutApplication"), QT_TRANSLATE_NOOP("actions", "About Otter..."), QString(), Utils::getIcon(QLatin1String("otter-browser"), false));
 		registerAction(QLatin1String("AboutQt"), QT_TRANSLATE_NOOP("actions", "About Qt..."), QString(), Utils::getIcon(QLatin1String("qt"), false));
 		registerAction(QLatin1String("CloseWindow"), QT_TRANSLATE_NOOP("actions", "Close Window"));
-		registerAction(QLatin1String("OpenLinkTab"), QT_TRANSLATE_NOOP("actions", "Open"));
+		registerAction(QLatin1String("OpenLink"), QT_TRANSLATE_NOOP("actions", "Open"));
 		registerAction(QLatin1String("OpenLinkInThisTab"), QT_TRANSLATE_NOOP("actions", "Open in This Tab"));
 		registerAction(QLatin1String("OpenLinkInNewTab"), QT_TRANSLATE_NOOP("actions", "Open in New Tab"));
 		registerAction(QLatin1String("OpenLinkInNewTabBackground"), QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"));
