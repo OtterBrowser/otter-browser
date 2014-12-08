@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Martin Gansser <martinkg@fedoraproject.org> -->
+<application>
+  <id type="desktop">otter-browser.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPLv3+</project_license>
+  <name>otter-browser</name>
+  <summary>Web browser controlled by the user, not vice-versa</summary>
+  <description>
+    <p>
+      Otter Browser, project aiming to recreate classic Opera (12.x) UI using Qt5.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">http://t.im9.eu/1497.jpg</screenshot>
+    <screenshot>http://t.im9.eu/826.jpg</screenshot>
+    <screenshot>http://t.im9.eu/725.jpg</screenshot>
+    <screenshot>http://t.im9.eu/635.jpg</screenshot>
+    <screenshot>http://t.im9.eu/596.jpg</screenshot>
+    <screenshot>http://t.im9.eu/4121.jpg</screenshot>
+    <screenshot>http://t.im9.eu/3146.jpg</screenshot>
+    <screenshot>http://t.im9.eu/2176.jpg</screenshot>
+  </screenshots>
+  <url type="homepage">http://otter-browser.org/</url>
+  <updatecontact>martinkg@fedoraproject.org</updatecontact>
+</application>
