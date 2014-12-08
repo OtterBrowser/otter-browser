@@ -51,7 +51,6 @@
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
-#include <QtNetwork/QAbstractNetworkCache>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKit/QtWebKitVersion>
@@ -365,7 +364,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 		else if (!m_hitResult.imageUrl().isEmpty() && m_hitResult.imageUrl().url().contains(QLatin1String(";base64,")))
 		{
 			const QString imageUrl = m_hitResult.imageUrl().url();
-			const QString imageType = imageUrl.mid(11, imageUrl.indexOf(QLatin1Char(';')) - 11);
+			const QString imageType = imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11));
 			const QString path = TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType);
 
 			if (path.isEmpty())

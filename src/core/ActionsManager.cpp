@@ -25,17 +25,21 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtCore/QSettings>
 
 namespace Otter
 {
 
-QHash<QString, ActionDefinition> ActionsManager::m_definitions;
+QHash<QString, ActionDefinition> ActionsManager::m_actionDefinitions;
+QHash<QString, ToolBarDefinition> ActionsManager::m_toolBarDefinitions;
 
 ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	m_window(parent)
 {
-	if (m_definitions.isEmpty())
+	if (m_actionDefinitions.isEmpty())
 	{
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "File"));
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sessions"));
@@ -78,6 +82,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("FindNext"), QT_TRANSLATE_NOOP("actions", "Find Next"), QString(), QIcon(), true, false, false, FindNextAction);
 		registerAction(QLatin1String("FindPrevious"), QT_TRANSLATE_NOOP("actions", "Find Previous"), QString(), QIcon(), true, false, false, FindPreviousAction);
 		registerAction(QLatin1String("Reload"), QT_TRANSLATE_NOOP("actions", "Reload"), QString(), Utils::getIcon(QLatin1String("view-refresh")), true, false, false, ReloadAction);
+		registerAction(QLatin1String("ReloadOrStop"), QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), Utils::getIcon(QLatin1String("view-refresh")), true, false, false, ReloadOrStopAction);
 		registerAction(QLatin1String("Stop"), QT_TRANSLATE_NOOP("actions", "Stop"), QString(), Utils::getIcon(QLatin1String("process-stop")), true, false, false, StopAction);
 		registerAction(QLatin1String("ZoomIn"), QT_TRANSLATE_NOOP("actions", "Zoom In"), QString(), Utils::getIcon(QLatin1String("zoom-in")), true, false, false, ZoomInAction);
 		registerAction(QLatin1String("ZoomOut"), QT_TRANSLATE_NOOP("actions", "Zoom Out"), QString(), Utils::getIcon(QLatin1String("zoom-out")), true, false, false, ZoomOutAction);
@@ -160,11 +165,85 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("ScrollPageRight"), QT_TRANSLATE_NOOP("actions", "Page Right"), QString(), QIcon(), true, false, false, ScrollPageRightAction);
 		registerAction(QLatin1String("QuickPreferences"), QT_TRANSLATE_NOOP("actions", "Quick Preferences"), QString(), QIcon(), true, false, false, QuickPreferencesAction);
 		registerAction(QLatin1String("LoadPlugins"), QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), Utils::getIcon(QLatin1String("preferences-plugin")), true, false, false, LoadPluginsAction);
+
+		const QString toolBarsPath = (SessionsManager::getProfilePath() + QLatin1String("/toolBars.json"));
+		QFile toolBarsFile(QFile::exists(toolBarsPath) ? toolBarsPath : QLatin1String(":/other/toolBars.json"));
+		toolBarsFile.open(QFile::ReadOnly);
+
+		const QJsonArray toolBars = QJsonDocument::fromJson(toolBarsFile.readAll()).array();
+
+		for (int i = 0; i < toolBars.count(); ++i)
+		{
+			const QJsonObject toolBarObject = toolBars.at(i).toObject();
+			const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
+			const QString location = toolBarObject.value(QLatin1String("location")).toString();
+			ToolBarDefinition toolBar;
+			toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
+			toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
+
+			if (location == QLatin1String("top"))
+			{
+				toolBar.location = TopToolBarLocation;
+			}
+			else if (location == QLatin1String("bottom"))
+			{
+				toolBar.location = BottomBarArea;
+			}
+			else if (location == QLatin1String("left"))
+			{
+				toolBar.location = LeftToolBarLocation;
+			}
+			else if (location == QLatin1String("right"))
+			{
+				toolBar.location = RightToolBarLocation;
+			}
+			else if (location == QLatin1String("navigation"))
+			{
+				toolBar.location = NavigationToolBarLocation;
+			}
+			else if (location == QLatin1String("status"))
+			{
+				toolBar.location = StatusToolBarLocation;
+			}
+			else if (location == QLatin1String("tabs"))
+			{
+				toolBar.location = TabsToolBarLocation;
+			}
+			else if (location == QLatin1String("menu"))
+			{
+				toolBar.location = MenuToolBarLocation;
+			}
+			else
+			{
+				toolBar.location = UnknownToolBarLocation;
+			}
+
+			for (int j = 0; j < actions.count(); ++j)
+			{
+				ToolBarActionDefinition action;
+
+				if (actions.at(j).isObject())
+				{
+					const QJsonObject actionObject = actions.at(j).toObject();
+
+					action.action = actionObject.value(QLatin1String("identifier")).toString();
+					action.options = actionObject.value(QLatin1String("options")).toObject().toVariantMap();
+				}
+				else
+				{
+					action.action = actions.at(j).toString();
+				}
+
+				toolBar.actions.append(action);
+			}
+
+			m_toolBarDefinitions[toolBar.name] = toolBar;
+		}
 	}
 
 	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
 
-	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
+	for (definitionsIterator = m_actionDefinitions.constBegin(); definitionsIterator != m_actionDefinitions.constEnd(); ++definitionsIterator)
 	{
 		Action *action =  new Action(definitionsIterator.value().icon, definitionsIterator.value().text, m_window);
 		action->setObjectName(definitionsIterator.key());
@@ -199,7 +278,7 @@ void ActionsManager::updateActions()
 	const QHash<QString, QList<QKeySequence> > shortcuts = ShortcutsManager::getShortcuts();
 	QHash<QString, ActionDefinition>::const_iterator definitionsIterator;
 
-	for (definitionsIterator = m_definitions.constBegin(); definitionsIterator != m_definitions.constEnd(); ++definitionsIterator)
+	for (definitionsIterator = m_actionDefinitions.constBegin(); definitionsIterator != m_actionDefinitions.constEnd(); ++definitionsIterator)
 	{
 		if (m_actions.contains(definitionsIterator.key()))
 		{
@@ -319,17 +398,27 @@ QAction* ActionsManager::getAction(ActionIdentifier action, QObject *parent)
 
 QList<ActionDefinition> ActionsManager::getActionDefinitions()
 {
-	return m_definitions.values();
+	return m_actionDefinitions.values();
 }
 
 ActionDefinition ActionsManager::getActionDefinition(const QString &action)
 {
-	return m_definitions[action];
+	return m_actionDefinitions.value(action, ActionDefinition());
+}
+
+ToolBarDefinition ActionsManager::getToolBarDefinition(const QString &toolBar)
+{
+	return m_toolBarDefinitions.value(toolBar, ToolBarDefinition());
+}
+
+ActionIdentifier ActionsManager::getActionIdentifier(const QString &action)
+{
+	return (m_actionDefinitions.contains(action) ? m_actionDefinitions[action].identifier : UnknownAction);
 }
 
 bool ActionsManager::registerAction(const QLatin1String &name, const QString &text, const QString &description , const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked, ActionIdentifier identifier, ActionScope scope)
 {
-	if (m_definitions.contains(name))
+	if (m_actionDefinitions.contains(name))
 	{
 		return false;
 	}
@@ -345,7 +434,7 @@ bool ActionsManager::registerAction(const QLatin1String &name, const QString &te
 	definition.isCheckable = isCheckable;
 	definition.isChecked = isChecked;
 
-	m_definitions[name] = definition;
+	m_actionDefinitions[name] = definition;
 
 	return true;
 }

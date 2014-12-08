@@ -29,6 +29,33 @@
 namespace Otter
 {
 
+enum ToolBarLocation
+{
+	UnknownToolBarLocation = 0,
+	TopToolBarLocation = 1,
+	BottomBarArea = 2,
+	LeftToolBarLocation = 3,
+	RightToolBarLocation = 4,
+	NavigationToolBarLocation = 5,
+	StatusToolBarLocation = 6,
+	TabsToolBarLocation = 7,
+	MenuToolBarLocation = 8
+};
+
+struct ToolBarActionDefinition
+{
+	QString action;
+	QVariantMap options;
+};
+
+struct ToolBarDefinition
+{
+	QString name;
+	QString title;
+	QList<ToolBarActionDefinition> actions;
+	ToolBarLocation location;
+};
+
 struct ActionDefinition
 {
 	QString name;
@@ -62,6 +89,8 @@ public:
 	static QAction* getAction(ActionIdentifier action, QObject *parent);
 	static QList<ActionDefinition> getActionDefinitions();
 	static ActionDefinition getActionDefinition(const QString &action);
+	static ToolBarDefinition getToolBarDefinition(const QString &toolBar);
+	static ActionIdentifier getActionIdentifier(const QString &action);
 	static bool registerAction(const QLatin1String &name, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false, ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
 
 public slots:
@@ -78,7 +107,8 @@ private:
 	QHash<QString, QAction*> m_actions;
 	QHash<ActionIdentifier, QAction*> m_standardActions;
 
-	static QHash<QString, ActionDefinition> m_definitions;
+	static QHash<QString, ActionDefinition> m_actionDefinitions;
+	static QHash<QString, ToolBarDefinition> m_toolBarDefinitions;
 };
 
 }

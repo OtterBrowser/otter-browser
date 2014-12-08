@@ -354,29 +354,56 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (m_contentsWidget->getType() == QLatin1String("web") && !m_navigationBar)
 	{
+		const ToolBarDefinition toolBar = ActionsManager::getToolBarDefinition(QLatin1String("NavigationBar"));
+
 		m_navigationBar = new QWidget(this);
-
-		m_addressWidget = new AddressWidget(this, false, this);
-		m_addressWidget->setUrl(m_contentsWidget->getUrl());
-
-		m_searchWidget = new SearchWidget(this);
 
 		QBoxLayout *navigationLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_navigationBar);
 		navigationLayout->setContentsMargins(0, 0, 0, 0);
-		navigationLayout->addWidget(new GoBackActionWidget(this, m_navigationBar));
-		navigationLayout->addWidget(new GoForwardActionWidget(this, m_navigationBar));
-		navigationLayout->addWidget(new ActionWidget(ReloadOrStopAction, this, m_navigationBar));
-		navigationLayout->addWidget(m_addressWidget, 3);
-		navigationLayout->addWidget(m_searchWidget);
+
+		for (int i = 0; i < toolBar.actions.count(); ++i)
+		{
+			if (toolBar.actions.at(i).action == QLatin1String("AddressWidget"))
+			{
+				m_addressWidget = new AddressWidget(this, false, this);
+				m_addressWidget->setUrl(m_contentsWidget->getUrl());
+
+				navigationLayout->addWidget(m_addressWidget, 3);
+
+				connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_addressWidget, SLOT(setUrl(QUrl)));
+				connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+				connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+			}
+			else if (toolBar.actions.at(i).action == QLatin1String("SearchWidget"))
+			{
+				m_searchWidget = new SearchWidget(this);
+
+				navigationLayout->addWidget(m_searchWidget);
+
+				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+			}
+			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
+			{
+				navigationLayout->addWidget(new GoBackActionWidget(this, m_navigationBar));
+			}
+			else if (toolBar.actions.at(i).action == QLatin1String("GoForwardAction"))
+			{
+				navigationLayout->addWidget(new GoForwardActionWidget(this, m_navigationBar));
+			}
+			else
+			{
+				const ActionIdentifier action = ActionsManager::getActionIdentifier(toolBar.actions.at(i).action.left(toolBar.actions.at(i).action.length() - 6));
+
+				if (action != UnknownAction)
+				{
+					navigationLayout->addWidget(new ActionWidget(action, this, m_navigationBar));
+				}
+			}
+		}
 
 		m_navigationBar->setLayout(navigationLayout);
 
 		layout()->addWidget(m_navigationBar);
-
-		connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_addressWidget, SLOT(setUrl(QUrl)));
-		connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-		connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
-		connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 	}
 	else if (m_contentsWidget->getType() != QLatin1String("web") && m_navigationBar)
 	{

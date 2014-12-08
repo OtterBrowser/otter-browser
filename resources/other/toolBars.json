@@ -1,0 +1,15 @@
+[
+	{
+		"identifier": "NavigationBar",
+		"location": "navigation",
+		"title": "Navigation Bar",
+		"actions":
+		[
+			"GoBackAction",
+			"GoForwardAction",
+			"ReloadOrStopAction",
+			"AddressWidget",
+			"SearchWidget"
+		]
+	}
+]
