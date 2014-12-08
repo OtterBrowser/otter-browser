@@ -47,6 +47,11 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	connect(button, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 
+void FilePathWidget::setFilter(const QString &filter)
+{
+	m_filter = filter;
+}
+
 void FilePathWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
@@ -56,7 +61,7 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 
 void FilePathWidget::selectPath()
 {
-	const QString path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), m_lineEdit->text()) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_lineEdit->text()));
+	const QString path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), m_lineEdit->text(), m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_lineEdit->text()));
 
 	if (!path.isEmpty())
 	{

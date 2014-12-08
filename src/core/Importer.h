@@ -51,6 +51,7 @@ public:
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const = 0;
 	virtual QString getVersion() const = 0;
+	virtual QString getFileFilter() const = 0;
 	virtual QString getSuggestedPath() const = 0;
 	virtual QString getBrowser() const = 0;
 	virtual ImportType getType() const = 0;

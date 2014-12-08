@@ -42,6 +42,7 @@ public:
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;
+	QString getFileFilter() const;
 	QString getSuggestedPath() const;
 	QString getBrowser() const;
 

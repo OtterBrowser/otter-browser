@@ -33,6 +33,7 @@ class FilePathWidget : public QWidget
 public:
 	explicit FilePathWidget(QWidget *parent = NULL);
 
+	void setFilter(const QString &filter);
 	void setSelectFile(bool mode);
 	void setPath(const QString &path);
 	QString getPath() const;
@@ -47,6 +48,7 @@ protected slots:
 private:
 	QLineEdit *m_lineEdit;
 	QCompleter *m_completer;
+	QString m_filter;
 	bool m_selectFile;
 
 signals:

@@ -185,6 +185,11 @@ QString HtmlBookmarksImporter::getVersion() const
 	return QLatin1String("1.0");
 }
 
+QString HtmlBookmarksImporter::getFileFilter() const
+{
+	return tr("HTML files (*.htm, *.html)");
+}
+
 QString HtmlBookmarksImporter::getSuggestedPath() const
 {
 	return QString();
