@@ -71,6 +71,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
@@ -99,6 +100,7 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
@@ -156,6 +158,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	m_widget->showDialog(&dialog);
 
 	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();

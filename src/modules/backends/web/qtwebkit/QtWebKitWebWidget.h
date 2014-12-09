@@ -43,6 +43,8 @@ class QtWebKitWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
+	~QtWebKitWebWidget();
+
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);

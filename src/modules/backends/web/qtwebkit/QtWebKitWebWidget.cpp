@@ -102,6 +102,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	}
 
 	m_page = new QtWebKitWebPage(m_networkManager, this);
+	m_page->setParent(m_webView);
 	m_page->setPluginFactory(m_pluginFactory);
 
 	m_webView->setPage(m_page);
@@ -168,6 +169,12 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
+}
+
+QtWebKitWebWidget::~QtWebKitWebWidget()
+{
+	m_webView->stop();
+	m_webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
