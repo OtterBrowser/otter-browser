@@ -58,7 +58,6 @@ public slots:
 	void restoreWindowState();
 
 protected:
-	void changeEvent(QEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
 	void updateAction(QAction *source, QAction *target);

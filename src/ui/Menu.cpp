@@ -56,14 +56,19 @@ Menu::Menu(const QJsonObject &definition, QWidget *parent) : QMenu(parent),
 	}
 }
 
-bool Menu::event(QEvent *event)
+void Menu::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
-	{
-		setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
-	}
+	QMenu::changeEvent(event);
 
-	return QMenu::event(event);
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+
+			break;
+		default:
+			break;
+	}
 }
 
 }

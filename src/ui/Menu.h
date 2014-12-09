@@ -33,7 +33,8 @@ class Menu : public QMenu
 public:
 	explicit Menu(const QJsonObject &definition, QWidget *parent = NULL);
 
-	bool event(QEvent *event);
+protected:
+	void changeEvent(QEvent *event);
 
 private:
 	QString m_title;

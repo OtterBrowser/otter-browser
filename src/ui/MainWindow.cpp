@@ -168,26 +168,6 @@ MainWindow::~MainWindow()
 	delete m_ui;
 }
 
-void MainWindow::changeEvent(QEvent *event)
-{
-	QMainWindow::changeEvent(event);
-
-	switch (event->type())
-	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			if (m_actionsManager)
-			{
-				m_actionsManager->updateActions();
-			}
-
-			break;
-		default:
-			break;
-	}
-}
-
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	if (SessionsManager::isLastWindow() && !Application::getInstance()->canClose())
@@ -1116,44 +1096,52 @@ WindowsManager* MainWindow::getWindowsManager()
 
 bool MainWindow::event(QEvent *event)
 {
-	if (event->type() == QEvent::WindowStateChange)
+	switch (event->type())
 	{
-		const bool result = QMainWindow::event(event);
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
 
-		if (isFullScreen())
-		{
-			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
-			m_ui->statusBar->hide();
+			updateWindowTitle(m_windowsManager->getTitle());
 
-			if (m_menuBar)
+			if (m_actionsManager)
 			{
-				m_menuBar->hide();
+				m_actionsManager->updateActions();
 			}
 
-			centralWidget()->installEventFilter(this);
-		}
-		else
-		{
-			m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-			m_ui->statusBar->show();
-
-			if (m_menuBar)
+			break;
+		case QEvent::WindowStateChange:
+			if (isFullScreen())
 			{
-				m_menuBar->show();
+				m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+				m_ui->statusBar->hide();
+
+				if (m_menuBar)
+				{
+					m_menuBar->hide();
+				}
+
+				centralWidget()->installEventFilter(this);
+			}
+			else
+			{
+				m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+				m_ui->statusBar->show();
+
+				if (m_menuBar)
+				{
+					m_menuBar->show();
+				}
+
+				centralWidget()->removeEventFilter(this);
 			}
 
-			centralWidget()->removeEventFilter(this);
-		}
+			break;
+		case QEvent::WindowActivate:
+			SessionsManager::setActiveWindow(this);
 
-		return result;
-	}
-	else if (event->type() == QEvent::WindowActivate)
-	{
-		SessionsManager::setActiveWindow(this);
-	}
-	else if (event->type() == QEvent::LanguageChange)
-	{
-		updateWindowTitle(m_windowsManager->getTitle());
+			break;
+		default:
+			break;
 	}
 
 	return QMainWindow::event(event);
