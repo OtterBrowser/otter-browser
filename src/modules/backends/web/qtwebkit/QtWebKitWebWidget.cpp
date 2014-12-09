@@ -1104,6 +1104,13 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 
 	const QPoint hitPosition = (position.isNull() ? m_hotclickPosition : position);
+	QContextMenuEvent menuEvent(QContextMenuEvent::Other, hitPosition, m_webView->mapToGlobal(hitPosition), Qt::NoModifier);
+
+	if (m_page->swallowContextMenuEvent(&menuEvent))
+	{
+		return;
+	}
+
 	QWebFrame *frame = m_webView->page()->frameAt(hitPosition);
 
 	m_hotclickPosition = QPoint();
