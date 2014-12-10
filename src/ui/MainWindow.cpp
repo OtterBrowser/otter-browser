@@ -232,7 +232,7 @@ void MainWindow::createMenuBar()
 	if (closedWindowsMenu)
 	{
 		closedWindowsMenu->setIcon(Utils::getIcon(QLatin1String("user-trash")));
-		closedWindowsMenu->setEnabled(false);
+		closedWindowsMenu->setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !m_windowsManager->getClosedWindows().isEmpty());
 
 		connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), closedWindowsMenu, SLOT(setEnabled(bool)));
 		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
@@ -814,16 +814,14 @@ void MainWindow::menuClosedWindowsAboutToShow()
 {
 	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
 
-	if (!closedWindowsMenu)
+	if (closedWindowsMenu)
 	{
-		return;
+		closedWindowsMenu->clear();
+		closedWindowsMenu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
+		closedWindowsMenu->addSeparator();
 	}
 
 	m_closedWindowsMenu->clear();
-
-	closedWindowsMenu->clear();
-	closedWindowsMenu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
-	closedWindowsMenu->addSeparator();
 
 	const QStringList windows = SessionsManager::getClosedWindows();
 
@@ -831,10 +829,10 @@ void MainWindow::menuClosedWindowsAboutToShow()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			closedWindowsMenu->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
+			m_closedWindowsMenu->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), m_closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
 		}
 
-		closedWindowsMenu->addSeparator();
+		m_closedWindowsMenu->addSeparator();
 	}
 
 	WebBackend *backend = WebBackendsManager::getBackend();
@@ -842,10 +840,13 @@ void MainWindow::menuClosedWindowsAboutToShow()
 
 	for (int i = 0; i < tabs.count(); ++i)
 	{
-		closedWindowsMenu->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
+		m_closedWindowsMenu->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), m_closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
 	}
 
-	m_closedWindowsMenu->addActions(closedWindowsMenu->actions());
+	if (closedWindowsMenu)
+	{
+		closedWindowsMenu->addActions(m_closedWindowsMenu->actions());
+	}
 }
 
 void MainWindow::menuBookmarksAboutToShow()
