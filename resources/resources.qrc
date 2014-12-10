@@ -56,6 +56,7 @@
         <file>icons/edit-undo.png</file>
         <file>icons/go-down.png</file>
         <file>icons/go-first.png</file>
+        <file>icons/go-jump-locationbar.png</file>
         <file>icons/go-last.png</file>
         <file>icons/go-next.png</file>
         <file>icons/go-previous.png</file>

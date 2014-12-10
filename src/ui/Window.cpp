@@ -153,6 +153,12 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 
 			return;
 		}
+		else if (action == GoAction)
+		{
+			m_addressWidget->handleUserInput(m_addressWidget->text());
+
+			return;
+		}
 	}
 
 	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))

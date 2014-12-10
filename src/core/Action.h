@@ -46,6 +46,7 @@ enum ActionIdentifier
 	CopyImageToClipboardAction,
 	CopyImageUrlToClipboardAction,
 	ImagePropertiesAction,
+	GoAction,
 	GoBackAction,
 	GoForwardAction,
 	GoToParentDirectoryAction,
