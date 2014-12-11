@@ -535,14 +535,9 @@ void AddressWidget::setUrl(const QUrl &url)
 {
 	updateBookmark();
 
-	if (m_window && url.scheme() != QLatin1String("javascript"))
+	if (m_window && !hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
-		if (!hasFocus())
-		{
-			setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
-		}
-
-		setIcon(m_window->getIcon());
+		setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
 	}
 }
 
