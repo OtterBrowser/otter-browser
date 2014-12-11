@@ -550,6 +550,7 @@ void AddressWidget::setWindow(Window *window)
 {
 	if (m_window)
 	{
+		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		disconnect(m_window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 	}
@@ -566,6 +567,7 @@ void AddressWidget::setWindow(Window *window)
 			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		}
 
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 		connect(window->getContentsWidget()->getAction(LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 	}
 

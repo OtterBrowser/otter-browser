@@ -41,12 +41,12 @@ public:
 	explicit AddressWidget(Window *window, bool simpleMode = false, QWidget *parent = NULL);
 
 	void handleUserInput(const QString &text, OpenHints hints = DefaultOpen);
-	void setWindow(Window *window);
 	QUrl getUrl() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setUrl(const QUrl &url);
+	void setWindow(Window *window = NULL);
 
 protected:
 	void timerEvent(QTimerEvent *event);
