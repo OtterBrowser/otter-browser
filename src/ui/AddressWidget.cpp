@@ -537,7 +537,7 @@ void AddressWidget::setUrl(const QUrl &url)
 
 	if (m_window && !hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
-		setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
+		setText(m_window->isUrlEmpty() ? QString() : url.toString());
 	}
 }
 
@@ -652,7 +652,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (text().trimmed().isEmpty() || text().trimmed() != url.toString())
 			{
-				setText((url.scheme() == QLatin1String("about") && m_window->isUrlEmpty()) ? QString() : url.toString());
+				setText(m_window->isUrlEmpty() ? QString() : url.toString());
 
 				if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
 				{

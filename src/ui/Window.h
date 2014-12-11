@@ -94,10 +94,10 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
+	void handleOpenUrlRequest(const QUrl &url, OpenHints hints);
 	void handleSearchRequest(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
-	void handleOpenUrlRequest(const QUrl &url, OpenHints hints);
 
 private:
 	QWidget *m_navigationBar;

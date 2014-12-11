@@ -27,6 +27,7 @@
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
+#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QAbstractItemView>
@@ -261,7 +262,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? DefaultOpen : NewTabOpen));
+		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), ((QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) ?  NewTabOpen : DefaultOpen));
 	}
 }
 

@@ -171,9 +171,26 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 	}
 }
 
+void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
+{
+	if (hints == DefaultOpen || hints == CurrentTabOpen)
+	{
+		setUrl(url);
+
+		return;
+	}
+
+	if (isPrivate())
+	{
+		hints |= PrivateOpen;
+	}
+
+	emit requestedOpenUrl(url, hints);
+}
+
 void Window::handleSearchRequest(const QString &query, const QString &engine, OpenHints hints)
 {
-	if ((getType() == QLatin1String("web") && getUrl().scheme() == QLatin1String("about") && isUrlEmpty()) || (hints == DefaultOpen || hints == CurrentTabOpen))
+	if ((getType() == QLatin1String("web") && isUrlEmpty()) || (hints == DefaultOpen || hints == CurrentTabOpen))
 	{
 		search(query, engine);
 	}
@@ -191,23 +208,6 @@ void Window::notifyLoadingStateChanged(bool loading)
 void Window::notifyRequestedCloseWindow()
 {
 	emit requestedCloseWindow(this);
-}
-
-void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
-{
-	if (hints == DefaultOpen || hints == CurrentTabOpen)
-	{
-		setUrl(url);
-
-		return;
-	}
-
-	if (isPrivate())
-	{
-		hints |= PrivateOpen;
-	}
-
-	emit requestedOpenUrl(url, hints);
 }
 
 void Window::setSession(const SessionWindow &session)
@@ -386,7 +386,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 				navigationLayout->addWidget(m_searchWidget);
 
-				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 			}
 			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
 			{
@@ -620,14 +620,9 @@ bool Window::isPrivate() const
 
 bool Window::isUrlEmpty() const
 {
-	const QString url = getUrl().path();
+	const QUrl url = getUrl();
 
-	if (url == QLatin1String("blank") || url == QLatin1String("start") || url.isEmpty())
-	{
-		return true;
-	}
-
-	return false;
+	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));
 }
 
 }

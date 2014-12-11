@@ -83,8 +83,8 @@ private:
 	bool m_simpleMode;
 
 signals:
-	void requestedOpenUrl(QUrl url, OpenHints hints = DefaultOpen);
-	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
+	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 
 }

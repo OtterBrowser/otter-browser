@@ -36,7 +36,7 @@ QString elideText(const QString &text, QWidget *widget, int width)
 {
 	if (width < 0)
 	{
-		width = (QApplication::desktop()->screenGeometry().width() / 4);
+		width = (QApplication::desktop()->screenGeometry(widget).width() / 4);
 	}
 
 	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), qMax(100, width));
