@@ -42,9 +42,10 @@ public:
 	void activateTabOnRight();
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 	int getPinnedTabsAmount() const;
+	int getNewTabPosition() const;
 
 public slots:
-	void setOrientation(Qt::DockWidgetArea orientation);
+	void setOrientation(Qt::ToolBarArea orientation);
 	void setShape(QTabBar::Shape shape);
 	void setTabProperty(int index, const QString &key, const QVariant &value);
 
@@ -76,6 +77,7 @@ protected slots:
 	void updatePinnedTabsAmount();
 	void updateButtons();
 	void updateTabs(int index = -1);
+	void setIsMoved(bool isMoved);
 
 private:
 	PreviewWidget *m_previewWidget;
@@ -87,6 +89,7 @@ private:
 	int m_hoveredTab;
 	int m_previewTimer;
 	bool m_enablePreviews;
+	bool m_isMoved;
 
 signals:
 	void requestedClone(int index);
@@ -94,7 +97,7 @@ signals:
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);
-	void moveNewTabButton(int position);
+	void newTabPositionChanged();
 };
 
 }

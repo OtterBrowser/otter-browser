@@ -30,6 +30,7 @@
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "TabBarToolBarWidget.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
@@ -64,6 +65,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
 	m_actionsManager(NULL),
 	m_windowsManager(NULL),
+	m_tabBarToolBarWidget(NULL),
 	m_menuBar(NULL),
 	m_sessionsGroup(NULL),
 	m_characterEncodingGroup(NULL),
@@ -79,16 +81,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_ui->statusBar->setup();
 
-	m_ui->tabsDockWidget->setup(m_closedWindowsMenu);
-	m_ui->tabsDockWidget->setFloating(true);
-	m_ui->tabsDockWidget->adjustSize();
-	m_ui->tabsDockWidget->setFloating(false);
-
 	MdiWidget *mdiWidget = new MdiWidget(this);
 
-	setCentralWidget(mdiWidget);
+	m_tabBarToolBarWidget = new TabBarToolBarWidget(m_closedWindowsMenu, this);
 
-	m_windowsManager = new WindowsManager(mdiWidget, m_ui->tabsDockWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	setCentralWidget(mdiWidget);
+	addToolBar(m_tabBarToolBarWidget);
+
+	m_windowsManager = new WindowsManager(mdiWidget, m_tabBarToolBarWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	SessionsManager::registerWindow(this);
 
@@ -111,7 +111,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
-	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_ui->tabsDockWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
+	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_tabBarToolBarWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("ErrorConsole")), SLOT(setChecked(bool)));
@@ -161,6 +161,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	updateWindowTitle(m_windowsManager->getTitle());
 	restoreGeometry(SettingsManager::getValue(QLatin1String("Window/Geometry")).toByteArray());
 	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
+
+	m_tabBarToolBarWidget->updateOrientation();
 }
 
 MainWindow::~MainWindow()
@@ -952,7 +954,7 @@ void MainWindow::openBookmark()
 
 void MainWindow::updateClosedWindows()
 {
-	m_ui->tabsDockWidget->setClosedWindowsMenuEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
+	m_tabBarToolBarWidget->setClosedWindowsMenuEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void MainWindow::updateBookmarks()

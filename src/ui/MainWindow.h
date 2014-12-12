@@ -37,6 +37,7 @@ namespace Ui
 
 class ActionsManager;
 class Menu;
+class TabBarToolBarWidget;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -110,6 +111,7 @@ protected slots:
 private:
 	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
+	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;
 	QActionGroup *m_sessionsGroup;
 	QActionGroup *m_characterEncodingGroup;

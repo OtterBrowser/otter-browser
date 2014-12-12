@@ -48,7 +48,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
-	m_enablePreviews(true)
+	m_enablePreviews(true),
+	m_isMoved(false)
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
 	setDrawBase(false);
@@ -234,22 +235,7 @@ void TabBarWidget::tabLayoutChange()
 {
 	QTabBar::tabLayoutChange();
 
-	int offset = 0;
-	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
-
-	for (int i = 0; i < count(); ++i)
-	{
-		if (isHorizontal)
-		{
-			offset += tabSizeHint(i).width();
-		}
-		else
-		{
-			offset += tabSizeHint(i).height();
-		}
-	}
-
-	emit moveNewTabButton(offset);
+	emit newTabPositionChanged();
 
 	updateButtons();
 }
@@ -347,7 +333,7 @@ void TabBarWidget::activateTabOnRight()
 
 void TabBarWidget::showPreview(int index)
 {
-	if (!m_enablePreviews || (parentWidget() && !parentWidget()->parentWidget()->parentWidget()->underMouse()))
+	if (!m_enablePreviews || m_isMoved || (window() && !window()->underMouse()))
 	{
 		hidePreview();
 
@@ -578,19 +564,26 @@ void TabBarWidget::updateTabs(int index)
 	tabHovered(tabAt(mapFromGlobal(QCursor::pos())));
 }
 
-void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
+void TabBarWidget::setIsMoved(bool isMoved)
+{
+	m_isMoved = isMoved;
+
+	hidePreview();
+}
+
+void TabBarWidget::setOrientation(Qt::ToolBarArea orientation)
 {
 	switch (orientation)
 	{
-		case Qt::LeftDockWidgetArea:
+		case Qt::LeftToolBarArea:
 			setShape(QTabBar::RoundedWest);
 
 			break;
-		case Qt::RightDockWidgetArea:
+		case Qt::RightToolBarArea:
 			setShape(QTabBar::RoundedEast);
 
 			break;
-		case Qt::BottomDockWidgetArea:
+		case Qt::BottomToolBarArea:
 			setShape(QTabBar::RoundedSouth);
 
 			break;
@@ -598,34 +591,6 @@ void TabBarWidget::setOrientation(Qt::DockWidgetArea orientation)
 			setShape(QTabBar::RoundedNorth);
 
 			break;
-	}
-
-	QDockWidget *widget = qobject_cast<QDockWidget*>(parentWidget()->parentWidget());
-
-	if (widget)
-	{
-		if (orientation == Qt::LeftDockWidgetArea || orientation == Qt::RightDockWidgetArea)
-		{
-			widget->setFeatures(widget->features() & ~QDockWidget::DockWidgetVerticalTitleBar);
-		}
-		else
-		{
-			widget->setFeatures(widget->features() | QDockWidget::DockWidgetVerticalTitleBar);
-		}
-	}
-
-	QBoxLayout *layout = qobject_cast<QBoxLayout*>(parentWidget()->layout());
-
-	if (layout)
-	{
-		if (orientation == Qt::LeftDockWidgetArea || orientation == Qt::RightDockWidgetArea)
-		{
-			layout->setDirection(QBoxLayout::TopToBottom);
-		}
-		else
-		{
-			layout->setDirection(QBoxLayout::LeftToRight);
-		}
 	}
 }
 
@@ -714,6 +679,26 @@ QSize TabBarWidget::tabSizeHint(int index) const
 int TabBarWidget::getPinnedTabsAmount() const
 {
 	return m_pinnedTabsAmount;
+}
+
+int TabBarWidget::getNewTabPosition() const
+{
+	int position = 0;
+	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+
+	for (int i = 0; i < count(); ++i)
+	{
+		if (isHorizontal)
+		{
+			position += tabSizeHint(i).width();
+		}
+		else
+		{
+			position += tabSizeHint(i).height();
+		}
+	}
+
+	return position;
 }
 
 }

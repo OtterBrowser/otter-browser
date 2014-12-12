@@ -95,7 +95,7 @@ SOURCES += src/main.cpp \
     src/ui/SidebarWidget.cpp \
     src/ui/StartupDialog.cpp \
     src/ui/StatusBarWidget.cpp \
-    src/ui/TabBarDockWidget.cpp \
+    src/ui/TabBarToolBarWidget.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TableViewWidget.cpp \
     src/ui/TextLabelWidget.cpp \
@@ -197,7 +197,7 @@ HEADERS += src/core/Action.h \
     src/ui/SidebarWidget.h \
     src/ui/StartupDialog.h \
     src/ui/StatusBarWidget.h \
-    src/ui/TabBarDockWidget.h \
+    src/ui/TabBarToolBarWidget.h \
     src/ui/TabBarWidget.h \
     src/ui/TableViewWidget.h \
     src/ui/TextLabelWidget.h \

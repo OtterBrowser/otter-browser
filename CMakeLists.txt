@@ -129,7 +129,7 @@ set(otter_src
 	src/ui/SidebarWidget.cpp
 	src/ui/StartupDialog.cpp
 	src/ui/StatusBarWidget.cpp
-	src/ui/TabBarDockWidget.cpp
+	src/ui/TabBarToolBarWidget.cpp
 	src/ui/TabBarWidget.cpp
 	src/ui/TableViewWidget.cpp
 	src/ui/TextLabelWidget.cpp

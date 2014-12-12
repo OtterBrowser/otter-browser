@@ -17,11 +17,11 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TABBARDOCKWIDGET_H
-#define OTTER_TABBARDOCKWIDGET_H
+#ifndef OTTER_TABBARTOOLBARWIDGET_H
+#define OTTER_TABBARTOOLBARWIDGET_H
 
-#include <QtGui/QPaintEvent>
-#include <QtWidgets/QDockWidget>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QToolBar>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
@@ -29,32 +29,23 @@ namespace Otter
 
 class TabBarWidget;
 
-class TabBarDockWidget : public QDockWidget
+class TabBarToolBarWidget : public QToolBar
 {
 	Q_OBJECT
 
 public:
-	explicit TabBarDockWidget(QWidget *parent = NULL);
+	explicit TabBarToolBarWidget(QMenu *closedWindowsMenu, QMainWindow *parent = NULL);
 
-	void setup(QMenu *closedWindowsMenu);
 	TabBarWidget* getTabBar();
-#ifdef Q_OS_WIN
-	bool eventFilter(QObject *object, QEvent *event);
-#endif
 
 public slots:
-#ifdef Q_OS_WIN
-	void updateSize();
-#endif
+	void updateNewTabPosition();
+	void updateOrientation();
 	void setClosedWindowsMenuEnabled(bool enabled);
 
-protected:
-	void paintEvent(QPaintEvent *event);
-
-protected slots:
-	void moveNewTabButton(int position);
-
 private:
+	QMainWindow *m_window;
+	QWidget *m_widget;
 	TabBarWidget *m_tabBar;
 	QToolButton *m_newTabButton;
 	QToolButton *m_trashButton;
