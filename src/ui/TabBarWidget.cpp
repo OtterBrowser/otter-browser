@@ -48,6 +48,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
+	m_showUrlIcon(true),
 	m_enablePreviews(true),
 	m_isMoved(false)
 {
@@ -64,6 +65,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
 
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
+	optionChanged(QLatin1String("TabBar/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")));
 	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -244,10 +246,18 @@ void TabBarWidget::tabInserted(int index)
 {
 	QTabBar::tabInserted(index);
 
-	QLabel *label = new QLabel();
-	label->setFixedSize(QSize(16, 16));
+	if (m_showUrlIcon)
+	{
+		QLabel *label = new QLabel();
+		label->setFixedSize(QSize(16, 16));
 
-	setTabButton(index, m_iconButtonPosition, label);
+		setTabButton(index, m_iconButtonPosition, label);
+	}
+	else
+	{
+		setTabButton(index, m_iconButtonPosition, NULL);
+	}
+
 	updateTabs();
 }
 
@@ -290,7 +300,6 @@ void TabBarWidget::addTab(int index, Window *window)
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(updatePinnedTabsAmount()));
-	connect(tabButton(index, QTabBar::LeftSide), SIGNAL(destroyed()), window, SLOT(deleteLater()));
 
 	if (window->isPinned())
 	{
@@ -421,6 +430,32 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	if (option == QLatin1String("TabBar/ShowCloseButton"))
 	{
 		setTabsClosable(value.toBool());
+	}
+	else if (option == QLatin1String("TabBar/ShowUrlIcon"))
+	{
+		if (m_showUrlIcon != value.toBool())
+		{
+			const bool showUrlIcons = value.toBool();
+
+			for (int i = 0; i < count(); ++i)
+			{
+				if (showUrlIcons && !tabButton(i, m_iconButtonPosition))
+				{
+					QLabel *label = new QLabel();
+					label->setFixedSize(QSize(16, 16));
+
+					setTabButton(i, m_iconButtonPosition, label);
+				}
+				else if (!showUrlIcons && tabButton(i, m_iconButtonPosition))
+				{
+					setTabButton(i, m_iconButtonPosition, NULL);
+				}
+			}
+
+			updateTabs();
+		}
+
+		m_showUrlIcon = value.toBool();
 	}
 	else if (option == QLatin1String("TabBar/EnablePreviews"))
 	{
