@@ -123,6 +123,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(Utils::getIcon(QLatin1String("tab-close-other")), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 	}
 
+	menu.addSeparator();
+	menu.addAction(ActionsManager::getAction(QLatin1String("LockToolBars"), this));
 	menu.exec(event->globalPos());
 
 	m_clickedTab = -1;

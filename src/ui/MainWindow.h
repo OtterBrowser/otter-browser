@@ -59,6 +59,7 @@ public slots:
 	void restoreWindowState();
 
 protected:
+	void contextMenuEvent(QContextMenuEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
 	void updateAction(QAction *source, QAction *target);
@@ -74,7 +75,7 @@ protected slots:
 	void actionManageSessions();
 	void actionSession(QAction *action);
 	void actionImport(QAction *action);
-	void actionWorkOffline(bool enabled);
+	void actionWorkOffline(bool enable);
 	void actionShowMenuBar(bool enable);
 	void actionFullScreen();
 	void actionUserAgent(QAction *action);
@@ -95,6 +96,7 @@ protected slots:
 	void actionPreferences();
 	void actionSwitchApplicationLanguage();
 	void actionAboutApplication();
+	void actionLockToolBars(bool lock);
 	void actionGoToPage();
 	void actionQuickBookmarkAccess();
 	void menuSessionsAboutToShow();

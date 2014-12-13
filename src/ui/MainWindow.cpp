@@ -84,6 +84,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	MdiWidget *mdiWidget = new MdiWidget(this);
 
 	m_tabBarToolBarWidget = new TabBarToolBarWidget(m_closedWindowsMenu, this);
+	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
 	setCentralWidget(mdiWidget);
 	addToolBar(m_tabBarToolBarWidget);
@@ -94,6 +95,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 	m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+	m_actionsManager->getAction(QLatin1String("LockToolBars"))->setChecked(SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 	m_actionsManager->getAction(QLatin1String("Exit"))->setMenuRole(QAction::QuitRole);
 	m_actionsManager->getAction(QLatin1String("Preferences"))->setMenuRole(QAction::PreferencesRole);
 	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
@@ -146,6 +148,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("AboutApplication")), SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
 	connect(m_actionsManager->getAction(QLatin1String("AboutQt")), SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
+	connect(m_actionsManager->getAction(QLatin1String("LockToolBars")), SIGNAL(toggled(bool)), this, SLOT(actionLockToolBars(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("GoToPage")), SIGNAL(triggered()), this, SLOT(actionGoToPage()));
 	connect(m_actionsManager->getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(actionQuickBookmarkAccess()));
 
@@ -168,6 +171,13 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 MainWindow::~MainWindow()
 {
 	delete m_ui;
+}
+
+void MainWindow::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+	menu.addAction(m_actionsManager->getAction(QLatin1String("LockToolBars")));
+	menu.exec(event->globalPos());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -349,6 +359,18 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(value.toBool());
 	}
+	else if (option == QLatin1String("Interface/LockToolBars"))
+	{
+		const QList<QToolBar*> toolBars = findChildren<QToolBar*>();
+		const bool movable = !value.toBool();
+
+		for (int i = 0; i < toolBars.count(); ++i)
+		{
+			toolBars.at(i)->setMovable(movable);
+		}
+
+		m_actionsManager->getAction(QLatin1String("LockToolBars"))->setChecked(value.toBool());
+	}
 	else if (option == QLatin1String("Interface/ShowMenuBar"))
 	{
 		m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(value.toBool());
@@ -403,9 +425,9 @@ void MainWindow::actionImport(QAction *action)
 	}
 }
 
-void MainWindow::actionWorkOffline(bool enabled)
+void MainWindow::actionWorkOffline(bool enable)
 {
-	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enabled);
+	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enable);
 }
 
 void MainWindow::actionShowMenuBar(bool enable)
@@ -614,6 +636,11 @@ void MainWindow::actionAboutApplication()
 	}
 
 	QMessageBox::about(this, QLatin1String("Otter"), about);
+}
+
+void MainWindow::actionLockToolBars(bool lock)
+{
+	SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), lock);
 }
 
 void MainWindow::actionGoToPage()
