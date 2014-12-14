@@ -20,6 +20,8 @@
 #ifndef OTTER_SESSIONSMANAGER_H
 #define OTTER_SESSIONSMANAGER_H
 
+#include "SettingsManager.h"
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QPoint>
 #include <QtCore/QPointer>
@@ -34,7 +36,7 @@ struct WindowHistoryEntry
 	QPoint position;
 	int zoom;
 
-	WindowHistoryEntry() : zoom(100) {}
+	WindowHistoryEntry() : zoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt()) {}
 };
 
 struct WindowHistoryInformation
@@ -84,7 +86,7 @@ struct SessionWindow
 			return history.at(index).zoom;
 		}
 
-		return 100;
+		return SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();
 	}
 };
 

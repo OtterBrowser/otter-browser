@@ -21,7 +21,6 @@
 #include "SessionsManager.h"
 #include "ActionsManager.h"
 #include "Application.h"
-#include "SettingsManager.h"
 #include "Utils.h"
 #include "WindowsManager.h"
 #include "../ui/MainWindow.h"
@@ -194,12 +193,14 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	QSettings sessionData(sessionPath, QSettings::IniFormat);
 	sessionData.setIniCodec("UTF-8");
 
-	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
 	SessionInformation session;
 	session.path = path;
 	session.title = sessionData.value(QLatin1String("Session/title"), ((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"))).toString();
 	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
 	session.clean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
+
+	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
+	const int defaultZoom = SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();
 
 	for (int i = 1; i <= windows; ++i)
 	{
@@ -225,7 +226,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
 				historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
 				historyEntry.position = QPoint(position.value(0, QString::number(0)).toInt(), position.value(1, QString::number(0)).toInt());
-				historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(i).arg(j).arg(k), 100).toInt();
+				historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(i).arg(j).arg(k), defaultZoom).toInt();
 
 				sessionWindow.history.append(historyEntry);
 			}
