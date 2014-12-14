@@ -113,11 +113,12 @@ private:
 
 signals:
 	void aboutToClose();
-	void requestedCloseWindow(Window *window);
 	void requestedOpenUrl(QUrl url, OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
+	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
+	void requestedCloseWindow(Window *window);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message);

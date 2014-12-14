@@ -1264,6 +1264,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
 
+	setRequestedUrl(m_webView->page()->history()->currentItem().url(), false, true);
 	updateOptions(m_webView->page()->history()->itemAt(history.index).url());
 
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
@@ -1274,6 +1275,7 @@ void QtWebKitWebWidget::setHistory(QDataStream &stream)
 	stream.device()->reset();
 	stream >> *(m_webView->page()->history());
 
+	setRequestedUrl(m_webView->page()->history()->currentItem().url(), false, true);
 	updateOptions(m_webView->page()->history()->currentItem().url());
 }
 

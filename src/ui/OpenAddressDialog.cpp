@@ -37,8 +37,9 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
-	connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl)), this, SLOT(openUrl(QUrl)));
-	connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString)), this, SLOT(openSearch(QString,QString)));
+	connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
+	connect(m_addressWidget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SLOT(openBookmark(BookmarksItem*,OpenHints)));
+	connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(openSearch(QString,QString,OpenHints)));
 	connect(this, SIGNAL(accepted()), this, SLOT(handleInput()));
 }
 
@@ -70,16 +71,23 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 	}
 }
 
-void OpenAddressDialog::openUrl(const QUrl &url)
+void OpenAddressDialog::openUrl(const QUrl &url, OpenHints hints)
 {
-	emit requestedLoadUrl(url, NewTabOpen);
+	emit requestedLoadUrl(url, hints);
 
 	close();
 }
 
-void OpenAddressDialog::openSearch(const QString &query, const QString &engine)
+void OpenAddressDialog::openBookmark(BookmarksItem *bookmark, OpenHints hints)
 {
-	emit requestedSearch(query, engine, NewTabOpen);
+	emit requestedOpenBookmark(bookmark, hints);
+
+	close();
+}
+
+void OpenAddressDialog::openSearch(const QString &query, const QString &engine, OpenHints hints)
+{
+	emit requestedSearch(query, engine, hints);
 
 	close();
 }

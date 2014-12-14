@@ -378,6 +378,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 				connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_addressWidget, SLOT(setUrl(QUrl)));
 				connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+				connect(m_addressWidget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
 				connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 			}
 			else if (toolBar.actions.at(i).action == QLatin1String("SearchWidget"))

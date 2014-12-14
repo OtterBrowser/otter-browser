@@ -240,14 +240,9 @@ void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 
 	if (bookmark)
 	{
-		MainWindow *window = MainWindow::findMainWindow(parent());
+		emit requestedOpenBookmark(bookmark, hints);
 
-		if (window)
-		{
-			window->getWindowsManager()->open(bookmark);
-
-			return;
-		}
+		return;
 	}
 
 	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))

@@ -44,8 +44,9 @@ public:
 
 protected slots:
 	void handleInput();
-	void openUrl(const QUrl &url);
-	void openSearch(const QString &query, const QString &engine);
+	void openUrl(const QUrl &url, OpenHints hints);
+	void openBookmark(BookmarksItem *bookmark, OpenHints hints);
+	void openSearch(const QString &query, const QString &engine, OpenHints hints);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -56,6 +57,7 @@ private:
 
 signals:
 	void requestedLoadUrl(QUrl url, OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
 	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 

@@ -191,7 +191,12 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	if (window && (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() || window->isUrlEmpty()) && !(hints & NewTabOpen))
+	if (hints == DefaultOpen && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	{
+		hints = CurrentTabOpen;
+	}
+
+	if (window && window->getType() == QLatin1String("web") && (window->isUrlEmpty() || hints == CurrentTabOpen))
 	{
 		window->search(query, engine);
 
@@ -435,12 +440,13 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 		}
 	}
 
-	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
-	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
-	connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(open(QUrl,OpenHints)));
-	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
-	connect(window, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(search(QString,QString,OpenHints)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
+	connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(open(QUrl,OpenHints)));
+	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SLOT(open(BookmarksItem*,OpenHints)));
+	connect(window, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(search(QString,QString,OpenHints)));
+	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
+	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
 
 	emit windowAdded(index);
 }
