@@ -1,18 +1,88 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN.GB2312" version="2.0">
 <context>
+    <name>Otter::AcceptLanguageDialog</name>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
+        <source>Preferred Webpage Language</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
+        <source>To add language, please choose one from list or type a code of any language.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
+        <source>Add</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="88"/>
+        <source>Remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="113"/>
+        <source>Move Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="133"/>
+        <source>Move Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <source>Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <source>Code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="69"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="115"/>
+        <source>Any other</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="70"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="119"/>
+        <source>System language (%1 - %2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="127"/>
+        <source>Custom</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="421"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="72"/>
+        <source>Enter address or search...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/AddressWidget.cpp" line="472"/>
         <source>Remove Bookmark</source>
         <translation>移除书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="421"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="472"/>
         <source>Add Bookmark</source>
         <translation>添加书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/AddressWidget.cpp" line="511"/>
+        <location filename="../../src/ui/AddressWidget.cpp" line="488"/>
+        <source>Click to load all contents handled by plugins on the page</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/AddressWidget.cpp" line="637"/>
         <source>Remove This Icon</source>
         <translation>移除此图标</translation>
     </message>
@@ -20,16 +90,50 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="262"/>
+        <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="262"/>
+        <location filename="../../src/core/Application.cpp" line="281"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>此会话没有被正确地保存。
 确定仍然要恢复此会话？</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="510"/>
+        <location filename="../../src/core/Application.cpp" line="559"/>
+        <source>Question</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/core/Application.cpp" line="511"/>
+        <source>You are about to quit while %n files are still being downloaded.</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="512"/>
+        <location filename="../../src/core/Application.cpp" line="561"/>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="516"/>
+        <location filename="../../src/core/Application.cpp" line="565"/>
+        <source>Do not show this message again</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="518"/>
+        <location filename="../../src/core/Application.cpp" line="567"/>
+        <source>Hide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="560"/>
+        <source>You are about to quit the current Otter Browser session.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -268,7 +372,7 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>属性...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="353"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="355"/>
         <source>Bookmarks Manager</source>
         <translation>书签管理器</translation>
     </message>
@@ -309,6 +413,29 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="127"/>
         <source>Subfolder name:</source>
         <translation>子文件夹名：</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::BookmarksManager</name>
+    <message>
+        <location filename="../../src/core/BookmarksManager.cpp" line="86"/>
+        <source>Failed to open bookmarks file: %0</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksManager.cpp" line="110"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksManager.cpp" line="110"/>
+        <source>Failed to parse bookmarks file. No bookmarks were loaded.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksManager.cpp" line="111"/>
+        <source>Bookmarks file was not loaded sucesfully. XmlStreamReader error %0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -372,77 +499,77 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="107"/>
         <source>Address</source>
         <translation>地址：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="107"/>
         <source>Type</source>
         <translation>种类：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="107"/>
         <source>Size</source>
         <translation>大小：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="107"/>
         <source>Last Modified</source>
         <translation>修改日期：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="105"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="107"/>
         <source>Expires</source>
         <translation>失效日期：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="380"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="382"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="381"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="383"/>
         <source>Open in New Tab</source>
         <translation>在新标签内打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="382"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="384"/>
         <source>Open in New Background Tab</source>
         <translation>在后台新标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="384"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="386"/>
         <source>Open in New Window</source>
         <translation>在新窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="385"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
         <source>Open in New Background Window</source>
         <translation>在新后台窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Copy Link to Clipboard</source>
         <translation>复制链接至剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
         <source>Remove Entry</source>
         <translation>删除条目</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
         <source>Remove All Entries from This Domain</source>
         <translation>删除此域名下所有条目</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="458"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="592"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="594"/>
         <source>Cache</source>
         <translation>缓存</translation>
     </message>
@@ -562,25 +689,25 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="53"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="99"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
         <source>Network</source>
         <translation>网络</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="66"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="103"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
         <source>Security</source>
         <translation>安全</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="79"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="107"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
         <source>JS</source>
         <translation>Javascript</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="111"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="115"/>
         <source>Other</source>
         <translation>其他</translation>
     </message>
@@ -593,6 +720,11 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter...</source>
         <translation>检索…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="223"/>
+        <source>Copy</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -728,14 +860,72 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>浏览文件…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
+        <location filename="../../src/ui/FilePathWidget.cpp" line="64"/>
         <source>Select File</source>
         <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FilePathWidget.cpp" line="59"/>
+        <location filename="../../src/ui/FilePathWidget.cpp" line="64"/>
         <source>Select Directory</source>
         <translation>选择目录</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::GoBackActionWidget</name>
+    <message>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="52"/>
+        <source>Back (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="52"/>
+        <source>Back</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="57"/>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="88"/>
+        <source>(Untitled)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="59"/>
+        <source>%1 (Back - %2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoBackActionWidget.cpp" line="59"/>
+        <source>%1 (Back)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::GoForwardActionWidget</name>
+    <message>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="52"/>
+        <source>Forward (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="52"/>
+        <source>Forward</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="57"/>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="88"/>
+        <source>(Untitled)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="59"/>
+        <source>%1 (Forward - %2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/GoForwardActionWidget.cpp" line="59"/>
+        <source>%1 (Forward)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -746,108 +936,108 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>在此范围内搜索…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Today</source>
         <translation>今天内</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Yesterday</source>
         <translation>昨天</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Earlier This Week</source>
         <translation>本周内早些时候</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Previous Week</source>
         <translation>上一周</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Earlier This Month</source>
         <translation>本月初</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Earlier This Year</source>
         <translation>今年年初</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
         <source>Older</source>
         <translation>更早</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <source>Address</source>
         <translation>地址</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <source>Title</source>
         <translation>标题</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
         <source>Date</source>
         <translation>访问日期</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="210"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="244"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="212"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="246"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="367"/>
         <source>Open in New Tab</source>
         <translation>在新标签内打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
         <source>Open in New Background Tab</source>
         <translation>在后台新标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
         <source>Open in New Window</source>
         <translation>在新窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="369"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
         <source>Open in New Background Window</source>
         <translation>在新后台窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
         <source>Add to Bookmarks...</source>
         <translation>添加到书签…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="372"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
         <source>Copy Link to Clipboard</source>
         <translation>复制链接至剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="376"/>
         <source>Remove Entry</source>
         <translation>删除此条目</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="375"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="377"/>
         <source>Remove All Entries from This Domain</source>
         <translation>删除此域名下所有条目</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
         <source>History</source>
         <translation>历史记录</translation>
     </message>
@@ -855,14 +1045,19 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::HtmlBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="174"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="175"/>
         <source>HTML Bookmarks</source>
         <translation>HTML书签</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="179"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="180"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
         <translation>从HTML文件导入书签(Netscape格式)</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="190"/>
+        <source>HTML files (*.htm, *.html)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -942,20 +1137,48 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>源文件：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="76"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="93"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Error</source>
         <translation>出错了！</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="76"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
         <source>Unable to import selected type.</source>
         <translation>无法导入选定的类别。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="93"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Failed to open file for reading.</source>
         <translation>无法读取要打开的文件。</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::JavaScriptPreferencesDialog</name>
+    <message>
+        <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="14"/>
+        <source>JavaScript Options</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="29"/>
+        <source>Allow moving and resizing of windows</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="42"/>
+        <source>Allow changing of status field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="52"/>
+        <source>Allow script to hide address bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="59"/>
+        <source>Allow access to clipboard</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1017,159 +1240,131 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::MainWindow</name>
     <message>
-        <location filename="../../src/ui/MainWindow.ui" line="51"/>
+        <location filename="../../src/ui/MainWindow.ui" line="41"/>
         <source>Console</source>
         <translation>控制台</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="149"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="253"/>
         <source>Import Opera Bookmarks</source>
         <translation>导入Opera书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="150"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="254"/>
         <source>Import HTML Bookmarks</source>
         <translation>导入HTML书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="308"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="339"/>
-        <source>Question</source>
-        <translation>请确认</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="309"/>
-        <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>即将退出时仍有 %n 个下载正在进行。</numerusform></translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="310"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="341"/>
-        <source>Do you want to continue?</source>
-        <translation>确定继续么？</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="314"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="345"/>
-        <source>Do not show this message again</source>
-        <translation>不再显示此提示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="340"/>
-        <source>You are about to quit the current Otter Browser session.</source>
-        <translation>你即将退出当前的浏览器会话。</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="505"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="368"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="626"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="507"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="626"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="507"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>这个地址已经存在于你的书签中，仍要继续？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="721"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="602"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;水獭浏览器 %1&lt;/b&gt;&lt;br&gt;一款旨在由用户操纵，而非操纵用户的浏览器。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="722"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="603"/>
         <source>Web backend: %1 %2.</source>
         <translation>渲染引擎：%1 %2</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="726"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="607"/>
         <source>SSL library version: %1.</source>
         <translation>SSL库版本号：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="730"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="611"/>
         <source>SSL library not available.</source>
         <translation>SSL库不可用。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="765"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="780"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="823"/>
-        <location filename="../../src/ui/MainWindow.cpp" line="1003"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="665"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="680"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="723"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="903"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/MainWindow.cpp" line="780"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="680"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n 个标签)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="811"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="711"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="833"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="733"/>
         <source>Custom</source>
         <translation>自定义…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="863"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="763"/>
         <source>Auto Detect</source>
         <translation>自动检测</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="925"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="825"/>
         <source>Clear</source>
         <translation>清空</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="934"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="834"/>
         <source>Window - %1</source>
         <translation>窗口 - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="982"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="882"/>
         <source>Open All</source>
         <translation>打开所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1112"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1002"/>
         <source>Undo</source>
         <translation>撤销</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1125"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1015"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1264"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1166"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1265"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1167"/>
         <source>Open in New Tab</source>
         <translation>在新标签内打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1266"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1168"/>
         <source>Open in New Background Tab</source>
         <translation>在新的后台标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1268"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1170"/>
         <source>Open in New Window</source>
         <translation>在新窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="1269"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="1171"/>
         <source>Open in New Background Window</source>
         <translation>在新后台窗口打开</translation>
     </message>
@@ -1177,18 +1372,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManager</name>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="268"/>
-        <location filename="../../src/core/NetworkManager.cpp" line="285"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="127"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="268"/>
-        <source>SSL errors occured, do you want to continue?</source>
-        <translation>出现了SSL错误，仍然继续？</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="285"/>
+        <location filename="../../src/core/NetworkManager.cpp" line="127"/>
         <source>SSL errors occured:
 
 %1
@@ -1204,7 +1393,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="228"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="248"/>
+        <source>Custom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="263"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -1215,6 +1409,19 @@ Do you want to continue?</source>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to setup proxy auto-config (PAC)</source>
         <translation>PAC文件加载失败</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OpenAddressDialog</name>
+    <message>
+        <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
+        <source>Go to Page</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
+        <source>Enter a web address or choose one from the list:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1242,6 +1449,11 @@ Do you want to continue?</source>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
         <translation>从Opera12及更早版本中导入书签</translation>
     </message>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="104"/>
+        <source>Opera bookmarks files (bookmarks.adr)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Otter::OptionWidget</name>
@@ -1265,7 +1477,9 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="27"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1352"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1394"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1484"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2233"/>
         <source>General</source>
         <translation>基本</translation>
     </message>
@@ -1386,627 +1600,689 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="273"/>
-        <source>Preferred language:</source>
-        <translation>偏好语言：</translation>
+        <source>Preferred Webpage Language:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="306"/>
-        <source>Content</source>
-        <translation>内容</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="318"/>
-        <source>Blocking</source>
-        <translation>过滤选项</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="330"/>
-        <source>Pop-ups:</source>
-        <translation>对弹出窗口：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="344"/>
-        <source>Block all pop-ups</source>
-        <translation>拦截所有</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="349"/>
-        <source>Open all pop-ups</source>
-        <translation>允许所有</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="354"/>
-        <source>Open all pop-ups in background</source>
-        <translation>允许所有后台的弹出窗口</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="370"/>
-        <source>Zoom</source>
-        <translation>缩放选项</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="382"/>
-        <source>Default zoom:</source>
-        <translation>默认缩放比例：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="392"/>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="410"/>
-        <source>Zoom text only</source>
-        <translation>只缩放文本</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="423"/>
-        <source>Fonts</source>
-        <translation>字体选项</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="464"/>
-        <source>Style</source>
-        <translation>类别</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="469"/>
-        <source>Font</source>
-        <translation>类型</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="474"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="613"/>
-        <source>Preview</source>
-        <translation>预览</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="484"/>
-        <source>Default proportional font size:</source>
-        <translation>默认字体大小：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="494"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="530"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="549"/>
-        <source> px</source>
-        <translation>像素</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="510"/>
-        <source>Default fixed-width font size:</source>
-        <translation>等宽字体默认大小：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="520"/>
-        <source>Minimum font size:</source>
-        <translation>最小字体尺寸：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="546"/>
-        <source>None</source>
-        <translation>无限制</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
-        <source>Colors</source>
-        <translation>字体颜色</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="608"/>
-        <source>Type</source>
-        <translation>类型</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="635"/>
-        <source>Privacy</source>
-        <translation>隐私</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="647"/>
-        <source>Tracking</source>
-        <translation>网页跟踪</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="656"/>
-        <source>Do Not Track:</source>
-        <translation>请勿跟踪：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="670"/>
-        <source>Inform websites that I do not want to be tracked</source>
-        <translation>向网站表明我不愿被跟踪</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="675"/>
-        <source>Inform websites that I allow tracking</source>
-        <translation>向网站表明我允许被跟踪</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="680"/>
-        <source>Do not inform websites about my preference</source>
-        <translation>不向网站透露我的偏向</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="696"/>
-        <source>History</source>
-        <translation>历史选项</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="703"/>
-        <source>Private mode</source>
-        <translation>隐私浏览模式</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="746"/>
-        <source>Remember browsing history</source>
-        <translation>记录浏览历史</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="753"/>
-        <source>Remember downloads history</source>
-        <translation>记录下载历史</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="763"/>
-        <source>Remember search history</source>
-        <translation>记录搜索历史</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="775"/>
-        <source>Remember form history</source>
-        <translation>记录填表历史</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="798"/>
-        <source>Template...</source>
-        <translation>管理模板…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="809"/>
-        <source>Accept cookies</source>
-        <translation>允许Cookies</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="832"/>
-        <source>Exceptions...</source>
-        <translation>例外…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
-        <source>Accept third-party cookies:</source>
-        <translation>允许第三方Cookies：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="890"/>
-        <source>Keep until:</source>
-        <translation>保存它们直到：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="904"/>
-        <source>Always</source>
-        <translation>总是保存</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
-        <source>Only existing</source>
-        <translation>只保存有效 </translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="914"/>
-        <source>Never</source>
-        <translation>从不保存</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="926"/>
-        <source>Expires</source>
-        <translation>直到过期</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="931"/>
-        <source>Current session is closed</source>
-        <translation>当前会话被关闭</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
-        <source>Always ask</source>
-        <translation>总是询问</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="951"/>
-        <source>Clear history when application closes</source>
-        <translation>程序关闭时清除历史</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="971"/>
-        <source>Settings...</source>
-        <translation>设置…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="991"/>
-        <source>Passwords</source>
-        <translation>密码相关</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1003"/>
-        <source>Remember passwords</source>
-        <translation>记住密码</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1026"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1381"/>
-        <source>Manage...</source>
-        <translation>管理…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1040"/>
-        <source>Use a master password</source>
-        <translation>采用主密码</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1063"/>
-        <source>Change...</source>
-        <translation>编辑…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1086"/>
-        <source>Search</source>
-        <translation>搜索</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1096"/>
-        <source>Search...</source>
-        <translation>在搜索引擎中搜索…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1147"/>
-        <source>Add...</source>
-        <translation>添加…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1157"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1885"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2030"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="283"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1189"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1988"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2133"/>
         <source>Edit...</source>
         <translation>编辑…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1167"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1756"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1905"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2050"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="298"/>
+        <source>System Defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="310"/>
+        <source>Set as a default browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="353"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1292"/>
+        <source>Content</source>
+        <translation>内容</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="365"/>
+        <source>Blocking</source>
+        <translation>过滤选项</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="380"/>
+        <source>Pop-ups:</source>
+        <translation>对弹出窗口：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="394"/>
+        <source>Block all pop-ups</source>
+        <translation>拦截所有</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="399"/>
+        <source>Open all pop-ups</source>
+        <translation>允许所有</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="404"/>
+        <source>Open all pop-ups in background</source>
+        <translation>允许所有后台的弹出窗口</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="420"/>
+        <source>Zoom</source>
+        <translation>缩放选项</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="432"/>
+        <source>Default zoom:</source>
+        <translation>默认缩放比例：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="442"/>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="460"/>
+        <source>Zoom text only</source>
+        <translation>只缩放文本</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="473"/>
+        <source>Fonts</source>
+        <translation>字体选项</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="514"/>
+        <source>Style</source>
+        <translation>类别</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="519"/>
+        <source>Font</source>
+        <translation>类型</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="524"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="663"/>
+        <source>Preview</source>
+        <translation>预览</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="534"/>
+        <source>Default proportional font size:</source>
+        <translation>默认字体大小：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="544"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="580"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="599"/>
+        <source> px</source>
+        <translation>像素</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="560"/>
+        <source>Default fixed-width font size:</source>
+        <translation>等宽字体默认大小：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="570"/>
+        <source>Minimum font size:</source>
+        <translation>最小字体尺寸：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="596"/>
+        <source>None</source>
+        <translation>无限制</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="620"/>
+        <source>Colors</source>
+        <translation>字体颜色</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="658"/>
+        <source>Type</source>
+        <translation>类型</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="685"/>
+        <source>Privacy</source>
+        <translation>隐私</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="697"/>
+        <source>Tracking</source>
+        <translation>网页跟踪</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="706"/>
+        <source>Do Not Track:</source>
+        <translation>请勿跟踪：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="720"/>
+        <source>Inform websites that I do not want to be tracked</source>
+        <translation>向网站表明我不愿被跟踪</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="725"/>
+        <source>Inform websites that I allow tracking</source>
+        <translation>向网站表明我允许被跟踪</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="730"/>
+        <source>Do not inform websites about my preference</source>
+        <translation>不向网站透露我的偏向</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="746"/>
+        <source>History</source>
+        <translation>历史选项</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="753"/>
+        <source>Private mode</source>
+        <translation>隐私浏览模式</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="787"/>
+        <source>Remember browsing history</source>
+        <translation>记录浏览历史</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="794"/>
+        <source>Remember downloads history</source>
+        <translation>记录下载历史</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="804"/>
+        <source>Remember search history</source>
+        <translation>记录搜索历史</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="816"/>
+        <source>Remember form history</source>
+        <translation>记录填表历史</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="839"/>
+        <source>Template...</source>
+        <translation>管理模板…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="850"/>
+        <source>Accept cookies</source>
+        <translation>允许Cookies</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="873"/>
+        <source>Exceptions...</source>
+        <translation>例外…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
+        <source>Accept third-party cookies:</source>
+        <translation>允许第三方Cookies：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="922"/>
+        <source>Keep until:</source>
+        <translation>保存它们直到：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="936"/>
+        <source>Always</source>
+        <translation>总是保存</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="941"/>
+        <source>Only existing</source>
+        <translation>只保存有效 </translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="946"/>
+        <source>Never</source>
+        <translation>从不保存</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="958"/>
+        <source>Expires</source>
+        <translation>直到过期</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="963"/>
+        <source>Current session is closed</source>
+        <translation>当前会话被关闭</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="968"/>
+        <source>Always ask</source>
+        <translation>总是询问</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="983"/>
+        <source>Clear history when application closes</source>
+        <translation>程序关闭时清除历史</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1003"/>
+        <source>Settings...</source>
+        <translation>设置…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1023"/>
+        <source>Passwords</source>
+        <translation>密码相关</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1035"/>
+        <source>Remember passwords</source>
+        <translation>记住密码</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1058"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1513"/>
+        <source>Manage...</source>
+        <translation>管理…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1072"/>
+        <source>Use a master password</source>
+        <translation>采用主密码</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1095"/>
+        <source>Change...</source>
+        <translation>编辑…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1118"/>
+        <source>Search</source>
+        <translation>搜索</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1128"/>
+        <source>Search...</source>
+        <translation>在搜索引擎中搜索…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1179"/>
+        <source>Add...</source>
+        <translation>添加…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1199"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1859"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2008"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2153"/>
         <source>Remove</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1192"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1781"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1930"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2075"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1224"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1884"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2033"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2178"/>
         <source>Move Up</source>
         <translation>上移</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1218"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1807"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1956"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2101"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1250"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1910"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2059"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2204"/>
         <source>Move Down</source>
         <translation>下移</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1231"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1263"/>
         <source>Enable search suggestions</source>
         <translation>开启搜索建议</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1239"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1271"/>
         <source>Advanced</source>
         <translation>高级设置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1255"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1287"/>
         <source>Address Field</source>
         <translation>地址栏</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1297"/>
         <source>Network</source>
         <translation>网络</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1265"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1302"/>
         <source>Security</source>
         <translation>安全</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1270"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1307"/>
         <source>Keyboard</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1291"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1312"/>
+        <source>Other</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1333"/>
         <source>Suggestions</source>
         <translation>输入时提示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1300"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1342"/>
         <source>Suggest bookmarks</source>
         <translation>提示书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1310"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1352"/>
         <source>Suggest history</source>
         <translation>提示历史记录</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1320"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1362"/>
         <source>Suggest search results</source>
         <translation>提示搜索结果</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1401"/>
+        <source>Enable images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1410"/>
+        <source>Enable JavaScript</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1417"/>
+        <source>JavaScript Options...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1426"/>
+        <source>Enable Java</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1435"/>
+        <source>Plugins:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1449"/>
+        <source>User style sheet:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1491"/>
         <source>Send referrer information</source>
         <translation>发送referrer信息</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1368"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1500"/>
         <source>User Agent:</source>
         <translation>用户标识符：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1528"/>
         <source>Proxy</source>
         <translation>代理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1405"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1537"/>
         <source>Mode:</source>
         <translation>模式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1419"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1551"/>
         <source>No proxy</source>
         <translation>不使用代理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1424"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1556"/>
         <source>System configuration</source>
         <translation>使用系统代理设置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1429"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1561"/>
         <source>Manual configuration</source>
         <translation>使用手动设置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1434"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1566"/>
         <source>Automatic configuration (PAC)</source>
         <translation>使用PAC自动配置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1536"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1659"/>
         <source>Port</source>
         <translation>端口</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1543"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1666"/>
         <source>Protocol</source>
         <translation>协议</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1550"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1673"/>
         <source>Servers</source>
         <translation>服务器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1557"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1680"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1564"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1687"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1571"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1694"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1585"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1708"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1599"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1722"/>
         <source>All</source>
         <translation>所有协议</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1637"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1751"/>
         <source>Path to PAC file:</source>
         <translation>PAC文件路径：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1649"/>
-        <source>Browse...</source>
-        <translation>浏览：</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1665"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1768"/>
         <source>Use system authentication</source>
         <translation>采用系统认证</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1695"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1798"/>
         <source>SSL ciphers</source>
         <translation>SSL 密钥</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1746"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1875"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2020"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1849"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1978"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2123"/>
         <source>Add</source>
         <translation>新增</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1830"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1933"/>
         <source>Action Shortcuts</source>
         <translation>快捷键方案</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1895"/>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="2040"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="1998"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2143"/>
         <source>Clone</source>
         <translation>克隆当前</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.ui" line="1975"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2078"/>
         <source>Action Macros</source>
         <translation>宏快捷方式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2249"/>
+        <source>Show tray icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.ui" line="2267"/>
+        <source>All Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="113"/>
+        <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Standard font</source>
         <translation>标准字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Fixed-width font</source>
         <translation>等宽字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Serif font</source>
         <translation>衬线字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Sans-serif font</source>
         <translation>无衬线字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Cursive font</source>
         <translation>手写字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="118"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="140"/>
         <source>Fantasy font</source>
         <translation>梦幻字体</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="132"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="154"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>The quick brown fox jumps over the lazy dog</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="166"/>
         <source>Background Color</source>
         <translation>背景色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="166"/>
         <source>Text Color</source>
         <translation>文本颜色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="166"/>
         <source>Link Color</source>
         <translation>链接颜色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="144"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="166"/>
         <source>Visited Link Color</source>
         <translation>已访问链接颜色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="208"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1155"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="186"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="208"/>
         <source>Keyword</source>
         <translation>关键字</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="241"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="697"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="266"/>
+        <source>Enabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="267"/>
+        <source>On Demand</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="268"/>
+        <source>Disabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="289"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="760"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="248"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="703"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="826"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="832"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="865"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="894"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="965"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="971"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1004"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1033"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1115"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1346"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1381"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="296"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="766"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="877"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="883"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="916"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="945"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1016"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1022"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1055"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1084"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1173"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1416"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1451"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="610"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1536"/>
         <source>Select Identifier</source>
         <translation>选定识别符</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="547"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="610"/>
         <source>Enter Unique Search Engine Identifier:</source>
         <translation>输入独有的搜索引擎名：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="570"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="633"/>
         <source>New Search Engine</source>
         <translation>新搜索引擎</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
-        <source>Select Proxy Automatic Configuration File</source>
-        <translation>选择自动代理配置文件</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="772"/>
-        <source>PAC files (*.pac)</source>
-        <translation>Pac文件</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="915"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1054"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="966"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1105"/>
         <source>Question</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="916"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1055"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="967"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1106"/>
         <source>Do you really want to remove this profile?</source>
         <translation>确定要删除这个配置文件？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1062"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="974"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1113"/>
         <source>Delete profile permanently</source>
         <translation>永久删除此配置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1097"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1155"/>
         <source>Identifier</source>
         <translation>配置文件名</translation>
     </message>
     <message>
-        <location filename="../../src/ui/PreferencesDialog.cpp" line="1464"/>
+        <location filename="../../src/ui/PreferencesDialog.cpp" line="1536"/>
         <source>Enter Unique Profile Identifier:</source>
         <translation>输入独有的配置文件名：</translation>
     </message>
@@ -2041,14 +2317,40 @@ Do you want to continue?</source>
     </message>
 </context>
 <context>
+    <name>Otter::QtWebKitNetworkManager</name>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="149"/>
+        <source>Warning</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="149"/>
+        <source>SSL errors occured, do you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="153"/>
+        <source>Do not show this message again</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::QtWebKitPluginWidget</name>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="32"/>
+        <source>Click to load content (%1) handled by plugin from: %2</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="109"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="138"/>
         <source>WebKit Backend</source>
         <translation>Webkit 引擎版本</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="114"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="143"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>引擎所采用QtWebkit模块</translation>
     </message>
@@ -2056,61 +2358,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="152"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="325"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="160"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="320"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="364"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="153"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="326"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="369"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="161"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="321"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="365"/>
         <source>Disable JavaScript popups</source>
         <translation>禁用 JavaScript 弹窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="285"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="259"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="280"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="453"/>
         <source>Question</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="286"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="259"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="281"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>确定要再次提交表格数据？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="265"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="259"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="282"/>
         <source>Do you want to resend data?</source>
         <translation>是否重新发送数据？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="266"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="291"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="260"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="286"/>
         <source>Do not show this message again</source>
         <translation>不再显示此提示</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="417"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="414"/>
         <source>Error %1</source>
         <translation>错误代码 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="444"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 错误代码 #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="453"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>这个页面上的脚本似乎出现了问题。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp" line="453"/>
         <source>Do you want to stop the script?</source>
         <translation>要终止该脚本吗？</translation>
     </message>
@@ -2118,126 +2420,152 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
         <source>Error</source>
         <translation>出错了！</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
         <source>Failed to open file for writing.</source>
         <translation>无法打开供写入的文件。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="375"/>
+        <source>file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="386"/>
+        <source>Failed to save image %0: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="457"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="540"/>
         <source>No search engines defined</source>
         <translation>未确认搜索引擎</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="655"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="804"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="958"/>
         <source>Select Identifier</source>
         <translation>选择标记</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="809"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="958"/>
         <source>Enter Unique Search Engine Identifier:</source>
         <translation>输入独有的搜索引擎名：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1070"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1177"/>
         <source>Open Image (Untitled)</source>
         <translation>打开图像 (未命名)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1070"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1177"/>
         <source>Open Image (%1)</source>
         <translation>打开图像 (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1085"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1192"/>
         <source>Save Video...</source>
         <translation>保存该视频…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1085"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1192"/>
         <source>Save Audio...</source>
         <translation>保存该音频…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1086"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1193"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>复制视频链接到剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1086"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1193"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>复制音频链接到剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1087"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1194"/>
         <source>Show Controls</source>
         <translation>显示控制按钮</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1088"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1195"/>
         <source>Looping</source>
         <translation>循环播放</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1090"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1197"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1090"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1197"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1092"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1199"/>
         <source>Unmute</source>
         <translation>取消静音</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1092"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1199"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1117"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1224"/>
         <source>Open Image</source>
         <translation>打开图像</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1660"/>
         <source>Blank Page</source>
         <translation>空白页</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1416"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1673"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1718"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1984"/>
+        <source>Title: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1984"/>
         <source>Address: %1</source>
         <translation>地址：%1</translation>
     </message>
+</context>
+<context>
+    <name>Otter::ReloadTimeDialog</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1718"/>
-        <source>Title: %1
-Address: %2</source>
-        <translation>标题：%1
-地址： %2</translation>
+        <location filename="../../src/ui/ReloadTimeDialog.ui" line="14"/>
+        <source>Automatic Page Reload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
+        <source>minutes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
+        <source>seconds</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2392,7 +2720,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchWidget</name>
     <message>
-        <location filename="../../src/ui/SearchWidget.cpp" line="325"/>
+        <location filename="../../src/ui/SearchWidget.cpp" line="327"/>
         <source>Search Using %1</source>
         <translation>以 %1  搜索之</translation>
     </message>
@@ -2414,7 +2742,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.cpp" line="200"/>
-        <location filename="../../src/core/SessionsManager.cpp" line="255"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="256"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
@@ -2585,32 +2913,32 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SidebarWidget</name>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="172"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="190"/>
         <source>Bookmarks</source>
         <translation>书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="177"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="195"/>
         <source>Cache</source>
         <translation>缓存</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="182"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="200"/>
         <source>Configuration</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="187"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="205"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="192"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="210"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="197"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="215"/>
         <source>Transfers</source>
         <translation>下载</translation>
     </message>
@@ -2653,14 +2981,6 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/StartupDialog.cpp" line="173"/>
         <source>Default</source>
         <translation>默认</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::StatusBarWidget</name>
-    <message>
-        <location filename="../../src/ui/StatusBarWidget.cpp" line="64"/>
-        <source>Zoom %1%</source>
-        <translation>缩放到 %1%</translation>
     </message>
 </context>
 <context>
@@ -2743,14 +3063,14 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="193"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="408"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="377"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="411"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="203"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="375"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="378"/>
         <source>Redownload</source>
         <translation>重新下载</translation>
     </message>
@@ -2790,19 +3110,19 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>完成时间</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="167"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="164"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="167"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>这项下载仍在进行。
 确认要删除么？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="246"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="249"/>
         <source>&lt;pre style='font-family:auto;'&gt;Source: %1
 Target: %2
 Size: %3
@@ -2815,45 +3135,45 @@ Progress: %5&lt;/pre&gt;</source>
 进度： %5&lt;/pre&gt;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="246"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="422"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="423"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="249"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="425"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="426"/>
         <source>%1 (%n B)</source>
         <translation><numerusform>%1 (%n 比特)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="372"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="375"/>
         <source>Open Folder</source>
         <translation>打开所在目录</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="374"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="377"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="406"/>
         <source>Resume</source>
         <translation>恢复下载</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="377"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="380"/>
         <source>Copy Transfer Information</source>
         <translation>复制此下载信息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="382"/>
         <source>Remove</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
         <source>Clear Finished Transfers</source>
         <translation>删除已完成的下载记录</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="533"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="536"/>
         <source>Transfers Manager</source>
         <translation>下载管理</translation>
     </message>
@@ -2861,25 +3181,25 @@ Progress: %5&lt;/pre&gt;</source>
 <context>
     <name>Otter::TransfersManager</name>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="364"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="367"/>
         <source>file</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="407"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="438"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="410"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="441"/>
         <source>Question</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="407"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="410"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
         <translation>一个以此命名的文件已经存在。
 确认要覆盖么？</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="438"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="441"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -2890,25 +3210,25 @@ Do you want to overwrite it?
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="536"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="539"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="554"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="563"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="557"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="566"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="554"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="557"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
         <translation>已有另一个下载任务占用此目录。
 选个其他的罢。</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="563"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="566"/>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>目标路径不可写。
@@ -2918,48 +3238,48 @@ Select another one.</source>
 <context>
     <name>Otter::TrayIcon</name>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
-        <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="33"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="139"/>
         <source>Show Windows</source>
         <translation>显示窗口</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="37"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="35"/>
         <source>New Tab</source>
         <translation>新建标签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="36"/>
         <source>New Private Tab</source>
         <translation>新建隐私标签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
         <source>Bookmarks</source>
         <translation>查看书签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="41"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="39"/>
         <source>Transfers</source>
         <translation>察看下载</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="40"/>
         <source>History</source>
         <translation>查看历史</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="42"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="48"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Otter Browser</source>
         <translation>水獭浏览器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TrayIcon.cpp" line="147"/>
+        <location filename="../../src/ui/TrayIcon.cpp" line="139"/>
         <source>Hide Windows</source>
         <translation>隐藏窗口</translation>
     </message>
@@ -3029,35 +3349,437 @@ Select another one.</source>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="268"/>
+        <source>Open all pop-ups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="269"/>
+        <source>Open pop-ups in background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="270"/>
+        <source>Block all pop-ups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="274"/>
+        <source>Enable Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="279"/>
+        <source>Enable JavaScript</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="284"/>
+        <source>Enable Java</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="289"/>
+        <source>Enable Plugins</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="296"/>
+        <source>Enable Cookies</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="300"/>
+        <source>Enable Referrer</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="304"/>
+        <source>Enable Proxy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="309"/>
+        <source>Reset Options</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="123"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="195"/>
         <source>Frame</source>
         <translation>框架</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="463"/>
+        <source>30 Minutes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="464"/>
+        <source>1 Hour</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="465"/>
+        <source>2 Hours</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="466"/>
+        <source>6 Hours</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="467"/>
+        <source>Never</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="468"/>
+        <source>Custom...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="470"/>
+        <source>Page Default</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Otter::WebsitePreferencesDialog</name>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="14"/>
+        <source>Website Preferences</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="22"/>
+        <source>Website:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="41"/>
+        <source>Content</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="50"/>
+        <source>Encoding:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="66"/>
+        <source>Pop-ups:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="80"/>
+        <source>Block all pop-ups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="85"/>
+        <source>Open all pop-ups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="90"/>
+        <source>Open all pop-ups in background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="98"/>
+        <source>Enable images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="105"/>
+        <source>Enable Java</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="112"/>
+        <source>Plugins:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="122"/>
+        <source>User style sheet:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="133"/>
+        <source>Privacy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="144"/>
+        <source>Do Not Track:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="161"/>
+        <source>Inform website that I do not want to be tracked</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="166"/>
+        <source>Inform website that I allow tracking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="171"/>
+        <source>Do not inform website about my preference</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="184"/>
+        <source>Remember browsing history</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="194"/>
+        <source>Accept cookies</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="237"/>
+        <source>Accept third-party cookies:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="250"/>
+        <source>Keep until:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="264"/>
+        <source>Always</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="269"/>
+        <source>Only existing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="274"/>
+        <source>Never</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="286"/>
+        <source>Expires</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="291"/>
+        <source>Current session is closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="296"/>
+        <source>Always ask</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="344"/>
+        <source>Add...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="354"/>
+        <source>Edit...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="364"/>
+        <source>Delete</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="389"/>
+        <source>Scripting</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="395"/>
+        <source>Enable JavaScript</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="405"/>
+        <source>Allow moving and resizing of windows</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="412"/>
+        <source>Allow changing of status field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="422"/>
+        <source>Allow script to hide address bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="429"/>
+        <source>Allow access to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="450"/>
+        <source>Network</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
+        <source>Send referrer information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="468"/>
+        <source>User Agent:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="484"/>
+        <source>Proxy mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="498"/>
+        <source>Global settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="503"/>
+        <source>No proxy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="508"/>
+        <source>System configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="513"/>
+        <source>Manual configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="518"/>
+        <source>Automatic configuration (PAC)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="620"/>
+        <source>Port</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
+        <source>Servers</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="634"/>
+        <source>FTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="641"/>
+        <source>SOCKS5</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="648"/>
+        <source>HTTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="662"/>
+        <source>HTTPS</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
+        <source>All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="693"/>
+        <source>Protocol</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="721"/>
+        <source>Path to PAC file:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="41"/>
+        <source>Auto Detect</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
+        <source>Enabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
+        <source>On Demand</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
+        <source>Disabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <source>Domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <source>Path</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <source>Expiration date</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <source>Default</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
+        <source>(Untitled)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.ui" line="68"/>
-        <source>Enter address or search...</source>
-        <translation>输入地址或搜索词…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="222"/>
-        <location filename="../../src/ui/Window.cpp" line="242"/>
-        <source>(Untitled)</source>
-        <translation>未命名</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="290"/>
+        <location filename="../../src/ui/Window.cpp" line="231"/>
         <source>Select User Agent</source>
         <translation>选择UA</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="290"/>
+        <location filename="../../src/ui/Window.cpp" line="231"/>
         <source>Enter User Agent:</source>
         <translation>输入用户标识符：</translation>
     </message>
@@ -3065,645 +3787,715 @@ Select another one.</source>
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="117"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="115"/>
         <source>Question</source>
         <translation>确认</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="118"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="116"/>
         <source>You are about to open %n bookmarks.</source>
         <translation><numerusform>即将打开 %n 个书签。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="123"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="121"/>
         <source>Do not show this message again</source>
         <translation>不再显示此提示</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="329"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="332"/>
         <source>Print Page</source>
         <translation>打印页面</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="354"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="358"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="508"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="512"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="713"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="755"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="834"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="716"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="758"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="830"/>
         <source>Empty</source>
         <translation>空</translation>
     </message>
 </context>
 <context>
+    <name>Otter::ZoomWidget</name>
+    <message>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="43"/>
+        <source>Zoom %1%</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>actions</name>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="44"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="45"/>
         <source>Sessions</source>
         <translation>会话</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="46"/>
         <source>Import and Export</source>
         <translation>导入/导出</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="47"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="48"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="49"/>
         <source>User Agent</source>
         <translation>用户标识符</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="50"/>
         <source>Character Encoding</source>
         <translation>字符编码</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="52"/>
         <source>Closed Windows</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="53"/>
         <source>Bookmarks</source>
         <translation>书签</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="54"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../../resources/other/menuBar.json" line="1"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="55"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="42"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>New Tab</source>
         <translation>新建标签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="43"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>New Private Tab</source>
         <translation>新建隐私标签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="44"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>New Window</source>
         <translation>新建窗口</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="45"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>New Private Window</source>
         <translation>新建隐私窗口</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="46"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="63"/>
         <source>Open...</source>
         <translation>打开…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="47"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="64"/>
         <source>Save...</source>
         <translation>保存…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="48"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="65"/>
+        <source>Clone Tab</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="66"/>
         <source>Close Tab</source>
         <translation>关闭标签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="49"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="67"/>
         <source>Save Current Session...</source>
         <translation>将当前会话另存为…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="50"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="68"/>
         <source>Manage Sessions...</source>
         <translation>管理会话…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="51"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <source>Print...</source>
         <translation>打印…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="52"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="53"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="71"/>
         <source>Work Offline</source>
         <translation>脱机工作</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="54"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <source>Show Menubar</source>
         <translation>显示菜单栏</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="55"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="56"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Undo</source>
         <translation>撤销</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="57"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="75"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="58"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="59"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="60"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="61"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="79"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="62"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="80"/>
         <source>Select All</source>
         <translation>选择全部</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="63"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="81"/>
         <source>Find...</source>
         <translation>查找…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="64"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="82"/>
         <source>Find Next</source>
         <translation>查找下一个…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="65"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="83"/>
         <source>Find Previous</source>
         <translation>查找上一个…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="66"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="104"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="84"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="85"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="67"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="85"/>
+        <source>Reload or Stop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="68"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Zoom In</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="69"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Zoom Out</source>
         <translation>缩小</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="70"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="89"/>
         <source>Zoom Original</source>
         <translation>缩放至原始比例</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="71"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="90"/>
         <source>Full Screen</source>
         <translation>全屏</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="72"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="106"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="91"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="126"/>
         <source>View Source</source>
         <translation>查看源代码</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="73"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="92"/>
         <source>Inspect Page</source>
         <translation>审查元素</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="74"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="93"/>
         <source>Show Sidebar</source>
         <translation>显示侧边栏</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="75"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="94"/>
         <source>Back</source>
         <translation>后退</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="76"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="95"/>
         <source>Forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="77"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="96"/>
+        <source>Go to Parent Directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="97"/>
         <source>Rewind</source>
         <translation>后退到底</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="78"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="98"/>
         <source>Fast Forward</source>
         <translation>前进到底</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="79"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="99"/>
         <source>View History</source>
         <translation>查看历史</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="80"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="100"/>
         <source>Clear History...</source>
         <translation>清除历史…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="81"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="101"/>
         <source>Add Bookmark...</source>
         <translation>添加为书签…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="82"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="102"/>
         <source>Manage Bookmarks...</source>
         <translation>管理书签…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="83"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="103"/>
         <source>Transfers...</source>
         <translation>下载…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="84"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="104"/>
         <source>Cookies...</source>
         <translation>Cookies...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="85"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="105"/>
         <source>Content Blocking...</source>
         <translation>内容拦截…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="86"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="106"/>
         <source>Error Console</source>
         <translation>错误控制台</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="87"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="107"/>
         <source>Preferences...</source>
         <translation>首选项…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="88"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="108"/>
         <source>Switch Application Language...</source>
         <translation>切换程序语言…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="89"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="109"/>
         <source>About Otter...</source>
         <translation>关于水獭浏览器…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="90"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>About Qt...</source>
         <translation>关于Qt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="91"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="111"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="92"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="100"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="112"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="93"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Open in This Tab</source>
         <translation>在当前标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="94"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="101"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="114"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Open in New Tab</source>
         <translation>在新标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="95"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="102"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="115"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Open in New Background Tab</source>
         <translation>在新后台标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="96"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="116"/>
         <source>Open in New Window</source>
         <translation>在新窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="97"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Open in New Background Window</source>
         <translation>在新的后台窗口打开</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="98"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="118"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>恢复上个已关闭标签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="99"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Copy Link to Clipboard</source>
         <translation>复制链接到剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="100"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="120"/>
         <source>Open Frame in This Tab</source>
         <translation>在当前标签打开框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="101"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="121"/>
         <source>Open Frame in New Tab</source>
         <translation>在新标签打开框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="102"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Open Frame in New Background Tab</source>
         <translation>在新后台标签打开框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="103"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="123"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>复制框架链接到剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="104"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="124"/>
         <source>Reload Frame</source>
         <translation>重载框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="105"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Reload Image</source>
         <translation>重载图像</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="107"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Save Link Target As...</source>
         <translation>链接另存为…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="108"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="128"/>
         <source>Save to Downloads</source>
         <translation>保存至下载</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="109"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="129"/>
         <source>Bookmark Link...</source>
         <translation>将链接存入书签…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="110"/>
-        <source>Reload Each</source>
-        <translation>刷新全部</translation>
+        <location filename="../../src/core/ActionsManager.cpp" line="130"/>
+        <source>Reload Every</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="111"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="131"/>
         <source>Copy Address</source>
         <translation>复制地址</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="112"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="132"/>
         <source>Validate</source>
         <translation>验证</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="113"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="133"/>
         <source>Website Preferences...</source>
         <translation>站点首选项…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="114"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Image Properties...</source>
         <translation>图像属性…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="115"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="135"/>
         <source>Open Image</source>
         <translation>打开图像</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="116"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="136"/>
         <source>Save Image...</source>
         <translation>图像另存为…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="117"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Copy Image to Clipboard</source>
         <translation>复制图像至剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="118"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>复制图像链接至剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="119"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="139"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="120"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="140"/>
         <source>Search Using</source>
         <translation>以其他引擎搜索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="121"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="141"/>
         <source>Go to This Address</source>
         <translation>前往此地址</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="122"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="142"/>
         <source>Clear All</source>
         <translation>全部清除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="123"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="143"/>
         <source>Check Spelling</source>
         <translation>检查拼写</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="124"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="144"/>
         <source>Create Search...</source>
         <translation>创建搜索…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="125"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="145"/>
         <source>Inspect Element...</source>
         <translation>审查元素…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="126"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="146"/>
         <source>Save Media...</source>
         <translation>保存媒体文件…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="127"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="147"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>复制媒体链接至剪贴板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="128"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="148"/>
         <source>Show Controls</source>
         <translation>显示控制方式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="129"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="149"/>
         <source>Looping</source>
         <translation>循环播放</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="130"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="150"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="131"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="151"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="132"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="152"/>
+        <source>Go to Page or Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="153"/>
         <source>Quick Bookmark Access</source>
         <translation>快速访问书签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="133"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="154"/>
         <source>Quick Find</source>
         <translation>快速查找</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="134"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Activate Address Field</source>
         <translation>聚焦到地址栏</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="135"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Copy as Plain Text</source>
         <translation>复制为纯文本</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="136"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="157"/>
         <source>Paste and Go</source>
         <translation>粘贴并转到</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="137"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="158"/>
         <source>Go to Tab on Left</source>
         <translation>前往左侧标签</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="138"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="159"/>
         <source>Go to Tab on Right</source>
         <translation>前往右侧标签</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="160"/>
+        <source>Go to Start of the Page</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="161"/>
+        <source>Go to the End of the Page</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="162"/>
+        <source>Page Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="163"/>
+        <source>Page Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="164"/>
+        <source>Page Left</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="165"/>
+        <source>Page Right</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="166"/>
+        <source>Quick Preferences</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="167"/>
+        <source>Load Plugins</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="379"/>
+        <location filename="../../src/core/Application.cpp" line="468"/>
         <source>URL to open</source>
         <translation>打开URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="380"/>
+        <location filename="../../src/core/Application.cpp" line="469"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>缓存路径为 &lt;path&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="381"/>
+        <location filename="../../src/core/Application.cpp" line="470"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>配置目录为 &lt;path&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="382"/>
+        <location filename="../../src/core/Application.cpp" line="471"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>如果其存在，恢复会话 &lt;session&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="383"/>
+        <location filename="../../src/core/Application.cpp" line="472"/>
         <source>Starts private session</source>
         <translation>新建隐私会话</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="384"/>
+        <location filename="../../src/core/Application.cpp" line="473"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>将配置和缓存目录设置到程序文件子目录下</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingList.cpp" line="49"/>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="51"/>
         <source>Failed to load adblock file: %0</source>
         <translation>无法加载 Adblock 文件: %0</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingList.cpp" line="87"/>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="90"/>
         <source>Loaded adblock file is not valid: %0</source>
         <translation>已载入的Adblock文件无效: %0</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingList.cpp" line="459"/>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="491"/>
+        <source>Unable to download update for content blocking: %0.
+Error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="506"/>
         <source>Content blocking file checksum mismatch: %0</source>
         <translation>过滤文件完整性检查错误: %0</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingList.cpp" line="467"/>
-        <source>Unable to download update for content blocking: %0</source>
-        <translation>无法下载广告过滤文件: %0</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ContentBlockingList.cpp" line="478"/>
+        <location filename="../../src/core/ContentBlockingList.cpp" line="516"/>
         <source>Unable to write downloaded content blocking file: %0</source>
         <translation>无法写入广告过滤文件: %0</translation>
     </message>
@@ -3715,20 +4507,30 @@ Select another one.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManager.cpp" line="319"/>
-        <source>Blocked content: %0</source>
-        <translation>已过滤内容: %0</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/SessionsManager.h" line="73"/>
-        <location filename="../../src/core/SessionsManager.h" line="76"/>
+        <location filename="../../src/core/SessionsManager.h" line="74"/>
+        <location filename="../../src/core/SessionsManager.h" line="77"/>
         <source>(Untitled)</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="77"/>
+        <location filename="../../src/main.cpp" line="108"/>
         <source>Default</source>
         <translation>默认</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="315"/>
+        <source>Blocked content: %0</source>
+        <translation>已过滤内容: %0</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="147"/>
+        <source>Failed to start association dialog: %0</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="202"/>
+        <source>Failed to register application to system registry: %0, %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
