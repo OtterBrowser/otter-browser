@@ -21,10 +21,12 @@
 #define OTTER_PLATFORMINTEGRATION_H
 
 #include <QtCore/QObject>
+#include <QtCore/QMimeType>
 
 namespace Otter
 {
 
+struct ApplicationInformation;
 class Application;
 
 class PlatformIntegration : public QObject
@@ -34,6 +36,7 @@ class PlatformIntegration : public QObject
 public:
 	explicit PlatformIntegration(Application *parent);
 
+	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) const;
 	virtual bool canSetAsDefaultBrowser() const;
 	virtual bool isDefaultBrowser() const;
 

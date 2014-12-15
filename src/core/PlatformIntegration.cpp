@@ -19,12 +19,20 @@
 
 #include "PlatformIntegration.h"
 #include "Application.h"
+#include "Utils.h"
 
 namespace Otter
 {
 
 PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
 {
+}
+
+QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType) const
+{
+	Q_UNUSED(mimeType)
+
+	return QList<ApplicationInformation>();
 }
 
 bool PlatformIntegration::setAsDefaultBrowser()

@@ -209,7 +209,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
 {
-	return isBrowserRegistered() ? true : m_applicationRegistration.isWritable();
+	return (isBrowserRegistered() ? true : m_applicationRegistration.isWritable());
 }
 
 bool WindowsPlatformIntegration::isBrowserRegistered() const

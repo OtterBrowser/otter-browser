@@ -21,11 +21,18 @@
 #ifndef OTTER_UTILS_H
 #define OTTER_UTILS_H
 
-#include <QtCore/QString>
+#include <QtCore/QMimeType>
 #include <QtGui/QIcon>
 
 namespace Otter
 {
+
+struct ApplicationInformation
+{
+	QString command;
+	QString name;
+	QIcon icon;
+};
 
 namespace Utils
 {
@@ -36,6 +43,7 @@ QString formatTime(int value);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
 QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QIcon getIcon(const QLatin1String &name, bool fromTheme = true);
+QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 
 }
 

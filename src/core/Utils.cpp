@@ -19,6 +19,8 @@
 **************************************************************************/
 
 #include "Utils.h"
+#include "Application.h"
+#include "PlatformIntegration.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
@@ -110,6 +112,18 @@ QIcon getIcon(const QLatin1String &name, bool fromTheme)
 	const QIcon icon(QStringLiteral(":/icons/%1.png").arg(name));
 
 	return (fromTheme ? QIcon::fromTheme(name, icon) : icon);
+}
+
+QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
+{
+	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+
+	if (integration)
+	{
+		return integration->getApplicationsForMimeType(mimeType);
+	}
+
+	return QList<ApplicationInformation>();
 }
 
 }
