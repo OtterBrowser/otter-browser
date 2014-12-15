@@ -44,11 +44,11 @@ public:
 
 public slots:
 	void locationChanged(Qt::DockWidgetArea area);
+	void openPanel(const QString &identifier);
 
 protected:
 	void resizeEvent(QResizeEvent *event);
 	void showEvent(QShowEvent *event);
-	void openPanel(const QString &identifier);
 	void registerPanel(const QString &identifier);
 	void updateSize();
 

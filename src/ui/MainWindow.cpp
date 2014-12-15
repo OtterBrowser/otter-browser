@@ -109,7 +109,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
 	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(actionTransfers()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
@@ -956,6 +956,30 @@ void MainWindow::menuBookmarksAboutToShow()
 		{
 			menu->addSeparator();
 		}
+	}
+}
+
+void MainWindow::transferStarted()
+{
+	const QString action = SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString();
+
+	if (action == QLatin1String("openTab"))
+	{
+		actionTransfers();
+	}
+	else if (action == QLatin1String("openBackgroundTab"))
+	{
+		const QUrl url(QLatin1String("about:transfers"));
+
+		if (!SessionsManager::hasUrl(url, true))
+		{
+			m_windowsManager->open(url, NewTabBackgroundOpen);
+		}
+	}
+	else if (action == QLatin1String("openPanel"))
+	{
+		m_ui->sidebarDockWidget->setVisible(true);
+		m_ui->sidebarWidget->openPanel(QLatin1String("transfers"));
 	}
 }
 

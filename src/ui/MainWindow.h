@@ -104,6 +104,7 @@ protected slots:
 	void menuCharacterEncodingAboutToShow();
 	void menuClosedWindowsAboutToShow();
 	void menuBookmarksAboutToShow();
+	void transferStarted();
 	void openBookmark();
 	void updateClosedWindows();
 	void updateBookmarks();
