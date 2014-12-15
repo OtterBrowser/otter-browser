@@ -251,7 +251,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		Action *action =  new Action(definitionsIterator.value().icon, definitionsIterator.value().text, m_window);
 		action->setObjectName(definitionsIterator.key());
 		action->setScope(definitionsIterator.value().scope);
-		action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+		action->setShortcutContext(Qt::WindowShortcut);
 		action->setEnabled(definitionsIterator.value().isEnabled);
 		action->setCheckable(definitionsIterator.value().isCheckable);
 		action->setChecked(definitionsIterator.value().isChecked);
