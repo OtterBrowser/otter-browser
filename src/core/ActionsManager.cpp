@@ -155,6 +155,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		registerAction(QLatin1String("QuickBookmarkAccess"), QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 		registerAction(QLatin1String("QuickFind"), QT_TRANSLATE_NOOP("actions", "Quick Find"), QString(), QIcon(), true, false, false, QuickFindAction);
 		registerAction(QLatin1String("ActivateAddressField"), QT_TRANSLATE_NOOP("actions", "Activate Address Field"), QString(), QIcon(), true, false, false, ActivateAddressFieldAction);
+		registerAction(QLatin1String("ActivateWebpage"), QT_TRANSLATE_NOOP("actions", "Activate Webpage"), QString(), QIcon(), true, false, false, ActivateWebpageAction);
 		registerAction(QLatin1String("CopyAsPlainText"), QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"), QString(), QIcon(), true, false, false, CopyAsPlainTextAction);
 		registerAction(QLatin1String("PasteAndGo"), QT_TRANSLATE_NOOP("actions", "Paste and Go"), QString(), QIcon(), true, false, false, PasteAndGoAction);
 		registerAction(QLatin1String("ActivateTabOnLeft"), QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"), QString(), QIcon(), true, false, false, ActivateTabOnLeftAction);

@@ -326,6 +326,10 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		m_isTabPreferencesMenuVisible = false;
 	}
+	else if (action == ActivateWebpageAction)
+	{
+		m_webWidget->setFocus();
+	}
 	else
 	{
 		m_webWidget->triggerAction(action, checked);
