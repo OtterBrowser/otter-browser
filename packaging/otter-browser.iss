@@ -55,31 +55,14 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "Z:\otter-browser-inno\input\otter-browser.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icudt51.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icuin51.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icuuc51.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Z:\otter-browser-inno\input\icudt53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Z:\otter-browser-inno\input\icuin53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Z:\otter-browser-inno\input\icuuc53.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\libeay32.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Multimedia.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5MultimediaWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5OpenGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Positioning.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5PrintSupport.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Qml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Quick.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Script.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Sensors.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Sql.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5WebKit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5WebKitWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5WinExtras.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5Xml.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Z:\otter-browser-inno\input\Qt5*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\ssleay32.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\otter-browser-inno\input\iconengines\*.*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs
 Source: "Z:\otter-browser-inno\input\imageformats\*.*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs
