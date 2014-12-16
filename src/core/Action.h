@@ -49,6 +49,7 @@ enum ActionIdentifier
 	GoAction,
 	GoBackAction,
 	GoForwardAction,
+	GoToHomePageAction,
 	GoToParentDirectoryAction,
 	RewindAction,
 	FastForwardAction,

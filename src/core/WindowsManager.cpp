@@ -391,6 +391,15 @@ void WindowsManager::triggerAction(ActionIdentifier action, bool checked)
 	{
 		m_tabBar->activateTabOnRight();
 	}
+	else if (action == GoToHomePageAction)
+	{
+		const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+
+		if (!homePage.isEmpty())
+		{
+			open(QUrl(homePage), CurrentTabOpen);
+		}
+	}
 	else if (window)
 	{
 		window->triggerAction(action, checked);
