@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 	else if (startupBehavior == QLatin1String("startHomePage") || startupBehavior == QLatin1String("startEmpty"))
 	{
 		WindowHistoryEntry entry;
-		entry.url = ((startupBehavior == QLatin1String("startHomePage")) ? SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString() : QString());
+		entry.url = ((startupBehavior == QLatin1String("startHomePage")) ? SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString() : QString());
 
 		SessionWindow tab;
 		tab.history.append(entry);

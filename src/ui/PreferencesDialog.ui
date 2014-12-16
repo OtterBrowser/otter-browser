@@ -108,14 +108,14 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="useCurrentAsStartPageButton">
+            <widget class="QPushButton" name="useCurrentAsHomePageButton">
              <property name="text">
               <string>Use Current Page</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="bookmarkAsStartPageButton">
+            <widget class="QPushButton" name="bookmarkAsHomePageButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -125,7 +125,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="restoreStartPageButton">
+            <widget class="QPushButton" name="restoreHomePageButton">
              <property name="text">
               <string>Restore to Default</string>
              </property>
@@ -778,7 +778,16 @@
          <item>
           <widget class="QWidget" name="historyWidget" native="true">
            <layout class="QVBoxLayout" name="historyWidgetLayout">
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
@@ -897,7 +906,16 @@
               <item>
                <widget class="QWidget" name="cookiesWidget" native="true">
                 <layout class="QFormLayout" name="cookiesLayout">
-                 <property name="margin">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item row="0" column="0">
@@ -1596,7 +1614,16 @@
                   <bool>false</bool>
                  </property>
                  <layout class="QGridLayout" name="manualProxyConfigurationLayout">
-                  <property name="margin">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <item row="2" column="1">
@@ -1742,7 +1769,16 @@
                   <bool>false</bool>
                  </property>
                  <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
-                  <property name="margin">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <item>
@@ -2296,9 +2332,9 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>startupBehaviorComboBox</tabstop>
   <tabstop>homePageLineEdit</tabstop>
-  <tabstop>useCurrentAsStartPageButton</tabstop>
-  <tabstop>bookmarkAsStartPageButton</tabstop>
-  <tabstop>restoreStartPageButton</tabstop>
+  <tabstop>useCurrentAsHomePageButton</tabstop>
+  <tabstop>bookmarkAsHomePageButton</tabstop>
+  <tabstop>restoreHomePageButton</tabstop>
   <tabstop>alwaysAskCheckBox</tabstop>
   <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>
   <tabstop>delayTabsLoadingCheckBox</tabstop>

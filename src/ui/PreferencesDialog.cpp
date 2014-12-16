@@ -118,7 +118,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	}
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex(startupBehaviorIndex);
-	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/StartPage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
 	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
@@ -416,8 +416,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 	connect(m_ui->allSettingsButton, SIGNAL(clicked()), this, SLOT(openConfigurationManager()));
-	connect(m_ui->useCurrentAsStartPageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsStartPage()));
-	connect(m_ui->restoreStartPageButton, SIGNAL(clicked()), this, SLOT(restoreStartPage()));
+	connect(m_ui->useCurrentAsHomePageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsHomePage()));
+	connect(m_ui->restoreHomePageButton, SIGNAL(clicked()), this, SLOT(restoreHomePage()));
 	connect(m_ui->fontsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentFontChanged(int,int,int,int)));
 	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
 	connect(m_ui->colorsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentColorChanged(int,int,int,int)));
@@ -491,7 +491,7 @@ void PreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesDialog::useCurrentAsStartPage()
+void PreferencesDialog::useCurrentAsHomePage()
 {
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
@@ -501,9 +501,9 @@ void PreferencesDialog::useCurrentAsStartPage()
 	}
 }
 
-void PreferencesDialog::restoreStartPage()
+void PreferencesDialog::restoreHomePage()
 {
-	m_ui->homePageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/StartPage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/HomePage")).toString());
 }
 
 void PreferencesDialog::currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1214,7 +1214,7 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), startupBehaviorString);
-	SettingsManager::setValue(QLatin1String("Browser/StartPage"), m_ui->homePageLineEdit->text());
+	SettingsManager::setValue(QLatin1String("Browser/HomePage"), m_ui->homePageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
