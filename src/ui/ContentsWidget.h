@@ -89,7 +89,7 @@ signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString search);
+	void requestedSearch(QString query, QString search, OpenHints hints);
 	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message);

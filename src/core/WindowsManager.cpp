@@ -93,7 +93,9 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		return;
 	}
 
-	if (hints == DefaultOpen && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	Window *window = m_mdi->getActiveWindow();
+
+	if (hints == DefaultOpen && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -191,12 +193,12 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	if (hints == DefaultOpen && SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	if (hints == DefaultOpen && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
 
-	if (window && window->getType() == QLatin1String("web") && (window->isUrlEmpty() || hints == CurrentTabOpen))
+	if (window && hints == CurrentTabOpen && window->getType() == QLatin1String("web"))
 	{
 		window->search(query, engine);
 
@@ -207,11 +209,11 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 	{
 		window = window->clone(false, m_mdi);
 
-		addWindow(window);
+		addWindow(window, hints);
 	}
 	else
 	{
-		open();
+		open(QUrl(), hints);
 
 		window = m_mdi->getActiveWindow();
 	}

@@ -262,7 +262,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), ((QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) ?  NewTabOpen : DefaultOpen));
+		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), (QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) ?  NewTabOpen : DefaultOpen));
 	}
 }
 

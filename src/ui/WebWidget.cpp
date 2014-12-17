@@ -25,6 +25,7 @@
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QUrl>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QIcon>
 #include <QtWidgets/QMenu>
 
@@ -130,7 +131,18 @@ void WebWidget::quickSearch(QAction *action)
 			emit quickSearchEngineChanged();
 		}
 
-		emit requestedSearch(getSelectedText(), m_quickSearchEngine);
+		if (QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
+		{
+			emit requestedSearch(getSelectedText(), m_quickSearchEngine, NewTabBackgroundOpen);
+		}
+		else if (QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) || !SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+		{
+			emit requestedSearch(getSelectedText(), m_quickSearchEngine, NewTabOpen);
+		}
+		else
+		{
+			search(getSelectedText(), m_quickSearchEngine);
+		}
 	}
 }
 

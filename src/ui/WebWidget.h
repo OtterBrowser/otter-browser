@@ -137,7 +137,7 @@ signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString search);
+	void requestedSearch(QString query, QString search, OpenHints hints);
 	void actionsChanged();
 	void progressBarGeometryChanged();
 	void quickSearchEngineChanged();

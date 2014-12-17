@@ -244,7 +244,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		return false;
 	}
 
-	if (type == QWebPage::NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers() & Qt::ShiftModifier)
+	if (type == QWebPage::NavigationTypeFormSubmitted && QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
 	{
 		m_networkManager->setFormRequest(request.url());
 	}
