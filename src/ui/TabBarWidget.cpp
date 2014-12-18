@@ -321,6 +321,13 @@ void TabBarWidget::removeTab(int index)
 		m_tabSize = (isHorizontal ? size.width() : size.height());
 	}
 
+	Window *window = qvariant_cast<Window*>(tabData(index));
+
+	if (window)
+	{
+		window->deleteLater();
+	}
+
 	QTabBar::removeTab(index);
 
 	if (underMouse() && tabAt(mapFromGlobal(QCursor::pos())) < 0)
