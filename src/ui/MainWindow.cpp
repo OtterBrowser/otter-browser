@@ -22,7 +22,6 @@
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
-#include "ImportDialog.h"
 #include "MdiWidget.h"
 #include "Menu.h"
 #include "OpenAddressDialog.h"
@@ -37,7 +36,6 @@
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 #include "../core/HistoryManager.h"
-#include "../core/NetworkManagerFactory.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
@@ -53,7 +51,6 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
-#include <QtCore/QTextCodec>
 #include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
@@ -67,10 +64,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	m_windowsManager(NULL),
 	m_tabBarToolBarWidget(NULL),
 	m_menuBar(NULL),
-	m_sessionsGroup(NULL),
-	m_characterEncodingGroup(NULL),
-	m_userAgentGroup(NULL),
-	m_closedWindowsMenu(new QMenu(this)),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -83,13 +76,16 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 
 	MdiWidget *mdiWidget = new MdiWidget(this);
 
-	m_tabBarToolBarWidget = new TabBarToolBarWidget(m_closedWindowsMenu, this);
+	setCentralWidget(mdiWidget);
+
+	m_windowsManager = new WindowsManager(mdiWidget, m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+
+	m_tabBarToolBarWidget = new TabBarToolBarWidget(this);
 	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
-	setCentralWidget(mdiWidget);
 	addToolBar(m_tabBarToolBarWidget);
 
-	m_windowsManager = new WindowsManager(mdiWidget, m_tabBarToolBarWidget->getTabBar(), m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	m_windowsManager->setTabBar(m_tabBarToolBarWidget->getTabBar());
 
 	SessionsManager::registerWindow(this);
 
@@ -106,16 +102,12 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 		createMenuBar();
 	}
 
-	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
-	connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindows()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
-	connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), m_tabBarToolBarWidget, SLOT(setClosedWindowsMenuEnabled(bool)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
-	connect(m_closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("ErrorConsole")), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("Sidebar")), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
@@ -227,61 +219,10 @@ void MainWindow::createMenuBar()
 
 	for (int i = 0; i < menuBar.count(); ++i)
 	{
-		m_menuBar->addMenu(new Menu(menuBar.at(i).toObject(), m_menuBar));
-	}
+		Menu *menu = new Menu(m_menuBar);
+		menu->load(menuBar.at(i).toObject());
 
-	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
-
-	if (bookmarksMenu)
-	{
-		bookmarksMenu->installEventFilter(this);
-
-		connect(bookmarksMenu, SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
-	}
-
-	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
-
-	if (closedWindowsMenu)
-	{
-		closedWindowsMenu->setIcon(Utils::getIcon(QLatin1String("user-trash")));
-		closedWindowsMenu->setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !m_windowsManager->getClosedWindows().isEmpty());
-
-		connect(m_windowsManager, SIGNAL(closedWindowsAvailableChanged(bool)), closedWindowsMenu, SLOT(setEnabled(bool)));
-		connect(closedWindowsMenu, SIGNAL(aboutToShow()), this, SLOT(menuClosedWindowsAboutToShow()));
-	}
-
-	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
-
-	if (sessionsMenu)
-	{
-		connect(sessionsMenu, SIGNAL(aboutToShow()), this, SLOT(menuSessionsAboutToShow()));
-		connect(sessionsMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionSession(QAction*)));
-	}
-
-	Menu *importExportMenu = getMenu(QLatin1String("MenuImportExport"));
-
-	if (importExportMenu)
-	{
-		importExportMenu->addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
-		importExportMenu->addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
-
-		connect(importExportMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionImport(QAction*)));
-	}
-
-	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
-
-	if (userAgentMenu)
-	{
-		connect(userAgentMenu, SIGNAL(aboutToShow()), this, SLOT(menuUserAgentAboutToShow()));
-		connect(userAgentMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionUserAgent(QAction*)));
-	}
-
-	Menu *characterEncodingMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
-
-	if (characterEncodingMenu)
-	{
-		connect(characterEncodingMenu, SIGNAL(aboutToShow()), this, SLOT(menuCharacterEncodingAboutToShow()));
-		connect(characterEncodingMenu, SIGNAL(triggered(QAction*)), this, SLOT(actionCharacterEncoding(QAction*)));
+		m_menuBar->addMenu(menu);
 	}
 }
 
@@ -409,22 +350,6 @@ void MainWindow::actionManageSessions()
 	dialog.exec();
 }
 
-void MainWindow::actionSession(QAction *action)
-{
-	if (!action->data().isNull())
-	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()));
-	}
-}
-
-void MainWindow::actionImport(QAction *action)
-{
-	if (action)
-	{
-		ImportDialog::createDialog(action->data().toString(), this);
-	}
-}
-
 void MainWindow::actionWorkOffline(bool enable)
 {
 	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enable);
@@ -458,53 +383,6 @@ void MainWindow::actionFullScreen()
 	{
 		storeWindowState();
 		showFullScreen();
-	}
-}
-
-void MainWindow::actionUserAgent(QAction *action)
-{
-	if (action)
-	{
-		m_windowsManager->setOption(QLatin1String("Network/UserAgent"), action->data().toString());
-	}
-}
-
-void MainWindow::actionCharacterEncoding(QAction *action)
-{
-	QString encoding;
-
-	if (action && action->data().toInt() > 0)
-	{
-		QTextCodec *codec = QTextCodec::codecForMib(action->data().toInt());
-
-		if (codec)
-		{
-			encoding = codec->name();
-		}
-	}
-
-	m_windowsManager->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
-}
-
-void MainWindow::actionClearClosedWindows()
-{
-	m_windowsManager->clearClosedWindows();
-
-	SessionsManager::clearClosedWindows();
-}
-
-void MainWindow::actionRestoreClosedWindow()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-	const int index = ((action && action->data().type() == QVariant::Int) ? action->data().toInt() : 0);
-
-	if (index > 0)
-	{
-		m_windowsManager->restore(index - 1);
-	}
-	else if (index < 0)
-	{
-		SessionsManager::restoreClosedWindow(-index - 1);
 	}
 }
 
@@ -549,26 +427,6 @@ void MainWindow::actionManageBookmarks()
 	if (!SessionsManager::hasUrl(url, true))
 	{
 		m_windowsManager->open(url);
-	}
-}
-
-void MainWindow::actionOpenBookmark()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action && !action->data().toString().isEmpty())
-	{
-		m_windowsManager->open(QUrl(action->data().toString()), (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
-	}
-}
-
-void MainWindow::actionOpenBookmarkFolder()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (action)
-	{
-		m_windowsManager->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())));
 	}
 }
 
@@ -663,302 +521,6 @@ void MainWindow::actionQuickBookmarkAccess()
 	dialog.exec();
 }
 
-void MainWindow::menuSessionsAboutToShow()
-{
-	Menu *sessionsMenu = getMenu(QLatin1String("MenuSessions"));
-
-	if (!sessionsMenu)
-	{
-		return;
-	}
-
-	if (m_sessionsGroup)
-	{
-		m_sessionsGroup->deleteLater();
-	}
-
-	sessionsMenu->clear();
-	sessionsMenu->addAction(m_actionsManager->getAction(QLatin1String("SaveSession")));
-	sessionsMenu->addAction(m_actionsManager->getAction(QLatin1String("ManageSessions")));
-	sessionsMenu->addSeparator();
-
-	m_sessionsGroup = new QActionGroup(this);
-	m_sessionsGroup->setExclusive(true);
-
-	const QStringList sessions = SessionsManager::getSessions();
-	QMultiHash<QString, SessionInformation> information;
-
-	for (int i = 0; i < sessions.count(); ++i)
-	{
-		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
-
-		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
-	}
-
-	const QList<SessionInformation> sorted = information.values();
-	const QString currentSession = SessionsManager::getCurrentSession();
-
-	for (int i = 0; i < sorted.count(); ++i)
-	{
-		int windows = 0;
-
-		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
-		{
-			windows += sorted.at(i).windows.at(j).windows.count();
-		}
-
-		QAction *action = sessionsMenu->addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
-		action->setData(sorted.at(i).path);
-		action->setCheckable(true);
-		action->setChecked(sorted.at(i).path == currentSession);
-
-		m_sessionsGroup->addAction(action);
-	}
-}
-
-void MainWindow::menuUserAgentAboutToShow()
-{
-	Menu *userAgentMenu = getMenu(QLatin1String("MenuUserAgent"));
-
-	if (!userAgentMenu)
-	{
-		return;
-	}
-
-	if (m_userAgentGroup)
-	{
-		m_userAgentGroup->deleteLater();
-
-		userAgentMenu->clear();
-	}
-
-	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
-	const QString userAgent = m_windowsManager->getOption(QLatin1String("Network/UserAgent")).toString();
-
-	m_userAgentGroup = new QActionGroup(this);
-	m_userAgentGroup->setExclusive(true);
-
-	QAction *defaultAction = userAgentMenu->addAction(tr("Default"));
-	defaultAction->setData(QLatin1String("default"));
-	defaultAction->setCheckable(true);
-	defaultAction->setChecked(userAgent == QLatin1String("default"));
-
-	m_userAgentGroup->addAction(defaultAction);
-
-	userAgentMenu->addSeparator();
-
-	for (int i = 0; i < userAgents.count(); ++i)
-	{
-		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
-		QAction *userAgentAction = userAgentMenu->addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, userAgentMenu)));
-		userAgentAction->setData(userAgents.at(i));
-		userAgentAction->setCheckable(true);
-		userAgentAction->setChecked(userAgent == userAgents.at(i));
-
-		m_userAgentGroup->addAction(userAgentAction);
-	}
-
-	userAgentMenu->addSeparator();
-
-	QAction *customAction = userAgentMenu->addAction(tr("Custom"));
-	customAction->setData(QLatin1String("custom"));
-	customAction->setCheckable(true);
-	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
-
-	m_userAgentGroup->addAction(customAction);
-
-	if (!m_userAgentGroup->checkedAction() && userAgentMenu->actions().count() > 2)
-	{
-		userAgentMenu->actions().first()->setChecked(true);
-	}
-}
-
-void MainWindow::menuCharacterEncodingAboutToShow()
-{
-	Menu *characterEncodignMenu = getMenu(QLatin1String("MenuCharacterEncoding"));
-
-	if (!characterEncodignMenu)
-	{
-		return;
-	}
-
-	if (!m_characterEncodingGroup)
-	{
-		QList<int> textCodecs;
-		textCodecs << 106 << 1015 << 1017 << 4 << 5 << 6 << 7 << 8 << 82 << 10 << 85 << 12 << 13 << 109 << 110 << 112 << 2250 << 2251 << 2252 << 2253 << 2254 << 2255 << 2256 << 2257 << 2258 << 18 << 39 << 17 << 38 << 2026;
-
-		m_characterEncodingGroup = new QActionGroup(this);
-		m_characterEncodingGroup->setExclusive(true);
-
-		QAction *defaultAction = characterEncodignMenu->addAction(tr("Auto Detect"));
-		defaultAction->setData(-1);
-		defaultAction->setCheckable(true);
-
-		m_characterEncodingGroup->addAction(defaultAction);
-
-		characterEncodignMenu->addSeparator();
-
-		for (int i = 0; i < textCodecs.count(); ++i)
-		{
-			QTextCodec *codec = QTextCodec::codecForMib(textCodecs.at(i));
-
-			if (!codec)
-			{
-				continue;
-			}
-
-			QAction *textCodecAction = characterEncodignMenu->addAction(Utils::elideText(codec->name(), characterEncodignMenu));
-			textCodecAction->setData(textCodecs.at(i));
-			textCodecAction->setCheckable(true);
-
-			m_characterEncodingGroup->addAction(textCodecAction);
-		}
-	}
-
-	const QString encoding = m_windowsManager->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower();
-
-	for (int i = 2; i < characterEncodignMenu->actions().count(); ++i)
-	{
-		QAction *action = characterEncodignMenu->actions().at(i);
-
-		if (!action)
-		{
-			continue;
-		}
-
-		action->setChecked(encoding == action->text().toLower());
-
-		if (action->isChecked())
-		{
-			break;
-		}
-	}
-
-	if (!m_characterEncodingGroup->checkedAction())
-	{
-		characterEncodignMenu->actions().first()->setChecked(true);
-	}
-}
-
-void MainWindow::menuClosedWindowsAboutToShow()
-{
-	Menu *closedWindowsMenu = getMenu(QLatin1String("MenuClosedWindows"));
-
-	if (closedWindowsMenu)
-	{
-		closedWindowsMenu->clear();
-		closedWindowsMenu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(actionClearClosedWindows()))->setData(0);
-		closedWindowsMenu->addSeparator();
-	}
-
-	m_closedWindowsMenu->clear();
-
-	const QStringList windows = SessionsManager::getClosedWindows();
-
-	if (!windows.isEmpty())
-	{
-		for (int i = 0; i < windows.count(); ++i)
-		{
-			m_closedWindowsMenu->addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), m_closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(-(i + 1));
-		}
-
-		m_closedWindowsMenu->addSeparator();
-	}
-
-	WebBackend *backend = WebBackendsManager::getBackend();
-	const QList<SessionWindow> tabs = m_windowsManager->getClosedWindows();
-
-	for (int i = 0; i < tabs.count(); ++i)
-	{
-		m_closedWindowsMenu->addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), m_closedWindowsMenu), this, SLOT(actionRestoreClosedWindow()))->setData(i + 1);
-	}
-
-	if (closedWindowsMenu)
-	{
-		closedWindowsMenu->addActions(m_closedWindowsMenu->actions());
-	}
-}
-
-void MainWindow::menuBookmarksAboutToShow()
-{
-	QMenu *menu = qobject_cast<QMenu*>(sender());
-
-	if (!menu || !menu->menuAction())
-	{
-		return;
-	}
-
-	if (menu->objectName().isEmpty())
-	{
-		menu->setObjectName(QLatin1String("bookmarks"));
-		menu->installEventFilter(this);
-	}
-
-	const QModelIndex index = menu->menuAction()->data().toModelIndex();
-
-	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3))
-	{
-		return;
-	}
-
-	QStandardItem *branch = (index.isValid() ? BookmarksManager::getModel()->itemFromIndex(index) : BookmarksManager::getModel()->getRootItem());
-
-	if (!branch)
-	{
-		return;
-	}
-
-	if (index.isValid() && branch->rowCount() > 1)
-	{
-		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"));
-		openAllAction->setData(index);
-
-		connect(openAllAction, SIGNAL(triggered()), this, SLOT(actionOpenBookmarkFolder()));
-
-		menu->addSeparator();
-	}
-
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		QStandardItem *item = branch->child(i);
-
-		if (!item)
-		{
-			continue;
-		}
-
-		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
-
-		if (type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)
-		{
-			QAction *action = menu->addAction(item->data(Qt::DecorationRole).value<QIcon>(), (item->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(item->data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
-			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
-
-			if (type == BookmarksItem::UrlBookmark)
-			{
-				action->setData(item->data(BookmarksModel::UrlRole).toString());
-
-				connect(action, SIGNAL(triggered()), this, SLOT(actionOpenBookmark()));
-			}
-			else
-			{
-				action->setData(item->index());
-
-				if (item->rowCount() > 0)
-				{
-					action->setMenu(new QMenu());
-
-					connect(action->menu(), SIGNAL(aboutToShow()), this, SLOT(menuBookmarksAboutToShow()));
-				}
-			}
-		}
-		else
-		{
-			menu->addSeparator();
-		}
-	}
-}
-
 void MainWindow::transferStarted()
 {
 	const QString action = SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString();
@@ -980,48 +542,6 @@ void MainWindow::transferStarted()
 	{
 		m_ui->sidebarDockWidget->setVisible(true);
 		m_ui->sidebarWidget->openPanel(QLatin1String("transfers"));
-	}
-}
-
-void MainWindow::openBookmark()
-{
-	const QUrl url(m_currentBookmark);
-
-	if (url.isValid())
-	{
-		QAction *action = qobject_cast<QAction*>(sender());
-
-		m_windowsManager->open(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen) | (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
-
-		Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
-
-		if (bookmarksMenu)
-		{
-			bookmarksMenu->close();
-		}
-	}
-
-	m_currentBookmark = QString();
-}
-
-void MainWindow::updateClosedWindows()
-{
-	m_tabBarToolBarWidget->setClosedWindowsMenuEnabled(m_windowsManager->getClosedWindows().count() > 0 || SessionsManager::getClosedWindows().count() > 0);
-}
-
-void MainWindow::updateBookmarks()
-{
-	Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
-
-	if (!bookmarksMenu || bookmarksMenu->actions().count() == 3)
-	{
-		return;
-	}
-
-	for (int i = (bookmarksMenu->actions().count() - 1); i > 2; --i)
-	{
-		bookmarksMenu->actions().at(i)->deleteLater();
-		bookmarksMenu->removeAction(bookmarksMenu->actions().at(i));
 	}
 }
 
@@ -1129,16 +649,6 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	return window;
 }
 
-Menu* MainWindow::getMenu(const QString &identifier)
-{
-	if (!m_menuBar)
-	{
-		return NULL;
-	}
-
-	return m_menuBar->findChild<Menu*>(identifier);
-}
-
 ActionsManager* MainWindow::getActionsManager()
 {
 	return m_actionsManager;
@@ -1204,73 +714,6 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::ContextMenu && object->objectName().contains(QLatin1String("bookmarks"), Qt::CaseInsensitive))
-	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
-		QMenu *menu = qobject_cast<QMenu*>(object);
-
-		if (contextMenuEvent && menu)
-		{
-			QAction *action = menu->actionAt(contextMenuEvent->pos());
-
-			if (action && action->data().type() == QVariant::String)
-			{
-				m_currentBookmark = action->data().toString();
-
-				QMenu contextMenu(this);
-				contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-				contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
-				contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(NewTabBackgroundOpen);
-				contextMenu.addSeparator();
-				contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(NewWindowOpen);
-				contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(NewWindowBackgroundOpen);
-				contextMenu.exec(contextMenuEvent->globalPos());
-
-				return true;
-			}
-		}
-	}
-
-	if (event->type() == QEvent::MouseButtonRelease && object->objectName().contains(QLatin1String("bookmarks"), Qt::CaseInsensitive))
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-		QMenu *menu = qobject_cast<QMenu*>(object);
-
-		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton) && menu)
-		{
-			QAction *action = menu->actionAt(mouseEvent->pos());
-
-			if (action && action->data().type() == QVariant::String)
-			{
-				OpenHints hints = DefaultOpen;
-
-				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
-				{
-					hints = NewTabBackgroundOpen;
-				}
-				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
-				{
-					hints = NewTabOpen;
-				}
-				else
-				{
-					hints = (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen);
-				}
-
-				m_windowsManager->open(QUrl(action->data().toString()), hints);
-
-				Menu *bookmarksMenu = getMenu(QLatin1String("MenuBookmarks"));
-
-				if (bookmarksMenu)
-				{
-					bookmarksMenu->close();
-				}
-
-				return true;
-			}
-		}
-	}
-
 	if (event->type() == QEvent::KeyPress && isFullScreen())
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);

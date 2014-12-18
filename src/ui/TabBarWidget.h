@@ -42,7 +42,6 @@ public:
 	void activateTabOnRight();
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 	int getPinnedTabsAmount() const;
-	int getNewTabPosition() const;
 
 public slots:
 	void setOrientation(Qt::ToolBarArea orientation);

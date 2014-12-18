@@ -17,36 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TABBARTOOLBARWIDGET_H
-#define OTTER_TABBARTOOLBARWIDGET_H
+#ifndef OTTER_MENUACTIONWIDGET_H
+#define OTTER_MENUACTIONWIDGET_H
 
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QToolButton>
+#include "../ActionWidget.h"
 
 namespace Otter
 {
 
-class TabBarWidget;
+class Menu;
 
-class TabBarToolBarWidget : public QToolBar
+class MenuActionWidget : public Otter::ActionWidget
 {
 	Q_OBJECT
 
 public:
-	explicit TabBarToolBarWidget(QMainWindow *parent = NULL);
+	explicit MenuActionWidget(QWidget *parent);
 
-	TabBarWidget* getTabBar();
-
-public slots:
-	void updateNewTabPosition();
-	void updateOrientation();
+protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
+	void updateMenu();
 
 private:
-	QMainWindow *m_window;
-	QWidget *m_widget;
-	TabBarWidget *m_tabBar;
-	QToolButton *m_newTabButton;
+	Menu *m_menu;
 };
 
 }

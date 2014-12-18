@@ -39,9 +39,9 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool isPrivate) : QObject(mdi),
+WindowsManager::WindowsManager(MdiWidget *mdi, StatusBarWidget *statusBar, bool isPrivate) : QObject(mdi),
 	m_mdi(mdi),
-	m_tabBar(tabBar),
+	m_tabBar(NULL),
 	m_statusBar(statusBar),
 	m_printedWindow(-1),
 	m_isPrivate(isPrivate),
@@ -742,6 +742,11 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		emit windowTitleChanged(text);
 	}
+}
+
+void WindowsManager::setTabBar(TabBarWidget *tabBar)
+{
+	m_tabBar = tabBar;
 }
 
 QAction* WindowsManager::getAction(ActionIdentifier action)

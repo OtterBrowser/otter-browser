@@ -110,6 +110,7 @@
         <file>macros/platform.ini</file>
         <file>other/adblock.ini</file>
         <file>other/menuBar.json</file>
+        <file>other/menuButton.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.ini</file>
         <file>schemas/browsingHistory.sql</file>

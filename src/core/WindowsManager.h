@@ -59,7 +59,7 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(MdiWidget *mdi, TabBarWidget *tabBar, StatusBarWidget *statusBar, bool isPrivate = false);
+	explicit WindowsManager(MdiWidget *mdi, StatusBarWidget *statusBar, bool isPrivate = false);
 
 	QAction* getAction(ActionIdentifier action);
 	Window* getWindow(int index) const;
@@ -95,6 +95,7 @@ public slots:
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
 	void gatherBookmarks(QStandardItem *branch);
+	void setTabBar(TabBarWidget *tabBar);
 	int getWindowIndex(Window *window) const;
 	bool event(QEvent *event);
 
@@ -130,6 +131,8 @@ signals:
 	void currentWindowChanged(int index);
 	void windowTitleChanged(QString title);
 	void closedWindowsAvailableChanged(bool available);
+
+friend class MainWindow;
 };
 
 }

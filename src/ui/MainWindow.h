@@ -23,7 +23,6 @@
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
-#include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
 
@@ -63,7 +62,6 @@ protected:
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
 	void updateAction(QAction *source, QAction *target);
-	Menu* getMenu(const QString &identifier);
 	bool event(QEvent *event);
 
 protected slots:
@@ -73,21 +71,13 @@ protected slots:
 	void actionOpen();
 	void actionSaveSession();
 	void actionManageSessions();
-	void actionSession(QAction *action);
-	void actionImport(QAction *action);
 	void actionWorkOffline(bool enable);
 	void actionShowMenuBar(bool enable);
 	void actionFullScreen();
-	void actionUserAgent(QAction *action);
-	void actionCharacterEncoding(QAction *action);
-	void actionClearClosedWindows();
-	void actionRestoreClosedWindow();
 	void actionViewHistory();
 	void actionClearHistory();
 	void actionAddBookmark(const QUrl &url = QUrl(), const QString &title = QString());
 	void actionManageBookmarks();
-	void actionOpenBookmark();
-	void actionOpenBookmarkFolder();
 	void actionCookies();
 	void actionTransfers();
 	void actionErrorConsole(bool enabled);
@@ -99,15 +89,7 @@ protected slots:
 	void actionLockToolBars(bool lock);
 	void actionGoToPage();
 	void actionQuickBookmarkAccess();
-	void menuSessionsAboutToShow();
-	void menuUserAgentAboutToShow();
-	void menuCharacterEncodingAboutToShow();
-	void menuClosedWindowsAboutToShow();
-	void menuBookmarksAboutToShow();
 	void transferStarted();
-	void openBookmark();
-	void updateClosedWindows();
-	void updateBookmarks();
 	void updateActions();
 	void updateWindowTitle(const QString &title);
 
@@ -116,10 +98,6 @@ private:
 	WindowsManager *m_windowsManager;
 	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;
-	QActionGroup *m_sessionsGroup;
-	QActionGroup *m_characterEncodingGroup;
-	QActionGroup *m_userAgentGroup;
-	QMenu *m_closedWindowsMenu;
 	QString m_currentBookmark;
 	Qt::WindowStates m_previousState;
 	Ui::MainWindow *m_ui;

@@ -1,6 +1,6 @@
 [
 	{
-		"identifier": "MenuFile",
+		"identifier": "FileMenu",
 		"type": "menu",
 		"title": "File",
 		"actions":
@@ -15,7 +15,7 @@
 			"CloseTab",
 			"separator",
 			{
-				"identifier": "MenuSessions",
+				"identifier": "SessionsMenu",
 				"type": "menu",
 				"title": "Sessions",
 				"actions":
@@ -23,7 +23,7 @@
 				]
 			},
 			{
-				"identifier": "MenuImportExport",
+				"identifier": "ImportExportMenu",
 				"type": "menu",
 				"title": "Import and Export",
 				"actions":
@@ -42,7 +42,7 @@
 		]
 	},
 	{
-		"identifier": "MenuEdit",
+		"identifier": "EditMenu",
 		"type": "menu",
 		"title": "Edit",
 		"actions":
@@ -63,7 +63,7 @@
 		]
 	},
 	{
-		"identifier": "MenuView",
+		"identifier": "ViewMenu",
 		"type": "menu",
 		"title": "View",
 		"actions":
@@ -80,7 +80,7 @@
 			"ViewSource",
 			"InspectPage",
 			{
-				"identifier": "MenuUserAgent",
+				"identifier": "UserAgentMenu",
 				"type": "menu",
 				"title": "User Agent",
 				"actions":
@@ -89,7 +89,7 @@
 			},
 			"separator",
 			{
-				"identifier": "MenuCharacterEncoding",
+				"identifier": "CharacterEncodingMenu",
 				"type": "menu",
 				"title": "Character Encoding",
 				"actions":
@@ -110,7 +110,7 @@
 			"FastForward",
 			"separator",
 			{
-				"identifier": "MenuClosedWindows",
+				"identifier": "ClosedWindowsMenu",
 				"type": "menu",
 				"title": "Closed Windows",
 				"actions":
@@ -124,7 +124,7 @@
 		]
 	},
 	{
-		"identifier": "MenuBookmarks",
+		"identifier": "BookmarksMenu",
 		"type": "menu",
 		"title": "Bookmarks",
 		"actions":
@@ -135,7 +135,7 @@
 		]
 	},
 	{
-		"identifier": "MenuTools",
+		"identifier": "ToolsMenu",
 		"type": "menu",
 		"title": "Tools",
 		"actions":
@@ -150,7 +150,7 @@
 		]
 	},
 	{
-		"identifier": "MenuHelp",
+		"identifier": "HelpMenu",
 		"type": "menu",
 		"title": "Help",
 		"actions":

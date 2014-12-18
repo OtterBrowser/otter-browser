@@ -718,24 +718,4 @@ int TabBarWidget::getPinnedTabsAmount() const
 	return m_pinnedTabsAmount;
 }
 
-int TabBarWidget::getNewTabPosition() const
-{
-	int position = 0;
-	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
-
-	for (int i = 0; i < count(); ++i)
-	{
-		if (isHorizontal)
-		{
-			position += tabSizeHint(i).width();
-		}
-		else
-		{
-			position += tabSizeHint(i).height();
-		}
-	}
-
-	return position;
-}
-
 }

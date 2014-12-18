@@ -1,0 +1,147 @@
+{
+	"identifier": "MainMenu",
+	"type": "menu",
+	"title": "Menu",
+	"actions":
+	[
+		{
+			"identifier": "TabsAndWindowsMenu",
+			"type": "menu",
+			"title": "Tabs and Windows",
+			"actions":
+			[
+				"NewTab",
+				"NewTabPrivate",
+				"NewWindow",
+				"NewWindowPrivate",
+				"separator",
+				{
+					"identifier": "ClosedWindowsMenu",
+					"type": "menu",
+					"title": "Closed Windows",
+					"actions":
+					[
+					]
+				},
+				{
+					"identifier": "SessionsMenu",
+					"type": "menu",
+					"title": "Sessions",
+					"actions":
+					[
+					]
+				}
+			]
+		},
+		{
+			"identifier": "PageMenu",
+			"type": "menu",
+			"title": "Page",
+			"actions":
+			[
+				"Undo",
+				"Redo",
+				"separator",
+				"Cut",
+				"Copy",
+				"Paste",
+				"Delete",
+				"separator",
+				"SelectAll",
+				"Find",
+				"separator",
+				"Open",
+				"Save",
+				"separator",
+				"Reload",
+				"Stop",
+				"separator",
+				"ZoomIn",
+				"ZoomOut",
+				"ZoomOriginal",
+				"separator",
+				"FullScreen",
+				"separator",
+				"ViewSource",
+				"InspectPage",
+				{
+					"identifier": "UserAgentMenu",
+					"type": "menu",
+					"title": "User Agent",
+					"actions":
+					[
+					]
+				},
+				"separator",
+				{
+					"identifier": "CharacterEncodingMenu",
+					"type": "menu",
+					"title": "Character Encoding",
+					"actions":
+					[
+					]
+				}
+			]
+		},
+		{
+			"identifier": "PrintMenu",
+			"type": "menu",
+			"title": "Print",
+			"actions":
+			[
+				"Print",
+				"PrintPreview"
+			]
+		},
+		"separator",
+		{
+			"identifier": "BookmarksMenu",
+			"type": "menu",
+			"title": "Bookmarks",
+			"actions":
+			[
+				"AddBookmark",
+				"ManageBookmarks",
+				"separator"
+			]
+		},
+		"ViewHistory",
+		"Transfers",
+		"separator",
+		{
+			"identifier": "SettingsMenu",
+			"type": "menu",
+			"title": "Settings",
+			"actions":
+			[
+				"Preferences",
+				"separator",
+				"WorkOffline",
+				"separator",
+				{
+					"identifier": "ImportExportMenu",
+					"type": "menu",
+					"title": "Import and Export",
+					"actions":
+					[
+					]
+				}
+			]
+		},
+		{
+			"identifier": "HelpMenu",
+			"type": "menu",
+			"title": "Help",
+			"actions":
+			[
+				"SwitchApplicationLanguage",
+				"separator",
+				"AboutApplication",
+				"AboutQt"
+			]
+		},
+		"ShowMenuBar",
+		"separator",
+		"Exit"
+	]
+}

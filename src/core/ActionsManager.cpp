@@ -53,6 +53,10 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"));
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"));
+		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"));
 
 		ShortcutsManager::createInstance(Application::getInstance());
 
