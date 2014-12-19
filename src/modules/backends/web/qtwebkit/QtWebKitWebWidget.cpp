@@ -140,6 +140,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaMute"), this), getAction(ToggleMediaMuteAction));
 #endif
 
+	getAction(GoBackAction)->setEnabled(m_webView->history()->canGoBack());
+	getAction(GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	getAction(RewindAction)->setEnabled(m_webView->history()->canGoBack());
+	getAction(FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
 	getAction(ReloadAction)->setEnabled(true);
 	getAction(OpenLinkAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
