@@ -230,9 +230,6 @@
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="thirdPartyCookiesLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
               <property name="text">
                <string>Accept third-party cookies:</string>
               </property>
@@ -255,26 +252,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QComboBox" name="thirdPartyCookiesComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>Always</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Only existing</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Never</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="thirdPartyCookiesComboBox"/>
             </item>
             <item row="1" column="1">
              <widget class="QComboBox" name="keepCookiesUntilComboBox">
@@ -763,15 +741,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::TableViewWidget</class>
+   <extends>QTableView</extends>
+   <header>src/ui/TableViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

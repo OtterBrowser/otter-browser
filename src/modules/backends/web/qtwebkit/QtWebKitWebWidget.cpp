@@ -562,6 +562,21 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
 
+	const QString thirdPartyCookiesPolicy = SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString();
+
+	if (thirdPartyCookiesPolicy == QLatin1String("acceptExisting"))
+	{
+		m_webView->settings()->setThirdPartyCookiePolicy(QWebSettings::AllowThirdPartyWithExistingCookies);
+	}
+	else if (thirdPartyCookiesPolicy == QLatin1String("ignore"))
+	{
+		m_webView->settings()->setThirdPartyCookiePolicy(QWebSettings::AlwaysBlockThirdPartyCookies);
+	}
+	else
+	{
+		m_webView->settings()->setThirdPartyCookiePolicy(QWebSettings::AlwaysAllowThirdPartyCookies);
+	}
+
 	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
 	if (getOption(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool())

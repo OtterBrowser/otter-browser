@@ -37,13 +37,14 @@ class Notification : public QObject
 	Q_OBJECT
 
 public:
-	explicit Notification(const QString &message, NotificationLevel level, QObject *parent);
-
 	void markClicked();
 	void markIgnored();
 	static Notification* createNotification(const QString &message, NotificationLevel level = InformationNotificationLevel);
 	QString getMessage() const;
 	NotificationLevel getLevel() const;
+
+protected:
+	explicit Notification(const QString &message, NotificationLevel level, QObject *parent);
 
 private:
 	QString m_message;

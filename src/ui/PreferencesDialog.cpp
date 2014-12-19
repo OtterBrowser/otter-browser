@@ -201,6 +201,14 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
 	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
+	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only Existing"), QLatin1String("acceptExisting"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+
+	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
+
+	m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
 	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
 
@@ -261,25 +269,13 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
 
-	const QString enablePlugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString();
-
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	if (enablePlugins == QLatin1String("disabled"))
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(2);
-	}
-	else if (enablePlugins == QLatin1String("onDemand"))
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(1);
-	}
-	else
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(0);
-	}
+	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString());
 
+	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
@@ -423,6 +419,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->colorsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentColorChanged(int,int,int,int)));
 	connect(colorsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(colorChanged(QWidget*)));
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
+	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
 	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilter(QString)));
@@ -1255,6 +1252,7 @@ void PreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableCookies"), m_ui->acceptCookiesCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString());
 	SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearSettings : QStringList()));
 
 	QList<SearchInformation*> searchEngines;

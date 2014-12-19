@@ -55,30 +55,27 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString())));
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
-
-	const QString enablePlugins = SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString();
-
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	if (enablePlugins == QLatin1String("disabled"))
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(2);
-	}
-	else if (enablePlugins == QLatin1String("onDemand"))
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(1);
-	}
-	else
-	{
-		m_ui->pluginsComboBox->setCurrentIndex(0);
-	}
+	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString());
 
+	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), url).toString());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), url).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool());
+
+	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), url).toBool());
+	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only Existing"), QLatin1String("acceptExisting"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+
+	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
+
+	m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
 
 	QStringList cookiesLabels;
 	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
@@ -114,6 +111,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), url).toString()));
 
+	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -150,6 +148,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString(), url);
 			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath(), url);
+			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString(), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked(), url);
