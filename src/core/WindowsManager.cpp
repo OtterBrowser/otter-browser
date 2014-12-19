@@ -54,6 +54,11 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
 	Window *window = m_mdi->getActiveWindow();
 
+	if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
+	{
+		hints = CurrentTabOpen;
+	}
+
 	if (m_isPrivate)
 	{
 		hints |= PrivateOpen;
@@ -63,11 +68,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	{
 		emit requestedNewWindow((hints & PrivateOpen), (hints & BackgroundOpen), url);
 	}
-	else if (url.isEmpty() || (hints & NewTabOpen))
-	{
-		openTab(url, hints);
-	}
-	else if (window && ((hints & CurrentTabOpen) || (window->getType() == QLatin1String("web") && (window->isUrlEmpty() || url.scheme() == QLatin1String("javascript")))))
+	else if ((hints & CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
 	{
 		if (window->isPrivate() == hints.testFlag(PrivateOpen))
 		{
@@ -139,7 +140,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 				for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
 				{
-					open(m_bookmarksToOpen.at(i), ((hints == DefaultOpen || hints == CurrentTabOpen) ? NewTabOpen : hints));
+					open(m_bookmarksToOpen.at(i), ((hints == DefaultOpen || (hints & CurrentTabOpen)) ? NewTabOpen : hints));
 				}
 
 				m_bookmarksToOpen.clear();
@@ -198,7 +199,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 		hints = CurrentTabOpen;
 	}
 
-	if (window && hints == CurrentTabOpen && window->getType() == QLatin1String("web"))
+	if (window && (hints & CurrentTabOpen) && window->getType() == QLatin1String("web"))
 	{
 		window->search(query, engine);
 
