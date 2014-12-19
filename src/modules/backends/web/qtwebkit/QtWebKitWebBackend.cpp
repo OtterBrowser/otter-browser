@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebBackend.h"
+#include "QtWebKitHistoryInterface.h"
 #include "QtWebKitWebPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -26,6 +27,7 @@
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QDir>
+#include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWidgets/QApplication>
@@ -106,6 +108,8 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 	if (!m_isInitialized)
 	{
 		m_isInitialized = true;
+
+		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
 
 		QWebSettings *globalSettings = QWebSettings::globalSettings();
 		globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);

@@ -53,6 +53,7 @@ public:
 	static HistoryEntry getEntry(qint64 entry);
 	static QList<HistoryEntry> getEntries(bool typed = false);
 	static qint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed = false);
+	static bool hasUrl(const QUrl &url);
 	static bool updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon);
 	static bool removeEntry(qint64 entry);
 	static bool removeEntries(const QList<qint64> &entries);
@@ -64,9 +65,9 @@ protected:
 	void scheduleCleanup();
 	void removeOldEntries(const QDateTime &date = QDateTime());
 	static HistoryEntry getEntry(const QSqlRecord &record);
-	static qint64 getRecord(const QLatin1String &table, const QVariantHash &values);
-	static qint64 getLocation(const QUrl &url);
-	static qint64 getIcon(const QIcon &icon);
+	static qint64 getRecord(const QLatin1String &table, const QVariantHash &values, bool canCreate = true);
+	static qint64 getLocation(const QUrl &url, bool canCreate = true);
+	static qint64 getIcon(const QIcon &icon, bool canCreate = true);
 
 protected slots:
 	void optionChanged(const QString &option);

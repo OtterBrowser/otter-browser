@@ -278,7 +278,7 @@ QList<HistoryEntry> HistoryManager::getEntries(bool typed)
 	return entries;
 }
 
-qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash &values)
+qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash &values, bool canCreate)
 {
 	const QStringList keys = values.keys();
 	QStringList placeholders;
@@ -303,6 +303,11 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 		return selectQuery.record().field(QLatin1String("id")).value().toLongLong();
 	}
 
+	if (!canCreate)
+	{
+		return -1;
+	}
+
 	QSqlQuery insertQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	insertQuery.prepare(QStringLiteral("INSERT INTO \"%1\" (\"%2\") VALUES(%3);").arg(table).arg(keys.join(QLatin1String("\", \""))).arg(placeholders.join(QLatin1String(", "))));
 
@@ -316,7 +321,7 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 	return insertQuery.lastInsertId().toULongLong();
 }
 
-qint64 HistoryManager::getLocation(const QUrl &url)
+qint64 HistoryManager::getLocation(const QUrl &url, bool canCreate)
 {
 	QVariantHash hostsRecord;
 	hostsRecord[QLatin1String("host")] = url.host();
@@ -326,14 +331,14 @@ qint64 HistoryManager::getLocation(const QUrl &url)
 	simplifiedUrl.setHost(QString());
 
 	QVariantHash locationsRecord;
-	locationsRecord[QLatin1String("host")] = getRecord(QLatin1String("hosts"), hostsRecord);
+	locationsRecord[QLatin1String("host")] = getRecord(QLatin1String("hosts"), hostsRecord, canCreate);
 	locationsRecord[QLatin1String("scheme")] = url.scheme();
 	locationsRecord[QLatin1String("path")] = simplifiedUrl.toString(QUrl::RemovePassword | QUrl::NormalizePathSegments);
 
-	return getRecord(QLatin1String("locations"), locationsRecord);
+	return getRecord(QLatin1String("locations"), locationsRecord, canCreate);
 }
 
-qint64 HistoryManager::getIcon(const QIcon &icon)
+qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 {
 	if (!m_storeFavicons)
 	{
@@ -349,7 +354,7 @@ qint64 HistoryManager::getIcon(const QIcon &icon)
 	QVariantHash record;
 	record[QLatin1String("icon")] = data;
 
-	return getRecord(QLatin1String("icons"), record);
+	return getRecord(QLatin1String("icons"), record, canCreate);
 }
 
 qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed)
@@ -378,6 +383,11 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 	}
 
 	return -1;
+}
+
+bool HistoryManager::hasUrl(const QUrl &url)
+{
+	return (getLocation(url, false) >= 0);
 }
 
 bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon)

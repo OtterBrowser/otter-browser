@@ -146,6 +146,7 @@ set(otter_src
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/ui/toolbars/MenuActionWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
+	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
