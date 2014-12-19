@@ -17,47 +17,43 @@
 *
 **************************************************************************/
 
-#include "PlatformIntegration.h"
-#include "Application.h"
-#include "Utils.h"
+#ifndef OTTER_NOTIFICATION_H
+#define OTTER_NOTIFICATION_H
+
+#include <QtCore/QObject>
 
 namespace Otter
 {
 
-PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
+enum NotificationLevel
 {
-}
+	InformationNotificationLevel = 0,
+	WarningNotificationLevel = 1,
+	ErrorNotificationLevel = 2
+};
 
-QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType) const
+class Notification : public QObject
 {
-	Q_UNUSED(mimeType)
+	Q_OBJECT
 
-	return QList<ApplicationInformation>();
-}
+public:
+	explicit Notification(const QString &message, NotificationLevel level, QObject *parent);
 
-bool PlatformIntegration::canShowNotifications() const
-{
-	return false;
-}
+	void markClicked();
+	void markIgnored();
+	static Notification* createNotification(const QString &message, NotificationLevel level = InformationNotificationLevel);
+	QString getMessage() const;
+	NotificationLevel getLevel() const;
 
-bool PlatformIntegration::setAsDefaultBrowser()
-{
-	return false;
-}
+private:
+	QString m_message;
+	NotificationLevel m_level;
 
-bool PlatformIntegration::canSetAsDefaultBrowser() const
-{
-	return false;
-}
-
-bool PlatformIntegration::isDefaultBrowser() const
-{
-	return false;
-}
-
-void PlatformIntegration::showNotification(Notification *notification)
-{
-	Q_UNUSED(notification)
-}
+signals:
+	void clicked();
+	void ignored();
+};
 
 }
+
+#endif

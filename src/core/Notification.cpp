@@ -17,47 +17,59 @@
 *
 **************************************************************************/
 
-#include "PlatformIntegration.h"
+#include "Notification.h"
 #include "Application.h"
-#include "Utils.h"
+#include "PlatformIntegration.h"
 
 namespace Otter
 {
 
-PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
+Notification::Notification(const QString &message, NotificationLevel level, QObject *parent) : QObject(parent),
+	m_message(message),
+	m_level(level)
 {
 }
 
-QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType) const
+void Notification::markClicked()
 {
-	Q_UNUSED(mimeType)
+	emit clicked();
 
-	return QList<ApplicationInformation>();
+	deleteLater();
 }
 
-bool PlatformIntegration::canShowNotifications() const
+void Notification::markIgnored()
 {
-	return false;
+	emit ignored();
+
+	deleteLater();
 }
 
-bool PlatformIntegration::setAsDefaultBrowser()
+QString Notification::getMessage() const
 {
-	return false;
+	return m_message;
 }
 
-bool PlatformIntegration::canSetAsDefaultBrowser() const
+NotificationLevel Notification::getLevel() const
 {
-	return false;
+	return m_level;
 }
 
-bool PlatformIntegration::isDefaultBrowser() const
+Notification* Notification::createNotification(const QString &message, NotificationLevel level)
 {
-	return false;
+	Notification *notification = new Notification(message, level, Application::getInstance());
+	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+
+	if (integration && integration->canShowNotifications())
+	{
+		integration->showNotification(notification);
+	}
+	else
+	{
+///TODO
+	}
+
+	return notification;
 }
 
-void PlatformIntegration::showNotification(Notification *notification)
-{
-	Q_UNUSED(notification)
 }
 
-}

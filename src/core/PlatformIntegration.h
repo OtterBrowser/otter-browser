@@ -28,6 +28,7 @@ namespace Otter
 
 struct ApplicationInformation;
 class Application;
+class Notification;
 
 class PlatformIntegration : public QObject
 {
@@ -37,10 +38,12 @@ public:
 	explicit PlatformIntegration(Application *parent);
 
 	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) const;
+	virtual bool canShowNotifications() const;
 	virtual bool canSetAsDefaultBrowser() const;
 	virtual bool isDefaultBrowser() const;
 
 public slots:
+	virtual void showNotification(Notification *notification);
 	virtual bool setAsDefaultBrowser();
 };
 
