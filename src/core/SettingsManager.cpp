@@ -30,15 +30,18 @@ QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
 QHash<QString, QVariant> SettingsManager::m_defaults;
 
-SettingsManager::SettingsManager(const QString &path, QObject *parent) : QObject(parent)
+SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
-	m_globalPath = path + QLatin1String("/otter.conf");
-	m_overridePath = path + QLatin1String("/override.ini");
 }
 
 void SettingsManager::createInstance(const QString &path, QObject *parent)
 {
-	m_instance = new SettingsManager(path, parent);
+	if (!m_instance)
+	{
+		m_instance = new SettingsManager(parent);
+		m_globalPath = path + QLatin1String("/otter.conf");
+		m_overridePath = path + QLatin1String("/override.ini");
+	}
 }
 
 void SettingsManager::registerOption(const QString &key)

@@ -49,7 +49,10 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 
 void HistoryManager::createInstance(QObject *parent)
 {
-	m_instance = new HistoryManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new HistoryManager(parent);
+	}
 }
 
 void HistoryManager::timerEvent(QTimerEvent *event)

@@ -56,11 +56,14 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 
 void NetworkManagerFactory::createInstance(QObject *parent)
 {
-	QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
+	if (!m_instance)
+	{
+		QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
 
-	m_instance = new NetworkManagerFactory(parent);
+		m_instance = new NetworkManagerFactory(parent);
 
-	ContentBlockingManager::createInstance(m_instance);
+		ContentBlockingManager::createInstance(m_instance);
+	}
 }
 
 void NetworkManagerFactory::initialize()

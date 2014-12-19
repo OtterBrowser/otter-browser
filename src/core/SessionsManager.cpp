@@ -62,9 +62,12 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 
 void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, QObject *parent)
 {
-	m_instance = new SessionsManager(parent);
-	m_cachePath = cachePath;
-	m_profilePath = profilePath;
+	if (!m_instance)
+	{
+		m_instance = new SessionsManager(parent);
+		m_cachePath = cachePath;
+		m_profilePath = profilePath;
+	}
 }
 
 void SessionsManager::scheduleSave()

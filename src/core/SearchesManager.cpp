@@ -54,7 +54,10 @@ SearchesManager::~SearchesManager()
 
 void SearchesManager::createInstance(QObject *parent)
 {
-	m_instance = new SearchesManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new SearchesManager(parent);
+	}
 }
 
 void SearchesManager::updateSearchEnginesModel()

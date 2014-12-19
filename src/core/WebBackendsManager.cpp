@@ -34,7 +34,10 @@ WebBackendsManager::WebBackendsManager(QObject *parent) : QObject(parent)
 
 void WebBackendsManager::createInstance(QObject *parent)
 {
-	m_instance = new WebBackendsManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new WebBackendsManager(parent);
+	}
 }
 
 void WebBackendsManager::registerBackend(WebBackend *backend, const QString &name)

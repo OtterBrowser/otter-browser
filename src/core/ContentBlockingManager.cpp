@@ -42,9 +42,12 @@ ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent
 
 void ContentBlockingManager::createInstance(QObject *parent)
 {
-	m_instance = new ContentBlockingManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new ContentBlockingManager(parent);
 
-	loadLists();
+		loadLists();
+	}
 }
 
 void ContentBlockingManager::loadLists()

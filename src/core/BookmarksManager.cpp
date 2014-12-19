@@ -56,8 +56,11 @@ void BookmarksManager::timerEvent(QTimerEvent *event)
 
 void BookmarksManager::createInstance(QObject *parent)
 {
-	m_instance = new BookmarksManager(parent);
-	m_model = new BookmarksModel(m_instance);
+	if (!m_instance)
+	{
+		m_instance = new BookmarksManager(parent);
+		m_model = new BookmarksModel(m_instance);
+	}
 }
 
 void BookmarksManager::scheduleSave()

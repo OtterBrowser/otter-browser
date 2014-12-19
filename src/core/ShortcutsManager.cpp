@@ -82,7 +82,10 @@ void ShortcutsManager::timerEvent(QTimerEvent *event)
 
 void ShortcutsManager::createInstance(QObject *parent)
 {
-	m_instance = new ShortcutsManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new ShortcutsManager(parent);
+	}
 }
 
 void ShortcutsManager::loadProfiles()

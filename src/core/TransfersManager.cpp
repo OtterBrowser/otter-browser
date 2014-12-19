@@ -75,7 +75,10 @@ TransfersManager::~TransfersManager()
 
 void TransfersManager::createInstance(QObject *parent)
 {
-	m_instance = new TransfersManager(parent);
+	if (!m_instance)
+	{
+		m_instance = new TransfersManager(parent);
+	}
 }
 
 void TransfersManager::timerEvent(QTimerEvent *event)

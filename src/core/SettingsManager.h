@@ -42,7 +42,7 @@ public:
 	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
 
 protected:
-	explicit SettingsManager(const QString &path, QObject *parent = NULL);
+	explicit SettingsManager(QObject *parent = NULL);
 
 private:
 	static SettingsManager *m_instance;

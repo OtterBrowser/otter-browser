@@ -39,7 +39,10 @@ Console::~Console()
 
 void Console::createInstance(QObject *parent)
 {
-	m_instance = new Console(parent);
+	if (!m_instance)
+	{
+		m_instance = new Console(parent);
+	}
 }
 
 void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line, qint64 window)
