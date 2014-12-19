@@ -93,6 +93,8 @@ struct SessionWindow
 struct SessionMainWindow
 {
 	QList<SessionWindow> windows;
+	QByteArray geometry;
+	QByteArray state;
 	int index;
 
 	SessionMainWindow() : index(-1) {}

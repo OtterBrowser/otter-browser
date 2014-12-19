@@ -59,7 +59,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_actionsManager(NULL),
 	m_windowsManager(NULL),
 	m_tabBarToolBarWidget(NULL),
@@ -144,18 +144,27 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &windows, QWidget
 	connect(m_actionsManager->getAction(QLatin1String("GoToPage")), SIGNAL(triggered()), this, SLOT(actionGoToPage()));
 	connect(m_actionsManager->getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(actionQuickBookmarkAccess()));
 
-	m_windowsManager->restore(windows);
+	m_windowsManager->restore(session);
 
 	m_ui->sidebarDockWidget->hide();
 	m_ui->consoleDockWidget->hide();
 
-	SettingsManager::setDefaultValue(QLatin1String("Window/Geometry"), QByteArray());
-	SettingsManager::setDefaultValue(QLatin1String("Window/State"), QByteArray());
-
 	updateActions();
 	updateWindowTitle(m_windowsManager->getTitle());
-	restoreGeometry(SettingsManager::getValue(QLatin1String("Window/Geometry")).toByteArray());
-	restoreState(SettingsManager::getValue(QLatin1String("Window/State")).toByteArray());
+
+	if (!session.geometry.isEmpty())
+	{
+		restoreGeometry(session.geometry);
+	}
+	else if (SettingsManager::getValue(QLatin1String("Interface/MaximizeNewWindows")).toBool())
+	{
+		showMaximized();
+	}
+
+	if (!session.state.isEmpty())
+	{
+		restoreState(session.state);
+	}
 
 	m_tabBarToolBarWidget->updateOrientation();
 }
@@ -196,9 +205,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 
 	m_windowsManager->closeAll();
-
-	SettingsManager::setValue(QLatin1String("Window/Geometry"), saveGeometry());
-	SettingsManager::setValue(QLatin1String("Window/State"), saveState());
 
 	application->removeWindow(this);
 
@@ -675,6 +681,8 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowStateChange:
+			SessionsManager::markSessionModified();
+
 			if (isFullScreen())
 			{
 				m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
@@ -703,6 +711,9 @@ bool MainWindow::event(QEvent *event)
 			break;
 		case QEvent::WindowActivate:
 			SessionsManager::setActiveWindow(this);
+		case QEvent::Resize:
+		case QEvent::Move:
+			SessionsManager::markSessionModified();
 
 			break;
 		default:

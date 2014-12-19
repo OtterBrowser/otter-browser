@@ -100,6 +100,8 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 	m_windows.removeAll(window);
 
 	SessionMainWindow session = window->getWindowsManager()->getSession();
+	session.geometry = window->saveGeometry();
+	session.state = window->saveState();
 
 	if (!session.windows.isEmpty())
 	{
@@ -206,6 +208,8 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	{
 		const int tabs = sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt();
 		SessionMainWindow sessionEntry;
+		sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(i), 1).toString().toLatin1());
+		sessionEntry.state = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/state").arg(i), 1).toString().toLatin1());
 		sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(i), 1).toInt() - 1);
 
 		for (int j = 1; j <= tabs; ++j)
@@ -370,7 +374,6 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		return false;
 	}
 
-	int tabs = 0;
 	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString();
 	const QString defaultUserAgent = SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString();
 	QTextStream stream(&file);
@@ -390,9 +393,9 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	{
 		const SessionMainWindow sessionEntry = windows.at(i)->getWindowsManager()->getSession();
 
-		tabs += sessionEntry.windows.count();
-
 		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
+		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), windows.at(i)->saveGeometry().toBase64(), true);
+		stream << Utils::formatConfigurationEntry(QLatin1String("state"), windows.at(i)->saveState().toBase64(), true);
 		stream << QLatin1String("groups=0\n");
 		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
 		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
