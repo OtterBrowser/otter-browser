@@ -56,7 +56,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
-	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
+	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
 	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString());
@@ -70,7 +70,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), url).toBool());
 	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
-	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only Existing"), QLatin1String("acceptExisting"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());

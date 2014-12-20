@@ -56,28 +56,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="startupBehaviorComboBox">
-           <item>
-            <property name="text">
-             <string>Continue previous session</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Show startup dialog</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Show home page</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Show empty page</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="startupBehaviorComboBox"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="homePageLabel">
@@ -269,6 +248,12 @@
         <layout class="QFormLayout" name="languageLayout">
          <item row="0" column="0">
           <widget class="QLabel" name="acceptLanguageLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Preferred Webpage Language:</string>
            </property>
@@ -713,23 +698,8 @@
          <item row="0" column="1">
           <widget class="QComboBox" name="doNotTrackComboBox">
            <property name="currentIndex">
-            <number>0</number>
+            <number>-1</number>
            </property>
-           <item>
-            <property name="text">
-             <string>Inform websites that I do not want to be tracked</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Inform websites that I allow tracking</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Do not inform websites about my preference</string>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>

@@ -85,21 +85,22 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->tabWidget->setCurrentIndex(0);
 	}
 
-	const QString startupBehaviorString = SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString();
-	int startupBehaviorIndex = 0;
+	m_ui->startupBehaviorComboBox->addItem(tr("Continue previous session"), QLatin1String("continuePrevious"));
+	m_ui->startupBehaviorComboBox->addItem(tr("Show startup dialog"), QLatin1String("showDialog"));
+	m_ui->startupBehaviorComboBox->addItem(tr("Show home page"), QLatin1String("startHomePage"));
+	m_ui->startupBehaviorComboBox->addItem(tr("Show empty page"), QLatin1String("startEmpty"));
 
-	if (startupBehaviorString == QLatin1String("showDialog"))
-	{
-		startupBehaviorIndex = 1;
-	}
-	else if (startupBehaviorString == QLatin1String("startHomePage"))
-	{
-		startupBehaviorIndex = 2;
-	}
-	else if (startupBehaviorString == QLatin1String("startEmpty"))
-	{
-		startupBehaviorIndex = 3;
-	}
+	const int startupBehaviorIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString());
+
+	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
+	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
+	m_ui->downloadsFilePathWidget->setSelectFile(false);
+	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
+	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
+	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
+	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool());
+	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool());
+	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool());
 
 	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
 
@@ -116,16 +117,6 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	{
 		connect(m_ui->setDefaultButton, SIGNAL(clicked()), integration, SLOT(setAsDefaultBrowser()));
 	}
-
-	m_ui->startupBehaviorComboBox->setCurrentIndex(startupBehaviorIndex);
-	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
-	m_ui->downloadsFilePathWidget->setSelectFile(false);
-	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
-	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
-	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
-	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool());
-	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool());
-	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool());
 
 	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")).toBool());
@@ -183,19 +174,13 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		m_ui->colorsWidget->setItem(i, 1, previewItem);
 	}
 
-	const QString doNotTrackPolicyString = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")).toString();
-	int doNotTrackPolicyIndex = 2;
+	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
+	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
+	m_ui->doNotTrackComboBox->addItem(tr("Do not inform websites about my preference"), QLatin1String("skip"));
 
-	if (doNotTrackPolicyString == QLatin1String("allow"))
-	{
-		doNotTrackPolicyIndex = 1;
-	}
-	else if (doNotTrackPolicyString == QLatin1String("doNotAllow"))
-	{
-		doNotTrackPolicyIndex = 0;
-	}
+	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")).toString());
 
-	m_ui->doNotTrackComboBox->setCurrentIndex(doNotTrackPolicyIndex);
+	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
 	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
@@ -203,7 +188,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
 	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
-	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only Existing"), QLatin1String("acceptExisting"));
+	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
@@ -270,7 +255,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
 
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
-	m_ui->pluginsComboBox->addItem(tr("On Demand"), QLatin1String("onDemand"));
+	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
 	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString());
@@ -1194,23 +1179,7 @@ void PreferencesDialog::openConfigurationManager()
 
 void PreferencesDialog::save()
 {
-	const int startupBehaviorIndex = m_ui->startupBehaviorComboBox->currentIndex();
-	QLatin1String startupBehaviorString = QLatin1String("continuePrevious");
-
-	if (startupBehaviorIndex == 1)
-	{
-		startupBehaviorString = QLatin1String("showDialog");
-	}
-	else if (startupBehaviorIndex == 2)
-	{
-		startupBehaviorString = QLatin1String("startHomePage");
-	}
-	else if (startupBehaviorIndex == 3)
-	{
-		startupBehaviorString = QLatin1String("startEmpty");
-	}
-
-	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), startupBehaviorString);
+	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), m_ui->startupBehaviorComboBox->currentData().toString());
 	SettingsManager::setValue(QLatin1String("Browser/HomePage"), m_ui->homePageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
@@ -1235,19 +1204,7 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(m_ui->colorsWidget->item(i, 1)->data(Qt::UserRole).toString() , m_ui->colorsWidget->item(i, 1)->data(Qt::EditRole));
 	}
 
-	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->currentIndex();
-	QLatin1String doNotTrackPolicyString = QLatin1String("skip");
-
-	if (doNotTrackPolicyIndex == 1)
-	{
-		doNotTrackPolicyString = QLatin1String("allow");
-	}
-	else if (doNotTrackPolicyIndex == 0)
-	{
-		doNotTrackPolicyString = QLatin1String("doNotAllow");
-	}
-
-	SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), doNotTrackPolicyString);
+	SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), m_ui->doNotTrackComboBox->currentData().toString());
 	SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
