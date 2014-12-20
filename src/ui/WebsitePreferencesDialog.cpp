@@ -74,6 +74,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
 
 	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool());
 	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), url).toBool());
 	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
@@ -158,6 +159,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString(), url);
 			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath(), url);
 			SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), m_ui->doNotTrackComboBox->currentData().toString(), url);
+			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString(), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked(), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(), url);

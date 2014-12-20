@@ -156,9 +156,6 @@
        </item>
        <item>
         <widget class="QCheckBox" name="rememberBrowsingHistoryCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Remember browsing history</string>
          </property>

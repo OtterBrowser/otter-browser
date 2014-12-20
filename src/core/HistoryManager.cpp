@@ -362,7 +362,7 @@ qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 
 qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed)
 {
-	if (!m_enabled || !url.isValid())
+	if (!m_enabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
 	{
 		return -1;
 	}
@@ -395,6 +395,18 @@ bool HistoryManager::hasUrl(const QUrl &url)
 
 bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon)
 {
+	if (!m_enabled || !url.isValid())
+	{
+		return false;
+	}
+
+	if (!SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
+	{
+		removeEntry(entry);
+
+		return false;
+	}
+
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("UPDATE \"visits\" SET \"location\" = ?, \"icon\" = ?, \"title\" = ? WHERE \"id\" = ?;"));
 	query.bindValue(0, getLocation(url));
