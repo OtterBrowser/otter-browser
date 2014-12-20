@@ -45,7 +45,7 @@ QStringList NetworkManagerFactory::m_userAgentsOrder;
 QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
-bool NetworkManagerFactory::m_canSendReferrer = false;
+bool NetworkManagerFactory::m_canSendReferrer = true;
 bool NetworkManagerFactory::m_isWorkingOffline = false;
 bool NetworkManagerFactory::m_isInitialized = false;
 bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication = false;

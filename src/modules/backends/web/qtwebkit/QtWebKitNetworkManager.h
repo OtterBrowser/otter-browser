@@ -21,6 +21,7 @@
 #define OTTER_QTWEBKITNETWORKMANAGER_H
 
 #include "../../../../core/NetworkManager.h"
+#include "../../../../core/NetworkManagerFactory.h"
 
 #include <QtNetwork/QNetworkRequest>
 
@@ -43,6 +44,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void resetStatistics();
 	void updateStatus();
+	void updateOptions(const QUrl &url);
 	void setFormRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager *clone();
@@ -58,6 +60,7 @@ protected slots:
 private:
 	QtWebKitWebWidget *m_widget;
 	QNetworkReply *m_baseReply;
+	QString m_acceptLanguage;
 	QUrl m_formRequestUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
@@ -67,6 +70,8 @@ private:
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
+	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
+	bool m_canSendReferrer;
 
 signals:
 	void messageChanged(const QString &message = QString());

@@ -23,6 +23,7 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
+#include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
@@ -30,6 +31,7 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QFileInfo>
 #include <QtNetwork/QNetworkProxy>
 #include <QtNetwork/QNetworkReply>
 
@@ -45,7 +47,9 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget
 	m_bytesTotal(0),
 	m_finishedRequests(0),
 	m_startedRequests(0),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
+	m_canSendReferrer(true)
 {
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 }
@@ -279,6 +283,31 @@ void QtWebKitNetworkManager::updateStatus()
 	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
 }
 
+void QtWebKitNetworkManager::updateOptions(const QUrl &url)
+{
+	QString acceptLanguage = SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString();
+	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
+
+	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
+
+	const QString policyValue = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString();
+
+	if (policyValue == QLatin1String("allow"))
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::AllowToTrackPolicy;
+	}
+	else if (policyValue == QLatin1String("doNotAllow"))
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::DoNotAllowToTrackPolicy;
+	}
+	else
+	{
+		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
+	}
+
+	m_canSendReferrer = SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool();
+}
+
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
 {
 	m_formRequestUrl = url;
@@ -320,7 +349,35 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
 	}
 
-	QNetworkReply *reply = NetworkManager::createRequest(operation, request, outgoingData);
+	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
+	{
+		return new LocalListingNetworkReply(this, request);
+	}
+
+	QNetworkRequest mutableRequest(request);
+
+	if (!m_canSendReferrer)
+	{
+		mutableRequest.setRawHeader(QStringLiteral("Referer").toLatin1(), QByteArray());
+	}
+
+	if (operation == PostOperation && mutableRequest.header(QNetworkRequest::ContentTypeHeader).isNull())
+	{
+		mutableRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+	}
+
+	if (NetworkManagerFactory::isWorkingOffline())
+	{
+		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysCache);
+	}
+	else if (m_doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
+	{
+		mutableRequest.setRawHeader(QByteArray("DNT"), QByteArray((m_doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? "1" : "0"));
+	}
+
+	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
+
+	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
 	if (!m_baseReply)
 	{

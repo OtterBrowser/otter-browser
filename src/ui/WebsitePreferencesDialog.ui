@@ -137,9 +137,6 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="doNotTrackLabel">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Do Not Track:</string>
            </property>
@@ -150,27 +147,9 @@
          </item>
          <item>
           <widget class="QComboBox" name="doNotTrackComboBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>-1</number>
            </property>
-           <item>
-            <property name="text">
-             <string>Inform website that I do not want to be tracked</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Inform website that I allow tracking</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Do not inform website about my preference</string>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>
@@ -430,9 +409,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QCheckBox" name="sendReferrerCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Send referrer information</string>
          </property>

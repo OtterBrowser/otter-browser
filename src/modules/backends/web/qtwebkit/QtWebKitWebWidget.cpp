@@ -590,6 +590,8 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 
 	m_page->updatePageStyleSheets();
 
+	m_networkManager->updateOptions(url);
+
 	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), url).toString() == QLatin1String("enabled"));
 }
 
