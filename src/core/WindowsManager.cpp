@@ -258,7 +258,7 @@ void WindowsManager::closeOther(int index)
 
 void WindowsManager::restore(const SessionMainWindow &session)
 {
-	if (session.windows.isEmpty())
+	if (session.windows.isEmpty() && SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString() != QLatin1String("doNothing"))
 	{
 		open();
 	}
