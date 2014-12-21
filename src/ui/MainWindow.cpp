@@ -521,7 +521,7 @@ void MainWindow::transferStarted()
 	{
 		const QUrl url(QLatin1String("about:transfers"));
 
-		if (!SessionsManager::hasUrl(url, true))
+		if (!SessionsManager::hasUrl(url, false))
 		{
 			m_windowsManager->open(url, NewTabBackgroundOpen);
 		}
