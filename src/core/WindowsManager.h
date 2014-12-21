@@ -40,6 +40,7 @@ enum OpenHint
 	NewWindowOpen = 8,
 	BackgroundOpen = 16,
 	EndOpen = 32,
+	NewTabPrivateOpen = (NewTabOpen | PrivateOpen),
 	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
 	NewTabBackgroundEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
 	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
@@ -78,14 +79,10 @@ public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
-	void clone();
-	void close(int index = -1);
 	void closeAll();
 	void closeOther(int index = -1);
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
-	void print(int index = -1);
-	void printPreview(int index = -1);
 	void triggerAction(ActionIdentifier action, bool checked = false);
 	void clearClosedWindows();
 	void setActiveWindow(int index);
@@ -100,7 +97,6 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
-	void printPreview(QPrinter *printer);
 	void addWindow(Window *window, OpenHints hints = DefaultOpen);
 	void openWindow(ContentsWidget *widget, OpenHints hints = false);
 	void cloneWindow(int index);
@@ -117,7 +113,6 @@ private:
 	StatusBarWidget *m_statusBar;
 	QList<SessionWindow> m_closedWindows;
 	QList<QUrl> m_bookmarksToOpen;
-	int m_printedWindow;
 	bool m_isPrivate;
 	bool m_isRestored;
 

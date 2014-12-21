@@ -111,17 +111,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("ErrorConsole")), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("Sidebar")), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
-	connect(m_actionsManager->getAction(QLatin1String("NewTab")), SIGNAL(triggered()), m_windowsManager, SLOT(open()));
-	connect(m_actionsManager->getAction(QLatin1String("NewTabPrivate")), SIGNAL(triggered()), this, SLOT(actionNewTabPrivate()));
-	connect(m_actionsManager->getAction(QLatin1String("NewWindow")), SIGNAL(triggered()), this, SIGNAL(requestedNewWindow()));
-	connect(m_actionsManager->getAction(QLatin1String("NewWindowPrivate")), SIGNAL(triggered()), this, SLOT(actionNewWindowPrivate()));
 	connect(m_actionsManager->getAction(QLatin1String("Open")), SIGNAL(triggered()), this, SLOT(actionOpen()));
-	connect(m_actionsManager->getAction(QLatin1String("CloneTab")), SIGNAL(triggered()), m_windowsManager, SLOT(clone()));
-	connect(m_actionsManager->getAction(QLatin1String("CloseTab")), SIGNAL(triggered()), m_windowsManager, SLOT(close()));
 	connect(m_actionsManager->getAction(QLatin1String("SaveSession")), SIGNAL(triggered()), this, SLOT(actionSaveSession()));
 	connect(m_actionsManager->getAction(QLatin1String("ManageSessions")), SIGNAL(triggered()), this, SLOT(actionManageSessions()));
-	connect(m_actionsManager->getAction(QLatin1String("Print")), SIGNAL(triggered()), m_windowsManager, SLOT(print()));
-	connect(m_actionsManager->getAction(QLatin1String("PrintPreview")), SIGNAL(triggered()), m_windowsManager, SLOT(printPreview()));
 	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("ShowMenuBar")), SIGNAL(toggled(bool)), this, SLOT(actionShowMenuBar(bool)));
 	connect(m_actionsManager->getAction(QLatin1String("Exit")), SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
@@ -322,16 +314,6 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(value.toBool());
 	}
-}
-
-void MainWindow::actionNewTabPrivate()
-{
-	m_windowsManager->open(QUrl(), PrivateOpen);
-}
-
-void MainWindow::actionNewWindowPrivate()
-{
-	emit requestedNewWindow(true);
 }
 
 void MainWindow::actionOpen()

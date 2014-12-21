@@ -60,18 +60,18 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 
 		ShortcutsManager::createInstance(Application::getInstance());
 
-		registerAction(QLatin1String("NewTab"), QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")));
-		registerAction(QLatin1String("NewTabPrivate"), QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), Utils::getIcon(QLatin1String("tab-new-private")));
-		registerAction(QLatin1String("NewWindow"), QT_TRANSLATE_NOOP("actions", "New Window"), QString(), Utils::getIcon(QLatin1String("window-new")));
-		registerAction(QLatin1String("NewWindowPrivate"), QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")));
+		registerAction(QLatin1String("NewTab"), QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")), true, false, false, NewTabAction);
+		registerAction(QLatin1String("NewTabPrivate"), QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), Utils::getIcon(QLatin1String("tab-new-private")), true, false, false, NewTabPrivateAction);
+		registerAction(QLatin1String("NewWindow"), QT_TRANSLATE_NOOP("actions", "New Window"), QString(), Utils::getIcon(QLatin1String("window-new")), true, false, false, NewWindowAction);
+		registerAction(QLatin1String("NewWindowPrivate"), QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")), true, false, false, NewWindowPrivateAction);
 		registerAction(QLatin1String("Open"), QT_TRANSLATE_NOOP("actions", "Open..."), QString(), Utils::getIcon(QLatin1String("document-open")));
 		registerAction(QLatin1String("Save"), QT_TRANSLATE_NOOP("actions", "Save..."), QString(), Utils::getIcon(QLatin1String("document-save")), false);
-		registerAction(QLatin1String("CloneTab"), QT_TRANSLATE_NOOP("actions", "Clone Tab"));
-		registerAction(QLatin1String("CloseTab"), QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
+		registerAction(QLatin1String("CloneTab"), QT_TRANSLATE_NOOP("actions", "Clone Tab"), QString(), QIcon(), true, false, false, CloneTabAction);
+		registerAction(QLatin1String("CloseTab"), QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), true, false, false, CloseTabAction);
 		registerAction(QLatin1String("SaveSession"), QT_TRANSLATE_NOOP("actions", "Save Current Session..."));
 		registerAction(QLatin1String("ManageSessions"), QT_TRANSLATE_NOOP("actions", "Manage Sessions..."));
-		registerAction(QLatin1String("Print"), QT_TRANSLATE_NOOP("actions", "Print..."), QString(), Utils::getIcon(QLatin1String("document-print")));
-		registerAction(QLatin1String("PrintPreview"), QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
+		registerAction(QLatin1String("Print"), QT_TRANSLATE_NOOP("actions", "Print..."), QString(), Utils::getIcon(QLatin1String("document-print")), true, false, false, PrintAction);
+		registerAction(QLatin1String("PrintPreview"), QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")), true, false, false, PrintPreviewAction);
 		registerAction(QLatin1String("WorkOffline"), QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), true, true, false);
 		registerAction(QLatin1String("ShowMenuBar"), QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), true, true, true);
 		registerAction(QLatin1String("Exit"), QT_TRANSLATE_NOOP("actions", "Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));

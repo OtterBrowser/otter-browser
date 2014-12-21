@@ -66,8 +66,6 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void actionNewTabPrivate();
-	void actionNewWindowPrivate();
 	void actionOpen();
 	void actionSaveSession();
 	void actionManageSessions();

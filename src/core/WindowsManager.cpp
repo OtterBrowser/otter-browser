@@ -28,12 +28,8 @@
 #include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 
-#include <QtGui/QPainter>
-#include <QtPrintSupport/QPrintDialog>
-#include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QCheckBox>
-#include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -43,7 +39,6 @@ WindowsManager::WindowsManager(MdiWidget *mdi, StatusBarWidget *statusBar, bool 
 	m_mdi(mdi),
 	m_tabBar(NULL),
 	m_statusBar(statusBar),
-	m_printedWindow(-1),
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
@@ -225,21 +220,6 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 	}
 }
 
-void WindowsManager::clone()
-{
-	cloneWindow(m_tabBar->currentIndex());
-}
-
-void WindowsManager::close(int index)
-{
-	if (index < 0)
-	{
-		index = m_tabBar->currentIndex();
-	}
-
-	closeWindow(index);
-}
-
 void WindowsManager::closeAll()
 {
 	for (int i = (m_tabBar->count() - 1); i >= 0; --i)
@@ -326,94 +306,68 @@ void WindowsManager::restore(int index)
 	addWindow(window);
 }
 
-void WindowsManager::print(int index)
-{
-	Window *window = getWindow(index);
-
-	if (!window)
-	{
-		return;
-	}
-
-	QPrinter printer;
-	QPrintDialog printDialog(&printer, m_mdi);
-	printDialog.setWindowTitle(tr("Print Page"));
-
-	if (printDialog.exec() != QDialog::Accepted)
-	{
-		return;
-	}
-
-	window->getContentsWidget()->print(&printer);
-}
-
-void WindowsManager::printPreview(int index)
-{
-	if (index < 0)
-	{
-		index = m_tabBar->currentIndex();
-	}
-
-	if (index < 0 || index >= m_tabBar->count())
-	{
-		return;
-	}
-
-	m_printedWindow = index;
-
-	QPrintPreviewDialog printPreviewtDialog(m_mdi);
-	printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
-	printPreviewtDialog.setWindowTitle(tr("Print Preview"));
-
-	connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printPreview(QPrinter*)));
-
-	printPreviewtDialog.exec();
-
-	m_printedWindow = -1;
-}
-
-void WindowsManager::printPreview(QPrinter *printer)
-{
-	Window *window = getWindow(m_printedWindow);
-
-	if (window)
-	{
-		window->getContentsWidget()->print(printer);
-	}
-}
-
 void WindowsManager::triggerAction(ActionIdentifier action, bool checked)
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	if (action == ActivateTabOnLeftAction)
+	switch (action)
 	{
-		m_tabBar->activateTabOnLeft();
-	}
-	else if (action == ActivateTabOnRightAction)
-	{
-		m_tabBar->activateTabOnRight();
-	}
-	else if (action == GoToHomePageAction)
-	{
-		const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+		case NewTabAction:
+			open(QUrl(), NewTabOpen);
 
-		if (!homePage.isEmpty())
-		{
-			open(QUrl(homePage), CurrentTabOpen);
-		}
-	}
-	else if (action == PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
-	{
-		window = new Window(m_isPrivate, NULL, m_mdi);
+			break;
+		case NewTabPrivateAction:
+			open(QUrl(), NewTabPrivateOpen);
 
-		addWindow(window, NewTabOpen);
+			break;
+		case NewWindowAction:
+			emit requestedNewWindow(false, false, QUrl());
 
-		window->triggerAction(PasteAndGoAction);
-	}
-	else if (window)
-	{
-		window->triggerAction(action, checked);
+			break;
+		case NewWindowPrivateAction:
+			emit requestedNewWindow(true, false, QUrl());
+
+			break;
+		case CloneTabAction:
+			cloneWindow(m_tabBar->currentIndex());
+
+			break;
+		case CloseTabAction:
+			closeWindow(m_tabBar->currentIndex());
+
+			break;
+		case ActivateTabOnLeftAction:
+			m_tabBar->activateTabOnLeft();
+
+			break;
+		case ActivateTabOnRightAction:
+			m_tabBar->activateTabOnRight();
+
+			break;
+		case GoToHomePageAction:
+			{
+				const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+
+				if (!homePage.isEmpty())
+				{
+					open(QUrl(homePage), CurrentTabOpen);
+				}
+			}
+
+			break;
+		default:
+			if (action == PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+			{
+				window = new Window(m_isPrivate, NULL, m_mdi);
+
+				addWindow(window, NewTabOpen);
+
+				window->triggerAction(PasteAndGoAction);
+			}
+			else if (window)
+			{
+				window->triggerAction(action, checked);
+			}
 	}
 }
 

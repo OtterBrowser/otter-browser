@@ -28,6 +28,12 @@ namespace Otter
 enum ActionIdentifier
 {
 	UnknownAction = 0,
+	NewTabAction,
+	NewTabPrivateAction,
+	NewWindowAction,
+	NewWindowPrivateAction,
+	CloneTabAction,
+	CloseTabAction,
 	OpenLinkAction,
 	OpenLinkInThisTabAction,
 	OpenLinkInNewTabAction,
@@ -74,6 +80,7 @@ enum ActionIdentifier
 	InspectPageAction,
 	InspectElementAction,
 	PrintAction,
+	PrintPreviewAction,
 	BookmarkAction,
 	BookmarkLinkAction,
 	CopyAddressAction,

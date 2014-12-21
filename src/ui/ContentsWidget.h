@@ -45,7 +45,6 @@ class ContentsWidget : public QWidget
 public:
 	explicit ContentsWidget(Window *window);
 
-	virtual void print(QPrinter *printer) = 0;
 	void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
 	virtual QAction* getAction(ActionIdentifier action);
@@ -66,10 +65,11 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
+	virtual void triggerAction(ActionIdentifier action, bool checked = false);
+	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	virtual void goToHistoryIndex(int index);
-	virtual void triggerAction(ActionIdentifier action, bool checked = false);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool typed = true);

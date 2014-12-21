@@ -38,6 +38,8 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
+#include <QtPrintSupport/QPrintDialog>
+#include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QInputDialog>
@@ -95,6 +97,64 @@ void Window::focusInEvent(QFocusEvent *event)
 	}
 }
 
+void Window::triggerAction(ActionIdentifier action, bool checked)
+{
+	if (m_addressWidget)
+	{
+		if (action == ActivateAddressFieldAction)
+		{
+			m_addressWidget->setFocus();
+		}
+		else if (action == PasteAndGoAction)
+		{
+			if (!QApplication::clipboard()->text().isEmpty())
+			{
+				m_addressWidget->handleUserInput(QApplication::clipboard()->text().trimmed());
+			}
+
+			return;
+		}
+		else if (action == GoAction)
+		{
+			m_addressWidget->handleUserInput(m_addressWidget->text());
+
+			return;
+		}
+	}
+
+	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
+	{
+		getContentsWidget()->setUrl(getContentsWidget()->getUrl().resolved(QUrl(QLatin1String(".."))));
+	}
+	else if (action == PrintAction)
+	{
+		QPrinter printer;
+		QPrintDialog printDialog(&printer, this);
+		printDialog.setWindowTitle(tr("Print Page"));
+
+		if (printDialog.exec() != QDialog::Accepted)
+		{
+			return;
+		}
+
+		getContentsWidget()->print(&printer);
+	}
+	else if (action == PrintPreviewAction)
+	{
+		QPrintPreviewDialog printPreviewtDialog(this);
+		printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+		printPreviewtDialog.setWindowTitle(tr("Print Preview"));
+
+		connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
+
+		printPreviewtDialog.exec();
+	}
+	else
+	{
+		getContentsWidget()->triggerAction(action, checked);
+	}
+}
+
 void Window::clear()
 {
 	if (m_addressWidget)
@@ -133,41 +193,6 @@ void Window::search(const QString &query, const QString &engine)
 	if (m_addressWidget)
 	{
 		m_addressWidget->setUrl(getUrl());
-	}
-}
-
-void Window::triggerAction(ActionIdentifier action, bool checked)
-{
-	if (m_addressWidget)
-	{
-		if (action == ActivateAddressFieldAction)
-		{
-			m_addressWidget->setFocus();
-		}
-		else if (action == PasteAndGoAction)
-		{
-			if (!QApplication::clipboard()->text().isEmpty())
-			{
-				m_addressWidget->handleUserInput(QApplication::clipboard()->text().trimmed());
-			}
-
-			return;
-		}
-		else if (action == GoAction)
-		{
-			m_addressWidget->handleUserInput(m_addressWidget->text());
-
-			return;
-		}
-	}
-
-	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
-	{
-		getContentsWidget()->setUrl(getContentsWidget()->getUrl().resolved(QUrl(QLatin1String(".."))));
-	}
-	else
-	{
-		getContentsWidget()->triggerAction(action, checked);
 	}
 }
 
