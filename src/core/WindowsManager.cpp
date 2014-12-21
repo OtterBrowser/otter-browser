@@ -49,6 +49,11 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
 	Window *window = m_mdi->getActiveWindow();
 
+	if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !window->isUrlEmpty()))
+	{
+		hints = NewTabOpen;
+	}
+
 	if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
