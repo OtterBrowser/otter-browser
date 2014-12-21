@@ -61,14 +61,12 @@ void Menu::changeEvent(QEvent *event)
 
 void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
-	QMenu::mouseReleaseEvent(event);
-
 	if (m_role == BookmarksMenuRole && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
 		MainWindow *window = MainWindow::findMainWindow(parent());
 		QAction *action = actionAt(event->pos());
 
-		if (window && action && action->data().type() == QVariant::String)
+		if (window && action && action->data().type() == QVariant::ModelIndex)
 		{
 			OpenHints hints = DefaultOpen;
 
@@ -85,7 +83,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				hints = (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen);
 			}
 
-			window->getWindowsManager()->open(QUrl(action->data().toString()), hints);
+			window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), hints);
 
 			QWidget *menu = this;
 
@@ -99,6 +97,8 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 			return;
 		}
 	}
+
+	QMenu::mouseReleaseEvent(event);
 }
 
 void Menu::contextMenuEvent(QContextMenuEvent *event)
