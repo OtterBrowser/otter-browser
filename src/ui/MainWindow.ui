@@ -23,7 +23,7 @@
    </attribute>
    <widget class="Otter::SidebarWidget" name="sidebarWidget"/>
   </widget>
-  <widget class="Otter::StatusBarWidget" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="windowTitle">
     <string>Console</string>
@@ -36,11 +36,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>Otter::StatusBarWidget</class>
-   <extends>QStatusBar</extends>
-   <header>src/ui/StatusBarWidget.h</header>
-  </customwidget>
   <customwidget>
    <class>Otter::ConsoleWidget</class>
    <extends>QWidget</extends>

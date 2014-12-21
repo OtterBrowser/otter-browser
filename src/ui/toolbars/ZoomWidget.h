@@ -25,6 +25,8 @@
 namespace Otter
 {
 
+class WindowsManager;
+
 class ZoomWidget : public QSlider
 {
 	Q_OBJECT
@@ -38,8 +40,8 @@ public slots:
 protected:
 	void mousePressEvent(QMouseEvent *event);
 
-signals:
-	void requestedZoomChange(int zoom);
+private:
+	WindowsManager *m_manager;
 };
 
 }

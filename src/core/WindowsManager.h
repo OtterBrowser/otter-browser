@@ -51,7 +51,6 @@ Q_DECLARE_FLAGS(OpenHints, OpenHint)
 class BookmarksItem;
 class ContentsWidget;
 class MdiWidget;
-class StatusBarWidget;
 class TabBarWidget;
 class Window;
 
@@ -60,7 +59,7 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(MdiWidget *mdi, StatusBarWidget *statusBar, bool isPrivate = false);
+	explicit WindowsManager(MdiWidget *mdi, bool isPrivate = false);
 
 	QAction* getAction(ActionIdentifier action);
 	Window* getWindow(int index) const;
@@ -106,11 +105,11 @@ protected slots:
 	void closeWindow(Window *window);
 	void removeStoredUrl(const QString &url);
 	void setTitle(const QString &title);
+	void setStatusMessage(const QString &message);
 
 private:
 	MdiWidget *m_mdi;
 	TabBarWidget *m_tabBar;
-	StatusBarWidget *m_statusBar;
 	QList<SessionWindow> m_closedWindows;
 	QList<QUrl> m_bookmarksToOpen;
 	bool m_isPrivate;
@@ -121,6 +120,7 @@ signals:
 	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
 	void actionsChanged();
 	void canZoomChanged(bool can);
+	void zoomChanged(int zoom);
 	void windowAdded(int index);
 	void windowRemoved(int index);
 	void currentWindowChanged(int index);

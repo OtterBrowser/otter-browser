@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "MainWindow.h"
+#include "ActionWidget.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
@@ -31,6 +32,7 @@
 #include "SessionsManagerDialog.h"
 #include "TabBarToolBarWidget.h"
 #include "preferences/ContentBlockingDialog.h"
+#include "toolbars/ZoomWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
@@ -72,13 +74,11 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
-	m_ui->statusBar->setup();
-
 	MdiWidget *mdiWidget = new MdiWidget(this);
 
 	setCentralWidget(mdiWidget);
 
-	m_windowsManager = new WindowsManager(mdiWidget, m_ui->statusBar, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	m_windowsManager = new WindowsManager(mdiWidget, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
 
 	m_tabBarToolBarWidget = new TabBarToolBarWidget(this);
 	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
@@ -86,6 +86,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	addToolBar(m_tabBarToolBarWidget);
 
 	m_windowsManager->setTabBar(m_tabBarToolBarWidget->getTabBar());
+
+	m_ui->statusBar->addPermanentWidget(new ActionWidget(ZoomOutAction, NULL, this));
+	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
+	m_ui->statusBar->addPermanentWidget(new ActionWidget(ZoomInAction, NULL, this));
 
 	SessionsManager::registerWindow(this);
 

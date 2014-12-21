@@ -25,9 +25,9 @@
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
 #include "../ui/MdiWidget.h"
-#include "../ui/StatusBarWidget.h"
 #include "../ui/TabBarWidget.h"
 
+#include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
@@ -35,10 +35,9 @@
 namespace Otter
 {
 
-WindowsManager::WindowsManager(MdiWidget *mdi, StatusBarWidget *statusBar, bool isPrivate) : QObject(mdi),
+WindowsManager::WindowsManager(MdiWidget *mdi, bool isPrivate) : QObject(mdi),
 	m_mdi(mdi),
 	m_tabBar(NULL),
-	m_statusBar(statusBar),
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
@@ -653,13 +652,12 @@ void WindowsManager::setActiveWindow(int index)
 		}
 
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
-		disconnect(window, SIGNAL(statusMessageChanged(QString)), m_statusBar, SLOT(showMessage(QString)));
-		disconnect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
-		disconnect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
-		disconnect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
+		disconnect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+		disconnect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
+		disconnect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	}
 
-	m_statusBar->clearMessage();
+	setStatusMessage(QString());
 
 	window = getWindow(index);
 
@@ -669,10 +667,10 @@ void WindowsManager::setActiveWindow(int index)
 
 		window->setFocus();
 
-		m_statusBar->showMessage(window->getContentsWidget()->getStatusMessage());
-		m_statusBar->setZoom(window->getContentsWidget()->getZoom());
-		m_statusBar->setZoomEnabled(window->getContentsWidget()->canZoom());
+		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
+		emit canZoomChanged(window->getContentsWidget()->canZoom());
+		emit zoomChanged(window->getContentsWidget()->getZoom());
 		emit windowTitleChanged(window->getContentsWidget()->getTitle());
 
 		if (window->getContentsWidget()->getUndoStack())
@@ -684,10 +682,9 @@ void WindowsManager::setActiveWindow(int index)
 		}
 
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
-		connect(window, SIGNAL(statusMessageChanged(QString)), m_statusBar, SLOT(showMessage(QString)));
-		connect(window, SIGNAL(zoomChanged(int)), m_statusBar, SLOT(setZoom(int)));
-		connect(window, SIGNAL(canZoomChanged(bool)), m_statusBar, SLOT(setZoomEnabled(bool)));
-		connect(m_statusBar, SIGNAL(requestedZoomChange(int)), window->getContentsWidget(), SLOT(setZoom(int)));
+		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
+		connect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
+		connect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	}
 
 	ActionsManager::getAction(QLatin1String("CloneTab"), m_mdi)->setEnabled(window && window->canClone());
@@ -710,6 +707,13 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		emit windowTitleChanged(text);
 	}
+}
+
+void WindowsManager::setStatusMessage(const QString &message)
+{
+	QStatusTipEvent event(message);
+
+	QApplication::sendEvent(this, &event);
 }
 
 void WindowsManager::setTabBar(TabBarWidget *tabBar)

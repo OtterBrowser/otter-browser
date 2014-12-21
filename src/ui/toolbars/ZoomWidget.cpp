@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "ZoomWidget.h"
+#include "../MainWindow.h"
+#include "../../core/WindowsManager.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QStyleOptionSlider>
@@ -25,16 +27,30 @@
 namespace Otter
 {
 
-ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent)
+ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
+	m_manager(NULL)
 {
+	MainWindow *window = MainWindow::findMainWindow(parent);
+
+	if (window)
+	{
+		m_manager = window->getWindowsManager();
+
+		connect(m_manager, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
+		connect(m_manager, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
+		connect(this, SIGNAL(valueChanged(int)), m_manager, SLOT(setZoom(int)));
+	}
+	else
+	{
+		setEnabled(false);
+	}
+
 	setRange(10, 250);
 	setTracking(true);
 	setOrientation(Qt::Horizontal);
 	setFocusPolicy(Qt::TabFocus);
 	setMaximumWidth(100);
 	setZoom(100);
-
-	connect(this, SIGNAL(valueChanged(int)), this, SIGNAL(requestedZoomChange(int)));
 }
 
 void ZoomWidget::setZoom(int zoom)
