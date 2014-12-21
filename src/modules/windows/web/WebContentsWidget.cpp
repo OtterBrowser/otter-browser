@@ -328,9 +328,17 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		m_isTabPreferencesMenuVisible = false;
 	}
-	else if (action == ActivateWebpageAction)
+	else if (action == ZoomInAction)
 	{
-		m_webWidget->setFocus();
+		setZoom(qMin((getZoom() + 10), 10000));
+	}
+	else if (action == ZoomOutAction)
+	{
+		setZoom(qMax((getZoom() - 10), 10));
+	}
+	else if (action == ZoomOriginalAction)
+	{
+		setZoom(100);
 	}
 	else
 	{

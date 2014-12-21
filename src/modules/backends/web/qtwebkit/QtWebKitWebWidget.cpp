@@ -734,16 +734,19 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			QApplication::clipboard()->setText(getUrl().toString());
 
 			break;
-		case ZoomInAction:
-			setZoom(qMin((getZoom() + 10), 10000));
+		case ActivateWebpageAction:
+			{
+				m_webView->setFocus();
 
-			break;
-		case ZoomOutAction:
-			setZoom(qMax((getZoom() - 10), 10));
+				m_page->mainFrame()->setFocus();
 
-			break;
-		case ZoomOriginalAction:
-			setZoom(100);
+				QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
+				{
+					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
+				}
+			}
 
 			break;
 		case ReloadOrStopAction:
