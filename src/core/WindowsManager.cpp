@@ -403,6 +403,14 @@ void WindowsManager::triggerAction(ActionIdentifier action, bool checked)
 			open(QUrl(homePage), CurrentTabOpen);
 		}
 	}
+	else if (action == PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+	{
+		window = new Window(m_isPrivate, NULL, m_mdi);
+
+		addWindow(window, NewTabOpen);
+
+		window->triggerAction(PasteAndGoAction);
+	}
 	else if (window)
 	{
 		window->triggerAction(action, checked);
