@@ -102,10 +102,12 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 			return;
 		}
 
-		const QRect geometry = m_webWidget->getProgressBarGeometry();
+		QRect geometry = m_webWidget->getProgressBarGeometry();
 
 		if (m_webWidget->isLoading() && geometry.width() > (width() / 2))
 		{
+			geometry.translate(0, m_webWidget->pos().y());
+
 			m_progressBarWidget->show();
 			m_progressBarWidget->raise();
 			m_progressBarWidget->setGeometry(geometry);
