@@ -2193,15 +2193,36 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
-			if (keyEvent->key() == Qt::Key_Escape && isLoading())
+			if (keyEvent->key() == Qt::Key_Escape)
 			{
-				triggerAction(StopAction);
+				if (isLoading())
+				{
+					triggerAction(StopAction);
 
-				ActionsManager::triggerAction(ActivateAddressFieldAction, this);
+					ActionsManager::triggerAction(ActivateAddressFieldAction, this);
 
-				event->accept();
+					event->accept();
 
-				return true;
+					return true;
+				}
+
+				if (m_webView->hasSelection())
+				{
+					QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+					if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
+					{
+						m_page->triggerAction(QWebPage::MoveToPreviousChar);
+					}
+					else
+					{
+						m_page->mainFrame()->evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
+					}
+
+					event->accept();
+
+					return true;
+				}
 			}
 		}
 	}
