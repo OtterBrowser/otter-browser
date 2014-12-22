@@ -37,6 +37,7 @@ class PlatformIntegration : public QObject
 public:
 	explicit PlatformIntegration(Application *parent);
 
+	virtual void runApplication(const QString &command, const QString &fileName = QString()) const;
 	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) const;
 	virtual bool canShowNotifications() const;
 	virtual bool canSetAsDefaultBrowser() const;

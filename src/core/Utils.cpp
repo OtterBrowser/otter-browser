@@ -25,6 +25,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
+#include <QtGui/QDesktopServices>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
@@ -33,6 +34,20 @@ namespace Otter
 
 namespace Utils
 {
+
+void runApplication(const QString &command, const QString &fileName)
+{
+	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+
+	if (integration)
+	{
+		integration->runApplication(command, fileName);
+
+		return;
+	}
+
+	QDesktopServices::openUrl(QUrl(fileName));
+}
 
 QString elideText(const QString &text, QWidget *widget, int width)
 {

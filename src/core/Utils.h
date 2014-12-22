@@ -37,6 +37,7 @@ struct ApplicationInformation
 namespace Utils
 {
 
+void runApplication(const QString &command, const QString &fileName = QString());
 QString elideText(const QString &text, QWidget *widget = NULL, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);
