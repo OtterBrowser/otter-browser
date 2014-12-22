@@ -58,8 +58,18 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->setItemDelegate(new ItemDelegate(this));
 	m_ui->historyView->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->historyView->expand(m_model->index(0, 0));
 	m_ui->historyView->viewport()->installEventFilter(this);
+
+	const QString expandBranches = SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString();
+
+	if (expandBranches == QLatin1String("first"))
+	{
+		m_ui->historyView->expand(m_model->index(0, 0));
+	}
+	else if (expandBranches == QLatin1String("all"))
+	{
+		m_ui->historyView->expandAll();
+	}
 
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
