@@ -124,7 +124,16 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 
 	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
 	{
-		getContentsWidget()->setUrl(getContentsWidget()->getUrl().resolved(QUrl(QLatin1String(".."))));
+		const QUrl url = getContentsWidget()->getUrl();
+
+		if (url.toString().endsWith(QLatin1Char('/')))
+		{
+			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String(".."))));
+		}
+		else
+		{
+			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String("."))));
+		}
 	}
 	else if (action == PrintAction)
 	{
