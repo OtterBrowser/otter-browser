@@ -1,19 +1,18 @@
 Release schedule of planned main features (it's not a full list), note that specific features may be delayed or added earlier than planned.
 
 0.9.04 (beta 4):
-- start page
-- mouse gestures
 - greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
-- exposing MDI features
 - user scripts
 - improved integration with different platforms (Windows taskbar integration etc.)
 
 1.0.01 (first stable release):
+- start page
 - passwords manager
 - feeds reader (as module)
 - fine-tune UI (sizes, margins and other details)
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
+- exposing MDI features
 
 Later:
 - Blink backend (with upcoming QtWebEngine, when API will be useful)

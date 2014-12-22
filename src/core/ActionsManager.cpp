@@ -20,6 +20,7 @@
 
 #include "ActionsManager.h"
 #include "Application.h"
+#include "GesturesManager.h"
 #include "ShortcutsManager.h"
 #include "Utils.h"
 #include "../ui/MainWindow.h"
@@ -57,6 +58,8 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"));
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"));
 		Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"));
+
+		GesturesManager::createInstance(Application::getInstance());
 
 		ShortcutsManager::createInstance(Application::getInstance());
 

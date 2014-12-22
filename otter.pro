@@ -42,6 +42,7 @@ SOURCES += src/main.cpp \
     src/core/Console.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
+    src/core/GesturesManager.cpp \
     src/core/HistoryManager.cpp \
     src/core/Importer.cpp \
     src/core/LocalListingNetworkReply.cpp \
@@ -130,7 +131,10 @@ SOURCES += src/main.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
-    src/modules/windows/web/WebContentsWidget.cpp
+    src/modules/windows/web/WebContentsWidget.cpp \
+    3rdparty/mousegestures/mousegesturerecognizer.cpp \
+    3rdparty/mousegestures/QjtMouseGesture.cpp \
+    3rdparty/mousegestures/QjtMouseGestureFilter.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
@@ -146,6 +150,7 @@ HEADERS += src/core/Action.h \
     src/core/Console.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \
+    src/core/GesturesManager.h \
     src/core/HistoryManager.h \
     src/core/Importer.h \
     src/core/LocalListingNetworkReply.h \
@@ -234,7 +239,10 @@ HEADERS += src/core/Action.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
-    src/modules/windows/web/WebContentsWidget.h
+    src/modules/windows/web/WebContentsWidget.h \
+    3rdparty/mousegestures/mousegesturerecognizer.h \
+    3rdparty/mousegestures/QjtMouseGesture.h \
+    3rdparty/mousegestures/QjtMouseGestureFilter.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 

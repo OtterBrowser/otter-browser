@@ -27,6 +27,7 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
+#include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -2091,9 +2092,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					triggerAction(GoForwardAction);
 
 					event->ignore();
-
-					return true;
 				}
+				else
+				{
+					event->accept();
+
+					GesturesManager::startGesture(m_webView, mouseEvent);
+				}
+
+				return true;
 			}
 			else if (mouseEvent->button() == Qt::BackButton)
 			{
@@ -2156,7 +2163,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					m_ignoreContextMenu = false;
 
-					showContextMenu(mouseEvent->pos());
+					if (!GesturesManager::endGesture(m_webView, mouseEvent))
+					{
+						showContextMenu(mouseEvent->pos());
+					}
 				}
 
 				return true;

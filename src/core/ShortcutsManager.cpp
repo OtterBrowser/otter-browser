@@ -88,6 +88,14 @@ void ShortcutsManager::createInstance(QObject *parent)
 	}
 }
 
+void ShortcutsManager::optionChanged(const QString &option)
+{
+	if ((option == QLatin1String("Browser/ActionMacrosProfilesOrder") || option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder")) && m_reloadTimer == 0)
+	{
+		m_reloadTimer = startTimer(50);
+	}
+}
+
 void ShortcutsManager::loadProfiles()
 {
 	qDeleteAll(m_macros.keys());
@@ -96,12 +104,12 @@ void ShortcutsManager::loadProfiles()
 	m_shortcuts.clear();
 
 	QList<QKeySequence> shortcutsInUse;
-	const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
+	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 
-	for (int i = 0; i < shortcutsProfiles.count(); ++i)
+	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini");
+		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
 		const QStringList actions = profile.childGroups();
 
 		for (int j = 0; j < actions.count(); ++j)
@@ -127,12 +135,12 @@ void ShortcutsManager::loadProfiles()
 		}
 	}
 
-	const QStringList macrosProfiles = SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfilesOrder")).toStringList();
+	const QStringList macroProfiles = SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfilesOrder")).toStringList();
 
-	for (int i = 0; i < macrosProfiles.count(); ++i)
+	for (int i = 0; i < macroProfiles.count(); ++i)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/macros/") + macrosProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/macros/") + macrosProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/macros/") + macroProfiles.at(i) + QLatin1String(".ini");
+		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/macros/") + macroProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
 		const QStringList macros = profile.childGroups();
 
 		for (int j = 0; j < macros.count(); ++j)
@@ -177,14 +185,6 @@ void ShortcutsManager::loadProfiles()
 	}
 
 	emit m_instance->shortcutsChanged();
-}
-
-void ShortcutsManager::optionChanged(const QString &option)
-{
-	if ((option == QLatin1String("Browser/ActionMacrosProfilesOrder") || option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder")) && m_reloadTimer == 0)
-	{
-		m_reloadTimer = startTimer(50);
-	}
 }
 
 void ShortcutsManager::triggerMacro()

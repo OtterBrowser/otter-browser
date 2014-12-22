@@ -18,6 +18,7 @@
         <file>adblock/latvian-list.txt</file>
         <file>adblock/liste_ar.txt</file>
         <file>adblock/liste_fr.txt</file>
+        <file>gestures/default.ini</file>
         <file>icons/application-exit.png</file>
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-left.png</file>
