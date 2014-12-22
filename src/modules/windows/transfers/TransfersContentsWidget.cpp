@@ -30,7 +30,6 @@
 #include <QtCore/QtMath>
 #include <QtCore/QQueue>
 #include <QtGui/QClipboard>
-#include <QtGui/QDesktopServices>
 #include <QtGui/QKeyEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
@@ -246,7 +245,7 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	m_model->item(row, 6)->setText(transfer->started.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 	m_model->item(row, 7)->setText(transfer->finished.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 
-	const QString tooltip = tr("<pre style='font-family:auto;'>Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</pre>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QStringLiteral("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QStringLiteral("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -299,7 +298,17 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 
 	if (transfer)
 	{
-		QDesktopServices::openUrl(QUrl::fromLocalFile(transfer->target));
+		Utils::runApplication(QString(), transfer->target);
+	}
+}
+
+void TransfersContentsWidget::openTransfer(QAction *action)
+{
+	TransferInformation *transfer = getTransfer(m_ui->transfersView->currentIndex());
+
+	if (transfer && action && !action->data().isNull())
+	{
+		Utils::runApplication(action->data().toString(), transfer->target);
 	}
 }
 
@@ -309,7 +318,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 	if (transfer)
 	{
-		QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(transfer->target).dir().canonicalPath()));
+		Utils::runApplication(QString(), QFileInfo(transfer->target).dir().canonicalPath());
 	}
 }
 
@@ -372,6 +381,26 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 	if (transfer)
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
+
+		const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(transfer->mimeType);
+
+		if (applications.count() > 1)
+		{
+			QMenu *applicationsMenu = menu.addMenu(tr("Open With"));
+
+			for (int i = 0; i < applications.count(); ++i)
+			{
+				applicationsMenu->addAction(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name))->setData(applications.at(i).command);
+
+				if (i == 0)
+				{
+					applicationsMenu->addSeparator();
+				}
+			}
+
+			connect(applicationsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openTransfer(QAction*)));
+		}
+
 		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()));
 		menu.addSeparator();
 		menu.addAction(((transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->state == RunningTransfer || transfer->state == ErrorTransfer);

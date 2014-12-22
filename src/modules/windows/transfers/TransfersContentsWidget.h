@@ -67,6 +67,7 @@ protected slots:
 	void removeTransfer();
 	void updateTransfer(TransferInformation *transfer);
 	void openTransfer(const QModelIndex &index = QModelIndex());
+	void openTransfer(QAction *action);
 	void openTransferFolder(const QModelIndex &index = QModelIndex());
 	void copyTransferInformation();
 	void stopResumeTransfer();

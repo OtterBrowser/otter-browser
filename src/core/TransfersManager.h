@@ -22,6 +22,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QFile>
+#include <QtCore/QMimeType>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
 
@@ -43,6 +44,7 @@ struct TransferInformation
 	QString target;
 	QDateTime started;
 	QDateTime finished;
+	QMimeType mimeType;
 	qint64 speed;
 	qint64 bytesStart;
 	qint64 bytesReceivedDifference;

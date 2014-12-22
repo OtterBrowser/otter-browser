@@ -55,6 +55,7 @@ TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 		transfer->target = history.value(QStringLiteral("%1/target").arg(entries.at(i))).toString();
 		transfer->started = history.value(QStringLiteral("%1/started").arg(entries.at(i))).toDateTime();
 		transfer->finished = history.value(QStringLiteral("%1/finished").arg(entries.at(i))).toDateTime();
+		transfer->mimeType = QMimeDatabase().mimeTypeForFile(transfer->target);
 		transfer->bytesTotal = history.value(QStringLiteral("%1/bytesTotal").arg(entries.at(i))).toLongLong();
 		transfer->bytesReceived = history.value(QStringLiteral("%1/bytesReceived").arg(entries.at(i))).toLongLong();
 		transfer->state = ((transfer->bytesReceived > 0 && transfer->bytesTotal == transfer->bytesReceived) ? FinishedTransfer : ErrorTransfer);
@@ -315,6 +316,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
 	transfer->started = QDateTime::currentDateTime();
+	transfer->mimeType = QMimeDatabase().mimeTypeForName(reply->header(QNetworkRequest::ContentTypeHeader).toString());
 	transfer->bytesTotal = reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
 	transfer->isPrivate = privateTransfer;
 	transfer->isHidden = skipTransfers;
@@ -332,18 +334,32 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 	m_transfers.append(transfer);
 
-	if (transfer->state == RunningTransfer)
+	const bool isRunning = (transfer->state == RunningTransfer);
+
+	if (isRunning)
 	{
 		m_replies[reply] = transfer;
 
 		connect(reply, SIGNAL(downloadProgress(qint64,qint64)), m_instance, SLOT(downloadProgress(qint64,qint64)));
-		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 		connect(reply, SIGNAL(finished()), m_instance, SLOT(downloadFinished()));
 		connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), m_instance, SLOT(downloadError(QNetworkReply::NetworkError)));
 	}
 	else
 	{
 		transfer->finished = QDateTime::currentDateTime();
+	}
+
+	transfer->device->reset();
+
+	transfer->mimeType = QMimeDatabase().mimeTypeForData(transfer->device);
+
+	transfer->device->seek(transfer->device->size());
+
+	m_instance->downloadData(reply);
+
+	if (isRunning)
+	{
+		connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
 	}
 
 	if (target.isEmpty())
@@ -376,20 +392,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 			if (reply->header(QNetworkRequest::ContentTypeHeader).isValid())
 			{
-				suffix = QMimeDatabase().mimeTypeForName(reply->header(QNetworkRequest::ContentTypeHeader).toString()).preferredSuffix();
-			}
-
-			if (suffix.isEmpty())
-			{
-				disconnect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
-
-				transfer->device->reset();
-
-				suffix = QMimeDatabase().mimeTypeForData(transfer->device).preferredSuffix();
-
-				transfer->device->seek(transfer->device->size());
-
-				connect(reply, SIGNAL(readyRead()), m_instance, SLOT(downloadData()));
+				suffix = transfer->mimeType.preferredSuffix();
 			}
 
 			if (!suffix.isEmpty())
