@@ -107,6 +107,7 @@ enum ActionIdentifier
 	ToggleMediaPlayPauseAction,
 	ToggleMediaMuteAction,
 	ActivateAddressFieldAction,
+	ActivateSearchFieldAction,
 	ActivateWebpageAction,
 	PasteAndGoAction,
 	ActivateTabOnLeftAction,

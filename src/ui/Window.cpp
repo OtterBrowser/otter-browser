@@ -99,7 +99,11 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::triggerAction(ActionIdentifier action, bool checked)
 {
-	if (m_addressWidget)
+	if (action == ActivateSearchFieldAction && m_searchWidget)
+	{
+		m_searchWidget->setFocus();
+	}
+	else if (m_addressWidget)
 	{
 		if (action == ActivateAddressFieldAction)
 		{
