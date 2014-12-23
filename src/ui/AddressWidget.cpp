@@ -149,7 +149,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 	QLineEdit::focusInEvent(event);
 
-	if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool() && event->reason() != Qt::OtherFocusReason)
 	{
 		QTimer::singleShot(0, this, SLOT(selectAll()));
 	}
@@ -274,19 +274,20 @@ void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 	}
 
 	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	const QStringList engines = SearchesManager::getSearchEngines();
-	SearchInformation *engine = NULL;
+	SearchInformation *engine = SearchesManager::getSearchEngine(keyword, true);
 
-	for (int i = 0; i < engines.count(); ++i)
+	if (engine)
 	{
-		engine = SearchesManager::getSearchEngine(engines.at(i));
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier, hints);
 
-		if (engine && keyword == engine->keyword)
-		{
-			emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier, hints);
+		return;
+	}
 
-			return;
-		}
+	if (keyword == QLatin1String("?"))
+	{
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
+
+		return;
 	}
 
 	const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();

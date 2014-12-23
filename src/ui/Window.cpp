@@ -107,7 +107,12 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 	{
 		if (action == ActivateAddressFieldAction)
 		{
-			m_addressWidget->setFocus();
+			m_addressWidget->setFocus(Qt::ShortcutFocusReason);
+		}
+		else if (action == ActivateSearchFieldAction)
+		{
+			m_addressWidget->setText(QLatin1String("? "));
+			m_addressWidget->setFocus(Qt::OtherFocusReason);
 		}
 		else if (action == PasteAndGoAction)
 		{

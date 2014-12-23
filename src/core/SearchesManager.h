@@ -61,7 +61,7 @@ public:
 	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 	static SearchInformation* readSearch(QIODevice *device, const QString &identifier);
 	static SearchesManager* getInstance();
-	static SearchInformation* getSearchEngine(const QString &identifier);
+	static SearchInformation* getSearchEngine(const QString &identifier = QString(), bool byKeyword = false);
 	static QStandardItemModel* getSearchEnginesModel();
 	static QStringList getSearchEngines();
 	static QStringList getSearchKeywords();

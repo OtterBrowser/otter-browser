@@ -299,8 +299,31 @@ SearchesManager* SearchesManager::getInstance()
 	return m_instance;
 }
 
-SearchInformation* SearchesManager::getSearchEngine(const QString &identifier)
+SearchInformation* SearchesManager::getSearchEngine(const QString &identifier, bool byKeyword)
 {
+	if (byKeyword)
+	{
+		if (!identifier.isEmpty())
+		{
+			QHash<QString, SearchInformation*>::iterator iterator;
+
+			for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
+			{
+				if (iterator.value()->keyword == identifier)
+				{
+					return iterator.value();
+				}
+			}
+		}
+
+		return NULL;
+	}
+
+	if (identifier.isEmpty())
+	{
+		return m_searchEngines.value(m_searchEnginesOrder.value(0, QString()), NULL);
+	}
+
 	return m_searchEngines.value(identifier, NULL);
 }
 
@@ -469,14 +492,14 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 bool SearchesManager::setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	if (!m_searchEngines.contains(engine))
+	if ((engine.isEmpty() && !m_searchEngines.isEmpty()) || m_searchEngines.contains(engine))
 	{
-		return false;
+		setupQuery(query, getSearchEngine(engine)->resultsUrl, request, method, body);
+
+		return true;
 	}
 
-	setupQuery(query, getSearchEngine(engine)->resultsUrl, request, method, body);
-
-	return true;
+	return false;
 }
 
 bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
