@@ -75,22 +75,26 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 
 	const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this);
 
-	if (!handle.contains(event->pos()))
+	if (handle.contains(event->pos()))
 	{
-		const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
-		int value = 0;
+		QSlider::mousePressEvent(event);
 
-		if (orientation() == Qt::Horizontal)
-		{
-			value = QStyle::sliderValueFromPosition(minimum(), maximum(), (event->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
-		}
-		else
-		{
-			value = QStyle::sliderValueFromPosition(minimum(), maximum(), (event->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
-		}
-
-		setValue(value);
+		return;
 	}
+
+	const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
+	int value = 0;
+
+	if (orientation() == Qt::Horizontal)
+	{
+		value = QStyle::sliderValueFromPosition(minimum(), maximum(), (event->x() - (handle.width() / 2) - groove.x()), (groove.right() - handle.width()));
+	}
+	else
+	{
+		value = QStyle::sliderValueFromPosition(minimum(), maximum(), (event->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
+	}
+
+	setValue(value);
 }
 
 }
