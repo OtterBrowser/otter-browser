@@ -1725,7 +1725,9 @@ QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)
 
 QUrl QtWebKitWebWidget::getUrl() const
 {
-	return m_webView->url();
+	const QUrl url = m_webView->url();
+
+	return (url.isEmpty() ? m_webView->page()->mainFrame()->requestedUrl() : url);
 }
 
 QIcon QtWebKitWebWidget::getIcon() const
