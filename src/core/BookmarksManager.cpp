@@ -111,7 +111,7 @@ void BookmarksManager::load()
 				m_model->clear();
 
 				QMessageBox::warning(NULL, tr("Error"), tr("Failed to parse bookmarks file. No bookmarks were loaded."), QMessageBox::Close);
-				Console::addMessage(tr("Bookmarks file was not loaded sucesfully. XmlStreamReader error %0").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
+				Console::addMessage(tr("Failed to load bookmarks file properly, QXmlStreamReader error code: %1").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
 
 				return;
 			}

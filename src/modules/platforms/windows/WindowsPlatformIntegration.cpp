@@ -129,14 +129,14 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
-		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = 0;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, 0, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
+		IApplicationAssociationRegistrationUI *applicationAssociationRegistration = 0;
+		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, 0, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistration);
 
-		if (result == S_OK && applicationAssociationRegistrationUI)
+		if (result == S_OK && applicationAssociationRegistration)
 		{
-			result = applicationAssociationRegistrationUI->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
+			result = applicationAssociationRegistration->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
 
-			applicationAssociationRegistrationUI->Release();
+			applicationAssociationRegistration->Release();
 
 			if (result == S_OK)
 			{
@@ -144,7 +144,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 			}
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to start association dialog: %0").arg(result), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1").arg(result), Otter::OtherMessageCategory, ErrorMessageLevel);
 	}
 	else
 	{
