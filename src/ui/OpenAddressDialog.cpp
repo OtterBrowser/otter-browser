@@ -22,6 +22,8 @@
 
 #include "ui_OpenAddressDialog.h"
 
+#include <QtCore/QTimer>
+
 namespace Otter
 {
 
@@ -46,6 +48,13 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 OpenAddressDialog::~OpenAddressDialog()
 {
 	delete m_ui;
+}
+
+void OpenAddressDialog::setText(const QString &text)
+{
+	m_addressWidget->setText(text);
+	m_addressWidget->clearFocus();
+	m_addressWidget->setFocus(Qt::OtherFocusReason);
 }
 
 void OpenAddressDialog::handleInput()

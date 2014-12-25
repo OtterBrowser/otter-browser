@@ -42,6 +42,8 @@ public:
 	explicit OpenAddressDialog(QWidget *parent = NULL);
 	~OpenAddressDialog();
 
+	void setText(const QString &text);
+
 protected slots:
 	void handleInput();
 	void openUrl(const QUrl &url, OpenHints hints);

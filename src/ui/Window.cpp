@@ -22,6 +22,7 @@
 #include "AddressWidget.h"
 #include "GoBackActionWidget.h"
 #include "GoForwardActionWidget.h"
+#include "OpenAddressDialog.h"
 #include "SearchWidget.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
@@ -130,6 +131,21 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 			return;
 		}
 	}
+	else if (action == ActivateAddressFieldAction || action == ActivateSearchFieldAction)
+	{
+		OpenAddressDialog dialog(this);
+
+		if (action == ActivateSearchFieldAction)
+		{
+			dialog.setText(QLatin1String("? "));
+		}
+
+		connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+		connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+
+		dialog.exec();
+	}
 
 	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
 	{
@@ -216,7 +232,7 @@ void Window::search(const QString &query, const QString &engine)
 
 void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
 {
-	if (hints == DefaultOpen || hints == CurrentTabOpen)
+	if (getType() == QLatin1String("web") && (hints == DefaultOpen || hints == CurrentTabOpen))
 	{
 		setUrl(url);
 
@@ -430,7 +446,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 				navigationLayout->addWidget(m_searchWidget);
 
-				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 			}
 			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
 			{
