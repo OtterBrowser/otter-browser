@@ -72,6 +72,7 @@ public:
 protected:
 	explicit SearchesManager(QObject *parent = NULL);
 
+	void initialize();
 	void updateSearchEnginesModel();
 
 private:
@@ -80,6 +81,7 @@ private:
 	static QStringList m_searchEnginesOrder;
 	static QStringList m_searchKeywords;
 	static QHash<QString, SearchInformation*> m_searchEngines;
+	static bool m_initialized;
 
 signals:
 	void searchEnginesModified();

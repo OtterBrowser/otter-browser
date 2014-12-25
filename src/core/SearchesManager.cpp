@@ -37,6 +37,7 @@ QStandardItemModel* SearchesManager::m_searchEnginesModel = NULL;
 QStringList SearchesManager::m_searchEnginesOrder;
 QStringList SearchesManager::m_searchKeywords;
 QHash<QString, SearchInformation*> SearchesManager::m_searchEngines;
+bool SearchesManager::m_initialized = false;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
@@ -57,6 +58,61 @@ void SearchesManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new SearchesManager(parent);
+	}
+}
+
+void SearchesManager::initialize()
+{
+	m_initialized = true;
+
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/");
+	const QDir directory(path);
+
+	if (!QFile::exists(path))
+	{
+		QDir().mkpath(path);
+
+		if (directory.entryList(QDir::Files).isEmpty())
+		{
+			const QStringList definitions = QDir(QLatin1String(":/searches/")).entryList(QDir::Files);
+
+			for (int i = 0; i < definitions.count(); ++i)
+			{
+				QFile::copy(QLatin1String(":/searches/") + definitions.at(i), directory.filePath(definitions.at(i)));
+				QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
+			}
+		}
+	}
+
+	const QStringList entries = directory.entryList(QDir::Files);
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		QFile file(directory.absoluteFilePath(entries.at(i)));
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			const QString identifier = QFileInfo(entries.at(i)).baseName();
+			SearchInformation *search = readSearch(&file, identifier);
+
+			if (search)
+			{
+				m_searchEngines[identifier] = search;
+			}
+
+			file.close();
+		}
+	}
+
+	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
+	m_searchEnginesOrder.removeAll(QString());
+
+	if (m_searchEnginesOrder.isEmpty())
+	{
+		QStringList engines = m_searchEngines.keys();
+		engines.sort();
+
+		m_searchEnginesOrder = engines;
 	}
 }
 
@@ -301,6 +357,11 @@ SearchesManager* SearchesManager::getInstance()
 
 SearchInformation* SearchesManager::getSearchEngine(const QString &identifier, bool byKeyword)
 {
+	if (!m_initialized && m_instance)
+	{
+		m_instance->initialize();
+	}
+
 	if (byKeyword)
 	{
 		if (!identifier.isEmpty())
@@ -321,7 +382,7 @@ SearchInformation* SearchesManager::getSearchEngine(const QString &identifier, b
 
 	if (identifier.isEmpty())
 	{
-		return m_searchEngines.value(m_searchEnginesOrder.value(0, QString()), NULL);
+		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), NULL);
 	}
 
 	return m_searchEngines.value(identifier, NULL);
@@ -341,57 +402,9 @@ QStandardItemModel* SearchesManager::getSearchEnginesModel()
 
 QStringList SearchesManager::getSearchEngines()
 {
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/");
-	const QDir directory(path);
-
-	if (!QFile::exists(path))
+	if (!m_initialized && m_instance)
 	{
-		QDir().mkpath(path);
-
-		if (directory.entryList(QDir::Files).isEmpty())
-		{
-			const QStringList definitions = QDir(QLatin1String(":/searches/")).entryList(QDir::Files);
-
-			for (int i = 0; i < definitions.count(); ++i)
-			{
-				QFile::copy(QLatin1String(":/searches/") + definitions.at(i), directory.filePath(definitions.at(i)));
-				QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
-			}
-		}
-	}
-
-	if (m_searchEngines.isEmpty())
-	{
-		const QStringList entries = directory.entryList(QDir::Files);
-
-		for (int i = 0; i < entries.count(); ++i)
-		{
-			QFile file(directory.absoluteFilePath(entries.at(i)));
-
-			if (file.open(QIODevice::ReadOnly))
-			{
-				const QString identifier = QFileInfo(entries.at(i)).baseName();
-				SearchInformation *search = readSearch(&file, identifier);
-
-				if (search)
-				{
-					m_searchEngines[identifier] = search;
-				}
-
-				file.close();
-			}
-		}
-
-		m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
-		m_searchEnginesOrder.removeAll(QString());
-
-		if (m_searchEnginesOrder.isEmpty())
-		{
-			QStringList engines = m_searchEngines.keys();
-			engines.sort();
-
-			m_searchEnginesOrder = engines;
-		}
+		m_instance->initialize();
 	}
 
 	return m_searchEnginesOrder;
@@ -399,6 +412,11 @@ QStringList SearchesManager::getSearchEngines()
 
 QStringList SearchesManager::getSearchKeywords()
 {
+	if (!m_initialized && m_instance)
+	{
+		m_instance->initialize();
+	}
+
 	return m_searchKeywords;
 }
 
@@ -492,9 +510,11 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 bool SearchesManager::setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	if ((engine.isEmpty() && !m_searchEngines.isEmpty()) || m_searchEngines.contains(engine))
+	SearchInformation *information = getSearchEngine(engine);
+
+	if (information)
 	{
-		setupQuery(query, getSearchEngine(engine)->resultsUrl, request, method, body);
+		setupQuery(query, information->resultsUrl, request, method, body);
 
 		return true;
 	}

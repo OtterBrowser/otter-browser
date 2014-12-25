@@ -53,7 +53,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void openUrl(const QString &input = QString());
+	void openUrl(const QString &text = QString());
 	void storeWindowState();
 	void restoreWindowState();
 

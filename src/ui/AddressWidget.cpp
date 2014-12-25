@@ -149,9 +149,13 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 	QLineEdit::focusInEvent(event);
 
-	if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool() && event->reason() != Qt::OtherFocusReason)
+	if (!text().trimmed().isEmpty() && (event->reason() == Qt::MouseFocusReason || event->reason() == Qt::ShortcutFocusReason || (!m_simpleMode && (event->reason() == Qt::TabFocusReason || event->reason() == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
 	{
 		QTimer::singleShot(0, this, SLOT(selectAll()));
+	}
+	else
+	{
+		deselect();
 	}
 }
 
@@ -317,7 +321,7 @@ void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 		return;
 	}
 
-	emit requestedSearch(text, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), hints);
+	emit requestedSearch(text, QString(), hints);
 }
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)

@@ -954,7 +954,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 					}
 
 					const QStringList identifiers = SearchesManager::getSearchEngines();
-					QStringList keywords;
+					const QStringList keywords = SearchesManager::getSearchKeywords();
 					QList<SearchInformation*> engines;
 
 					for (int i = 0; i < identifiers.count(); ++i)
@@ -967,13 +967,6 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 						}
 
 						engines.append(engine);
-
-						const QString keyword = engine->keyword;
-
-						if (!keyword.isEmpty())
-						{
-							keywords.append(keyword);
-						}
 					}
 
 					QString identifier = getUrl().host().toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9]")));

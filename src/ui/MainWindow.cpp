@@ -228,9 +228,9 @@ void MainWindow::createMenuBar()
 	}
 }
 
-void MainWindow::openUrl(const QString &input)
+void MainWindow::openUrl(const QString &text)
 {
-	BookmarksItem *bookmark = BookmarksManager::getBookmark(input);
+	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
 
 	if (bookmark)
 	{
@@ -239,51 +239,52 @@ void MainWindow::openUrl(const QString &input)
 		return;
 	}
 
-	if (input == QString(QLatin1Char('~')) || input.startsWith(QLatin1Char('~') + QDir::separator()))
+	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
 	{
 		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
 
 		if (!locations.isEmpty())
 		{
-			m_windowsManager->open(QUrl(locations.first() + input.mid(1)));
+			m_windowsManager->open(QUrl(locations.first() + text.mid(1)));
 
 			return;
 		}
 	}
 
-	if (QFileInfo(input).exists())
+	if (QFileInfo(text).exists())
 	{
-		m_windowsManager->open(QUrl::fromLocalFile(QFileInfo(input).canonicalFilePath()));
+		m_windowsManager->open(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()));
 
 		return;
 	}
 
-	const QUrl url = QUrl::fromUserInput(input);
+	const QUrl url = QUrl::fromUserInput(text);
 
-	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(input).hasMatch()))
+	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
 	{
 		m_windowsManager->open(url);
 
 		return;
 	}
 
-	const QString keyword = input.section(QLatin1Char(' '), 0, 0);
-	const QStringList engines = SearchesManager::getSearchEngines();
-	SearchInformation *engine = NULL;
+	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
+	SearchInformation *engine = SearchesManager::getSearchEngine(keyword, true);
 
-	for (int i = 0; i < engines.count(); ++i)
+	if (engine)
 	{
-		engine = SearchesManager::getSearchEngine(engines.at(i));
+		m_windowsManager->search(text.section(QLatin1Char(' '), 1), engine->identifier);
 
-		if (engine && keyword == engine->keyword)
-		{
-			m_windowsManager->search(input.section(QLatin1Char(' '), 1), engine->identifier);
-
-			return;
-		}
+		return;
 	}
 
-	m_windowsManager->open();
+	if (keyword == QLatin1String("?"))
+	{
+		m_windowsManager->search(text.section(QLatin1Char(' '), 1), QString());
+
+		return;
+	}
+
+	m_windowsManager->triggerAction(NewTabAction);
 }
 
 void MainWindow::storeWindowState()
