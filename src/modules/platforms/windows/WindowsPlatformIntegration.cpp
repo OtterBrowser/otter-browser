@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -23,18 +23,25 @@
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/MainWindow.h"
 
+#include <Windows.h>
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QtMath>
+#include <QtGui/QDesktopServices>
+#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
+
+QProcessEnvironment WindowsPlatformIntegration::m_environment;
 
 WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_registrationIdentifier(QLatin1String("OtterBrowser")),
 	m_applicationFilePath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath())),
 	m_applicationRegistration(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\RegisteredApplications"), QSettings::NativeFormat),
-	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + m_registrationIdentifier, QSettings::NativeFormat)
+	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + m_registrationIdentifier, QSettings::NativeFormat),
+	m_cleanupTimer(0)
 {
 	m_registrationPairs << qMakePair(QLatin1String("http"), ProtocolType) << qMakePair(QLatin1String("https"), ProtocolType) << qMakePair(QLatin1String("ftp"), ProtocolType)
 	<< qMakePair(QLatin1String(".htm"), ExtensionType) << qMakePair(QLatin1String(".html"), ExtensionType) << qMakePair(QLatin1String(".xhtml"), ExtensionType);
@@ -47,6 +54,17 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
 		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
 		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+	}
+}
+
+void WindowsPlatformIntegration::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_cleanupTimer)
+	{
+		killTimer(m_cleanupTimer);
+
+		m_cleanupTimer = 0;
+		m_environment.clear();
 	}
 }
 
@@ -102,6 +120,171 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 	}
 }
 
+void WindowsPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+{
+	const QString nativeFileName = QDir::toNativeSeparators(fileName);
+
+	if (command.isEmpty())
+	{
+		if (!nativeFileName.isEmpty())
+		{
+			QDesktopServices::openUrl(QUrl(QLatin1String("file:///") + nativeFileName));
+		}
+
+		return;
+	}
+
+	const int indexOfExecutable = command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive);
+
+	if (indexOfExecutable == -1)
+	{
+		Console::addMessage(tr("Failed to run command \"%1\", file is not executable").arg(command), OtherMessageCategory, ErrorMessageLevel);
+
+		return;
+	}
+
+	const QString application = command.left(indexOfExecutable + 4);
+	QStringList arguments = command.mid(indexOfExecutable + 5).split(QLatin1Char(' '), QString::SkipEmptyParts);
+	const int indexOfPlaceholder = arguments.indexOf(QLatin1String("%1"));
+
+	if (nativeFileName.isEmpty())
+	{
+		if (indexOfPlaceholder > -1)
+		{
+			arguments.removeAt(indexOfPlaceholder);
+		}
+	}
+	else
+	{
+		if (indexOfPlaceholder > -1)
+		{
+			arguments.replace(indexOfPlaceholder, arguments.at(indexOfPlaceholder).arg(nativeFileName));
+		}
+		else
+		{
+			arguments.append(nativeFileName);
+		}
+	}
+
+	if (!QProcess::startDetached(application, arguments))
+	{
+		Console::addMessage(tr("Failed to run command \"%1\" (arguments: \"%2\")").arg(command).arg(arguments.join(QLatin1Char(' '))), OtherMessageCategory, ErrorMessageLevel);
+	}
+}
+
+void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformation &information)
+{
+	const QString rootPath = information.command.left(information.command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%'));
+
+	if (m_environment.contains(rootPath))
+	{
+		information.command.replace(QLatin1Char('%') + rootPath + QLatin1Char('%'), m_environment.value(rootPath));
+	}
+
+	const QString fullApplicationPath = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4);
+	const QFileInfo fileInfo(fullApplicationPath);
+	const QFileIconProvider fileIconProvider;
+	information.icon = fileIconProvider.icon(fileInfo);
+
+	HKEY key = NULL;
+	TCHAR readBuffer[128];
+	DWORD bufferSize = sizeof(readBuffer);
+
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
+	{
+		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), NULL, NULL, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
+		{
+			information.name = QString::fromWCharArray(readBuffer);
+		}
+
+		RegCloseKey(key);
+	}
+
+	if (information.name.isEmpty())
+	{
+		information.name = fileInfo.baseName();
+	}
+}
+
+QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+{
+	QList<ApplicationInformation> applications;
+	const QString suffix = mimeType.preferredSuffix();
+
+	if (m_cleanupTimer != 0)
+	{
+		killTimer(m_cleanupTimer);
+
+		m_cleanupTimer = 0;
+	}
+
+	if (m_environment.isEmpty())
+	{
+		m_environment = QProcessEnvironment::systemEnvironment();
+	}
+
+	// Vista+ applications
+	const QSettings modernAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithProgids"), QSettings::NativeFormat);
+	
+	QStringList associations = modernAssociations.childKeys();
+
+	for (int i = 0; i < associations.count(); ++i)
+	{
+		ApplicationInformation information;
+		const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + associations.at(i) + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
+
+		information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+
+		getApplicationInformation(information);
+	}
+
+	// Win XP applications
+	const QSettings legacyAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithList"), QSettings::NativeFormat);
+
+	associations = legacyAssociations.childKeys();
+	associations.removeAt(associations.indexOf(QLatin1String("MRUList")));
+
+	for (int i = 0; i < associations.count(); ++i)
+	{
+		ApplicationInformation information;
+		const QString value = legacyAssociations.value(associations.at(i)).toString();
+
+		const QSettings applicationPath(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
+
+		information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+
+		if (information.command.isEmpty())
+		{
+			const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
+
+			information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+		}
+
+		getApplicationInformation(information);
+
+		bool exclude = false;
+
+		for (int j = 0; j < applications.length(); ++j)
+		{
+			if (applications.at(j).name == information.name)
+			{
+				exclude = true;
+
+				break;
+			}
+		}
+
+		if (!exclude)
+		{
+			applications.append(information);
+		}
+	}
+
+	m_cleanupTimer = startTimer(5 * 60000);
+
+	return applications;
+}
+
 bool WindowsPlatformIntegration::setAsDefaultBrowser()
 {
 	if (!isBrowserRegistered() && !registerToSystem())
@@ -129,14 +312,14 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
-		IApplicationAssociationRegistrationUI *applicationAssociationRegistration = 0;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, 0, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistration);
+		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = NULL;
+		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, NULL, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
 
-		if (result == S_OK && applicationAssociationRegistration)
+		if (result == S_OK && applicationAssociationRegistrationUI)
 		{
-			result = applicationAssociationRegistration->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
+			result = applicationAssociationRegistrationUI->LaunchAdvancedAssociationUI(m_registrationIdentifier.toStdWString().c_str());
 
-			applicationAssociationRegistration->Release();
+			applicationAssociationRegistrationUI->Release();
 
 			if (result == S_OK)
 			{

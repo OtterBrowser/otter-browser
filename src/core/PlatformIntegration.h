@@ -38,7 +38,7 @@ public:
 	explicit PlatformIntegration(Application *parent);
 
 	virtual void runApplication(const QString &command, const QString &fileName = QString()) const;
-	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) const;
+	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	virtual bool canShowNotifications() const;
 	virtual bool canSetAsDefaultBrowser() const;
 	virtual bool isDefaultBrowser() const;

@@ -20,9 +20,11 @@
 #ifndef OTTER_WINDOWSPLATFORMINTEGRATION_H
 #define OTTER_WINDOWSPLATFORMINTEGRATION_H
 
+#include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QProcessEnvironment>
 #include <QtCore/QSettings>
 #include <QtWinExtras/QtWin>
 #include <QtWinExtras/QWinTaskbarButton>
@@ -66,6 +68,8 @@ class WindowsPlatformIntegration : public PlatformIntegration
 public:
 	explicit WindowsPlatformIntegration(Application *parent);
 
+	void runApplication(const QString &command, const QString &fileName = QString()) const;
+	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	bool isDefaultBrowser() const;
 	bool canSetAsDefaultBrowser() const;
 
@@ -73,6 +77,8 @@ public slots:
 	bool setAsDefaultBrowser();
 
 protected:
+	void timerEvent(QTimerEvent *event);
+	void getApplicationInformation(ApplicationInformation &information);
 	bool registerToSystem();
 	bool isBrowserRegistered() const;
 
@@ -87,6 +93,9 @@ private:
 	QSettings m_propertiesRegistration;
 	QList<QPair<QString, RegistrationType> > m_registrationPairs;
 	QHash<MainWindow*, QWinTaskbarButton*> m_taskbarButtons;
+	int m_cleanupTimer;
+
+	static QProcessEnvironment m_environment;
 };
 
 }

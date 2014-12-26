@@ -34,7 +34,7 @@ void PlatformIntegration::runApplication(const QString &command, const QString &
 	Q_UNUSED(fileName)
 }
 
-QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType) const
+QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	Q_UNUSED(mimeType)
 
