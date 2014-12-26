@@ -166,9 +166,7 @@ set(otter_src
 	src/modules/windows/web/ImagePropertiesDialog.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
-	3rdparty/mousegestures/mousegesturerecognizer.cpp
-	3rdparty/mousegestures/QjtMouseGesture.cpp
-	3rdparty/mousegestures/QjtMouseGestureFilter.cpp
+	3rdparty/mousegestures/MouseGestures.cpp
 )
 
 qt5_add_resources(otter_res

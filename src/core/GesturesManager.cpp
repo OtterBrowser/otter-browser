@@ -21,8 +21,6 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
-#include "../../3rdparty/mousegestures/QjtMouseGestureFilter.h"
-#include "../../3rdparty/mousegestures/QjtMouseGesture.h"
 
 #include <QtCore/QSettings>
 
@@ -30,8 +28,8 @@ namespace Otter
 {
 
 GesturesManager* GesturesManager::m_instance = NULL;
-QjtMouseGestureFilter* GesturesManager::m_filter = NULL;
-QHash<QjtMouseGesture*, QString> GesturesManager::m_gestures;
+MouseGestures::Recognizer* GesturesManager::m_recognizer = NULL;
+QList<MouseGesture> GesturesManager::m_gestures;
 
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent)
 {
@@ -60,15 +58,6 @@ void GesturesManager::optionChanged(const QString &option)
 
 void GesturesManager::loadProfiles()
 {
-	if (m_filter)
-	{
-		m_filter->clearGestures(true);
-	}
-	else
-	{
-		m_filter = new QjtMouseGestureFilter(m_instance);
-	}
-
 	m_gestures.clear();
 
 	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/GesturesProfilesOrder")).toStringList();
@@ -82,52 +71,51 @@ void GesturesManager::loadProfiles()
 		for (int j = 0; j < gestures.count(); ++j)
 		{
 			const QString action = profile.value(gestures.at(j) + QLatin1String("/action"), QString()).toString();
-			const QStringList rawDirections = gestures.at(j).split(QLatin1Char(','));
+			const QStringList rawMouseActions = gestures.at(j).split(QLatin1Char(','));
 
-			if (action.isEmpty() || rawDirections.isEmpty())
+			if (action.isEmpty() || rawMouseActions.isEmpty())
 			{
 				continue;
 			}
 
-			DirectionList directions;
+			MouseGestures::ActionList mouseActions;
 
-			for (int k = 0; k < rawDirections.count(); ++k)
+			for (int k = 0; k < rawMouseActions.count(); ++k)
 			{
-				if (rawDirections.at(k) == QLatin1String("up"))
+				if (rawMouseActions.at(k) == QLatin1String("up"))
 				{
-					directions.append(Up);
+					mouseActions.push_back(MouseGestures::MoveUpMouseAction);
 				}
-				else if (rawDirections.at(k) == QLatin1String("down"))
+				else if (rawMouseActions.at(k) == QLatin1String("down"))
 				{
-					directions.append(Down);
+					mouseActions.push_back(MouseGestures::MoveDownMouseAction);
 				}
-				else if (rawDirections.at(k) == QLatin1String("left"))
+				else if (rawMouseActions.at(k) == QLatin1String("left"))
 				{
-					directions.append(Left);
+					mouseActions.push_back(MouseGestures::MoveLeftMouseAction);
 				}
-				else if (rawDirections.at(k) == QLatin1String("right"))
+				else if (rawMouseActions.at(k) == QLatin1String("right"))
 				{
-					directions.append(Right);
+					mouseActions.push_back(MouseGestures::MoveRightMouseAction);
 				}
-				else if (rawDirections.at(k) == QLatin1String("anyHorizontal"))
+				else if (rawMouseActions.at(k) == QLatin1String("anyHorizontal"))
 				{
-					directions.append(AnyHorizontal);
+					mouseActions.push_back(MouseGestures::MoveHorizontallyMouseAction);
 				}
-				else if (rawDirections.at(k) == QLatin1String("anyVertical"))
+				else if (rawMouseActions.at(k) == QLatin1String("anyVertical"))
 				{
-					directions.append(AnyVertical);
+					mouseActions.push_back(MouseGestures::MoveVerticallyMouseAction);
 				}
 			}
 
-			if (!directions.isEmpty())
+			if (mouseActions.size() > 0)
 			{
-				QjtMouseGesture *gesture = new QjtMouseGesture(directions, m_instance);
+				MouseGesture definition;
+				definition.action = action;
+				definition.mouseActions = mouseActions;
+				definition.identifier = 0;
 
-				m_gestures[gesture] = action;
-
-				m_filter->addGesture(gesture);
-
-				connect(gesture, SIGNAL(gestured()), m_instance, SLOT(triggerGesture()));
+				m_gestures.append(definition);
 			}
 		}
 	}
@@ -135,36 +123,70 @@ void GesturesManager::loadProfiles()
 
 void GesturesManager::startGesture(QObject *object, QMouseEvent *event)
 {
-	if (m_filter)
+	m_recognizer = new MouseGestures::Recognizer();
+
+	for (int i = 0; i < m_gestures.count(); ++i)
 	{
-		m_filter->startGesture(object, event);
+		m_gestures[i].identifier = m_recognizer->registerGesture(m_gestures.at(i).mouseActions);
 	}
+
+	m_recognizer->startGesture(event->pos().x(), event->pos().y());
+
+	object->installEventFilter(m_instance);
 }
 
 bool GesturesManager::endGesture(QObject *object, QMouseEvent *event)
 {
-	if (m_filter)
+	object->removeEventFilter(m_instance);
+
+	if (m_recognizer)
 	{
-		return m_filter->endGesture(object, event);
+		const int gesture = m_recognizer->endGesture(event->pos().x(), event->pos().y());
+
+		if (gesture < 0)
+		{
+			return false;
+		}
+
+		for (int i = 0; i < m_gestures.count(); ++i)
+		{
+			if (m_gestures.at(i).identifier == gesture)
+			{
+				MainWindow *window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
+
+				if (window)
+				{
+					window->getActionsManager()->triggerAction(m_gestures.at(i).action);
+				}
+
+				return true;
+			}
+		}
 	}
 
 	return false;
 }
 
-void GesturesManager::triggerGesture()
-{
-	QjtMouseGesture *gesture = qobject_cast<QjtMouseGesture*>(sender());
-	MainWindow *window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
-
-	if (gesture && window)
-	{
-		window->getActionsManager()->triggerAction(m_gestures.value(gesture, QString()));
-	}
-}
-
 GesturesManager* GesturesManager::getInstance()
 {
 	return m_instance;
+}
+
+bool GesturesManager::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::MouseMove && m_recognizer)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
+		}
+
+		return true;
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }

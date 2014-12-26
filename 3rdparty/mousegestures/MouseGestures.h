@@ -1,6 +1,7 @@
 /*
  * This file is part of the mouse gesture package.
  * Copyright (C) 2006 Johan Thelin <e8johan@gmail.com>
+ * Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -35,58 +36,54 @@
  *
  */
 
-#ifndef QJTMOUSEGESTUREFILTER_H
-#define QJTMOUSEGESTUREFILTER_H
+#ifndef MOUSEGESTURES_H
+#define MOUSEGESTURES_H
 
-#include <QObject>
-#include <QEvent>
-#include <QMouseEvent>
+#include <list>
 
-class QjtMouseGesture;
+namespace MouseGestures
+{
 
 /*
- *  The QjtMouseGestureFilter class is a mouse
- *  gesture recognizing event filter.
- *
- *  Use it by creating it, install it as a filter
- *  for the affected widget and add QjtMouseGesture
- *  instances to it.
- *
+ * The available actions.
  */
-class QjtMouseGestureFilter : public QObject
+
+enum MouseAction
 {
-public:
-    /*
-     *  The gestureButton controls which mouse button
-     *  that has to be pressed during the mouse gesture.
-     *  Notice that this all events for this button are
-     *  swallowed by the filter.
-     */
-    QjtMouseGestureFilter(QObject *parent = 0 );
-    ~QjtMouseGestureFilter();
-
-    /*
-     *  Adds a gesture to the filter.
-     */
-    void addGesture( QjtMouseGesture *gesture );
-    void startGesture( QObject *obj, QMouseEvent *event );
-    bool endGesture( QObject *obj, QMouseEvent *event );
-
-    /*
-     *  Clears the filter from gestures.
-     *
-     *  If deleteGestures is true, the QjtMouseGesture objects are deleted.
-     */
-    void clearGestures( bool deleteGestures = false );
-
-protected:
-    bool eventFilter( QObject *obj, QEvent *event );
-
-private:
-    bool mouseMoveEvent( QObject *obj, QMouseEvent *event );
-
-    class Private;
-    Private *d;
+	UnknownMouseAction,
+	MoveUpMouseAction,
+	MoveDownMouseAction,
+	MoveLeftMouseAction,
+	MoveRightMouseAction,
+	MoveHorizontallyMouseAction,
+	MoveVerticallyMouseAction
 };
 
-#endif // QJTMOUSEGESTUREFILTER_H
+/*
+ * A list of actions.
+ */
+
+typedef std::list<MouseAction> ActionList;
+
+class Recognizer
+{
+
+public:
+	Recognizer(int minimumMovement = 5, double minimumMatch = 0.9);
+	~Recognizer();
+
+	void startGesture(int x, int y);
+	void addPosition(int x, int y);
+	int registerGesture(const ActionList &actions);
+	int endGesture(int x, int y);
+	int recognizeGesture();
+
+private:
+	struct Private;
+
+	Private *d;
+};
+
+}
+
+#endif

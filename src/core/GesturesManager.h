@@ -23,11 +23,17 @@
 #include <QtCore/QObject>
 #include <QtGui/QMouseEvent>
 
-class QjtMouseGesture;
-class QjtMouseGestureFilter;
+#include "../../3rdparty/mousegestures/MouseGestures.h"
 
 namespace Otter
 {
+
+struct MouseGesture
+{
+	QString action;
+	MouseGestures::ActionList mouseActions;
+	int identifier;
+};
 
 class GesturesManager : public QObject
 {
@@ -43,14 +49,15 @@ public:
 protected:
 	explicit GesturesManager(QObject *parent);
 
+	bool eventFilter(QObject *object, QEvent *event);
+
 protected slots:
 	void optionChanged(const QString &option);
-	void triggerGesture();
 
 private:
 	static GesturesManager *m_instance;
-	static QjtMouseGestureFilter *m_filter;
-	static QHash<QjtMouseGesture*, QString> m_gestures;
+	static MouseGestures::Recognizer *m_recognizer;
+	static QList<MouseGesture> m_gestures;
 };
 
 }

@@ -132,9 +132,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
-    3rdparty/mousegestures/mousegesturerecognizer.cpp \
-    3rdparty/mousegestures/QjtMouseGesture.cpp \
-    3rdparty/mousegestures/QjtMouseGestureFilter.cpp
+    3rdparty/mousegestures/MouseGestures.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
@@ -240,9 +238,7 @@ HEADERS += src/core/Action.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/WebContentsWidget.h \
-    3rdparty/mousegestures/mousegesturerecognizer.h \
-    3rdparty/mousegestures/QjtMouseGesture.h \
-    3rdparty/mousegestures/QjtMouseGestureFilter.h
+    3rdparty/mousegestures/MouseGestures.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
