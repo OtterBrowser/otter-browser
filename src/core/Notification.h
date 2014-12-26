@@ -39,7 +39,7 @@ class Notification : public QObject
 public:
 	void markClicked();
 	void markIgnored();
-	static Notification* createNotification(const QString &message, NotificationLevel level = InformationNotificationLevel);
+	static Notification* createNotification(const QString &event, const QString &message, NotificationLevel level = InformationNotificationLevel, QObject *parent = NULL);
 	QString getMessage() const;
 	NotificationLevel getLevel() const;
 

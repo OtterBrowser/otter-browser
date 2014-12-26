@@ -20,6 +20,12 @@
 #include "Notification.h"
 #include "Application.h"
 #include "PlatformIntegration.h"
+#include "SessionsManager.h"
+#include "../ui/MainWindow.h"
+
+#include <QtCore/QFile>
+#include <QtCore/QSettings>
+#include <QtMultimedia/QSoundEffect>
 
 namespace Otter
 {
@@ -54,18 +60,35 @@ NotificationLevel Notification::getLevel() const
 	return m_level;
 }
 
-Notification* Notification::createNotification(const QString &message, NotificationLevel level)
+Notification* Notification::createNotification(const QString &event, const QString &message, NotificationLevel level, QObject *parent )
 {
 	Notification *notification = new Notification(message, level, Application::getInstance());
-	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+	const QString notificationsPath = (SessionsManager::getProfilePath() + QLatin1String("/notifications.ini"));
+	QSettings notificationSettings(QFile::exists(notificationsPath) ? notificationsPath : QLatin1String(":/schemas/notifications.ini"));
+	const QString playSound = notificationSettings.value(event + QLatin1String("/playSound"), QString()).toString();
 
-	if (integration && integration->canShowNotifications())
+	if (!playSound.isEmpty())
 	{
-		integration->showNotification(notification);
+		QSoundEffect effect;
+		effect.setSource(QUrl::fromLocalFile(playSound));
+		effect.setLoopCount(1);
+		effect.setVolume(0.5);
+		effect.play();
 	}
-	else
+
+	if (notificationSettings.value(event + QLatin1String("/showAlert"), false).toBool())
 	{
-///TODO
+		Application::getInstance()->alert(MainWindow::findMainWindow(parent));
+	}
+
+	if (notificationSettings.value(event + QLatin1String("/showNativeNotification"), false).toBool())
+	{
+		PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+
+		if (integration && integration->canShowNotifications())
+		{
+			integration->showNotification(notification);
+		}
 	}
 
 	return notification;
