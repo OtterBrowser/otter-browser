@@ -399,7 +399,7 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 	const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
 	QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
 
-	if (!errorOption || !errorOutput)
+	if (!errorOption || !errorOutput || (errorOption->error == 203 && errorOption->domain == QWebPage::WebKit))
 	{
 		return false;
 	}
