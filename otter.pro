@@ -73,8 +73,6 @@ SOURCES += src/main.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/FilePathWidget.cpp \
-    src/ui/GoBackActionWidget.cpp \
-    src/ui/GoForwardActionWidget.cpp \
     src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/LocaleDialog.cpp \
@@ -110,6 +108,8 @@ SOURCES += src/main.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
+    src/ui/toolbars/GoBackActionWidget.cpp \
+    src/ui/toolbars/GoForwardActionWidget.cpp \
     src/ui/toolbars/MenuActionWidget.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp \
@@ -178,8 +178,6 @@ HEADERS += src/core/Action.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/FilePathWidget.h \
-    src/ui/GoBackActionWidget.h \
-    src/ui/GoForwardActionWidget.h \
     src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
     src/ui/LocaleDialog.h \
@@ -215,6 +213,8 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
+    src/ui/toolbars/GoBackActionWidget.h \
+    src/ui/toolbars/GoForwardActionWidget.h \
     src/ui/toolbars/MenuActionWidget.h \
     src/ui/toolbars/ZoomWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.h \

@@ -17,18 +17,18 @@
 *
 **************************************************************************/
 
-#include "GoForwardActionWidget.h"
-#include "ContentsWidget.h"
-#include "Window.h"
-#include "../core/WebBackend.h"
-#include "../core/WebBackendsManager.h"
+#include "GoBackActionWidget.h"
+#include "../ContentsWidget.h"
+#include "../Window.h"
+#include "../../core/WebBackend.h"
+#include "../../core/WebBackendsManager.h"
 
 #include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
-GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoForwardAction, window, parent),
+GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoBackAction, window, parent),
 	m_window(window)
 {
 	setMenu(new QMenu(this));
@@ -38,30 +38,37 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : 
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
-void GoForwardActionWidget::enterEvent(QEvent *event)
+void GoBackActionWidget::enterEvent(QEvent *event)
 {
 	ActionWidget::enterEvent(event);
 
-	if (m_window)
-	{
-		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
-		const bool hasShortcut = (defaultAction() && !defaultAction()->shortcut().isEmpty());
+	Action *action = qobject_cast<Action*>(defaultAction());
 
-		if (history.entries.isEmpty() || history.index == (history.entries.count() - 1))
+	if (m_window && action)
+	{
+		QString text = action->text();
+		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
+		const bool hasShortcut = text.contains(QLatin1Char('\t'));
+
+		if (history.entries.isEmpty() || history.index == 0)
 		{
-			setToolTip(hasShortcut ? tr("Forward (%1)").arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)) : tr("Forward"));
+			setToolTip(hasShortcut ? text.replace(QLatin1Char('\t'), QStringLiteral(" (")) + QLatin1Char(')') : action->text());
 		}
 		else
 		{
-			QString title = history.entries.at(history.index + 1).title;
+			QString title = history.entries.at(history.index - 1).title;
 			title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
 
-			setToolTip(hasShortcut ? tr("%1 (Forward - %2)").arg(title).arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)) : tr("%1 (Forward)").arg(title));
+			setToolTip(hasShortcut ? tr("%1 (Back - %2)").arg(title).arg(action->getShortcuts().first().toString(QKeySequence::NativeText)) : tr("%1 (Back)").arg(title));
 		}
+
+		return;
 	}
+
+	setToolTip(tr("Back"));
 }
 
-void GoForwardActionWidget::goToHistoryIndex(QAction *action)
+void GoBackActionWidget::goToHistoryIndex(QAction *action)
 {
 	if (m_window && action && action->data().type() == QVariant::Int)
 	{
@@ -69,7 +76,7 @@ void GoForwardActionWidget::goToHistoryIndex(QAction *action)
 	}
 }
 
-void GoForwardActionWidget::updateMenu()
+void GoBackActionWidget::updateMenu()
 {
 	if (!menu() || !m_window)
 	{
@@ -81,7 +88,7 @@ void GoForwardActionWidget::updateMenu()
 	WebBackend *backend = WebBackendsManager::getBackend();
 	const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
 
-	for (int i = (history.index + 1); i < history.entries.count(); ++i)
+	for (int i = (history.index - 1); i >= 0; --i)
 	{
 		QString title = history.entries.at(i).title;
 

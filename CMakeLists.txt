@@ -109,8 +109,6 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/FilePathWidget.cpp
-	src/ui/GoBackActionWidget.cpp
-	src/ui/GoForwardActionWidget.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/LocaleDialog.cpp
@@ -146,6 +144,8 @@ set(otter_src
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
+	src/ui/toolbars/GoBackActionWidget.cpp
+	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuActionWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp

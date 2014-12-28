@@ -17,20 +17,20 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_GOBACKACTIONWIDGET_H
-#define OTTER_GOBACKACTIONWIDGET_H
+#ifndef OTTER_GOFORWARDACTIONWIDGET_H
+#define OTTER_GOFORWARDACTIONWIDGET_H
 
-#include "ActionWidget.h"
+#include "../ActionWidget.h"
 
 namespace Otter
 {
 
-class GoBackActionWidget : public ActionWidget
+class GoForwardActionWidget : public ActionWidget
 {
 	Q_OBJECT
 
 public:
-	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
+	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
 
 protected:
 	void enterEvent(QEvent *event);
