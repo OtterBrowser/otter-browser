@@ -218,131 +218,141 @@ void WebContentsWidget::goToHistoryIndex(int index)
 
 void WebContentsWidget::triggerAction(int identifier, bool checked)
 {
-	const bool isFindAction = (identifier == Action::FindAction || identifier == Action::QuickFindAction);
-
-	if (isFindAction || identifier == Action::FindNextAction || identifier == Action::FindPreviousAction)
+	switch (identifier)
 	{
-		if (!m_ui->findWidget->isVisible())
-		{
-			if (identifier == Action::QuickFindAction)
+		case Action::FindAction:
+		case Action::QuickFindAction:
+		case Action::FindNextAction:
+		case Action::FindPreviousAction:
 			{
-				killTimer(m_quickFindTimer);
+				const bool isFindAction = (identifier == Action::FindAction || identifier == Action::QuickFindAction);
 
-				m_quickFindTimer = startTimer(2000);
-			}
-
-			if (!isFindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
-			{
-				m_ui->findLineEdit->setText(m_quickFindQuery);
-
-				if (isFindAction)
+				if (!m_ui->findWidget->isVisible())
 				{
-					updateFind();
+					if (identifier == Action::QuickFindAction)
+					{
+						killTimer(m_quickFindTimer);
+
+						m_quickFindTimer = startTimer(2000);
+					}
+
+					if (!isFindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+					{
+						m_ui->findLineEdit->setText(m_quickFindQuery);
+
+						if (isFindAction)
+						{
+							updateFind();
+						}
+					}
+
+					m_ui->findWidget->setVisible(true);
+				}
+
+				m_ui->findLineEdit->setFocus();
+				m_ui->findLineEdit->selectAll();
+
+				if (!isFindAction)
+				{
+					updateFind(identifier == Action::FindPreviousAction);
 				}
 			}
 
-			m_ui->findWidget->setVisible(true);
-		}
-
-		m_ui->findLineEdit->setFocus();
-		m_ui->findLineEdit->selectAll();
-
-		if (!isFindAction)
-		{
-			updateFind(identifier == Action::FindPreviousAction);
-		}
-	}
-	else if (identifier == Action::QuickPreferencesAction)
-	{
-		if (m_isTabPreferencesMenuVisible)
-		{
-			return;
-		}
-
-		m_isTabPreferencesMenuVisible = true;
-
-		QActionGroup popupsGroup(this);
-		popupsGroup.setExclusive(true);
-		popupsGroup.setEnabled(false);
-
-		QMenu menu;
-
-		popupsGroup.addAction(menu.addAction(tr("Open all pop-ups")));
-		popupsGroup.addAction(menu.addAction(tr("Open pop-ups in background")));
-		popupsGroup.addAction(menu.addAction(tr("Block all pop-ups")));
-
-		menu.addSeparator();
-
-		QAction *enableImagesAction = menu.addAction(tr("Enable Images"));
-		enableImagesAction->setCheckable(true);
-		enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
-		enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
-
-		QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
-		enableJavaScriptAction->setCheckable(true);
-		enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
-		enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
-
-		QAction *enableJavaAction = menu.addAction(tr("Enable Java"));
-		enableJavaAction->setCheckable(true);
-		enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
-		enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
-
-		QAction *enablePluginsAction = menu.addAction(tr("Enable Plugins"));
-		enablePluginsAction->setCheckable(true);
-		enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString() == QLatin1String("enabled"));
-		enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
-
-		menu.addSeparator();
-
-		QAction *enableCookiesAction = menu.addAction(tr("Enable Cookies"));
-		enableCookiesAction->setCheckable(true);
-		enableCookiesAction->setEnabled(false);
-
-		QAction *enableReferrerAction = menu.addAction(tr("Enable Referrer"));
-		enableReferrerAction->setCheckable(true);
-		enableReferrerAction->setEnabled(false);
-
-		QAction *enableProxyAction = menu.addAction(tr("Enable Proxy"));
-		enableProxyAction->setCheckable(true);
-		enableProxyAction->setEnabled(false);
-
-		menu.addSeparator();
-		menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
-		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(Action::WebsitePreferencesAction, parent()));
-
-		QAction *triggeredAction = menu.exec(QCursor::pos());
-
-		if (triggeredAction && triggeredAction->data().isValid())
-		{
-			if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
+			break;
+		case Action::QuickPreferencesAction:
 			{
-				m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
-			}
-			else
-			{
-				m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
-			}
-		}
+				if (m_isTabPreferencesMenuVisible)
+				{
+					return;
+				}
 
-		m_isTabPreferencesMenuVisible = false;
-	}
-	else if (identifier == Action::ZoomInAction)
-	{
-		setZoom(qMin((getZoom() + 10), 10000));
-	}
-	else if (identifier == Action::ZoomOutAction)
-	{
-		setZoom(qMax((getZoom() - 10), 10));
-	}
-	else if (identifier == Action::ZoomOriginalAction)
-	{
-		setZoom(100);
-	}
-	else
-	{
-		m_webWidget->triggerAction(identifier, checked);
+				m_isTabPreferencesMenuVisible = true;
+
+				QActionGroup popupsGroup(this);
+				popupsGroup.setExclusive(true);
+				popupsGroup.setEnabled(false);
+
+				QMenu menu;
+
+				popupsGroup.addAction(menu.addAction(tr("Open all pop-ups")));
+				popupsGroup.addAction(menu.addAction(tr("Open pop-ups in background")));
+				popupsGroup.addAction(menu.addAction(tr("Block all pop-ups")));
+
+				menu.addSeparator();
+
+				QAction *enableImagesAction = menu.addAction(tr("Enable Images"));
+				enableImagesAction->setCheckable(true);
+				enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
+				enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
+
+				QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
+				enableJavaScriptAction->setCheckable(true);
+				enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
+				enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
+
+				QAction *enableJavaAction = menu.addAction(tr("Enable Java"));
+				enableJavaAction->setCheckable(true);
+				enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
+				enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
+
+				QAction *enablePluginsAction = menu.addAction(tr("Enable Plugins"));
+				enablePluginsAction->setCheckable(true);
+				enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString() == QLatin1String("enabled"));
+				enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
+
+				menu.addSeparator();
+
+				QAction *enableCookiesAction = menu.addAction(tr("Enable Cookies"));
+				enableCookiesAction->setCheckable(true);
+				enableCookiesAction->setEnabled(false);
+
+				QAction *enableReferrerAction = menu.addAction(tr("Enable Referrer"));
+				enableReferrerAction->setCheckable(true);
+				enableReferrerAction->setEnabled(false);
+
+				QAction *enableProxyAction = menu.addAction(tr("Enable Proxy"));
+				enableProxyAction->setCheckable(true);
+				enableProxyAction->setEnabled(false);
+
+				menu.addSeparator();
+				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
+				menu.addSeparator();
+				menu.addAction(ActionsManager::getAction(Action::WebsitePreferencesAction, parent()));
+
+				QAction *triggeredAction = menu.exec(QCursor::pos());
+
+				if (triggeredAction && triggeredAction->data().isValid())
+				{
+					if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
+					{
+						m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
+					}
+					else
+					{
+						m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
+					}
+				}
+
+				m_isTabPreferencesMenuVisible = false;
+			}
+
+			break;
+		case Action::ZoomInAction:
+			setZoom(qMin((getZoom() + 10), 10000));
+
+			break;
+		case Action::ZoomOutAction:
+			setZoom(qMax((getZoom() - 10), 10));
+
+			break;
+		case Action::ZoomOriginalAction:
+			setZoom(100);
+
+			break;
+		default:
+			m_webWidget->triggerAction(identifier, checked);
+
+			break;
 	}
 }
 

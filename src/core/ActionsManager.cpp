@@ -582,19 +582,18 @@ Action* ActionsManager::getAction(int identifier)
 
 	if (!m_standardActions[identifier])
 	{
-		m_mutex.lock();
-
-		Action *action = new Action(identifier, m_helper->actionDefinitions[identifier].icon, m_helper->actionDefinitions[identifier].text, m_window);
+		const ActionDefinition definition = m_helper->actionDefinitions[identifier];
+		Action *action = new Action(identifier, definition.icon, definition.text, m_window);
 		action->setShortcutContext(Qt::WindowShortcut);
-		action->setEnabled(m_helper->actionDefinitions[identifier].isEnabled);
-		action->setCheckable(m_helper->actionDefinitions[identifier].isCheckable);
-		action->setChecked(m_helper->actionDefinitions[identifier].isChecked);
+		action->setEnabled(definition.isEnabled);
+		action->setCheckable(definition.isCheckable);
+		action->setChecked(definition.isChecked);
 
 		m_standardActions[identifier] = action;
 
 		m_window->addAction(action);
 
-		if (m_helper->actionDefinitions[identifier].isCheckable)
+		if (definition.isCheckable)
 		{
 			connect(action, SIGNAL(toggled(bool)), this, SLOT(actionTriggered(bool)));
 		}
@@ -602,8 +601,6 @@ Action* ActionsManager::getAction(int identifier)
 		{
 			connect(action, SIGNAL(triggered()), this, SLOT(actionTriggered()));
 		}
-
-		m_mutex.unlock();
 	}
 
 	return m_standardActions.value(identifier, NULL);
