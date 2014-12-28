@@ -523,9 +523,9 @@ void ActionsManager::loadShortcuts()
 			const QStringList rawActions = profile.value(macros.at(j) + QLatin1String("/actions"), QString()).toStringList();
 			QVector<int> actions;
 
-			for (int j = 0; j < rawActions.count(); ++j)
+			for (int k = 0; k < rawActions.count(); ++k)
 			{
-				const int action = ActionsManager::getActionIdentifier(rawActions.at(j));
+				const int action = ActionsManager::getActionIdentifier(rawActions.at(k));
 
 				if (action >= 0)
 				{
