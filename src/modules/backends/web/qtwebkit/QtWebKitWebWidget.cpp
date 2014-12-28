@@ -844,7 +844,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->triggerAction(QWebPage::Stop);
 
 			break;
-		case Action::StopScheduledPageRefreshAction:
+		case Action::StopScheduledReloadAction:
 			m_webView->page()->triggerAction(QWebPage::StopScheduledPageRefresh);
 
 			break;
@@ -1503,7 +1503,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			action->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
 
 			break;
-		case Action::ReloadTimeAction:
+		case Action::ScheduleReloadAction:
 			action->setMenu(getReloadTimeMenu());
 
 			break;

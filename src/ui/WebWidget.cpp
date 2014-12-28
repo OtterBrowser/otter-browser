@@ -63,7 +63,7 @@ void WebWidget::startReloadTimer()
 {
 	if (m_reloadTime >= 0)
 	{
-		triggerAction(Action::StopScheduledPageRefreshAction);
+		triggerAction(Action::StopScheduledReloadAction);
 
 		if (m_reloadTime > 0)
 		{
@@ -183,7 +183,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		menu.addAction(getAction(Action::FastForwardAction));
 		menu.addSeparator();
 		menu.addAction(getAction(Action::ReloadAction));
-		menu.addAction(getAction(Action::ReloadTimeAction));
+		menu.addAction(getAction(Action::ScheduleReloadAction));
 		menu.addSeparator();
 		menu.addAction(getAction(Action::AddBookmarkAction));
 		menu.addAction(getAction(Action::CopyAddressAction));
@@ -400,7 +400,7 @@ void WebWidget::setReloadTime(int time)
 
 		if (time >= 0)
 		{
-			triggerAction(Action::StopScheduledPageRefreshAction);
+			triggerAction(Action::StopScheduledReloadAction);
 
 			if (time > 0)
 			{
