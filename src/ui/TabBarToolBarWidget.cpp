@@ -69,7 +69,7 @@ TabBarToolBarWidget::TabBarToolBarWidget(QMainWindow *parent) : QToolBar(parent)
 	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_newTabButton->setAutoRaise(true);
-	m_newTabButton->setDefaultAction(ActionsManager::getAction(QLatin1String("NewTab"), this));
+	m_newTabButton->setDefaultAction(ActionsManager::getAction(Action::NewTabAction, this));
 	m_newTabButton->setFixedSize(32, 32);
 	m_newTabButton->show();
 	m_newTabButton->raise();

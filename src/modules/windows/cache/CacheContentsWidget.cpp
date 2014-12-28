@@ -80,11 +80,11 @@ void CacheContentsWidget::print(QPrinter *printer)
 	m_ui->cacheView->render(printer);
 }
 
-void CacheContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void CacheContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	if (action == DeleteAction)
+	if (identifier == Action::DeleteAction)
 	{
 		removeDomainEntriesOrEntry();
 	}
@@ -92,11 +92,11 @@ void CacheContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 void CacheContentsWidget::triggerAction()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
 	{
-		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
+		triggerAction(action->getIdentifier());
 	}
 }
 
@@ -397,7 +397,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(QLatin1String("ClearHistory"), this));
+	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
 	menu.exec(m_ui->cacheView->mapToGlobal(point));
 }
 
@@ -521,9 +521,9 @@ void CacheContentsWidget::updateActions()
 		}
 	}
 
-	if (m_ui->deleteButton->isEnabled() != getAction(DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
 	{
-		getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 
 		emit actionsChanged();
 	}
@@ -565,28 +565,26 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 	return NULL;
 }
 
-QAction* CacheContentsWidget::getAction(ActionIdentifier action)
+Action* CacheContentsWidget::getAction(int identifier)
 {
-	if (m_actions.contains(action))
+	if (m_actions.contains(identifier))
 	{
-		return m_actions[action];
+		return m_actions[identifier];
 	}
 
-	if (action != DeleteAction)
+	if (identifier != Action::DeleteAction)
 	{
 		return NULL;
 	}
 
-	QAction *actionObject = new QAction(this);
-	actionObject->setData(action);
+	Action *action = new Action(identifier, QIcon(), QString(), this);
+	action->setup(ActionsManager::getAction(Action::DeleteAction, this));
 
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), actionObject);
+	m_actions[identifier] = action;
 
-	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
-	m_actions[action] = actionObject;
-
-	return actionObject;
+	return action;
 }
 
 QString CacheContentsWidget::getTitle() const

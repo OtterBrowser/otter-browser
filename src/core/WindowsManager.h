@@ -61,7 +61,7 @@ class WindowsManager : public QObject
 public:
 	explicit WindowsManager(MdiWidget *mdi, bool isPrivate = false);
 
-	QAction* getAction(ActionIdentifier action);
+	Action* getAction(int identifier);
 	Window* getWindow(int index) const;
 	QVariant getOption(const QString &key) const;
 	QString getTitle() const;
@@ -82,7 +82,7 @@ public slots:
 	void closeOther(int index = -1);
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 	void clearClosedWindows();
 	void setActiveWindow(int index);
 	void setOption(const QString &key, const QVariant &value);

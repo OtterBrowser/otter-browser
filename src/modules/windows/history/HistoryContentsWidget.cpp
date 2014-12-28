@@ -388,7 +388,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(QLatin1String("ClearHistory"), this));
+	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
 	menu.exec(m_ui->historyView->mapToGlobal(point));
 }
 

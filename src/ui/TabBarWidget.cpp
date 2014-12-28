@@ -92,8 +92,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	hidePreview();
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(QLatin1String("NewTab"), this));
-	menu.addAction(ActionsManager::getAction(QLatin1String("NewTabPrivate"), this));
+	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
 
 	if (m_clickedTab >= 0)
 	{
@@ -107,15 +107,11 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			QAction *closeAction = menu.addAction(Utils::getIcon(QLatin1String("tab-close")), tr("Close Tab"));
-
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CloseTab"), this), closeAction, true);
-
-			closeAction->setEnabled(false);
+			menu.addAction(Utils::getIcon(QLatin1String("tab-close")), tr("Close Tab"))->setEnabled(false);
 		}
 		else
 		{
-			menu.addAction(ActionsManager::getAction(QLatin1String("CloseTab"), this));
+			menu.addAction(ActionsManager::getAction(Action::CloseTabAction, this));
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
@@ -124,7 +120,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(QLatin1String("LockToolBars"), this));
+	menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
 	menu.exec(event->globalPos());
 
 	m_clickedTab = -1;
@@ -146,7 +142,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 	if (tab < 0)
 	{
-		ActionsManager::triggerAction(QLatin1String("NewTab"), this);
+		ActionsManager::triggerAction(Action::NewTabAction, this);
 	}
 	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
 	{
@@ -164,7 +160,7 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 
 		if (tab < 0)
 		{
-			ActionsManager::triggerAction(QLatin1String("NewTab"), this);
+			ActionsManager::triggerAction(Action::NewTabAction, this);
 		}
 		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 		{

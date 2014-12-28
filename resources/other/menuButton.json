@@ -101,11 +101,11 @@
 			"actions":
 			[
 				"AddBookmark",
-				"ManageBookmarks",
+				"Bookmarks",
 				"separator"
 			]
 		},
-		"ViewHistory",
+		"History",
 		"Transfers",
 		"separator",
 		{

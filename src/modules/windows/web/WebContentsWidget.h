@@ -44,7 +44,7 @@ public:
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
 	WebContentsWidget* clone(bool cloneHistory = true);
-	QAction* getAction(ActionIdentifier action);
+	Action* getAction(int identifier);
 	QUndoStack* getUndoStack();
 	WebWidget* getWebWidget();
 	QString getTitle() const;
@@ -64,7 +64,7 @@ public:
 
 public slots:
 	void goToHistoryIndex(int index);
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 	void setHistory(const WindowHistoryInformation &history);
 	void setReloadTime(int time);
 	void setZoom(int zoom);

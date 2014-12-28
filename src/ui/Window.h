@@ -81,7 +81,7 @@ public:
 	bool isUrlEmpty() const;
 
 public slots:
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 	void search(const QString &query, const QString &engine);
 	void setOption(const QString &key, const QVariant &value);
 	void setSearchEngine(const QString &engine);

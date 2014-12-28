@@ -54,7 +54,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 		if (!isLoading())
 		{
-			triggerAction(ReloadAction);
+			triggerAction(Action::ReloadAction);
 		}
 	}
 }
@@ -63,7 +63,7 @@ void WebWidget::startReloadTimer()
 {
 	if (m_reloadTime >= 0)
 	{
-		triggerAction(StopScheduledPageRefreshAction);
+		triggerAction(Action::StopScheduledPageRefreshAction);
 
 		if (m_reloadTime > 0)
 		{
@@ -177,130 +177,130 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 
 	if (flags & StandardMenu)
 	{
-		menu.addAction(getAction(GoBackAction));
-		menu.addAction(getAction(GoForwardAction));
-		menu.addAction(getAction(RewindAction));
-		menu.addAction(getAction(FastForwardAction));
+		menu.addAction(getAction(Action::GoBackAction));
+		menu.addAction(getAction(Action::GoForwardAction));
+		menu.addAction(getAction(Action::RewindAction));
+		menu.addAction(getAction(Action::FastForwardAction));
 		menu.addSeparator();
-		menu.addAction(getAction(ReloadAction));
-		menu.addAction(getAction(ReloadTimeAction));
+		menu.addAction(getAction(Action::ReloadAction));
+		menu.addAction(getAction(Action::ReloadTimeAction));
 		menu.addSeparator();
-		menu.addAction(getAction(BookmarkAction));
-		menu.addAction(getAction(CopyAddressAction));
-		menu.addAction(getAction(PrintAction));
+		menu.addAction(getAction(Action::AddBookmarkAction));
+		menu.addAction(getAction(Action::CopyAddressAction));
+		menu.addAction(getAction(Action::PrintAction));
 		menu.addSeparator();
 
 		if (flags & FormMenu)
 		{
-			menu.addAction(getAction(CreateSearchAction));
+			menu.addAction(getAction(Action::CreateSearchAction));
 			menu.addSeparator();
 		}
 
-		menu.addAction(getAction(InspectElementAction));
-		menu.addAction(getAction(ViewSourceAction));
-		menu.addAction(getAction(ValidateAction));
+		menu.addAction(getAction(Action::InspectElementAction));
+		menu.addAction(getAction(Action::ViewSourceAction));
+		menu.addAction(getAction(Action::ValidateAction));
 		menu.addSeparator();
 
 		if (flags & FrameMenu)
 		{
 			QMenu *frameMenu = new QMenu(&menu);
 			frameMenu->setTitle(tr("Frame"));
-			frameMenu->addAction(getAction(OpenFrameInThisTabAction));
-			frameMenu->addAction(getAction(OpenFrameInNewTabAction));
-			frameMenu->addAction(getAction(OpenFrameInNewTabBackgroundAction));
+			frameMenu->addAction(getAction(Action::OpenFrameInCurrentTabAction));
+			frameMenu->addAction(getAction(Action::OpenFrameInNewTabAction));
+			frameMenu->addAction(getAction(Action::OpenFrameInNewTabBackgroundAction));
 			frameMenu->addSeparator();
-			frameMenu->addAction(getAction(ViewSourceFrameAction));
-			frameMenu->addAction(getAction(ReloadFrameAction));
-			frameMenu->addAction(getAction(CopyFrameLinkToClipboardAction));
+			frameMenu->addAction(getAction(Action::ViewFrameSourceAction));
+			frameMenu->addAction(getAction(Action::ReloadFrameAction));
+			frameMenu->addAction(getAction(Action::CopyFrameLinkToClipboardAction));
 
 			menu.addMenu(frameMenu);
 			menu.addSeparator();
 		}
 
-		menu.addAction(ActionsManager::getAction(QLatin1String("ContentBlocking"), this));
-		menu.addAction(getAction(WebsitePreferencesAction));
+		menu.addAction(ActionsManager::getAction(Action::ContentBlockingAction, this));
+		menu.addAction(getAction(Action::WebsitePreferencesAction));
 		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(QLatin1String("FullScreen"), this));
+		menu.addAction(ActionsManager::getAction(Action::FullScreenAction, this));
 	}
 	else
 	{
 		if (flags & EditMenu)
 		{
-			menu.addAction(getAction(UndoAction));
-			menu.addAction(getAction(RedoAction));
+			menu.addAction(getAction(Action::UndoAction));
+			menu.addAction(getAction(Action::RedoAction));
 			menu.addSeparator();
-			menu.addAction(getAction(CutAction));
-			menu.addAction(getAction(CopyAction));
-			menu.addAction(getAction(PasteAction));
-			menu.addAction(getAction(DeleteAction));
+			menu.addAction(getAction(Action::CutAction));
+			menu.addAction(getAction(Action::CopyAction));
+			menu.addAction(getAction(Action::PasteAction));
+			menu.addAction(getAction(Action::DeleteAction));
 			menu.addSeparator();
-			menu.addAction(getAction(SelectAllAction));
-			menu.addAction(getAction(ClearAllAction));
+			menu.addAction(getAction(Action::SelectAllAction));
+			menu.addAction(getAction(Action::ClearAllAction));
 			menu.addSeparator();
 
 			if (flags & FormMenu)
 			{
-				menu.addAction(getAction(CreateSearchAction));
+				menu.addAction(getAction(Action::CreateSearchAction));
 				menu.addSeparator();
 			}
 
 			if (flags == EditMenu || flags == (EditMenu | FormMenu))
 			{
-				menu.addAction(getAction(InspectElementAction));
+				menu.addAction(getAction(Action::InspectElementAction));
 				menu.addSeparator();
 			}
 
-			menu.addAction(getAction(SpellCheckAction));
+			menu.addAction(getAction(Action::CheckSpellingAction));
 			menu.addSeparator();
 		}
 
 		if (flags & SelectionMenu)
 		{
-			menu.addAction(getAction(SearchAction));
-			menu.addAction(getAction(SearchMenuAction));
+			menu.addAction(getAction(Action::SearchAction));
+			menu.addAction(getAction(Action::SearchMenuAction));
 			menu.addSeparator();
 
 			if (!(flags & EditMenu))
 			{
-				menu.addAction(getAction(CopyAction));
+				menu.addAction(getAction(Action::CopyAction));
 				menu.addSeparator();
 			}
 
-			menu.addAction(getAction(OpenSelectionAsLinkAction));
+			menu.addAction(getAction(Action::OpenSelectionAsLinkAction));
 			menu.addSeparator();
 		}
 
 		if (flags & MailMenu)
 		{
-			menu.addAction(getAction(OpenLinkInThisTabAction));
+			menu.addAction(getAction(Action::OpenLinkInCurrentTabAction));
 			menu.addSeparator();
-			menu.addAction(getAction(CopyLinkToClipboardAction));
+			menu.addAction(getAction(Action::CopyLinkToClipboardAction));
 
 			if (!(flags & ImageMenu))
 			{
-				menu.addAction(getAction(InspectElementAction));
+				menu.addAction(getAction(Action::InspectElementAction));
 			}
 
 			menu.addSeparator();
 		}
 		else if (flags & LinkMenu)
 		{
-			menu.addAction(getAction(OpenLinkAction));
-			menu.addAction(getAction(OpenLinkInNewTabAction));
-			menu.addAction(getAction(OpenLinkInNewTabBackgroundAction));
+			menu.addAction(getAction(Action::OpenLinkAction));
+			menu.addAction(getAction(Action::OpenLinkInNewTabAction));
+			menu.addAction(getAction(Action::OpenLinkInNewTabBackgroundAction));
 			menu.addSeparator();
-			menu.addAction(getAction(OpenLinkInNewWindowAction));
-			menu.addAction(getAction(OpenLinkInNewWindowBackgroundAction));
+			menu.addAction(getAction(Action::OpenLinkInNewWindowAction));
+			menu.addAction(getAction(Action::OpenLinkInNewWindowBackgroundAction));
 			menu.addSeparator();
-			menu.addAction(getAction(BookmarkLinkAction));
-			menu.addAction(getAction(CopyLinkToClipboardAction));
+			menu.addAction(getAction(Action::BookmarkLinkAction));
+			menu.addAction(getAction(Action::CopyLinkToClipboardAction));
 			menu.addSeparator();
-			menu.addAction(getAction(SaveLinkToDiskAction));
-			menu.addAction(getAction(SaveLinkToDownloadsAction));
+			menu.addAction(getAction(Action::SaveLinkToDiskAction));
+			menu.addAction(getAction(Action::SaveLinkToDownloadsAction));
 
 			if (!(flags & ImageMenu))
 			{
-				menu.addAction(getAction(InspectElementAction));
+				menu.addAction(getAction(Action::InspectElementAction));
 			}
 
 			menu.addSeparator();
@@ -308,29 +308,29 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 
 		if (flags & ImageMenu)
 		{
-			menu.addAction(getAction(OpenImageInNewTabAction));
-			menu.addAction(getAction(ReloadImageAction));
-			menu.addAction(getAction(CopyImageUrlToClipboardAction));
+			menu.addAction(getAction(Action::OpenImageInNewTabAction));
+			menu.addAction(getAction(Action::ReloadImageAction));
+			menu.addAction(getAction(Action::CopyImageUrlToClipboardAction));
 			menu.addSeparator();
-			menu.addAction(getAction(SaveImageToDiskAction));
-			menu.addAction(getAction(CopyImageToClipboardAction));
+			menu.addAction(getAction(Action::SaveImageToDiskAction));
+			menu.addAction(getAction(Action::CopyImageToClipboardAction));
 			menu.addSeparator();
-			menu.addAction(getAction(InspectElementAction));
-			menu.addAction(getAction(ImagePropertiesAction));
+			menu.addAction(getAction(Action::InspectElementAction));
+			menu.addAction(getAction(Action::ImagePropertiesAction));
 			menu.addSeparator();
 		}
 
 		if (flags & MediaMenu)
 		{
-			menu.addAction(getAction(CopyMediaUrlToClipboardAction));
-			menu.addAction(getAction(SaveMediaToDiskAction));
+			menu.addAction(getAction(Action::CopyMediaUrlToClipboardAction));
+			menu.addAction(getAction(Action::SaveMediaToDiskAction));
 			menu.addSeparator();
-			menu.addAction(getAction(ToggleMediaPlayPauseAction));
-			menu.addAction(getAction(ToggleMediaMuteAction));
-			menu.addAction(getAction(ToggleMediaLoopAction));
-			menu.addAction(getAction(ToggleMediaControlsAction));
+			menu.addAction(getAction(Action::ToggleMediaPlayPauseAction));
+			menu.addAction(getAction(Action::ToggleMediaMuteAction));
+			menu.addAction(getAction(Action::ToggleMediaLoopAction));
+			menu.addAction(getAction(Action::ToggleMediaControlsAction));
 			menu.addSeparator();
-			menu.addAction(getAction(InspectElementAction));
+			menu.addAction(getAction(Action::InspectElementAction));
 			menu.addSeparator();
 		}
 	}
@@ -400,7 +400,7 @@ void WebWidget::setReloadTime(int time)
 
 		if (time >= 0)
 		{
-			triggerAction(StopScheduledPageRefreshAction);
+			triggerAction(Action::StopScheduledPageRefreshAction);
 
 			if (time > 0)
 			{

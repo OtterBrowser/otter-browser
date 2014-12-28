@@ -271,11 +271,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
 }
 
-void BookmarksContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	if (action == DeleteAction)
+	if (identifier == Action::DeleteAction)
 	{
 		removeBookmark();
 	}
@@ -283,11 +283,11 @@ void BookmarksContentsWidget::triggerAction(ActionIdentifier action, bool checke
 
 void BookmarksContentsWidget::triggerAction()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
 	{
-		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
+		triggerAction(action->getIdentifier());
 	}
 }
 
@@ -304,7 +304,7 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark);
 
-	getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+	getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
@@ -312,28 +312,26 @@ void BookmarksContentsWidget::print(QPrinter *printer)
 	m_ui->bookmarksView->render(printer);
 }
 
-QAction* BookmarksContentsWidget::getAction(ActionIdentifier action)
+Action* BookmarksContentsWidget::getAction(int identifier)
 {
-	if (m_actions.contains(action))
+	if (m_actions.contains(identifier))
 	{
-		return m_actions[action];
+		return m_actions[identifier];
 	}
 
-	if (action != DeleteAction)
+	if (identifier != Action::DeleteAction)
 	{
 		return NULL;
 	}
 
-	QAction *actionObject = new QAction(this);
-	actionObject->setData(action);
+	Action *action = new Action(identifier, QIcon(), QString(), this);
+	action->setup(ActionsManager::getAction(Action::DeleteAction, this));
 
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), actionObject);
+	m_actions[identifier] = action;
 
-	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
-	m_actions[action] = actionObject;
-
-	return actionObject;
+	return action;
 }
 
 QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)

@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(GoBackAction, window, parent),
+GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoBackAction, window, parent),
 	m_window(window)
 {
 	setMenu(new QMenu(this));

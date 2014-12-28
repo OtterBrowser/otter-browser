@@ -151,15 +151,20 @@ void Menu::load(const QJsonObject &definition)
 		}
 		else
 		{
-			const QString action = actions.at(i).toString();
+			const QString rawAction = actions.at(i).toString();
 
-			if (action == QLatin1String("separator"))
+			if (rawAction == QLatin1String("separator"))
 			{
 				addSeparator();
 			}
 			else
 			{
-				addAction(ActionsManager::getAction(action, parentWidget()));
+				const int action = ActionsManager::getActionIdentifier(rawAction);
+
+				if (action >= 0)
+				{
+					addAction(ActionsManager::getAction(action, parentWidget()));
+				}
 			}
 		}
 	}
@@ -199,6 +204,8 @@ void Menu::setRole(MenuRole role)
 	switch (role)
 	{
 		case BookmarksMenuRole:
+			installEventFilter(this);
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
 
 			break;
@@ -256,12 +263,6 @@ void Menu::populateBookmarksMenu()
 	if (!menu || !menu->menuAction())
 	{
 		return;
-	}
-
-	if (menu->objectName().isEmpty())
-	{
-		menu->setObjectName(QLatin1String("bookmarks"));
-		menu->installEventFilter(this);
 	}
 
 	const QModelIndex index = menu->menuAction()->data().toModelIndex();
@@ -423,8 +424,8 @@ void Menu::populateSessionsMenu()
 	}
 
 	clear();
-	addAction(ActionsManager::getAction(QLatin1String("SaveSession"), parent()));
-	addAction(ActionsManager::getAction(QLatin1String("ManageSessions"), parent()));
+	addAction(ActionsManager::getAction(Action::SaveSessionAction, parent()));
+	addAction(ActionsManager::getAction(Action::SessionsAction, parent()));
 	addSeparator();
 
 	m_actionGroup = new QActionGroup(this);

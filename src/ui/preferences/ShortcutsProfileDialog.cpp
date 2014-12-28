@@ -20,7 +20,6 @@
 #include "ShortcutsProfileDialog.h"
 #include "KeyboardShortcutDelegate.h"
 #include "../../core/ActionsManager.h"
-#include "../../core/ShortcutsManager.h"
 
 #include "ui_ShortcutsProfileDialog.h"
 
@@ -67,22 +66,23 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	{
 		labels << tr("Action");
 
-		const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
+///TODO
+//		const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
 
-		for (int i = 0; i < actions.count(); ++i)
-		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
-			items[0]->setData(actions.at(i).name, Qt::UserRole);
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+//		for (int i = 0; i < actions.count(); ++i)
+//		{
+//			QList<QStandardItem*> items;
+//			items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
+//			items[0]->setData(actions.at(i).ide, Qt::UserRole);
+//			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-			if (data.contains(actions.at(i).name))
-			{
-				items[0]->setData(data[actions.at(i).name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
-			}
+//			if (data.contains(actions.at(i).name))
+//			{
+//				items[0]->setData(data[actions.at(i).name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
+//			}
 
-			model->appendRow(items);
-		}
+//			model->appendRow(items);
+//		}
 
 		m_ui->macrosWidget->hide();
 	}
@@ -129,15 +129,16 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 
 void ShortcutsProfileDialog::addMacro()
 {
-///FIXME create list from profiles, like shortcuts
+///TODO create list from profiles, like shortcuts
 	QStringList identifiers = m_shortcuts.keys();
 	QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
 	QString identifier;
 
-	for (int i = 0; i < actions.count(); ++i)
-	{
-		identifiers.append(actions.at(i).name);
-	}
+///TODO
+//	for (int i = 0; i < actions.count(); ++i)
+//	{
+//		identifiers.append(actions.at(i).name);
+//	}
 
 	do
 	{
@@ -197,19 +198,20 @@ void ShortcutsProfileDialog::updateMacrosActions()
 
 	const QStringList rawShortcuts = m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 
-	for (int i = 0; i < rawShortcuts.count(); ++i)
-	{
-		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(m_currentAction.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
+///TODO
+//	for (int i = 0; i < rawShortcuts.count(); ++i)
+//	{
+//		const QKeySequence shortcut = ((rawShortcuts.at(i) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(m_currentAction.data(Qt::UserRole).toString()) : QKeySequence(rawShortcuts.at(i)));
 
-		if (!shortcut.isEmpty())
-		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(shortcut.toString()));
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+//		if (!shortcut.isEmpty())
+//		{
+//			QList<QStandardItem*> items;
+//			items.append(new QStandardItem(shortcut.toString()));
+//			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
-		}
-	}
+//			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+//		}
+//	}
 
 	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }

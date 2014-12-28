@@ -21,8 +21,9 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QMutex>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QShortcut>
 
 #include "Action.h"
 
@@ -58,18 +59,51 @@ struct ToolBarDefinition
 
 struct ActionDefinition
 {
-	QString name;
 	QString text;
 	QString description;
 	QIcon icon;
-	ActionIdentifier identifier;
-	ActionScope scope;
+	QVector<QKeySequence> shortcuts;
+	int identifier;
 	bool isCheckable;
 	bool isChecked;
 	bool isEnabled;
+
+	ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
 };
 
+struct MacroDefinition
+{
+//	QString script;
+	QVector<int> actions;
+	QVector<QKeySequence> shortcuts;
+};
+
+class ActionsManager;
 class MainWindow;
+
+class ActionsManagerHelper : public QObject
+{
+	Q_OBJECT
+
+protected:
+	ActionsManagerHelper(QObject *parent);
+
+	void timerEvent(QTimerEvent *event);
+	int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
+
+	int reloadShortcutsTimer;
+	QVector<ActionDefinition> actionDefinitions;
+	QVector<MacroDefinition> macroDefinitions;
+	QHash<QString, ToolBarDefinition> toolBarDefinitions;
+
+protected slots:
+	void optionChanged(const QString &option);
+
+signals:
+	void shortcutsChanged();
+
+friend class ActionsManager;
+};
 
 class ActionsManager : public QObject
 {
@@ -78,37 +112,36 @@ class ActionsManager : public QObject
 public:
 	explicit ActionsManager(MainWindow *parent = NULL);
 
-	void triggerAction(const QString &action);
-	void triggerAction(ActionIdentifier action);
-	static void triggerAction(const QString &action, QObject *parent);
-	static void triggerAction(ActionIdentifier action, QObject *parent);
-	static void setupLocalAction(QAction *globalAction, QAction *localAction, bool connectTrigger = false);
-	QAction* getAction(const QString &action);
-	QAction* getAction(ActionIdentifier action);
-	static QAction* getAction(const QString &action, QObject *parent);
-	static QAction* getAction(ActionIdentifier action, QObject *parent);
+	void triggerAction(int identifier, bool checked = false);
+	static void triggerAction(int identifier, QObject *parent, bool checked = false);
+	static void loadShortcuts();
+	Action* getAction(int identifier);
+	static Action* getAction(int identifier, QObject *parent);
 	static QList<ActionDefinition> getActionDefinitions();
-	static ActionDefinition getActionDefinition(const QString &action);
+	static QList<MacroDefinition> getMacroDefinitions();
+	static QList<ToolBarDefinition> getToolBarDefinitions();
+	static ActionDefinition getActionDefinition(int identifier);
 	static ToolBarDefinition getToolBarDefinition(const QString &toolBar);
-	static ActionIdentifier getActionIdentifier(const QString &action);
-	static bool registerAction(const QLatin1String &name, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false, ActionIdentifier identifier = UnknownAction, ActionScope scope = MainWindowScope);
-
-public slots:
-	void updateActions();
+	static int getActionIdentifier(const QString &name);
 
 protected:
 	static ActionsManager* findManager(QObject *parent);
 
 protected slots:
-	void triggerAction();
+	void actionTriggered();
+	void actionTriggered(bool checked);
+	void macroTriggered();
+	void updateShortcuts();
 
 private:
 	MainWindow *m_window;
-	QHash<QString, QAction*> m_actions;
-	QHash<ActionIdentifier, QAction*> m_standardActions;
+	QVector<Action*> m_standardActions;
+	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
+	QVector<QPair<int, QVector<QShortcut*> > > m_macroShortcuts;
 
-	static QHash<QString, ActionDefinition> m_actionDefinitions;
-	static QHash<QString, ToolBarDefinition> m_toolBarDefinitions;
+	static ActionsManagerHelper *m_helper;
+	static Action *m_dummyAction;
+	static QMutex m_mutex;
 };
 
 }

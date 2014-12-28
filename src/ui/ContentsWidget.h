@@ -47,7 +47,7 @@ public:
 
 	void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
-	virtual QAction* getAction(ActionIdentifier action);
+	virtual Action* getAction(int identifier);
 	Window* getParent();
 	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
@@ -65,7 +65,7 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
-	virtual void triggerAction(ActionIdentifier action, bool checked = false);
+	virtual void triggerAction(int identifier, bool checked = false);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);

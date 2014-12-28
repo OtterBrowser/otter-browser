@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-MenuActionWidget::MenuActionWidget(QWidget *parent) : ActionWidget(UnknownAction, NULL, parent),
+MenuActionWidget::MenuActionWidget(QWidget *parent) : ActionWidget(-1, NULL, parent),
 	m_menu(new Menu(this))
 {
 	setIcon(Utils::getIcon(QLatin1String("otter-browser"), false));

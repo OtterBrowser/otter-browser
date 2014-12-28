@@ -216,15 +216,15 @@ void WebContentsWidget::goToHistoryIndex(int index)
 	m_webWidget->goToHistoryIndex(index);
 }
 
-void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void WebContentsWidget::triggerAction(int identifier, bool checked)
 {
-	const bool isFindAction = (action == FindAction || action == QuickFindAction);
+	const bool isFindAction = (identifier == Action::FindAction || identifier == Action::QuickFindAction);
 
-	if (isFindAction || action == FindNextAction || action == FindPreviousAction)
+	if (isFindAction || identifier == Action::FindNextAction || identifier == Action::FindPreviousAction)
 	{
 		if (!m_ui->findWidget->isVisible())
 		{
-			if (action == QuickFindAction)
+			if (identifier == Action::QuickFindAction)
 			{
 				killTimer(m_quickFindTimer);
 
@@ -249,10 +249,10 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		if (!isFindAction)
 		{
-			updateFind(action == FindPreviousAction);
+			updateFind(identifier == Action::FindPreviousAction);
 		}
 	}
-	else if (action == QuickPreferencesAction)
+	else if (identifier == Action::QuickPreferencesAction)
 	{
 		if (m_isTabPreferencesMenuVisible)
 		{
@@ -310,7 +310,7 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 		menu.addSeparator();
 		menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
 		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(WebsitePreferencesAction, parent()));
+		menu.addAction(ActionsManager::getAction(Action::WebsitePreferencesAction, parent()));
 
 		QAction *triggeredAction = menu.exec(QCursor::pos());
 
@@ -328,21 +328,21 @@ void WebContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 		m_isTabPreferencesMenuVisible = false;
 	}
-	else if (action == ZoomInAction)
+	else if (identifier == Action::ZoomInAction)
 	{
 		setZoom(qMin((getZoom() + 10), 10000));
 	}
-	else if (action == ZoomOutAction)
+	else if (identifier == Action::ZoomOutAction)
 	{
 		setZoom(qMax((getZoom() - 10), 10));
 	}
-	else if (action == ZoomOriginalAction)
+	else if (identifier == Action::ZoomOriginalAction)
 	{
 		setZoom(100);
 	}
 	else
 	{
-		m_webWidget->triggerAction(action, checked);
+		m_webWidget->triggerAction(identifier, checked);
 	}
 }
 
@@ -494,9 +494,9 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 	return webWidget;
 }
 
-QAction* WebContentsWidget::getAction(ActionIdentifier action)
+Action* WebContentsWidget::getAction(int identifier)
 {
-	return m_webWidget->getAction(action);
+	return m_webWidget->getAction(identifier);
 }
 
 QUndoStack* WebContentsWidget::getUndoStack()

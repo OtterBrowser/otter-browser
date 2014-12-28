@@ -44,7 +44,7 @@ public:
 	~BookmarksContentsWidget();
 
 	void print(QPrinter *printer);
-	QAction* getAction(ActionIdentifier action);
+	Action* getAction(int identifier);
 	QString getTitle() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
@@ -52,7 +52,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -75,7 +75,7 @@ protected slots:
 	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
 
 private:
-	QHash<ActionIdentifier, QAction*> m_actions;
+	QHash<int, Action*> m_actions;
 	QHash<QStandardItem*, QPair<QModelIndex, int> > m_trash;
 	Ui::BookmarksContentsWidget *m_ui;
 };

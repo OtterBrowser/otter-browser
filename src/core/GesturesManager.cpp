@@ -70,10 +70,10 @@ void GesturesManager::loadProfiles()
 
 		for (int j = 0; j < gestures.count(); ++j)
 		{
-			const QString action = profile.value(gestures.at(j) + QLatin1String("/action"), QString()).toString();
 			const QStringList rawMouseActions = gestures.at(j).split(QLatin1Char(','));
+			const int action = ActionsManager::getActionIdentifier(profile.value(gestures.at(j) + QLatin1String("/action"), QString()).toString());
 
-			if (action.isEmpty() || rawMouseActions.isEmpty())
+			if (action < 0 || rawMouseActions.isEmpty())
 			{
 				continue;
 			}

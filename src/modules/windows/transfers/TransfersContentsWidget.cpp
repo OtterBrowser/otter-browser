@@ -105,11 +105,11 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 
 void TransfersContentsWidget::triggerAction()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
 	{
-		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
+		triggerAction(action->getIdentifier());
 	}
 }
 
@@ -444,8 +444,8 @@ void TransfersContentsWidget::updateActions()
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
 	m_ui->redownloadButton->setEnabled(transfer);
 
-	getAction(CopyAction)->setEnabled(transfer);
-	getAction(DeleteAction)->setEnabled(transfer);
+	getAction(Action::CopyAction)->setEnabled(transfer);
+	getAction(Action::DeleteAction)->setEnabled(transfer);
 
 	if (transfer)
 	{
@@ -472,13 +472,13 @@ void TransfersContentsWidget::print(QPrinter *printer)
 	m_ui->transfersView->render(printer);
 }
 
-void TransfersContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void TransfersContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	switch (action)
+	switch (identifier)
 	{
-		case CopyAction:
+		case Action::CopyAction:
 			if (m_ui->transfersView->hasFocus() && m_ui->transfersView->currentIndex().isValid())
 			{
 				copyTransferInformation();
@@ -499,11 +499,11 @@ void TransfersContentsWidget::triggerAction(ActionIdentifier action, bool checke
 			}
 
 			break;
-		case DeleteAction:
+		case Action::DeleteAction:
 			removeTransfer();
 
 			break;
-		case ActivateAddressFieldAction:
+		case Action::ActivateAddressFieldAction:
 			m_ui->downloadLineEdit->setFocus();
 			m_ui->downloadLineEdit->selectAll();
 
@@ -523,41 +523,26 @@ TransferInformation* TransfersContentsWidget::getTransfer(const QModelIndex &ind
 	return NULL;
 }
 
-QAction* TransfersContentsWidget::getAction(ActionIdentifier action)
+Action* TransfersContentsWidget::getAction(int identifier)
 {
-	if (m_actions.contains(action))
+	if (m_actions.contains(identifier))
 	{
-		return m_actions[action];
+		return m_actions[identifier];
 	}
 
-	QAction *actionObject = new QAction(this);
-	actionObject->setData(action);
-
-	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
-	switch (action)
+	if (identifier != Action::CopyAction && identifier != Action::DeleteAction)
 	{
-		case CopyAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Copy"), this), actionObject);
-
-			break;
-		case DeleteAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), actionObject);
-
-			break;
-		default:
-			actionObject->deleteLater();
-			actionObject = NULL;
-
-			break;
+		return NULL;
 	}
 
-	if (actionObject)
-	{
-		m_actions[action] = actionObject;
-	}
+	Action *action = new Action(identifier, QIcon(), QString(), this);
+	action->setup(ActionsManager::getAction(identifier, this));
 
-	return actionObject;
+	m_actions[identifier] = action;
+
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	return action;
 }
 
 QString TransfersContentsWidget::getTitle() const

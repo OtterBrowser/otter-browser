@@ -73,7 +73,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<ActionIdentifier, QAction*> m_actions;
 	bool m_isLoading;
 	Ui::HistoryContentsWidget *m_ui;
 };

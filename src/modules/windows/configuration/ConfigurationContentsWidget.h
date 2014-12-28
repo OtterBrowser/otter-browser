@@ -58,7 +58,6 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<ActionIdentifier, QAction*> m_actions;
 	Ui::ConfigurationContentsWidget *m_ui;
 };
 

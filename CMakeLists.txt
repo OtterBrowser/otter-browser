@@ -93,7 +93,6 @@ set(otter_src
 	src/core/SearchSuggester.cpp
 	src/core/SessionsManager.cpp
 	src/core/SettingsManager.cpp
-	src/core/ShortcutsManager.cpp
 	src/core/TransfersManager.cpp
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
@@ -223,7 +222,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	qt5_use_modules(otter-browser WinExtras)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets)
+qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")

@@ -48,7 +48,7 @@ public:
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);
-	QAction* getAction(ActionIdentifier action);
+	Action* getAction(int identifier);
 	QUndoStack* getUndoStack();
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
@@ -72,7 +72,7 @@ public slots:
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 	void setOption(const QString &key, const QVariant &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -91,7 +91,6 @@ protected:
 	void setOptions(const QVariantHash &options);
 	QString getPluginToken() const;
 	QWebPage* getPage();
-	QWebPage::WebAction mapAction(ActionIdentifier action) const;
 	bool canLoadPlugins() const;
 
 protected slots:
@@ -123,11 +122,11 @@ private:
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
-	QPoint m_hotclickPosition;
+	QPoint m_clickPosition;
 	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
-	QHash<ActionIdentifier, QAction*> m_actions;
+	QHash<int, Action*> m_actions;
 	qint64 m_historyEntry;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;

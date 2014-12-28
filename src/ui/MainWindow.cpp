@@ -87,19 +87,19 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	m_windowsManager->setTabBar(m_tabBarToolBarWidget->getTabBar());
 
-	m_ui->statusBar->addPermanentWidget(new ActionWidget(ZoomOutAction, NULL, this));
+	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
 	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
-	m_ui->statusBar->addPermanentWidget(new ActionWidget(ZoomInAction, NULL, this));
+	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomInAction, NULL, this));
 
 	SessionsManager::registerWindow(this);
 
-	m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
-	m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
-	m_actionsManager->getAction(QLatin1String("LockToolBars"))->setChecked(SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
-	m_actionsManager->getAction(QLatin1String("Exit"))->setMenuRole(QAction::QuitRole);
-	m_actionsManager->getAction(QLatin1String("Preferences"))->setMenuRole(QAction::PreferencesRole);
-	m_actionsManager->getAction(QLatin1String("AboutQt"))->setMenuRole(QAction::AboutQtRole);
-	m_actionsManager->getAction(QLatin1String("AboutApplication"))->setMenuRole(QAction::AboutRole);
+	m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
+	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
+	m_actionsManager->getAction(Action::ExitAction)->setMenuRole(QAction::QuitRole);
+	m_actionsManager->getAction(Action::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
+	m_actionsManager->getAction(Action::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
+	m_actionsManager->getAction(Action::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
 	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
 	{
@@ -108,37 +108,13 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(transferStarted()));
-	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(actionAddBookmark(QUrl,QString)));
+	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(addBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
-	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("ErrorConsole")), SLOT(setChecked(bool)));
-	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(QLatin1String("Sidebar")), SLOT(setChecked(bool)));
+	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowErrorConsoleAction), SLOT(setChecked(bool)));
+	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowSidebarAction), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
-	connect(m_actionsManager->getAction(QLatin1String("Open")), SIGNAL(triggered()), this, SLOT(actionOpen()));
-	connect(m_actionsManager->getAction(QLatin1String("SaveSession")), SIGNAL(triggered()), this, SLOT(actionSaveSession()));
-	connect(m_actionsManager->getAction(QLatin1String("ManageSessions")), SIGNAL(triggered()), this, SLOT(actionManageSessions()));
-	connect(m_actionsManager->getAction(QLatin1String("WorkOffline")), SIGNAL(toggled(bool)), this, SLOT(actionWorkOffline(bool)));
-	connect(m_actionsManager->getAction(QLatin1String("ShowMenuBar")), SIGNAL(toggled(bool)), this, SLOT(actionShowMenuBar(bool)));
-	connect(m_actionsManager->getAction(QLatin1String("Exit")), SIGNAL(triggered()), Application::getInstance(), SLOT(close()));
-	connect(m_actionsManager->getAction(QLatin1String("FullScreen")), SIGNAL(triggered()), this, SLOT(actionFullScreen()));
-	connect(m_actionsManager->getAction(QLatin1String("ViewHistory")), SIGNAL(triggered()), this, SLOT(actionViewHistory()));
-	connect(m_actionsManager->getAction(QLatin1String("ClearHistory")), SIGNAL(triggered()), this, SLOT(actionClearHistory()));
-	connect(m_actionsManager->getAction(QLatin1String("AddBookmark")), SIGNAL(triggered()), this, SLOT(actionAddBookmark()));
-	connect(m_actionsManager->getAction(QLatin1String("ManageBookmarks")), SIGNAL(triggered()), this, SLOT(actionManageBookmarks()));
-	connect(m_actionsManager->getAction(QLatin1String("Cookies")), SIGNAL(triggered()), this, SLOT(actionCookies()));
-	connect(m_actionsManager->getAction(QLatin1String("Transfers")), SIGNAL(triggered()), this, SLOT(actionTransfers()));
-	connect(m_actionsManager->getAction(QLatin1String("ErrorConsole")), SIGNAL(toggled(bool)), this, SLOT(actionErrorConsole(bool)));
-	connect(m_actionsManager->getAction(QLatin1String("Sidebar")), SIGNAL(toggled(bool)), this, SLOT(actionSidebar(bool)));
-	connect(m_actionsManager->getAction(QLatin1String("ContentBlocking")), SIGNAL(triggered()), this, SLOT(actionContentBlocking()));
-	connect(m_actionsManager->getAction(QLatin1String("Preferences")), SIGNAL(triggered()), this, SLOT(actionPreferences()));
-	connect(m_actionsManager->getAction(QLatin1String("SwitchApplicationLanguage")), SIGNAL(triggered()), this, SLOT(actionSwitchApplicationLanguage()));
-	connect(m_actionsManager->getAction(QLatin1String("AboutApplication")), SIGNAL(triggered()), this, SLOT(actionAboutApplication()));
-	connect(m_actionsManager->getAction(QLatin1String("AboutQt")), SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
-	connect(m_actionsManager->getAction(QLatin1String("CloseWindow")), SIGNAL(triggered()), this, SLOT(close()));
-	connect(m_actionsManager->getAction(QLatin1String("LockToolBars")), SIGNAL(toggled(bool)), this, SLOT(actionLockToolBars(bool)));
-	connect(m_actionsManager->getAction(QLatin1String("GoToPage")), SIGNAL(triggered()), this, SLOT(actionGoToPage()));
-	connect(m_actionsManager->getAction(QLatin1String("QuickBookmarkAccess")), SIGNAL(triggered()), this, SLOT(actionQuickBookmarkAccess()));
 
 	m_windowsManager->restore(session);
 
@@ -173,7 +149,7 @@ MainWindow::~MainWindow()
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(m_actionsManager->getAction(QLatin1String("LockToolBars")));
+	menu.addAction(m_actionsManager->getAction(Action::LockToolBarsAction));
 	menu.exec(event->globalPos());
 }
 
@@ -284,7 +260,7 @@ void MainWindow::openUrl(const QString &text)
 		return;
 	}
 
-	m_windowsManager->triggerAction(NewTabAction);
+	m_windowsManager->triggerAction(Action::NewTabAction);
 }
 
 void MainWindow::storeWindowState()
@@ -297,11 +273,248 @@ void MainWindow::restoreWindowState()
 	setWindowState(m_previousState);
 }
 
+void MainWindow::triggerAction(int identifier, bool checked)
+{
+	switch (identifier)
+	{
+		case Action::NewTabAction:
+			m_windowsManager->open(QUrl(), NewTabOpen);
+
+			break;
+		case Action::NewTabPrivateAction:
+			m_windowsManager->open(QUrl(), NewTabPrivateOpen);
+
+			break;
+		case Action::NewWindowAction:
+			emit requestedNewWindow(false, false, QUrl());
+
+			break;
+		case Action::NewWindowPrivateAction:
+			emit requestedNewWindow(true, false, QUrl());
+
+			break;
+		case Action::OpenAction:
+			{
+				const QString path = QFileDialog::getOpenFileName(this, tr("Open File"));
+
+				if (!path.isEmpty())
+				{
+					m_windowsManager->open(QUrl(path));
+				}
+			}
+
+			break;
+		case Action::CloseWindowAction:
+			close();
+
+			break;
+		case Action::SessionsAction:
+			{
+				SessionsManagerDialog dialog(this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::SaveSessionAction:
+			{
+				SaveSessionDialog dialog(this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::GoToPageAction:
+			{
+				OpenAddressDialog dialog(this);
+
+				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,OpenHints)));
+				connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
+
+				dialog.exec();
+			}
+
+			break;
+		case Action::GoToHomePageAction:
+			{
+				const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+
+				if (!homePage.isEmpty())
+				{
+					m_windowsManager->open(QUrl(homePage), CurrentTabOpen);
+				}
+			}
+
+			break;
+		case Action::BookmarksAction:
+			{
+				const QUrl url(QLatin1String("about:bookmarks"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
+		case Action::AddBookmarkAction:
+			addBookmark();
+
+			break;
+		case Action::QuickBookmarkAccessAction:
+			{
+				OpenBookmarkDialog dialog(this);
+
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), m_windowsManager, SLOT(open(BookmarksItem*)));
+
+				dialog.exec();
+			}
+
+			break;
+		case Action::WorkOfflineAction:
+			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), checked);
+
+			break;
+		case Action::FullScreenAction:
+			if (isFullScreen())
+			{
+				restoreWindowState();
+			}
+			else
+			{
+				storeWindowState();
+				showFullScreen();
+			}
+
+			break;
+		case Action::ShowMenuBarAction:
+			if (checked && !m_menuBar)
+			{
+				createMenuBar();
+			}
+			else if (!checked && m_menuBar)
+			{
+				m_menuBar->deleteLater();
+
+				setMenuBar(NULL);
+
+				m_menuBar = NULL;
+			}
+
+			SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), checked);
+
+			break;
+		case Action::ShowSidebarAction:
+			m_ui->sidebarDockWidget->setVisible(checked);
+
+			break;
+		case Action::ShowErrorConsoleAction:
+			m_ui->consoleDockWidget->setVisible(checked);
+
+			break;
+		case Action::LockToolBarsAction:
+			SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), checked);
+
+			break;
+		case Action::ContentBlockingAction:
+			{
+				ContentBlockingDialog dialog(this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::HistoryAction:
+			{
+				const QUrl url(QLatin1String("about:history"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
+		case Action::ClearHistoryAction:
+			{
+				ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ManualClearOptions")).toStringList(), false, this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::TransfersAction:
+			{
+				const QUrl url(QLatin1String("about:transfers"));
+
+				if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
+		case Action::CookiesAction:
+			{
+				const QUrl url(QLatin1String("about:cookies"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
+		case Action::PreferencesAction:
+			{
+				PreferencesDialog dialog(QLatin1String("general"), this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::SwitchApplicationLanguageAction:
+			{
+				LocaleDialog dialog(this);
+				dialog.exec();
+			}
+
+			break;
+		case Action::AboutApplicationAction:
+			{
+				WebBackend *backend = WebBackendsManager::getBackend();
+				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
+				about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(backend->getTitle()).arg(backend->getEngineVersion()) + QLatin1String("<br><br>"));
+
+				if (QSslSocket::supportsSsl())
+				{
+					 about.append(tr("SSL library version: %1.").arg(QSslSocket::sslLibraryVersionString()));
+				}
+				else
+				{
+					about.append(tr("SSL library not available."));
+				}
+
+				QMessageBox::about(this, QLatin1String("Otter"), about);
+			}
+
+			break;
+		case Action::AboutQtAction:
+			Application::getInstance()->aboutQt();
+
+			break;
+		case Action::ExitAction:
+			Application::getInstance()->close();
+
+			break;
+		default:
+			m_windowsManager->triggerAction(identifier, checked);
+
+			break;
+	}
+}
+
 void MainWindow::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Network/WorkOffline"))
 	{
-		m_actionsManager->getAction(QLatin1String("WorkOffline"))->setChecked(value.toBool());
+		m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Interface/LockToolBars"))
 	{
@@ -313,89 +526,15 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 			toolBars.at(i)->setMovable(movable);
 		}
 
-		m_actionsManager->getAction(QLatin1String("LockToolBars"))->setChecked(value.toBool());
+		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Interface/ShowMenuBar"))
 	{
-		m_actionsManager->getAction(QLatin1String("ShowMenuBar"))->setChecked(value.toBool());
+		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(value.toBool());
 	}
 }
 
-void MainWindow::actionOpen()
-{
-	const QString path = QFileDialog::getOpenFileName(this, tr("Open File"));
-
-	if (!path.isEmpty())
-	{
-		m_windowsManager->open(QUrl(path));
-	}
-}
-
-void MainWindow::actionSaveSession()
-{
-	SaveSessionDialog dialog(this);
-	dialog.exec();
-}
-
-void MainWindow::actionManageSessions()
-{
-	SessionsManagerDialog dialog(this);
-	dialog.exec();
-}
-
-void MainWindow::actionWorkOffline(bool enable)
-{
-	SettingsManager::setValue(QLatin1String("Network/WorkOffline"), enable);
-}
-
-void MainWindow::actionShowMenuBar(bool enable)
-{
-	if (enable && !m_menuBar)
-	{
-		createMenuBar();
-	}
-	else if (!enable && m_menuBar)
-	{
-		m_menuBar->deleteLater();
-
-		setMenuBar(NULL);
-
-		m_menuBar = NULL;
-	}
-
-	SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), enable);
-}
-
-void MainWindow::actionFullScreen()
-{
-	if (isFullScreen())
-	{
-		restoreWindowState();
-	}
-	else
-	{
-		storeWindowState();
-		showFullScreen();
-	}
-}
-
-void MainWindow::actionViewHistory()
-{
-	const QUrl url(QLatin1String("about:history"));
-
-	if (!SessionsManager::hasUrl(url, true))
-	{
-		m_windowsManager->open(url);
-	}
-}
-
-void MainWindow::actionClearHistory()
-{
-	ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ManualClearOptions")).toStringList(), false, this);
-	dialog.exec();
-}
-
-void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)
+void MainWindow::addBookmark(const QUrl &url, const QString &title)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 
@@ -413,114 +552,13 @@ void MainWindow::actionAddBookmark(const QUrl &url, const QString &title)
 	}
 }
 
-void MainWindow::actionManageBookmarks()
-{
-	const QUrl url(QLatin1String("about:bookmarks"));
-
-	if (!SessionsManager::hasUrl(url, true))
-	{
-		m_windowsManager->open(url);
-	}
-}
-
-void MainWindow::actionCookies()
-{
-	const QUrl url(QLatin1String("about:cookies"));
-
-	if (!SessionsManager::hasUrl(url, true))
-	{
-		m_windowsManager->open(url);
-	}
-}
-
-void MainWindow::actionTransfers()
-{
-	const QUrl url(QLatin1String("about:transfers"));
-
-	if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
-	{
-		m_windowsManager->open(url);
-	}
-}
-
-void MainWindow::actionErrorConsole(bool enabled)
-{
-	m_ui->consoleDockWidget->setVisible(enabled);
-}
-
-void MainWindow::actionSidebar(bool enabled)
-{
-	m_ui->sidebarDockWidget->setVisible(enabled);
-}
-
-void MainWindow::actionContentBlocking()
-{
-	ContentBlockingDialog dialog(this);
-	dialog.exec();
-}
-
-void MainWindow::actionPreferences()
-{
-	PreferencesDialog dialog(QLatin1String("general"), this);
-	dialog.exec();
-}
-
-void MainWindow::actionSwitchApplicationLanguage()
-{
-	LocaleDialog dialog(this);
-	dialog.exec();
-}
-
-void MainWindow::actionAboutApplication()
-{
-	WebBackend *backend = WebBackendsManager::getBackend();
-	QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
-	about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(backend->getTitle()).arg(backend->getEngineVersion()) + QLatin1String("<br><br>"));
-
-	if (QSslSocket::supportsSsl())
-	{
-		 about.append(tr("SSL library version: %1.").arg(QSslSocket::sslLibraryVersionString()));
-	}
-	else
-	{
-		about.append(tr("SSL library not available."));
-	}
-
-	QMessageBox::about(this, QLatin1String("Otter"), about);
-}
-
-void MainWindow::actionLockToolBars(bool lock)
-{
-	SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), lock);
-}
-
-void MainWindow::actionGoToPage()
-{
-	OpenAddressDialog dialog(this);
-
-	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
-	connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,OpenHints)));
-	connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
-
-	dialog.exec();
-}
-
-void MainWindow::actionQuickBookmarkAccess()
-{
-	OpenBookmarkDialog dialog(this);
-
-	connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*)), m_windowsManager, SLOT(open(BookmarksItem*)));
-
-	dialog.exec();
-}
-
 void MainWindow::transferStarted()
 {
 	const QString action = SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString();
 
 	if (action == QLatin1String("openTab"))
 	{
-		actionTransfers();
+		triggerAction(Action::TransfersAction);
 	}
 	else if (action == QLatin1String("openBackgroundTab"))
 	{
@@ -538,73 +576,32 @@ void MainWindow::transferStarted()
 	}
 }
 
-void MainWindow::updateAction(QAction *source, QAction *target)
-{
-	if (source)
-	{
-		target->setEnabled(source->isEnabled());
-
-		if (target->isCheckable())
-		{
-			target->setChecked(source->isChecked());
-		}
-	}
-	else
-	{
-		target->setEnabled(false);
-	}
-}
-
 void MainWindow::updateActions()
 {
-	QAction *undoAction = m_windowsManager->getAction(UndoAction);
-
-	if (undoAction)
-	{
-		m_actionsManager->getAction(QLatin1String("Undo"))->setEnabled(undoAction->isEnabled());
-		m_actionsManager->getAction(QLatin1String("Undo"))->setText(undoAction->text());
-	}
-	else
-	{
-		m_actionsManager->getAction(QLatin1String("Undo"))->setEnabled(false);
-		m_actionsManager->getAction(QLatin1String("Undo"))->setText(tr("Undo"));
-	}
-
-	QAction *redoAction = m_windowsManager->getAction(RedoAction);
-
-	if (redoAction)
-	{
-		m_actionsManager->getAction(QLatin1String("Redo"))->setEnabled(redoAction->isEnabled());
-		m_actionsManager->getAction(QLatin1String("Redo"))->setText(redoAction->text());
-	}
-	else
-	{
-		m_actionsManager->getAction(QLatin1String("Redo"))->setEnabled(false);
-		m_actionsManager->getAction(QLatin1String("Redo"))->setText(tr("Redo"));
-	}
-
-	updateAction(m_windowsManager->getAction(CutAction), m_actionsManager->getAction(QLatin1String("Cut")));
-	updateAction(m_windowsManager->getAction(CopyAction), m_actionsManager->getAction(QLatin1String("Copy")));
-	updateAction(m_windowsManager->getAction(PasteAction), m_actionsManager->getAction(QLatin1String("Paste")));
-	updateAction(m_windowsManager->getAction(DeleteAction), m_actionsManager->getAction(QLatin1String("Delete")));
-	updateAction(m_windowsManager->getAction(SelectAllAction), m_actionsManager->getAction(QLatin1String("SelectAll")));
-	updateAction(m_windowsManager->getAction(FindAction), m_actionsManager->getAction(QLatin1String("Find")));
-	updateAction(m_windowsManager->getAction(FindNextAction), m_actionsManager->getAction(QLatin1String("FindNext")));
-	updateAction(m_windowsManager->getAction(FindPreviousAction), m_actionsManager->getAction(QLatin1String("FindPrevious")));
-	updateAction(m_windowsManager->getAction(ReloadAction), m_actionsManager->getAction(QLatin1String("Reload")));
-	updateAction(m_windowsManager->getAction(StopAction), m_actionsManager->getAction(QLatin1String("Stop")));
-	updateAction(m_windowsManager->getAction(ViewSourceAction), m_actionsManager->getAction(QLatin1String("ViewSource")));
-	updateAction(m_windowsManager->getAction(InspectPageAction), m_actionsManager->getAction(QLatin1String("InspectPage")));
-	updateAction(m_windowsManager->getAction(GoBackAction), m_actionsManager->getAction(QLatin1String("GoBack")));
-	updateAction(m_windowsManager->getAction(RewindAction), m_actionsManager->getAction(QLatin1String("Rewind")));
-	updateAction(m_windowsManager->getAction(GoForwardAction), m_actionsManager->getAction(QLatin1String("GoForward")));
-	updateAction(m_windowsManager->getAction(FastForwardAction), m_actionsManager->getAction(QLatin1String("FastForward")));
+	m_actionsManager->getAction(Action::UndoAction)->setup(m_windowsManager->getAction(Action::UndoAction));
+	m_actionsManager->getAction(Action::RedoAction)->setup(m_windowsManager->getAction(Action::RedoAction));
+	m_actionsManager->getAction(Action::CutAction)->setup(m_windowsManager->getAction(Action::CutAction));
+	m_actionsManager->getAction(Action::CopyAction)->setup(m_windowsManager->getAction(Action::CopyAction));
+	m_actionsManager->getAction(Action::PasteAction)->setup(m_windowsManager->getAction(Action::PasteAction));
+	m_actionsManager->getAction(Action::DeleteAction)->setup(m_windowsManager->getAction(Action::DeleteAction));
+	m_actionsManager->getAction(Action::SelectAllAction)->setup(m_windowsManager->getAction(Action::SelectAllAction));
+	m_actionsManager->getAction(Action::FindAction)->setup(m_windowsManager->getAction(Action::FindAction));
+	m_actionsManager->getAction(Action::FindNextAction)->setup(m_windowsManager->getAction(Action::FindNextAction));
+	m_actionsManager->getAction(Action::FindPreviousAction)->setup(m_windowsManager->getAction(Action::FindPreviousAction));
+	m_actionsManager->getAction(Action::ReloadAction)->setup(m_windowsManager->getAction(Action::ReloadAction));
+	m_actionsManager->getAction(Action::StopAction)->setup(m_windowsManager->getAction(Action::StopAction));
+	m_actionsManager->getAction(Action::ViewSourceAction)->setup(m_windowsManager->getAction(Action::ViewSourceAction));
+	m_actionsManager->getAction(Action::InspectPageAction)->setup(m_windowsManager->getAction(Action::InspectPageAction));
+	m_actionsManager->getAction(Action::GoBackAction)->setup(m_windowsManager->getAction(Action::GoBackAction));
+	m_actionsManager->getAction(Action::RewindAction)->setup(m_windowsManager->getAction(Action::RewindAction));
+	m_actionsManager->getAction(Action::GoForwardAction)->setup(m_windowsManager->getAction(Action::GoForwardAction));
+	m_actionsManager->getAction(Action::FastForwardAction)->setup(m_windowsManager->getAction(Action::FastForwardAction));
 
 	const bool canZoom = m_windowsManager->canZoom();
 
-	m_actionsManager->getAction(QLatin1String("ZoomOut"))->setEnabled(canZoom);
-	m_actionsManager->getAction(QLatin1String("ZoomIn"))->setEnabled(canZoom);
-	m_actionsManager->getAction(QLatin1String("ZoomOriginal"))->setEnabled(canZoom);
+	m_actionsManager->getAction(Action::ZoomOutAction)->setEnabled(canZoom);
+	m_actionsManager->getAction(Action::ZoomInAction)->setEnabled(canZoom);
+	m_actionsManager->getAction(Action::ZoomOriginalAction)->setEnabled(canZoom);
 }
 
 void MainWindow::updateWindowTitle(const QString &title)
@@ -661,18 +658,13 @@ bool MainWindow::event(QEvent *event)
 
 			updateWindowTitle(m_windowsManager->getTitle());
 
-			if (m_actionsManager)
-			{
-				m_actionsManager->updateActions();
-			}
-
 			break;
 		case QEvent::WindowStateChange:
 			SessionsManager::markSessionModified();
 
 			if (isFullScreen())
 			{
-				m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+				m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
 				m_ui->statusBar->hide();
 
 				if (m_menuBar)
@@ -684,7 +676,7 @@ bool MainWindow::event(QEvent *event)
 			}
 			else
 			{
-				m_actionsManager->getAction(QLatin1String("FullScreen"))->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+				m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
 				m_ui->statusBar->show();
 
 				if (m_menuBar)
@@ -718,7 +710,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
-			actionFullScreen();
+			triggerAction(Action::FullScreenAction);
 		}
 	}
 

@@ -41,7 +41,7 @@ WindowsManager::WindowsManager(MdiWidget *mdi, bool isPrivate) : QObject(mdi),
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
-	connect(ActionsManager::getAction(QLatin1String("ReopenTab"), this), SIGNAL(triggered()), this, SLOT(restore()));
+	connect(ActionsManager::getAction(Action::ReopenTabAction, this), SIGNAL(triggered()), this, SLOT(restore()));
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
@@ -310,67 +310,40 @@ void WindowsManager::restore(int index)
 	addWindow(window);
 }
 
-void WindowsManager::triggerAction(ActionIdentifier action, bool checked)
+void WindowsManager::triggerAction(int identifier, bool checked)
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	switch (action)
+	switch (identifier)
 	{
-		case NewTabAction:
-			open(QUrl(), NewTabOpen);
-
-			break;
-		case NewTabPrivateAction:
-			open(QUrl(), NewTabPrivateOpen);
-
-			break;
-		case NewWindowAction:
-			emit requestedNewWindow(false, false, QUrl());
-
-			break;
-		case NewWindowPrivateAction:
-			emit requestedNewWindow(true, false, QUrl());
-
-			break;
-		case CloneTabAction:
+		case Action::CloneTabAction:
 			cloneWindow(m_tabBar->currentIndex());
 
 			break;
-		case CloseTabAction:
+		case Action::CloseTabAction:
 			closeWindow(m_tabBar->currentIndex());
 
 			break;
-		case ActivateTabOnLeftAction:
+		case Action::ActivateTabOnLeftAction:
 			m_tabBar->activateTabOnLeft();
 
 			break;
-		case ActivateTabOnRightAction:
+		case Action::ActivateTabOnRightAction:
 			m_tabBar->activateTabOnRight();
 
 			break;
-		case GoToHomePageAction:
-			{
-				const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
-
-				if (!homePage.isEmpty())
-				{
-					open(QUrl(homePage), CurrentTabOpen);
-				}
-			}
-
-			break;
 		default:
-			if (action == PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+			if (identifier == Action::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
 				window = new Window(m_isPrivate, NULL, m_mdi);
 
 				addWindow(window, NewTabOpen);
 
-				window->triggerAction(PasteAndGoAction);
+				window->triggerAction(Action::PasteAndGoAction);
 			}
 			else if (window)
 			{
-				window->triggerAction(action, checked);
+				window->triggerAction(identifier, checked);
 			}
 	}
 }
@@ -553,7 +526,7 @@ void WindowsManager::closeWindow(Window *window)
 	{
 		if (lastTabClosingAction == QLatin1String("closeWindow"))
 		{
-			ActionsManager::triggerAction(QLatin1String("CloseWindow"), m_mdi);
+			ActionsManager::triggerAction(Action::CloseWindowAction, m_mdi);
 
 			return;
 		}
@@ -571,7 +544,7 @@ void WindowsManager::closeWindow(Window *window)
 		}
 		else
 		{
-			ActionsManager::getAction(QLatin1String("CloneTab"), m_mdi)->setEnabled(false);
+			ActionsManager::getAction(Action::CloneTabAction, m_mdi)->setEnabled(false);
 
 			emit windowTitleChanged(QString());
 		}
@@ -687,7 +660,7 @@ void WindowsManager::setActiveWindow(int index)
 		connect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	}
 
-	ActionsManager::getAction(QLatin1String("CloneTab"), m_mdi)->setEnabled(window && window->canClone());
+	ActionsManager::getAction(Action::CloneTabAction, m_mdi)->setEnabled(window && window->canClone());
 
 	emit actionsChanged();
 	emit currentWindowChanged(index);
@@ -721,11 +694,11 @@ void WindowsManager::setTabBar(TabBarWidget *tabBar)
 	m_tabBar = tabBar;
 }
 
-QAction* WindowsManager::getAction(ActionIdentifier action)
+Action *WindowsManager::getAction(int identifier)
 {
 	Window *window = m_mdi->getActiveWindow();
 
-	return (window ? window->getContentsWidget()->getAction(action) : NULL);
+	return (window ? window->getContentsWidget()->getAction(identifier) : NULL);
 }
 
 Window* WindowsManager::getWindow(int index) const

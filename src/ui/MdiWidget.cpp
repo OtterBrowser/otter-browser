@@ -26,13 +26,13 @@ void MdiWidget::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Tab)
 	{
-		ActionsManager::triggerAction(QLatin1String("ActivateTabOnRight"), parentWidget());
+		ActionsManager::triggerAction(Action::ActivateTabOnRightAction, parentWidget());
 
 		event->accept();
 	}
 	else if (event->key() == Qt::Key_Backtab)
 	{
-		ActionsManager::triggerAction(QLatin1String("ActivateTabOnLeft"), parentWidget());
+		ActionsManager::triggerAction(Action::ActivateTabOnLeftAction, parentWidget());
 
 		event->accept();
 	}

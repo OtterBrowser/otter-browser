@@ -25,48 +25,57 @@
 namespace Otter
 {
 
-Action::Action(const QIcon &icon, const QString &text, QObject *parent) : QAction(icon, text, parent),
-	m_identifier(UnknownAction),
-	m_scope(MainWindowScope)
+Action::Action(int identifier, const QIcon &icon, const QString &text, QObject *parent) : QAction(icon, text, parent),
+	m_identifier(identifier)
 {
-	setText(QCoreApplication::translate("actions", text.toUtf8().constData()));
+	update();
 }
 
-void Action::setName(const QString &name)
+void Action::setup(Action *action)
 {
-	setObjectName(name);
+	if (!action)
+	{
+		update();
+		setEnabled(false);
+
+		return;
+	}
+
+	setEnabled(action->isEnabled());
+	setText(action->text());
+	setIcon(action->icon());
+	setCheckable(action->isCheckable());
+	setChecked(action->isChecked());
 }
 
-void Action::setIdentifier(ActionIdentifier identifier)
+void Action::update()
 {
-	m_identifier = identifier;
+	const ActionDefinition action = ActionsManager::getActionDefinition(m_identifier);
+	QString text = QCoreApplication::translate("actions", action.text.toUtf8().constData());
+
+	if (!action.shortcuts.isEmpty())
+	{
+		text += QLatin1Char('\t') + action.shortcuts.first().toString(QKeySequence::NativeText);
+	}
+
+	setText(text);
 }
 
-void Action::setScope(ActionScope scope)
+QList<QKeySequence> Action::getShortcuts() const
 {
-	m_scope = scope;
+	return ActionsManager::getActionDefinition(m_identifier).shortcuts.toList();
 }
 
-QString Action::getName() const
-{
-	return objectName();
-}
-
-ActionIdentifier Action::getIdentifier() const
+int Action::getIdentifier() const
 {
 	return m_identifier;
-}
-
-ActionScope Action::getScope() const
-{
-	return m_scope;
 }
 
 bool Action::event(QEvent *event)
 {
 	if (event->type() == QEvent::LanguageChange)
 	{
-		setText(QCoreApplication::translate("actions", ActionsManager::getActionDefinition(objectName()).text.toUtf8().constData()));
+		update();
 	}
 
 	return QAction::event(event);

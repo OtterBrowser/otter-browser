@@ -56,37 +56,17 @@ public slots:
 	void openUrl(const QString &text = QString());
 	void storeWindowState();
 	void restoreWindowState();
+	void triggerAction(int identifier, bool checked = false);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
-	void updateAction(QAction *source, QAction *target);
 	bool event(QEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void actionOpen();
-	void actionSaveSession();
-	void actionManageSessions();
-	void actionWorkOffline(bool enable);
-	void actionShowMenuBar(bool enable);
-	void actionFullScreen();
-	void actionViewHistory();
-	void actionClearHistory();
-	void actionAddBookmark(const QUrl &url = QUrl(), const QString &title = QString());
-	void actionManageBookmarks();
-	void actionCookies();
-	void actionTransfers();
-	void actionErrorConsole(bool enabled);
-	void actionSidebar(bool enabled);
-	void actionContentBlocking();
-	void actionPreferences();
-	void actionSwitchApplicationLanguage();
-	void actionAboutApplication();
-	void actionLockToolBars(bool lock);
-	void actionGoToPage();
-	void actionQuickBookmarkAccess();
+	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString());
 	void transferStarted();
 	void updateActions();
 	void updateWindowTitle(const QString &title);

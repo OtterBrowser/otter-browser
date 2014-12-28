@@ -128,9 +128,9 @@ void ContentsWidget::goToHistoryIndex(int index)
 	Q_UNUSED(index)
 }
 
-void ContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void ContentsWidget::triggerAction(int identifier, bool checked)
 {
-	Q_UNUSED(action)
+	Q_UNUSED(identifier)
 	Q_UNUSED(checked)
 }
 
@@ -167,9 +167,9 @@ ContentsWidget* ContentsWidget::clone(bool cloneHistory)
 	return NULL;
 }
 
-QAction* ContentsWidget::getAction(ActionIdentifier action)
+Action* ContentsWidget::getAction(int identifier)
 {
-	Q_UNUSED(action)
+	Q_UNUSED(identifier)
 
 	return NULL;
 }

@@ -30,8 +30,8 @@ namespace Otter
 
 struct MouseGesture
 {
-	QString action;
 	MouseGestures::ActionList mouseActions;
+	int action;
 	int identifier;
 };
 

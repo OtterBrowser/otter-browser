@@ -24,7 +24,7 @@
 namespace Otter
 {
 
-ActionWidget::ActionWidget(ActionIdentifier identifier, Window *window, QWidget *parent) : QToolButton(parent)
+ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QToolButton(parent)
 {
 	setAutoRaise(true);
 
@@ -42,10 +42,25 @@ void ActionWidget::enterEvent(QEvent *event)
 {
 	QToolButton::enterEvent(event);
 
-	if (defaultAction() && !defaultAction()->shortcut().isEmpty())
+	Action *action = qobject_cast<Action*>(defaultAction());
+
+	if (action)
 	{
-		setToolTip(QStringLiteral("%1 (%2)").arg(defaultAction()->text()).arg(defaultAction()->shortcut().toString(QKeySequence::NativeText)));
+		QString text = action->text();
+
+		if (text.contains(QLatin1Char('\t')))
+		{
+			setToolTip(text.replace(QLatin1Char('\t'), QStringLiteral(" (")) + QLatin1Char(')'));
+		}
+		else
+		{
+			setToolTip(text);
+		}
+
+		return;
 	}
+
+	setToolTip(QString());
 }
 
 }

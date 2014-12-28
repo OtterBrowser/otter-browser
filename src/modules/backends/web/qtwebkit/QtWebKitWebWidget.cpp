@@ -112,41 +112,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Cut"), this), getAction(CutAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Copy"), this), getAction(CopyAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Paste"), this), getAction(PasteAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), getAction(DeleteAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SelectAll"), this), getAction(SelectAllAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Undo"), this), getAction(UndoAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Redo"), this), getAction(RedoAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("GoBack"), this), getAction(GoBackAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("GoForward"), this), getAction(GoForwardAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), getAction(ReloadAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Stop"), this), getAction(StopAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLink"), this), getAction(OpenLinkAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInThisTab"), this), getAction(OpenLinkInThisTabAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindow"), this), getAction(OpenLinkInNewWindowAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInNewTab"), this), getAction(OpenFrameInNewTabAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveLinkToDisk"), this), getAction(SaveLinkToDiskAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenImageInNewTab"), this), getAction(OpenImageInNewTabAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveImageToDisk"), this), getAction(SaveImageToDiskAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageToClipboard"), this), getAction(CopyImageToClipboardAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyImageUrlToClipboard"), this), getAction(CopyImageUrlToClipboardAction));
-#if QTWEBKIT_VERSION >= 0x050200
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveMediaToDisk"), this), getAction(SaveMediaToDiskAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyMediaUrlToClipboard"), this), getAction(CopyMediaUrlToClipboardAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaControls"), this), getAction(ToggleMediaControlsAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaLoop"), this), getAction(ToggleMediaLoopAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaPlayPause"), this), getAction(ToggleMediaPlayPauseAction));
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ToggleMediaMute"), this), getAction(ToggleMediaMuteAction));
-#endif
-
-	getAction(GoBackAction)->setEnabled(m_webView->history()->canGoBack());
-	getAction(GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	getAction(RewindAction)->setEnabled(m_webView->history()->canGoBack());
-	getAction(FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	getAction(ReloadAction)->setEnabled(true);
-	getAction(OpenLinkAction)->setIcon(Utils::getIcon(QLatin1String("document-open")));
+	getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
+	getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
+	getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	getAction(Action::ReloadAction)->setEnabled(true);
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
@@ -253,14 +223,12 @@ void QtWebKitWebWidget::pageLoadStarted()
 	m_isLoading = true;
 	m_thumbnail = QPixmap();
 
-	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
-	getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	getAction(Action::RewindAction)->setEnabled(getAction(Action::GoBackAction)->isEnabled());
+	getAction(Action::FastForwardAction)->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
+	getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
-	QAction *action = getAction(ReloadOrStopAction);
-
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Stop"), this), action);
-
+	Action *action = getAction(Action::ReloadOrStopAction);
+	action->setup(ActionsManager::getAction(Action::StopAction, this));
 	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
 
@@ -299,14 +267,12 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	m_networkManager->resetStatistics();
 
-	QAction *action = getAction(ReloadOrStopAction);
-
-	ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), action);
-
+	Action *action = getAction(Action::ReloadOrStopAction);
+	action->setup(ActionsManager::getAction(Action::ReloadAction, this));
 	action->setEnabled(true);
 	action->setShortcut(QKeySequence());
 
-	getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
 	if (!isPrivate())
 	{
@@ -437,7 +403,7 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 
 void QtWebKitWebWidget::hideInspector()
 {
-	triggerAction(InspectPageAction, false);
+	triggerAction(Action::InspectPageAction, false);
 }
 
 void QtWebKitWebWidget::linkHovered(const QString &link)
@@ -512,8 +478,8 @@ void QtWebKitWebWidget::notifyTitleChanged()
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	updateOptions(url);
-	getAction(RewindAction)->setEnabled(getAction(GoBackAction)->isEnabled());
-	getAction(FastForwardAction)->setEnabled(getAction(GoForwardAction)->isEnabled());
+	getAction(Action::RewindAction)->setEnabled(getAction(Action::GoBackAction)->isEnabled());
+	getAction(Action::FastForwardAction)->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
 
 	emit urlChanged(url);
 
@@ -527,7 +493,7 @@ void QtWebKitWebWidget::notifyIconChanged()
 
 void QtWebKitWebWidget::updateQuickSearchAction()
 {
-	QAction *defaultSearchAction = getAction(SearchAction);
+	QAction *defaultSearchAction = getAction(Action::SearchAction);
 	SearchInformation *engine = SearchesManager::getSearchEngine(getQuickSearchEngine());
 
 	if (engine)
@@ -545,7 +511,7 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 		defaultSearchAction->setToolTip(tr("No search engines defined"));
 	}
 
-	getAction(SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+	getAction(Action::SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -630,86 +596,160 @@ void QtWebKitWebWidget::goToHistoryIndex(int index)
 
 void QtWebKitWebWidget::triggerAction()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
 	{
-		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
+		triggerAction(action->getIdentifier());
 	}
 }
 
-void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
+void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 {
-	const QWebPage::WebAction webAction = mapAction(action);
-
-	if (webAction != QWebPage::NoWebAction)
+	switch (identifier)
 	{
-		m_webView->triggerPageAction(webAction, checked);
-
-		return;
-	}
-
-	switch (action)
-	{
-		case OpenLinkAction:
+		case Action::OpenLinkAction:
 			{
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_hitResult.boundingRect().center()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(m_hitResult.boundingRect().center()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 
 				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
 				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
+
+				m_clickPosition = QPoint();
 			}
 
 			break;
-		case OpenLinkInNewTabAction:
+		case Action::OpenLinkInCurrentTabAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), CurrentTabOpen);
+			}
+
+			break;
+		case Action::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
 				openUrl(m_hitResult.linkUrl(), NewTabOpen);
 			}
 
 			break;
-		case OpenLinkInNewTabBackgroundAction:
+		case Action::OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
 				openUrl(m_hitResult.linkUrl(), NewTabBackgroundOpen);
 			}
 
 			break;
-		case OpenLinkInNewWindowAction:
+		case Action::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
 				openUrl(m_hitResult.linkUrl(), NewWindowOpen);
 			}
 
 			break;
-		case OpenLinkInNewWindowBackgroundAction:
+		case Action::OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
 				openUrl(m_hitResult.linkUrl(), NewWindowBackgroundOpen);
 			}
 
 			break;
-		case RewindAction:
-			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
+		case Action::CopyLinkToClipboardAction:
+			if (!m_hitResult.linkUrl().isEmpty())
+			{
+				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl().toString());
+			}
 
 			break;
-		case FastForwardAction:
-			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
+		case Action::BookmarkLinkAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute(QLatin1String("title")));
+			}
 
 			break;
-		case ReloadAction:
-			emit aboutToReload();
-
-			m_webView->page()->triggerAction(QWebPage::Stop);
-			m_webView->page()->triggerAction(QWebPage::Reload);
+		case Action::SaveLinkToDiskAction:
+			m_webView->page()->triggerAction(QWebPage::DownloadLinkToDisk);
 
 			break;
-		case ReloadImageAction:
+		case Action::SaveLinkToDownloadsAction:
+			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
+
+			break;
+		case Action::OpenSelectionAsLinkAction:
+			openUrl(QUrl(m_webView->selectedText()));
+
+			break;
+		case Action::OpenFrameInCurrentTabAction:
+			if (m_hitResult.frame())
+			{
+				setUrl(m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+			}
+
+			break;
+		case Action::OpenFrameInNewTabAction:
+			if (m_hitResult.frame())
+			{
+				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), CurrentTabOpen);
+			}
+
+			break;
+		case Action::OpenFrameInNewTabBackgroundAction:
+			if (m_hitResult.frame())
+			{
+				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewTabBackgroundOpen);
+			}
+
+			break;
+		case Action::CopyFrameLinkToClipboardAction:
+			if (m_hitResult.frame())
+			{
+				QGuiApplication::clipboard()->setText((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()).toString());
+			}
+
+			break;
+		case Action::ReloadFrameAction:
+			if (m_hitResult.frame())
+			{
+				const QUrl url = (m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+
+				m_hitResult.frame()->setUrl(QUrl());
+				m_hitResult.frame()->setUrl(url);
+			}
+
+			break;
+		case Action::OpenImageInNewTabAction:
+			if (!m_hitResult.imageUrl().isEmpty())
+			{
+				openUrl(m_hitResult.imageUrl(), NewTabOpen);
+			}
+
+			break;
+		case Action::SaveImageToDiskAction:
+			if (m_hitResult.imageUrl().isValid())
+			{
+				emit downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
+			}
+
+			break;
+		case Action::CopyImageToClipboardAction:
+			m_webView->page()->triggerAction(QWebPage::CopyImageToClipboard);
+
+			break;
+		case Action::CopyImageUrlToClipboardAction:
+			if (!m_hitResult.imageUrl().isEmpty())
+			{
+				QApplication::clipboard()->setText(m_hitResult.imageUrl().toString());
+			}
+
+			break;
+		case Action::ReloadImageAction:
 			if ((!m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img")) && !m_hitResult.element().isNull())
 			{
 				if (getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
-					triggerAction(ReloadAndBypassCacheAction);
+					triggerAction(Action::ReloadAndBypassCacheAction);
 				}
 				else
 				{
@@ -731,48 +771,7 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			}
 
 			break;
-		case CopyAddressAction:
-			QApplication::clipboard()->setText(getUrl().toString());
-
-			break;
-		case ActivateWebpageAction:
-			{
-				m_webView->setFocus();
-
-				m_page->mainFrame()->setFocus();
-
-				QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
-
-				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
-				{
-					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
-				}
-			}
-
-			break;
-		case ReloadOrStopAction:
-			if (isLoading())
-			{
-				triggerAction(StopAction);
-			}
-			else
-			{
-				triggerAction(ReloadAction);
-			}
-
-			break;
-		case BookmarkLinkAction:
-			if (m_hitResult.linkUrl().isValid())
-			{
-				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute(QLatin1String("title")));
-			}
-
-			break;
-		case OpenSelectionAsLinkAction:
-			openUrl(QUrl(m_webView->selectedText()));
-
-			break;
-		case ImagePropertiesAction:
+		case Action::ImagePropertiesAction:
 			{
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
 				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkManager->cache() ? m_networkManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
@@ -795,115 +794,135 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			}
 
 			break;
-		case SaveImageToDiskAction:
-			if (m_hitResult.imageUrl().isValid())
-			{
-				emit downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
-			}
-
-			break;
 #if QTWEBKIT_VERSION >= 0x050200
-		case SaveMediaToDiskAction:
+		case Action::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl().isValid())
 			{
 				emit downloadFile(QNetworkRequest(m_hitResult.mediaUrl()));
 			}
 
 			break;
-#endif
-		case InspectPageAction:
-			if (!m_inspector)
+		case Action::CopyMediaUrlToClipboardAction:
+			if (!m_hitResult.mediaUrl().isEmpty())
 			{
-				m_inspector = new QWebInspector(this);
-				m_inspector->setPage(m_webView->page());
-				m_inspector->setContextMenuPolicy(Qt::NoContextMenu);
-				m_inspector->setMinimumHeight(200);
-				m_inspector->installEventFilter(this);
-
-				m_splitter->addWidget(m_inspector);
-
-				m_inspectorCloseButton = new QToolButton(m_inspector);
-				m_inspectorCloseButton->setAutoFillBackground(false);
-				m_inspectorCloseButton->setAutoRaise(true);
-				m_inspectorCloseButton->setIcon(Utils::getIcon(QLatin1String("window-close")));
-				m_inspectorCloseButton->setToolTip(tr("Close"));
-
-				connect(m_inspectorCloseButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
+				QApplication::clipboard()->setText(m_hitResult.mediaUrl().toString());
 			}
 
-			m_inspector->setVisible(checked);
+			break;
+		case Action::ToggleMediaControlsAction:
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls);
 
-			if (checked)
+			break;
+		case Action::ToggleMediaLoopAction:
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop);
+
+			break;
+		case Action::ToggleMediaPlayPauseAction:
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaPlayPause);
+
+			break;
+		case Action::ToggleMediaMuteAction:
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaMute);
+#endif
+		case Action::GoBackAction:
+			m_webView->page()->triggerAction(QWebPage::Back);
+
+			break;
+		case Action::GoForwardAction:
+			m_webView->page()->triggerAction(QWebPage::Forward);
+
+			break;
+		case Action::RewindAction:
+			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(0));
+
+			break;
+		case Action::FastForwardAction:
+			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
+
+			break;
+		case Action::StopAction:
+			m_webView->page()->triggerAction(QWebPage::Stop);
+
+			break;
+		case Action::StopScheduledPageRefreshAction:
+			m_webView->page()->triggerAction(QWebPage::StopScheduledPageRefresh);
+
+			break;
+		case Action::ReloadAction:
+			emit aboutToReload();
+
+			m_webView->page()->triggerAction(QWebPage::Stop);
+			m_webView->page()->triggerAction(QWebPage::Reload);
+
+			break;
+		case Action::ReloadOrStopAction:
+			if (isLoading())
 			{
-				m_inspectorCloseButton->setFixedSize(16, 16);
-				m_inspectorCloseButton->show();
-				m_inspectorCloseButton->raise();
-				m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
+				triggerAction(Action::StopAction);
 			}
 			else
 			{
-				m_inspectorCloseButton->hide();
+				triggerAction(Action::ReloadAction);
 			}
 
-			getAction(InspectPageAction)->setChecked(checked);
-
-			emit actionsChanged();
-			emit progressBarGeometryChanged();
+			break;
+		case Action::ReloadAndBypassCacheAction:
+			m_webView->page()->triggerAction(QWebPage::ReloadAndBypassCache);
 
 			break;
-		case InspectElementAction:
-			triggerAction(InspectPageAction, true);
-
-			m_webView->triggerPageAction(QWebPage::InspectElement);
+		case Action::UndoAction:
+			m_webView->page()->triggerAction(QWebPage::Undo);
 
 			break;
-		case SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
+		case Action::RedoAction:
+			m_webView->page()->triggerAction(QWebPage::Redo);
 
 			break;
-		case OpenFrameInThisTabAction:
-			if (m_hitResult.frame())
+		case Action::CutAction:
+			m_webView->page()->triggerAction(QWebPage::Cut);
+
+			break;
+		case Action::CopyAction:
+			m_webView->page()->triggerAction(QWebPage::Copy);
+
+			break;
+		case Action::CopyPlainTextAction:
 			{
-				setUrl(m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+				const QString text = getSelectedText();
+
+				if (!text.isEmpty())
+				{
+					QApplication::clipboard()->setText(text);
+				}
 			}
 
 			break;
-		case OpenFrameInNewTabBackgroundAction:
-			if (m_hitResult.frame())
-			{
-				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewTabBackgroundOpen);
-			}
+		case Action::CopyAddressAction:
+			QApplication::clipboard()->setText(getUrl().toString());
 
 			break;
-		case CopyLinkToClipboardAction:
-			if (!m_hitResult.linkUrl().isEmpty())
-			{
-				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl().toString());
-			}
+		case Action::PasteAction:
+			m_webView->page()->triggerAction(QWebPage::Paste);
 
 			break;
-		case CopyFrameLinkToClipboardAction:
-			if (m_hitResult.frame())
-			{
-				QGuiApplication::clipboard()->setText((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()).toString());
-			}
+		case Action::DeleteAction:
+			m_webView->page()->triggerAction(QWebPage::DeleteEndOfWord);
 
 			break;
-		case ReloadFrameAction:
-			if (m_hitResult.frame())
-			{
-				const QUrl url = (m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
-
-				m_hitResult.frame()->setUrl(QUrl());
-				m_hitResult.frame()->setUrl(url);
-			}
+		case Action::SelectAllAction:
+			m_webView->page()->triggerAction(QWebPage::SelectAll);
 
 			break;
-		case SearchAction:
-			quickSearch(getAction(SearchAction));
+		case Action::ClearAllAction:
+			triggerAction(Action::SelectAllAction);
+			triggerAction(Action::DeleteAction);
 
 			break;
-		case CreateSearchAction:
+		case Action::SearchAction:
+			quickSearch(getAction(Action::SearchAction));
+
+			break;
+		case Action::CreateSearchAction:
 			{
 				QWebElement parentElement = m_hitResult.element().parent();
 
@@ -1038,59 +1057,46 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 			}
 
 			break;
-		case ClearAllAction:
-			triggerAction(SelectAllAction);
-			triggerAction(DeleteAction);
-
-			break;
-		case CopyAsPlainTextAction:
-			{
-				const QString text = getSelectedText();
-
-				if (!text.isEmpty())
-				{
-					QApplication::clipboard()->setText(text);
-				}
-			}
-
-			break;
-		case ScrollToStartAction:
+		case Action::ScrollToStartAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), 0));
 
 			break;
-		case ScrollToEndAction:
+		case Action::ScrollToEndAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)));
 
 			break;
-		case ScrollPageUpAction:
+		case Action::ScrollPageUpAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMax(0, (m_webView->page()->mainFrame()->scrollPosition().y() - m_webView->height()))));
 
 			break;
-		case ScrollPageDownAction:
+		case Action::ScrollPageDownAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(m_webView->page()->mainFrame()->scrollPosition().x(), qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical), (m_webView->page()->mainFrame()->scrollPosition().y() + m_webView->height()))));
 
 			break;
-		case ScrollPageLeftAction:
+		case Action::ScrollPageLeftAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMax(0, (m_webView->page()->mainFrame()->scrollPosition().x() - m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
-		case ScrollPageRightAction:
+		case Action::ScrollPageRightAction:
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
-		case WebsitePreferencesAction:
+		case Action::ActivateWebpageAction:
 			{
-				const QUrl url(getUrl());
-				WebsitePreferencesDialog dialog(url, m_networkManager->getCookieJar()->getCookies(url.host()), this);
+				m_webView->setFocus();
 
-				if (dialog.exec() == QDialog::Accepted)
+				m_page->mainFrame()->setFocus();
+
+				QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
 				{
-					updateOptions(getUrl());
+					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
 				}
 			}
 
 			break;
-		case LoadPluginsAction:
+		case Action::LoadPluginsAction:
 			{
 				m_canLoadPlugins = true;
 
@@ -1110,7 +1116,65 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 					frames.append(frame->childFrames());
 				}
 
-				getAction(LoadPluginsAction)->setEnabled(false);
+				getAction(Action::LoadPluginsAction)->setEnabled(false);
+			}
+
+			break;
+		case Action::InspectPageAction:
+			if (!m_inspector)
+			{
+				m_inspector = new QWebInspector(this);
+				m_inspector->setPage(m_webView->page());
+				m_inspector->setContextMenuPolicy(Qt::NoContextMenu);
+				m_inspector->setMinimumHeight(200);
+				m_inspector->installEventFilter(this);
+
+				m_splitter->addWidget(m_inspector);
+
+				m_inspectorCloseButton = new QToolButton(m_inspector);
+				m_inspectorCloseButton->setAutoFillBackground(false);
+				m_inspectorCloseButton->setAutoRaise(true);
+				m_inspectorCloseButton->setIcon(Utils::getIcon(QLatin1String("window-close")));
+				m_inspectorCloseButton->setToolTip(tr("Close"));
+
+				connect(m_inspectorCloseButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
+			}
+
+			m_inspector->setVisible(checked);
+
+			if (checked)
+			{
+				m_inspectorCloseButton->setFixedSize(16, 16);
+				m_inspectorCloseButton->show();
+				m_inspectorCloseButton->raise();
+				m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
+			}
+			else
+			{
+				m_inspectorCloseButton->hide();
+			}
+
+			getAction(Action::InspectPageAction)->setChecked(checked);
+
+			emit actionsChanged();
+			emit progressBarGeometryChanged();
+
+			break;
+		case Action::InspectElementAction:
+			triggerAction(Action::InspectPageAction, true);
+
+			m_webView->triggerPageAction(QWebPage::InspectElement);
+
+			break;
+		case Action::WebsitePreferencesAction:
+			{
+				const QUrl url(getUrl());
+				WebsitePreferencesDialog dialog(url, m_networkManager->getCookieJar()->getCookies(url.host()), this);
+
+				if (dialog.exec() == QDialog::Accepted)
+				{
+					updateOptions(getUrl());
+				}
 			}
 
 			break;
@@ -1121,14 +1185,12 @@ void QtWebKitWebWidget::triggerAction(ActionIdentifier action, bool checked)
 
 void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 {
-	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().isEmpty() || m_hotclickPosition.isNull())))
+	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().isEmpty() || m_clickPosition.isNull())))
 	{
-		m_hotclickPosition = QPoint();
-
 		return;
 	}
 
-	const QPoint hitPosition = (position.isNull() ? m_hotclickPosition : position);
+	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
 	QContextMenuEvent menuEvent(QContextMenuEvent::Other, hitPosition, m_webView->mapToGlobal(hitPosition), Qt::NoModifier);
 
 	if (m_page->swallowContextMenuEvent(&menuEvent))
@@ -1137,8 +1199,6 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 
 	QWebFrame *frame = m_webView->page()->frameAt(hitPosition);
-
-	m_hotclickPosition = QPoint();
 
 	if (!frame)
 	{
@@ -1191,11 +1251,11 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 		const bool isImageOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
 		const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl().fileName(), Qt::ElideMiddle, 256);
-		QAction *openImageAction = getAction(OpenImageInNewTabAction);
+		QAction *openImageAction = getAction(Action::OpenImageInNewTabAction);
 		openImageAction->setText((fileName.isEmpty() || m_hitResult.imageUrl().scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName));
 		openImageAction->setEnabled(!isImageOpened);
 
-		getAction(InspectElementAction)->setEnabled(!isImageOpened);
+		getAction(Action::InspectElementAction)->setEnabled(!isImageOpened);
 	}
 
 #if QTWEBKIT_VERSION >= 0x050200
@@ -1207,14 +1267,14 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 		const bool isPaused = m_hitResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool();
 		const bool isMuted = m_hitResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool();
 
-		getAction(SaveMediaToDiskAction)->setText(isVideo ? tr("Save Video...") : tr("Save Audio..."));
-		getAction(CopyMediaUrlToClipboardAction)->setText(isVideo ? tr("Copy Video Link to Clipboard") : tr("Copy Audio Link to Clipboard"));
-		getAction(ToggleMediaControlsAction)->setText(tr("Show Controls"));
-		getAction(ToggleMediaLoopAction)->setText(tr("Looping"));
-		getAction(ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
-		getAction(ToggleMediaPlayPauseAction)->setText(isPaused ? tr("Play") : tr("Pause"));
-		getAction(ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
-		getAction(ToggleMediaMuteAction)->setText(isMuted ? tr("Unmute") : tr("Mute"));
+		getAction(Action::SaveMediaToDiskAction)->setText(isVideo ? tr("Save Video...") : tr("Save Audio..."));
+		getAction(Action::CopyMediaUrlToClipboardAction)->setText(isVideo ? tr("Copy Video Link to Clipboard") : tr("Copy Audio Link to Clipboard"));
+		getAction(Action::ToggleMediaControlsAction)->setText(tr("Show Controls"));
+		getAction(Action::ToggleMediaLoopAction)->setText(tr("Looping"));
+		getAction(Action::ToggleMediaPlayPauseAction)->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		getAction(Action::ToggleMediaPlayPauseAction)->setText(isPaused ? tr("Play") : tr("Pause"));
+		getAction(Action::ToggleMediaMuteAction)->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		getAction(Action::ToggleMediaMuteAction)->setText(isMuted ? tr("Unmute") : tr("Mute"));
 	}
 #endif
 
@@ -1222,7 +1282,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	{
 		flags |= EditMenu;
 
-		getAction(ClearAllAction)->setEnabled(getAction(SelectAllAction)->isEnabled());
+		getAction(Action::ClearAllAction)->setEnabled(getAction(Action::SelectAllAction)->isEnabled());
 	}
 
 	if (flags == NoMenu || flags == FormMenu)
@@ -1239,7 +1299,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	if (flags & ImageMenu)
 	{
-		getAction(OpenImageInNewTabAction)->setText(tr("Open Image"));
+		getAction(Action::OpenImageInNewTabAction)->setText(tr("Open Image"));
 	}
 }
 
@@ -1249,10 +1309,10 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	{
 		m_webView->page()->history()->clear();
 
-		getAction(GoBackAction)->setEnabled(false);
-		getAction(GoForwardAction)->setEnabled(false);
-		getAction(RewindAction)->setEnabled(false);
-		getAction(FastForwardAction)->setEnabled(false);
+		getAction(Action::GoBackAction)->setEnabled(false);
+		getAction(Action::GoForwardAction)->setEnabled(false);
+		getAction(Action::RewindAction)->setEnabled(false);
+		getAction(Action::FastForwardAction)->setEnabled(false);
 
 		emit actionsChanged();
 
@@ -1400,261 +1460,77 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	return widget;
 }
 
-QAction* QtWebKitWebWidget::getAction(ActionIdentifier action)
+Action* QtWebKitWebWidget::getAction(int identifier)
 {
-	const QWebPage::WebAction webAction = mapAction(action);
-
-	if (webAction != QWebPage::NoWebAction)
-	{
-		return m_webView->page()->action(webAction);
-	}
-
-	if (action == UnknownAction)
+	if (identifier < 0)
 	{
 		return NULL;
 	}
 
-	if (m_actions.contains(action))
+	if (m_actions.contains(identifier))
 	{
-		return m_actions[action];
+		return m_actions[identifier];
 	}
 
-	QAction *actionObject = new QAction(this);
-	actionObject->setData(action);
+	Action *action = new Action(identifier, QIcon(), QString(), this);
+	action->setup(ActionsManager::getAction(identifier, this));
 
-	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
-	switch (action)
+	switch (identifier)
 	{
-		case OpenLinkAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLink"), this), actionObject, true);
+		case Action::ReloadOrStopAction:
+		case Action::InspectPageAction:
+		case Action::InspectElementAction:
+		case Action::FindAction:
+		case Action::FindNextAction:
+		case Action::FindPreviousAction:
+		case Action::CopyPlainTextAction:
+			action->setEnabled(true);
 
 			break;
-		case OpenLinkInNewTabAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewTab"), this), actionObject, true);
+		case Action::ViewFrameSourceAction:
+		case Action::ViewSourceAction:
+		case Action::LoadPluginsAction:
+			action->setEnabled(false);
 
 			break;
-		case OpenLinkInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewTabBackground"), this), actionObject, true);
+		case Action::RewindAction:
+			action->setEnabled(getAction(Action::GoBackAction)->isEnabled());
 
 			break;
-		case OpenLinkInNewWindowAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindow"), this), actionObject, true);
+		case Action::FastForwardAction:
+			action->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
 
 			break;
-		case OpenLinkInNewWindowBackgroundAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenLinkInNewWindowBackground"), this), actionObject, true);
+		case Action::ReloadTimeAction:
+			action->setMenu(getReloadTimeMenu());
 
 			break;
-		case OpenFrameInThisTabAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInThisTab"), this), actionObject, true);
+		case Action::ValidateAction:
+			action->setEnabled(false);
+			action->setMenu(new QMenu(this));
 
 			break;
-		case OpenFrameInNewTabBackgroundAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenFrameInNewTabBackground"), this), actionObject, true);
+		case Action::SearchMenuAction:
+			action->setMenu(getQuickSearchMenu());
 
 			break;
-		case CopyLinkToClipboardAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyLinkToClipboard"), this), actionObject, true);
-
-			break;
-		case CopyFrameLinkToClipboardAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyFrameLinkToClipboard"), this), actionObject, true);
-
-			break;
-		case ViewSourceFrameAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ViewSourceFrame"), this), actionObject, true);
-
-			actionObject->setEnabled(false);
-
-			break;
-		case ReloadFrameAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadFrame"), this), actionObject, true);
-
-			break;
-		case ReloadImageAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadImage"), this), actionObject, true);
-
-			break;
-		case SaveLinkToDownloadsAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveLinkToDownloads"), this), actionObject);
-
-			break;
-
-		case SaveImageToDiskAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveImageToDisk"), this), actionObject);
-
-			break;
-		case SaveMediaToDiskAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SaveMediaToDisk"), this), actionObject);
-
-			break;
-		case RewindAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Rewind"), this), actionObject, true);
-
-			actionObject->setEnabled(getAction(GoBackAction)->isEnabled());
-
-			break;
-		case FastForwardAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FastForward"), this), actionObject, true);
-
-			actionObject->setEnabled(getAction(GoForwardAction)->isEnabled());
-
-			break;
-		case ReloadAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), actionObject, true);
-
-			break;
-		case ReloadTimeAction:
-			{
-				ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ReloadTime"), this), actionObject, true);
-
-				actionObject->setMenu(getReloadTimeMenu());
-			}
-
-			break;
-		case PrintAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Print"), this), actionObject, true);
-
-			break;
-		case BookmarkAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("AddBookmark"), this), actionObject, true);
-
-			break;
-		case BookmarkLinkAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("BookmarkLink"), this), actionObject, true);
-
-			break;
-		case CopyAddressAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyAddress"), this), actionObject, true);
-
-			break;
-		case ViewSourceAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ViewSource"), this), actionObject, true);
-
-			actionObject->setEnabled(false);
-
-			break;
-		case ValidateAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Validate"), this), actionObject, true);
-
-			actionObject->setMenu(new QMenu(this));
-			actionObject->setEnabled(false);
-
-			break;
-		case WebsitePreferencesAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("WebsitePreferences"), this), actionObject, false);
-
-			break;
-		case ZoomInAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomIn"), this), actionObject, true);
-
-			break;
-		case ZoomOutAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomOut"), this), actionObject, true);
-
-			break;
-		case ZoomOriginalAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ZoomOriginal"), this), actionObject, true);
-
-			break;
-		case SearchAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Search"), this), actionObject, true);
-
-			break;
-		case SearchMenuAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SearchMenu"), this), actionObject, true);
-
-			actionObject->setMenu(getQuickSearchMenu());
-
-			break;
-		case OpenSelectionAsLinkAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("OpenSelectionAsLink"), this), actionObject, true);
-
-			break;
-		case ClearAllAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ClearAll"), this), actionObject, true);
-
-			break;
-		case SpellCheckAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SpellCheck"), this), actionObject, true);
-
-			actionObject->setEnabled(false);
-
-			break;
-		case ImagePropertiesAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("ImageProperties"), this), actionObject, true);
-
-			break;
-		case CreateSearchAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CreateSearch"), this), actionObject, true);
-
-			break;
-		case ReloadOrStopAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Reload"), this), actionObject);
-
-			actionObject->setEnabled(true);
-			actionObject->setShortcut(QKeySequence());
-
-			break;
-		case InspectPageAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectPage"), this), actionObject);
-
-			actionObject->setEnabled(true);
-			actionObject->setShortcut(QKeySequence());
-
-			break;
-		case InspectElementAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("InspectElement"), this), actionObject);
-
-			actionObject->setEnabled(true);
-			actionObject->setShortcut(QKeySequence());
-
-			break;
-		case FindAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Find"), this), actionObject, true);
-
-			actionObject->setEnabled(true);
-
-			break;
-		case FindNextAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FindNext"), this), actionObject, true);
-
-			actionObject->setEnabled(true);
-
-			break;
-		case FindPreviousAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("FindPrevious"), this), actionObject, true);
-
-			actionObject->setEnabled(true);
-
-			break;
-		case CopyAsPlainTextAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("CopyAsPlainText"), this), actionObject, true);
-
-			actionObject->setEnabled(true);
-
-			break;
-		case LoadPluginsAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("LoadPlugins"), this), actionObject);
-
-			actionObject->setEnabled(false);
-			actionObject->setShortcut(QKeySequence());
+		case Action::CheckSpellingAction:
+			action->setup(ActionsManager::getAction(Action::CheckSpellingAction, this));
+			action->setEnabled(false);
 
 			break;
 		default:
-			actionObject->deleteLater();
-			actionObject = NULL;
-
 			break;
 	}
 
-	if (actionObject)
+	if (action)
 	{
-		m_actions[action] = actionObject;
+		m_actions[identifier] = action;
 	}
 
-	return actionObject;
+	return action;
 }
 
 QUndoStack* QtWebKitWebWidget::getUndoStack()
@@ -1851,65 +1727,6 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
-QWebPage::WebAction QtWebKitWebWidget::mapAction(ActionIdentifier action) const
-{
-	switch (action)
-	{
-		case OpenLinkInThisTabAction:
-			return QWebPage::OpenLinkInThisWindow;
-		case OpenFrameInNewTabAction:
-			return QWebPage::OpenFrameInNewWindow;
-		case SaveLinkToDiskAction:
-			return QWebPage::DownloadLinkToDisk;
-		case OpenImageInNewTabAction:
-			return QWebPage::OpenImageInNewWindow;
-		case CopyImageToClipboardAction:
-			return QWebPage::CopyImageToClipboard;
-		case CopyImageUrlToClipboardAction:
-			return QWebPage::CopyImageUrlToClipboard;
-		case GoBackAction:
-			return QWebPage::Back;
-		case GoForwardAction:
-			return QWebPage::Forward;
-		case StopAction:
-			return QWebPage::Stop;
-		case StopScheduledPageRefreshAction:
-			return QWebPage::StopScheduledPageRefresh;
-		case ReloadAndBypassCacheAction:
-			return QWebPage::ReloadAndBypassCache;
-		case CutAction:
-			return QWebPage::Cut;
-		case CopyAction:
-			return QWebPage::Copy;
-		case PasteAction:
-			return QWebPage::Paste;
-		case DeleteAction:
-			return QWebPage::DeleteEndOfWord;
-		case SelectAllAction:
-			return QWebPage::SelectAll;
-		case UndoAction:
-			return QWebPage::Undo;
-		case RedoAction:
-			return QWebPage::Redo;
-#if QTWEBKIT_VERSION >= 0x050200
-		case CopyMediaUrlToClipboardAction:
-			return QWebPage::CopyMediaUrlToClipboard;
-		case ToggleMediaControlsAction:
-			return QWebPage::ToggleMediaControls;
-		case ToggleMediaLoopAction:
-			return QWebPage::ToggleMediaLoop;
-		case ToggleMediaPlayPauseAction:
-			return QWebPage::ToggleMediaPlayPause;
-		case ToggleMediaMuteAction:
-			return QWebPage::ToggleMediaMute;
-#endif
-		default:
-			return QWebPage::NoWebAction;
-	}
-
-	return QWebPage::NoWebAction;
-}
-
 bool QtWebKitWebWidget::canLoadPlugins() const
 {
 	return m_canLoadPlugins;
@@ -2037,7 +1854,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					m_isUsingRockerNavigation = true;
 
-					triggerAction(GoBackAction);
+					triggerAction(Action::GoBackAction);
 
 					event->ignore();
 
@@ -2050,7 +1867,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					if (mouseEvent->modifiers() & Qt::ControlModifier)
 					{
-						triggerAction(OpenLinkInNewTabBackgroundAction);
+						triggerAction(Action::OpenLinkInNewTabBackgroundAction);
 
 						event->accept();
 
@@ -2059,7 +1876,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (mouseEvent->modifiers() & Qt::ShiftModifier)
 					{
-						triggerAction(OpenLinkInNewTabAction);
+						triggerAction(Action::OpenLinkInNewTabAction);
 
 						event->accept();
 
@@ -2082,15 +1899,22 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else if (mouseEvent->button() == Qt::RightButton)
 			{
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
 				if (mouseEvent->buttons() & Qt::LeftButton)
 				{
-					triggerAction(GoForwardAction);
+					triggerAction(Action::GoForwardAction);
 
 					event->ignore();
 				}
 				else
 				{
 					event->accept();
+
+					if (!m_hitResult.linkElement().isNull())
+					{
+						m_clickPosition = mouseEvent->pos();
+					}
 
 					GesturesManager::startGesture(m_webView, mouseEvent);
 				}
@@ -2099,7 +1923,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else if (mouseEvent->button() == Qt::BackButton)
 			{
-				triggerAction(GoBackAction);
+				triggerAction(Action::GoBackAction);
 
 				event->accept();
 
@@ -2107,7 +1931,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else if (mouseEvent->button() == Qt::ForwardButton)
 			{
-				triggerAction(GoForwardAction);
+				triggerAction(Action::GoForwardAction);
 
 				event->accept();
 
@@ -2145,7 +1969,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					element.removeAttribute(QLatin1String("data-otter-browser"));
 
-					getAction(LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+					getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
@@ -2177,7 +2001,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (!result.isContentEditable() && result.element().tagName().toLower() != QLatin1String("textarea") && result.element().tagName().toLower() != QLatin1String("select") && result.element().tagName().toLower() != QLatin1String("input"))
 				{
-					m_hotclickPosition = mouseEvent->pos();
+					m_clickPosition = mouseEvent->pos();
 
 					QTimer::singleShot(250, this, SLOT(showContextMenu()));
 				}
@@ -2205,9 +2029,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				if (isLoading())
 				{
-					triggerAction(StopAction);
+					triggerAction(Action::StopAction);
 
-					ActionsManager::triggerAction(ActivateAddressFieldAction, this);
+					ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
 
 					event->accept();
 

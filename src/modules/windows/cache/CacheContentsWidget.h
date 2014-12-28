@@ -43,7 +43,7 @@ public:
 	~CacheContentsWidget();
 
 	void print(QPrinter *printer);
-	QAction* getAction(ActionIdentifier action);
+	Action* getAction(int identifier);
 	QString getTitle() const;
 	QLatin1String getType() const;
 	QUrl getUrl() const;
@@ -52,7 +52,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void triggerAction(ActionIdentifier action, bool checked = false);
+	void triggerAction(int identifier, bool checked = false);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -77,7 +77,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
-	QHash<ActionIdentifier, QAction*> m_actions;
+	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	Ui::CacheContentsWidget *m_ui;
 };

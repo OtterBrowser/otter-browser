@@ -118,7 +118,7 @@
 				]
 			},
 			"separator",
-			"ViewHistory",
+			"History",
 			"separator",
 			"ClearHistory"
 		]
@@ -130,7 +130,7 @@
 		"actions":
 		[
 			"AddBookmark",
-			"ManageBookmarks",
+			"Bookmarks",
 			"separator"
 		]
 	},
@@ -143,8 +143,8 @@
 			"Transfers",
 			"Cookies",
 			"ContentBlocking",
-			"ErrorConsole",
-			"Sidebar",
+			"ShowErrorConsole",
+			"ShowSidebar",
 			"separator",
 			"Preferences"
 		]

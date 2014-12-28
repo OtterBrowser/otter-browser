@@ -259,7 +259,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(QLatin1String("ClearHistory"), this));
+	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
 	menu.exec(m_ui->cookiesView->mapToGlobal(point));
 }
 
@@ -268,17 +268,17 @@ void CookiesContentsWidget::print(QPrinter *printer)
 	m_ui->cookiesView->render(printer);
 }
 
-void CookiesContentsWidget::triggerAction(ActionIdentifier action, bool checked)
+void CookiesContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	switch (action)
+	switch (identifier)
 	{
-		case SelectAllAction:
+		case Action::SelectAllAction:
 			m_ui->cookiesView->selectAll();
 
 			break;
-		case DeleteAction:
+		case Action::DeleteAction:
 			removeCookies();
 
 			break;
@@ -289,11 +289,11 @@ void CookiesContentsWidget::triggerAction(ActionIdentifier action, bool checked)
 
 void CookiesContentsWidget::triggerAction()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
 	{
-		triggerAction(static_cast<ActionIdentifier>(action->data().toInt()));
+		triggerAction(action->getIdentifier());
 	}
 }
 
@@ -303,9 +303,9 @@ void CookiesContentsWidget::updateActions()
 
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
-	if (m_ui->deleteButton->isEnabled() != getAction(DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
 	{
-		getAction(DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 
 		emit actionsChanged();
 	}
@@ -365,41 +365,26 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 	return NULL;
 }
 
-QAction* CookiesContentsWidget::getAction(ActionIdentifier action)
+Action* CookiesContentsWidget::getAction(int identifier)
 {
-	if (m_actions.contains(action))
+	if (m_actions.contains(identifier))
 	{
-		return m_actions[action];
+		return m_actions[identifier];
 	}
 
-	QAction *actionObject = new QAction(this);
-	actionObject->setData(action);
-
-	connect(actionObject, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
-	switch (action)
+	if (identifier != Action::DeleteAction && identifier != Action::SelectAllAction)
 	{
-		case SelectAllAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("SelectAll"), this), actionObject);
-
-			break;
-		case DeleteAction:
-			ActionsManager::setupLocalAction(ActionsManager::getAction(QLatin1String("Delete"), this), actionObject);
-
-			break;
-		default:
-			actionObject->deleteLater();
-			actionObject = NULL;
-
-			break;
+		return NULL;
 	}
 
-	if (actionObject)
-	{
-		m_actions[action] = actionObject;
-	}
+	Action *action = new Action(identifier, QIcon(), QString(), this);
+	action->setup(ActionsManager::getAction(identifier, this));
 
-	return actionObject;
+	m_actions[identifier] = action;
+
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	return action;
 }
 
 QString CookiesContentsWidget::getTitle() const

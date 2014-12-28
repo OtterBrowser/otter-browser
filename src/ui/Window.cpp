@@ -98,24 +98,24 @@ void Window::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void Window::triggerAction(ActionIdentifier action, bool checked)
+void Window::triggerAction(int identifier, bool checked)
 {
-	if (action == ActivateSearchFieldAction && m_searchWidget)
+	if (identifier == Action::ActivateSearchFieldAction && m_searchWidget)
 	{
 		m_searchWidget->setFocus();
 	}
 	else if (m_addressWidget)
 	{
-		if (action == ActivateAddressFieldAction)
+		if (identifier == Action::ActivateAddressFieldAction)
 		{
 			m_addressWidget->setFocus(Qt::ShortcutFocusReason);
 		}
-		else if (action == ActivateSearchFieldAction)
+		else if (identifier == Action::ActivateSearchFieldAction)
 		{
 			m_addressWidget->setText(QLatin1String("? "));
 			m_addressWidget->setFocus(Qt::OtherFocusReason);
 		}
-		else if (action == PasteAndGoAction)
+		else if (identifier == Action::PasteAndGoAction)
 		{
 			if (!QApplication::clipboard()->text().isEmpty())
 			{
@@ -124,18 +124,18 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 
 			return;
 		}
-		else if (action == GoAction)
+		else if (identifier == Action::GoAction)
 		{
 			m_addressWidget->handleUserInput(m_addressWidget->text());
 
 			return;
 		}
 	}
-	else if (action == ActivateAddressFieldAction || action == ActivateSearchFieldAction)
+	else if (identifier == Action::ActivateAddressFieldAction || identifier == Action::ActivateSearchFieldAction)
 	{
 		OpenAddressDialog dialog(this);
 
-		if (action == ActivateSearchFieldAction)
+		if (identifier == Action::ActivateSearchFieldAction)
 		{
 			dialog.setText(QLatin1String("? "));
 		}
@@ -147,7 +147,7 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 		dialog.exec();
 	}
 
-	if (action == GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
+	if (identifier == Action::GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
 	{
 		const QUrl url = getContentsWidget()->getUrl();
 
@@ -160,7 +160,7 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String("."))));
 		}
 	}
-	else if (action == PrintAction)
+	else if (identifier == Action::PrintAction)
 	{
 		QPrinter printer;
 		QPrintDialog printDialog(&printer, this);
@@ -173,7 +173,7 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 
 		getContentsWidget()->print(&printer);
 	}
-	else if (action == PrintPreviewAction)
+	else if (identifier == Action::PrintPreviewAction)
 	{
 		QPrintPreviewDialog printPreviewtDialog(this);
 		printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
@@ -185,7 +185,7 @@ void Window::triggerAction(ActionIdentifier action, bool checked)
 	}
 	else
 	{
-		getContentsWidget()->triggerAction(action, checked);
+		getContentsWidget()->triggerAction(identifier, checked);
 	}
 }
 
@@ -458,9 +458,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			}
 			else
 			{
-				const ActionIdentifier action = ActionsManager::getActionIdentifier(toolBar.actions.at(i).action.left(toolBar.actions.at(i).action.length() - 6));
+				const int action = ActionsManager::getActionIdentifier(toolBar.actions.at(i).action.left(toolBar.actions.at(i).action.length() - 6));
 
-				if (action != UnknownAction)
+				if (action >= 0)
 				{
 					navigationLayout->addWidget(new ActionWidget(action, this, m_navigationBar));
 				}

@@ -67,7 +67,7 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void setQuickSearchEngine(const QString &engine);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
-	virtual QAction* getAction(ActionIdentifier action) = 0;
+	virtual Action* getAction(int identifier) = 0;
 	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();
 	QMenu* getReloadTimeMenu();
@@ -97,7 +97,7 @@ public:
 public slots:
 	virtual void clearOptions();
 	virtual void goToHistoryIndex(int index) = 0;
-	virtual void triggerAction(ActionIdentifier action, bool checked = false) = 0;
+	virtual void triggerAction(int identifier, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
