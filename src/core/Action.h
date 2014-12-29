@@ -155,7 +155,7 @@ public:
 		PreferencesAction,
 		WebsitePreferencesAction,
 		QuickPreferencesAction,
-		ClearQuickPreferencesAction,
+		ResetQuickPreferencesAction,
 		SwitchApplicationLanguageAction,
 		AboutApplicationAction,
 		AboutQtAction,

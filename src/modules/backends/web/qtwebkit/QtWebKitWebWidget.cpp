@@ -112,11 +112,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
-	getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
-	getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
-	getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	getAction(Action::ReloadAction)->setEnabled(true);
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
@@ -223,14 +218,36 @@ void QtWebKitWebWidget::pageLoadStarted()
 	m_isLoading = true;
 	m_thumbnail = QPixmap();
 
-	getAction(Action::RewindAction)->setEnabled(getAction(Action::GoBackAction)->isEnabled());
-	getAction(Action::FastForwardAction)->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
-	getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	if (m_actions.contains(Action::GoBackAction))
+	{
+		getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
+	}
 
-	Action *action = getAction(Action::ReloadOrStopAction);
-	action->setup(ActionsManager::getAction(Action::StopAction, this));
-	action->setEnabled(true);
-	action->setShortcut(QKeySequence());
+	if (m_actions.contains(Action::GoForwardAction))
+	{
+		getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
+
+	if (m_actions.contains(Action::RewindAction))
+	{
+		getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
+	}
+
+	if (m_actions.contains(Action::FastForwardAction))
+	{
+		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
+
+	if (m_actions.contains(Action::LoadPluginsAction))
+	{
+		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	}
+
+	if (m_actions.contains(Action::ReloadOrStopAction))
+	{
+		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::StopAction, this));
+		getAction(Action::ReloadOrStopAction)->setEnabled(true);
+	}
 
 	if (!isPrivate())
 	{
@@ -267,12 +284,16 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	m_networkManager->resetStatistics();
 
-	Action *action = getAction(Action::ReloadOrStopAction);
-	action->setup(ActionsManager::getAction(Action::ReloadAction, this));
-	action->setEnabled(true);
-	action->setShortcut(QKeySequence());
+	if (m_actions.contains(Action::ReloadOrStopAction))
+	{
+		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::StopAction, this));
+		getAction(Action::ReloadOrStopAction)->setEnabled(true);
+	}
 
-	getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	if (m_actions.contains(Action::LoadPluginsAction))
+	{
+		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	}
 
 	if (!isPrivate())
 	{
@@ -478,8 +499,26 @@ void QtWebKitWebWidget::notifyTitleChanged()
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	updateOptions(url);
-	getAction(Action::RewindAction)->setEnabled(getAction(Action::GoBackAction)->isEnabled());
-	getAction(Action::FastForwardAction)->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
+
+	if (m_actions.contains(Action::GoBackAction))
+	{
+		getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
+	}
+
+	if (m_actions.contains(Action::GoForwardAction))
+	{
+		getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
+
+	if (m_actions.contains(Action::RewindAction))
+	{
+		getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
+	}
+
+	if (m_actions.contains(Action::FastForwardAction))
+	{
+		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
 
 	emit urlChanged(url);
 
@@ -493,7 +532,7 @@ void QtWebKitWebWidget::notifyIconChanged()
 
 void QtWebKitWebWidget::updateQuickSearchAction()
 {
-	QAction *defaultSearchAction = getAction(Action::SearchAction);
+	Action *defaultSearchAction = getAction(Action::SearchAction);
 	SearchInformation *engine = SearchesManager::getSearchEngine(getQuickSearchEngine());
 
 	if (engine)
@@ -1116,7 +1155,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 					frames.append(frame->childFrames());
 				}
 
-				getAction(Action::LoadPluginsAction)->setEnabled(false);
+				if (m_actions.contains(Action::LoadPluginsAction))
+				{
+					getAction(Action::LoadPluginsAction)->setEnabled(false);
+				}
 			}
 
 			break;
@@ -1251,7 +1293,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 		const bool isImageOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
 		const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl().fileName(), Qt::ElideMiddle, 256);
-		QAction *openImageAction = getAction(Action::OpenImageInNewTabAction);
+		Action *openImageAction = getAction(Action::OpenImageInNewTabAction);
 		openImageAction->setText((fileName.isEmpty() || m_hitResult.imageUrl().scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName));
 		openImageAction->setEnabled(!isImageOpened);
 
@@ -1492,15 +1534,17 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		case Action::ViewFrameSourceAction:
 		case Action::ViewSourceAction:
 		case Action::LoadPluginsAction:
-			action->setEnabled(false);
+			action->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
 			break;
+		case Action::GoBackAction:
 		case Action::RewindAction:
-			action->setEnabled(getAction(Action::GoBackAction)->isEnabled());
+			action->setEnabled(m_webView->history()->canGoBack());
 
 			break;
+		case Action::GoForwardAction:
 		case Action::FastForwardAction:
-			action->setEnabled(getAction(Action::GoForwardAction)->isEnabled());
+			action->setEnabled(m_webView->history()->canGoForward());
 
 			break;
 		case Action::ScheduleReloadAction:
@@ -1969,7 +2013,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					element.removeAttribute(QLatin1String("data-otter-browser"));
 
-					getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+					if (m_actions.contains(Action::LoadPluginsAction))
+					{
+						getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+					}
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
