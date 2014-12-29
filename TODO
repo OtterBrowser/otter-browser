@@ -1,30 +1,33 @@
-Release schedule of planned main features (it's not a full list), note that specific features may be delayed or added earlier than planned.
+Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
 
-0.9.04 (beta 4):
-- greater UI customization abilities (configurable toolbars, overwriting list of context menu actions etc.)
+0.9.05 - beta 5 (01.03.2015):
 - user scripts
-- improved integration with different platforms (Windows taskbar integration etc.)
+- address field suggestions / drop down history
+- UI for customizing toolbars
+- customizable context menu
+- improved taskbar integration for Windows
+- exposing MDI features
+- additional panels for sidebar (page information, notes etc.)
 
-1.0.01 (first stable release):
+0.9.06 - beta 6 (01.05.2015):
 - start page
 - passwords manager
+- helper for mouse gestures
 - feeds reader (as module)
-- fine-tune UI (sizes, margins and other details)
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
-- exposing MDI features
+
+1.0.01 - first stable release (01.06.2015):
+- fine-tune UI (sizes, margins and other details)
+- (at least) preview Blink (QtWebEnginel) backend (assuming that there will be usable (pre)release of Qt 5.5 at that time)
 
 Later:
-- Blink backend (with upcoming QtWebEngine, when API will be useful)
 - spell checking
-- additional panels for sidebar (page information, notes etc.)
 - shared contacts database
 - mail client (as module)
 - form auto completion
 - extensions (Firefox and Chrome APIs support)
 - Opera Link like solution
-
-Maybe:
 - support for Opera skins (through custom QStyle)
-- IM client module (libpurple based, including support for IRC)
+- IM client module (at least IRC, possibly libpurple based)
 - BitTorrent module
