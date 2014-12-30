@@ -616,7 +616,7 @@ void WindowsManager::setActiveWindow(int index)
 
 	if (window)
 	{
-		if (window->getContentsWidget())
+		if (window->getContentsWidget()->getAction(Action::UndoAction))
 		{
 			disconnect(window->getContentsWidget()->getAction(Action::UndoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
 			disconnect(window->getContentsWidget()->getAction(Action::RedoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
@@ -644,8 +644,12 @@ void WindowsManager::setActiveWindow(int index)
 		emit zoomChanged(window->getContentsWidget()->getZoom());
 		emit windowTitleChanged(window->getContentsWidget()->getTitle());
 
-		connect(window->getContentsWidget()->getAction(Action::UndoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
-		connect(window->getContentsWidget()->getAction(Action::RedoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
+		if (window->getContentsWidget()->getAction(Action::UndoAction))
+		{
+			connect(window->getContentsWidget()->getAction(Action::UndoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
+			connect(window->getContentsWidget()->getAction(Action::RedoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
+		}
+
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
 		connect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
