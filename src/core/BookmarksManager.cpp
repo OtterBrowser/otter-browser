@@ -39,7 +39,6 @@ BookmarksModel* BookmarksManager::m_model = NULL;
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
 	 m_saveTimer(0)
 {
-	QTimer::singleShot(250, this, SLOT(load()));
 }
 
 void BookmarksManager::timerEvent(QTimerEvent *event)
@@ -59,7 +58,6 @@ void BookmarksManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new BookmarksManager(parent);
-		m_model = new BookmarksModel(m_instance);
 	}
 }
 
@@ -69,59 +67,6 @@ void BookmarksManager::scheduleSave()
 	{
 		m_saveTimer = startTimer(1000);
 	}
-
-	emit modelModified();
-}
-
-void BookmarksManager::load()
-{
-	QFile file(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
-
-	if (!file.exists())
-	{
-		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
-
-		return;
-	}
-
-	if (!file.open(QFile::ReadOnly | QFile::Text))
-	{
-		Console::addMessage(tr("Failed to open bookmarks file: %0").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
-
-		return;
-	}
-
-	QXmlStreamReader reader(file.readAll());
-
-	if (reader.readNextStartElement() && reader.name() == QLatin1String("xbel") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
-	{
-		while (reader.readNextStartElement())
-		{
-			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
-			{
-				readBookmark(&reader, m_model->getRootItem());
-			}
-			else
-			{
-				reader.skipCurrentElement();
-			}
-
-			if (reader.hasError())
-			{
-				m_model->clear();
-
-				QMessageBox::warning(NULL, tr("Error"), tr("Failed to parse bookmarks file. No bookmarks were loaded."), QMessageBox::Close);
-				Console::addMessage(tr("Failed to load bookmarks file properly, QXmlStreamReader error code: %1").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
-
-				return;
-			}
-		}
-	}
-
-	connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
-	connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
-	connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
-	connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), m_instance, SLOT(scheduleSave()));
 
 	emit modelModified();
 }
@@ -434,31 +379,111 @@ BookmarksManager* BookmarksManager::getInstance()
 
 BookmarksModel* BookmarksManager::getModel()
 {
+	if (!m_model && m_instance)
+	{
+		QFile file(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
+
+		m_model = new BookmarksModel(m_instance);
+
+		if (!file.exists())
+		{
+			connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+
+			return m_model;
+		}
+
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+		{
+			Console::addMessage(tr("Failed to open bookmarks file: %0").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
+
+			return m_model;
+		}
+
+		QXmlStreamReader reader(file.readAll());
+
+		if (reader.readNextStartElement() && reader.name() == QLatin1String("xbel") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
+		{
+			while (reader.readNextStartElement())
+			{
+				if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
+				{
+					readBookmark(&reader, m_model->getRootItem());
+				}
+				else
+				{
+					reader.skipCurrentElement();
+				}
+
+				if (reader.hasError())
+				{
+					m_model->clear();
+
+					QMessageBox::warning(NULL, tr("Error"), tr("Failed to parse bookmarks file. No bookmarks were loaded."), QMessageBox::Close);
+					Console::addMessage(tr("Failed to load bookmarks file properly, QXmlStreamReader error code: %1").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
+
+					return m_model;
+				}
+			}
+		}
+
+		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
+		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+		connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
+		connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), m_instance, SLOT(scheduleSave()));
+
+		emit m_instance->modelModified();
+	}
+
 	return m_model;
 }
 
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 {
+	if (!m_model)
+	{
+		getModel();
+	}
+
 	return BookmarksItem::getBookmark(keyword);
 }
 
 QStringList BookmarksManager::getKeywords()
 {
+	if (!m_model)
+	{
+		getModel();
+	}
+
 	return BookmarksItem::getKeywords();
 }
 
 QStringList BookmarksManager::getUrls()
 {
+	if (!m_model)
+	{
+		getModel();
+	}
+
 	return BookmarksItem::getUrls();
 }
 
 bool BookmarksManager::hasBookmark(const QString &url)
 {
+	if (!m_model)
+	{
+		getModel();
+	}
+
 	return BookmarksItem::hasUrl(url);
 }
 
 bool BookmarksManager::hasKeyword(const QString &keyword)
 {
+	if (!m_model)
+	{
+		getModel();
+	}
+
 	return BookmarksItem::hasKeyword(keyword);
 }
 

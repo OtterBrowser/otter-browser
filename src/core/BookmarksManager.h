@@ -53,12 +53,11 @@ protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
+	static void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
 	static void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
 
 protected slots:
 	void scheduleSave();
-	void load();
 
 private:
 	int m_saveTimer;

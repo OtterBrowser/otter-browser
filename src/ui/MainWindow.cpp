@@ -206,6 +206,13 @@ void MainWindow::createMenuBar()
 
 void MainWindow::openUrl(const QString &text)
 {
+	if (text.isEmpty())
+	{
+		m_windowsManager->triggerAction(Action::NewTabAction);
+
+		return;
+	}
+
 	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
 
 	if (bookmark)
