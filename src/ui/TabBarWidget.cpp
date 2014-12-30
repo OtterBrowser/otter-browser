@@ -362,6 +362,12 @@ void TabBarWidget::showPreview(int index)
 		}
 
 		QPoint position;
+		// Note that screen rectangle, tab rectangle and preview rectangle could have
+		// negative values on multiple monitors systems. All calculations must be done in context
+		// of a current screen rectangle. Because top left point of current screen could
+		// have coordinates (-1366, 250) instead of (0, 0).
+		///TODO: Calculate screen rectangle based on current mouse pointer position
+		const QRect screen = QApplication::desktop()->screenGeometry(this);
 		QRect rectangle = tabRect(index);
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
@@ -370,33 +376,31 @@ void TabBarWidget::showPreview(int index)
 		switch (shape())
 		{
 			case QTabBar::RoundedEast:
-				position = QPoint((rectangle.left() - m_previewWidget->width()), qMax(0, ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
+				position = QPoint((rectangle.left() - m_previewWidget->width()), qMax(screen.top(), ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
 
 				break;
 			case QTabBar::RoundedWest:
-				position = QPoint(rectangle.right(), qMax(0, ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
+				position = QPoint(rectangle.right(), qMax(screen.top(), ((rectangle.bottom() - (rectangle.height() / 2)) - (m_previewWidget->height() / 2))));
 
 				break;
 			case QTabBar::RoundedSouth:
-				position = QPoint(qMax(0, ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), (rectangle.top() - m_previewWidget->height()));
+				position = QPoint(qMax(screen.left(), ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), (rectangle.top() - m_previewWidget->height()));
 
 				break;
 			default:
-				position = QPoint(qMax(0, ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), rectangle.bottom());
+				position = QPoint(qMax(screen.left(), ((rectangle.right() - (rectangle.width() / 2)) - (m_previewWidget->width() / 2))), rectangle.bottom());
 
 				break;
 		}
 
-		const QRect screen = QApplication::desktop()->screenGeometry(this);
-
-		if ((position.x() + m_previewWidget->width()) > screen.bottomRight().x())
+		if ((position.x() + m_previewWidget->width()) > screen.right())
 		{
-			position.setX(screen.width() - m_previewWidget->width());
+			position.setX(screen.right() - m_previewWidget->width());
 		}
 
-		if ((position.y() + m_previewWidget->height()) > screen.bottomRight().y())
+		if ((position.y() + m_previewWidget->height()) > screen.bottom())
 		{
-			position.setY(screen.height() - m_previewWidget->height());
+			position.setY(screen.bottom() - m_previewWidget->height());
 		}
 
 		if (m_previewWidget->isVisible())
