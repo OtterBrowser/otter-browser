@@ -246,7 +246,6 @@ void QtWebKitWebWidget::pageLoadStarted()
 	if (m_actions.contains(Action::ReloadOrStopAction))
 	{
 		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::StopAction, this));
-		getAction(Action::ReloadOrStopAction)->setEnabled(true);
 	}
 
 	if (!isPrivate())
@@ -286,8 +285,7 @@ void QtWebKitWebWidget::pageLoadFinished(bool ok)
 
 	if (m_actions.contains(Action::ReloadOrStopAction))
 	{
-		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::StopAction, this));
-		getAction(Action::ReloadOrStopAction)->setEnabled(true);
+		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::ReloadAction, this));
 	}
 
 	if (m_actions.contains(Action::LoadPluginsAction))
@@ -1533,7 +1531,6 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
-		case Action::ReloadOrStopAction:
 		case Action::InspectPageAction:
 		case Action::InspectElementAction:
 		case Action::FindAction:
@@ -1545,6 +1542,10 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			break;
 		case Action::ViewFrameSourceAction:
 		case Action::ViewSourceAction:
+		case Action::CheckSpellingAction:
+			action->setEnabled(false);
+
+			break;
 		case Action::LoadPluginsAction:
 			action->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
@@ -1572,8 +1573,8 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			action->setMenu(getQuickSearchMenu());
 
 			break;
-		case Action::CheckSpellingAction:
-			action->setEnabled(false);
+		case Action::ReloadOrStopAction:
+			action->setup(isLoading() ? getAction(Action::StopAction) : getAction(Action::ReloadAction));
 
 			break;
 		case Action::UndoAction:
