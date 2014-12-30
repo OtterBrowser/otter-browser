@@ -267,7 +267,7 @@ void MainWindow::openUrl(const QString &text)
 		return;
 	}
 
-	m_windowsManager->triggerAction(Action::NewTabAction);
+	m_windowsManager->search(text, QString());
 }
 
 void MainWindow::storeWindowState()
