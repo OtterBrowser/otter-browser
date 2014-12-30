@@ -302,11 +302,11 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			break;
 		case Action::OpenAction:
 			{
-				const QString path = QFileDialog::getOpenFileName(this, tr("Open File"));
+				const QUrl url = QFileDialog::getOpenFileUrl(this, tr("Open File"));
 
-				if (!path.isEmpty())
+				if (url.isValid())
 				{
-					m_windowsManager->open(QUrl(path));
+					m_windowsManager->open(url);
 				}
 			}
 
