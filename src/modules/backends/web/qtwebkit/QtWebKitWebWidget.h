@@ -49,7 +49,6 @@ public:
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
-	QUndoStack* getUndoStack();
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getSelectedText() const;
@@ -108,6 +107,8 @@ protected slots:
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
+	void updateUndoText(const QString &text);
+	void updateRedoText(const QString &text);
 	void updateQuickSearchAction();
 	void updateOptions(const QUrl &url);
 	void showContextMenu(const QPoint &position = QPoint());

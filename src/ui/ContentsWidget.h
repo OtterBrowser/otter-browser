@@ -49,7 +49,6 @@ public:
 	virtual ContentsWidget* clone(bool cloneHistory = true);
 	virtual Action* getAction(int identifier);
 	Window* getParent();
-	virtual QUndoStack* getUndoStack();
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;
 	virtual QString getStatusMessage() const;

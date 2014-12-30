@@ -68,7 +68,6 @@ public:
 	void setQuickSearchEngine(const QString &engine);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual Action* getAction(int identifier) = 0;
-	virtual QUndoStack* getUndoStack() = 0;
 	WebBackend* getBackend();
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();

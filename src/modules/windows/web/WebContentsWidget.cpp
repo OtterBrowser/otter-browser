@@ -509,11 +509,6 @@ Action* WebContentsWidget::getAction(int identifier)
 	return m_webWidget->getAction(identifier);
 }
 
-QUndoStack* WebContentsWidget::getUndoStack()
-{
-	return m_webWidget->getUndoStack();
-}
-
 WebWidget* WebContentsWidget::getWebWidget()
 {
 	return m_webWidget;

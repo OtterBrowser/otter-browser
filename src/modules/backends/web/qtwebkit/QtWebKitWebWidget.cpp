@@ -530,6 +530,16 @@ void QtWebKitWebWidget::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
+void QtWebKitWebWidget::updateUndoText(const QString &text)
+{
+	getAction(Action::UndoAction)->setText(text.isEmpty() ? tr("Undo") : tr("Undo: %1").arg(text));
+}
+
+void QtWebKitWebWidget::updateRedoText(const QString &text)
+{
+	getAction(Action::RedoAction)->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
+}
+
 void QtWebKitWebWidget::updateQuickSearchAction()
 {
 	Action *defaultSearchAction = getAction(Action::SearchAction);
@@ -1517,6 +1527,8 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 	Action *action = new Action(identifier, QIcon(), QString(), this);
 	action->setup(ActionsManager::getAction(identifier, this));
 
+	m_actions[identifier] = action;
+
 	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
 	switch (identifier)
@@ -1561,25 +1573,32 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 			break;
 		case Action::CheckSpellingAction:
-			action->setup(ActionsManager::getAction(Action::CheckSpellingAction, this));
 			action->setEnabled(false);
+
+			break;
+		case Action::UndoAction:
+			action->setEnabled(m_page->undoStack()->canUndo());
+
+			updateUndoText(m_page->undoStack()->undoText());
+
+			connect(m_page->undoStack(), SIGNAL(canUndoChanged(bool)), action, SLOT(setEnabled(bool)));
+			connect(m_page->undoStack(), SIGNAL(undoTextChanged(QString)), this, SLOT(updateUndoText(QString)));
+
+			break;
+		case Action::RedoAction:
+			action->setEnabled(m_page->undoStack()->canRedo());
+
+			updateRedoText(m_page->undoStack()->redoText());
+
+			connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), action, SLOT(setEnabled(bool)));
+			connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(updateRedoText(QString)));
 
 			break;
 		default:
 			break;
 	}
 
-	if (action)
-	{
-		m_actions[identifier] = action;
-	}
-
 	return action;
-}
-
-QUndoStack* QtWebKitWebWidget::getUndoStack()
-{
-	return m_webView->page()->undoStack();
 }
 
 QWebPage* QtWebKitWebWidget::getPage()

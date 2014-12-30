@@ -616,12 +616,10 @@ void WindowsManager::setActiveWindow(int index)
 
 	if (window)
 	{
-		if (window->getContentsWidget()->getUndoStack())
+		if (window->getContentsWidget())
 		{
-			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-			disconnect(window->getContentsWidget()->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getAction(Action::UndoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
+			disconnect(window->getContentsWidget()->getAction(Action::RedoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
 		}
 
 		disconnect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
@@ -646,14 +644,8 @@ void WindowsManager::setActiveWindow(int index)
 		emit zoomChanged(window->getContentsWidget()->getZoom());
 		emit windowTitleChanged(window->getContentsWidget()->getTitle());
 
-		if (window->getContentsWidget()->getUndoStack())
-		{
-			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(undoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(redoTextChanged(QString)), this, SIGNAL(actionsChanged()));
-			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(canUndoChanged(bool)), this, SIGNAL(actionsChanged()));
-			connect(window->getContentsWidget()->getUndoStack(), SIGNAL(canRedoChanged(bool)), this, SIGNAL(actionsChanged()));
-		}
-
+		connect(window->getContentsWidget()->getAction(Action::UndoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
+		connect(window->getContentsWidget()->getAction(Action::RedoAction), SIGNAL(changed()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(actionsChanged()), this, SIGNAL(actionsChanged()));
 		connect(window, SIGNAL(statusMessageChanged(QString)), this, SLOT(setStatusMessage(QString)));
 		connect(window, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));

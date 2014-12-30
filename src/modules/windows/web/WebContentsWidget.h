@@ -45,7 +45,6 @@ public:
 	void print(QPrinter *printer);
 	WebContentsWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
-	QUndoStack* getUndoStack();
 	WebWidget* getWebWidget();
 	QString getTitle() const;
 	QString getStatusMessage() const;

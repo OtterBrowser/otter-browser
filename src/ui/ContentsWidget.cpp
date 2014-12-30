@@ -179,11 +179,6 @@ Window* ContentsWidget::getParent()
 	return qobject_cast<Window*>(parent());
 }
 
-QUndoStack* ContentsWidget::getUndoStack()
-{
-	return NULL;
-}
-
 QString ContentsWidget::getVersion() const
 {
 	return QCoreApplication::applicationVersion();
