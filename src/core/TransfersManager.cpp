@@ -311,7 +311,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 	}
 
 	QPointer<QNetworkReply> replyPointer = reply;
-	QTemporaryFile temporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/otter-download-XXXXXX.dat"), m_instance);
+	QTemporaryFile temporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + QLatin1String("otter-download-XXXXXX.dat"), m_instance);
 	TransferInformation *transfer = new TransferInformation();
 	transfer->source = reply->url().toString(QUrl::RemovePassword | QUrl::PreferLocalFile);
 	transfer->device = &temporaryFile;
@@ -367,7 +367,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		QUrl url;
 		QString fileName;
 
-		if (reply->rawHeaderList().contains(QStringLiteral("Content-Disposition").toLatin1()))
+		if (reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
 		{
 			url = QUrl(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
 
@@ -411,7 +411,7 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 
 		if (quickTransfer)
 		{
-			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + QLatin1Char('/') + fileName;
+			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + QDir::separator() + fileName;
 
 			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
@@ -542,7 +542,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 	{
 		if (path.isEmpty())
 		{
-			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + '/' + fileName);
+			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName, tr("All files (*)"));
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);
 
