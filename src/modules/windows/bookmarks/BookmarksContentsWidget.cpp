@@ -324,7 +324,7 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, QIcon(), QString(), this);
+	Action *action = new Action(identifier, this);
 	action->setup(ActionsManager::getAction(Action::DeleteAction, this));
 
 	m_actions[identifier] = action;

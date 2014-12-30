@@ -93,6 +93,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::SaveImageToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Image..."));
 	registerAction(Action::CopyImageToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Image to Clipboard"));
 	registerAction(Action::CopyImageUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Image Link to Clipboard"));
+	registerAction(Action::ReloadImageAction, QT_TRANSLATE_NOOP("actions", "Reload Image"));
 	registerAction(Action::ImagePropertiesAction, QT_TRANSLATE_NOOP("actions", "Image Properties..."));
 	registerAction(Action::SaveMediaToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Media..."));
 	registerAction(Action::CopyMediaUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Media Link to Clipboard"));
@@ -100,7 +101,6 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ToggleMediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"));
 	registerAction(Action::ToggleMediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
 	registerAction(Action::ToggleMediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
-	registerAction(Action::ReloadImageAction, QT_TRANSLATE_NOOP("actions", "Reload Image"));
 	registerAction(Action::GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), Utils::getIcon(QLatin1String("go-jump-locationbar")));
 	registerAction(Action::GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")));
 	registerAction(Action::GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")));
@@ -308,10 +308,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 {
 	if (!m_helper)
 	{
-		m_dummyAction = new Action(-1, QIcon(), QString(), parent);
-		m_helper = new ActionsManagerHelper(QCoreApplication::instance());
-
-		ActionsManager::loadShortcuts();
+		initialize();
 	}
 
 	m_standardActions.fill(NULL, m_helper->actionDefinitions.count());
@@ -321,8 +318,23 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 	connect(m_helper, SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 }
 
+void ActionsManager::initialize()
+{
+	if (!m_helper)
+	{
+		m_helper = new ActionsManagerHelper(QCoreApplication::instance());
+
+		ActionsManager::loadShortcuts();
+	}
+}
+
 void ActionsManager::actionTriggered()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	QShortcut *shortcut = qobject_cast<QShortcut*>(sender());
 
 	if (shortcut)
@@ -381,6 +393,11 @@ void ActionsManager::actionTriggered(bool checked)
 
 void ActionsManager::macroTriggered()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	QShortcut *shortcut = qobject_cast<QShortcut*>(sender());
 
 	if (shortcut)
@@ -408,6 +425,11 @@ void ActionsManager::macroTriggered()
 
 void ActionsManager::updateShortcuts()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	for (int i = 0; i < m_actionShortcuts.count(); ++i)
 	{
 		qDeleteAll(m_actionShortcuts[i].second);
@@ -478,6 +500,11 @@ void ActionsManager::triggerAction(int identifier, QObject *parent, bool checked
 
 void ActionsManager::loadShortcuts()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QList<QKeySequence> allShortcuts;
 	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
@@ -586,6 +613,11 @@ ActionsManager* ActionsManager::findManager(QObject *parent)
 
 Action* ActionsManager::getAction(int identifier)
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	if (identifier < 0 || identifier >= m_standardActions.count() || identifier >= m_helper->actionDefinitions.count())
 	{
 		return NULL;
@@ -594,11 +626,7 @@ Action* ActionsManager::getAction(int identifier)
 	if (!m_standardActions[identifier])
 	{
 		const ActionDefinition definition = m_helper->actionDefinitions[identifier];
-		Action *action = new Action(identifier, definition.icon, definition.text, m_window);
-		action->setShortcutContext(Qt::WindowShortcut);
-		action->setEnabled(definition.isEnabled);
-		action->setCheckable(definition.isCheckable);
-		action->setChecked(definition.isChecked);
+		Action *action = new Action(identifier, m_window);
 
 		m_standardActions[identifier] = action;
 
@@ -626,21 +654,41 @@ Action* ActionsManager::getAction(int identifier, QObject *parent)
 
 QList<ActionDefinition> ActionsManager::getActionDefinitions()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	return m_helper->actionDefinitions.toList();
 }
 
 QList<MacroDefinition> ActionsManager::getMacroDefinitions()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	return m_helper->macroDefinitions.toList();
 }
 
 QList<ToolBarDefinition> ActionsManager::getToolBarDefinitions()
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	return m_helper->toolBarDefinitions.values();
 }
 
 ActionDefinition ActionsManager::getActionDefinition(int identifier)
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	if (identifier < 0 || identifier >= m_helper->actionDefinitions.count())
 	{
 		return ActionDefinition();
@@ -651,11 +699,21 @@ ActionDefinition ActionsManager::getActionDefinition(int identifier)
 
 ToolBarDefinition ActionsManager::getToolBarDefinition(const QString &toolBar)
 {
+	if (!m_helper)
+	{
+		initialize();
+	}
+
 	return m_helper->toolBarDefinitions.value(toolBar, ToolBarDefinition());
 }
 
 int ActionsManager::getActionIdentifier(const QString &name)
 {
+	if (!m_dummyAction)
+	{
+		m_dummyAction = new Action(-1, QCoreApplication::instance());
+	}
+
 	const int enumerator = m_dummyAction->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());
 
 	if (!name.endsWith(QLatin1String("Action")))

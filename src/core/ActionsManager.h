@@ -125,6 +125,7 @@ public:
 	static int getActionIdentifier(const QString &name);
 
 protected:
+	static void initialize();
 	static ActionsManager* findManager(QObject *parent);
 
 protected slots:

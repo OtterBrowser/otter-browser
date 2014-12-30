@@ -37,6 +37,7 @@ enum MenuRole
 	UserAgentMenuRole = 6
 };
 
+class Action;
 class BookmarksItem;
 
 class Menu : public QMenu
@@ -48,6 +49,7 @@ public:
 
 	void load(const QJsonObject &definition);
 	void setRole(MenuRole role);
+	Action* addAction(int identifier);
 
 protected:
 	void changeEvent(QEvent *event);

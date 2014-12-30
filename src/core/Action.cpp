@@ -25,17 +25,18 @@
 namespace Otter
 {
 
-Action::Action(int identifier, const QIcon &icon, const QString &text, QObject *parent) : QAction(icon, text, parent),
-	m_identifier(identifier)
+Action::Action(int identifier, QObject *parent) : QAction(QIcon(), QString(), parent),
+	m_identifier(identifier),
+	m_isOverridingText(false)
 {
-	update();
+	update(true);
 }
 
 void Action::setup(Action *action)
 {
 	if (!action)
 	{
-		update();
+		update(true);
 		setEnabled(false);
 
 		return;
@@ -48,10 +49,15 @@ void Action::setup(Action *action)
 	setChecked(action->isChecked());
 }
 
-void Action::update()
+void Action::update(bool reset)
 {
+	if (m_identifier < 0)
+	{
+		return;
+	}
+
 	const ActionDefinition action = ActionsManager::getActionDefinition(m_identifier);
-	QString text = QCoreApplication::translate("actions", action.text.toUtf8().constData());
+	QString text = QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.text).toUtf8().constData());
 
 	if (!action.shortcuts.isEmpty())
 	{
@@ -59,6 +65,20 @@ void Action::update()
 	}
 
 	setText(text);
+
+	if (reset)
+	{
+		setEnabled(action.isEnabled);
+		setCheckable(action.isCheckable);
+		setChecked(action.isChecked);
+		setIcon(action.icon);
+	}
+}
+
+void Action::setOverrideText(const QString &text)
+{
+	m_overrideText = text;
+	m_isOverridingText = true;
 }
 
 QList<QKeySequence> Action::getShortcuts() const

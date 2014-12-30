@@ -19,9 +19,9 @@
 
 #include "TrayIcon.h"
 #include "MainWindow.h"
+#include "Menu.h"
+#include "../core/ActionsManager.h"
 #include "../core/Application.h"
-
-#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -29,17 +29,17 @@ namespace Otter
 TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_icon(new QSystemTrayIcon(this))
 {
-	QMenu *menu = new QMenu();
-	menu->addAction(tr("Show Windows"))->setData(QLatin1String("toggleVisibility"));
+	Menu *menu = new Menu();
+	menu->addAction(-1)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
 	menu->addSeparator();
-	menu->addAction(tr("New Tab"))->setData(QLatin1String("newTab"));
-	menu->addAction(tr("New Private Tab"))->setData(QLatin1String("newPrivateTab"));
+	menu->addAction(Action::NewTabAction);
+	menu->addAction(Action::NewTabPrivateAction);
 	menu->addSeparator();
-	menu->addAction(tr("Bookmarks"))->setData(QLatin1String("bookmarks"));
-	menu->addAction(tr("Transfers"))->setData(QLatin1String("transfers"));
-	menu->addAction(tr("History"))->setData(QLatin1String("history"));
+	menu->addAction(Action::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+	menu->addAction(Action::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+	menu->addAction(Action::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
 	menu->addSeparator();
-	menu->addAction(tr("Exit"))->setData(QLatin1String("exit"));
+	menu->addAction(Action::ExitAction);
 
 	m_icon->setIcon(parent->windowIcon());
 	m_icon->setContextMenu(menu);
@@ -67,63 +67,20 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 
 void TrayIcon::triggerAction(QAction *action)
 {
-	if (!action || action->data().isNull())
+	Action *actionObject = qobject_cast<Action*>(action);
+
+	if (!actionObject)
 	{
 		return;
 	}
 
-	const QString identifier = action->data().toString();
-
-	if (identifier == QLatin1String("toggleVisibility"))
+	if (actionObject->getIdentifier() < 0)
 	{
 		activated(QSystemTrayIcon::Trigger);
 	}
-	else if (identifier == QLatin1String("exit"))
-	{
-		Application::getInstance()->close();
-	}
 	else
 	{
-		WindowsManager *manager = SessionsManager::getWindowsManager();
-
-		if (manager)
-		{
-			if (identifier == QLatin1String("newTab"))
-			{
-				manager->open(QUrl(), DefaultOpen);
-			}
-			else if (identifier == QLatin1String("newPrivateTab"))
-			{
-				manager->open(QUrl(), PrivateOpen);
-			}
-			else if (identifier == QLatin1String("bookmarks"))
-			{
-				const QUrl url(QLatin1String("about:bookmarks"));
-
-				if (!SessionsManager::hasUrl(url, true))
-				{
-					manager->open(url);
-				}
-			}
-			else if (identifier == QLatin1String("transfers"))
-			{
-				const QUrl url(QLatin1String("about:transfers"));
-
-				if (!SessionsManager::hasUrl(url, true))
-				{
-					manager->open(url);
-				}
-			}
-			else if (identifier == QLatin1String("history"))
-			{
-				const QUrl url(QLatin1String("about:history"));
-
-				if (!SessionsManager::hasUrl(url, true))
-				{
-					manager->open(url);
-				}
-			}
-		}
+		ActionsManager::triggerAction(actionObject->getIdentifier(), NULL);
 	}
 }
 

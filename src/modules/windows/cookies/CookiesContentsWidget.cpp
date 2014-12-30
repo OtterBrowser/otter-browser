@@ -377,7 +377,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, QIcon(), QString(), this);
+	Action *action = new Action(identifier, this);
 	action->setup(ActionsManager::getAction(identifier, this));
 
 	m_actions[identifier] = action;

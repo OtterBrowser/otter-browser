@@ -163,7 +163,7 @@ void Menu::load(const QJsonObject &definition)
 
 				if (action >= 0)
 				{
-					addAction(ActionsManager::getAction(action, parentWidget()));
+					QMenu::addAction(ActionsManager::getAction(action, parentWidget()));
 				}
 			}
 		}
@@ -234,8 +234,8 @@ void Menu::setRole(MenuRole role)
 
 			break;
 		case ImportExportMenuRole:
-			addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
-			addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
+			QMenu::addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
+			QMenu::addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
 
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
 
@@ -333,7 +333,7 @@ void Menu::populateCharacterEncodingMenu()
 		m_actionGroup = new QActionGroup(this);
 		m_actionGroup->setExclusive(true);
 
-		QAction *defaultAction = addAction(tr("Auto Detect"));
+		QAction *defaultAction = QMenu::addAction(tr("Auto Detect"));
 		defaultAction->setData(-1);
 		defaultAction->setCheckable(true);
 
@@ -350,7 +350,7 @@ void Menu::populateCharacterEncodingMenu()
 				continue;
 			}
 
-			QAction *textCodecAction = addAction(Utils::elideText(codec->name(), this));
+			QAction *textCodecAction = QMenu::addAction(Utils::elideText(codec->name(), this));
 			textCodecAction->setData(textCodecs.at(i));
 			textCodecAction->setCheckable(true);
 
@@ -387,7 +387,7 @@ void Menu::populateCharacterEncodingMenu()
 void Menu::populateClosedWindowsMenu()
 {
 	clear();
-	addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clearClosedWindows()))->setData(0);
+	QMenu::addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clearClosedWindows()))->setData(0);
 	addSeparator();
 
 	const QStringList windows = SessionsManager::getClosedWindows();
@@ -396,7 +396,7 @@ void Menu::populateClosedWindowsMenu()
 	{
 		for (int i = 0; i < windows.count(); ++i)
 		{
-			addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), this), this, SLOT(restoreClosedWindow()))->setData(-(i + 1));
+			QMenu::addAction(Utils::elideText(tr("Window - %1").arg(windows.at(i)), this), this, SLOT(restoreClosedWindow()))->setData(-(i + 1));
 		}
 
 		addSeparator();
@@ -411,7 +411,7 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), this), this, SLOT(restoreClosedWindow()))->setData(i + 1);
+			QMenu::addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), this), this, SLOT(restoreClosedWindow()))->setData(i + 1);
 		}
 	}
 }
@@ -424,8 +424,8 @@ void Menu::populateSessionsMenu()
 	}
 
 	clear();
-	addAction(ActionsManager::getAction(Action::SaveSessionAction, parent()));
-	addAction(ActionsManager::getAction(Action::SessionsAction, parent()));
+	QMenu::addAction(ActionsManager::getAction(Action::SaveSessionAction, parent()));
+	QMenu::addAction(ActionsManager::getAction(Action::SessionsAction, parent()));
 	addSeparator();
 
 	m_actionGroup = new QActionGroup(this);
@@ -453,7 +453,7 @@ void Menu::populateSessionsMenu()
 			windows += sorted.at(i).windows.at(j).windows.count();
 		}
 
-		QAction *action = addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
+		QAction *action = QMenu::addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
 		action->setChecked(sorted.at(i).path == currentSession);
@@ -478,7 +478,7 @@ void Menu::populateUserAgentMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	QAction *defaultAction = addAction(tr("Default"));
+	QAction *defaultAction = QMenu::addAction(tr("Default"));
 	defaultAction->setData(QLatin1String("default"));
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(userAgent == QLatin1String("default"));
@@ -490,7 +490,7 @@ void Menu::populateUserAgentMenu()
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
 		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
-		QAction *userAgentAction = addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this)));
+		QAction *userAgentAction = QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this)));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);
 		userAgentAction->setChecked(userAgent == userAgents.at(i));
@@ -500,7 +500,7 @@ void Menu::populateUserAgentMenu()
 
 	addSeparator();
 
-	QAction *customAction = addAction(tr("Custom"));
+	QAction *customAction = QMenu::addAction(tr("Custom"));
 	customAction->setData(QLatin1String("custom"));
 	customAction->setCheckable(true);
 	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
@@ -639,6 +639,15 @@ void Menu::updateClosedWindowsMenu()
 	MainWindow *window = MainWindow::findMainWindow(parent());
 
 	setEnabled((window && window->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
+}
+
+Action* Menu::addAction(int identifier)
+{
+	Action *action = new Action(identifier, this);
+
+	QMenu::addAction(action);
+
+	return action;
 }
 
 }
