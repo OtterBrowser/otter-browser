@@ -80,7 +80,12 @@ void TrayIcon::triggerAction(QAction *action)
 	}
 	else
 	{
-		ActionsManager::triggerAction(actionObject->getIdentifier(), NULL);
+		MainWindow *window = SessionsManager::getActiveWindow();
+
+		if (window)
+		{
+			window->getActionsManager()->triggerAction(actionObject->getIdentifier());
+		}
 	}
 }
 
