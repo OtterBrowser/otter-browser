@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,6 +31,7 @@ namespace Otter
 {
 
 WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent) : QDialog(parent),
+	m_updateOverride(true),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
 	QList<int> textCodecs;
@@ -52,38 +54,17 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		m_ui->encodingComboBox->addItem(codec->name(), textCodecs.at(i));
 	}
 
-	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), url).toString())));
-	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toBool());
-	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), url).toBool());
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
-
-	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), url).toString());
-
-	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
-	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), url).toString());
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), url).toBool());
-	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), url).toBool());
-	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), url).toBool());
 
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Do not inform websites about my preference"), QLatin1String("skip"));
 
-	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
-
-	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
-	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool());
-	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), url).toBool());
-	m_ui->cookiesWidget->setEnabled(m_ui->acceptCookiesCheckBox->isChecked());
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
-
-	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
-
-	m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
 
 	QStringList cookiesLabels;
 	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
@@ -104,8 +85,6 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	m_ui->cookiesTableWidget->setModel(cookiesModel);
 
-	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool());
-
 	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
 
 	m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
@@ -119,9 +98,47 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
 	}
 
-	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), url).toString()));
+	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->enableJavaOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->pluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->thirdPartyCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->javaSriptCanAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
 
-	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
+	updateValues();
+
+	QList<QCheckBox*> checkBoxes = findChildren<QCheckBox*>();
+
+	for (int i = 0; i < checkBoxes.count(); ++i)
+	{
+		if (checkBoxes.at(i)->text().isEmpty())
+		{
+			connect(checkBoxes.at(i), SIGNAL(toggled(bool)), this, SLOT(updateValues(bool)));
+		}
+		else
+		{
+			connect(checkBoxes.at(i), SIGNAL(toggled(bool)), this, SLOT(valueChanged()));
+		}
+	}
+
+	QList<QComboBox*> comboBoxes = findChildren<QComboBox*>();
+
+	for (int i = 0; i < comboBoxes.count(); ++i)
+	{
+		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(valueChanged()));
+	}
+
+	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged()), this, SLOT(valueChanged()));
+	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesOverrideCheckBox, SLOT(setDisabled(bool)));
+	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesLabel, SLOT(setDisabled(bool)));
+	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesComboBox, SLOT(setDisabled(bool)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -153,19 +170,19 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
 		case QDialogButtonBox::AcceptRole:
-			SettingsManager::setValue(QLatin1String("Content/DefaultEncoding"), ((m_ui->encodingComboBox->currentIndex() == 0) ? QString() : m_ui->encodingComboBox->currentText()), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString(), url);
-			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath(), url);
-			SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), m_ui->doNotTrackComboBox->currentData().toString(), url);
-			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString(), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked(), url);
-			SettingsManager::setValue(QLatin1String("Network/UserAgent"), ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()), url);
+			SettingsManager::setValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? (m_ui->encodingComboBox->currentIndex() ? m_ui->encodingComboBox->currentText() : QString()): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? m_ui->enableJavaCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? m_ui->pluginsComboBox->currentData(Qt::UserRole).toString(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? m_ui->userStyleSheetFilePathWidget->getPath(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? m_ui->doNotTrackComboBox->currentData().toString(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? m_ui->rememberBrowsingHistoryCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesComboBox->currentData().toString(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaSriptCanAccessClipboardOverrideCheckBox->isChecked() ? m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()): QVariant()), url);
 
 			accept();
 
@@ -182,6 +199,97 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 		default:
 			break;
 	}
+}
+
+void WebsitePreferencesDialog::updateValues(bool checked)
+{
+	QUrl url;
+	url.setHost(m_ui->websiteLineEdit->text());
+
+	if (checked)
+	{
+		return;
+	}
+
+	m_updateOverride = false;
+
+	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString())));
+	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+
+	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
+	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaSriptCanAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+
+	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), (m_ui->acceptCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+
+	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
+	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+
+	m_updateOverride = true;
+}
+
+void WebsitePreferencesDialog::valueChanged()
+{
+	QWidget *widget = qobject_cast<QWidget*>(sender());
+
+	if (!widget || !m_updateOverride)
+	{
+		return;
+	}
+
+	QWidget *tab = qobject_cast<QWidget*>(widget->parent());
+
+	if (!tab)
+	{
+		return;
+	}
+
+	QGridLayout *layout = qobject_cast<QGridLayout*>(tab->layout());
+
+	if (!layout)
+	{
+		return;
+	}
+
+	const int index = layout->indexOf(widget);
+
+	if (index < 0)
+	{
+		return;
+	}
+
+	int row = 0;
+	int dummy = 0;
+
+	layout->getItemPosition(index, &row, &dummy, &dummy, &dummy);
+
+	QLayoutItem *item = layout->itemAtPosition(row, 0);
+
+	if (!item)
+	{
+		return;
+	}
+
+	QCheckBox *overrideCheckBox = qobject_cast<QCheckBox*>(item->widget());
+
+	if (!overrideCheckBox)
+	{
+		return;
+	}
+
+	overrideCheckBox->setChecked(true);
 }
 
 }

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,9 +52,16 @@ void SettingsManager::registerOption(const QString &key)
 	emit m_instance->valueChanged(key, getValue(key));
 }
 
-void SettingsManager::removeOverride(const QUrl &url)
+void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 {
-	QSettings(m_overridePath, QSettings::IniFormat).remove(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	if (key.isEmpty())
+	{
+		QSettings(m_overridePath, QSettings::IniFormat).remove(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	}
+	else
+	{
+		QSettings(m_overridePath, QSettings::IniFormat).remove((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+	}
 }
 
 void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
@@ -105,6 +113,18 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 	}
 
 	return QSettings(m_globalPath, QSettings::IniFormat).value(key, getDefaultValue(key));
+}
+
+bool SettingsManager::hasOverride(const QUrl &url, const QString &key)
+{
+	if (key.isEmpty())
+	{
+		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+	}
+	else
+	{
+		return QSettings(m_overridePath, QSettings::IniFormat).contains((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+	}
 }
 
 }

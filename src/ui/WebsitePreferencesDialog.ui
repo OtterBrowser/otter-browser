@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QFormLayout" name="generalLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="websiteLabel">
        <property name="text">
@@ -40,37 +43,38 @@
       <attribute name="title">
        <string>Content</string>
       </attribute>
-      <layout class="QFormLayout" name="contentLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="2">
+        <widget class="QComboBox" name="encodingComboBox"/>
+       </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="encodingLabel">
+        <widget class="QLabel" name="contentOverrideLabel">
          <property name="text">
-          <string>Encoding:</string>
-         </property>
-         <property name="buddy">
-          <cstring>encodingComboBox</cstring>
+          <string>Override</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="encodingComboBox"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="popupsLabel">
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="popupsOverrideCheckBox">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Pop-ups:</string>
-         </property>
-         <property name="buddy">
-          <cstring>popupsComboBox</cstring>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="6" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="userStyleSheetOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="pluginsComboBox"/>
+       </item>
+       <item row="2" column="2">
         <widget class="QComboBox" name="popupsComboBox">
          <property name="enabled">
           <bool>false</bool>
@@ -92,39 +96,113 @@
          </item>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="enableImagesCheckBox">
+       <item row="4" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableJavaOverrideCheckBox">
          <property name="text">
-          <string>Enable images</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="enableJavaCheckBox">
+       <item row="6" column="2">
+        <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="encodingLabel">
          <property name="text">
-          <string>Enable Java</string>
+          <string>Encoding:</string>
+         </property>
+         <property name="buddy">
+          <cstring>encodingComboBox</cstring>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="pluginsLabel">
-         <property name="text">
-          <string>Plugins:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="pluginsComboBox"/>
-       </item>
-       <item row="6" column="0">
+       <item row="6" column="1">
         <widget class="QLabel" name="userStyleSheetLabel">
          <property name="text">
           <string>User style sheet:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true"/>
+       <item row="5" column="1">
+        <widget class="QLabel" name="pluginsLabel">
+         <property name="text">
+          <string>Plugins:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="popupsLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Pop-ups:</string>
+         </property>
+         <property name="buddy">
+          <cstring>popupsComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableImagesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="encodingOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="enableImagesCheckBox">
+         <property name="text">
+          <string>Enable images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="pluginsOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="enableJavaCheckBox">
+         <property name="text">
+          <string>Enable Java</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <spacer name="contentSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="2">
+        <spacer name="contentHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -132,36 +210,46 @@
       <attribute name="title">
        <string>Privacy</string>
       </attribute>
-      <layout class="QVBoxLayout" name="privacyLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="doNotTrackLabel">
-           <property name="text">
-            <string>Do Not Track:</string>
-           </property>
-           <property name="buddy">
-            <cstring>doNotTrackComboBox</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="doNotTrackComboBox">
-           <property name="currentIndex">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="2" column="2">
+        <widget class="QComboBox" name="doNotTrackComboBox">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="3" column="1">
         <widget class="QCheckBox" name="rememberBrowsingHistoryCheckBox">
          <property name="text">
           <string>Remember browsing history</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="doNotTrackOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="thirdPartyCookiesComboBox"/>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="thirdPartyCookiesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="privacyOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <widget class="QCheckBox" name="acceptCookiesCheckBox">
          <property name="enabled">
           <bool>false</bool>
@@ -171,10 +259,10 @@
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="cookiesDetailsLayout">
+       <item row="5" column="1">
+        <layout class="QHBoxLayout" name="thirdPartyLayout">
          <item>
-          <spacer name="cookiesDetailsSpacer">
+          <spacer name="thirdPartySpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -190,74 +278,123 @@
           </spacer>
          </item>
          <item>
-          <widget class="QWidget" name="cookiesWidget" native="true">
-           <layout class="QFormLayout" name="cookiesLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="thirdPartyCookiesLabel">
-              <property name="text">
-               <string>Accept third-party cookies:</string>
-              </property>
-              <property name="buddy">
-               <cstring>thirdPartyCookiesComboBox</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="keepCookiesUntilLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Keep until:</string>
-              </property>
-              <property name="buddy">
-               <cstring>keepCookiesUntilComboBox</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="thirdPartyCookiesComboBox"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QComboBox" name="keepCookiesUntilComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>Expires</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Current session is closed</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Always ask</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
+          <widget class="QLabel" name="thirdPartyCookiesLabel">
+           <property name="text">
+            <string>Accept third-party cookies:</string>
+           </property>
+           <property name="buddy">
+            <cstring>thirdPartyCookiesComboBox</cstring>
+           </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="doNotTrackLabel">
+         <property name="text">
+          <string>Do Not Track:</string>
+         </property>
+         <property name="buddy">
+          <cstring>doNotTrackComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="rememberBrowsingHistoryOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="acceptCookiesOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="keepCookiesUntilOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <layout class="QHBoxLayout" name="keepCookiesUntilLayout">
+         <item>
+          <spacer name="keepCookiesUntilSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="keepCookiesUntilLabel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Keep until:</string>
+           </property>
+           <property name="buddy">
+            <cstring>keepCookiesUntilComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="2">
+        <widget class="QComboBox" name="keepCookiesUntilComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Expires</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Current session is closed</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Always ask</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <spacer name="privacyHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="0" colspan="3">
         <layout class="QHBoxLayout" name="cookiesTableLayout">
          <item>
           <widget class="Otter::TableViewWidget" name="cookiesTableWidget">
@@ -342,15 +479,70 @@
       <attribute name="title">
        <string>Scripting</string>
       </attribute>
-      <layout class="QVBoxLayout" name="scriptingLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="1">
         <widget class="QCheckBox" name="enableJavaScriptCheckBox">
          <property name="text">
           <string>Enable JavaScript</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="4" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="javaScriptCanHideAddressBarOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QCheckBox" name="javaSriptCanAccessClipboardCheckBox">
+         <property name="text">
+          <string>Allow access to clipboard</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="scriptingOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableJavaScriptOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="javaSriptCanAccessClipboardOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
         <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryCheckBox">
          <property name="enabled">
           <bool>false</bool>
@@ -360,14 +552,14 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="1">
         <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesCheckBox">
          <property name="text">
           <string>Allow changing of status field</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="4" column="1">
         <widget class="QCheckBox" name="javaScriptCanHideAddressBarCheckBox">
          <property name="enabled">
           <bool>false</bool>
@@ -377,14 +569,7 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QCheckBox" name="javaSriptCanAccessClipboardCheckBox">
-         <property name="text">
-          <string>Allow access to clipboard</string>
-         </property>
-        </widget>
-       </item>
-       <item>
+       <item row="6" column="1">
         <spacer name="scriptingSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -397,83 +582,137 @@
          </property>
         </spacer>
        </item>
+       <item row="8" column="1">
+        <spacer name="scriptingHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="networkTab">
       <attribute name="title">
        <string>Network</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QCheckBox" name="sendReferrerCheckBox">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="userAgentOverrideCheckBox">
          <property name="text">
-          <string>Send referrer information</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="userAgentLabel">
-           <property name="text">
-            <string>User Agent:</string>
-           </property>
-           <property name="buddy">
-            <cstring>userAgentComboBox</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="userAgentComboBox"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="proxyModeLabel">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Proxy mode:</string>
-           </property>
-           <property name="buddy">
-            <cstring>proxyModeComboBox</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="proxyModeComboBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Global settings</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>No proxy</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>System configuration</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Manual configuration</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Automatic configuration (PAC)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
+       <item row="2" column="1">
+        <widget class="QLabel" name="userAgentLabel">
+         <property name="text">
+          <string>User Agent:</string>
+         </property>
+         <property name="buddy">
+          <cstring>userAgentComboBox</cstring>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="sendReferrerOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="networkOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <spacer name="networkSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="proxyModeLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Proxy mode:</string>
+         </property>
+         <property name="buddy">
+          <cstring>proxyModeComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="proxyModeOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="userAgentComboBox"/>
+       </item>
+       <item row="3" column="3">
+        <widget class="QComboBox" name="proxyModeComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>No proxy</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>System configuration</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Manual configuration</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Automatic configuration (PAC)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <spacer name="networkHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="1" colspan="3">
         <layout class="QHBoxLayout" name="proxyConfigurationLayout">
          <item>
           <spacer name="proxyConfigurationSpacer">
@@ -683,18 +922,12 @@
          </item>
         </layout>
        </item>
-       <item>
-        <spacer name="networkSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="1" colspan="2">
+        <widget class="QCheckBox" name="sendReferrerCheckBox">
+         <property name="text">
+          <string>Send referrer information</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -707,6 +940,9 @@
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -728,27 +964,35 @@
  <tabstops>
   <tabstop>websiteLineEdit</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>encodingOverrideCheckBox</tabstop>
   <tabstop>encodingComboBox</tabstop>
+  <tabstop>popupsOverrideCheckBox</tabstop>
   <tabstop>popupsComboBox</tabstop>
+  <tabstop>enableImagesOverrideCheckBox</tabstop>
   <tabstop>enableImagesCheckBox</tabstop>
+  <tabstop>enableJavaOverrideCheckBox</tabstop>
   <tabstop>enableJavaCheckBox</tabstop>
+  <tabstop>pluginsOverrideCheckBox</tabstop>
   <tabstop>pluginsComboBox</tabstop>
-  <tabstop>doNotTrackComboBox</tabstop>
-  <tabstop>rememberBrowsingHistoryCheckBox</tabstop>
-  <tabstop>acceptCookiesCheckBox</tabstop>
-  <tabstop>thirdPartyCookiesComboBox</tabstop>
-  <tabstop>keepCookiesUntilComboBox</tabstop>
+  <tabstop>userStyleSheetOverrideCheckBox</tabstop>
   <tabstop>cookiesTableWidget</tabstop>
   <tabstop>addCookieButton</tabstop>
   <tabstop>editCookieButton</tabstop>
   <tabstop>deleteCookieButton</tabstop>
+  <tabstop>enableJavaScriptOverrideCheckBox</tabstop>
   <tabstop>enableJavaScriptCheckBox</tabstop>
+  <tabstop>javaScriptCanChangeWndowGeometryOverrideCheckBox</tabstop>
   <tabstop>javaScriptCanChangeWndowGeometryCheckBox</tabstop>
+  <tabstop>javaScriptCanShowStatusMessagesOverrideCheckBox</tabstop>
   <tabstop>javaScriptCanShowStatusMessagesCheckBox</tabstop>
+  <tabstop>javaScriptCanHideAddressBarOverrideCheckBox</tabstop>
   <tabstop>javaScriptCanHideAddressBarCheckBox</tabstop>
+  <tabstop>javaSriptCanAccessClipboardOverrideCheckBox</tabstop>
   <tabstop>javaSriptCanAccessClipboardCheckBox</tabstop>
-  <tabstop>sendReferrerCheckBox</tabstop>
+  <tabstop>sendReferrerOverrideCheckBox</tabstop>
+  <tabstop>userAgentOverrideCheckBox</tabstop>
   <tabstop>userAgentComboBox</tabstop>
+  <tabstop>proxyModeOverrideCheckBox</tabstop>
   <tabstop>proxyModeComboBox</tabstop>
   <tabstop>allProxyCheckBox</tabstop>
   <tabstop>allProxyServersLineEdit</tabstop>
@@ -765,7 +1009,6 @@
   <tabstop>socksProxyCheckBox</tabstop>
   <tabstop>socksProxyServersLineEdit</tabstop>
   <tabstop>socksProxyPortSpinBox</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
