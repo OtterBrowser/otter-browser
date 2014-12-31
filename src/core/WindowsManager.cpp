@@ -682,7 +682,7 @@ void WindowsManager::setStatusMessage(const QString &message)
 {
 	QStatusTipEvent event(message);
 
-	QApplication::sendEvent(this, &event);
+	QApplication::sendEvent(MainWindow::findMainWindow(parent()), &event);
 }
 
 void WindowsManager::setTabBar(TabBarWidget *tabBar)
