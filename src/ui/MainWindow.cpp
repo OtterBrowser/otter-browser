@@ -88,6 +88,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
 	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
 	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomInAction, NULL, this));
+	m_ui->statusBar->setFixedHeight(m_ui->statusBar->sizeHint().height() * 0.7);
 
 	SessionsManager::registerWindow(this);
 

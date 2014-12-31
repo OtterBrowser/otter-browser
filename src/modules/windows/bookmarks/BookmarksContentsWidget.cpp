@@ -325,7 +325,6 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 	}
 
 	Action *action = new Action(identifier, this);
-	action->setup(ActionsManager::getAction(Action::DeleteAction, this));
 
 	m_actions[identifier] = action;
 
