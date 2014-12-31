@@ -80,6 +80,7 @@ struct MacroDefinition
 
 class ActionsManager;
 class MainWindow;
+class Window;
 
 class ActionsManagerHelper : public QObject
 {
@@ -115,6 +116,7 @@ public:
 	void triggerAction(int identifier, bool checked = false);
 	static void triggerAction(int identifier, QObject *parent, bool checked = false);
 	static void loadShortcuts();
+	void setCurrentWindow(Window *window);
 	Action* getAction(int identifier);
 	static Action* getAction(int identifier, QObject *parent);
 	static QList<ActionDefinition> getActionDefinitions();
@@ -135,7 +137,8 @@ protected slots:
 	void updateShortcuts();
 
 private:
-	MainWindow *m_window;
+	MainWindow *m_mainWindow;
+	Window *m_window;
 	QVector<Action*> m_standardActions;
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	QVector<QPair<int, QVector<QShortcut*> > > m_macroShortcuts;

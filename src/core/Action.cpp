@@ -36,6 +36,11 @@ void Action::setup(Action *action)
 {
 	if (!action)
 	{
+		action = qobject_cast<Action*>(sender());
+	}
+
+	if (!action)
+	{
 		update(true);
 		setEnabled(false);
 
@@ -99,6 +104,115 @@ bool Action::event(QEvent *event)
 	}
 
 	return QAction::event(event);
+}
+
+bool Action::isLocal(int identifier)
+{
+	switch (identifier)
+	{
+		case Action::SaveAction:
+		case Action::CloneTabAction:
+		case Action::CloseTabAction:
+		case Action::OpenLinkAction:
+		case Action::OpenLinkInCurrentTabAction:
+		case Action::OpenLinkInNewTabAction:
+		case Action::OpenLinkInNewTabBackgroundAction:
+		case Action::OpenLinkInNewWindowAction:
+		case Action::OpenLinkInNewWindowBackgroundAction:
+		case Action::CopyLinkToClipboardAction:
+		case Action::BookmarkLinkAction:
+		case Action::SaveLinkToDiskAction:
+		case Action::SaveLinkToDownloadsAction:
+		case Action::OpenSelectionAsLinkAction:
+		case Action::OpenFrameInCurrentTabAction:
+		case Action::OpenFrameInNewTabAction:
+		case Action::OpenFrameInNewTabBackgroundAction:
+		case Action::CopyFrameLinkToClipboardAction:
+		case Action::ReloadFrameAction:
+		case Action::ViewFrameSourceAction:
+		case Action::OpenImageInNewTabAction:
+		case Action::SaveImageToDiskAction:
+		case Action::CopyImageToClipboardAction:
+		case Action::CopyImageUrlToClipboardAction:
+		case Action::ReloadImageAction:
+		case Action::ImagePropertiesAction:
+		case Action::SaveMediaToDiskAction:
+		case Action::CopyMediaUrlToClipboardAction:
+		case Action::ToggleMediaControlsAction:
+		case Action::ToggleMediaLoopAction:
+		case Action::ToggleMediaPlayPauseAction:
+		case Action::ToggleMediaMuteAction:
+		case Action::GoAction:
+		case Action::GoBackAction:
+		case Action::GoForwardAction:
+		case Action::GoToParentDirectoryAction:
+		case Action::RewindAction:
+		case Action::FastForwardAction:
+		case Action::StopAction:
+		case Action::StopScheduledReloadAction:
+		case Action::ReloadAction:
+		case Action::ReloadOrStopAction:
+		case Action::ReloadAndBypassCacheAction:
+		case Action::ScheduleReloadAction:
+		case Action::UndoAction:
+		case Action::RedoAction:
+		case Action::CutAction:
+		case Action::CopyAction:
+		case Action::CopyPlainTextAction:
+		case Action::CopyAddressAction:
+		case Action::PasteAction:
+		case Action::PasteAndGoAction:
+		case Action::DeleteAction:
+		case Action::SelectAllAction:
+		case Action::ClearAllAction:
+		case Action::CheckSpellingAction:
+		case Action::FindAction:
+		case Action::FindNextAction:
+		case Action::FindPreviousAction:
+		case Action::QuickFindAction:
+		case Action::SearchAction:
+		case Action::SearchMenuAction:
+		case Action::CreateSearchAction:
+		case Action::ZoomInAction:
+		case Action::ZoomOutAction:
+		case Action::ZoomOriginalAction:
+		case Action::ScrollToStartAction:
+		case Action::ScrollToEndAction:
+		case Action::ScrollPageUpAction:
+		case Action::ScrollPageDownAction:
+		case Action::ScrollPageLeftAction:
+		case Action::ScrollPageRightAction:
+		case Action::ActivateAddressFieldAction:
+		case Action::ActivateSearchFieldAction:
+		case Action::ActivateContentAction:
+		case Action::ActivateTabOnLeftAction:
+		case Action::ActivateTabOnRightAction:
+		case Action::AddBookmarkAction:
+		case Action::QuickBookmarkAccessAction:
+		case Action::PopupsPolicyAction:
+		case Action::ImagesPolicyAction:
+		case Action::CookiesPolicyAction:
+		case Action::ThirdPartyCookiesPolicyAction:
+		case Action::PluginsPolicyAction:
+		case Action::LoadPluginsAction:
+		case Action::EnableJavaScriptAction:
+		case Action::EnableJavaAction:
+		case Action::EnableReferrerAction:
+		case Action::ProxyMenuAction:
+		case Action::EnableProxyAction:
+		case Action::ViewSourceAction:
+		case Action::ValidateAction:
+		case Action::InspectPageAction:
+		case Action::InspectElementAction:
+		case Action::WebsitePreferencesAction:
+		case Action::QuickPreferencesAction:
+		case Action::ResetQuickPreferencesAction:
+			return true;
+		default:
+			break;
+	}
+
+	return false;
 }
 
 }

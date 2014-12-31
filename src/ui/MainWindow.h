@@ -35,8 +35,10 @@ namespace Ui
 }
 
 class ActionsManager;
+class MdiWidget;
 class Menu;
 class TabBarToolBarWidget;
+class TabBarWidget;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -48,6 +50,8 @@ public:
 	~MainWindow();
 
 	static MainWindow* findMainWindow(QObject *parent);
+	MdiWidget* getMdi();
+	TabBarWidget* getTabBar();
 	ActionsManager* getActionsManager();
 	WindowsManager* getWindowsManager();
 	bool eventFilter(QObject *object, QEvent *event);
@@ -68,12 +72,12 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString());
 	void transferStarted();
-	void updateActions();
 	void updateWindowTitle(const QString &title);
 
 private:
 	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
+	MdiWidget *m_mdiWidget;
 	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;
 	QString m_currentBookmark;

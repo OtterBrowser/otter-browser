@@ -524,8 +524,6 @@ void CacheContentsWidget::updateActions()
 	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
 	{
 		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
-
-		emit actionsChanged();
 	}
 }
 

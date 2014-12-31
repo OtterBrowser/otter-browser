@@ -22,7 +22,9 @@
 #include "Application.h"
 #include "GesturesManager.h"
 #include "Utils.h"
+#include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
+#include "../ui/Window.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
@@ -147,7 +149,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::PrintPreviewAction, QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
 	registerAction(Action::ActivateAddressFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Address Field"));
 	registerAction(Action::ActivateSearchFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Search Field"));
-	registerAction(Action::ActivateWebpageAction, QT_TRANSLATE_NOOP("actions", "Activate Webpage"));
+	registerAction(Action::ActivateContentAction, QT_TRANSLATE_NOOP("actions", "Activate Content"));
 	registerAction(Action::ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"));
 	registerAction(Action::ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"));
 	registerAction(Action::BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks..."), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
@@ -304,7 +306,8 @@ void ActionsManagerHelper::optionChanged(const QString &option)
 }
 
 ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
-	m_window(parent)
+	m_mainWindow(parent),
+	m_window(NULL)
 {
 	if (!m_helper)
 	{
@@ -453,7 +456,7 @@ void ActionsManager::updateShortcuts()
 
 		for (int j = 0; j < m_helper->actionDefinitions[i].shortcuts.count(); ++j)
 		{
-			QShortcut *shortcut = new QShortcut(m_helper->actionDefinitions[i].shortcuts[j], m_window);
+			QShortcut *shortcut = new QShortcut(m_helper->actionDefinitions[i].shortcuts[j], m_mainWindow);
 
 			shortcuts.append(shortcut);
 
@@ -470,7 +473,7 @@ void ActionsManager::updateShortcuts()
 
 		for (int j = 0; j < m_helper->macroDefinitions[i].shortcuts.count(); ++j)
 		{
-			QShortcut *shortcut = new QShortcut(m_helper->macroDefinitions[i].shortcuts[j], m_window);
+			QShortcut *shortcut = new QShortcut(m_helper->macroDefinitions[i].shortcuts[j], m_mainWindow);
 
 			shortcuts.append(shortcut);
 
@@ -485,7 +488,7 @@ void ActionsManager::updateShortcuts()
 
 void ActionsManager::triggerAction(int identifier, bool checked)
 {
-	m_window->triggerAction(identifier, checked);
+	m_mainWindow->triggerAction(identifier, checked);
 }
 
 void ActionsManager::triggerAction(int identifier, QObject *parent, bool checked)
@@ -604,6 +607,35 @@ void ActionsManager::loadShortcuts()
 	emit m_helper->shortcutsChanged();
 }
 
+void ActionsManager::setCurrentWindow(Window *window)
+{
+	Window *previousWindow = m_window;
+
+	m_window = window;
+
+	for (int i = 0; i < m_standardActions.count(); ++i)
+	{
+		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
+		{
+			const int identifier = m_standardActions[i]->getIdentifier();
+			Action *previousAction = (previousWindow ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
+			Action *currentAction = (window ? window->getContentsWidget()->getAction(identifier) : NULL);
+
+			if (previousAction)
+			{
+				disconnect(previousAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+			}
+
+			m_standardActions[i]->setup(currentAction);
+
+			if (currentAction)
+			{
+				connect(currentAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+			}
+		}
+	}
+}
+
 ActionsManager* ActionsManager::findManager(QObject *parent)
 {
 	MainWindow *window = MainWindow::findMainWindow(parent);
@@ -626,11 +658,11 @@ Action* ActionsManager::getAction(int identifier)
 	if (!m_standardActions[identifier])
 	{
 		const ActionDefinition definition = m_helper->actionDefinitions[identifier];
-		Action *action = new Action(identifier, m_window);
+		Action *action = new Action(identifier, m_mainWindow);
 
 		m_standardActions[identifier] = action;
 
-		m_window->addAction(action);
+		m_mainWindow->addAction(action);
 
 		if (definition.isCheckable)
 		{

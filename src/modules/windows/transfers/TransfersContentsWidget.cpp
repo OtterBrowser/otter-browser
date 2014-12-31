@@ -463,8 +463,6 @@ void TransfersContentsWidget::updateActions()
 		m_ui->downloadedLabelWidget->clear();
 		m_ui->progressLabelWidget->clear();
 	}
-
-	emit actionsChanged();
 }
 
 void TransfersContentsWidget::print(QPrinter *printer)
@@ -536,7 +534,6 @@ Action* TransfersContentsWidget::getAction(int identifier)
 	}
 
 	Action *action = new Action(identifier, this);
-	action->setup(ActionsManager::getAction(identifier, this));
 
 	m_actions[identifier] = action;
 

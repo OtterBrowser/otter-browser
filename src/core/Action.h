@@ -120,7 +120,7 @@ public:
 		PrintPreviewAction,
 		ActivateAddressFieldAction,
 		ActivateSearchFieldAction,
-		ActivateWebpageAction,
+		ActivateContentAction,
 		ActivateTabOnLeftAction,
 		ActivateTabOnRightAction,
 		BookmarksAction,
@@ -165,11 +165,14 @@ public:
 
 	explicit Action(int identifier, QObject *parent = NULL);
 
-	void setup(Action *action);
 	void setOverrideText(const QString &text);
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event);
+	static bool isLocal(int identifier);
+
+public slots:
+	void setup(Action *action = NULL);
 
 protected:
 	void update(bool reset = false);

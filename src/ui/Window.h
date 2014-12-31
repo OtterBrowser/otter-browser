@@ -119,7 +119,6 @@ signals:
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedCloseWindow(Window *window);
-	void actionsChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

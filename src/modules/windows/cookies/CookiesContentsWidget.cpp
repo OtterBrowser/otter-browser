@@ -306,8 +306,6 @@ void CookiesContentsWidget::updateActions()
 	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
 	{
 		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
-
-		emit actionsChanged();
 	}
 
 	m_ui->domainLineEdit->setText(QString());
@@ -378,7 +376,6 @@ Action* CookiesContentsWidget::getAction(int identifier)
 	}
 
 	Action *action = new Action(identifier, this);
-	action->setup(ActionsManager::getAction(identifier, this));
 
 	m_actions[identifier] = action;
 

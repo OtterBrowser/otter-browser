@@ -119,8 +119,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
 	connect(m_page, SIGNAL(aboutToNavigate(QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)));
-	connect(m_page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -502,14 +500,29 @@ void QtWebKitWebWidget::updateNavigationActions()
 		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
 	}
 
-	if (m_actions.contains(Action::LoadPluginsAction))
+	if (m_actions.contains(Action::ReloadAction))
 	{
-		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+		getAction(Action::ReloadAction)->setEnabled(!m_isLoading);
+	}
+
+	if (m_actions.contains(Action::StopAction))
+	{
+		getAction(Action::StopAction)->setEnabled(m_isLoading);
 	}
 
 	if (m_actions.contains(Action::ReloadOrStopAction))
 	{
 		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction((m_isLoading ? Action::StopAction : Action::ReloadAction), this));
+	}
+
+	if (m_actions.contains(Action::ReloadOrStopAction))
+	{
+		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction((m_isLoading ? Action::StopAction : Action::ReloadAction), this));
+	}
+
+	if (m_actions.contains(Action::LoadPluginsAction))
+	{
+		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 	}
 }
 
@@ -1080,7 +1093,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
-		case Action::ActivateWebpageAction:
+		case Action::ActivateContentAction:
 			{
 				m_webView->setFocus();
 
@@ -1158,7 +1171,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			getAction(Action::InspectPageAction)->setChecked(checked);
 
-			emit actionsChanged();
 			emit progressBarGeometryChanged();
 
 			break;
@@ -1341,8 +1353,6 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 		updateNavigationActions();
 
-		emit actionsChanged();
-
 		return;
 	}
 
@@ -1501,7 +1511,6 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 	}
 
 	Action *action = new Action(identifier, this);
-	action->setup(ActionsManager::getAction(identifier, this));
 
 	m_actions[identifier] = action;
 

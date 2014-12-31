@@ -50,8 +50,7 @@ Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
 class BookmarksItem;
 class ContentsWidget;
-class MdiWidget;
-class TabBarWidget;
+class MainWindow;
 class Window;
 
 class WindowsManager : public QObject
@@ -59,10 +58,10 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
-	explicit WindowsManager(MdiWidget *mdi, bool isPrivate = false);
+	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
 	Action* getAction(int identifier);
-	Window* getWindow(int index) const;
+	Window* getWindow(int index = -1) const;
 	QVariant getOption(const QString &key) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
@@ -91,7 +90,6 @@ public slots:
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
 	void gatherBookmarks(QStandardItem *branch);
-	void setTabBar(TabBarWidget *tabBar);
 	int getWindowIndex(Window *window) const;
 	bool event(QEvent *event);
 
@@ -108,8 +106,7 @@ protected slots:
 	void setStatusMessage(const QString &message);
 
 private:
-	MdiWidget *m_mdi;
-	TabBarWidget *m_tabBar;
+	MainWindow *m_mainWindow;
 	QList<SessionWindow> m_closedWindows;
 	QList<QUrl> m_bookmarksToOpen;
 	bool m_isPrivate;
@@ -118,7 +115,6 @@ private:
 signals:
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
-	void actionsChanged();
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
 	void windowAdded(int index);
@@ -126,8 +122,6 @@ signals:
 	void currentWindowChanged(int index);
 	void windowTitleChanged(QString title);
 	void closedWindowsAvailableChanged(bool available);
-
-friend class MainWindow;
 };
 
 }

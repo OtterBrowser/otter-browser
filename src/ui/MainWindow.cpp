@@ -74,18 +74,16 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
-	MdiWidget *mdiWidget = new MdiWidget(this);
+	m_mdiWidget = new MdiWidget(this);
 
-	setCentralWidget(mdiWidget);
+	setCentralWidget(m_mdiWidget);
 
-	m_windowsManager = new WindowsManager(mdiWidget, (isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()));
+	m_windowsManager = new WindowsManager((isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
 	m_tabBarToolBarWidget = new TabBarToolBarWidget(this);
 	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
 	addToolBar(m_tabBarToolBarWidget);
-
-	m_windowsManager->setTabBar(m_tabBarToolBarWidget->getTabBar());
 
 	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
 	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
@@ -111,7 +109,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(addBookmark(QUrl,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
-	connect(m_windowsManager, SIGNAL(actionsChanged()), this, SLOT(updateActions()));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowSidebarAction), SLOT(setChecked(bool)));
 	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
@@ -121,7 +118,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_ui->sidebarDockWidget->hide();
 	m_ui->consoleDockWidget->hide();
 
-	updateActions();
 	updateWindowTitle(m_windowsManager->getTitle());
 
 	if (!session.geometry.isEmpty())
@@ -583,34 +579,6 @@ void MainWindow::transferStarted()
 	}
 }
 
-void MainWindow::updateActions()
-{
-	m_actionsManager->getAction(Action::UndoAction)->setup(m_windowsManager->getAction(Action::UndoAction));
-	m_actionsManager->getAction(Action::RedoAction)->setup(m_windowsManager->getAction(Action::RedoAction));
-	m_actionsManager->getAction(Action::CutAction)->setup(m_windowsManager->getAction(Action::CutAction));
-	m_actionsManager->getAction(Action::CopyAction)->setup(m_windowsManager->getAction(Action::CopyAction));
-	m_actionsManager->getAction(Action::PasteAction)->setup(m_windowsManager->getAction(Action::PasteAction));
-	m_actionsManager->getAction(Action::DeleteAction)->setup(m_windowsManager->getAction(Action::DeleteAction));
-	m_actionsManager->getAction(Action::SelectAllAction)->setup(m_windowsManager->getAction(Action::SelectAllAction));
-	m_actionsManager->getAction(Action::FindAction)->setup(m_windowsManager->getAction(Action::FindAction));
-	m_actionsManager->getAction(Action::FindNextAction)->setup(m_windowsManager->getAction(Action::FindNextAction));
-	m_actionsManager->getAction(Action::FindPreviousAction)->setup(m_windowsManager->getAction(Action::FindPreviousAction));
-	m_actionsManager->getAction(Action::ReloadAction)->setup(m_windowsManager->getAction(Action::ReloadAction));
-	m_actionsManager->getAction(Action::StopAction)->setup(m_windowsManager->getAction(Action::StopAction));
-	m_actionsManager->getAction(Action::ViewSourceAction)->setup(m_windowsManager->getAction(Action::ViewSourceAction));
-	m_actionsManager->getAction(Action::InspectPageAction)->setup(m_windowsManager->getAction(Action::InspectPageAction));
-	m_actionsManager->getAction(Action::GoBackAction)->setup(m_windowsManager->getAction(Action::GoBackAction));
-	m_actionsManager->getAction(Action::RewindAction)->setup(m_windowsManager->getAction(Action::RewindAction));
-	m_actionsManager->getAction(Action::GoForwardAction)->setup(m_windowsManager->getAction(Action::GoForwardAction));
-	m_actionsManager->getAction(Action::FastForwardAction)->setup(m_windowsManager->getAction(Action::FastForwardAction));
-
-	const bool canZoom = m_windowsManager->canZoom();
-
-	m_actionsManager->getAction(Action::ZoomOutAction)->setEnabled(canZoom);
-	m_actionsManager->getAction(Action::ZoomInAction)->setEnabled(canZoom);
-	m_actionsManager->getAction(Action::ZoomOriginalAction)->setEnabled(canZoom);
-}
-
 void MainWindow::updateWindowTitle(const QString &title)
 {
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
@@ -644,6 +612,16 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	}
 
 	return window;
+}
+
+MdiWidget* MainWindow::getMdi()
+{
+	return m_mdiWidget;
+}
+
+TabBarWidget* MainWindow::getTabBar()
+{
+	return (m_tabBarToolBarWidget ? m_tabBarToolBarWidget->getTabBar() : NULL);
 }
 
 ActionsManager* MainWindow::getActionsManager()
