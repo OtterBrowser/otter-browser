@@ -23,6 +23,7 @@
 #include "ui/MainWindow.h"
 #include "ui/StartupDialog.h"
 
+#include <QtCore/QLibraryInfo>
 #include <QtCore/QUrl>
 
 using namespace Otter;
@@ -59,6 +60,15 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 int main(int argc, char *argv[])
 {
 	qInstallMessageHandler(otterMessageHander);
+
+#ifdef Q_OS_WIN
+	const QString executable = argv[0];
+	const QString pluginsPath = QLibraryInfo::location(QLibraryInfo::PluginsPath);
+
+	QCoreApplication::removeLibraryPath(pluginsPath);
+	QCoreApplication::addLibraryPath(executable.mid(0, executable.lastIndexOf(QLatin1String("\\"))));
+	QCoreApplication::addLibraryPath(pluginsPath);
+#endif
 
 	Application application(argc, argv);
 
