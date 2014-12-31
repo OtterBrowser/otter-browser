@@ -68,6 +68,19 @@
 		"title": "View",
 		"actions":
 		[
+			{
+				"identifier": "ToolBarsMenu",
+				"type": "menu",
+				"title": "Toolbars",
+				"actions":
+				[
+					"ShowSidebar",
+					"ShowErrorConsole",
+					"separator",
+					"LockToolBarsAction"
+				]
+			},
+			"separator",
 			"Reload",
 			"Stop",
 			"separator",
@@ -143,8 +156,6 @@
 			"Transfers",
 			"Cookies",
 			"ContentBlocking",
-			"ShowErrorConsole",
-			"ShowSidebar",
 			"separator",
 			"Preferences"
 		]

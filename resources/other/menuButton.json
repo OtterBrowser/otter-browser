@@ -109,6 +109,18 @@
 		"Transfers",
 		"separator",
 		{
+			"identifier": "ToolBarsMenu",
+			"type": "menu",
+			"title": "Toolbars",
+			"actions":
+			[
+				"ShowSidebar",
+				"ShowErrorConsole",
+				"separator",
+				"LockToolBarsAction"
+			]
+		},
+		{
 			"identifier": "SettingsMenu",
 			"type": "menu",
 			"title": "Settings",
