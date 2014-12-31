@@ -42,7 +42,7 @@ protected:
 
 protected slots:
 	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
-	void setLoading(bool loading);
+	void loadingChanged(bool isLoading);
 
 private:
 	WebWidget *m_webWidget;
@@ -53,6 +53,7 @@ private:
 	QLabel *m_elapsedLabel;
 	QLabel *m_messageLabel;
 	QTime *m_time;
+	bool m_isLoading;
 };
 
 }

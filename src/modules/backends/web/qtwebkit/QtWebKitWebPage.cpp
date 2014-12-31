@@ -297,12 +297,9 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 		}
 	}
 
-	if (type == QWebPage::NavigationTypeReload && m_widget)
-	{
-		m_widget->markPageRealoded();
-	}
+	emit aboutToNavigate(frame, type);
 
-	return QWebPage::acceptNavigationRequest(frame, request, type);
+	return true;
 }
 
 bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message)

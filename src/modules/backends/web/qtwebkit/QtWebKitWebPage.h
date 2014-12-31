@@ -75,6 +75,7 @@ private:
 
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
+	void aboutToNavigate(QWebFrame *frame, QWebPage::NavigationType navigationType);
 
 friend class QtWebKitWebBackend;
 };

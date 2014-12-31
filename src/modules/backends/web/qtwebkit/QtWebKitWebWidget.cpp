@@ -74,12 +74,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspectorCloseButton(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
-	m_historyEntry(-1),
 	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
-	m_isReloading(false),
 	m_isTyped(false)
 {
 	m_splitter->addWidget(m_webView);
@@ -119,11 +117,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
+	connect(m_page, SIGNAL(aboutToNavigate(QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)));
 	connect(m_page, SIGNAL(microFocusChanged()), this, SIGNAL(actionsChanged()));
 	connect(m_page, SIGNAL(selectionChanged()), this, SIGNAL(actionsChanged()));
-	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
-	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished(bool)));
 	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -131,7 +128,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
-	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SIGNAL(progressBarGeometryChanged()));
+	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
@@ -207,110 +205,44 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 	}
 }
 
+void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType type)
+{
+	if (frame == m_page->mainFrame() && type != QWebPage::NavigationTypeBackOrForward)
+	{
+		pageLoadStarted();
+		handleHistory();
+
+		if (type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeFormSubmitted)
+		{
+			m_isTyped = false;
+		}
+	}
+}
+
 void QtWebKitWebWidget::pageLoadStarted()
 {
-	if (m_isLoading)
-	{
-		return;
-	}
-
 	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("enabled"));
 	m_isLoading = true;
 	m_thumbnail = QPixmap();
 
-	if (m_actions.contains(Action::GoBackAction))
-	{
-		getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(Action::GoForwardAction))
-	{
-		getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	}
-
-	if (m_actions.contains(Action::RewindAction))
-	{
-		getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(Action::FastForwardAction))
-	{
-		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	}
-
-	if (m_actions.contains(Action::LoadPluginsAction))
-	{
-		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-	}
-
-	if (m_actions.contains(Action::ReloadOrStopAction))
-	{
-		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::StopAction, this));
-	}
-
-	if (!isPrivate())
-	{
-		SessionsManager::markSessionModified();
-
-		if (m_isReloading)
-		{
-			m_isReloading = false;
-		}
-		else if (HistoryManager::getEntry(m_historyEntry).url != getUrl())
-		{
-			m_historyEntry = HistoryManager::addEntry(getUrl(), m_webView->title(), m_webView->icon(), m_isTyped);
-		}
-
-		m_isTyped = false;
-	}
-
+	updateNavigationActions();
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
+	emit progressBarGeometryChanged();
 	emit loadingChanged(true);
 }
 
-void QtWebKitWebWidget::pageLoadFinished(bool ok)
+void QtWebKitWebWidget::pageLoadFinished()
 {
-	if (!m_isLoading)
-	{
-		return;
-	}
-
 	m_isLoading = false;
 
 	m_thumbnail = QPixmap();
 
 	m_networkManager->resetStatistics();
 
-	if (m_actions.contains(Action::ReloadOrStopAction))
-	{
-		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction(Action::ReloadAction, this));
-	}
-
-	if (m_actions.contains(Action::LoadPluginsAction))
-	{
-		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-	}
-
-	if (!isPrivate())
-	{
-		if (ok)
-		{
-			SessionsManager::markSessionModified();
-
-			if (m_historyEntry >= 0)
-			{
-				HistoryManager::updateEntry(m_historyEntry, getUrl(), m_webView->title(), m_webView->icon());
-				BookmarksManager::updateVisits(getUrl().toString());
-			}
-		}
-		else if (m_historyEntry >= 0)
-		{
-			HistoryManager::removeEntry(m_historyEntry);
-		}
-	}
-
+	updateNavigationActions();
+	handleHistory();
 	startReloadTimer();
 
 	emit loadingChanged(false);
@@ -399,9 +331,20 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 {
 	if (frame == m_webView->page()->mainFrame())
 	{
-		QVariantHash data;
-		data[QLatin1String("position")] = m_webView->page()->mainFrame()->scrollPosition();
-		data[QLatin1String("zoom")] = getZoom();
+		QVariantList data = m_webView->history()->currentItem().userData().toList();
+
+		if (data.isEmpty() || data.length() < 3)
+		{
+			data.clear();
+			data.append(0);
+			data.append(getZoom());
+			data.append(m_webView->page()->mainFrame()->scrollPosition());
+		}
+		else
+		{
+			data[ZoomEntryData] = getZoom();
+			data[PositionEntryData] = m_webView->page()->mainFrame()->scrollPosition();
+		}
 
 		item->setUserData(data);
 	}
@@ -411,11 +354,11 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 {
 	if (frame == m_webView->page()->mainFrame())
 	{
-		setZoom(m_webView->history()->currentItem().userData().toHash().value(QLatin1String("zoom"), getZoom()).toInt());
+		setZoom(m_webView->history()->currentItem().userData().toList().value(ZoomEntryData, getZoom()).toInt());
 
 		if (m_webView->page()->mainFrame()->scrollPosition() == QPoint(0, 0))
 		{
-			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toHash().value(QLatin1String("position")).toPoint());
+			m_webView->page()->mainFrame()->setScrollPosition(m_webView->history()->currentItem().userData().toList().value(PositionEntryData).toPoint());
 		}
 	}
 }
@@ -428,11 +371,6 @@ void QtWebKitWebWidget::hideInspector()
 void QtWebKitWebWidget::linkHovered(const QString &link)
 {
 	setStatusMessage(link, true);
-}
-
-void QtWebKitWebWidget::markPageRealoded()
-{
-	m_isReloading = true;
 }
 
 void QtWebKitWebWidget::clearPluginToken()
@@ -491,32 +429,13 @@ void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
 
-	SessionsManager::markSessionModified();
+	handleHistory();
 }
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	updateOptions(url);
-
-	if (m_actions.contains(Action::GoBackAction))
-	{
-		getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(Action::GoForwardAction))
-	{
-		getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	}
-
-	if (m_actions.contains(Action::RewindAction))
-	{
-		getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(Action::FastForwardAction))
-	{
-		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
-	}
+	updateNavigationActions();
 
 	emit urlChanged(url);
 
@@ -559,6 +478,39 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 	}
 
 	getAction(Action::SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+}
+
+void QtWebKitWebWidget::updateNavigationActions()
+{
+	if (m_actions.contains(Action::GoBackAction))
+	{
+		getAction(Action::GoBackAction)->setEnabled(m_webView->history()->canGoBack());
+	}
+
+	if (m_actions.contains(Action::GoForwardAction))
+	{
+		getAction(Action::GoForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
+
+	if (m_actions.contains(Action::RewindAction))
+	{
+		getAction(Action::RewindAction)->setEnabled(m_webView->history()->canGoBack());
+	}
+
+	if (m_actions.contains(Action::FastForwardAction))
+	{
+		getAction(Action::FastForwardAction)->setEnabled(m_webView->history()->canGoForward());
+	}
+
+	if (m_actions.contains(Action::LoadPluginsAction))
+	{
+		getAction(Action::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+	}
+
+	if (m_actions.contains(Action::ReloadOrStopAction))
+	{
+		getAction(Action::ReloadOrStopAction)->setup(ActionsManager::getAction((m_isLoading ? Action::StopAction : Action::ReloadAction), this));
+	}
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -1353,16 +1305,41 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 }
 
+void QtWebKitWebWidget::handleHistory()
+{
+	if (isPrivate())
+	{
+		return;
+	}
+
+	const QUrl url = getUrl();
+	const qint64 identifier = m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toLongLong();
+
+	if (identifier == 0)
+	{
+		QVariantList data;
+		data.append(HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
+		data.append(getZoom());
+		data.append(QPoint(0, 0));
+
+		m_page->history()->currentItem().setUserData(data);
+
+		SessionsManager::markSessionModified();
+		BookmarksManager::updateVisits(url.toString());
+	}
+	else if (identifier > 0)
+	{
+		HistoryManager::updateEntry(identifier, url, getTitle(), m_webView->icon());
+	}
+}
+
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
 	{
 		m_webView->page()->history()->clear();
 
-		getAction(Action::GoBackAction)->setEnabled(false);
-		getAction(Action::GoForwardAction)->setEnabled(false);
-		getAction(Action::RewindAction)->setEnabled(false);
-		getAction(Action::FastForwardAction)->setEnabled(false);
+		updateNavigationActions();
 
 		emit actionsChanged();
 
@@ -1385,9 +1362,10 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		QVariantHash data;
-		data[QLatin1String("position")] = history.entries.at(i).position;
-		data[QLatin1String("zoom")] = history.entries.at(i).zoom;
+		QVariantList data;
+		data.append(-1);
+		data.append(history.entries.at(i).zoom);
+		data.append(history.entries.at(i).position);
 
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
@@ -1751,9 +1729,20 @@ QRect QtWebKitWebWidget::getProgressBarGeometry() const
 
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
-	QVariantHash data;
-	data[QLatin1String("position")] = m_webView->page()->mainFrame()->scrollPosition();
-	data[QLatin1String("zoom")] = getZoom();
+	QVariantList data = m_webView->history()->currentItem().userData().toList();
+
+	if (data.isEmpty() || data.length() < 3)
+	{
+		data.clear();
+		data.append(0);
+		data.append(getZoom());
+		data.append(m_webView->page()->mainFrame()->scrollPosition());
+	}
+	else
+	{
+		data[ZoomEntryData] = getZoom();
+		data[PositionEntryData] = m_webView->page()->mainFrame()->scrollPosition();
+	}
 
 	m_webView->history()->currentItem().setUserData(data);
 
@@ -1770,8 +1759,8 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
-		entry.position = item.userData().toHash().value(QLatin1String("position"), QPoint(0, 0)).toPoint();
-		entry.zoom = item.userData().toHash().value(QLatin1String("zoom")).toInt();
+		entry.position = item.userData().toList().value(PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = item.userData().toList().value(ZoomEntryData).toInt();
 
 		information.entries.append(entry);
 	}
@@ -1781,8 +1770,8 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
 		entry.title = getTitle();
-		entry.position = data.value(QLatin1String("position"), QPoint(0, 0)).toPoint();
-		entry.zoom = data.value(QLatin1String("zoom")).toInt();
+		entry.position = data.value(PositionEntryData, QPoint(0, 0)).toPoint();
+		entry.zoom = data.value(ZoomEntryData).toInt();
 
 		information.index = historyCount;
 		information.entries.append(entry);
@@ -1914,7 +1903,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent->button() == Qt::LeftButton)
 			{
-				if (mouseEvent->buttons() & Qt::RightButton)
+				if (mouseEvent->buttons().testFlag(Qt::RightButton))
 				{
 					m_isUsingRockerNavigation = true;
 
@@ -1929,7 +1918,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (m_hitResult.linkUrl().isValid())
 				{
-					if (mouseEvent->modifiers() & Qt::ControlModifier)
+					if (mouseEvent->modifiers().testFlag(Qt::ControlModifier))
 					{
 						triggerAction(Action::OpenLinkInNewTabBackgroundAction);
 
@@ -1938,7 +1927,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 
-					if (mouseEvent->modifiers() & Qt::ShiftModifier)
+					if (mouseEvent->modifiers().testFlag(Qt::ShiftModifier))
 					{
 						triggerAction(Action::OpenLinkInNewTabAction);
 
@@ -1950,11 +1939,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 			else if (mouseEvent->button() == Qt::MiddleButton)
 			{
-				const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (result.linkUrl().isValid() && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
+				if (m_hitResult.linkUrl().isValid() && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
 				{
-					openUrl(result.linkUrl(), ((mouseEvent->modifiers() & Qt::AltModifier) ? NewTabBackgroundEndOpen : NewTabBackgroundOpen));
+					openUrl(m_hitResult.linkUrl(), ((mouseEvent->modifiers().testFlag(Qt::AltModifier)) ? NewTabBackgroundEndOpen : NewTabBackgroundOpen));
 
 					event->accept();
 
@@ -1965,7 +1954,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (mouseEvent->buttons() & Qt::LeftButton)
+				if (mouseEvent->buttons().testFlag(Qt::LeftButton))
 				{
 					triggerAction(Action::GoForwardAction);
 
@@ -2039,7 +2028,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					}
 				}
 			}
-			else if (mouseEvent->button() == Qt::RightButton && !(mouseEvent->buttons() & Qt::LeftButton))
+			else if (mouseEvent->button() == Qt::RightButton && !mouseEvent->buttons().testFlag(Qt::LeftButton))
 			{
 				if (m_isUsingRockerNavigation)
 				{
@@ -2078,7 +2067,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
 
-			if (wheelEvent->modifiers() & Qt::CTRL)
+			if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
 			{
 				setZoom(getZoom() + (wheelEvent->delta() / 16));
 

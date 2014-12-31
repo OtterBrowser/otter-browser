@@ -22,6 +22,7 @@
 
 #include "../../../../ui/WebWidget.h"
 
+#include <QtCore/QMutex>
 #include <QtWebKitWidgets/QWebHitTestResult>
 #include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
@@ -78,14 +79,21 @@ public slots:
 	void setUrl(const QUrl &url, bool typed = true);
 
 protected:
+	enum HistoryEntryData
+	{
+		IdentifierEntryData = 0,
+		ZoomEntryData = 1,
+		PositionEntryData = 2
+	};
+
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
-	void markPageRealoded();
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
+	void handleHistory();
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
 	QString getPluginToken() const;
@@ -95,8 +103,9 @@ protected:
 protected slots:
 	void triggerAction();
 	void optionChanged(const QString &option, const QVariant &value);
+	void navigating(QWebFrame *frame, QWebPage::NavigationType type);
 	void pageLoadStarted();
-	void pageLoadFinished(bool ok);
+	void pageLoadFinished();
 	void downloadFile(const QNetworkRequest &request);
 	void downloadFile(QNetworkReply *reply);
 	void saveState(QWebFrame *frame, QWebHistoryItem *item);
@@ -110,6 +119,7 @@ protected slots:
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
 	void updateQuickSearchAction();
+	void updateNavigationActions();
 	void updateOptions(const QUrl &url);
 	void showContextMenu(const QPoint &position = QPoint());
 
@@ -128,13 +138,11 @@ private:
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QHash<int, Action*> m_actions;
-	qint64 m_historyEntry;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
-	bool m_isReloading;
 	bool m_isTyped;
 
 signals:

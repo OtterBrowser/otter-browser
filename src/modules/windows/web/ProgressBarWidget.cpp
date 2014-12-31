@@ -35,7 +35,8 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_speedLabel(new QLabel(this)),
 	m_elapsedLabel(new QLabel(this)),
 	m_messageLabel(new QLabel(this)),
-	m_time(NULL)
+	m_time(NULL),
+	m_isLoading(false)
 {
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->addWidget(m_progressBar);
@@ -67,11 +68,11 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_elapsedLabel->setPalette(palette);
 
 	setAutoFillBackground(true);
-	setLoading(webWidget->isLoading());
+	loadingChanged(webWidget->isLoading());
 
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
 	connect(webWidget, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,qint64,qint64,qint64)));
-	connect(webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
+	connect(webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(loadingChanged(bool)));
 }
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
@@ -105,9 +106,14 @@ void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuest
 	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
 }
 
-void ProgressBarWidget::setLoading(bool loading)
+void ProgressBarWidget::loadingChanged(bool isLoading)
 {
-	if (loading)
+	if (isLoading == m_isLoading)
+	{
+		return;
+	}
+
+	if (isLoading)
 	{
 		m_progressBar->setValue(0);
 		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
@@ -135,6 +141,8 @@ void ProgressBarWidget::setLoading(bool loading)
 
 		hide();
 	}
+
+	m_isLoading = isLoading;
 }
 
 }
