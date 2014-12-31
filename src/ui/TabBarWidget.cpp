@@ -98,16 +98,27 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_clickedTab >= 0)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
+		Action *cloneTabAction = new Action(Action::CloneTabAction, &menu);
+		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 
-		menu.addAction(tr("Clone Tab"), this, SLOT(cloneTab()))->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
-		menu.addAction((isPinned ? tr("Unpin Tab") : tr("Pin Tab")), this, SLOT(pinTab()));
+		Action *pinTabAction = new Action(Action::PinTabAction, &menu);
+		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+
+		Action *detachTabAction = new Action(Action::DetachTabAction, &menu);
+		detachTabAction->setEnabled(count() > 1);
+
+		menu.addAction(cloneTabAction);
+		menu.addAction(pinTabAction);
 		menu.addSeparator();
-		menu.addAction(tr("Detach Tab"), this, SLOT(detachTab()))->setEnabled(count() > 1);
+		menu.addAction(detachTabAction);
 		menu.addSeparator();
 
 		if (isPinned)
 		{
-			menu.addAction(Utils::getIcon(QLatin1String("tab-close")), tr("Close Tab"))->setEnabled(false);
+			Action *closeTabAction = new Action(Action::CloseTabAction, &menu);
+			closeTabAction->setEnabled(false);
+
+			menu.addAction(closeTabAction);
 		}
 		else
 		{
@@ -115,8 +126,15 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
+		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabs, &menu);
+		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
-		menu.addAction(Utils::getIcon(QLatin1String("tab-close-other")), tr("Close Other Tabs"), this, SLOT(closeOther()))->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
+		menu.addAction(closeOtherTabsAction);
+
+		connect(cloneTabAction, SIGNAL(triggered()), this, SLOT(cloneTab()));
+		connect(pinTabAction, SIGNAL(triggered()), this, SLOT(pinTab()));
+		connect(detachTabAction, SIGNAL(triggered()), this, SLOT(detachTab()));
+		connect(closeOtherTabsAction, SIGNAL(triggered()), this, SLOT(closeOtherTabs()));
 	}
 
 	menu.addSeparator();
@@ -487,7 +505,7 @@ void TabBarWidget::currentTabChanged(int index)
 	}
 }
 
-void TabBarWidget::closeOther()
+void TabBarWidget::closeOtherTabs()
 {
 	if (m_clickedTab >= 0)
 	{

@@ -84,6 +84,8 @@ void Action::setOverrideText(const QString &text)
 {
 	m_overrideText = text;
 	m_isOverridingText = true;
+
+	update();
 }
 
 QList<QKeySequence> Action::getShortcuts() const

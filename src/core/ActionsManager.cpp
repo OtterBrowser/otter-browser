@@ -69,7 +69,10 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::OpenAction, QT_TRANSLATE_NOOP("actions", "Open..."), QString(), Utils::getIcon(QLatin1String("document-open")));
 	registerAction(Action::SaveAction, QT_TRANSLATE_NOOP("actions", "Save..."), QString(), Utils::getIcon(QLatin1String("document-save")), false);
 	registerAction(Action::CloneTabAction, QT_TRANSLATE_NOOP("actions", "Clone Tab"));
+	registerAction(Action::PinTabAction, QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+	registerAction(Action::DetachTabAction, QT_TRANSLATE_NOOP("actions", "Detach Tab"));
 	registerAction(Action::CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
+	registerAction(Action::CloseOtherTabs, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
 	registerAction(Action::ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
 	registerAction(Action::CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"));
 	registerAction(Action::SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions..."));

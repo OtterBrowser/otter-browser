@@ -319,8 +319,27 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
+		case Action::PinTabAction:
+			{
+				const int index = m_mainWindow->getTabBar()->currentIndex();
+
+				pinWindow(index, !m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool());
+			}
+
+			break;
+		case Action::DetachTabAction:
+			if (m_mainWindow->getTabBar()->count() > 1)
+			{
+				detachWindow(m_mainWindow->getTabBar()->currentIndex());
+			}
+
+			break;
 		case Action::CloseTabAction:
 			closeWindow(m_mainWindow->getTabBar()->currentIndex());
+
+			break;
+		case Action::CloseOtherTabs:
+			closeOther(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
 		case Action::ActivateTabOnLeftAction:
@@ -668,7 +687,7 @@ void WindowsManager::setStatusMessage(const QString &message)
 {
 	QStatusTipEvent event(message);
 
-	QApplication::sendEvent(MainWindow::findMainWindow(parent()), &event);
+	QApplication::sendEvent(m_mainWindow, &event);
 }
 
 Action* WindowsManager::getAction(int identifier)

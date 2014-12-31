@@ -2,7 +2,9 @@
 - added support for mouse gestures;
 - added initial support for customizing toolbars;
 - allow to load plugins on demand;
+- more actions (over 150 in total);
 - added Go to Page dialog (F2);
+- allow to customize menu button (JSON file);
 - lots of other fixes and improvements.
 
 0.9.03 (01.11.2014):
