@@ -35,6 +35,8 @@ namespace Otter
 NetworkManager* ContentBlockingList::m_networkManager = NULL;
 
 ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
+	m_root(NULL),
+	m_networkReply(NULL),
 	m_daysToExpire(4),
 	m_isUpdated(false),
 	m_isEnabled(false)

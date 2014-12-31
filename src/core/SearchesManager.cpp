@@ -267,11 +267,12 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 	SearchInformation *search = new SearchInformation();
 	search->identifier = identifier;
 
-	SearchUrl *currentUrl = NULL;
 	QXmlStreamReader reader(device->readAll());
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
 	{
+		SearchUrl *currentUrl = NULL;
+
 		while (!reader.atEnd())
 		{
 			reader.readNext();

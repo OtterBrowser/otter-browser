@@ -104,6 +104,7 @@ private slots:
 
 private:
 	Node *m_root;
+	QNetworkReply *m_networkReply;
 	QDateTime m_lastUpdate;
 	QString m_fullFilePath;
 	QString m_fileName;
@@ -117,7 +118,6 @@ private:
 	QMultiHash<QString, QString> m_cssHidingRulesExceptions;
 	QRegularExpression m_domainExpression;
 	QStringList m_requestSubdomainList;
-	QNetworkReply *m_networkReply;
 	int m_daysToExpire;
 	bool m_isUpdated;
 	bool m_isEnabled;

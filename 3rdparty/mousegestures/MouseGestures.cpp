@@ -132,7 +132,7 @@ int Recognizer::recognizeGesture()
 	PositionList directions = simplify(limitDirections(d->positions));
 	const double minimumLength = (calculateLength(directions) * d->minimumMatch);
 
-	while (directions.size() > 0 && calculateLength(directions) > minimumLength)
+	while (!directions.empty() && calculateLength(directions) > minimumLength)
 	{
 		for (unsigned int i = 0; i < d->gestures.size(); ++i)
 		{

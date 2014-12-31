@@ -108,7 +108,7 @@ void GesturesManager::loadProfiles()
 				}
 			}
 
-			if (mouseActions.size() > 0)
+			if (!mouseActions.empty())
 			{
 				MouseGesture definition;
 				definition.action = action;

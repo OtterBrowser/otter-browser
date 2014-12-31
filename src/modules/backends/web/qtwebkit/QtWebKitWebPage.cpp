@@ -63,7 +63,11 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKi
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
-QtWebKitWebPage::QtWebKitWebPage()
+QtWebKitWebPage::QtWebKitWebPage() : QWebPage(),
+	m_widget(NULL),
+	m_backend(NULL),
+	m_networkManager(NULL),
+	m_ignoreJavaScriptPopups(false)
 {
 }
 
@@ -202,13 +206,12 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 		if (m_widget)
 		{
 			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false));
+			widget->setRequestedUrl(m_widget->getRequestedUrl(), false, true);
 		}
 		else
 		{
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, NULL);
 		}
-
-		widget->setRequestedUrl(m_widget->getRequestedUrl(), false, true);
 
 		emit requestedNewWindow(widget, DefaultOpen);
 
