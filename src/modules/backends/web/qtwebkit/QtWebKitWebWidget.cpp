@@ -286,7 +286,10 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 				return;
 			}
 
-			device->deleteLater();
+			if (device)
+			{
+				device->deleteLater();
+			}
 		}
 		else if (!m_hitResult.imageUrl().isEmpty() && m_hitResult.imageUrl().url().contains(QLatin1String(";base64,")))
 		{
