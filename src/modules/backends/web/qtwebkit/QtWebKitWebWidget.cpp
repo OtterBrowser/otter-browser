@@ -1981,7 +1981,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 						m_clickPosition = mouseEvent->pos();
 					}
 
-					GesturesManager::startGesture(m_webView, mouseEvent);
+					GesturesManager::startGesture((m_hitResult.linkUrl().isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), m_webView, mouseEvent);
 				}
 
 				return true;

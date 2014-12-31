@@ -29,7 +29,8 @@ namespace Otter
 
 GesturesManager* GesturesManager::m_instance = NULL;
 MouseGestures::Recognizer* GesturesManager::m_recognizer = NULL;
-QList<MouseGesture> GesturesManager::m_gestures;
+QHash<GesturesManager::GesturesContext, QVector<MouseGesture> > GesturesManager::m_gestures;
+GesturesManager::GesturesContext GesturesManager::m_context = GesturesManager::GenericGesturesContext;
 
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent)
 {
@@ -65,69 +66,97 @@ void GesturesManager::loadProfiles()
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
 		const QString path = SessionsManager::getProfilePath() + QLatin1String("/gestures/") + gestureProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/gestures/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList gestures = profile.childGroups();
+		QSettings profile((QFile::exists(path) ? path : QLatin1String(":/gestures/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QStringList contexts = profile.childGroups();
 
-		for (int j = 0; j < gestures.count(); ++j)
+		for (int j = 0; j < contexts.count(); ++j)
 		{
-			const QStringList rawMouseActions = gestures.at(j).split(QLatin1Char(','));
-			const int action = ActionsManager::getActionIdentifier(profile.value(gestures.at(j) + QLatin1String("/action"), QString()).toString());
+			GesturesContext context = GenericGesturesContext;
 
-			if (action < 0 || rawMouseActions.isEmpty())
+			if (contexts.at(j) == QLatin1String("Link"))
 			{
-				continue;
+				context = LinkGesturesContext;
 			}
 
-			MouseGestures::ActionList mouseActions;
+			profile.beginGroup(contexts.at(j));
 
-			for (int k = 0; k < rawMouseActions.count(); ++k)
+			const QStringList gestures = profile.allKeys();
+
+			for (int k = 0; k < gestures.count(); ++k)
 			{
-				if (rawMouseActions.at(k) == QLatin1String("up"))
+				const QStringList rawMouseActions = gestures.at(k).split(QLatin1Char(','));
+				const int action = ActionsManager::getActionIdentifier(profile.value(gestures.at(k), QString()).toString());
+
+				if (action < 0 || rawMouseActions.isEmpty())
 				{
-					mouseActions.push_back(MouseGestures::MoveUpMouseAction);
+					continue;
 				}
-				else if (rawMouseActions.at(k) == QLatin1String("down"))
+
+				MouseGestures::ActionList mouseActions;
+
+				for (int l = 0; l < rawMouseActions.count(); ++l)
 				{
-					mouseActions.push_back(MouseGestures::MoveDownMouseAction);
+					if (rawMouseActions.at(l) == QLatin1String("up"))
+					{
+						mouseActions.push_back(MouseGestures::MoveUpMouseAction);
+					}
+					else if (rawMouseActions.at(l) == QLatin1String("down"))
+					{
+						mouseActions.push_back(MouseGestures::MoveDownMouseAction);
+					}
+					else if (rawMouseActions.at(l) == QLatin1String("left"))
+					{
+						mouseActions.push_back(MouseGestures::MoveLeftMouseAction);
+					}
+					else if (rawMouseActions.at(l) == QLatin1String("right"))
+					{
+						mouseActions.push_back(MouseGestures::MoveRightMouseAction);
+					}
+					else if (rawMouseActions.at(l) == QLatin1String("anyHorizontal"))
+					{
+						mouseActions.push_back(MouseGestures::MoveHorizontallyMouseAction);
+					}
+					else if (rawMouseActions.at(l) == QLatin1String("anyVertical"))
+					{
+						mouseActions.push_back(MouseGestures::MoveVerticallyMouseAction);
+					}
 				}
-				else if (rawMouseActions.at(k) == QLatin1String("left"))
+
+				if (!mouseActions.empty())
 				{
-					mouseActions.push_back(MouseGestures::MoveLeftMouseAction);
-				}
-				else if (rawMouseActions.at(k) == QLatin1String("right"))
-				{
-					mouseActions.push_back(MouseGestures::MoveRightMouseAction);
-				}
-				else if (rawMouseActions.at(k) == QLatin1String("anyHorizontal"))
-				{
-					mouseActions.push_back(MouseGestures::MoveHorizontallyMouseAction);
-				}
-				else if (rawMouseActions.at(k) == QLatin1String("anyVertical"))
-				{
-					mouseActions.push_back(MouseGestures::MoveVerticallyMouseAction);
+					MouseGesture definition;
+					definition.action = action;
+					definition.mouseActions = mouseActions;
+					definition.identifier = 0;
+
+					if (!m_gestures.contains(context))
+					{
+						m_gestures[context] = QVector<MouseGesture>();
+					}
+
+					m_gestures[context].append(definition);
 				}
 			}
 
-			if (!mouseActions.empty())
-			{
-				MouseGesture definition;
-				definition.action = action;
-				definition.mouseActions = mouseActions;
-				definition.identifier = 0;
-
-				m_gestures.append(definition);
-			}
+			profile.endGroup();
 		}
 	}
 }
 
-void GesturesManager::startGesture(QObject *object, QMouseEvent *event)
+void GesturesManager::startGesture(GesturesContext context, QObject *object, QMouseEvent *event)
 {
+	if (!m_gestures.contains(context))
+	{
+		return;
+	}
+
+	m_context = context;
+
 	m_recognizer = new MouseGestures::Recognizer();
 
-	for (int i = 0; i < m_gestures.count(); ++i)
+	for (int i = 0; i < m_gestures[context].count(); ++i)
 	{
-		m_gestures[i].identifier = m_recognizer->registerGesture(m_gestures.at(i).mouseActions);
+		m_gestures[context][i].identifier = m_recognizer->registerGesture(m_gestures[context][i].mouseActions);
 	}
 
 	m_recognizer->startGesture(event->pos().x(), event->pos().y());
@@ -139,7 +168,7 @@ bool GesturesManager::endGesture(QObject *object, QMouseEvent *event)
 {
 	object->removeEventFilter(m_instance);
 
-	if (m_recognizer)
+	if (m_recognizer && m_gestures.contains(m_context))
 	{
 		const int gesture = m_recognizer->endGesture(event->pos().x(), event->pos().y());
 
@@ -148,15 +177,15 @@ bool GesturesManager::endGesture(QObject *object, QMouseEvent *event)
 			return false;
 		}
 
-		for (int i = 0; i < m_gestures.count(); ++i)
+		for (int i = 0; i < m_gestures[m_context].count(); ++i)
 		{
-			if (m_gestures.at(i).identifier == gesture)
+			if (m_gestures[m_context][i].identifier == gesture)
 			{
 				MainWindow *window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
 
 				if (window)
 				{
-					window->getActionsManager()->triggerAction(m_gestures.at(i).action);
+					window->getActionsManager()->triggerAction(m_gestures[m_context][i].action);
 				}
 
 				return true;

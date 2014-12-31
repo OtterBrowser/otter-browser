@@ -40,9 +40,15 @@ class GesturesManager : public QObject
 	Q_OBJECT
 
 public:
+	enum GesturesContext
+	{
+		GenericGesturesContext = 0,
+		LinkGesturesContext
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
-	static void startGesture(QObject *object, QMouseEvent *event);
+	static void startGesture(GesturesContext context, QObject *object, QMouseEvent *event);
 	static bool endGesture(QObject *object, QMouseEvent *event);
 	static GesturesManager* getInstance();
 
@@ -57,7 +63,8 @@ protected slots:
 private:
 	static GesturesManager *m_instance;
 	static MouseGestures::Recognizer *m_recognizer;
-	static QList<MouseGesture> m_gestures;
+	static QHash<GesturesContext, QVector<MouseGesture> > m_gestures;
+	static GesturesContext m_context;
 };
 
 }
