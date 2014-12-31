@@ -22,7 +22,6 @@
 
 #include "../../../../ui/WebWidget.h"
 
-#include <QtCore/QMutex>
 #include <QtWebKitWidgets/QWebHitTestResult>
 #include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>

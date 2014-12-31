@@ -29,7 +29,7 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(QWidget *parent) : QDia
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaSriptCanAccessClipboard")).toBool());
+	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
@@ -58,7 +58,7 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 
 void JavaScriptPreferencesDialog::save()
 {
-	SettingsManager::setValue(QLatin1String("Browser/JavaSriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked());
 }
 
