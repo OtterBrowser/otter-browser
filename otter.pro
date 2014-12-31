@@ -11,7 +11,7 @@
 QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
 win32: QT += winextras
-win32: LIBS += -lOle32 -lshell32 -ladvapi32
+win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
 
