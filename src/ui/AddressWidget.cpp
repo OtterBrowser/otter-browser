@@ -153,7 +153,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 	{
 		QTimer::singleShot(0, this, SLOT(selectAll()));
 	}
-	else
+	else if (event->reason() != Qt::PopupFocusReason)
 	{
 		deselect();
 	}
