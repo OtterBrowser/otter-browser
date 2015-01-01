@@ -440,6 +440,11 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 	updateOptions(url);
 	updateNavigationActions();
 
+	if (m_actions.contains(Action::AddBookmarkAction))
+	{
+		m_actions[Action::AddBookmarkAction]->setOverrideText(HistoryManager::hasUrl(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
+	}
+
 	emit urlChanged(url);
 
 	SessionsManager::markSessionModified();
@@ -615,8 +620,8 @@ void QtWebKitWebWidget::updateLinkActions()
 
 	if (m_actions.contains(Action::BookmarkLinkAction))
 	{
-		m_actions[Action::BookmarkLinkAction]->setEnabled(isLink);
 		m_actions[Action::BookmarkLinkAction]->setOverrideText(HistoryManager::hasUrl(m_hitResult.linkUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark...") : QT_TRANSLATE_NOOP("actions", "Bookmark Link..."));
+		m_actions[Action::BookmarkLinkAction]->setEnabled(isLink);
 	}
 
 	if (m_actions.contains(Action::SaveLinkToDiskAction))
@@ -1335,6 +1340,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
 				}
 			}
+
+			break;
+		case Action::AddBookmarkAction:
+			emit requestedAddBookmark(getUrl(), getTitle());
 
 			break;
 		case Action::LoadPluginsAction:

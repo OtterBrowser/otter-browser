@@ -361,7 +361,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::AddBookmarkAction:
-			addBookmark();
+			addBookmark(QUrl(), QString(), true);
 
 			break;
 		case Action::QuickBookmarkAccessAction:
@@ -538,11 +538,11 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
-void MainWindow::addBookmark(const QUrl &url, const QString &title)
+void MainWindow::addBookmark(const QUrl &url, const QString &title, bool warn)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 
-	if (bookmarkUrl.isEmpty() || (BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
+	if (bookmarkUrl.isEmpty() || (warn && BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
 	{
 		return;
 	}

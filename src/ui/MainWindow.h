@@ -70,7 +70,7 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString());
+	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), bool warn = false);
 	void transferStarted();
 	void updateWindowTitle(const QString &title);
 
