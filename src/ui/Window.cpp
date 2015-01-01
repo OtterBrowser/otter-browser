@@ -102,7 +102,7 @@ void Window::triggerAction(int identifier, bool checked)
 {
 	if (identifier == Action::ActivateSearchFieldAction && m_searchWidget)
 	{
-		m_searchWidget->setFocus();
+		m_searchWidget->setFocus(Qt::ShortcutFocusReason);
 	}
 	else if (m_addressWidget)
 	{
