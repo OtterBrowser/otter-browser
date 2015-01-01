@@ -119,7 +119,7 @@ class SessionsManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(const QString &profilePath, const QString &cachePath, QObject *parent = NULL);
+	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, QObject *parent = NULL);
 	static void clearClosedWindows();
 	static void registerWindow(MainWindow *window);
 	static void storeClosedWindow(MainWindow *window);
@@ -143,6 +143,7 @@ public:
 	static bool deleteSession(const QString &path = QString());
 	static bool moveSession(const QString &from, const QString &to);
 	static bool isLastWindow();
+	static bool isPrivate();
 	static bool hasUrl(const QUrl &url, bool activate = false);
 
 protected:
@@ -161,7 +162,8 @@ private:
 	static QString m_profilePath;
 	static QList<MainWindow*> m_windows;
 	static QList<SessionMainWindow> m_closedWindows;
-	static bool m_dirty;
+	static bool m_isDirty;
+	static bool m_isPrivate;
 
 signals:
 	void closedWindowsChanged();

@@ -78,7 +78,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	setCentralWidget(m_mdiWidget);
 
-	m_windowsManager = new WindowsManager((isPrivate || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
 	m_tabBarToolBarWidget = new TabBarToolBarWidget(this);
 	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());

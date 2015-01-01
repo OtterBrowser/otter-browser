@@ -82,6 +82,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	parser->process(arguments());
 
 	const bool isPortable = parser->isSet(QLatin1String("portable"));
+	const bool isPrivate = parser->isSet(QLatin1String("privatesession"));
 
 	if (isPortable)
 	{
@@ -181,7 +182,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	SettingsManager::setDefaultValue(QLatin1String("Paths/Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
-	SessionsManager::createInstance(profilePath, cachePath, this);
+	SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
 
 	NetworkManagerFactory::createInstance(this);
 

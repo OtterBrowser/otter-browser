@@ -39,7 +39,8 @@ QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
 QList<MainWindow*> SessionsManager::m_windows;
 QList<SessionMainWindow> SessionsManager::m_closedWindows;
-bool SessionsManager::m_dirty = false;
+bool SessionsManager::m_isDirty = false;
+bool SessionsManager::m_isPrivate = false;
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
@@ -50,29 +51,33 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_saveTimer)
 	{
-		m_dirty = false;
+		m_isDirty = false;
 
 		killTimer(m_saveTimer);
 
 		m_saveTimer = 0;
 
-		saveSession(QString(), QString(), NULL, false);
+		if (!m_isPrivate)
+		{
+			saveSession(QString(), QString(), NULL, false);
+		}
 	}
 }
 
-void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, QObject *parent)
+void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate, QObject *parent)
 {
 	if (!m_instance)
 	{
 		m_instance = new SessionsManager(parent);
 		m_cachePath = cachePath;
 		m_profilePath = profilePath;
+		m_isPrivate = isPrivate;
 	}
 }
 
 void SessionsManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (m_saveTimer == 0 && !m_isPrivate)
 	{
 		m_saveTimer = startTimer(1000);
 	}
@@ -116,9 +121,9 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 
 void SessionsManager::markSessionModified()
 {
-	if (m_session == QLatin1String("default") && !m_dirty)
+	if (!m_isPrivate && !m_isDirty && m_session == QLatin1String("default"))
 	{
-		m_dirty = true;
+		m_isDirty = true;
 
 		m_instance->scheduleSave();
 	}
@@ -341,6 +346,11 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 
 bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window, bool clean)
 {
+	if (m_isPrivate && path.isEmpty())
+	{
+		return false;
+	}
+
 	QList<MainWindow*> windows;
 
 	if (window)
@@ -464,6 +474,11 @@ bool SessionsManager::moveSession(const QString &from, const QString &to)
 bool SessionsManager::isLastWindow()
 {
 	return (m_windows.count() == 1);
+}
+
+bool SessionsManager::isPrivate()
+{
+	return m_isPrivate;
 }
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
