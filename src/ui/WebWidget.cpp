@@ -272,7 +272,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 
 		if (flags & MailMenu)
 		{
-			menu.addAction(getAction(Action::OpenLinkInCurrentTabAction));
+			menu.addAction(getAction(Action::OpenLinkAction));
 			menu.addSeparator();
 			menu.addAction(getAction(Action::CopyLinkToClipboardAction));
 
@@ -325,10 +325,10 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			menu.addAction(getAction(Action::CopyMediaUrlToClipboardAction));
 			menu.addAction(getAction(Action::SaveMediaToDiskAction));
 			menu.addSeparator();
-			menu.addAction(getAction(Action::ToggleMediaPlayPauseAction));
-			menu.addAction(getAction(Action::ToggleMediaMuteAction));
-			menu.addAction(getAction(Action::ToggleMediaLoopAction));
-			menu.addAction(getAction(Action::ToggleMediaControlsAction));
+			menu.addAction(getAction(Action::MediaPlayPauseAction));
+			menu.addAction(getAction(Action::MediaMuteAction));
+			menu.addAction(getAction(Action::MediaLoopAction));
+			menu.addAction(getAction(Action::MediaControlsAction));
 			menu.addSeparator();
 			menu.addAction(getAction(Action::InspectElementAction));
 			menu.addSeparator();

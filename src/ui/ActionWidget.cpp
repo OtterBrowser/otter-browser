@@ -28,7 +28,7 @@ ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QT
 {
 	setAutoRaise(true);
 
-	if (window && window->getContentsWidget()->getAction(identifier))
+	if (window && Action::isLocal(identifier) && window->getContentsWidget()->getAction(identifier))
 	{
 		setDefaultAction(window->getContentsWidget()->getAction(identifier));
 	}

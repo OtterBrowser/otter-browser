@@ -119,6 +119,11 @@ protected slots:
 	void updateRedoText(const QString &text);
 	void updateQuickSearchAction();
 	void updateNavigationActions();
+	void updateEditActions();
+	void updateLinkActions();
+	void updateFrameActions();
+	void updateImageActions();
+	void updateMediaActions();
 	void updateOptions(const QUrl &url);
 	void showContextMenu(const QPoint &position = QPoint());
 

@@ -103,10 +103,10 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ImagePropertiesAction, QT_TRANSLATE_NOOP("actions", "Image Properties..."));
 	registerAction(Action::SaveMediaToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Media..."));
 	registerAction(Action::CopyMediaUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Media Link to Clipboard"));
-	registerAction(Action::ToggleMediaControlsAction, QT_TRANSLATE_NOOP("actions", "Show Controls"));
-	registerAction(Action::ToggleMediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"));
-	registerAction(Action::ToggleMediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
-	registerAction(Action::ToggleMediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
+	registerAction(Action::MediaControlsAction, QT_TRANSLATE_NOOP("actions", "Show Controls"), QString(), QIcon(), true, true, true);
+	registerAction(Action::MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QString(), QIcon(), true, true, false);
+	registerAction(Action::MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
+	registerAction(Action::MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
 	registerAction(Action::GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), Utils::getIcon(QLatin1String("go-jump-locationbar")));
 	registerAction(Action::GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")));
 	registerAction(Action::GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")));
@@ -170,7 +170,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::EnableJavaAction, QT_TRANSLATE_NOOP("actions", "Enable Java"), QString(), QIcon(), true, true, true);
 	registerAction(Action::EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
-	registerAction(Action::EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enale Proxy"), QString(), QIcon(), true, true, true);
+	registerAction(Action::EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), false, false, false);
 	registerAction(Action::ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
 	registerAction(Action::InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false);

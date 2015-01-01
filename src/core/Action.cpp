@@ -140,11 +140,10 @@ bool Action::isLocal(int identifier)
 		case Action::ImagePropertiesAction:
 		case Action::SaveMediaToDiskAction:
 		case Action::CopyMediaUrlToClipboardAction:
-		case Action::ToggleMediaControlsAction:
-		case Action::ToggleMediaLoopAction:
-		case Action::ToggleMediaPlayPauseAction:
-		case Action::ToggleMediaMuteAction:
-		case Action::GoAction:
+		case Action::MediaControlsAction:
+		case Action::MediaLoopAction:
+		case Action::MediaPlayPauseAction:
+		case Action::MediaMuteAction:
 		case Action::GoBackAction:
 		case Action::GoForwardAction:
 		case Action::GoToParentDirectoryAction:
