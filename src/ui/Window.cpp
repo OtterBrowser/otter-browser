@@ -446,7 +446,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 				navigationLayout->addWidget(m_searchWidget);
 
-				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 			}
 			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
 			{
