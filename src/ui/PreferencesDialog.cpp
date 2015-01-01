@@ -1565,74 +1565,73 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 {
 	QHash<QString, QList<QKeySequence> > shortcuts;
 
-///TODO
-//	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
-//	{
-//		const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
+	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
 
-//		if (index.data().toString().isEmpty())
-//		{
-//			continue;
-//		}
+		if (index.data().toString().isEmpty())
+		{
+			continue;
+		}
 
-//		const QHash<QString, QVariantHash> data = (m_keyboardProfilesData.contains(index.data().toString()) ? m_keyboardProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
-//		QHash<QString, QVariantHash>::const_iterator iterator;
+		const QHash<QString, QVariantHash> data = (m_keyboardProfilesData.contains(index.data().toString()) ? m_keyboardProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
+		QHash<QString, QVariantHash>::const_iterator iterator;
 
-//		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
-//		{
-//			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-//			QList<QKeySequence> actionShortcuts;
+		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+		{
+			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
 
-//			for (int j = 0; j < rawShortcuts.count(); ++j)
-//			{
-//				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+			for (int j = 0; j < rawShortcuts.count(); ++j)
+			{
+				const QKeySequence shortcut(rawShortcuts.at(j));
 
-//				if (!shortcut.isEmpty())
-//				{
-//					actionShortcuts.append(shortcut);
-//				}
-//			}
+				if (!shortcut.isEmpty())
+				{
+					actionShortcuts.append(shortcut);
+				}
+			}
 
-//			if (!actionShortcuts.isEmpty())
-//			{
-//				shortcuts[iterator.key()] = actionShortcuts;
-//			}
-//		}
-//	}
+			if (!actionShortcuts.isEmpty())
+			{
+				shortcuts[iterator.key()] = actionShortcuts;
+			}
+		}
+	}
 
-//	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
-//	{
-//		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
+	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
 
-//		if (index.data().toString().isEmpty())
-//		{
-//			continue;
-//		}
+		if (index.data().toString().isEmpty())
+		{
+			continue;
+		}
 
-//		const QHash<QString, QVariantHash> data = (m_macrosProfilesData.contains(index.data().toString()) ? m_macrosProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
-//		QHash<QString, QVariantHash>::const_iterator iterator;
+		const QHash<QString, QVariantHash> data = (m_macrosProfilesData.contains(index.data().toString()) ? m_macrosProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
+		QHash<QString, QVariantHash>::const_iterator iterator;
 
-//		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
-//		{
-//			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-//			QList<QKeySequence> actionShortcuts;
+		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+		{
+			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QList<QKeySequence> actionShortcuts;
 
-//			for (int j = 0; j < rawShortcuts.count(); ++j)
-//			{
-//				const QKeySequence shortcut = ((rawShortcuts.at(j) == QLatin1String("native")) ? ShortcutsManager::getNativeShortcut(iterator.key()) : QKeySequence(rawShortcuts.at(j)));
+			for (int j = 0; j < rawShortcuts.count(); ++j)
+			{
+				const QKeySequence shortcut(rawShortcuts.at(j));
 
-//				if (!shortcut.isEmpty())
-//				{
-//					actionShortcuts.append(shortcut);
-//				}
-//			}
+				if (!shortcut.isEmpty())
+				{
+					actionShortcuts.append(shortcut);
+				}
+			}
 
-//			if (!actionShortcuts.isEmpty())
-//			{
-//				shortcuts[iterator.key()] = actionShortcuts;
-//			}
-//		}
-//	}
+			if (!actionShortcuts.isEmpty())
+			{
+				shortcuts[iterator.key()] = actionShortcuts;
+			}
+		}
+	}
 
 	return shortcuts;
 }

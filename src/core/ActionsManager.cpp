@@ -688,6 +688,25 @@ Action* ActionsManager::getAction(int identifier, QObject *parent)
 	return (manager ? manager->getAction(identifier) : NULL);
 }
 
+QString ActionsManager::getActionName(int identifier)
+{
+	if (!m_dummyAction)
+	{
+		m_dummyAction = new Action(-1, QCoreApplication::instance());
+	}
+
+	QString name = m_dummyAction->metaObject()->enumerator(m_dummyAction->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data())).valueToKey(identifier);
+
+	if (!name.isEmpty())
+	{
+		name.chop(6);
+
+		return name;
+	}
+
+	return QString();
+}
+
 QList<ActionDefinition> ActionsManager::getActionDefinitions()
 {
 	if (!m_helper)

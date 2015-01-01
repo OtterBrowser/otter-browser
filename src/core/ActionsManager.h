@@ -119,6 +119,7 @@ public:
 	void setCurrentWindow(Window *window);
 	Action* getAction(int identifier);
 	static Action* getAction(int identifier, QObject *parent);
+	static QString getActionName(int identifier);
 	static QList<ActionDefinition> getActionDefinitions();
 	static QList<MacroDefinition> getMacroDefinitions();
 	static QList<ToolBarDefinition> getToolBarDefinitions();
