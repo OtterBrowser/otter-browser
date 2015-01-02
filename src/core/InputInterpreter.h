@@ -34,7 +34,7 @@ class InputInterpreter : public QObject
 public:
 	explicit InputInterpreter(QObject *parent = NULL);
 
-	void interpret(const QString &text, OpenHints hints);
+	void interpret(const QString &text, OpenHints hints, bool ignoreBookmarks = false);
 
 protected:
 	void timerEvent(QTimerEvent *event);

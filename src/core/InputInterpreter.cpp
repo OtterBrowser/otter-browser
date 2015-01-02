@@ -70,17 +70,20 @@ void InputInterpreter::verifyLookup(const QHostInfo &host)
 	deleteLater();
 }
 
-void InputInterpreter::interpret(const QString &text, OpenHints hints)
+void InputInterpreter::interpret(const QString &text, OpenHints hints, bool ignoreBookmarks)
 {
-	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
-
-	if (bookmark)
+	if (!ignoreBookmarks)
 	{
-		emit requestedOpenBookmark(bookmark, hints);
+		BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
 
-		deleteLater();
+		if (bookmark)
+		{
+			emit requestedOpenBookmark(bookmark, hints);
 
-		return;
+			deleteLater();
+
+			return;
+		}
 	}
 
 	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))

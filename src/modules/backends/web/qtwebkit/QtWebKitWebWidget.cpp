@@ -29,6 +29,7 @@
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
+#include "../../../../core/InputInterpreter.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -922,7 +923,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::OpenSelectionAsLinkAction:
-			openUrl(QUrl(m_webView->selectedText()));
+			{
+				const QString text(m_webView->selectedText());
+
+				if (!text.isEmpty())
+				{
+					InputInterpreter *interpreter = new InputInterpreter(this);
+
+					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
+					connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+
+					interpreter->interpret(text, DefaultOpen, true);
+				}
+			}
 
 			break;
 		case Action::OpenFrameInCurrentTabAction:
