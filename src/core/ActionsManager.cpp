@@ -354,6 +354,8 @@ void ActionsManager::actionTriggered()
 			{
 				const ActionDefinition definition = m_helper->actionDefinitions.value(m_actionShortcuts[i].first);
 
+				m_mutex.unlock();
+
 				if (definition.identifier >= 0)
 				{
 					if (definition.isCheckable)
@@ -371,7 +373,7 @@ void ActionsManager::actionTriggered()
 					}
 				}
 
-				break;
+				return;
 			}
 		}
 
