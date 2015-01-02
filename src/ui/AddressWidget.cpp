@@ -26,14 +26,10 @@
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
+#include "../core/InputInterpreter.h"
 #include "../core/SearchesManager.h"
-#include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
@@ -51,8 +47,6 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	m_bookmarkLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
-	m_lookupIdentifier(0),
-	m_lookupTimer(0),
 	m_simpleMode(simpleMode)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -78,22 +72,6 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
-}
-
-void AddressWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_lookupTimer)
-	{
-		QHostInfo::abortHostLookup(m_lookupIdentifier);
-
-		killTimer(m_lookupTimer);
-
-		m_lookupTimer = 0;
-
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), m_hints);
-
-		m_lookupQuery.clear();
-	}
 }
 
 void AddressWidget::paintEvent(QPaintEvent *event)
@@ -238,92 +216,6 @@ void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
-void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
-{
-	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
-
-	if (bookmark)
-	{
-		emit requestedOpenBookmark(bookmark, hints);
-
-		return;
-	}
-
-	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
-	{
-		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-
-		if (!locations.isEmpty())
-		{
-			emit requestedOpenUrl(locations.first() + text.mid(1), hints);
-
-			return;
-		}
-	}
-
-	if (QFileInfo(text).exists())
-	{
-		emit requestedOpenUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()), hints);
-
-		return;
-	}
-
-	const QUrl url = QUrl::fromUserInput(text);
-
-	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
-	{
-		emit requestedOpenUrl(url, hints);
-
-		return;
-	}
-
-	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	SearchInformation *engine = SearchesManager::getSearchEngine(keyword, true);
-
-	if (engine)
-	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier, hints);
-
-		return;
-	}
-
-	if (keyword == QLatin1String("?"))
-	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), QString(), hints);
-
-		return;
-	}
-
-	const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
-
-	if (!m_simpleMode && url.isValid() && lookupTimeout > 0)
-	{
-		if (text == m_lookupQuery)
-		{
-			return;
-		}
-
-		m_lookupQuery = text;
-		m_hints = hints;
-
-		if (m_lookupTimer != 0)
-		{
-			QHostInfo::abortHostLookup(m_lookupIdentifier);
-
-			killTimer(m_lookupTimer);
-
-			m_lookupTimer = 0;
-		}
-
-		m_lookupIdentifier = QHostInfo::lookupHost(url.host(), this, SLOT(verifyLookup(QHostInfo)));
-		m_lookupTimer = startTimer(lookupTimeout);
-
-		return;
-	}
-
-	emit requestedSearch(text, QString(), hints);
-}
-
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
@@ -419,22 +311,18 @@ void AddressWidget::removeIcon()
 	}
 }
 
-void AddressWidget::verifyLookup(const QHostInfo &host)
+void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 {
-	killTimer(m_lookupTimer);
-
-	m_lookupTimer = 0;
-
-	if (host.error() == QHostInfo::NoError)
+	if (!text.isEmpty())
 	{
-		emit requestedOpenUrl(getUrl(), m_hints);
-	}
-	else
-	{
-		emit requestedSearch(m_lookupQuery, SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), m_hints);
-	}
+		InputInterpreter *interpreter = new InputInterpreter(this);
 
-	m_lookupQuery.clear();
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+
+		interpreter->interpret(text, hints);
+	}
 }
 
 void AddressWidget::notifyRequestedLoadUrl()

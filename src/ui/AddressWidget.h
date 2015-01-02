@@ -23,7 +23,6 @@
 #include "../core/WindowsManager.h"
 
 #include <QtCore/QUrl>
-#include <QtNetwork/QHostInfo>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -49,7 +48,6 @@ public slots:
 	void setWindow(Window *window = NULL);
 
 protected:
-	void timerEvent(QTimerEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
@@ -61,7 +59,6 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void removeIcon();
-	void verifyLookup(const QHostInfo &host);
 	void notifyRequestedLoadUrl();
 	void updateBookmark();
 	void updateLoadPlugins();
@@ -76,15 +73,12 @@ private:
 	QLabel *m_loadPluginsLabel;
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;
-	QString m_lookupQuery;
 	OpenHints m_hints;
-	int m_lookupIdentifier;
-	int m_lookupTimer;
 	bool m_simpleMode;
 
 signals:
-	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 

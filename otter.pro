@@ -45,6 +45,7 @@ SOURCES += src/main.cpp \
     src/core/GesturesManager.cpp \
     src/core/HistoryManager.cpp \
     src/core/Importer.cpp \
+    src/core/InputInterpreter.cpp \
     src/core/LocalListingNetworkReply.cpp \
     src/core/NetworkManager.cpp \
     src/core/NetworkManagerFactory.cpp \
@@ -150,6 +151,7 @@ HEADERS += src/core/Action.h \
     src/core/GesturesManager.h \
     src/core/HistoryManager.h \
     src/core/Importer.h \
+    src/core/InputInterpreter.h \
     src/core/LocalListingNetworkReply.h \
     src/core/NetworkAutomaticProxy.h \
     src/core/NetworkCache.h \

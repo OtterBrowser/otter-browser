@@ -38,7 +38,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 #include "../core/HistoryManager.h"
-#include "../core/SearchesManager.h"
+#include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -209,62 +209,16 @@ void MainWindow::openUrl(const QString &text)
 
 		return;
 	}
-
-	BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
-
-	if (bookmark)
+	else
 	{
-		m_windowsManager->open(bookmark);
+		InputInterpreter *interpreter = new InputInterpreter(this);
 
-		return;
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
+
+		interpreter->interpret(text, ((m_windowsManager->getWindowCount() == 0 || m_windowsManager->getWindow()->isUrlEmpty()) ? CurrentTabOpen : NewTabOpen));
 	}
-
-	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
-	{
-		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-
-		if (!locations.isEmpty())
-		{
-			m_windowsManager->open(QUrl(locations.first() + text.mid(1)));
-
-			return;
-		}
-	}
-
-	if (QFileInfo(text).exists())
-	{
-		m_windowsManager->open(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()));
-
-		return;
-	}
-
-	const QUrl url = QUrl::fromUserInput(text);
-
-	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
-	{
-		m_windowsManager->open(url);
-
-		return;
-	}
-
-	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	SearchInformation *engine = SearchesManager::getSearchEngine(keyword, true);
-
-	if (engine)
-	{
-		m_windowsManager->search(text.section(QLatin1Char(' '), 1), engine->identifier);
-
-		return;
-	}
-
-	if (keyword == QLatin1String("?"))
-	{
-		m_windowsManager->search(text.section(QLatin1Char(' '), 1), QString());
-
-		return;
-	}
-
-	m_windowsManager->search(text, QString());
 }
 
 void MainWindow::storeWindowState()
