@@ -51,6 +51,7 @@ protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
@@ -59,7 +60,6 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void removeIcon();
-	void notifyRequestedLoadUrl();
 	void updateBookmark();
 	void updateLoadPlugins();
 	void updateIcons();

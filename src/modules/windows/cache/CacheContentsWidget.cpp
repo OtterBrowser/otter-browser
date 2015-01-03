@@ -620,7 +620,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton))
+		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			const QModelIndex entryIndex = m_ui->cacheView->currentIndex();
 
@@ -633,22 +633,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (url.isValid())
 			{
-				OpenHints hints = DefaultOpen;
-
-				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
-				{
-					hints = NewTabBackgroundOpen;
-				}
-				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
-				{
-					hints = NewTabOpen;
-				}
-				else
-				{
-					return false;
-				}
-
-				emit requestedOpenUrl(url, hints);
+				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
 
 				return true;
 			}

@@ -2173,9 +2173,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent->button() == Qt::LeftButton)
+			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 			{
-				if (mouseEvent->buttons().testFlag(Qt::RightButton))
+				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
 				{
 					m_isUsingRockerNavigation = true;
 
@@ -2186,36 +2186,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (m_hitResult.linkUrl().isValid())
+				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
 				{
-					if (mouseEvent->modifiers().testFlag(Qt::ControlModifier))
-					{
-						triggerAction(Action::OpenLinkInNewTabBackgroundAction);
+					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-						event->accept();
-
-						return true;
-					}
-
-					if (mouseEvent->modifiers().testFlag(Qt::ShiftModifier))
-					{
-						triggerAction(Action::OpenLinkInNewTabAction);
-
-						event->accept();
-
-						return true;
-					}
-				}
-			}
-			else if (mouseEvent->button() == Qt::MiddleButton)
-			{
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (m_hitResult.linkUrl().isValid() && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
-				{
-					openUrl(m_hitResult.linkUrl(), ((mouseEvent->modifiers().testFlag(Qt::AltModifier)) ? NewTabBackgroundEndOpen : NewTabBackgroundOpen));
+					openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
 
 					event->accept();
 

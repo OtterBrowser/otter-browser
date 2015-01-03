@@ -68,22 +68,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 		if (window && action && action->data().type() == QVariant::ModelIndex)
 		{
-			OpenHints hints = DefaultOpen;
-
-			if (event->button() == Qt::MiddleButton || event->modifiers() & Qt::ControlModifier)
-			{
-				hints = NewTabBackgroundOpen;
-			}
-			else if (event->modifiers() & Qt::ShiftModifier)
-			{
-				hints = NewTabOpen;
-			}
-			else
-			{
-				hints = (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen);
-			}
-
-			window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), hints);
+			window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
 
 			QWidget *menu = this;
 
@@ -569,7 +554,9 @@ void Menu::openBookmark()
 
 	if (window)
 	{
-		window->getWindowsManager()->open(m_bookmark, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen) | (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool() ? CurrentTabOpen : DefaultOpen));
+		const OpenHints hints = (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen);
+
+		window->getWindowsManager()->open(m_bookmark, ((hints == DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
 
 		QWidget *menu = this;
 

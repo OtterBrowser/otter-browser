@@ -440,28 +440,13 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
 
-		if (mouseEvent && (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton))
+		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
-				OpenHints hints = DefaultOpen;
-
-				if (mouseEvent->button() == Qt::MiddleButton || mouseEvent->modifiers() & Qt::ControlModifier)
-				{
-					hints = NewTabBackgroundOpen;
-				}
-				else if (mouseEvent->modifiers() & Qt::ShiftModifier)
-				{
-					hints = NewTabOpen;
-				}
-				else
-				{
-					return false;
-				}
-
-				manager->open(bookmark, hints);
+				manager->open(bookmark, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
 
 				return true;
 			}

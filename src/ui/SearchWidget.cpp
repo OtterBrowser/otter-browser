@@ -47,7 +47,6 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	installEventFilter(this);
 
 	setEditable(true);
 	setItemDelegate(new SearchDelegate(height(), this));
@@ -65,7 +64,6 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSearchEngineChanged(int)));
 	connect(this, SIGNAL(activated(int)), this, SLOT(searchEngineSelected(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
-	connect(lineEdit(), SIGNAL(returnPressed()), this, SLOT(sendRequest()));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
 }
 
@@ -138,6 +136,26 @@ void SearchWidget::focusInEvent(QFocusEvent *event)
 	else if (event->reason() != Qt::PopupFocusReason)
 	{
 		lineEdit()->deselect();
+	}
+}
+
+void SearchWidget::keyPressEvent(QKeyEvent *event)
+{
+	QComboBox::keyPressEvent(event);
+
+	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	{
+		const QString input = lineEdit()->text().trimmed();
+
+		if (!input.isEmpty())
+		{
+			m_query = input;
+		}
+
+		if (!m_query.isEmpty())
+		{
+			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(event->modifiers()));
+		}
 	}
 }
 
@@ -277,7 +295,7 @@ void SearchWidget::sendRequest(const QString &query)
 
 	if (!m_query.isEmpty())
 	{
-		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), (QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier) ?  NewTabOpen : DefaultOpen));
+		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
 	}
 }
 
@@ -352,33 +370,6 @@ bool SearchWidget::setPlaceholderText(int index)
 	lineEdit()->setText(m_query);
 
 	return true;
-}
-
-bool SearchWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == this && event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) && keyEvent->modifiers() & Qt::ShiftModifier)
-		{
-			const QString input = lineEdit()->text().trimmed();
-
-			if (!input.isEmpty())
-			{
-				m_query = input;
-			}
-
-			if (!m_query.isEmpty())
-			{
-				emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), NewTabOpen);
-			}
-
-			return true;
-		}
-	}
-
-	return QComboBox::eventFilter(object, event);
 }
 
 }

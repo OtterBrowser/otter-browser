@@ -57,7 +57,6 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	setWindow(window);
 	setCompleter(m_completer);
 	setMinimumWidth(100);
-	installEventFilter(this);
 
 	if (!m_simpleMode)
 	{
@@ -70,7 +69,6 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	}
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
-	connect(this, SIGNAL(returnPressed()), this, SLOT(notifyRequestedLoadUrl()));
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
 
@@ -134,6 +132,35 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 	else if (event->reason() != Qt::PopupFocusReason)
 	{
 		deselect();
+	}
+}
+
+void AddressWidget::keyPressEvent(QKeyEvent *event)
+{
+	QLineEdit::keyPressEvent(event);
+
+	if (m_window && event->key() == Qt::Key_Escape)
+	{
+		const QUrl url = m_window->getUrl();
+
+		if (text().trimmed().isEmpty() || text().trimmed() != url.toString())
+		{
+			setText(m_window->isUrlEmpty() ? QString() : url.toString());
+
+			if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+			{
+				QTimer::singleShot(0, this, SLOT(selectAll()));
+			}
+		}
+		else
+		{
+			m_window->setFocus();
+		}
+	}
+
+	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	{
+		handleUserInput(text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, CurrentTabOpen));
 	}
 }
 
@@ -325,16 +352,6 @@ void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 	}
 }
 
-void AddressWidget::notifyRequestedLoadUrl()
-{
-	const QString input = text().trimmed();
-
-	if (!input.isEmpty())
-	{
-		handleUserInput(input);
-	}
-}
-
 void AddressWidget::updateBookmark()
 {
 	if (!m_bookmarkLabel)
@@ -512,7 +529,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (object != this && event->type() == QEvent::ContextMenu)
+	if (event->type() == QEvent::ContextMenu)
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
@@ -530,48 +547,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (object == this && event->type() == QEvent::KeyPress && m_window)
-	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			const QUrl url = m_window->getUrl();
-
-			if (text().trimmed().isEmpty() || text().trimmed() != url.toString())
-			{
-				setText(m_window->isUrlEmpty() ? QString() : url.toString());
-
-				if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
-				{
-					QTimer::singleShot(0, this, SLOT(selectAll()));
-				}
-			}
-			else
-			{
-				m_window->setFocus();
-			}
-		}
-	}
-
-	if (object == this && event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) && keyEvent->modifiers() & Qt::ShiftModifier)
-		{
-			const QString input = text().trimmed();
-
-			if (!input.isEmpty())
-			{
-				handleUserInput(input, NewTabOpen);
-
-				return true;
-			}
-		}
-	}
-
-	return QLineEdit::eventFilter(object, event);
+	return QObject::eventFilter(object, event);
 }
 
 }

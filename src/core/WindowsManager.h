@@ -43,7 +43,7 @@ enum OpenHint
 	NewTabPrivateOpen = (NewTabOpen | PrivateOpen),
 	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
 	NewTabBackgroundEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
-	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
+	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen)
 };
 
 Q_DECLARE_FLAGS(OpenHints, OpenHint)
@@ -67,6 +67,7 @@ public:
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QList<SessionWindow> getClosedWindows() const;
+	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
 	int getWindowCount() const;
 	int getZoom() const;
 	bool canZoom() const;

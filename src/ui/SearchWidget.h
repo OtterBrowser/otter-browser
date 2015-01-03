@@ -40,7 +40,6 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
-	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setCurrentSearchEngine(const QString &engine = QString());
@@ -49,6 +48,7 @@ protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);

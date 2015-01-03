@@ -755,6 +755,41 @@ QList<SessionWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
+OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
+{
+	if (modifiers == Qt::NoModifier)
+	{
+		modifiers = QGuiApplication::keyboardModifiers();
+	}
+
+	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
+	{
+		return NewTabBackgroundEndOpen;
+	}
+
+	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
+	{
+		return NewTabBackgroundOpen;
+	}
+
+	if (modifiers.testFlag(Qt::ShiftModifier))
+	{
+		return NewTabOpen;
+	}
+
+	if (hints != DefaultOpen)
+	{
+		return hints;
+	}
+
+	if (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
+	{
+		return CurrentTabOpen;
+	}
+
+	return NewTabOpen;
+}
+
 int WindowsManager::getWindowIndex(Window *window) const
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
