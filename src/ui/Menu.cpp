@@ -544,6 +544,19 @@ void Menu::restoreClosedWindow()
 
 void Menu::openBookmark()
 {
+	QWidget *menu = this;
+
+	while (menu)
+	{
+		menu->close();
+		menu = menu->parentWidget();
+
+		if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
+		{
+			break;
+		}
+	}
+
 	MainWindow *window = MainWindow::findMainWindow(parent());
 	QAction *action = qobject_cast<QAction*>(sender());
 
@@ -557,15 +570,6 @@ void Menu::openBookmark()
 		const OpenHints hints = (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen);
 
 		window->getWindowsManager()->open(m_bookmark, ((hints == DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
-
-		QWidget *menu = this;
-
-		while (menu->parentWidget() && menu->parentWidget()->inherits("QMenu"))
-		{
-			menu = menu->parentWidget();
-		}
-
-		menu->close();
 	}
 
 	m_bookmark = NULL;
