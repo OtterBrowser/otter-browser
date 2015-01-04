@@ -26,7 +26,7 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5webkit5 (>=5.1.0), libqt5script5 (>=5.2.0), libqt5multimedia5 (>=5.2.0)")
 	set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "gstreamer0.10-plugins-base, gstreamer0.10-plugins-good")
 	set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-	set(CPACK_DEBIAN_PACKAGE_SECTION "net")
+	set(CPACK_DEBIAN_PACKAGE_SECTION "web")
 	set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 	set(CPACK_COMPONENTS_ALL Libraries ApplicationData)
 	set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
