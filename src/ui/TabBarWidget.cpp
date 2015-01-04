@@ -170,6 +170,18 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
+	if (event->button() == Qt::LeftButton && event->modifiers().testFlag(Qt::ShiftModifier))
+	{
+		const int tab = tabAt(event->pos());
+
+		if (tab >= 0)
+		{
+			emit requestedClose(tab);
+
+			return;
+		}
+	}
+
 	QTabBar::mousePressEvent(event);
 
 	if (event->button() == Qt::MidButton)
