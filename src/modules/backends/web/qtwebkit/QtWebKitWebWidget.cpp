@@ -135,7 +135,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
-	connect(m_webView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
@@ -1140,6 +1139,32 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->triggerAction(QWebPage::ReloadAndBypassCache);
 
 			break;
+		case Action::ContextMenuAction:
+			{
+				const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+				if (element.isNull())
+				{
+					m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+				}
+				else
+				{
+					m_clickPosition = element.geometry().center();
+
+					QWebFrame *frame = element.webFrame();
+
+					while (frame)
+					{
+						m_clickPosition -= frame->scrollPosition();
+
+						frame = frame->parentFrame();
+					}
+				}
+
+				showContextMenu(m_clickPosition);
+			}
+
+			break;
 		case Action::UndoAction:
 			m_webView->page()->triggerAction(QWebPage::Undo);
 
@@ -2127,6 +2152,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
 			m_ignoreContextMenu = (contextMenuEvent->reason() == QContextMenuEvent::Mouse);
+
+			if (contextMenuEvent->reason() == QContextMenuEvent::Keyboard)
+			{
+				triggerAction(Action::ContextMenuAction);
+			}
 		}
 		else if (event->type() == QEvent::Resize)
 		{
@@ -2201,8 +2231,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					triggerAction(Action::GoBackAction);
 
-					event->ignore();
-
 					return true;
 				}
 
@@ -2210,11 +2238,14 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-					openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
+					if (m_hitResult.linkUrl().isValid())
+					{
+						openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
 
-					event->accept();
+						event->accept();
 
-					return true;
+						return true;
+					}
 				}
 			}
 			else if (mouseEvent->button() == Qt::RightButton)
@@ -2363,7 +2394,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (m_webView->hasSelection())
 				{
-					QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
 
 					if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
 					{

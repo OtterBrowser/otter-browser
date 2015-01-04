@@ -91,6 +91,7 @@ public:
 		ReloadOrStopAction,
 		ReloadAndBypassCacheAction,
 		ScheduleReloadAction,
+		ContextMenuAction,
 		UndoAction,
 		RedoAction,
 		CutAction,
