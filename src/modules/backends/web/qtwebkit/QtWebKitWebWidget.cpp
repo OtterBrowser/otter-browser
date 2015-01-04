@@ -117,6 +117,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	updateEditActions();
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
+	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
 	connect(m_page, SIGNAL(aboutToNavigate(QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QWebFrame*,QWebPage::NavigationType)));
@@ -439,12 +440,8 @@ void QtWebKitWebWidget::notifyTitleChanged()
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
 	updateOptions(url);
+	updatePageActions(url);
 	updateNavigationActions();
-
-	if (m_actions.contains(Action::AddBookmarkAction))
-	{
-		m_actions[Action::AddBookmarkAction]->setOverrideText(HistoryManager::hasUrl(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
-	}
 
 	emit urlChanged(url);
 
@@ -487,6 +484,14 @@ void QtWebKitWebWidget::updateQuickSearchAction()
 	}
 
 	getAction(Action::SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+}
+
+void QtWebKitWebWidget::updatePageActions(const QUrl &url)
+{
+	if (m_actions.contains(Action::AddBookmarkAction))
+	{
+		m_actions[Action::AddBookmarkAction]->setOverrideText(HistoryManager::hasUrl(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
+	}
 }
 
 void QtWebKitWebWidget::updateNavigationActions()
@@ -757,6 +762,12 @@ void QtWebKitWebWidget::updateMediaActions()
 		m_actions[Action::MediaMuteAction]->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		m_actions[Action::MediaMuteAction]->setEnabled(isMedia);
 	}
+}
+
+void QtWebKitWebWidget::updateBookmarkActions()
+{
+	updatePageActions(getUrl());
+	updateLinkActions();
 }
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
@@ -1577,6 +1588,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		m_webView->page()->history()->clear();
 
 		updateNavigationActions();
+		updateOptions(QUrl());
+		updatePageActions(QUrl());
 
 		return;
 	}
@@ -1605,10 +1618,13 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
 
-	setRequestedUrl(m_webView->page()->history()->currentItem().url(), false, true);
-	updateOptions(m_webView->page()->history()->itemAt(history.index).url());
-
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
+
+	const QUrl url = m_webView->page()->history()->itemAt(history.index).url();
+
+	setRequestedUrl(url, false, true);
+	updateOptions(url);
+	updatePageActions(url);
 }
 
 void QtWebKitWebWidget::setHistory(QDataStream &stream)
@@ -1754,6 +1770,10 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		case Action::ViewSourceAction:
 		case Action::CheckSpellingAction:
 			action->setEnabled(false);
+
+			break;
+		case Action::AddBookmarkAction:
+			updatePageActions(getUrl());
 
 			break;
 		case Action::LoadPluginsAction:
