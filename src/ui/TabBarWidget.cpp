@@ -149,25 +149,6 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 }
 
-void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-	if (event->button() != Qt::LeftButton)
-	{
-		return;
-	}
-
-	const int tab = tabAt(event->pos());
-
-	if (tab < 0)
-	{
-		ActionsManager::triggerAction(Action::NewTabAction, this);
-	}
-	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
-	{
-		emit requestedClose(tab);
-	}
-}
-
 void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton && event->modifiers().testFlag(Qt::ShiftModifier))
@@ -199,6 +180,25 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 	}
 
 	hidePreview();
+}
+
+void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() != Qt::LeftButton)
+	{
+		return;
+	}
+
+	const int tab = tabAt(event->pos());
+
+	if (tab < 0)
+	{
+		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
+	}
+	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
+	{
+		emit requestedClose(tab);
+	}
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
