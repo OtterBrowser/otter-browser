@@ -1,0 +1,55 @@
+.TH OTTER-BROWSER 1 "January 2015" "" "USER COMMANDS"
+.SH NAME
+otter-browser \- the web browser controlled by the user, not vice-versa
+.SH SYNOPSIS
+.B otter-browser
+[\fIOPTIONS\fR] [\fIPATH\fR|\fIURL\fR|\fITERM\fR...]
+.SH DESCRIPTION
+See the Otter Browser wiki for help on using the browser:
+.IP
+<https://github.com/Emdek/otter/wiki/>
+.SH OPTIONS
+.TP
+\fB\-\-profile\fR=\fIPATH\fR
+Specifies the directory that profile (user data) is kept in.
+Defaults to \fI~/.config/otter\fR.
+.TP
+\fB\-\-cache\fR=\fIPATH\fR
+Specifies the directory that cache data is kept in.
+Defaults to \fI~/.cache/otter\fR.
+.TP
+\fB\-\-session\fR=\fIIDENTIFIER\fR
+Tries to load session specified by \fIIDENTIFIER\fR.
+.TP
+\fB\-\-privatesession\fR
+Starts private session.
+.TP
+\fB\-\-portable\fR
+Sets profile and cache paths to directories inside
+the same directory as that of application binary.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Show list of supported command line options.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Show version information.
+.PP
+As a Qt application, Otter also obeys Qt command-line flags, see the Qt
+documentation for complete list:
+.IP
+<http://doc.qt.io/qt-5/qguiapplication.html#QGuiApplication>
+.SH FILES
+.TP
+.I ~/.config/otter
+Default directory for configuration data.
+.TP
+.I ~/.cache/otter
+Default directory for cache data.
+.SH BUGS
+Bug tracker:
+.IP
+https://github.com/Emdek/otter/issues
+.PP
+Be sure to do your search within open and closed issues before submitting reports.
+.SH AUTHOR
+The Otter Browser team \- <http://otter-browser.org>
