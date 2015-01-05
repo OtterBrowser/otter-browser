@@ -53,16 +53,7 @@ endif (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Script REQUIRED)
-find_package(Qt5Sql REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5WebKit REQUIRED)
-find_package(Qt5WebKitWidgets REQUIRED)
+find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql Widgets WebKit WebKitWidgets)
 
 set(otter_src
 	src/main.cpp
