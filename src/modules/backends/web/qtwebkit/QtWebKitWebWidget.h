@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -87,7 +88,10 @@ protected:
 
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
@@ -130,6 +134,13 @@ protected slots:
 	void showContextMenu(const QPoint &position = QPoint());
 
 private:
+	enum ScrollMode
+	{
+		NoScroll = 0,
+		MoveScroll = 1,
+		DragScroll = 2
+	};
+
 	QWebView *m_webView;
 	QtWebKitWebPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
@@ -139,17 +150,22 @@ private:
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
+	QPoint m_beginCursorPosition;
+	QPoint m_beginScrollPosition;
 	QPoint m_clickPosition;
 	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QHash<int, Action*> m_actions;
 	QNetworkAccessManager::Operation m_formRequestOperation;
+	ScrollMode m_scrollMode;
+	int m_scrollTimer;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
+	bool m_ignoreContextMenuNextTime;
 
 signals:
 	void aboutToReload();

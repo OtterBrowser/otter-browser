@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -75,11 +76,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspectorCloseButton(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
+	m_scrollMode(NoScroll),
+	m_scrollTimer(0),
 	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
-	m_isTyped(false)
+	m_isTyped(false),
+	m_ignoreContextMenuNextTime(false)
 {
 	m_splitter->addWidget(m_webView);
 	m_splitter->setChildrenCollapsible(false);
@@ -146,6 +150,14 @@ QtWebKitWebWidget::~QtWebKitWebWidget()
 	m_webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 }
 
+void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_scrollTimer)
+	{
+		m_webView->page()->mainFrame()->setScrollPosition(m_webView->page()->mainFrame()->scrollPosition() + ((QCursor::pos() - m_beginCursorPosition) / 20));
+	}
+}
+
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 {
 	WebWidget::focusInEvent(event);
@@ -155,6 +167,28 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	if (m_inspector && m_inspector->isVisible())
 	{
 		m_inspectorCloseButton->raise();
+	}
+}
+
+void QtWebKitWebWidget::keyPressEvent(QKeyEvent *event)
+{
+	WebWidget::keyPressEvent(event);
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+	}
+}
+
+void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
+{
+	WebWidget::mousePressEvent(event);
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+
+		m_ignoreContextMenuNextTime = true;
 	}
 }
 
@@ -1376,6 +1410,42 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
+		case Action::StartDragScrollAction:
+			QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+
+			m_beginCursorPosition = QCursor::pos();
+			m_beginScrollPosition = m_webView->page()->mainFrame()->scrollPosition();
+			m_scrollMode = DragScroll;
+
+			break;
+		case Action::StartMoveScrollAction:
+			QApplication::setOverrideCursor(Qt::SizeAllCursor);
+
+			grabKeyboard();
+			grabMouse();
+
+			m_beginCursorPosition = QCursor::pos();
+			m_scrollMode = MoveScroll;
+			m_scrollTimer = startTimer(10);
+
+			break;
+		case Action::EndScrollAction:
+			if (m_scrollMode == MoveScroll)
+			{
+				killTimer(m_scrollTimer);
+
+				m_scrollTimer = 0;
+
+				releaseKeyboard();
+				releaseMouse();
+
+			}
+
+			QApplication::restoreOverrideCursor();
+
+			m_scrollMode = NoScroll;
+
+			break;
 		case Action::ActivateContentAction:
 			{
 				m_webView->setFocus();
@@ -2234,6 +2304,18 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 
+				if (mouseEvent->button() == Qt::MiddleButton)
+				{
+					const QString tagName = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos())).element().tagName().toLower();
+
+					if (tagName != QLatin1String("textarea") && tagName != QLatin1String("input") && tagName != QLatin1String("a"))
+					{
+						triggerAction(Action::StartMoveScrollAction);
+
+						return true;
+					}
+				}
+
 				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
 				{
 					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
@@ -2293,11 +2375,21 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent->button() == Qt::MidButton)
+			if (m_scrollMode == MoveScroll)
+			{
+				m_ignoreContextMenuNextTime = false;
+
+				return true;
+			}
+			else if (mouseEvent->button() == Qt::MiddleButton)
 			{
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (m_hitResult.linkUrl().isValid())
+				if (m_scrollMode == DragScroll)
+				{
+					triggerAction(Action::EndScrollAction);
+				}
+				else if (m_hitResult.linkUrl().isValid())
 				{
 					return true;
 				}
@@ -2363,15 +2455,24 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::Wheel)
 		{
-			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-
-			if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
+			if (m_scrollMode == MoveScroll)
 			{
-				setZoom(getZoom() + (wheelEvent->delta() / 16));
-
-				event->accept();
+				triggerAction(Action::EndScrollAction);
 
 				return true;
+			}
+			else
+			{
+				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+				if (wheelEvent->modifiers() & Qt::CTRL)
+				{
+					setZoom(getZoom() + (wheelEvent->delta() / 16));
+
+					event->accept();
+
+					return true;
+				}
 			}
 
 		}
@@ -2410,6 +2511,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
+		}
+		else if (event->type() == QEvent::MouseMove && m_scrollMode == DragScroll)
+		{
+			m_webView->page()->mainFrame()->setScrollPosition(m_beginScrollPosition + m_beginCursorPosition - QCursor::pos());
 		}
 	}
 	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
