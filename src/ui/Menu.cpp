@@ -63,23 +63,31 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_role == BookmarksMenuRole && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
-		MainWindow *window = MainWindow::findMainWindow(parent());
 		QAction *action = actionAt(event->pos());
 
-		if (window && action && action->data().type() == QVariant::ModelIndex)
+		if (action && action->data().type() == QVariant::ModelIndex)
 		{
-			window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
-
 			QWidget *menu = this;
 
-			while (menu->parentWidget() && menu->parentWidget()->inherits("QMenu"))
+			while (menu)
 			{
+				menu->close();
 				menu = menu->parentWidget();
+
+				if (!menu || !menu->inherits(QLatin1String("QMenu").data()))
+				{
+					break;
+				}
 			}
 
-			menu->close();
+			MainWindow *window = MainWindow::findMainWindow(parent());
 
-			return;
+			if (window)
+			{
+				window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
+
+				return;
+			}
 		}
 	}
 
