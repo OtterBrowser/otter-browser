@@ -210,7 +210,8 @@ qt5_wrap_ui(otter_ui
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-	set(otter_src ${otter_src} src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
+        cmake_policy(SET CMP0020 NEW)
+        set(otter_src ${otter_src} otter-browser.rc src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 add_executable(otter-browser
