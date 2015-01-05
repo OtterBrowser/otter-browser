@@ -150,6 +150,9 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ScrollPageDownAction, QT_TRANSLATE_NOOP("actions", "Page Down"));
 	registerAction(Action::ScrollPageLeftAction, QT_TRANSLATE_NOOP("actions", "Page Left"));
 	registerAction(Action::ScrollPageRightAction, QT_TRANSLATE_NOOP("actions", "Page Right"));
+	registerAction(Action::StartDragScrollAction, QT_TRANSLATE_NOOP("actions", "Enter Drag Scroll Mode"));
+	registerAction(Action::StartMoveScrollAction, QT_TRANSLATE_NOOP("actions", "Enter Move Scroll Mode"));
+	registerAction(Action::EndScrollAction, QT_TRANSLATE_NOOP("actions", "Exit Scroll Mode"));
 	registerAction(Action::PrintAction, QT_TRANSLATE_NOOP("actions", "Print..."), QString(), Utils::getIcon(QLatin1String("document-print")));
 	registerAction(Action::PrintPreviewAction, QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
 	registerAction(Action::ActivateAddressFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Address Field"));

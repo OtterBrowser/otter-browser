@@ -183,6 +183,9 @@ bool Action::isLocal(int identifier)
 		case Action::ScrollPageDownAction:
 		case Action::ScrollPageLeftAction:
 		case Action::ScrollPageRightAction:
+		case Action::StartDragScrollAction:
+		case Action::StartMoveScrollAction:
+		case Action::EndScrollAction:
 		case Action::ActivateAddressFieldAction:
 		case Action::ActivateSearchFieldAction:
 		case Action::ActivateContentAction:
