@@ -187,7 +187,7 @@ QString HtmlBookmarksImporter::getVersion() const
 
 QString HtmlBookmarksImporter::getFileFilter() const
 {
-	return tr("HTML files (*.htm, *.html)");
+	return tr("HTML files (*.htm; *.html)");
 }
 
 QString HtmlBookmarksImporter::getSuggestedPath() const
