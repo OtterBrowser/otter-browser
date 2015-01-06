@@ -78,7 +78,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	setLocale(QLatin1String("system"));
 
-	QCommandLineParser *parser = getParser();
+	QCommandLineParser *parser = createCommandLineParser();
 	parser->process(arguments());
 
 	const bool isPortable = parser->isSet(QLatin1String("portable"));
@@ -262,7 +262,7 @@ void Application::newConnection()
 		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
 	}
 
-	QCommandLineParser *parser = getParser();
+	QCommandLineParser *parser = createCommandLineParser();
 	parser->parse(decodedArguments);
 
 	const QString session = parser->value(QLatin1String("session"));
@@ -290,7 +290,11 @@ void Application::newConnection()
 
 	if (window)
 	{
-		if (!parser->positionalArguments().isEmpty())
+		if (parser->positionalArguments().isEmpty())
+		{
+			window->triggerAction(Action::NewTabAction);
+		}
+		else
 		{
 			const QStringList urls = parser->positionalArguments();
 
@@ -298,10 +302,6 @@ void Application::newConnection()
 			{
 				window->openUrl(urls.at(i));
 			}
-		}
-		else if (session.isEmpty())
-		{
-			window->openUrl();
 		}
 	}
 
@@ -415,9 +415,19 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(QLocale(identifier));
 }
 
-Application* Application::getInstance()
+QCommandLineParser* Application::createCommandLineParser() const
 {
-	return m_instance;
+	QCommandLineParser *parser = new QCommandLineParser();
+	parser->addHelpOption();
+	parser->addVersionOption();
+	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
+	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
+	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
+	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
+
+	return parser;
 }
 
 MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const SessionMainWindow &windows)
@@ -446,6 +456,11 @@ MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const S
 	return window;
 }
 
+Application* Application::getInstance()
+{
+	return m_instance;
+}
+
 MainWindow* Application::getWindow()
 {
 	if (m_windows.isEmpty())
@@ -459,21 +474,6 @@ MainWindow* Application::getWindow()
 PlatformIntegration* Application::getPlatformIntegration()
 {
 	return m_platformIntegration;
-}
-
-QCommandLineParser* Application::getParser() const
-{
-	QCommandLineParser *parser = new QCommandLineParser();
-	parser->addHelpOption();
-	parser->addVersionOption();
-	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
-	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
-	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
-
-	return parser;
 }
 
 QString Application::getFullVersion() const

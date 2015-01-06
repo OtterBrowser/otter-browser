@@ -43,11 +43,11 @@ public:
 
 	void removeWindow(MainWindow* window);
 	void setLocale(const QString &locale);
-	static Application* getInstance();
+	QCommandLineParser* createCommandLineParser() const;
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
+	static Application* getInstance();
 	MainWindow* getWindow();
 	PlatformIntegration* getPlatformIntegration();
-	QCommandLineParser* getParser() const;
 	QString getFullVersion() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;

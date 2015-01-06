@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	QCommandLineParser *parser = application.getParser();
+	QCommandLineParser *parser = application.createCommandLineParser();
 	parser->process(application);
 
 	const QString session = (parser->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : parser->value(QLatin1String("session")));
