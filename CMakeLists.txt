@@ -171,6 +171,7 @@ set(otter_src
 
 qt5_add_resources(otter_res
 	resources/resources.qrc
+	src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 )
 
 qt5_wrap_ui(otter_ui

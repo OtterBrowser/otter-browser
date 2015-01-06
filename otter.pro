@@ -274,7 +274,8 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/modules/windows/web/ImagePropertiesDialog.ui \
     src/modules/windows/web/WebContentsWidget.ui
 
-RESOURCES += resources/resources.qrc
+RESOURCES += resources/resources.qrc \
+    src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 
 TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_de_DE.ts \

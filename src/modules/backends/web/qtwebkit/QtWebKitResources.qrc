@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/modules/backends/web/qtwebkit">
+        <file>resources/imageViewer.js</file>
+    </qresource>
+</RCC>

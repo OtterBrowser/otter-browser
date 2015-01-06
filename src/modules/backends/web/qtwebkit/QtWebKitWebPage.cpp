@@ -83,7 +83,9 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 
 void QtWebKitWebPage::pageLoadFinished()
 {
-	clearIgnoreJavaScriptPopups();
+	m_ignoreJavaScriptPopups = false;
+
+	updatePageStyleSheets();
 
 	if (ContentBlockingManager::isContentBlockingEnabled() && mainFrame()->url().isValid())
 	{
@@ -94,15 +96,25 @@ void QtWebKitWebPage::pageLoadFinished()
 	}
 }
 
-void QtWebKitWebPage::clearIgnoreJavaScriptPopups()
+void QtWebKitWebPage::updatePageStyleSheets(const QUrl &url)
 {
-	m_ignoreJavaScriptPopups = false;
-}
-
-void QtWebKitWebPage::updatePageStyleSheets()
-{
-	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), mainFrame()->url()).toString() : QString());
+	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
 	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
+	QWebElement image = mainFrame()->findFirstElement(QLatin1String("img"));
+
+	if (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl)
+	{
+		styleSheet += QLatin1String("html {width:100%;height:100%;text-align:center;} img {-webkit-user-select:none;} .zoomedIn {cursor:-webkit-zoom-out;} .zoomedOut {max-width:100%;max-height:100%;cursor:-webkit-zoom-in;}");
+
+		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+
+		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/imageViewer.js"));
+		file.open(QIODevice::ReadOnly);
+
+		mainFrame()->evaluateJavaScript(file.readAll());
+	}
+
+	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());
 
 	if (!userSyleSheet.isEmpty())
 	{

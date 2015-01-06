@@ -844,7 +844,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 		setStatusMessage(QString());
 	}
 
-	m_page->updatePageStyleSheets();
+	m_page->updatePageStyleSheets(url);
 
 	m_networkManager->updateOptions(url);
 

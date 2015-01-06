@@ -47,7 +47,7 @@ public:
 	bool supportsExtension(Extension extension) const;
 
 public slots:
-	void updatePageStyleSheets();
+	void updatePageStyleSheets(const QUrl &url = QUrl());
 
 protected:
 	QtWebKitWebPage();
@@ -64,7 +64,6 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void clearIgnoreJavaScriptPopups();
 	void pageLoadFinished();
 
 private:
