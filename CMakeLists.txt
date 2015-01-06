@@ -53,6 +53,13 @@ endif (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+if (MSVC)
+	set(CMAKE_PREFIX_PATH $ENV{QTDIR})
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MP")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MP")
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:\"mainCRTStartup\"")
+endif (MSVC)
+
 find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql Widgets WebKit WebKitWidgets)
 
 set(otter_src
@@ -201,8 +208,9 @@ qt5_wrap_ui(otter_ui
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-        cmake_policy(SET CMP0020 NEW)
-        set(otter_src ${otter_src} otter-browser.rc src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
+	cmake_policy(SET CMP0020 NEW)
+	add_definitions(-DUNICODE -D_UNICODE)
+	set(otter_src ${otter_src} otter-browser.rc src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 add_executable(otter-browser
@@ -213,6 +221,7 @@ add_executable(otter-browser
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	qt5_use_modules(otter-browser WinExtras)
+	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
