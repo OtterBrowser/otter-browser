@@ -236,8 +236,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 
 		if (type != BookmarksItem::RootBookmark)
 		{
+			Action *copyLinkAction = getAction(Action::CopyLinkToClipboardAction);
+			copyLinkAction->setEnabled(type == BookmarksItem::UrlBookmark);
+
 			menu.addSeparator();
-			menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyBookmarkLink()))->setEnabled(type == BookmarksItem::UrlBookmark);
+			menu.addAction(copyLinkAction);
 		}
 
 		if (!inTrash)
@@ -260,7 +263,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			}
 			else
 			{
-				menu.addAction(tr("Remove Bookmark"), this, SLOT(removeBookmark()));
+				menu.addAction(getAction(Action::DeleteAction));
 			}
 
 			menu.addSeparator();
@@ -275,9 +278,18 @@ void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	if (identifier == Action::DeleteAction)
+	switch (identifier)
 	{
-		removeBookmark();
+		case Action::DeleteAction:
+			removeBookmark();
+
+			break;
+		case Action::CopyLinkToClipboardAction:
+			copyBookmarkLink();
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -304,7 +316,10 @@ void BookmarksContentsWidget::updateActions()
 	m_ui->propertiesButton->setEnabled((hasSelecion && (type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)));
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark);
 
-	getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+	if (m_actions.contains(Action::DeleteAction))
+	{
+		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+	}
 }
 
 void BookmarksContentsWidget::print(QPrinter *printer)
@@ -319,12 +334,17 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	if (identifier != Action::DeleteAction)
+	if (identifier != Action::CopyLinkToClipboardAction && identifier != Action::DeleteAction)
 	{
 		return NULL;
 	}
 
 	Action *action = new Action(identifier, this);
+
+	if (identifier == Action::DeleteAction)
+	{
+		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Bookmark"));
+	}
 
 	m_actions[identifier] = action;
 
