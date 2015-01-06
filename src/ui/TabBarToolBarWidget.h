@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+class ActionWidget;
 class TabBarWidget;
 
 class TabBarToolBarWidget : public QToolBar
@@ -46,7 +47,7 @@ private:
 	QMainWindow *m_window;
 	QWidget *m_widget;
 	TabBarWidget *m_tabBar;
-	QToolButton *m_newTabButton;
+	ActionWidget *m_newTabButton;
 };
 
 }

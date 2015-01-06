@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TabBarToolBarWidget.h"
+#include "ActionWidget.h"
 #include "Menu.h"
 #include "TabBarWidget.h"
 #include "toolbars/MenuActionWidget.h"
@@ -36,7 +37,7 @@ TabBarToolBarWidget::TabBarToolBarWidget(QMainWindow *parent) : QToolBar(parent)
 	m_window(parent),
 	m_widget(new QWidget(this)),
 	m_tabBar(new TabBarWidget(m_widget)),
-	m_newTabButton(new QToolButton(m_widget))
+	m_newTabButton(new ActionWidget(Action::NewTabAction, NULL, m_widget))
 {
 	setObjectName(QLatin1String("tabBarToolBar"));
 	setStyleSheet(QLatin1String("QToolBar {padding:0;}"));
@@ -68,8 +69,6 @@ TabBarToolBarWidget::TabBarToolBarWidget(QMainWindow *parent) : QToolBar(parent)
 	m_widget->setLayout(layout);
 	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_newTabButton->setAutoRaise(true);
-	m_newTabButton->setDefaultAction(ActionsManager::getAction(Action::NewTabAction, this));
 	m_newTabButton->setFixedSize(32, 32);
 	m_newTabButton->show();
 	m_newTabButton->raise();

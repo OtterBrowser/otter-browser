@@ -19,12 +19,16 @@
 
 #include "ActionWidget.h"
 #include "ContentsWidget.h"
+#include "MainWindow.h"
 #include "Window.h"
+
+#include <QtGui/QMouseEvent>
 
 namespace Otter
 {
 
-ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QToolButton(parent)
+ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QToolButton(parent),
+	m_identifier(identifier)
 {
 	setAutoRaise(true);
 
@@ -61,6 +65,30 @@ void ActionWidget::enterEvent(QEvent *event)
 	}
 
 	setToolTip(QString());
+}
+
+void ActionWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (m_identifier == Action::NewTabAction || m_identifier == Action::NewTabPrivateAction)
+	{
+		MainWindow *window = MainWindow::findMainWindow(this);
+
+		if (window)
+		{
+			OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button());
+
+			if (m_identifier == Action::NewTabPrivateAction)
+			{
+				hints |= PrivateOpen;
+			}
+
+			window->getWindowsManager()->open(QUrl(), hints);
+
+			return;
+		}
+	}
+
+	QToolButton::mousePressEvent(event);
 }
 
 }

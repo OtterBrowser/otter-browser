@@ -38,6 +38,10 @@ public:
 
 protected:
 	void enterEvent(QEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+
+private:
+	int m_identifier;
 };
 
 }
