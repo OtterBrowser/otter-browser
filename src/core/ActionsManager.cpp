@@ -628,7 +628,7 @@ void ActionsManager::setCurrentWindow(Window *window)
 		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
 		{
 			const int identifier = m_standardActions[i]->getIdentifier();
-			Action *previousAction = (previousWindow ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
+			Action *previousAction = ((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
 			Action *currentAction = (window ? window->getContentsWidget()->getAction(identifier) : NULL);
 
 			if (previousAction)

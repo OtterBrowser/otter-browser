@@ -21,11 +21,12 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
+#include "Action.h"
+
 #include <QtCore/QMutex>
+#include <QtCore/QPointer>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QShortcut>
-
-#include "Action.h"
 
 namespace Otter
 {
@@ -139,7 +140,7 @@ protected slots:
 
 private:
 	MainWindow *m_mainWindow;
-	Window *m_window;
+	QPointer<Window> m_window;
 	QVector<Action*> m_standardActions;
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	QVector<QPair<int, QVector<QShortcut*> > > m_macroShortcuts;
