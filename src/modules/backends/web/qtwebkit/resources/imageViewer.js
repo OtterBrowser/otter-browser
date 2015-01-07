@@ -1,48 +1,68 @@
 (function (window)
 {
-	var image = document.querySelector('img');
+	var originalImage = document.querySelector('img');
 	var drag = null;
+	var dragEnd = null;
+	var dragInterval = 50;
 	var ignore = false;
 
-	if (image && !image.classList.contains('imageViewer'))
+	if (originalImage && !originalImage.classList.contains('hidden'))
 	{
-		image.classList.add('imageViewer');
+		originalImage.classList.add('hidden');
+
+		var image = originalImage.cloneNode(true);
+		image.removeAttribute('width');
+		image.removeAttribute('height');
+		image.removeAttribute('style');
+
 		image.addEventListener('click', function(event)
 		{
-			if (drag)
+			var clickStart = new Date().getTime();
+
+			if (dragEnd !== null && ((clickStart - dragEnd) < dragInterval))
 			{
 				return;
 			}
-
-			image.removeAttribute('width');
-			image.removeAttribute('height');
-			image.removeAttribute('style');
 
 			var documentSize = [window.innerWidth, window.innerHeight];
 			var imageSize = [image.naturalWidth, image.naturalHeight];
 
 			if (imageSize[0] <= documentSize[0] && imageSize[1] <= documentSize[1])
 			{
-				image.classList.remove('zoomedIn');
-				image.classList.remove('zoomedOut');
+				document.documentElement.classList.remove('zoomedIn');
+				document.documentElement.classList.remove('zoomedOut');
 			}
 			else if (!ignore)
 			{
-				if (image.classList.contains('zoomedOut'))
+				if (document.documentElement.classList.contains('zoomedOut'))
 				{
-					image.classList.add('zoomedIn');
-					image.classList.remove('zoomedOut');
+					var imageComputedSize = [image.clientWidth, image.clientHeight];
+
+					var ratioX = (imageComputedSize[0] / imageSize[0]);
+					var ratioY = (imageComputedSize[1] / imageSize[1]);
+					var scrollToX = (event.offsetX / ratioX) - (imageComputedSize[0] / 2);
+					var scrollToY = (event.offsetY / ratioY) - (imageComputedSize[1] / 2);
+
+					document.documentElement.classList.add('zoomedIn');
+					document.documentElement.classList.remove('zoomedOut');
+
+					window.scrollTo(scrollToX, scrollToY);
 				}
 				else
 				{
-					image.classList.add('zoomedOut');
-					image.classList.remove('zoomedIn');
+					document.documentElement.classList.add('zoomedOut');
+					document.documentElement.classList.remove('zoomedIn');
 				}
 			}
 
 			ignore = false;
 		});
-		image.click();
+
+		image.addEventListener('load', function()
+		{
+			image.click();
+			image.classList.remove('hidden');
+		});
 
 		this.addEventListener('resize', function()
 		{
@@ -52,7 +72,7 @@
 
 		this.addEventListener('mousedown', function(event)
 		{
-			if (image.classList.contains('zoomedIn') && event.button === 0)
+			if (document.documentElement.classList.contains('zoomedIn') && event.button === 0)
 			{
 				drag = {
 					oldX: (event.screenX + this.scrollX),
@@ -63,7 +83,7 @@
 
 		this.addEventListener('dragstart', function(event)
 		{
-			if (image.classList.contains('zoomedIn'))
+			if (document.documentElement.classList.contains('zoomedIn'))
 			{
 				event.preventDefault();
 			}
@@ -83,14 +103,16 @@
 
 		this.addEventListener('mouseup', function(event)
 		{
-			if (drag)
+			if (image.classList.contains('drag'))
 			{
-				event.preventDefault();
-
 				image.classList.remove('drag');
 
-				drag = null;
+				dragEnd = new Date().getTime();
 			}
+
+			drag = null;
 		});
+
+		document.body.appendChild(image);
 	}
 })(window);

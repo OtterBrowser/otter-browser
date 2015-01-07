@@ -104,7 +104,7 @@ void QtWebKitWebPage::updatePageStyleSheets(const QUrl &url)
 
 	if (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl)
 	{
-		styleSheet += QLatin1String("html {width:100%;height:100%;text-align:center;} img {-webkit-user-select:none;} .zoomedIn {cursor:-webkit-zoom-out;} .zoomedOut {max-width:100%;max-height:100%;cursor:-webkit-zoom-in;} .drag {cursor:move;}");
+		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:-webkit-flex;-webkit-align-items:center;} img {display:block;margin:auto;-webkit-user-select:none;} .hidden {display:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {cursor:-webkit-zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {max-width:100%;max-height:100%;cursor:-webkit-zoom-in;}");
 
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
