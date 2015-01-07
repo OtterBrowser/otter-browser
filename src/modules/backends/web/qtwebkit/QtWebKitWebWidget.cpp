@@ -528,19 +528,14 @@ void QtWebKitWebWidget::updateNavigationActions()
 		m_actions[Action::FastForwardAction]->setEnabled(m_webView->history()->canGoForward());
 	}
 
-	if (m_actions.contains(Action::ReloadAction))
-	{
-		m_actions[Action::ReloadAction]->setEnabled(!m_isLoading);
-	}
-
 	if (m_actions.contains(Action::StopAction))
 	{
 		m_actions[Action::StopAction]->setEnabled(m_isLoading);
 	}
 
-	if (m_actions.contains(Action::ReloadOrStopAction))
+	if (m_actions.contains(Action::ReloadAction))
 	{
-		m_actions[Action::ReloadOrStopAction]->setup(ActionsManager::getAction((m_isLoading ? Action::StopAction : Action::ReloadAction), this));
+		m_actions[Action::ReloadAction]->setEnabled(!m_isLoading);
 	}
 
 	if (m_actions.contains(Action::ReloadOrStopAction))
@@ -1861,10 +1856,6 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			updatePageActions(getUrl());
 
 			break;
-		case Action::LoadPluginsAction:
-			action->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-
-			break;
 		case Action::GoBackAction:
 		case Action::RewindAction:
 			action->setEnabled(m_webView->history()->canGoBack());
@@ -1875,21 +1866,30 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			action->setEnabled(m_webView->history()->canGoForward());
 
 			break;
+		case Action::StopAction:
+			action->setEnabled(m_isLoading);
+
+			break;
+
+		case Action::ReloadAction:
+			action->setEnabled(!m_isLoading);
+
+			break;
+		case Action::ReloadOrStopAction:
+			action->setup(m_isLoading ? getAction(Action::StopAction) : getAction(Action::ReloadAction));
+
+			break;
 		case Action::ScheduleReloadAction:
 			action->setMenu(getReloadTimeMenu());
+
+			break;
+		case Action::LoadPluginsAction:
+			action->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 
 			break;
 		case Action::ValidateAction:
 			action->setEnabled(false);
 			action->setMenu(new QMenu(this));
-
-			break;
-		case Action::SearchMenuAction:
-			action->setMenu(getQuickSearchMenu());
-
-			break;
-		case Action::ReloadOrStopAction:
-			action->setup(isLoading() ? getAction(Action::StopAction) : getAction(Action::ReloadAction));
 
 			break;
 		case Action::UndoAction:
@@ -1908,6 +1908,20 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 			connect(m_page->undoStack(), SIGNAL(canRedoChanged(bool)), action, SLOT(setEnabled(bool)));
 			connect(m_page->undoStack(), SIGNAL(redoTextChanged(QString)), this, SLOT(updateRedoText(QString)));
+
+			break;
+		case Action::SearchMenuAction:
+			action->setMenu(getQuickSearchMenu());
+
+		case Action::CutAction:
+		case Action::CopyAction:
+		case Action::CopyPlainTextAction:
+		case Action::PasteAction:
+		case Action::PasteAndGoAction:
+		case Action::DeleteAction:
+		case Action::ClearAllAction:
+		case Action::SearchAction:
+			updateEditActions();
 
 			break;
 		case Action::OpenLinkAction:
