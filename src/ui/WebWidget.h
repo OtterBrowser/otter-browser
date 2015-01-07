@@ -86,7 +86,6 @@ public:
 	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
-	virtual int getReloadTime() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;
 	virtual bool isLoading() const = 0;
@@ -100,7 +99,6 @@ public slots:
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
-	virtual void setReloadTime(int time);
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
@@ -129,7 +127,6 @@ private:
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
 	QVariantHash m_options;
-	int m_reloadTime;
 	int m_reloadTimer;
 
 signals:

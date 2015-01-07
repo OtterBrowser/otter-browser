@@ -514,7 +514,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 			if (webWidget)
 			{
-				webWidget->setReloadTime(m_session.reloadTime);
+				webWidget->setOption(QLatin1String("Content/PageReloadTime"), m_session.reloadTime);
 			}
 		}
 
@@ -648,9 +648,11 @@ SessionWindow Window::getSession() const
 
 		if (webWidget)
 		{
-			if (webWidget->getReloadTime() != -1)
+			const int reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
+
+			if (reloadTime >= 0)
 			{
-				session.reloadTime = webWidget->getReloadTime();
+				session.reloadTime = reloadTime;
 			}
 
 			if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))

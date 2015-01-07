@@ -156,6 +156,10 @@ void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
 	{
 		m_webView->page()->mainFrame()->setScrollPosition(m_webView->page()->mainFrame()->scrollPosition() + ((QCursor::pos() - m_beginCursorPosition) / 20));
 	}
+	else
+	{
+		WebWidget::timerEvent(event);
+	}
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
@@ -1818,7 +1822,6 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
 	widget->setOptions(getOptions());
 	widget->setQuickSearchEngine(getQuickSearchEngine());
-	widget->setReloadTime(getReloadTime());
 
 	if (cloneHistory)
 	{

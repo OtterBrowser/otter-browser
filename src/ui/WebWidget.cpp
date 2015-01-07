@@ -35,7 +35,6 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_backend(backend),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
-	m_reloadTime(-1),
 	m_reloadTimer(0)
 {
 	Q_UNUSED(isPrivate)
@@ -60,13 +59,15 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::startReloadTimer()
 {
-	if (m_reloadTime >= 0)
+	const int reloadTime = getOption(QLatin1String("Content/PageReloadTime")).toInt();
+
+	if (reloadTime >= 0)
 	{
 		triggerAction(Action::StopScheduledReloadAction);
 
-		if (m_reloadTime > 0)
+		if (reloadTime > 0)
 		{
-			m_reloadTimer = startTimer(m_reloadTime * 1000);
+			m_reloadTimer = startTimer(reloadTime * 1000);
 		}
 	}
 }
@@ -79,7 +80,7 @@ void WebWidget::search(const QString &query, const QString &engine)
 
 void WebWidget::reloadTimeMenuAboutToShow()
 {
-	switch (getReloadTime())
+	switch (getOption(QLatin1String("Content/PageReloadTime")).toInt())
 	{
 		case 1800:
 			m_reloadTimeMenu->actions().at(0)->setChecked(true);
@@ -357,6 +358,34 @@ void WebWidget::updateQuickSearch()
 
 void WebWidget::setOption(const QString &key, const QVariant &value)
 {
+	if (key == QLatin1String("Content/PageReloadTime"))
+	{
+		const int newReloadTime = value.toInt();
+		const int oldReloadTime = m_options.value(QLatin1String("Content/PageReloadTime"), -1).toInt();
+
+		if (newReloadTime == oldReloadTime)
+		{
+			return;
+		}
+
+		if (m_reloadTimer != 0)
+		{
+			killTimer(m_reloadTimer);
+
+			m_reloadTimer = 0;
+		}
+
+		if (newReloadTime >= 0)
+		{
+			triggerAction(Action::StopScheduledReloadAction);
+
+			if (newReloadTime > 0)
+			{
+				m_reloadTimer = startTimer(newReloadTime * 1000);
+			}
+		}
+	}
+
 	if (value.isNull())
 	{
 		m_options.remove(key);
@@ -382,47 +411,22 @@ void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
 	}
 }
 
-void WebWidget::setReloadTime(int time)
-{
-	if (time != m_reloadTime)
-	{
-		m_reloadTime = time;
-
-		if (m_reloadTimer != 0)
-		{
-			killTimer(m_reloadTimer);
-
-			m_reloadTimer = 0;
-		}
-
-		if (time >= 0)
-		{
-			triggerAction(Action::StopScheduledReloadAction);
-
-			if (time > 0)
-			{
-				m_reloadTimer = startTimer(time * 1000);
-			}
-		}
-	}
-}
-
 void WebWidget::setReloadTime(QAction *action)
 {
 	const int reloadTime = action->data().toInt();
 
 	if (reloadTime == -2)
 	{
-		ReloadTimeDialog dialog(qMax(0, getReloadTime()), this);
+		ReloadTimeDialog dialog(qMax(0, getOption(QLatin1String("Content/PageReloadTime")).toInt()), this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
-			setReloadTime(dialog.getReloadTime());
+			setOption(QLatin1String("Content/PageReloadTime"), dialog.getReloadTime());
 		}
 	}
 	else
 	{
-		setReloadTime(reloadTime);
+		setOption(QLatin1String("Content/PageReloadTime"), reloadTime);
 	}
 }
 
@@ -541,11 +545,6 @@ QUrl WebWidget::getRequestedUrl() const
 QVariantHash WebWidget::getOptions() const
 {
 	return m_options;
-}
-
-int WebWidget::getReloadTime() const
-{
-	return m_reloadTime;
 }
 
 bool WebWidget::hasOption(const QString &key) const

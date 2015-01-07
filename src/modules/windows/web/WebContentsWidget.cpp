@@ -355,14 +355,14 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
+void WebContentsWidget::setOption(const QString &key, const QVariant &value)
+{
+	m_webWidget->setOption(key, value);
+}
+
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	m_webWidget->setHistory(history);
-}
-
-void WebContentsWidget::setReloadTime(int time)
-{
-	m_webWidget->setReloadTime(time);
 }
 
 void WebContentsWidget::setZoom(int zoom)
@@ -528,6 +528,16 @@ QLatin1String WebContentsWidget::getType() const
 	return QLatin1String("web");
 }
 
+QVariant WebContentsWidget::getOption(const QString &key) const
+{
+	if (m_webWidget->hasOption(key))
+	{
+		return m_webWidget->getOptions().value(key, QVariant());
+	}
+
+	return QVariant();
+}
+
 QUrl WebContentsWidget::getUrl() const
 {
 	return m_webWidget->getRequestedUrl();
@@ -546,11 +556,6 @@ QPixmap WebContentsWidget::getThumbnail() const
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
-}
-
-int WebContentsWidget::getReloadTime() const
-{
-	return m_webWidget->getReloadTime();
 }
 
 int WebContentsWidget::getZoom() const

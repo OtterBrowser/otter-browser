@@ -49,11 +49,11 @@ public:
 	QString getTitle() const;
 	QString getStatusMessage() const;
 	QLatin1String getType() const;
+	QVariant getOption(const QString &key) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
-	int getReloadTime() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;
@@ -64,8 +64,8 @@ public:
 public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
+	void setOption(const QString &key, const QVariant &value);
 	void setHistory(const WindowHistoryInformation &history);
-	void setReloadTime(int time);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
 
