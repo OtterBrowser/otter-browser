@@ -2306,9 +2306,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (mouseEvent->button() == Qt::MiddleButton)
 				{
-					const QString tagName = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos())).element().tagName().toLower();
+					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
 
-					if (tagName != QLatin1String("textarea") && tagName != QLatin1String("input") && tagName != QLatin1String("a"))
+					const QString tagName = m_hitResult.element().tagName().toLower();
+
+					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
 					{
 						triggerAction(Action::StartMoveScrollAction);
 
