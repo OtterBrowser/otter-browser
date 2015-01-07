@@ -86,6 +86,7 @@ public slots:
 	void setOption(const QString &key, const QVariant &value);
 	void setSearchEngine(const QString &engine);
 	void setUrl(const QUrl &url, bool typed = true);
+	void setControlsHidden(bool hidden);
 	void setPinned(bool pinned);
 
 protected:
@@ -106,6 +107,7 @@ private:
 	ContentsWidget *m_contentsWidget;
 	SessionWindow m_session;
 	qint64 m_identifier;
+	bool m_areControlsHidden;
 	bool m_isPinned;
 	bool m_isPrivate;
 

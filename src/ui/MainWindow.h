@@ -86,6 +86,7 @@ private:
 
 signals:
 	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, QUrl url = QUrl());
+	void controlsHiddenChanged(bool hidden);
 };
 
 }

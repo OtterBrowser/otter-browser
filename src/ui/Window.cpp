@@ -58,6 +58,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	m_searchWidget(NULL),
 	m_contentsWidget(NULL),
 	m_identifier(++m_identifierCounter),
+	m_areControlsHidden(false),
 	m_isPinned(false),
 	m_isPrivate(isPrivate)
 {
@@ -391,6 +392,16 @@ void Window::setUrl(const QUrl &url, bool typed)
 	}
 }
 
+void Window::setControlsHidden(bool hidden)
+{
+	m_areControlsHidden = hidden;
+
+	if (m_navigationBar)
+	{
+		m_navigationBar->setVisible(!m_areControlsHidden);
+	}
+}
+
 void Window::setPinned(bool pinned)
 {
 	if (pinned != m_isPinned)
@@ -422,6 +433,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		const ToolBarDefinition toolBar = ActionsManager::getToolBarDefinition(QLatin1String("NavigationBar"));
 
 		m_navigationBar = new QWidget(this);
+		m_navigationBar->setVisible(!m_areControlsHidden);
 
 		QBoxLayout *navigationLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_navigationBar);
 		navigationLayout->setContentsMargins(0, 0, 0, 0);

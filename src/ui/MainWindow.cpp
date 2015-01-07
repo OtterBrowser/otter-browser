@@ -180,6 +180,30 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
+void MainWindow::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Network/WorkOffline"))
+	{
+		m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(value.toBool());
+	}
+	else if (option == QLatin1String("Interface/LockToolBars"))
+	{
+		const QList<QToolBar*> toolBars = findChildren<QToolBar*>();
+		const bool movable = !value.toBool();
+
+		for (int i = 0; i < toolBars.count(); ++i)
+		{
+			toolBars.at(i)->setMovable(movable);
+		}
+
+		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
+	}
+	else if (option == QLatin1String("Interface/ShowMenuBar"))
+	{
+		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(value.toBool());
+	}
+}
+
 void MainWindow::createMenuBar()
 {
 	m_menuBar = new QMenuBar(this);
@@ -468,30 +492,6 @@ void MainWindow::triggerAction(int identifier, bool checked)
 	}
 }
 
-void MainWindow::optionChanged(const QString &option, const QVariant &value)
-{
-	if (option == QLatin1String("Network/WorkOffline"))
-	{
-		m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(value.toBool());
-	}
-	else if (option == QLatin1String("Interface/LockToolBars"))
-	{
-		const QList<QToolBar*> toolBars = findChildren<QToolBar*>();
-		const bool movable = !value.toBool();
-
-		for (int i = 0; i < toolBars.count(); ++i)
-		{
-			toolBars.at(i)->setMovable(movable);
-		}
-
-		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
-	}
-	else if (option == QLatin1String("Interface/ShowMenuBar"))
-	{
-		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(value.toBool());
-	}
-}
-
 void MainWindow::addBookmark(const QUrl &url, const QString &title, bool warn)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
@@ -600,31 +600,63 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowStateChange:
-			SessionsManager::markSessionModified();
-
-			if (isFullScreen())
 			{
-				m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
-				m_ui->statusBar->hide();
+				QWindowStateChangeEvent *stateChangeEvent = dynamic_cast<QWindowStateChangeEvent*>(event);
 
-				if (m_menuBar)
+				SessionsManager::markSessionModified();
+
+				if (windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
-					m_menuBar->hide();
+					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+
+					if (isFullScreen())
+					{
+						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+
+						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+						{
+							m_tabBarToolBarWidget->setMaximumWidth(1);
+						}
+						else
+						{
+							m_tabBarToolBarWidget->setMaximumHeight(1);
+						}
+
+						m_ui->statusBar->hide();
+
+						if (m_menuBar)
+						{
+							m_menuBar->hide();
+						}
+
+						m_mdiWidget->installEventFilter(this);
+						m_tabBarToolBarWidget->installEventFilter(this);
+					}
+					else
+					{
+						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+						m_ui->statusBar->show();
+
+						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+						{
+							m_tabBarToolBarWidget->setMaximumWidth(QWIDGETSIZE_MAX);
+						}
+						else
+						{
+							m_tabBarToolBarWidget->setMaximumHeight(QWIDGETSIZE_MAX);
+						}
+
+						if (m_menuBar)
+						{
+							m_menuBar->show();
+						}
+
+						m_mdiWidget->removeEventFilter(this);
+						m_tabBarToolBarWidget->removeEventFilter(this);
+					}
+
+					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
 				}
-
-				centralWidget()->installEventFilter(this);
-			}
-			else
-			{
-				m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-				m_ui->statusBar->show();
-
-				if (m_menuBar)
-				{
-					m_menuBar->show();
-				}
-
-				centralWidget()->removeEventFilter(this);
 			}
 
 			break;
@@ -644,13 +676,41 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::KeyPress && isFullScreen())
+	if (object == m_mdiWidget && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
 			triggerAction(Action::FullScreenAction);
+		}
+	}
+
+	if (object == m_tabBarToolBarWidget && event->type() == QEvent::Enter)
+	{
+		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+
+		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+		{
+			m_tabBarToolBarWidget->setMaximumWidth(QWIDGETSIZE_MAX);
+		}
+		else
+		{
+			m_tabBarToolBarWidget->setMaximumHeight(QWIDGETSIZE_MAX);
+		}
+	}
+
+	if (object == m_tabBarToolBarWidget && event->type() == QEvent::Leave)
+	{
+		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+
+		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
+		{
+			m_tabBarToolBarWidget->setMaximumWidth(1);
+		}
+		else
+		{
+			m_tabBarToolBarWidget->setMaximumHeight(1);
 		}
 	}
 

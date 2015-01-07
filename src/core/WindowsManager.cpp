@@ -383,6 +383,8 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 		return;
 	}
 
+	window->setControlsHidden(m_mainWindow->isFullScreen());
+
 	int index = ((!(hints & EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
 
 	if (!window->isPinned())
@@ -396,7 +398,6 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 	}
 
 	m_mainWindow->getTabBar()->addTab(index, window);
-
 	m_mainWindow->getMdi()->addWindow(window);
 
 	if (!(hints & BackgroundOpen))
@@ -409,6 +410,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 		}
 	}
 
+	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), window, SLOT(setControlsHidden(bool)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(open(QUrl,OpenHints)));
 	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SLOT(open(BookmarksItem*,OpenHints)));
