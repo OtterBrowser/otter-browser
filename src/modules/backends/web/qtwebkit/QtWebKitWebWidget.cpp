@@ -123,7 +123,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(this, SIGNAL(quickSearchEngineChanged()), this, SLOT(updateQuickSearchAction()));
 	connect(m_page, SIGNAL(aboutToNavigate(QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)));
 	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
@@ -460,7 +459,6 @@ void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::
 
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
 	widget->setOptions(getOptions());
-	widget->setQuickSearchEngine(getQuickSearchEngine());
 	widget->setZoom(getZoom());
 	widget->openRequest(url, operation, outgoingData);
 
@@ -498,29 +496,6 @@ void QtWebKitWebWidget::updateUndoText(const QString &text)
 void QtWebKitWebWidget::updateRedoText(const QString &text)
 {
 	getAction(Action::RedoAction)->setText(text.isEmpty() ? tr("Redo") : tr("Redo: %1").arg(text));
-}
-
-void QtWebKitWebWidget::updateQuickSearchAction()
-{
-	Action *defaultSearchAction = getAction(Action::SearchAction);
-	SearchInformation *engine = SearchesManager::getSearchEngine(getQuickSearchEngine());
-
-	if (engine)
-	{
-		defaultSearchAction->setEnabled(true);
-		defaultSearchAction->setIcon(engine->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
-		defaultSearchAction->setText(engine->title);
-		defaultSearchAction->setToolTip(engine->description);
-	}
-	else
-	{
-		defaultSearchAction->setEnabled(false);
-		defaultSearchAction->setIcon(QIcon());
-		defaultSearchAction->setText(tr("Search"));
-		defaultSearchAction->setToolTip(tr("No search engines defined"));
-	}
-
-	getAction(Action::SearchMenuAction)->setEnabled(SearchesManager::getSearchEngines().count() > 1);
 }
 
 void QtWebKitWebWidget::updatePageActions(const QUrl &url)
@@ -614,6 +589,21 @@ void QtWebKitWebWidget::updateEditActions()
 	if (m_actions.contains(Action::ClearAllAction))
 	{
 		m_actions[Action::ClearAllAction]->setEnabled(m_page->hasSelection());
+	}
+
+	if (m_actions.contains(Action::SearchAction))
+	{
+		SearchInformation *engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+
+		m_actions[Action::SearchAction]->setEnabled(engine != NULL);
+		m_actions[Action::SearchAction]->setIcon((!engine || engine->icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
+		m_actions[Action::SearchAction]->setOverrideText(engine ? engine->title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[Action::SearchAction]->setToolTip(engine ? engine->description : tr("No search engines defined"));
+	}
+
+	if (m_actions.contains(Action::SearchMenuAction))
+	{
+		m_actions[Action::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
 	}
 
 	updateLinkActions();
@@ -1605,8 +1595,6 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
 	{
-		updateQuickSearchAction();
-
 		flags |= SelectionMenu;
 	}
 
@@ -1821,7 +1809,6 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
 	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
 	widget->setOptions(getOptions());
-	widget->setQuickSearchEngine(getQuickSearchEngine());
 
 	if (cloneHistory)
 	{

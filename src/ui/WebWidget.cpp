@@ -115,32 +115,27 @@ void WebWidget::reloadTimeMenuAboutToShow()
 
 void WebWidget::quickSearch(QAction *action)
 {
-	const QString engine = ((!action || action->data().type() != QVariant::String) ? getQuickSearchEngine() : action->data().toString());
+	SearchInformation *engine = SearchesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
 
-	if (SearchesManager::getSearchEngines().contains(engine))
+	if (!engine)
 	{
-		if (engine != m_quickSearchEngine)
-		{
-			m_quickSearchEngine = engine;
+		return;
+	}
 
-			if (m_quickSearchMenu)
-			{
-				m_quickSearchMenu->clear();
-			}
+	if (engine->identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+	{
+		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), engine->identifier);
+	}
 
-			emit quickSearchEngineChanged();
-		}
+	const OpenHints hints = WindowsManager::calculateOpenHints();
 
-		const OpenHints hints = WindowsManager::calculateOpenHints();
-
-		if (hints == CurrentTabOpen)
-		{
-			search(getSelectedText(), m_quickSearchEngine);
-		}
-		else
-		{
-			emit requestedSearch(getSelectedText(), m_quickSearchEngine, hints);
-		}
+	if (hints == CurrentTabOpen)
+	{
+		search(getSelectedText(), engine->identifier);
+	}
+	else
+	{
+		emit requestedSearch(getSelectedText(), engine->identifier, hints);
 	}
 }
 
@@ -338,32 +333,40 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 
 void WebWidget::updateQuickSearch()
 {
-	if (m_quickSearchMenu && sender() == SearchesManager::getInstance())
+	if (m_quickSearchMenu)
 	{
 		m_quickSearchMenu->clear();
-	}
-
-	if (!SearchesManager::getSearchEngines().contains(m_quickSearchEngine))
-	{
-		const QString engine = SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString();
-
-		if (engine != m_quickSearchEngine)
-		{
-			m_quickSearchEngine = engine;
-
-			emit quickSearchEngineChanged();
-		}
 	}
 }
 
 void WebWidget::setOption(const QString &key, const QVariant &value)
 {
+	if (key == QLatin1String("Search/DefaultQuickSearchEngine"))
+	{
+		const QString quickSearchEngine = value.toString();
+
+		if (quickSearchEngine != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+		{
+			if (value.isNull())
+			{
+				m_options.remove(key);
+			}
+			else
+			{
+				m_options[key] = value;
+			}
+
+			updateQuickSearch();
+		}
+
+		return;
+	}
+
 	if (key == QLatin1String("Content/PageReloadTime"))
 	{
-		const int newReloadTime = value.toInt();
-		const int oldReloadTime = m_options.value(QLatin1String("Content/PageReloadTime"), -1).toInt();
+		const int reloadTime = value.toInt();
 
-		if (newReloadTime == oldReloadTime)
+		if (reloadTime == m_options.value(QLatin1String("Content/PageReloadTime"), -1).toInt())
 		{
 			return;
 		}
@@ -375,13 +378,13 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 			m_reloadTimer = 0;
 		}
 
-		if (newReloadTime >= 0)
+		if (reloadTime >= 0)
 		{
 			triggerAction(Action::StopScheduledReloadAction);
 
-			if (newReloadTime > 0)
+			if (reloadTime > 0)
 			{
-				m_reloadTimer = startTimer(newReloadTime * 1000);
+				m_reloadTimer = startTimer(reloadTime * 1000);
 			}
 		}
 	}
@@ -451,18 +454,6 @@ void WebWidget::setStatusMessage(const QString &message, bool override)
 	}
 }
 
-void WebWidget::setQuickSearchEngine(const QString &engine)
-{
-	if (engine != m_quickSearchEngine)
-	{
-		m_quickSearchEngine = engine;
-
-		updateQuickSearch();
-
-		emit quickSearchEngineChanged();
-	}
-}
-
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
@@ -510,11 +501,6 @@ QMenu* WebWidget::getQuickSearchMenu()
 	}
 
 	return m_quickSearchMenu;
-}
-
-QString WebWidget::getQuickSearchEngine() const
-{
-	return (m_quickSearchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : m_quickSearchEngine);
 }
 
 QString WebWidget::getSelectedText() const

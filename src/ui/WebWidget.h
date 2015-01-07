@@ -65,13 +65,11 @@ class WebWidget : public QWidget
 public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
-	void setQuickSearchEngine(const QString &engine);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual Action* getAction(int identifier) = 0;
 	WebBackend* getBackend();
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
-	QString getQuickSearchEngine() const;
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
@@ -135,7 +133,6 @@ signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
 	void progressBarGeometryChanged();
-	void quickSearchEngineChanged();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

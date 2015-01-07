@@ -121,7 +121,6 @@ protected slots:
 	void notifyIconChanged();
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
-	void updateQuickSearchAction();
 	void updatePageActions(const QUrl &url);
 	void updateNavigationActions();
 	void updateEditActions();
