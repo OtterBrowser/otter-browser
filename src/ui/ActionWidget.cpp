@@ -75,7 +75,7 @@ void ActionWidget::mousePressEvent(QMouseEvent *event)
 
 		if (window)
 		{
-			OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button());
+			OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), NewTabOpen);
 
 			if (m_identifier == Action::NewTabPrivateAction)
 			{
