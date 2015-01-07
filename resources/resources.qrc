@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>files/error.html</file>
-        <file>files/listing.html</file>
-        <file>files/start.html</file>
         <file>adblock/abpindo.txt</file>
         <file>adblock/adblock_bg.txt</file>
         <file>adblock/adblock_polska.txt</file>
@@ -18,6 +15,18 @@
         <file>adblock/latvian-list.txt</file>
         <file>adblock/liste_ar.txt</file>
         <file>adblock/liste_fr.txt</file>
+        <file>cursors/scroll-bottom-left.png</file>
+        <file>cursors/scroll-bottom-right.png</file>
+        <file>cursors/scroll-bottom.png</file>
+        <file>cursors/scroll-left.png</file>
+        <file>cursors/scroll-right.png</file>
+        <file>cursors/scroll-top-left.png</file>
+        <file>cursors/scroll-top-right.png</file>
+        <file>cursors/scroll-top.png</file>
+        <file>cursors/scroll-vertical.png</file>
+        <file>files/error.html</file>
+        <file>files/listing.html</file>
+        <file>files/start.html</file>
         <file>gestures/default.ini</file>
         <file>icons/application-exit.png</file>
         <file>icons/arrow-down.png</file>
