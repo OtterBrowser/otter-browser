@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>200</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,9 +54,16 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="javaSriptCanAccessClipboardCheckBox">
+    <widget class="QCheckBox" name="javaScriptCanAccessClipboardCheckBox">
      <property name="text">
       <string>Allow access to clipboard</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="javaScriptCanDisableContextMenuCheckBox">
+     <property name="text">
+      <string>Allow to disable context menu</string>
      </property>
     </widget>
    </item>
@@ -64,6 +71,12 @@
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
     </spacer>
    </item>

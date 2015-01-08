@@ -1551,11 +1551,20 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 
 	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
-	QContextMenuEvent menuEvent(QContextMenuEvent::Other, hitPosition, m_webView->mapToGlobal(hitPosition), Qt::NoModifier);
 
-	if (m_page->swallowContextMenuEvent(&menuEvent))
+	if (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(hitPosition) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(hitPosition))
 	{
 		return;
+	}
+
+	if (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool())
+	{
+		QContextMenuEvent menuEvent(QContextMenuEvent::Other, hitPosition, m_webView->mapToGlobal(hitPosition), Qt::NoModifier);
+
+		if (m_page->swallowContextMenuEvent(&menuEvent))
+		{
+			return;
+		}
 	}
 
 	QWebFrame *frame = m_webView->page()->frameAt(hitPosition);

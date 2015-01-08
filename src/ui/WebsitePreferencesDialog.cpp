@@ -99,18 +99,19 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	}
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->enableJavaOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->pluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->thirdPartyCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->javaSriptCanAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableImages")));
+	m_ui->enableJavaOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJava")));
+	m_ui->pluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnablePlugins")));
+	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/UserStyleSheet")));
+	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/DoNotTrackPolicy")));
+	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("History/RememberBrowsing")));
+	m_ui->thirdPartyCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/ThirdPartyCookiesPolicy")));
+	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJavaScript")));
+	m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
+	m_ui->javaScriptCanAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanAccessClipboard")));
+	m_ui->javaScriptCanDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
+	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/EnableReferrer")));
+	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/UserAgent")));
 
 	updateValues();
 
@@ -179,8 +180,9 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? m_ui->rememberBrowsingHistoryCheckBox->isChecked(): QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesComboBox->currentData().toString(): QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked(): QVariant()), url);
-			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaSriptCanAccessClipboardOverrideCheckBox->isChecked() ? m_ui->javaSriptCanAccessClipboardCheckBox->isChecked(): QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaScriptCanAccessClipboardOverrideCheckBox->isChecked() ? m_ui->javaScriptCanAccessClipboardCheckBox->isChecked(): QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->javaScriptCanDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->javaScriptCanDisableContextMenuCheckBox->isChecked(): QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked(): QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()): QVariant()), url);
 
@@ -222,8 +224,9 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaSriptCanAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->javaScriptCanShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->javaScriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->javaScriptCanAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->javaScriptCanDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->javaScriptCanDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 
 	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 

@@ -18,22 +18,22 @@
 **************************************************************************/
 
 #include "JavaScriptPreferencesDialog.h"
-#include "../../core/SettingsManager.h"
 
 #include "ui_JavaScriptPreferencesDialog.h"
 
 namespace Otter
 {
 
-JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(QWidget *parent) : QDialog(parent),
+JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->javaSriptCanAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
-	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
+	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
+	m_ui->javaScriptCanAccessClipboardCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
+	m_ui->javaScriptCanDisableContextMenuCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool());
 
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
-	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
 JavaScriptPreferencesDialog::~JavaScriptPreferencesDialog()
@@ -56,10 +56,14 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void JavaScriptPreferencesDialog::save()
+QVariantMap JavaScriptPreferencesDialog::getOptions() const
 {
-	SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_ui->javaSriptCanAccessClipboardCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked());
+	QVariantMap options;
+	options[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = m_ui->javaScriptCanAccessClipboardCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->javaScriptCanDisableContextMenuCheckBox->isChecked();
+
+	return options;
 }
 
 }

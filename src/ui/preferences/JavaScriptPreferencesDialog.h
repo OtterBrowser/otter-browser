@@ -35,14 +35,13 @@ class JavaScriptPreferencesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit JavaScriptPreferencesDialog(QWidget *parent = 0);
+	explicit JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent = 0);
 	~JavaScriptPreferencesDialog();
+
+	QVariantMap getOptions() const;
 
 protected:
 	void changeEvent(QEvent *event);
-
-protected slots:
-	void save();
 
 private:
 	Ui::JavaScriptPreferencesDialog *m_ui;

@@ -21,6 +21,7 @@
 #ifndef OTTER_PREFERENCESDIALOG_H
 #define OTTER_PREFERENCESDIALOG_H
 
+#include <QtCore/QVariantMap>
 #include <QtWidgets/QDialog>
 
 namespace Otter
@@ -86,6 +87,7 @@ private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
 	QStringList m_removedProfiles;
+	QVariantMap m_javaScriptOptions;
 	QHash<QString, QHash<QString, QString> > m_keyboardProfilesInformation;
 	QHash<QString, QHash<QString, QString> > m_macrosProfilesInformation;
 	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;

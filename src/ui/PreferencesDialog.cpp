@@ -1125,9 +1125,27 @@ void PreferencesDialog::updateMacrosProfleActions()
 
 void PreferencesDialog::updateJavaScriptOptions()
 {
-	JavaScriptPreferencesDialog dialog(this);
+	const bool isSet = !m_javaScriptOptions.isEmpty();
 
-	dialog.exec();
+	if (!isSet)
+	{
+		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"));
+		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"));
+		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"));
+	}
+
+	JavaScriptPreferencesDialog dialog(m_javaScriptOptions, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_javaScriptOptions = dialog.getOptions();
+
+		markModified();
+	}
+	else if (!isSet)
+	{
+		m_javaScriptOptions.clear();
+	}
 }
 
 void PreferencesDialog::loadProfiles(const QString &type, const QString &key, ItemViewWidget *view)
@@ -1455,6 +1473,13 @@ void PreferencesDialog::save()
 	ActionsManager::loadShortcuts();
 
 	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
+
+	if (!m_javaScriptOptions.isEmpty())
+	{
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")));
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
+	}
 
 	if (sender() == m_ui->buttonBox)
 	{
