@@ -37,7 +37,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="Otter::TableViewWidget" name="actionsViewWidget">
+          <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
            <property name="editTriggers">
             <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
            </property>
@@ -49,9 +49,6 @@
            </property>
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
             <number>200</number>
@@ -117,7 +114,7 @@
        <item>
         <layout class="QHBoxLayout" name="shortcutsLayout">
          <item>
-          <widget class="Otter::TableViewWidget" name="shortcutsViewWidget">
+          <widget class="Otter::ItemViewWidget" name="shortcutsViewWidget">
            <property name="editTriggers">
             <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
            </property>
@@ -141,9 +138,6 @@
            </property>
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderHighlightSections">
             <bool>false</bool>
@@ -275,9 +269,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

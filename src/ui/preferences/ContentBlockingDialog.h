@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class TableViewWidget;
+class ItemViewWidget;
 
 namespace Ui
 {

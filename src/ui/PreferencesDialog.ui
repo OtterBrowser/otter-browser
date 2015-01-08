@@ -1135,7 +1135,7 @@
             </widget>
            </item>
            <item>
-            <widget class="Otter::TableViewWidget" name="searchViewWidget">
+            <widget class="Otter::ItemViewWidget" name="searchViewWidget">
              <property name="editTriggers">
               <set>QAbstractItemView::SelectedClicked</set>
              </property>
@@ -1160,15 +1160,6 @@
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
-             <property name="showGrid">
-              <bool>false</bool>
-             </property>
-             <attribute name="horizontalHeaderHighlightSections">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
             </widget>
            </item>
           </layout>
@@ -1822,7 +1813,7 @@
            <item>
             <layout class="QHBoxLayout" name="ciphersLayout">
              <item>
-              <widget class="Otter::TableViewWidget" name="ciphersViewWidget">
+              <widget class="Otter::ItemViewWidget" name="ciphersViewWidget">
                <property name="dragEnabled">
                 <bool>true</bool>
                </property>
@@ -1844,16 +1835,7 @@
                <property name="selectionBehavior">
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <attribute name="horizontalHeaderVisible">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderHighlightSections">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
+               <attribute name="headerVisible">
                 <bool>false</bool>
                </attribute>
               </widget>
@@ -1957,7 +1939,7 @@
            <item>
             <layout class="QHBoxLayout" name="actionShortcutsLayout">
              <item>
-              <widget class="Otter::TableViewWidget" name="actionShortcutsViewWidget">
+              <widget class="Otter::ItemViewWidget" name="actionShortcutsViewWidget">
                <property name="dragEnabled">
                 <bool>true</bool>
                </property>
@@ -1979,15 +1961,6 @@
                <property name="selectionBehavior">
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <attribute name="horizontalHeaderHighlightSections">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
-                <bool>false</bool>
-               </attribute>
               </widget>
              </item>
              <item>
@@ -2102,7 +2075,7 @@
            <item>
             <layout class="QHBoxLayout" name="actionMacrosLayout">
              <item>
-              <widget class="Otter::TableViewWidget" name="actionMacrosViewWidget">
+              <widget class="Otter::ItemViewWidget" name="actionMacrosViewWidget">
                <property name="dragEnabled">
                 <bool>true</bool>
                </property>
@@ -2124,15 +2097,6 @@
                <property name="selectionBehavior">
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <attribute name="horizontalHeaderHighlightSections">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
-                <bool>false</bool>
-               </attribute>
               </widget>
              </item>
              <item>
@@ -2301,9 +2265,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::FilePathWidget</class>

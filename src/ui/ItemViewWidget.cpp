@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "TableViewWidget.h"
+#include "ItemViewWidget.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
@@ -25,20 +25,26 @@
 namespace Otter
 {
 
-TableViewWidget::TableViewWidget(QWidget *parent) : QTableView(parent),
+ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_model(NULL),
 	m_dropRow(-1),
 	m_isModified(false)
 {
+	setIndentation(0);
+
 	viewport()->setAcceptDrops(true);
 }
 
-void TableViewWidget::dropEvent(QDropEvent *event)
+void ItemViewWidget::dropEvent(QDropEvent *event)
 {
-	QTableView::dropEvent(event);
+	QDropEvent modifiedEvent(QPointF((visualRect(m_model->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
 
-	if (event->isAccepted())
+	QTreeView::dropEvent(&modifiedEvent);
+
+	if (modifiedEvent.isAccepted())
 	{
+		event->accept();
+
 		m_dropRow = indexAt(event->pos()).row();
 
 		if (dropIndicatorPosition() == QAbstractItemView::BelowItem)
@@ -54,7 +60,7 @@ void TableViewWidget::dropEvent(QDropEvent *event)
 	}
 }
 
-void TableViewWidget::moveRow(bool up)
+void ItemViewWidget::moveRow(bool up)
 {
 	if (!m_model)
 	{
@@ -77,7 +83,7 @@ void TableViewWidget::moveRow(bool up)
 	}
 }
 
-void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
+void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 {
 	if (!m_model)
 	{
@@ -102,7 +108,7 @@ void TableViewWidget::insertRow(const QList<QStandardItem*> &items)
 	emit modified();
 }
 
-void TableViewWidget::removeRow()
+void ItemViewWidget::removeRow()
 {
 	if (!m_model)
 	{
@@ -121,17 +127,17 @@ void TableViewWidget::removeRow()
 	}
 }
 
-void TableViewWidget::moveUpRow()
+void ItemViewWidget::moveUpRow()
 {
 	moveRow(true);
 }
 
-void TableViewWidget::moveDownRow()
+void ItemViewWidget::moveDownRow()
 {
 	moveRow(false);
 }
 
-void TableViewWidget::notifySelectionChanged()
+void ItemViewWidget::notifySelectionChanged()
 {
 	if (m_model)
 	{
@@ -141,14 +147,14 @@ void TableViewWidget::notifySelectionChanged()
 	}
 }
 
-void TableViewWidget::updateDropSelection()
+void ItemViewWidget::updateDropSelection()
 {
 	setCurrentIndex(getIndex(qBound(0, m_dropRow, getRowCount()), 0));
 
 	m_dropRow = -1;
 }
 
-void TableViewWidget::setFilter(const QString filter)
+void ItemViewWidget::setFilter(const QString filter)
 {
 	if (!m_model)
 	{
@@ -174,11 +180,11 @@ void TableViewWidget::setFilter(const QString filter)
 			}
 		}
 
-		setRowHidden(i, !found);
+		setRowHidden(i, m_model->invisibleRootItem()->index(), !found);
 	}
 }
 
-void TableViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
+void ItemViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
 {
 	if (m_model)
 	{
@@ -186,9 +192,9 @@ void TableViewWidget::setData(const QModelIndex &index, const QVariant &value, i
 	}
 }
 
-void TableViewWidget::setModel(QAbstractItemModel *model)
+void ItemViewWidget::setModel(QAbstractItemModel *model)
 {
-	QTableView::setModel(model);
+	QTreeView::setModel(model);
 
 	if (!model)
 	{
@@ -206,44 +212,44 @@ void TableViewWidget::setModel(QAbstractItemModel *model)
 	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(modified()));
 }
 
-QStandardItemModel* TableViewWidget::getModel()
+QStandardItemModel* ItemViewWidget::getModel()
 {
 	return m_model;
 }
 
-QModelIndex TableViewWidget::getIndex(int row, int column) const
+QModelIndex ItemViewWidget::getIndex(int row, int column) const
 {
 	return (m_model ? m_model->index(row, column) : QModelIndex());
 }
 
-int TableViewWidget::getCurrentRow() const
+int ItemViewWidget::getCurrentRow() const
 {
 	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);
 }
 
-int TableViewWidget::getRowCount() const
+int ItemViewWidget::getRowCount() const
 {
 	return (m_model ? m_model->rowCount() : 0);
 }
 
-int TableViewWidget::getColumnCount() const
+int ItemViewWidget::getColumnCount() const
 {
 	return (m_model ? m_model->columnCount() : 0);
 }
 
-bool TableViewWidget::canMoveUp() const
+bool ItemViewWidget::canMoveUp() const
 {
 	return (currentIndex().row() > 0 && m_model->rowCount() > 1);
 }
 
-bool TableViewWidget::canMoveDown() const
+bool ItemViewWidget::canMoveDown() const
 {
 	const int currentRow = currentIndex().row();
 
 	return (currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
 }
 
-bool TableViewWidget::isModified() const
+bool ItemViewWidget::isModified() const
 {
 	return m_isModified;
 }

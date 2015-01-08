@@ -397,7 +397,7 @@
        <item row="7" column="0" colspan="3">
         <layout class="QHBoxLayout" name="cookiesTableLayout">
          <item>
-          <widget class="Otter::TableViewWidget" name="cookiesTableWidget">
+          <widget class="Otter::ItemViewWidget" name="cookiesTableWidget">
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -406,9 +406,6 @@
            </property>
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
            </property>
            <property name="sortingEnabled">
             <bool>true</bool>
@@ -950,9 +947,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::FilePathWidget</class>

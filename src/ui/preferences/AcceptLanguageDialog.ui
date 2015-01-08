@@ -41,7 +41,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="Otter::TableViewWidget" name="languagesViewWidget">
+      <widget class="Otter::ItemViewWidget" name="languagesViewWidget">
        <property name="dragEnabled">
         <bool>true</bool>
        </property>
@@ -62,9 +62,6 @@
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="showGrid">
-        <bool>false</bool>
        </property>
        <attribute name="horizontalHeaderVisible">
         <bool>true</bool>
@@ -160,9 +157,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

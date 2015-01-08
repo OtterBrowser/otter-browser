@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class TableViewWidget;
+class ItemViewWidget;
 
 namespace Ui
 {
@@ -43,8 +43,8 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
-	void loadProfiles(const QString &type, const QString &key, TableViewWidget *view);
-	QString createProfileIdentifier(TableViewWidget *view, QString identifier = QString());
+	void loadProfiles(const QString &type, const QString &key, ItemViewWidget *view);
+	QString createProfileIdentifier(ItemViewWidget *view, QString identifier = QString());
 	QString getProfilePath(const QString &type, const QString &identifier);
 	QHash<QString, QString> getProfileInformation(const QString &path) const;
 	QHash<QString, QVariantHash> getProfileData(const QString &path) const;

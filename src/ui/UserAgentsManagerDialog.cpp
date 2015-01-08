@@ -53,7 +53,7 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	}
 
 	m_ui->userAgentsView->setModel(model);
-	m_ui->userAgentsView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+	m_ui->userAgentsView->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 
 	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));

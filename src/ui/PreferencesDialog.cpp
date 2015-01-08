@@ -239,7 +239,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	}
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
-	m_ui->searchViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->searchViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
@@ -347,7 +347,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 		}
 
 		m_ui->ciphersViewWidget->setModel(ciphersModel);
-		m_ui->ciphersViewWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
+		m_ui->ciphersViewWidget->header()->setSectionResizeMode(0,QHeaderView::Stretch);
 		m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
 		m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 	}
@@ -1130,7 +1130,7 @@ void PreferencesDialog::updateJavaScriptOptions()
 	dialog.exec();
 }
 
-void PreferencesDialog::loadProfiles(const QString &type, const QString &key, TableViewWidget *view)
+void PreferencesDialog::loadProfiles(const QString &type, const QString &key, ItemViewWidget *view)
 {
 	QStringList labels;
 	labels << tr("Name") << tr("Identifier");
@@ -1162,7 +1162,7 @@ void PreferencesDialog::loadProfiles(const QString &type, const QString &key, Ta
 	}
 
 	view->setModel(model);
-	view->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	view->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	view->setItemDelegate(new OptionDelegate(true, this));
 }
 
@@ -1466,7 +1466,7 @@ void PreferencesDialog::save()
 	}
 }
 
-QString PreferencesDialog::createProfileIdentifier(TableViewWidget *view, QString identifier)
+QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, QString identifier)
 {
 	QStringList identifiers;
 

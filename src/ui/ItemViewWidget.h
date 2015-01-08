@@ -17,21 +17,21 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TABLEVIEWWIDGET_H
-#define OTTER_TABLEVIEWWIDGET_H
+#ifndef OTTER_ITEMVIEWWIDGET_H
+#define OTTER_ITEMVIEWWIDGET_H
 
 #include <QtGui/QStandardItemModel>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTreeView>
 
 namespace Otter
 {
 
-class TableViewWidget : public QTableView
+class ItemViewWidget : public QTreeView
 {
 	Q_OBJECT
 
 public:
-	explicit TableViewWidget(QWidget *parent = NULL);
+	explicit ItemViewWidget(QWidget *parent = NULL);
 
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);

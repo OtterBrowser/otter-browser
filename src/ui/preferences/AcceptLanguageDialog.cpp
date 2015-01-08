@@ -42,7 +42,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->languagesViewWidget->setModel(m_model);
-	m_ui->languagesViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->languagesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 
 	QStringList chosenLanguages = SettingsManager::getValue("Network/AcceptLanguage").toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 

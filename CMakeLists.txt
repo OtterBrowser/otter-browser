@@ -110,6 +110,7 @@ set(otter_src
 	src/ui/FilePathWidget.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
+	src/ui/ItemViewWidget.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
 	src/ui/MdiWidget.cpp
@@ -130,7 +131,6 @@ set(otter_src
 	src/ui/StartupDialog.cpp
 	src/ui/TabBarToolBarWidget.cpp
 	src/ui/TabBarWidget.cpp
-	src/ui/TableViewWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp

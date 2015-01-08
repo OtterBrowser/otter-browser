@@ -32,7 +32,7 @@
      <item>
       <layout class="QVBoxLayout" name="filtersLayout">
        <item>
-        <widget class="Otter::TableViewWidget" name="filtersViewWidget">
+        <widget class="Otter::ItemViewWidget" name="filtersViewWidget">
          <property name="dragEnabled">
           <bool>true</bool>
          </property>
@@ -53,9 +53,6 @@
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <property name="showGrid">
-          <bool>false</bool>
          </property>
          <attribute name="horizontalHeaderVisible">
           <bool>false</bool>
@@ -143,9 +140,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::TableViewWidget</class>
-   <extends>QTableView</extends>
-   <header>src/ui/TableViewWidget.h</header>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

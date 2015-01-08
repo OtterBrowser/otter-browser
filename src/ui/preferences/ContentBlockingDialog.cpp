@@ -61,8 +61,8 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 	}
 
 	m_ui->filtersViewWidget->setModel(model);
-	m_ui->filtersViewWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->filtersViewWidget->horizontalHeader()->setVisible(true);
+	m_ui->filtersViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->filtersViewWidget->header()->setVisible(true);
 	m_ui->filtersViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
