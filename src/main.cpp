@@ -28,11 +28,9 @@
 
 using namespace Otter;
 
-void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const QString &mesage)
+void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const QString &message)
 {
-	const QByteArray localMessage = mesage.toLocal8Bit();
-
-	if (localMessage.startsWith(QLatin1String("libpng warning: iCCP: Not recognizing known sRGB profile that has been edited").data()) || localMessage.startsWith(QLatin1String("OpenType support missing for script").data()) || localMessage.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once").data()) || localMessage.startsWith(QLatin1String("QBasicTimer::start: QBasicTimer can only be used with threads started with QThread").data()))
+	if (message.trimmed().startsWith(QLatin1String("OpenType support missing")) || message.startsWith(QLatin1String("libpng warning: iCCP: Not recognizing known sRGB profile that has been edited")) || message.startsWith(QLatin1String("OpenType support missing for script")) || message.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once")) || message.startsWith(QLatin1String("QBasicTimer::start: QBasicTimer can only be used with threads started with QThread")))
 	{
 		return;
 	}
@@ -40,19 +38,19 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 	switch (type)
 	{
 		case QtDebugMsg:
-			fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMessage.constData(), context.file, context.line, context.function);
+			fprintf(stderr, "Debug: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
 
 			break;
 		case QtWarningMsg:
-			fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMessage.constData(), context.file, context.line, context.function);
+			fprintf(stderr, "Warning: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
 
 			break;
 		case QtCriticalMsg:
-			fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMessage.constData(), context.file, context.line, context.function);
+			fprintf(stderr, "Critical: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
 
 			break;
 		case QtFatalMsg:
-			fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMessage.constData(), context.file, context.line, context.function);
+			fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
 			abort();
 	}
 }
