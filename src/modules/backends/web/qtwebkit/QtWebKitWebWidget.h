@@ -140,6 +140,17 @@ private:
 		DragScroll = 2
 	};
 
+	enum ScrollDirection
+	{
+		NoDirection = 0,
+		TopDirection = 1,
+		BottomDirection = 2,
+		RightDirection = 4,
+		LeftDirection = 8
+	};
+
+	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
+
 	QWebView *m_webView;
 	QtWebKitWebPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
@@ -165,6 +176,7 @@ private:
 	bool m_isLoading;
 	bool m_isTyped;
 	bool m_ignoreContextMenuNextTime;
+	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
 	void aboutToReload();

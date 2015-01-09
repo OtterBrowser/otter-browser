@@ -68,6 +68,8 @@
 namespace Otter
 {
 
+QMap<int, QPixmap> QtWebKitWebWidget::m_scrollCursors;
+
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(NULL),
@@ -153,7 +155,71 @@ void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_scrollTimer)
 	{
-		m_webView->page()->mainFrame()->setScrollPosition(m_webView->page()->mainFrame()->scrollPosition() + ((QCursor::pos() - m_beginCursorPosition) / 20));
+		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
+
+		ScrollDirections directions = NoDirection;
+
+		if (scrollDelta.x() < 0)
+ 		{
+ 			directions |= LeftDirection;
+ 		}
+		else if (scrollDelta.x() > 0)
+ 		{
+ 			directions |= RightDirection;
+ 		}
+
+		if (scrollDelta.y() < 0)
+ 		{
+ 			directions |= TopDirection;
+ 		}
+		else if (scrollDelta.y() > 0)
+ 		{
+ 			directions |= BottomDirection;
+ 		}
+
+		if (!m_scrollCursors.contains(directions))
+		{
+			if (directions == (BottomDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom-left.png");
+			}
+			else if (directions == (BottomDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom-right.png");
+			}
+			else if (directions == BottomDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom.png");
+			}
+			else if (directions == LeftDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-left.png");
+			}
+			else if (directions == RightDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-right.png");
+			}
+			else if (directions == (TopDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top-left.png");
+			}
+			else if (directions == (TopDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top-right.png");
+			}
+			else if (directions == TopDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top.png");
+			}
+			else if (directions == NoDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-vertical.png");
+			}
+		}
+
+ 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
+
+		m_webView->page()->mainFrame()->setScrollPosition(m_webView->page()->mainFrame()->scrollPosition() + scrollDelta);
 	}
 	else
 	{
@@ -1408,7 +1474,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::StartMoveScrollAction:
-			QApplication::setOverrideCursor(Qt::SizeAllCursor);
+			if (!m_scrollCursors.contains(NoDirection))
+			{
+				m_scrollCursors[NoDirection] = QPixmap(":/cursors/scroll-vertical.png");
+			}
+
+			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
 
 			grabKeyboard();
 			grabMouse();
