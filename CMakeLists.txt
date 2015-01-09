@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 2.8.10.2)
+cmake_policy(SET CMP0020 NEW)
+cmake_policy(SET CMP0043 NEW)
 
 project(otter-browser)
 
@@ -209,7 +211,6 @@ qt5_wrap_ui(otter_ui
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-	cmake_policy(SET CMP0020 NEW)
 	add_definitions(-DUNICODE -D_UNICODE)
 	set(otter_src ${otter_src} otter-browser.rc src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
