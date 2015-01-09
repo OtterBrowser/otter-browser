@@ -2,15 +2,14 @@ Source: otter-browser
 Section: web
 Priority: extra
 Maintainer: Rog131 <samrog131@hotmail.com>
-Build-Depends: debhelper (>= 8.0),
+Build-Depends: debhelper (>= 9.0),
  cmake,
  qtbase5-dev,
  libqt5webkit5-dev,
  qtdeclarative5-dev,
  qtscript5-dev,
- qt5-default,
  qtmultimedia5-dev
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://otter-browser.org/
 
 Package: otter-browser
