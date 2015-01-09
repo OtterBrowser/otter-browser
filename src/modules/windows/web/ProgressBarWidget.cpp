@@ -58,6 +58,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 	m_progressBar->setFixedWidth(150);
 	m_progressBar->setFormat(tr("Document: %p%"));
+	m_progressBar->setAlignment(Qt::AlignHCenter);
 	m_elementsLabel->setFixedWidth(150);
 	m_totalLabel->setFixedWidth(150);
 	m_totalLabel->setAutoFillBackground(true);
