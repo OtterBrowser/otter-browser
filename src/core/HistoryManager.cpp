@@ -23,6 +23,7 @@
 
 #include <QtCore/QBuffer>
 #include <QtCore/QFile>
+#include <QtCore/QTextStream>
 #include <QtCore/QTimerEvent>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlField>
@@ -201,11 +202,11 @@ void HistoryManager::optionChanged(const QString &option)
 				QFile file(QLatin1String(":/schemas/browsingHistory.sql"));
 				file.open(QIODevice::ReadOnly);
 
-				const QStringList queries = QString(file.readAll()).split(QLatin1String(";\n"));
+				QTextStream stream(&file);
 
-				for (int i = 0; i < queries.count(); ++i)
+				while (!stream.atEnd())
 				{
-					database.exec(queries.at(i));
+					database.exec(stream.readLine());
 				}
 			}
 		}
