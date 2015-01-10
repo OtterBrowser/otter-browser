@@ -1,4 +1,4 @@
-Name:          otter
+Name:          otter-browser
 Summary:       Otter Browser
 Version:       0.9.04
 Release:       0%{dist}
@@ -18,7 +18,7 @@ BuildRequires: qt5-qtwebkit-devel
 Project aiming to recreate classic Opera (12.x) UI using Qt5
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n otter-%{version}
 
 %install
 rm -rf $RPM_BUILD_ROOT
