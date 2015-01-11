@@ -35,8 +35,8 @@
 #include <QtCore/QTextStream>
 #include <QtGui/QDesktopServices>
 #include <QtNetwork/QNetworkReply>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLineEdit>
@@ -403,59 +403,69 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 
 bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
-	if (extension != QWebPage::ErrorPageExtension)
+	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
 	{
-		return false;
+		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption = static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option);
+		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput = static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output);
+
+		filesOutput->fileNames = QFileDialog::getOpenFileNames(m_widget, tr("Open File"), QString(), filesOption->suggestedFileNames.join(QLatin1Char(';')));
+
+		return true;
 	}
 
-	const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
-	QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
-
-	if (!errorOption || !errorOutput || (errorOption->error == 203 && errorOption->domain == QWebPage::WebKit))
+	if (extension == QWebPage::ErrorPageExtension)
 	{
-		return false;
+		const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
+		QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
+
+		if (!errorOption || !errorOutput || (errorOption->error == 203 && errorOption->domain == QWebPage::WebKit))
+		{
+			return false;
+		}
+
+		QFile file(QLatin1String(":/files/error.html"));
+		file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+		QTextStream stream(&file);
+		stream.setCodec("UTF-8");
+
+		QHash<QString, QString> variables;
+		variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
+		variables[QLatin1String("description")] = errorOption->errorString;
+		variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
+
+		QString html = stream.readAll();
+		QHash<QString, QString>::iterator iterator;
+
+		for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+		{
+			html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+		}
+
+		errorOutput->baseUrl = errorOption->url;
+		errorOutput->content = html.toUtf8();
+
+		QString domain;
+
+		if (errorOption->domain == QWebPage::QtNetwork)
+		{
+			domain = QLatin1String("QtNetwork");
+		}
+		else if (errorOption->domain == QWebPage::WebKit)
+		{
+			domain = QLatin1String("WebKit");
+		}
+		else
+		{
+			domain = QLatin1String("HTTP");
+		}
+
+		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString());
+
+		return true;
 	}
 
-	QFile file(QLatin1String(":/files/error.html"));
-	file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-
-	QHash<QString, QString> variables;
-	variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
-	variables[QLatin1String("description")] = errorOption->errorString;
-	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-
-	QString html = stream.readAll();
-	QHash<QString, QString>::iterator iterator;
-
-	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-	{
-		html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
-	}
-
-	errorOutput->baseUrl = errorOption->url;
-	errorOutput->content = html.toUtf8();
-
-	QString domain;
-
-	if (errorOption->domain == QWebPage::QtNetwork)
-	{
-		domain = QLatin1String("QtNetwork");
-	}
-	else if (errorOption->domain == QWebPage::WebKit)
-	{
-		domain = QLatin1String("WebKit");
-	}
-	else
-	{
-		domain = QLatin1String("HTTP");
-	}
-
-	Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString());
-
-	return true;
+	return false;
 }
 
 bool QtWebKitWebPage::shouldInterruptJavaScript()
@@ -483,7 +493,7 @@ bool QtWebKitWebPage::shouldInterruptJavaScript()
 
 bool QtWebKitWebPage::supportsExtension(QWebPage::Extension extension) const
 {
-	return (extension == QWebPage::ErrorPageExtension);
+	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
 }
 
 }
