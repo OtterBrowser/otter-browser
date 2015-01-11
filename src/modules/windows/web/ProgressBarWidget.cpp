@@ -71,6 +71,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	setAutoFillBackground(true);
 	loadingChanged(webWidget->isLoading());
 
+	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
 	connect(webWidget, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,qint64,qint64,qint64)));
 	connect(webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(loadingChanged(bool)));

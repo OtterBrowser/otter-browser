@@ -63,6 +63,8 @@ void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
 
 void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
+	emit messageChanged(tr("Waiting for authentication…"));
+
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(reply->url(), authenticator, m_widget);
 	authenticationDialog->setButtonsVisible(false);
 
@@ -91,6 +93,8 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 		return;
 	}
+
+	emit messageChanged(tr("Waiting for authentication…"));
 
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);
 	authenticationDialog->setButtonsVisible(false);
@@ -234,6 +238,8 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 		return;
 	}
 
+	emit messageChanged(tr("Receiving data from %1…").arg(reply->url().host()));
+
 	const qint64 difference = (bytesReceived - m_replies[reply].first);
 
 	m_replies[reply].first = bytesReceived;
@@ -271,6 +277,8 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 
 	if (reply)
 	{
+		emit messageChanged(tr("Completed request to %1").arg(reply->url().host()));
+
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 	}
 }
@@ -376,6 +384,8 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 
 	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
+
+	emit messageChanged(tr("Sending request to %1…").arg(request.url().host()));
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
