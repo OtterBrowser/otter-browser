@@ -2377,42 +2377,45 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
+			if (!m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
 			{
-				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
+				if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 				{
-					m_isUsingRockerNavigation = true;
-
-					triggerAction(Action::GoBackAction);
-
-					return true;
-				}
-
-				if (mouseEvent->button() == Qt::MiddleButton)
-				{
-					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
-
-					const QString tagName = m_hitResult.element().tagName().toLower();
-
-					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
 					{
-						triggerAction(Action::StartMoveScrollAction);
+						m_isUsingRockerNavigation = true;
+
+						triggerAction(Action::GoBackAction);
 
 						return true;
 					}
-				}
 
-				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
-				{
-					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-					if (m_hitResult.linkUrl().isValid())
+					if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
 					{
-						openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
+						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-						event->accept();
+						if (m_hitResult.linkUrl().isValid())
+						{
+							openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
 
-						return true;
+							event->accept();
+
+							return true;
+						}
+					}
+
+					if (mouseEvent->button() == Qt::MiddleButton)
+					{
+						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
+
+						const QString tagName = m_hitResult.element().tagName().toLower();
+
+						if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+						{
+							triggerAction(Action::StartMoveScrollAction);
+
+							return true;
+						}
 					}
 				}
 			}
