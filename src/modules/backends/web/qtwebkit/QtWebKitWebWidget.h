@@ -102,6 +102,7 @@ protected:
 	QString getPluginToken() const;
 	QWebPage* getPage();
 	bool canLoadPlugins() const;
+	bool isScrollBar(const QPoint &position) const;
 
 protected slots:
 	void triggerAction();

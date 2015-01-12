@@ -1625,7 +1625,7 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
 
-	if (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(hitPosition) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(hitPosition))
+	if (isScrollBar(hitPosition))
 	{
 		return;
 	}
@@ -2253,14 +2253,19 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
+int QtWebKitWebWidget::getZoom() const
+{
+	return (m_webView->zoomFactor() * 100);
+}
+
 bool QtWebKitWebWidget::canLoadPlugins() const
 {
 	return m_canLoadPlugins;
 }
 
-int QtWebKitWebWidget::getZoom() const
+bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 {
-	return (m_webView->zoomFactor() * 100);
+	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
 }
 
 bool QtWebKitWebWidget::isLoading() const
@@ -2379,45 +2384,60 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (!m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(mouseEvent->pos()) && !m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(mouseEvent->pos()))
+			if (mouseEvent->button() == Qt::BackButton)
 			{
-				if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
-				{
-					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
-					{
-						m_isUsingRockerNavigation = true;
+				triggerAction(Action::GoBackAction);
 
-						triggerAction(Action::GoBackAction);
+				event->accept();
+
+				return true;
+			}
+
+			if (mouseEvent->button() == Qt::ForwardButton)
+			{
+				triggerAction(Action::GoForwardAction);
+
+				event->accept();
+
+				return true;
+			}
+
+			if ((mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton) && !isScrollBar(mouseEvent->pos()))
+			{
+				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
+				{
+					m_isUsingRockerNavigation = true;
+
+					triggerAction(Action::GoBackAction);
+
+					return true;
+				}
+
+				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
+				{
+					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+					if (m_hitResult.linkUrl().isValid())
+					{
+						openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
+
+						event->accept();
 
 						return true;
 					}
+				}
 
-					if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
+				if (mouseEvent->button() == Qt::MiddleButton)
+				{
+					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
+
+					const QString tagName = m_hitResult.element().tagName().toLower();
+
+					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
 					{
-						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+						triggerAction(Action::StartMoveScrollAction);
 
-						if (m_hitResult.linkUrl().isValid())
-						{
-							openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
-
-							event->accept();
-
-							return true;
-						}
-					}
-
-					if (mouseEvent->button() == Qt::MiddleButton)
-					{
-						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
-
-						const QString tagName = m_hitResult.element().tagName().toLower();
-
-						if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
-						{
-							triggerAction(Action::StartMoveScrollAction);
-
-							return true;
-						}
+						return true;
 					}
 				}
 			}
@@ -2442,22 +2462,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					GesturesManager::startGesture((m_hitResult.linkUrl().isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), m_webView, mouseEvent);
 				}
-
-				return true;
-			}
-			else if (mouseEvent->button() == Qt::BackButton)
-			{
-				triggerAction(Action::GoBackAction);
-
-				event->accept();
-
-				return true;
-			}
-			else if (mouseEvent->button() == Qt::ForwardButton)
-			{
-				triggerAction(Action::GoForwardAction);
-
-				event->accept();
 
 				return true;
 			}
