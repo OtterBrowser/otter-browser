@@ -1,6 +1,6 @@
 ﻿/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -211,6 +211,13 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	QList<ApplicationInformation> applications;
 	const QString suffix = mimeType.preferredSuffix();
 
+	if (suffix.isEmpty())
+	{
+		Console::addMessage(tr("There is no valid suffix for given MIME type\n %1").arg(mimeType.name()), OtherMessageCategory, ErrorMessageLevel);
+
+		return QList<ApplicationInformation>();
+	}
+
 	if (m_cleanupTimer != 0)
 	{
 		killTimer(m_cleanupTimer);
@@ -224,22 +231,64 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	}
 
 	// Vista+ applications
+	const QSettings defaultAssociation(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix, QSettings::NativeFormat);
+	QString defaultApplication = defaultAssociation.value(QLatin1String("."), QString()).toString();
+	QStringList associations;
+
+	if (defaultApplication.isEmpty())
+	{
+		const QSettings defaultAssociation(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\.") + suffix, QSettings::NativeFormat);
+
+		defaultApplication = defaultAssociation.value(QLatin1String("."), QString()).toString();
+	}
+
+	if (!defaultApplication.isEmpty())
+	{
+		associations.append(defaultApplication);
+	}
+
 	const QSettings modernAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithProgids"), QSettings::NativeFormat);
-	
-	QStringList associations = modernAssociations.childKeys();
+
+	associations.append(modernAssociations.childKeys());
+	associations.removeAt(associations.indexOf(QLatin1String(".")));
+	associations.removeDuplicates();
 
 	for (int i = 0; i < associations.count(); ++i)
 	{
+		const QString value = associations.at(i);
+
+		if (m_registrationIdentifier == value)
+		{
+			continue;
+		}
+
 		ApplicationInformation information;
-		const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + associations.at(i) + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
+		const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Classes\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
 		information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
 
+		if (information.command.contains(QLatin1String("explorer.exe"), Qt::CaseInsensitive))
+		{
+			information.command = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4);
+			information.command += " %1";
+		}
+
+		if (information.command.isEmpty())
+		{
+			Console::addMessage(tr("Failed to load a valid application path for MIME type %1:\n%2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
+
+			continue;
+		}
+
 		getApplicationInformation(information);
+
+		applications.append(information);
 	}
 
 	// Win XP applications
 	const QSettings legacyAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithList"), QSettings::NativeFormat);
+	const QString order = legacyAssociations.value(QLatin1String("MRUList"), QString()).toString();
+	const QString applicationFileName = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
 
 	associations = legacyAssociations.childKeys();
 	associations.removeAt(associations.indexOf(QLatin1String("MRUList")));
@@ -247,7 +296,12 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	for (int i = 0; i < associations.count(); ++i)
 	{
 		ApplicationInformation information;
-		const QString value = legacyAssociations.value(associations.at(i)).toString();
+		const QString value = legacyAssociations.value(order.at(i)).toString();
+
+		if (applicationFileName == value)
+		{
+			continue;
+		}
 
 		const QSettings applicationPath(QLatin1String("HKEY_CURRENT_USER\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
@@ -258,6 +312,24 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 			const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Applications\\") + value + QLatin1String("\\shell\\open\\command"), QSettings::NativeFormat);
 
 			information.command = applicationPath.value(QLatin1String("."), QString()).toString().remove(QLatin1Char('"'));
+
+			if (information.command.isEmpty())
+			{
+				const QSettings applicationPath(QLatin1String("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + value, QSettings::NativeFormat);
+
+				information.command = applicationPath.value(QLatin1String("."), QString()).toString();
+
+				if (!information.command.isEmpty())
+				{
+					information.command.append(QLatin1String(" %1"));
+				}
+				else
+				{
+					Console::addMessage(tr("Failed to load a valid application path for MIME type %1:\n%2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
+
+					continue;
+				}
+			}
 		}
 
 		getApplicationInformation(information);
