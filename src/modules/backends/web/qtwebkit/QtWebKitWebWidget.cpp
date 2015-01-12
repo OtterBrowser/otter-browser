@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -2605,6 +2606,20 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		else if (event->type() == QEvent::MouseMove && m_scrollMode == DragScroll)
 		{
 			m_webView->page()->mainFrame()->setScrollPosition(m_beginScrollPosition + m_beginCursorPosition - QCursor::pos());
+		}
+		else if (event->type() == QEvent::ShortcutOverride)
+		{
+			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+			if (keyEvent->modifiers() == Qt::ControlModifier)
+			{
+				if (keyEvent->key() == Qt::Key_Backspace && m_page->currentFrame()->hitTestContent(m_page->inputMethodQuery(Qt::ImCursorRectangle).toRect().center()).isContentEditable())
+				{
+					event->accept();
+				}
+
+				return true;
+			}
 		}
 	}
 	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
