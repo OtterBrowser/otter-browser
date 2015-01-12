@@ -141,9 +141,7 @@ void SearchWidget::focusInEvent(QFocusEvent *event)
 
 void SearchWidget::keyPressEvent(QKeyEvent *event)
 {
-	QComboBox::keyPressEvent(event);
-
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && !(m_completer->popup() && m_completer->popup()->isVisible()))
 	{
 		const QString input = lineEdit()->text().trimmed();
 
@@ -157,6 +155,8 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(event->modifiers()));
 		}
 	}
+
+	QComboBox::keyPressEvent(event);
 }
 
 void SearchWidget::mousePressEvent(QMouseEvent *event)
