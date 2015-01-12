@@ -31,6 +31,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_isModified(false)
 {
 	setIndentation(0);
+	setAllColumnsShowFocus(true);
 
 	viewport()->setAcceptDrops(true);
 }
