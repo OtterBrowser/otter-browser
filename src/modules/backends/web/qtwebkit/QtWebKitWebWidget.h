@@ -53,7 +53,6 @@ public:
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
 	QString getSelectedText() const;
-	QVariant evaluateJavaScript(const QString &script);
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
@@ -105,7 +104,6 @@ protected:
 	bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void triggerAction();
 	void optionChanged(const QString &option, const QVariant &value);
 	void navigating(QWebFrame *frame, QWebPage::NavigationType type);
 	void pageLoadStarted();

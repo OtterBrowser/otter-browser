@@ -74,7 +74,6 @@ public:
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;
-	virtual QVariant evaluateJavaScript(const QString &script) = 0;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
@@ -109,6 +108,7 @@ protected:
 	virtual void setOptions(const QVariantHash &options);
 
 protected slots:
+	void triggerAction();
 	void reloadTimeMenuAboutToShow();
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();

@@ -78,6 +78,16 @@ void WebWidget::search(const QString &query, const QString &engine)
 	Q_UNUSED(engine)
 }
 
+void WebWidget::triggerAction()
+{
+	Action *action = qobject_cast<Action*>(sender());
+
+	if (action)
+	{
+		triggerAction(action->getIdentifier());
+	}
+}
+
 void WebWidget::reloadTimeMenuAboutToShow()
 {
 	switch (getOption(QLatin1String("Content/PageReloadTime")).toInt())

@@ -940,16 +940,6 @@ void QtWebKitWebWidget::goToHistoryIndex(int index)
 	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
 }
 
-void QtWebKitWebWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
@@ -1124,7 +1114,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 					m_hitResult.element().setAttribute(QLatin1String("src"), src);
 
-					evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+					m_webView->page()->mainFrame()->evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
 				}
 			}
 
@@ -1817,7 +1807,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == QLatin1String("javascript"))
 	{
-		evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
+		m_webView->page()->mainFrame()->evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
 
 		return;
 	}
@@ -2100,11 +2090,6 @@ QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 QVariantHash QtWebKitWebWidget::getStatistics() const
 {
 	return m_networkManager->getStatistics();
-}
-
-QVariant QtWebKitWebWidget::evaluateJavaScript(const QString &script)
-{
-	return m_webView->page()->mainFrame()->evaluateJavaScript(script);
 }
 
 QUrl QtWebKitWebWidget::getUrl() const

@@ -379,7 +379,7 @@ void AddressWidget::updateBookmark()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(Action::LoadPluginsAction)->isEnabled());
+	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(Action::LoadPluginsAction) && m_window->getContentsWidget()->getAction(Action::LoadPluginsAction)->isEnabled());
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
@@ -452,7 +452,11 @@ void AddressWidget::setWindow(Window *window)
 	{
 		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		disconnect(m_window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+
+		if (m_window->getContentsWidget()->getAction(Action::LoadPluginsAction))
+		{
+			disconnect(m_window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+		}
 	}
 
 	m_window = window;
@@ -468,7 +472,11 @@ void AddressWidget::setWindow(Window *window)
 		}
 
 		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
-		connect(window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+
+		if (window->getContentsWidget()->getAction(Action::LoadPluginsAction))
+		{
+			connect(window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+		}
 	}
 
 	updateLoadPlugins();

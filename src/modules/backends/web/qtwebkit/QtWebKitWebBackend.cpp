@@ -26,11 +26,11 @@
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
 #include <QtWebKitWidgets/QWebPage>
-#include <QtWidgets/QApplication>
 
 namespace Otter
 {
@@ -59,7 +59,7 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	}
 
 	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
-	m_userAgentComponents[QLatin1String("applicationVersion")] = QApplication::applicationName() + QLatin1Char('/') + QApplication::applicationVersion();
+	m_userAgentComponents[QLatin1String("applicationVersion")] = QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion();
 
 	page->deleteLater();
 }

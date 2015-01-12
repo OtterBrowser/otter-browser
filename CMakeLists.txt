@@ -68,7 +68,13 @@ if (MSVC)
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:\"mainCRTStartup\"")
 endif (MSVC)
 
-find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql Widgets WebKit WebKitWidgets)
+option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.4)" OFF)
+
+if (${EnableQtwebengine})
+	find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
+else (${EnableQtwebengine})
+	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+endif (${EnableQtwebengine})
 
 set(otter_src
 	src/main.cpp
@@ -216,9 +222,24 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/WebContentsWidget.ui
 )
 
+if (${EnableQtwebengine})
+	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
+
+	set(otter_src
+		${otter_src}
+		src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp
+		src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
+	)
+endif (${EnableQtwebengine})
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	add_definitions(-DUNICODE -D_UNICODE)
-	set(otter_src ${otter_src} otter-browser.rc src/modules/platforms/windows/WindowsPlatformIntegration.cpp)
+
+	set(otter_src
+		${otter_src}
+		otter-browser.rc
+		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
+	)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 add_executable(otter-browser
@@ -227,8 +248,13 @@ add_executable(otter-browser
 	${otter_src}
 )
 
+if (${EnableQtwebengine})
+	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
+endif (${EnableQtwebengine})
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	qt5_use_modules(otter-browser WinExtras)
+
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 

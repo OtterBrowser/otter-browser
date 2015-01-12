@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,34 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_WEBBACKENDSMANAGER_H
-#define OTTER_WEBBACKENDSMANAGER_H
+#ifndef OTTER_QTWEBENGINEWEBBACKEND_H
+#define OTTER_QTWEBENGINEWEBBACKEND_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
+#include "../../../../core/WebBackend.h"
 
 namespace Otter
 {
 
-class WebBackend;
-
-class WebBackendsManager : public QObject
+class QtWebEngineWebBackend : public WebBackend
 {
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
-	static void registerBackend(WebBackend *backend, const QString &name);
-	static WebBackend* getBackend(const QString &backend = QString());
-	static QStringList getBackends();
+	explicit QtWebEngineWebBackend(QObject *parent = NULL);
 
-protected:
-	explicit WebBackendsManager(QObject *parent = NULL);
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL);
+	QString getTitle() const;
+	QString getDescription() const;
+	QString getVersion() const;
+	QString getEngineVersion() const;
+	QString getUserAgent(const QString &pattern = QString()) const;
+	QIcon getIconForUrl(const QUrl &url);
+
+protected slots:
+	void optionChanged(const QString &option);
 
 private:
-	static WebBackendsManager *m_instance;
-	static QHash<QString, WebBackend*> m_backends;
+	bool m_isInitialized;
 };
 
 }
