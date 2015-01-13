@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -437,11 +438,11 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 			return NULL;
 		}
 
-		transfer->target = path;
+		transfer->target = QDir::toNativeSeparators(path);
 	}
 	else
 	{
-		transfer->target = QFileInfo(target).canonicalFilePath();
+		transfer->target = QFileInfo(QDir::toNativeSeparators(target)).canonicalFilePath();
 	}
 
 	if (!target.isEmpty() && QFile::exists(transfer->target) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(transfer->target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
@@ -510,6 +511,10 @@ TransferInformation* TransfersManager::startTransfer(QNetworkReply *reply, const
 		if (transfer->bytesReceived == 0 || transfer->bytesReceived < transfer->bytesTotal)
 		{
 			transfer->state = ErrorTransfer;
+		}
+		else
+		{
+			transfer->mimeType = QMimeDatabase().mimeTypeForFile(transfer->target);
 		}
 	}
 
