@@ -39,20 +39,20 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_COMPONENTS_ALL Libraries ApplicationData)
 	set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
 		${CMAKE_INSTALL_PREFIX}/share/applications
-		/usr/share/icons
-		/usr/share/icons/hicolor
-		/usr/share/icons/hicolor/16x16
-		/usr/share/icons/hicolor/32x32
-		/usr/share/icons/hicolor/48x48
-		/usr/share/icons/hicolor/64x64
-		/usr/share/icons/hicolor/128x128
-		/usr/share/icons/hicolor/256x256
-		/usr/share/icons/hicolor/16x16/apps
-		/usr/share/icons/hicolor/32x32/apps
-		/usr/share/icons/hicolor/48x48/apps
-		/usr/share/icons/hicolor/64x64/apps
-		/usr/share/icons/hicolor/128x128/apps
-		/usr/share/icons/hicolor/256x256/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps
 	)
 
 	include(CPack)
@@ -271,12 +271,12 @@ foreach(_current_QM_FILE ${_qm_files})
 	install(FILES ${_current_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/otter-browser/locale/)
 endforeach(_current_QM_FILE)
 
-install(FILES resources/icons/otter-browser-16.png DESTINATION /usr/share/icons/hicolor/16x16/apps/ RENAME otter-browser.png)
-install(FILES resources/icons/otter-browser-32.png DESTINATION /usr/share/icons/hicolor/32x32/apps/ RENAME otter-browser.png)
-install(FILES resources/icons/otter-browser-48.png DESTINATION /usr/share/icons/hicolor/48x48/apps/ RENAME otter-browser.png)
-install(FILES resources/icons/otter-browser-64.png DESTINATION /usr/share/icons/hicolor/64x64/apps/ RENAME otter-browser.png)
-install(FILES resources/icons/otter-browser-128.png DESTINATION /usr/share/icons/hicolor/128x128/apps/ RENAME otter-browser.png)
-install(FILES resources/icons/otter-browser-256.png DESTINATION /usr/share/icons/hicolor/256x256/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-16.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-32.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-48.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-64.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-128.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps/ RENAME otter-browser.png)
+install(FILES resources/icons/otter-browser-256.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/ RENAME otter-browser.png)
 install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES man/otter-browser.1 DESTINATION share/man/man1/)
 install(TARGETS otter-browser DESTINATION bin/)
