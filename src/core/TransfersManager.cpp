@@ -195,6 +195,10 @@ void TransfersManager::downloadFinished(QNetworkReply *reply)
 	{
 		transfer->state = ErrorTransfer;
 	}
+	else
+	{
+		transfer->mimeType = QMimeDatabase().mimeTypeForFile(transfer->target);
+	}
 
 	if (!transfer->isHidden)
 	{
