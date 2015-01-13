@@ -60,6 +60,11 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyView->viewport()->installEventFilter(this);
 
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
+	}
+
 	const QString expandBranches = SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString();
 
 	if (expandBranches == QLatin1String("first"))
@@ -153,8 +158,6 @@ void HistoryContentsWidget::populateEntries()
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
-
 		QStandardItem *groupItem = m_model->item(i, 0);
 
 		if (groupItem)
