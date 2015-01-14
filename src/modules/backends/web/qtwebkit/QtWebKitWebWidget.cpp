@@ -2512,6 +2512,13 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				if (m_isUsingRockerNavigation)
 				{
 					m_isUsingRockerNavigation = false;
+					m_ignoreContextMenuNextTime = true;
+
+					QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+					QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+
+					QCoreApplication::sendEvent(m_webView, &mousePressEvent);
+					QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
 				}
 				else
 				{
