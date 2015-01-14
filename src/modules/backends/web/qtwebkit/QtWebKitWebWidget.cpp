@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -83,10 +83,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_scrollTimer(0),
 	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
+	m_ignoreContextMenuNextTime(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
-	m_isTyped(false),
-	m_ignoreContextMenuNextTime(false)
+	m_isTyped(false)
 {
 	m_splitter->addWidget(m_webView);
 	m_splitter->setChildrenCollapsible(false);
@@ -249,6 +249,16 @@ void QtWebKitWebWidget::keyPressEvent(QKeyEvent *event)
 	{
 		triggerAction(Action::EndScrollAction);
 	}
+}
+
+void QtWebKitWebWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+	}
+
+	event->accept();
 }
 
 void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
@@ -2457,11 +2467,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (m_scrollMode == MoveScroll)
 			{
-				m_ignoreContextMenuNextTime = false;
-
 				return true;
 			}
-			else if (mouseEvent->button() == Qt::MiddleButton)
+
+			if (mouseEvent->button() == Qt::MiddleButton)
 			{
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
@@ -2510,7 +2519,14 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (!GesturesManager::endGesture(m_webView, mouseEvent))
 					{
-						showContextMenu(mouseEvent->pos());
+						if (m_ignoreContextMenuNextTime)
+						{
+							m_ignoreContextMenuNextTime = false;
+						}
+						else
+						{
+							showContextMenu(mouseEvent->pos());
+						}
 					}
 				}
 

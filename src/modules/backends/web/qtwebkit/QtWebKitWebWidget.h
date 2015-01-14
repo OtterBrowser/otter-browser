@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -90,6 +90,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
@@ -171,10 +172,10 @@ private:
 	int m_scrollTimer;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
+	bool m_ignoreContextMenuNextTime;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
-	bool m_ignoreContextMenuNextTime;
 	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
