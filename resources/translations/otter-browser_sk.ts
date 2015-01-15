@@ -9,7 +9,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation type="unfinished"/>
+        <translation>Pre pridanie jazyka, prosím vyberte niektorý zo zoznamu alebo zadajte jeho kód.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -435,7 +435,7 @@ Ste si istý, že aj tak chete túto reláciu obnoviť?</translation>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="422"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Načítanie súboru so záložkami nebolo úspešné. QXmlStreamReader chybový kód: %1</translation>
     </message>
 </context>
 <context>
@@ -1277,42 +1277,42 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="115"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="116"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť na novej karte</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="117"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť na novej karte v pozadí</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť v novom okne</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="120"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť v novom okne na pozadí</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="237"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importovať záložky prehliadača Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="238"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importovať HTML záložky</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="284"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť všetky</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="303"/>
@@ -1320,37 +1320,37 @@ Chcete pokračovať?</translation>
         <location filename="../../src/ui/Menu.cpp" line="456"/>
         <location filename="../../src/ui/Menu.cpp" line="493"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="336"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Auto-detekcia</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="390"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Vyčistiť</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="399"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Okno - %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="456"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n karta)</numerusform><numerusform>%1 (%n karty)</numerusform><numerusform>%1 (%n kartiet)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="481"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Predvolený</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="503"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Vlastný</translation>
     </message>
 </context>
 <context>
@@ -1358,7 +1358,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/toolbars/MenuActionWidget.cpp" line="35"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
 </context>
 <context>
@@ -1755,7 +1755,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="829"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="877"/>
@@ -1790,22 +1790,22 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="946"/>
         <source>Policy:</source>
-        <translation type="unfinished"/>
+        <translation>Zásady:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="960"/>
         <source>Accept all</source>
-        <translation type="unfinished"/>
+        <translation>Prijímať všetky</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="965"/>
         <source>Allow to only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť len čítanie existujúcich</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="970"/>
         <source>Allow to modify existing</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť úpravu existujúcich</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="985"/>
@@ -2224,7 +2224,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="257"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>Na požiadanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="258"/>
@@ -2454,22 +2454,22 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Späť</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo: %1</source>
-        <translation type="unfinished"/>
+        <translation>Späť: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Dopredu</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo: %1</source>
-        <translation type="unfinished"/>
+        <translation>Dopredu: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
@@ -2965,7 +2965,7 @@ Chcete aj napriek tomu obnoviť toto sedenie? </translation>
     <message>
         <location filename="../../src/ui/TabBarToolBarWidget.cpp" line="46"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Zatvorené záložky</translation>
     </message>
 </context>
 <context>
@@ -3075,7 +3075,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Zdroj: %1
+Cieľ: %2
+Veľkosť: %3
+Prenesené: %4
+Priebeh: %5&lt;/div&gt;</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="248"/>
@@ -3092,12 +3096,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť s</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Neznáme</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
@@ -3170,7 +3174,7 @@ Chcete ho prepísať?
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="545"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Všetky súbory (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="563"/>
@@ -3398,7 +3402,7 @@ Prosím, zvoľte iný.</translation>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="632"/>
         <source>Override</source>
-        <translation type="unfinished"/>
+        <translation>Prepísať</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
@@ -3633,7 +3637,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="58"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>Na požiadanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="59"/>
@@ -3643,17 +3647,17 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Informovať internetové stránky, že nechcem, aby ma sledovali</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Informovať internetové stránky, že povoľujem sledovanie</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Neinformovať internetové stránky, čomu dávam prednosť</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="65"/>
@@ -3706,12 +3710,12 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/ui/Window.cpp" line="167"/>
         <source>Print Page</source>
-        <translation type="unfinished"/>
+        <translation>Vytlačiť stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="180"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Náhlad tlače</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="296"/>
@@ -3759,12 +3763,12 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="141"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation type="unfinished"/>
+        <translation>Nepodarilo sa spustiť príkaz &quot;%1&quot;, súbor nie je spustiteľný</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="171"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>Nepodarilo sa spustiť príkaz &quot;%1&quot; (argumenty: &quot;%2&quot;)</translation>
     </message>
 </context>
 <context>
@@ -3805,7 +3809,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Panely</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
@@ -3847,22 +3851,22 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Karty a okná</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>Strana</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Print</source>
-        <translation type="unfinished"/>
+        <translation>Tlač</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavenia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
@@ -3903,12 +3907,12 @@ Prosím, zvoľte iný.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Pripnúť kartu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>Vyňať kartu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
@@ -3918,7 +3922,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Zatvoriť ostatné karty</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
@@ -4103,7 +4107,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Go</source>
-        <translation type="unfinished"/>
+        <translation>Prejsť</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
@@ -4123,7 +4127,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Go to Home Page</source>
-        <translation type="unfinished"/>
+        <translation>Prejsť na domovskú stránku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
@@ -4148,7 +4152,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Stop Scheduled Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Zastaviť automatickú obnovu stránky</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
@@ -4158,7 +4162,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Reload and Bypass Cache</source>
-        <translation type="unfinished"/>
+        <translation>Obnoviť a ignorovať pamäť cache</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
@@ -4323,12 +4327,12 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Activate Search Field</source>
-        <translation type="unfinished"/>
+        <translation>Aktivovať vyhľadávacie pole</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Activate Content</source>
-        <translation type="unfinished"/>
+        <translation>Aktivovať obsah</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
@@ -4358,12 +4362,12 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="162"/>
         <source>Block pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Blokovať vyskakovacie okná</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="163"/>
         <source>Load Images</source>
-        <translation type="unfinished"/>
+        <translation>Načítať obrázky</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="164"/>
@@ -4373,17 +4377,17 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="165"/>
         <source>Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>Zásady pre súbory cookies</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="166"/>
         <source>Third-party Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>Zásady súborov cookies tretích strán</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="167"/>
         <source>Plugins</source>
-        <translation type="unfinished"/>
+        <translation>Rozšírenia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="168"/>
@@ -4393,27 +4397,27 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="169"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="170"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť Java</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="171"/>
         <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť informáciu Referrer</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="172"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť Proxy</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4458,7 +4462,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="183"/>
         <source>Lock Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Zamknúť panely</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="184"/>
@@ -4498,7 +4502,7 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>Zresetovať nastavenia</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="192"/>
@@ -4523,52 +4527,52 @@ Prosím, zvoľte iný.</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Upraviť odkaz záložky</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť video...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť zvuk...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať odkaz videa do schránky Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať odkaz zvuku do schránky Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Pauza</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Zapnúť zvuk</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Odopnúť kartu</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="33"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť okná</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="39"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>Prenosy</translation>
     </message>
 </context>
 <context>
@@ -4656,7 +4660,7 @@ Chyba: %1</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="330"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepodarilo sa spustiť manažéra asociácií súborov a programov, chybový kód: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="385"/>

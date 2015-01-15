@@ -4417,7 +4417,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Povolit proxy</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4527,37 +4527,37 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Upravit záložku odkazu...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Uložit obrazový záznam...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Uložit zvukový záznam...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovat odkaz na obrazový záznam do schránky</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovat odkaz na zvukový záznam do schránky</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Pozastavit</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Zrušit ztlumení</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>

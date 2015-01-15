@@ -382,7 +382,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation>Meglévő könyvjelző eltávolítása</translation>
+        <translation>Jelenlegi könyvjelzők törlése.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
@@ -397,7 +397,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation>Engedje a már meglévő könyvjelző ismétlését</translation>
+        <translation>Nem baj ha az importálás miatt egy könyvjelző 2x is szerepel.</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -1105,7 +1105,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="76"/>
         <source>%1 B</source>
-        <translation>%1 B</translation>
+        <translation>%1 byte</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="92"/>
@@ -1124,7 +1124,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation>Forrás:</translation>
+        <translation>Hely:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="78"/>
@@ -1358,7 +1358,7 @@ Biztos újra el akarja menteni?</translation>
     <message>
         <location filename="../../src/ui/toolbars/MenuActionWidget.cpp" line="35"/>
         <source>Menu</source>
-        <translation>Men</translation>
+        <translation>Menü</translation>
     </message>
 </context>
 <context>
@@ -1413,7 +1413,7 @@ Biztos folytatja?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Irjon be egy webcímet vagy válasszon ki egyet a listából:</translation>
+        <translation>Irjon be egy címet vagy válasszon ki egyet a listából:</translation>
     </message>
 </context>
 <context>
@@ -1675,7 +1675,7 @@ Biztos folytatja?</translation>
         <location filename="../../src/ui/PreferencesDialog.ui" line="565"/>
         <location filename="../../src/ui/PreferencesDialog.ui" line="584"/>
         <source> px</source>
-        <translation>pixel</translation>
+        <translation> pixel</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="545"/>
@@ -2193,7 +2193,7 @@ Biztos folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="189"/>
         <source>Always</source>
-        <translation>Örökre</translation>
+        <translation>Mindig</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="190"/>
@@ -2620,7 +2620,7 @@ Ki akarja cserélni erre?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="96"/>
         <source>Set as Default Search Engine</source>
-        <translation>Alapértelmezett kereső motor beállítása</translation>
+        <translation>Legyen ez az alapértelmezett kereső motor.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="107"/>
@@ -2986,7 +2986,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="123"/>
         <source>Source:</source>
-        <translation>Forrás:</translation>
+        <translation>Hely:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="133"/>
@@ -3039,7 +3039,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Time</source>
-        <translation>Idő</translation>
+        <translation>Hátralévő idő</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
@@ -3086,7 +3086,7 @@ Folyamat: %5&lt;/div&gt;</translation>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="454"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="455"/>
         <source>%1 (%n B)</source>
-        <translation><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform></translation>
+        <translation><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n byte)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="383"/>
@@ -3662,7 +3662,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="65"/>
         <source>Always</source>
-        <translation>Örökre</translation>
+        <translation>Mindig</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
@@ -3725,7 +3725,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/Window.cpp" line="296"/>
         <source>Enter User Agent:</source>
-        <translation>Írja be a böngészőazonosítót:</translation>
+        <translation>Írja be a kívánt böngészőazonosítót:</translation>
     </message>
 </context>
 <context>
@@ -4562,7 +4562,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Unpin Tab</source>
-        <translation>Fül feloldása</translation>
+        <translation>Fül rögzítésének a feloldása</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="33"/>

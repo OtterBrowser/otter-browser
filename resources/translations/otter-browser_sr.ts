@@ -4417,7 +4417,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Омогући прокси</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4527,37 +4527,37 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Уреди везу обележивача...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Сачувај видео...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Сачувај звук...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копирај везу видеа на клипборд</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копирај везу звука на клипборд</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Паузирај</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Укључи звук</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>

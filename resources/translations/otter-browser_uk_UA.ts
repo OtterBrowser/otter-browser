@@ -14,7 +14,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Додати</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="88"/>
@@ -45,7 +45,7 @@
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="69"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="115"/>
         <source>Any other</source>
-        <translation type="unfinished"/>
+        <translation>Будь-який інший</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="70"/>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="72"/>
         <source>Enter address or search...</source>
-        <translation type="unfinished"/>
+        <translation>Введіть адресу або фразу для пошуку...</translation>
     </message>
     <message>
         <location filename="../../src/ui/AddressWidget.cpp" line="472"/>
@@ -105,7 +105,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/Application.cpp" line="510"/>
         <location filename="../../src/core/Application.cpp" line="559"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Питання</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="511"/>
@@ -116,19 +116,19 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/Application.cpp" line="512"/>
         <location filename="../../src/core/Application.cpp" line="561"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="516"/>
         <location filename="../../src/core/Application.cpp" line="565"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Більше не показувати це повідомлення</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="518"/>
         <location filename="../../src/core/Application.cpp" line="567"/>
         <source>Hide</source>
-        <translation type="unfinished"/>
+        <translation>Сховати</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="560"/>
@@ -420,12 +420,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="397"/>
         <source>Failed to open bookmarks file: %0</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося відкрити файл закладки: %0</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="421"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="421"/>
@@ -724,7 +724,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="223"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Копіювати</translation>
     </message>
 </context>
 <context>
@@ -876,22 +876,22 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="60"/>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="95"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Безіменний)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="62"/>
         <source>%1 (Back - %2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Назад - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="62"/>
         <source>%1 (Back)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Назад)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="68"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -900,22 +900,22 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="60"/>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="95"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Безіменний)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="62"/>
         <source>%1 (Forward - %2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Вперед - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="62"/>
         <source>%1 (Forward)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Вперед)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="68"/>
         <source>Forward</source>
-        <translation type="unfinished"/>
+        <translation>Вперед</translation>
     </message>
 </context>
 <context>
@@ -1047,7 +1047,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="190"/>
         <source>HTML files (*.htm, *.html)</source>
-        <translation type="unfinished"/>
+        <translation>Файли веб сторінок (*.htm, *.html)</translation>
     </message>
 </context>
 <context>
@@ -1148,12 +1148,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="14"/>
         <source>JavaScript Options</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="29"/>
         <source>Allow moving and resizing of windows</source>
-        <translation type="unfinished"/>
+        <translation>Дозволити тягати та змінювати розміри вікон</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="42"/>
@@ -1168,7 +1168,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="59"/>
         <source>Allow access to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Дозволити доступ до буферу обміну</translation>
     </message>
 </context>
 <context>
@@ -1277,27 +1277,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="115"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="116"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити у новій вкладці</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="117"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити у фоновій вкладці</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити у новому вікні</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="120"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити у новому фоновому вікні</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="237"/>
@@ -1312,7 +1312,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="284"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити все</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="303"/>
@@ -1320,7 +1320,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/Menu.cpp" line="456"/>
         <location filename="../../src/ui/Menu.cpp" line="493"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Безіменний)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="336"/>
@@ -1330,12 +1330,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="390"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очистити</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="399"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Вікно - %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="456"/>
@@ -1358,7 +1358,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/toolbars/MenuActionWidget.cpp" line="35"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Меню</translation>
     </message>
 </context>
 <context>
@@ -1408,12 +1408,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
         <source>Go to Page</source>
-        <translation type="unfinished"/>
+        <translation>Перейти до сторінки</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation type="unfinished"/>
+        <translation>Введіть веб адресу або оберіть зі списку:</translation>
     </message>
 </context>
 <context>
@@ -1591,7 +1591,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="295"/>
         <source>Set as a default browser</source>
-        <translation type="unfinished"/>
+        <translation>Встановити браузером за замовчуванням</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="338"/>
@@ -1915,7 +1915,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1314"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Інше</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1335"/>
@@ -1950,7 +1950,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1419"/>
         <source>JavaScript Options...</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування JavaScript...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1428"/>
@@ -2093,7 +2093,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2287"/>
         <source>All Settings</source>
-        <translation type="unfinished"/>
+        <translation>Всі налаштування</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="87"/>
@@ -2224,7 +2224,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="257"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>На вимогу</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="258"/>
@@ -2537,12 +2537,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
         <source>minutes</source>
-        <translation type="unfinished"/>
+        <translation>хвилин</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>секунд</translation>
     </message>
 </context>
 <context>
@@ -2965,7 +2965,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarToolBarWidget.cpp" line="46"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Закриті вкладки</translation>
     </message>
 </context>
 <context>
@@ -3092,7 +3092,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити за допомогою</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
@@ -3170,7 +3170,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="545"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Всі файли (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="563"/>
@@ -3342,22 +3342,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="475"/>
         <source>30 Minutes</source>
-        <translation type="unfinished"/>
+        <translation>30 хвилин</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="476"/>
         <source>1 Hour</source>
-        <translation type="unfinished"/>
+        <translation>1 година</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="477"/>
         <source>2 Hours</source>
-        <translation type="unfinished"/>
+        <translation>2 години</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="478"/>
         <source>6 Hours</source>
-        <translation type="unfinished"/>
+        <translation>6 годин</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="479"/>
@@ -3458,7 +3458,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="258"/>
         <source>Accept cookies</source>
-        <translation type="unfinished"/>
+        <translation>Приймати куки</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
@@ -3473,12 +3473,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="353"/>
         <source>Keep until:</source>
-        <translation type="unfinished"/>
+        <translation>Зберігати до:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="369"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Спливає</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="374"/>
@@ -3488,22 +3488,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="379"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Завжди питати</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="435"/>
         <source>Add...</source>
-        <translation type="unfinished"/>
+        <translation>Додати...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="445"/>
         <source>Edit...</source>
-        <translation type="unfinished"/>
+        <translation>Редагувати...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="455"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
@@ -3513,17 +3513,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="486"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="503"/>
         <source>Allow access to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Дозволити доступ до буферу обміну</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="551"/>
         <source>Allow moving and resizing of windows</source>
-        <translation type="unfinished"/>
+        <translation>Дозволити тягати та змінювати розміри вікон</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="558"/>
@@ -3573,47 +3573,47 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="810"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>Порт</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="817"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Сервери</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="824"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="866"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Усе</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="883"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>Протокол</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="911"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Шлях до PAC-файлу:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="928"/>
@@ -3633,7 +3633,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="58"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>На вимогу</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="59"/>
@@ -3643,27 +3643,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Інформувати сайти, щоб не стежили за мною.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Інформувати сайти, що я дозволяю за собою стежити</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Не інформувати сайти про мої налаштування</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="65"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Завжди</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="66"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Лише існуючі</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="67"/>
@@ -3847,17 +3847,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Вкладки та вікна</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>Сторінка</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Print</source>
-        <translation type="unfinished"/>
+        <translation>Друк</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
@@ -3897,18 +3897,18 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <source>Clone Tab</source>
-        <translation type="unfinished"/>
+        <translation>Клонувати вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>Прицвяхувати вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>Відокремити вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
@@ -3918,7 +3918,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Закрити всі інші вкладки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
@@ -4118,12 +4118,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Go to Page or Search</source>
-        <translation type="unfinished"/>
+        <translation>Перейти до сторінки або пошук</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Go to Home Page</source>
-        <translation type="unfinished"/>
+        <translation>Перейти на домашню сторінку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
@@ -4408,7 +4408,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="172"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Проксі</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
@@ -4493,7 +4493,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="190"/>
         <source>Quick Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Швидкі налаштування</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
@@ -4528,27 +4528,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Зберегти відео...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Зберегти аудіо...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Скопіювати посилання на відео</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Скопіювати посилання на аудіо</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>

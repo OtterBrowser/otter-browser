@@ -2453,22 +2453,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>撤销</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo: %1</source>
-        <translation type="unfinished"/>
+        <translation>撤销： %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo: %1</source>
-        <translation type="unfinished"/>
+        <translation>重做： %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
@@ -3173,7 +3173,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="545"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="563"/>
@@ -3401,7 +3401,7 @@ Select another one.</source>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="632"/>
         <source>Override</source>
-        <translation type="unfinished"/>
+        <translation>覆盖</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
@@ -3808,7 +3808,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>工具栏</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
@@ -3906,12 +3906,12 @@ Select another one.</source>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>固定标签</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>取消固定标签</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
@@ -3921,7 +3921,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>关闭其它标签</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
@@ -4151,7 +4151,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Stop Scheduled Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>停止自动刷新日程</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
@@ -4331,7 +4331,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Activate Content</source>
-        <translation type="unfinished"/>
+        <translation>激活内容</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
@@ -4361,12 +4361,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="162"/>
         <source>Block pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>阻挡弹出窗口</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="163"/>
         <source>Load Images</source>
-        <translation type="unfinished"/>
+        <translation>载入图像</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="164"/>
@@ -4376,17 +4376,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="165"/>
         <source>Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>Cookies政策</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="166"/>
         <source>Third-party Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>第三方Cookies政策</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="167"/>
         <source>Plugins</source>
-        <translation type="unfinished"/>
+        <translation>插件</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="168"/>
@@ -4396,27 +4396,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="169"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>允许 JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="170"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>允许使用Java</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="171"/>
         <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <translation>允许发送 Referrer信息</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="172"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>代理</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>启用代理</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4501,7 +4501,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>重置选项</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="192"/>
@@ -4526,52 +4526,52 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>编辑链接性书签...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>视频另存为...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>音频另存为...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>复制视频链接到剪贴板</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>复制音频链接到剪贴板</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>暂停</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>取消静音</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>取消固定标签</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="33"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>显示窗口</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="39"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>查看下载</translation>
     </message>
 </context>
 <context>

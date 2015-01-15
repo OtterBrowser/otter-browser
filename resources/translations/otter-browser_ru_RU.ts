@@ -430,12 +430,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="421"/>
         <source>Failed to parse bookmarks file. No bookmarks were loaded.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось разобрать файл закладок. Закладки не были загружены.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="422"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить файл закладок правильно, QXmlStreamReader код ошибки: %1</translation>
     </message>
 </context>
 <context>
@@ -1319,7 +1319,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/Menu.cpp" line="456"/>
         <location filename="../../src/ui/Menu.cpp" line="493"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(непоименованно)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="336"/>
@@ -1349,7 +1349,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="503"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>По-умолчанию</translation>
     </message>
 </context>
 <context>
@@ -1789,22 +1789,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="946"/>
         <source>Policy:</source>
-        <translation type="unfinished"/>
+        <translation>Политика:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="960"/>
         <source>Accept all</source>
-        <translation type="unfinished"/>
+        <translation>Принять всё</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="965"/>
         <source>Allow to only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить только читать существующие</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="970"/>
         <source>Allow to modify existing</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить изменять существующие</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="985"/>
@@ -3095,12 +3095,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>Открыть с помощью</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестно</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
@@ -3332,7 +3332,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="317"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>Параметры сброса</translation>
     </message>
 </context>
 <context>
@@ -3401,7 +3401,7 @@ Select another one.</source>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="632"/>
         <source>Override</source>
-        <translation type="unfinished"/>
+        <translation>Переопределение</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
@@ -3511,7 +3511,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
         <source>Scripting</source>
-        <translation type="unfinished"/>
+        <translation>Сценарии</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="486"/>
@@ -3606,7 +3606,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="866"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Все</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="883"/>
@@ -3646,17 +3646,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Сообщить веб-сайтам, что я не хочу быть отслеживаемым</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Информировать веб-сайты, что я разрешаю слежение</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Не информировать сайты о моих предпочтений</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="65"/>
@@ -3762,12 +3762,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="141"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось выполнить команду &quot;%1&quot;, файл не является исполняемым</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="171"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось выполнить команду &quot;%1&quot; (аргументы: &quot;%2&quot;)</translation>
     </message>
 </context>
 <context>
@@ -4106,7 +4106,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Go</source>
-        <translation type="unfinished"/>
+        <translation>Перейти</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
@@ -4121,7 +4121,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="113"/>
         <source>Go to Page or Search</source>
-        <translation type="unfinished"/>
+        <translation>Перейти к странице или Поиск</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
@@ -4131,7 +4131,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
         <source>Go to Parent Directory</source>
-        <translation type="unfinished"/>
+        <translation>Перейти в родительский каталог</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="116"/>
@@ -4151,7 +4151,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Stop Scheduled Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Остановить запланированную перезагрузку страницы</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
@@ -4161,7 +4161,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Reload and Bypass Cache</source>
-        <translation type="unfinished"/>
+        <translation>Обновить кэш</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
@@ -4281,32 +4281,32 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="146"/>
         <source>Go to Start of the Page</source>
-        <translation type="unfinished"/>
+        <translation>Перейти к началу страницы</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="147"/>
         <source>Go to the End of the Page</source>
-        <translation type="unfinished"/>
+        <translation>Перейти в конец страницы</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="148"/>
         <source>Page Up</source>
-        <translation type="unfinished"/>
+        <translation>Стр. Выше</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="149"/>
         <source>Page Down</source>
-        <translation type="unfinished"/>
+        <translation>Следующая страница </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="150"/>
         <source>Page Left</source>
-        <translation type="unfinished"/>
+        <translation>Стр. слева</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="151"/>
         <source>Page Right</source>
-        <translation type="unfinished"/>
+        <translation>Стр. справа</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="152"/>
@@ -4326,12 +4326,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Activate Search Field</source>
-        <translation type="unfinished"/>
+        <translation>Активировать поле поиска</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Activate Content</source>
-        <translation type="unfinished"/>
+        <translation>Активизировать содержимое</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
@@ -4416,7 +4416,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить Прокси</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4501,7 +4501,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>Опции сброса</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="192"/>
@@ -4526,37 +4526,37 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Изменить ссылку закладки..</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить Видео..</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить Аудио...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать Видео ссылку в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать Аудио ссылку в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>Включить звук</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
@@ -4659,12 +4659,12 @@ Error: %1</source>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="330"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось запустить ассоциированный файловый менеджер, код ошибки: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="385"/>
         <source>Failed to register application to system registry: %0, %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось зарегистрировать приложение в системном регистре: %0, %1</translation>
     </message>
 </context>
 </TS>

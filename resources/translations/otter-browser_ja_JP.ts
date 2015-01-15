@@ -9,7 +9,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation type="unfinished"/>
+        <translation>言語を追加するには、リストから1つを選択するか、任意のコードを入力してください。</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -435,7 +435,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="422"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>ブックマークファイルの読み込みに失敗しました。QXmlStreamReaderエラーコード： %1</translation>
     </message>
 </context>
 <context>
@@ -1292,12 +1292,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="120"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>新しいバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="237"/>
@@ -1312,7 +1312,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="284"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>全て開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="303"/>
@@ -1325,12 +1325,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="336"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>自動検出</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="390"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="399"/>
@@ -1345,7 +1345,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="481"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>デフォルト</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="503"/>
@@ -1518,7 +1518,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="153"/>
         <source>Always ask me where to save files</source>
-        <translation>いつもどこでファイルを保存するかを確認</translation>
+        <translation>ファイルの保存場所を毎回確認する</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="166"/>
@@ -1528,12 +1528,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="173"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>代わりに、新しいタブで新しいウィンドウを開く</translation>
+        <translation>新しいタブの代わりに新しいウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="180"/>
         <source>Delay loading of tabs until selected</source>
-        <translation>未選択のタブを遅延読み込みさせる</translation>
+        <translation>未選択のタブの読み込みを遅らせる</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="187"/>
@@ -1780,7 +1780,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="909"/>
         <source>Accept third-party cookies:</source>
-        <translation>サードパーティのクッキーを受け入れる：</translation>
+        <translation>サードパーティーのクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="934"/>
@@ -1790,22 +1790,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="946"/>
         <source>Policy:</source>
-        <translation type="unfinished"/>
+        <translation>ポリシー：</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="960"/>
         <source>Accept all</source>
-        <translation type="unfinished"/>
+        <translation>すべて許可</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="965"/>
         <source>Allow to only read existing</source>
-        <translation type="unfinished"/>
+        <translation>既読のみ有効にする</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="970"/>
         <source>Allow to modify existing</source>
-        <translation type="unfinished"/>
+        <translation>未読のみ有効にする</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="985"/>
@@ -2224,7 +2224,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="257"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>任意</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="258"/>
@@ -2454,22 +2454,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>取り消す</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="455"/>
         <source>Undo: %1</source>
-        <translation type="unfinished"/>
+        <translation>取り消す: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>やり直し</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="460"/>
         <source>Redo: %1</source>
-        <translation type="unfinished"/>
+        <translation>やり直し: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
@@ -2965,7 +2965,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarToolBarWidget.cpp" line="46"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>閉じたタブ</translation>
     </message>
 </context>
 <context>
@@ -3075,7 +3075,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;ソース: %1
+ターゲット: %2
+サイズ: %3
+ダウンロード: %4
+進捗状況: %5&lt;/div&gt;</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="248"/>
@@ -3092,12 +3096,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>で開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
@@ -3170,7 +3174,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="545"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>すべてのファイル(*)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="563"/>
@@ -3398,7 +3402,7 @@ Select another one.</source>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="632"/>
         <source>Override</source>
-        <translation type="unfinished"/>
+        <translation>オーバーライド</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
@@ -3463,7 +3467,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
         <source>Accept third-party cookies:</source>
-        <translation>サードパーティのクッキーを受け入れる：</translation>
+        <translation>サードパーティーのクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="295"/>
@@ -3633,7 +3637,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="58"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>任意</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="59"/>
@@ -3643,17 +3647,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>追跡されたくないウェブサイトを通知する</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>追跡できるようにウェブサイトを知らせる</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>任意のウェブサイトを通知しない</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="65"/>
@@ -3706,12 +3710,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/Window.cpp" line="167"/>
         <source>Print Page</source>
-        <translation type="unfinished"/>
+        <translation>ページを印刷</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="180"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>プリント表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="296"/>
@@ -3759,12 +3763,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="141"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation type="unfinished"/>
+        <translation>コマンドの実行に失敗しました。&quot;%1&quot;。 ファイルは実行ファイルではありません。</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="171"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>コマンドの実行に失敗しました。&quot;%1&quot;(因数: &quot;%2&quot;)</translation>
     </message>
 </context>
 <context>
@@ -3805,7 +3809,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="51"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>ツールバー</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="52"/>
@@ -3847,22 +3851,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="59"/>
         <source>Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>タブとウィンドウ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="60"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>ページ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="61"/>
         <source>Print</source>
-        <translation type="unfinished"/>
+        <translation>印刷</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="62"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="66"/>
@@ -3897,18 +3901,18 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="72"/>
         <source>Clone Tab</source>
-        <translation>重複タブ</translation>
+        <translation>タブの複製</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Pin Tab</source>
-        <translation type="unfinished"/>
+        <translation>タブをピン留めする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"/>
+        <translation>タブを切り離す</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
@@ -3918,7 +3922,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="76"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>他のタブを閉じる</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
@@ -4103,7 +4107,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="110"/>
         <source>Go</source>
-        <translation type="unfinished"/>
+        <translation>移動</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="111"/>
@@ -4123,7 +4127,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="114"/>
         <source>Go to Home Page</source>
-        <translation type="unfinished"/>
+        <translation>ホームページへ移動</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="115"/>
@@ -4148,7 +4152,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="119"/>
         <source>Stop Scheduled Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>ページの読み込みを停止</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="121"/>
@@ -4158,7 +4162,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="122"/>
         <source>Reload and Bypass Cache</source>
-        <translation type="unfinished"/>
+        <translation>リロードし、キャッシュに留める</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="123"/>
@@ -4323,12 +4327,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Activate Search Field</source>
-        <translation type="unfinished"/>
+        <translation>検索窓をアクティブに</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Activate Content</source>
-        <translation type="unfinished"/>
+        <translation>コンテンツをアクティブに</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
@@ -4358,12 +4362,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="162"/>
         <source>Block pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>ポップアップをブロック</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="163"/>
         <source>Load Images</source>
-        <translation type="unfinished"/>
+        <translation>画像を読み込む</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="164"/>
@@ -4373,17 +4377,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="165"/>
         <source>Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>クッキーのポリシー</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="166"/>
         <source>Third-party Cookies Policy</source>
-        <translation type="unfinished"/>
+        <translation>サードパーティーのクッキーのポリシー</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="167"/>
         <source>Plugins</source>
-        <translation type="unfinished"/>
+        <translation>プラグイン</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="168"/>
@@ -4393,27 +4397,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="169"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScriptを有効にする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="170"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>Javaを有効にする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="171"/>
         <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <translation>リファラーを有効にする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="172"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>プロキシ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Enable Proxy</source>
-        <translation type="unfinished"/>
+        <translation>プロキシを有効にする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
@@ -4423,12 +4427,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="176"/>
         <source>Inspect Page</source>
-        <translation>ページを点検</translation>
+        <translation>ページを調査</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="177"/>
         <source>Inspect Element...</source>
-        <translation>要素を点検...</translation>
+        <translation>要素を調査...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="178"/>
@@ -4458,7 +4462,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="183"/>
         <source>Lock Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>ツールバーを固定</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="184"/>
@@ -4498,7 +4502,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
         <source>Reset Options</source>
-        <translation type="unfinished"/>
+        <translation>オプションをリセット</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="192"/>
@@ -4518,57 +4522,57 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="195"/>
         <source>Exit</source>
-        <translation>退出</translation>
+        <translation>終了</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
         <source>Edit Link Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>ブックマークのリンク先を編集...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Video...</source>
-        <translation type="unfinished"/>
+        <translation>ビデオを保存...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="719"/>
         <source>Save Audio...</source>
-        <translation type="unfinished"/>
+        <translation>オーディオを保存...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>クリップボードにビデオリンクをコピー</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="725"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>クリップボードにオーディオリンクをコピー</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="743"/>
         <source>Pause</source>
-        <translation type="unfinished"/>
+        <translation>停止</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="750"/>
         <source>Unmute</source>
-        <translation type="unfinished"/>
+        <translation>ミュートを解除する</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>
         <source>Unpin Tab</source>
-        <translation type="unfinished"/>
+        <translation>タブのピン留めを外す</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="33"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>ウィンドウを表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="39"/>
         <source>Transfers</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロード</translation>
     </message>
 </context>
 <context>
@@ -4656,7 +4660,7 @@ Error: %1</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="330"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>ファイルの関連付けマネージャを実行できませんでした。エラーコード：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="385"/>
