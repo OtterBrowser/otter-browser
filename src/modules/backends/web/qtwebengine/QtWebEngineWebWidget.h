@@ -65,6 +65,7 @@ protected:
 protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
+	void linkHovered(const QString &link);
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();

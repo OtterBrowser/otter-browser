@@ -50,6 +50,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
 }
 
 void QtWebEngineWebWidget::print(QPrinter *printer)
@@ -76,6 +77,11 @@ void QtWebEngineWebWidget::pageLoadFinished()
 	notifyUrlChanged(getUrl());
 
 	emit loadingChanged(false);
+}
+
+void QtWebEngineWebWidget::linkHovered(const QString &link)
+{
+	setStatusMessage(link, true);
 }
 
 void QtWebEngineWebWidget::goToHistoryIndex(int index)
