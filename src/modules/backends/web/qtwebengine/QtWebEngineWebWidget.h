@@ -27,6 +27,8 @@
 namespace Otter
 {
 
+class ContentsDialog;
+
 class QtWebEngineWebWidget : public WebWidget
 {
 	Q_OBJECT
@@ -50,6 +52,9 @@ public:
 	bool find(const QString &text, FindFlags flags = HighlightAllFind);
 
 public slots:
+	void clearOptions();
+	void showDialog(ContentsDialog *dialog);
+	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
 	void setHistory(const WindowHistoryInformation &history);
@@ -61,6 +66,7 @@ protected:
 
 	void updateOptions(const QUrl &url);
 	void setOptions(const QVariantHash &options);
+	QWebEnginePage* getPage();
 
 protected slots:
 	void pageLoadStarted();
@@ -79,6 +85,10 @@ private:
 	bool m_isLoading;
 	bool m_isTyped;
 
+signals:
+	void aboutToReload();
+
+friend class QtWebEnginePage;
 friend class QtWebEngineWebBackend;
 };
 

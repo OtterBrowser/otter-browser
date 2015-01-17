@@ -18,9 +18,12 @@
 **************************************************************************/
 
 #include "QtWebEngineWebWidget.h"
+#include "QtWebEnginePage.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
 #include "../../../../core/Utils.h"
+#include "../../../../ui/ContentsDialog.h"
+#include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QFileInfo>
@@ -38,6 +41,8 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_isLoading(false),
 	m_isTyped(false)
 {
+	m_webView->setPage(new QtWebEnginePage(this));
+
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(m_webView);
 	layout->setContentsMargins(0, 0, 0, 0);
@@ -83,6 +88,33 @@ void QtWebEngineWebWidget::pageLoadFinished()
 void QtWebEngineWebWidget::linkHovered(const QString &link)
 {
 	setStatusMessage(link, true);
+}
+
+void QtWebEngineWebWidget::clearOptions()
+{
+	WebWidget::clearOptions();
+
+	updateOptions(getUrl());
+}
+
+void QtWebEngineWebWidget::showDialog(ContentsDialog *dialog)
+{
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->showDialog(dialog);
+	}
+}
+
+void QtWebEngineWebWidget::hideDialog(ContentsDialog *dialog)
+{
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->hideDialog(dialog);
+	}
 }
 
 void QtWebEngineWebWidget::goToHistoryIndex(int index)
@@ -133,6 +165,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ReloadAction:
+			emit aboutToReload();
+
 			m_webView->page()->triggerAction(QWebEnginePage::Stop);
 			m_webView->page()->triggerAction(QWebEnginePage::Reload);
 
@@ -434,6 +468,11 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 	}
 
 	return NULL;
+}
+
+QWebEnginePage* QtWebEngineWebWidget::getPage()
+{
+	return m_webView->page();
 }
 
 QString QtWebEngineWebWidget::getTitle() const
