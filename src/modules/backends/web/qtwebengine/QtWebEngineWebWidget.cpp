@@ -26,6 +26,7 @@
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
 #include <QtWebEngineWidgets/QWebEngineHistory>
+#include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>
 
@@ -289,7 +290,13 @@ void QtWebEngineWebWidget::updateNavigationActions()
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
-	Q_UNUSED(url)
+	QWebEngineSettings *settings = m_webView->page()->settings();
+	settings->setAttribute(QWebEngineSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaScriptCanAccessClipboard"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
+	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
 }
 
 void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
