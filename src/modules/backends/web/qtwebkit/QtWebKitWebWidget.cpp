@@ -23,7 +23,7 @@
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
-#include "QtWebKitWebPage.h"
+#include "QtWebKitPage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/BookmarksManager.h"
@@ -108,7 +108,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 		m_networkManager = new QtWebKitNetworkManager(isPrivate, this);
 	}
 
-	m_page = new QtWebKitWebPage(m_networkManager, this);
+	m_page = new QtWebKitPage(m_networkManager, this);
 	m_page->setParent(m_webView);
 	m_page->setPluginFactory(m_pluginFactory);
 

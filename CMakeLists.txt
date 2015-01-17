@@ -163,10 +163,10 @@ set(otter_src
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
+	src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitWebPage.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp

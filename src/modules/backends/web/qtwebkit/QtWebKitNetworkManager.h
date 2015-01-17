@@ -78,7 +78,7 @@ signals:
 	void documentLoadProgressChanged(int progress);
 	void statusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
-friend class QtWebKitWebPage;
+friend class QtWebKitPage;
 friend class QtWebKitWebWidget;
 };
 

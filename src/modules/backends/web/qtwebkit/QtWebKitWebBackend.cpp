@@ -20,7 +20,7 @@
 
 #include "QtWebKitWebBackend.h"
 #include "QtWebKitHistoryInterface.h"
-#include "QtWebKitWebPage.h"
+#include "QtWebKitPage.h"
 #include "QtWebKitWebWidget.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
@@ -41,7 +41,7 @@ QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
-	QtWebKitWebPage *page = new QtWebKitWebPage();
+	QtWebKitPage *page = new QtWebKitPage();
 	const QList<QString> userAgentSplited = page->getDefaultUserAgent().split(QLatin1Char(' '));
 
 	for (int i = 1; i < userAgentSplited.count(); ++i)

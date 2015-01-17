@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "QtWebKitWebPage.h"
+#include "QtWebKitPage.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitWebBackend.h"
 #include "QtWebKitWebWidget.h"
@@ -48,7 +48,7 @@
 namespace Otter
 {
 
-QtWebKitWebPage::QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
+QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
 	m_networkManager(networkManager),
@@ -63,7 +63,7 @@ QtWebKitWebPage::QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKi
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
-QtWebKitWebPage::QtWebKitWebPage() : QWebPage(),
+QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(NULL),
 	m_backend(NULL),
 	m_networkManager(NULL),
@@ -71,7 +71,7 @@ QtWebKitWebPage::QtWebKitWebPage() : QWebPage(),
 {
 }
 
-void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value)
+void QtWebKitPage::optionChanged(const QString &option, const QVariant &value)
 {
 	Q_UNUSED(value)
 
@@ -81,7 +81,7 @@ void QtWebKitWebPage::optionChanged(const QString &option, const QVariant &value
 	}
 }
 
-void QtWebKitWebPage::pageLoadFinished()
+void QtWebKitPage::pageLoadFinished()
 {
 	m_ignoreJavaScriptPopups = false;
 
@@ -96,7 +96,7 @@ void QtWebKitWebPage::pageLoadFinished()
 	}
 }
 
-void QtWebKitWebPage::updatePageStyleSheets(const QUrl &url)
+void QtWebKitPage::updatePageStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
 	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
@@ -127,7 +127,7 @@ void QtWebKitWebPage::updatePageStyleSheets(const QUrl &url)
 	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + styleSheet.toUtf8().toBase64()));
 }
 
-void QtWebKitWebPage::updateBlockedPageElements(const QStringList domainList, const bool isException)
+void QtWebKitPage::updateBlockedPageElements(const QStringList domainList, const bool isException)
 {
 	for (int i = 0; i < domainList.count(); ++i)
 	{
@@ -159,7 +159,7 @@ void QtWebKitWebPage::updateBlockedPageElements(const QStringList domainList, co
 	}
 }
 
-void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
+void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 {
 	if (m_ignoreJavaScriptPopups)
 	{
@@ -194,12 +194,12 @@ void QtWebKitWebPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	}
 }
 
-void QtWebKitWebPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
+void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
 {
 	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line);
 }
 
-void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
+void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
 	if (action == InspectElement && m_widget)
 	{
@@ -209,7 +209,7 @@ void QtWebKitWebPage::triggerAction(QWebPage::WebAction action, bool checked)
 	QWebPage::triggerAction(action, checked);
 }
 
-QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
+QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
 	{
@@ -233,17 +233,17 @@ QWebPage* QtWebKitWebPage::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
-QString QtWebKitWebPage::userAgentForUrl(const QUrl &url) const
+QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
 {
 	return m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
 }
 
-QString QtWebKitWebPage::getDefaultUserAgent() const
+QString QtWebKitPage::getDefaultUserAgent() const
 {
 	return QWebPage::userAgentForUrl(QUrl());
 }
 
-bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
+bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
 {
 	if (request.url().scheme() == QLatin1String("javascript") && frame)
 	{
@@ -317,7 +317,7 @@ bool QtWebKitWebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRe
 	return true;
 }
 
-bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
+bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 {
 	if (m_ignoreJavaScriptPopups)
 	{
@@ -352,7 +352,7 @@ bool QtWebKitWebPage::javaScriptConfirm(QWebFrame *frame, const QString &message
 	return dialog.isAccepted();
 }
 
-bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result)
+bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result)
 {
 	if (m_ignoreJavaScriptPopups)
 	{
@@ -401,7 +401,7 @@ bool QtWebKitWebPage::javaScriptPrompt(QWebFrame *frame, const QString &message,
 	return dialog.isAccepted();
 }
 
-bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
+bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)
 {
 	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
 	{
@@ -468,7 +468,7 @@ bool QtWebKitWebPage::extension(QWebPage::Extension extension, const QWebPage::E
 	return false;
 }
 
-bool QtWebKitWebPage::shouldInterruptJavaScript()
+bool QtWebKitPage::shouldInterruptJavaScript()
 {
 	if (m_widget)
 	{
@@ -491,7 +491,7 @@ bool QtWebKitWebPage::shouldInterruptJavaScript()
 	return QWebPage::shouldInterruptJavaScript();
 }
 
-bool QtWebKitWebPage::supportsExtension(QWebPage::Extension extension) const
+bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 {
 	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
 }

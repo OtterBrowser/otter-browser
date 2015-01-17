@@ -36,7 +36,7 @@ namespace Otter
 class ContentsDialog;
 class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
-class QtWebKitWebPage;
+class QtWebKitPage;
 class QtWebKitPluginFactory;
 
 class QtWebKitWebWidget : public WebWidget
@@ -152,7 +152,7 @@ private:
 	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
 
 	QWebView *m_webView;
-	QtWebKitWebPage *m_page;
+	QtWebKitPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
 	QWebInspector *m_inspector;
 	QToolButton *m_inspectorCloseButton;
@@ -184,7 +184,7 @@ signals:
 friend class QtWebKitNetworkManager;
 friend class QtWebKitPluginFactory;
 friend class QtWebKitWebBackend;
-friend class QtWebKitWebPage;
+friend class QtWebKitPage;
 };
 
 }

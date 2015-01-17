@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_QTWEBKITWEBPAGE_H
-#define OTTER_QTWEBKITWEBPAGE_H
+#ifndef OTTER_QTWEBKITPAGE_H
+#define OTTER_QTWEBKITPAGE_H
 
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/WindowsManager.h"
@@ -34,12 +34,12 @@ class QtWebKitWebWidget;
 class WebBackend;
 class WebWidget;
 
-class QtWebKitWebPage : public QWebPage
+class QtWebKitPage : public QWebPage
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebKitWebPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
+	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 
 	void triggerAction(WebAction action, bool checked = false);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
@@ -50,7 +50,7 @@ public slots:
 	void updatePageStyleSheets(const QUrl &url = QUrl());
 
 protected:
-	QtWebKitWebPage();
+	QtWebKitPage();
 
 	void updateBlockedPageElements(const QStringList domainList, const bool isException);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
