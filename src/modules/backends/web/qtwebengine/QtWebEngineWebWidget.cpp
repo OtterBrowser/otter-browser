@@ -22,10 +22,12 @@
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
 #include "../../../../core/Utils.h"
+#include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
 #include <QtWebEngineWidgets/QWebEngineHistory>
@@ -57,6 +59,8 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
+	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
+	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 }
 
 void QtWebEngineWebWidget::print(QPrinter *printer)
@@ -248,6 +252,52 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		default:
 			break;
 	}
+}
+
+void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
+{
+	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(url, authenticator, this);
+	authenticationDialog->setButtonsVisible(false);
+
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+
+	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+
+	QEventLoop eventLoop;
+
+	showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	hideDialog(&dialog);
+}
+
+void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy)
+{
+	Q_UNUSED(url)
+
+	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy, authenticator, this);
+	authenticationDialog->setButtonsVisible(false);
+
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+
+	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+
+	QEventLoop eventLoop;
+
+	showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	hideDialog(&dialog);
 }
 
 void QtWebEngineWebWidget::notifyTitleChanged()
