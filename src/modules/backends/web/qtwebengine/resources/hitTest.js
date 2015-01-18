@@ -1,9 +1,9 @@
 var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement);
 var result = {
 	alternateText: '',
-	boundingRectangle: { w: 0, h: 0, t: 0, l: 0 },
 	formUrl: '',
 	frameUrl: '',
+	geometry: { x: 0, y: 0, w: 0, h: 0 },
 	hasControls: false,
 	imageUrl: '',
 	isContentEditable: false,
@@ -19,6 +19,9 @@ var result = {
 
 if (element)
 {
+	var geometry = element.getBoundingClientRect();
+
+	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 	result.isContentEditable = element.isContentEditable;
 	result.tagName = element.tagName.toLowerCase();
 

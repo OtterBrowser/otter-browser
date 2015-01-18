@@ -45,6 +45,7 @@ public:
 		QUrl imageUrl;
 		QUrl linkUrl;
 		QUrl mediaUrl;
+		QRect geometry;
 		bool hasControls;
 		bool isContentEditable;
 		bool isLooped;
@@ -55,20 +56,24 @@ public:
 
 		HitTestResult(const QVariant &result)
 		{
-			title = result.toMap().value(QLatin1String("title")).toString();
-			tagName = result.toMap().value(QLatin1String("tagName")).toString();
-			alternateText = result.toMap().value(QLatin1String("alternateText")).toString();
-			longDescription = result.toMap().value(QLatin1String("longDescription")).toString();
-			formUrl = QUrl(result.toMap().value(QLatin1String("formUrl")).toString());
-			frameUrl = QUrl(result.toMap().value(QLatin1String("frameUrl")).toString());
-			imageUrl = QUrl(result.toMap().value(QLatin1String("imageUrl")).toString());
-			linkUrl = QUrl(result.toMap().value(QLatin1String("linkUrl")).toString());
-			mediaUrl = QUrl(result.toMap().value(QLatin1String("mediaUrl")).toString());
-			hasControls = result.toMap().value(QLatin1String("hasControls")).toBool();
-			isContentEditable = result.toMap().value(QLatin1String("isContentEditable")).toBool();
-			isLooped = result.toMap().value(QLatin1String("isLooped")).toBool();
-			isMuted = result.toMap().value(QLatin1String("isMuted")).toBool();
-			isPaused = result.toMap().value(QLatin1String("isPaused")).toBool();
+			const QVariantMap map = result.toMap();
+			const QVariantMap geometryMap = map.value(QLatin1String("geometry")).toMap();
+
+			title = map.value(QLatin1String("title")).toString();
+			tagName = map.value(QLatin1String("tagName")).toString();
+			alternateText = map.value(QLatin1String("alternateText")).toString();
+			longDescription = map.value(QLatin1String("longDescription")).toString();
+			formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
+			frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
+			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
+			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
+			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
+			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
+			hasControls = map.value(QLatin1String("hasControls")).toBool();
+			isContentEditable = map.value(QLatin1String("isContentEditable")).toBool();
+			isLooped = map.value(QLatin1String("isLooped")).toBool();
+			isMuted = map.value(QLatin1String("isMuted")).toBool();
+			isPaused = map.value(QLatin1String("isPaused")).toBool();
 		}
 	};
 
@@ -103,6 +108,7 @@ public slots:
 protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
+	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void handleContextMenu(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void updateOptions(const QUrl &url);
@@ -118,6 +124,8 @@ protected slots:
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
+	void updateUndo();
+	void updateRedo();
 	void updatePageActions(const QUrl &url);
 	void updateNavigationActions();
 	void updateEditActions();

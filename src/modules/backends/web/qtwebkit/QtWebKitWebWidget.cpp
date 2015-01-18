@@ -1087,7 +1087,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::SaveImageToDiskAction:
 			if (m_hitResult.imageUrl().isValid())
 			{
-				emit downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
+				downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
 			}
 
 			break;
@@ -1156,7 +1156,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl().isValid())
 			{
-				emit downloadFile(QNetworkRequest(m_hitResult.mediaUrl()));
+				downloadFile(QNetworkRequest(m_hitResult.mediaUrl()));
 			}
 
 			break;
@@ -1929,8 +1929,8 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 			action->setEnabled(true);
 
 			break;
-		case Action::ViewSourceAction:
 		case Action::CheckSpellingAction:
+		case Action::ViewSourceAction:
 			action->setEnabled(false);
 
 			break;
