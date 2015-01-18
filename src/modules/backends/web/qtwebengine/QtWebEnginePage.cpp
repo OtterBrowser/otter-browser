@@ -77,6 +77,8 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 		file.open(QIODevice::ReadOnly);
 
 		runJavaScript(file.readAll());
+
+		file.close();
 	}
 }
 

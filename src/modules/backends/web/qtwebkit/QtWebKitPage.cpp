@@ -112,6 +112,8 @@ void QtWebKitPage::updatePageStyleSheets(const QUrl &url)
 		file.open(QIODevice::ReadOnly);
 
 		mainFrame()->evaluateJavaScript(file.readAll());
+
+		file.close();
 	}
 
 	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());

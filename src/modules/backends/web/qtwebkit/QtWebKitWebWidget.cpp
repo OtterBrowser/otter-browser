@@ -845,7 +845,7 @@ void QtWebKitWebWidget::updateMediaActions()
 
 	if (m_actions.contains(Action::MediaLoopAction))
 	{
-		m_actions[Action::MediaLoopAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.controls")).toBool());
+		m_actions[Action::MediaLoopAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.looped")).toBool());
 		m_actions[Action::MediaLoopAction]->setEnabled(isMedia);
 	}
 

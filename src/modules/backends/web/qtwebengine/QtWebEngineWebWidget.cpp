@@ -21,6 +21,7 @@
 #include "QtWebEnginePage.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
+#include "../../../../core/SearchesManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -30,20 +31,47 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
+#include <QtGui/QContextMenuEvent>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>
+
+template<typename Arg, typename R, typename C>
+
+struct InvokeWrapper
+{
+	R *receiver;
+
+	void (C::*memberFunction)(Arg);
+
+	void operator()(Arg result)
+	{
+		(receiver->*memberFunction)(result);
+	}
+};
+
+template<typename Arg, typename R, typename C>
+
+InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFunction)(Arg))
+{
+	InvokeWrapper<Arg, R, C> wrapper = {receiver, memberFunction};
+
+	return wrapper;
+}
 
 namespace Otter
 {
 
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
+	m_ignoreContextMenu(false),
 	m_isLoading(false),
 	m_isTyped(false)
 {
 	m_webView->setPage(new QtWebEnginePage(this));
+	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+	m_webView->installEventFilter(this);
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(m_webView);
@@ -300,6 +328,65 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	hideDialog(&dialog);
 }
 
+void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
+{
+	m_hitResult = HitTestResult(result);
+
+	if (m_ignoreContextMenu || (m_webView->selectedText().isEmpty() && m_clickPosition.isNull()))
+	{
+		return;
+	}
+
+	updateEditActions();
+
+	MenuFlags flags = NoMenu;
+
+	if (m_hitResult.linkUrl.isValid())
+	{
+		if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
+		{
+			flags |= MailMenu;
+		}
+		else
+		{
+			flags |= LinkMenu;
+		}
+	}
+
+	if (!m_hitResult.imageUrl.isEmpty())
+	{
+		qDebug() << "image";
+		flags |= ImageMenu;
+	}
+
+	if (m_hitResult.mediaUrl.isValid())
+	{
+		flags |= MediaMenu;
+	}
+
+	if (m_hitResult.isContentEditable)
+	{
+		flags |= EditMenu;
+	}
+
+	if (flags == NoMenu || flags == FormMenu)
+	{
+		flags |= StandardMenu;
+
+		if (m_hitResult.frameUrl.isValid())
+		{
+			flags |= FrameMenu;
+		}
+	}
+qDebug() << flags;
+	WebWidget::showContextMenu(m_clickPosition, flags);
+}
+
+void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
+{
+	m_hitResult = HitTestResult(result);
+}
+
 void QtWebEngineWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -370,6 +457,243 @@ void QtWebEngineWebWidget::updateNavigationActions()
 	{
 		m_actions[Action::LoadPluginsAction]->setEnabled(false);
 	}
+}
+
+void QtWebEngineWebWidget::updateEditActions()
+{
+	if (m_actions.contains(Action::CutAction))
+	{
+		m_actions[Action::CutAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Cut)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::CopyAction))
+	{
+		m_actions[Action::CopyAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::CopyPlainTextAction))
+	{
+		m_actions[Action::CopyPlainTextAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::PasteAction))
+	{
+		m_actions[Action::PasteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::PasteAndGoAction))
+	{
+		m_actions[Action::PasteAndGoAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::DeleteAction))
+	{
+		m_actions[Action::DeleteAction]->setEnabled(m_webView->hasSelection() && m_hitResult.isContentEditable);
+	}
+
+	if (m_actions.contains(Action::ClearAllAction))
+	{
+		m_actions[Action::ClearAllAction]->setEnabled(m_webView->hasSelection());
+	}
+
+	if (m_actions.contains(Action::SearchAction))
+	{
+		SearchInformation *engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+
+		m_actions[Action::SearchAction]->setEnabled(engine != NULL);
+		m_actions[Action::SearchAction]->setIcon((!engine || engine->icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
+		m_actions[Action::SearchAction]->setOverrideText(engine ? engine->title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[Action::SearchAction]->setToolTip(engine ? engine->description : tr("No search engines defined"));
+	}
+
+	if (m_actions.contains(Action::SearchMenuAction))
+	{
+		m_actions[Action::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+	}
+
+	updateLinkActions();
+	updateFrameActions();
+	updateImageActions();
+	updateMediaActions();
+}
+
+void QtWebEngineWebWidget::updateLinkActions()
+{
+	const bool isLink = m_hitResult.linkUrl.isValid();
+
+	if (m_actions.contains(Action::OpenLinkAction))
+	{
+		m_actions[Action::OpenLinkAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInCurrentTabAction))
+	{
+		m_actions[Action::OpenLinkInCurrentTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewTabAction))
+	{
+		m_actions[Action::OpenLinkInNewTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewTabBackgroundAction))
+	{
+		m_actions[Action::OpenLinkInNewTabBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewWindowAction))
+	{
+		m_actions[Action::OpenLinkInNewWindowAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewWindowBackgroundAction))
+	{
+		m_actions[Action::OpenLinkInNewWindowBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::CopyLinkToClipboardAction))
+	{
+		m_actions[Action::CopyLinkToClipboardAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::BookmarkLinkAction))
+	{
+		m_actions[Action::BookmarkLinkAction]->setOverrideText(HistoryManager::hasUrl(m_hitResult.linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark...") : QT_TRANSLATE_NOOP("actions", "Bookmark Link..."));
+		m_actions[Action::BookmarkLinkAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::SaveLinkToDiskAction))
+	{
+		m_actions[Action::SaveLinkToDiskAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::SaveLinkToDownloadsAction))
+	{
+		m_actions[Action::SaveLinkToDownloadsAction]->setEnabled(isLink);
+	}
+}
+
+void QtWebEngineWebWidget::updateFrameActions()
+{
+	const bool isFrame = m_hitResult.frameUrl.isValid();
+
+	if (m_actions.contains(Action::OpenFrameInCurrentTabAction))
+	{
+		m_actions[Action::OpenFrameInCurrentTabAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(Action::OpenFrameInNewTabAction))
+	{
+		m_actions[Action::OpenFrameInNewTabAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(Action::OpenFrameInNewTabBackgroundAction))
+	{
+		m_actions[Action::OpenFrameInNewTabBackgroundAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(Action::CopyFrameLinkToClipboardAction))
+	{
+		m_actions[Action::CopyFrameLinkToClipboardAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(Action::ReloadFrameAction))
+	{
+		m_actions[Action::ReloadFrameAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(Action::ViewFrameSourceAction))
+	{
+		m_actions[Action::ViewFrameSourceAction]->setEnabled(false);
+	}
+}
+
+void QtWebEngineWebWidget::updateImageActions()
+{
+	const bool isImage = !m_hitResult.imageUrl.isEmpty();
+	const bool isOpened = getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+	const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256);
+
+	if (m_actions.contains(Action::OpenImageInNewTabAction))
+	{
+		m_actions[Action::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image"));
+		m_actions[Action::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
+	}
+
+	if (m_actions.contains(Action::SaveImageToDiskAction))
+	{
+		m_actions[Action::SaveImageToDiskAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(Action::CopyImageToClipboardAction))
+	{
+		m_actions[Action::CopyImageToClipboardAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(Action::CopyImageUrlToClipboardAction))
+	{
+		m_actions[Action::CopyImageUrlToClipboardAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(Action::ReloadImageAction))
+	{
+		m_actions[Action::ReloadImageAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(Action::ImagePropertiesAction))
+	{
+		m_actions[Action::ImagePropertiesAction]->setEnabled(isImage);
+	}
+}
+
+void QtWebEngineWebWidget::updateMediaActions()
+{
+	const bool isMedia = m_hitResult.mediaUrl.isValid();
+	const bool isVideo = (m_hitResult.tagName == QLatin1String("video"));
+
+	if (m_actions.contains(Action::SaveMediaToDiskAction))
+	{
+		m_actions[Action::SaveMediaToDiskAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Save Video...") : QT_TRANSLATE_NOOP("actions", "Save Audio..."));
+		m_actions[Action::SaveMediaToDiskAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(Action::CopyMediaUrlToClipboardAction))
+	{
+		m_actions[Action::CopyMediaUrlToClipboardAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Copy Video Link to Clipboard") : QT_TRANSLATE_NOOP("actions", "Copy Audio Link to Clipboard"));
+		m_actions[Action::CopyMediaUrlToClipboardAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(Action::MediaControlsAction))
+	{
+		m_actions[Action::MediaControlsAction]->setChecked(m_hitResult.hasControls);
+		m_actions[Action::MediaControlsAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(Action::MediaLoopAction))
+	{
+		m_actions[Action::MediaLoopAction]->setChecked(m_hitResult.isLooped);
+		m_actions[Action::MediaLoopAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(Action::MediaPlayPauseAction))
+	{
+		m_actions[Action::MediaPlayPauseAction]->setOverrideText(m_hitResult.isPaused ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+		m_actions[Action::MediaPlayPauseAction]->setIcon(Utils::getIcon(m_hitResult.isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		m_actions[Action::MediaPlayPauseAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(Action::MediaMuteAction))
+	{
+		m_actions[Action::MediaMuteAction]->setOverrideText(m_hitResult.isMuted ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+		m_actions[Action::MediaMuteAction]->setIcon(Utils::getIcon(m_hitResult.isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		m_actions[Action::MediaMuteAction]->setEnabled(isMedia);
+	}
+}
+
+void QtWebEngineWebWidget::updateBookmarkActions()
+{
+	updatePageActions(getUrl());
+	updateLinkActions();
 }
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
@@ -660,6 +984,27 @@ bool QtWebEngineWebWidget::find(const QString &text, FindFlags flags)
 	m_webView->findText(text, nativeFlags);
 
 	return false;
+}
+
+bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+		file.open(QIODevice::ReadOnly);
+
+		m_clickPosition = contextMenuEvent->pos();
+
+		m_webView->page()->runJavaScript(QString(file.readAll()).arg(contextMenuEvent->pos().x() / m_webView->zoomFactor()).arg(contextMenuEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
+
+		file.close();
+
+		return true;
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }

@@ -34,6 +34,44 @@ class QtWebEngineWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
+	struct HitTestResult
+	{
+		QString title;
+		QString tagName;
+		QString alternateText;
+		QString longDescription;
+		QUrl formUrl;
+		QUrl frameUrl;
+		QUrl imageUrl;
+		QUrl linkUrl;
+		QUrl mediaUrl;
+		bool hasControls;
+		bool isContentEditable;
+		bool isLooped;
+		bool isMuted;
+		bool isPaused;
+
+		HitTestResult() : hasControls(false), isContentEditable(false), isLooped(false), isMuted(false), isPaused(false) {}
+
+		HitTestResult(const QVariant &result)
+		{
+			title = result.toMap().value(QLatin1String("title")).toString();
+			tagName = result.toMap().value(QLatin1String("tagName")).toString();
+			alternateText = result.toMap().value(QLatin1String("alternateText")).toString();
+			longDescription = result.toMap().value(QLatin1String("longDescription")).toString();
+			formUrl = QUrl(result.toMap().value(QLatin1String("formUrl")).toString());
+			frameUrl = QUrl(result.toMap().value(QLatin1String("frameUrl")).toString());
+			imageUrl = QUrl(result.toMap().value(QLatin1String("imageUrl")).toString());
+			linkUrl = QUrl(result.toMap().value(QLatin1String("linkUrl")).toString());
+			mediaUrl = QUrl(result.toMap().value(QLatin1String("mediaUrl")).toString());
+			hasControls = result.toMap().value(QLatin1String("hasControls")).toBool();
+			isContentEditable = result.toMap().value(QLatin1String("isContentEditable")).toBool();
+			isLooped = result.toMap().value(QLatin1String("isLooped")).toBool();
+			isMuted = result.toMap().value(QLatin1String("isMuted")).toBool();
+			isPaused = result.toMap().value(QLatin1String("isPaused")).toBool();
+		}
+	};
+
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
@@ -50,6 +88,7 @@ public:
 	bool isLoading() const;
 	bool isPrivate() const;
 	bool find(const QString &text, FindFlags flags = HighlightAllFind);
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void clearOptions();
@@ -64,6 +103,8 @@ public slots:
 protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
+	void handleContextMenu(const QVariant &result);
+	void handleHitTest(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
@@ -79,11 +120,20 @@ protected slots:
 	void notifyIconChanged();
 	void updatePageActions(const QUrl &url);
 	void updateNavigationActions();
+	void updateEditActions();
+	void updateLinkActions();
+	void updateFrameActions();
+	void updateImageActions();
+	void updateMediaActions();
+	void updateBookmarkActions();
 
 private:
 	QWebEngineView *m_webView;
 	QIcon m_icon;
+	HitTestResult m_hitResult;
+	QPoint m_clickPosition;
 	QHash<int, Action*> m_actions;
+	bool m_ignoreContextMenu;
 	bool m_isLoading;
 	bool m_isTyped;
 
