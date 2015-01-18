@@ -47,6 +47,7 @@ protected:
 
 protected slots:
 	void pageLoadFinished();
+	void handlePageLoaded(const QString &result);
 
 private:
 	QtWebEngineWebWidget *m_widget;

@@ -8,7 +8,20 @@
 
 	if (originalImage && !originalImage.classList.contains('hidden'))
 	{
-		originalImage.classList.add('hidden');
+		var styleSheet = document.createElement('style');
+
+		document.head.appendChild(styleSheet);
+
+		styleSheet.sheet.insertRule('html {width:100%;height:100%;}', 0);
+		styleSheet.sheet.insertRule('body {display:-webkit-flex;-webkit-align-items:center;}', 0);
+		styleSheet.sheet.insertRule('img {display:block;margin:auto;-webkit-user-select:none;}', 0);
+		styleSheet.sheet.insertRule('.zoomedIn {display:table;}', 0);
+		styleSheet.sheet.insertRule('.zoomedIn body {display:table-cell;vertical-align:middle;}', 0);
+		styleSheet.sheet.insertRule('.zoomedIn img {cursor:-webkit-zoom-out;}', 0);
+		styleSheet.sheet.insertRule('.zoomedIn .drag {cursor:move;}', 0);
+		styleSheet.sheet.insertRule('.zoomedOut img {max-width:100%;max-height:100%;cursor:-webkit-zoom-in;}', 0);
+
+		originalImage.style.display = 'none';
 
 		var image = originalImage.cloneNode(true);
 		image.removeAttribute('width');

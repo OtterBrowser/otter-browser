@@ -231,6 +231,10 @@ if (${EnableQtwebengine})
 		src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp
 		src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
 	)
+
+	qt5_add_resources(otter_res
+		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
+	)
 endif (${EnableQtwebengine})
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

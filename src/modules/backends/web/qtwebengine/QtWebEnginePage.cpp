@@ -24,8 +24,33 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
+#include <QtCore/QFile>
+#include <QtCore/QRegularExpression>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
+
+template<typename Arg, typename R, typename C>
+
+struct InvokeWrapper
+{
+	R *receiver;
+
+	void (C::*memberFunction)(Arg);
+
+	void operator()(Arg result)
+	{
+		(receiver->*memberFunction)(result);
+	}
+};
+
+template<typename Arg, typename R, typename C>
+
+InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFunction)(Arg))
+{
+	InvokeWrapper<Arg, R, C> wrapper = {receiver, memberFunction};
+
+	return wrapper;
+}
 
 namespace Otter
 {
@@ -40,6 +65,19 @@ QtWebEnginePage::QtWebEnginePage(QtWebEngineWebWidget *parent) : QWebEnginePage(
 void QtWebEnginePage::pageLoadFinished()
 {
 	m_ignoreJavaScriptPopups = false;
+
+	toHtml(invoke(this, &QtWebEnginePage::handlePageLoaded));
+}
+
+void QtWebEnginePage::handlePageLoaded(const QString &result)
+{
+	if (QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1\"").arg(url().toString())).match(result).hasMatch())
+	{
+		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
+		file.open(QIODevice::ReadOnly);
+
+		runJavaScript(file.readAll());
+	}
 }
 
 void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
