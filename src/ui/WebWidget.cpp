@@ -134,7 +134,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::keyPressEvent(QKeyEvent *event)
 {
-	WebWidget::keyPressEvent(event);
+	QWidget::keyPressEvent(event);
 
 	if (m_scrollMode == MoveScroll)
 	{
