@@ -20,6 +20,7 @@
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
+#include "../../../../core/Console.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
 #include "../../../../core/SearchesManager.h"
@@ -34,6 +35,7 @@
 #include <QtCore/QFileInfo>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QImageWriter>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
@@ -294,7 +296,28 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case Action::SaveImageToDiskAction:
 			if (m_hitResult.imageUrl.isValid())
 			{
-				TransfersManager::startTransfer(m_hitResult.imageUrl.toString(), QString(), isPrivate());
+				if (m_hitResult.imageUrl.url().contains(QLatin1String(";base64,")))
+				{
+					const QString imageUrl = m_hitResult.imageUrl.url();
+					const QString imageType = imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11));
+					const QString path = TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType);
+
+					if (path.isEmpty())
+					{
+						return;
+					}
+
+					QImageWriter writer(path);
+
+					if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
+					{
+						Console::addMessage(tr("Failed to save image %0: %1").arg(path).arg(writer.errorString()), OtherMessageCategory, ErrorMessageLevel);
+					}
+				}
+				else
+				{
+					TransfersManager::startTransfer(m_hitResult.imageUrl.toString(), QString(), isPrivate());
+				}
 			}
 
 			break;
