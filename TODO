@@ -19,7 +19,6 @@ Release schedule of planned features (not a full list), note that specific featu
 
 1.0.01 - first stable release (2015-06-01):
 - fine-tune UI (sizes, margins and other details)
-- (at least) preview Blink (QtWebEngine) backend (assuming that there will be usable (pre)release of Qt 5.5 at that time)
 
 Later:
 - spell checking
