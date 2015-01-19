@@ -727,6 +727,7 @@ void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
 	m_hitResult = HitTestResult(result);
 
 	emit hitTestResultReady();
+	emit unlockEventLoop();
 }
 
 void QtWebEngineWebWidget::handleHotClick(const QVariant &result)
@@ -738,6 +739,14 @@ void QtWebEngineWebWidget::handleHotClick(const QVariant &result)
 	if (!m_hitResult.isContentEditable && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
 	{
 		QTimer::singleShot(250, this, SLOT(showHotClickMenu()));
+	}
+}
+
+void QtWebEngineWebWidget::handleScroll(const QVariant &result)
+{
+	if (result.isValid())
+	{
+		m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
 	}
 }
 
@@ -1134,7 +1143,7 @@ void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
 
 void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 {
-	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2)").arg(position.x(), position.y()));
+	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), invoke(this, &QtWebEngineWebWidget::handleScroll));
 }
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
@@ -1584,6 +1593,8 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 			{
+				m_webView->page()->runJavaScript(QStringLiteral("[window.scrollX, window.scrollY]"), invoke(this, &QtWebEngineWebWidget::handleScroll));
+
 				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
 				{
 					m_isUsingRockerNavigation = true;
@@ -1604,7 +1615,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					file.close();
 
-					connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
 					connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
@@ -1651,7 +1662,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					file.close();
 
-					connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
 					connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
@@ -1688,7 +1699,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				file.close();
 
-				connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+				connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
 				connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
@@ -1756,6 +1767,8 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::Wheel)
 		{
+			m_webView->page()->runJavaScript(QStringLiteral("[window.scrollX, window.scrollY]"), invoke(this, &QtWebEngineWebWidget::handleScroll));
+
 			if (getScrollMode() == MoveScroll)
 			{
 				triggerAction(Action::EndScrollAction);

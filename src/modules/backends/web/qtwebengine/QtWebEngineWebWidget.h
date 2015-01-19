@@ -120,6 +120,7 @@ protected:
 	void handleContextMenu(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void handleHotClick(const QVariant &result);
+	void handleScroll(const QVariant &result);
 	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setOptions(const QVariantHash &options);
@@ -163,6 +164,7 @@ private:
 signals:
 	void aboutToReload();
 	void hitTestResultReady();
+	void unlockEventLoop();
 
 friend class QtWebEnginePage;
 friend class QtWebEngineWebBackend;
