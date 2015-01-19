@@ -49,12 +49,13 @@ public:
 		bool hasControls;
 		bool isContentEditable;
 		bool isEmpty;
+		bool isForm;
 		bool isLooped;
 		bool isMuted;
 		bool isPaused;
 		bool isSelected;
 
-		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isLooped(false), isMuted(false), isPaused(false), isSelected(false) {}
+		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isForm(false), isLooped(false), isMuted(false), isPaused(false), isSelected(false) {}
 
 		HitTestResult(const QVariant &result)
 		{
@@ -74,6 +75,7 @@ public:
 			hasControls = map.value(QLatin1String("hasControls")).toBool();
 			isContentEditable = map.value(QLatin1String("isContentEditable")).toBool();
 			isEmpty = map.value(QLatin1String("isEmpty")).toBool();
+			isForm = map.value(QLatin1String("isForm")).toBool();
 			isLooped = map.value(QLatin1String("isLooped")).toBool();
 			isMuted = map.value(QLatin1String("isMuted")).toBool();
 			isPaused = map.value(QLatin1String("isPaused")).toBool();
@@ -119,6 +121,7 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void handleContextMenu(const QVariant &result);
+	void handleCreateSearch(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void handleHotClick(const QVariant &result);
 	void handleImageProperties(const QVariant &result);

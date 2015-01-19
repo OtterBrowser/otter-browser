@@ -8,6 +8,7 @@ var result = {
 	imageUrl: '',
 	isContentEditable: false,
 	isEmpty: true,
+	isForm: false,
 	isLooped: false,
 	isMuted: false,
 	isPaused: false,
@@ -68,9 +69,10 @@ if (element)
 		result.isEmpty = (!element.value || element.value == '');
 	}
 
-	var isForm = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'))
+	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'search')));
+	var isSubmit = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'));
 
-		while (element && ((isForm && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
+	while (element && ((isForm && !result.isForm) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
 	{
 		if (element.title !== '')
 		{
@@ -83,12 +85,19 @@ if (element)
 			{
 				result.linkUrl = element.href;
 			}
-			else if (isForm && result.formUrl == '' && element.tagName.toLowerCase() == 'form')
+			else if ((isForm || (isSubmit && result.formUrl == '')) && element.tagName.toLowerCase() == 'form')
 			{
-				var link = document.createElement('a');
-				link.href = element.action;
+				if ((isSubmit && result.formUrl == ''))
+				{
+					var link = document.createElement('a');
+					link.href = element.action;
 
-				result.formUrl = link.href;
+					result.formUrl = link.href;
+				}
+				else
+				{
+					result.isForm = true;
+				}
 			}
 		}
 
