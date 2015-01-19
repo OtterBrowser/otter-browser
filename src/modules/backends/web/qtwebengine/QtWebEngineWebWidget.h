@@ -146,6 +146,7 @@ protected slots:
 	void updateImageActions();
 	void updateMediaActions();
 	void updateBookmarkActions();
+	void showContextMenu(const QPoint &position = QPoint(-1, -1));
 	void showHotClickMenu();
 
 private:

@@ -506,14 +506,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ContextMenuAction:
-			{
-				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-				file.open(QIODevice::ReadOnly);
-
-				m_webView->page()->runJavaScript(QString(file.readAll()).arg(-1).arg(-1), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
-
-				file.close();
-			}
+			showContextMenu();
 
 			break;
 		case Action::UndoAction:
@@ -1156,9 +1149,19 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
 }
 
+void QtWebEngineWebWidget::showContextMenu(const QPoint &position)
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+	file.open(QIODevice::ReadOnly);
+
+	m_webView->page()->runJavaScript(QString(file.readAll()).arg(position.x()).arg(position.y()), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
+
+	file.close();
+}
+
 void QtWebEngineWebWidget::showHotClickMenu()
 {
-	triggerAction(Action::ContextMenuAction);
+	showContextMenu(m_clickPosition);
 }
 
 void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
@@ -1565,11 +1568,12 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
 			m_ignoreContextMenu = (contextMenuEvent->reason() == QContextMenuEvent::Mouse);
-			m_clickPosition = contextMenuEvent->pos();
 
 			if (contextMenuEvent->reason() == QContextMenuEvent::Keyboard)
 			{
-				triggerAction(Action::ContextMenuAction);
+				m_clickPosition = contextMenuEvent->pos();
+
+				showContextMenu();
 			}
 
 			return true;
@@ -1768,7 +1772,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 						{
 							m_clickPosition = mouseEvent->pos();
 
-							triggerAction(Action::ContextMenuAction);
+							showContextMenu(mouseEvent->pos());
 						}
 					}
 				}
