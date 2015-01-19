@@ -710,12 +710,12 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 
 	MenuFlags flags = NoMenu;
 
-	if (m_hitResult.isForm)
+	if (m_hitResult.flags.testFlag(IsFormTest))
 	{
 		flags |= FormMenu;
 	}
 
-	if (!m_hitResult.imageUrl.isValid() && m_hitResult.isSelected && !m_webView->selectedText().isEmpty())
+	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && !m_webView->selectedText().isEmpty())
 	{
 		flags |= SelectionMenu;
 	}
@@ -742,7 +742,7 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 		flags |= MediaMenu;
 	}
 
-	if (m_hitResult.isContentEditable)
+	if (m_hitResult.flags.testFlag(IsContentEditableTest))
 	{
 		flags |= EditMenu;
 	}
@@ -865,7 +865,7 @@ void QtWebEngineWebWidget::handleHotClick(const QVariant &result)
 
 	emit hitTestResultReady();
 
-	if (!m_hitResult.isContentEditable && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
+	if (!m_hitResult.flags.testFlag(IsContentEditableTest) && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
 	{
 		QTimer::singleShot(250, this, SLOT(showHotClickMenu()));
 	}
@@ -1074,17 +1074,17 @@ void QtWebEngineWebWidget::updateEditActions()
 
 	if (m_actions.contains(Action::DeleteAction))
 	{
-		m_actions[Action::DeleteAction]->setEnabled(m_webView->hasSelection() && m_hitResult.isContentEditable);
+		m_actions[Action::DeleteAction]->setEnabled(m_webView->hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
 	}
 
 	if (m_actions.contains(Action::SelectAllAction))
 	{
-		m_actions[Action::SelectAllAction]->setEnabled(!m_hitResult.isContentEditable || !m_hitResult.isEmpty);
+		m_actions[Action::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsContentEditableTest) || !m_hitResult.flags.testFlag(IsEmptyTest));
 	}
 
 	if (m_actions.contains(Action::ClearAllAction))
 	{
-		m_actions[Action::ClearAllAction]->setEnabled(m_hitResult.isContentEditable && !m_hitResult.isEmpty);
+		m_actions[Action::ClearAllAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
 	}
 
 	if (m_actions.contains(Action::SearchAction))
@@ -1251,27 +1251,27 @@ void QtWebEngineWebWidget::updateMediaActions()
 
 	if (m_actions.contains(Action::MediaControlsAction))
 	{
-		m_actions[Action::MediaControlsAction]->setChecked(m_hitResult.hasControls);
+		m_actions[Action::MediaControlsAction]->setChecked(m_hitResult.flags.testFlag(MediaHasControlsTest));
 		m_actions[Action::MediaControlsAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(Action::MediaLoopAction))
 	{
-		m_actions[Action::MediaLoopAction]->setChecked(m_hitResult.isLooped);
+		m_actions[Action::MediaLoopAction]->setChecked(m_hitResult.flags.testFlag(MediaIsLoopedTest));
 		m_actions[Action::MediaLoopAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(Action::MediaPlayPauseAction))
 	{
-		m_actions[Action::MediaPlayPauseAction]->setOverrideText(m_hitResult.isPaused ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-		m_actions[Action::MediaPlayPauseAction]->setIcon(Utils::getIcon(m_hitResult.isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		m_actions[Action::MediaPlayPauseAction]->setOverrideText(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+		m_actions[Action::MediaPlayPauseAction]->setIcon(Utils::getIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
 		m_actions[Action::MediaPlayPauseAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(Action::MediaMuteAction))
 	{
-		m_actions[Action::MediaMuteAction]->setOverrideText(m_hitResult.isMuted ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-		m_actions[Action::MediaMuteAction]->setIcon(Utils::getIcon(m_hitResult.isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		m_actions[Action::MediaMuteAction]->setOverrideText(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+		m_actions[Action::MediaMuteAction]->setIcon(Utils::getIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		m_actions[Action::MediaMuteAction]->setEnabled(isMedia);
 	}
 }

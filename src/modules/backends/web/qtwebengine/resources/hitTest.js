@@ -1,18 +1,11 @@
 var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement);
 var result = {
 	alternateText: '',
+	flags: 0,
 	formUrl: '',
 	frameUrl: '',
 	geometry: { x: -1, y: -1, w: 0, h: 0 },
-	hasControls: false,
 	imageUrl: '',
-	isContentEditable: false,
-	isEmpty: true,
-	isForm: false,
-	isLooped: false,
-	isMuted: false,
-	isPaused: false,
-	isSelected: false,
 	linkUrl: '',
 	longDescription: '',
 	mediaUrl: '',
@@ -25,8 +18,17 @@ if (element)
 	var geometry = element.getBoundingClientRect();
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
-	result.isContentEditable = element.isContentEditable;
-	result.isSelected = window.getSelection().containsNode(element, true);
+
+	if (element.isContentEditable)
+	{
+		result.flags |= 1;
+	}
+
+	if (window.getSelection().containsNode(element, true))
+	{
+		result.flags |= 8;
+	}
+
 	result.tagName = element.tagName.toLowerCase();
 
 	if (result.tagName == 'iframe' || result.tagName == 'frame')
@@ -52,27 +54,46 @@ if (element)
 		var link = document.createElement('a');
 		link.href = element.src;
 
-		result.hasControls = element.controls;
-		result.isLooped = element.looped;
-		result.isMuted = element.muted;
-		result.isPaused = element.paused;
+		if (element.controls)
+		{
+			result.flags |= 16;
+		}
+
+		if (element.loop)
+		{
+			result.flags |= 32;
+		}
+
+		if (element.muted)
+		{
+			result.flags |= 64;
+		}
+
+		if (element.paused)
+		{
+			result.flags |= 128;
+		}
+
 		result.mediaUrl = link.href;
 	}
 
 	if (result.tagName == 'textarea' || (result.tagName == 'input' && element.type && (element.type == 'text' || element.type == 'search')))
 	{
-		if (!result.isContentEditable && !element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
+		if (!(result.flags & 1) && !element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
 		{
-			result.isContentEditable = true;
+			result.flags |= 1;
 		}
 
-		result.isEmpty = (!element.value || element.value == '');
+		if (!element.value || element.value == '')
+		{
+			result.flags |= 2;
+		}
 	}
 
 	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'search')));
 	var isSubmit = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'));
 
-	while (element && ((isForm && !result.isForm) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
+	while (element && ((isForm && !(result.flags & 4)) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
 	{
 		if (element.title !== '')
 		{
@@ -96,7 +117,7 @@ if (element)
 				}
 				else
 				{
-					result.isForm = true;
+					result.flags |= 4;
 				}
 			}
 		}

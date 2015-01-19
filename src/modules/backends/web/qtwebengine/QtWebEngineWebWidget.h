@@ -34,6 +34,21 @@ class QtWebEngineWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
+	enum HitTestFlag
+	{
+		NoFlagsTest = 0,
+		IsContentEditableTest = 1,
+		IsEmptyTest = 2,
+		IsFormTest = 4,
+		IsSelectedTest = 8,
+		MediaHasControlsTest = 16,
+		MediaIsLoopedTest = 32,
+		MediaIsMutedTest = 64,
+		MediaIsPausedTest = 128
+	};
+
+	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
+
 	struct HitTestResult
 	{
 		QString title;
@@ -46,16 +61,9 @@ public:
 		QUrl linkUrl;
 		QUrl mediaUrl;
 		QRect geometry;
-		bool hasControls;
-		bool isContentEditable;
-		bool isEmpty;
-		bool isForm;
-		bool isLooped;
-		bool isMuted;
-		bool isPaused;
-		bool isSelected;
+		HitTestFlags flags;
 
-		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isForm(false), isLooped(false), isMuted(false), isPaused(false), isSelected(false) {}
+		HitTestResult() : flags(NoFlagsTest) {}
 
 		HitTestResult(const QVariant &result)
 		{
@@ -72,14 +80,7 @@ public:
 			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
 			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
 			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
-			hasControls = map.value(QLatin1String("hasControls")).toBool();
-			isContentEditable = map.value(QLatin1String("isContentEditable")).toBool();
-			isEmpty = map.value(QLatin1String("isEmpty")).toBool();
-			isForm = map.value(QLatin1String("isForm")).toBool();
-			isLooped = map.value(QLatin1String("isLooped")).toBool();
-			isMuted = map.value(QLatin1String("isMuted")).toBool();
-			isPaused = map.value(QLatin1String("isPaused")).toBool();
-			isSelected = map.value(QLatin1String("isSelected")).toBool();
+			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
 		}
 	};
 
