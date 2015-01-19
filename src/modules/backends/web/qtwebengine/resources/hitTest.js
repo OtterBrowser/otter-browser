@@ -7,7 +7,8 @@ var result = {
 	hasControls: false,
 	imageUrl: '',
 	isContentEditable: false,
-	isLooped : false,
+	isEmpty: true,
+	isLooped: false,
 	isMuted: false,
 	isPaused: false,
 	linkUrl: '',
@@ -53,6 +54,16 @@ if (element)
 		result.isMuted = element.muted;
 		result.isPaused = element.paused;
 		result.mediaUrl = link.href;
+	}
+
+	if (result.tagName == 'textarea' || (result.tagName == 'input' && element.type && (element.type == 'text' || element.type == 'search')))
+	{
+		if (!result.isContentEditable && !element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
+		{
+			result.isContentEditable = true;
+		}
+
+		result.isEmpty = (!element.value || element.value == '');
 	}
 
 	var isForm = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'))

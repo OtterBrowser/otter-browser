@@ -492,7 +492,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::DeleteAction:
-//TODO
+			m_webView->page()->runJavaScript(QLatin1String("window.getSelection().deleteFromDocument()"));
+
 			break;
 		case Action::SelectAllAction:
 			m_webView->triggerPageAction(QWebEnginePage::SelectAll);
@@ -832,9 +833,14 @@ void QtWebEngineWebWidget::updateEditActions()
 		m_actions[Action::DeleteAction]->setEnabled(m_webView->hasSelection() && m_hitResult.isContentEditable);
 	}
 
+	if (m_actions.contains(Action::SelectAllAction))
+	{
+		m_actions[Action::SelectAllAction]->setEnabled(!m_hitResult.isContentEditable || !m_hitResult.isEmpty);
+	}
+
 	if (m_actions.contains(Action::ClearAllAction))
 	{
-		m_actions[Action::ClearAllAction]->setEnabled(m_webView->hasSelection());
+		m_actions[Action::ClearAllAction]->setEnabled(m_hitResult.isContentEditable && !m_hitResult.isEmpty);
 	}
 
 	if (m_actions.contains(Action::SearchAction))

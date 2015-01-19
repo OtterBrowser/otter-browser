@@ -661,7 +661,11 @@ void QtWebKitWebWidget::updateEditActions()
 
 	if (m_actions.contains(Action::ClearAllAction))
 	{
-		m_actions[Action::ClearAllAction]->setEnabled(m_page->hasSelection());
+		const QWebElement element = m_hitResult.element();
+		const QString tagName = element.tagName().toLower();
+		const QString type = element.attribute(QLatin1String("type")).toLower();
+
+		m_actions[Action::ClearAllAction]->setEnabled(m_hitResult.isContentEditable() && ((tagName == QLatin1String("textarea") && !element.toPlainText().isEmpty()) || (tagName == QLatin1String("input") && (type.isEmpty() || type == QLatin1String("text") || type == QLatin1String("search")) && !element.attribute(QLatin1String("value")).isEmpty())));
 	}
 
 	if (m_actions.contains(Action::SearchAction))

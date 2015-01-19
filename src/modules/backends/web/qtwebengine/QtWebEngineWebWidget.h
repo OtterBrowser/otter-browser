@@ -48,11 +48,12 @@ public:
 		QRect geometry;
 		bool hasControls;
 		bool isContentEditable;
+		bool isEmpty;
 		bool isLooped;
 		bool isMuted;
 		bool isPaused;
 
-		HitTestResult() : hasControls(false), isContentEditable(false), isLooped(false), isMuted(false), isPaused(false) {}
+		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isLooped(false), isMuted(false), isPaused(false) {}
 
 		HitTestResult(const QVariant &result)
 		{
@@ -71,6 +72,7 @@ public:
 			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
 			hasControls = map.value(QLatin1String("hasControls")).toBool();
 			isContentEditable = map.value(QLatin1String("isContentEditable")).toBool();
+			isEmpty = map.value(QLatin1String("isEmpty")).toBool();
 			isLooped = map.value(QLatin1String("isLooped")).toBool();
 			isMuted = map.value(QLatin1String("isMuted")).toBool();
 			isPaused = map.value(QLatin1String("isPaused")).toBool();
