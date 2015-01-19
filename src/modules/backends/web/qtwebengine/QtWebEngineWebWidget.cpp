@@ -1215,8 +1215,6 @@ void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 {
-	Q_UNUSED(history)
-
 	if (history.index >= 0 && history.index < history.entries.count())
 	{
 		setUrl(history.entries[history.index].url, false);

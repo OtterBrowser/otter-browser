@@ -70,7 +70,10 @@ void QtWebEnginePage::pageLoadFinished()
 
 void QtWebEnginePage::handlePageLoaded(const QString &result)
 {
-	if (QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1\"").arg(url().toString())).match(result).hasMatch())
+	QString string(url().toString());
+	string.truncate(1000);
+
+	if (QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1").arg(QRegularExpression::escape(string))).match(result).hasMatch())
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
 		file.open(QIODevice::ReadOnly);
