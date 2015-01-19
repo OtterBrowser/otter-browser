@@ -381,10 +381,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::CopyImageToClipboardAction:
-//TODO Fetch pixmap
-
-			break;
 		case Action::CopyImageUrlToClipboardAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
@@ -408,10 +404,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ImagePropertiesAction:
+			if (m_hitResult.imageUrl.scheme() == QLatin1String("data"))
 			{
+				QVariantMap properties;
+				properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
+				properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
+
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-//TODO Fetch pixmap
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, m_hitResult.alternateText, m_hitResult.longDescription, QPixmap(), NULL, this);
+				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)
@@ -428,6 +428,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 					parent->hideDialog(&dialog);
 				}
+			}
+			else
+			{
+				m_webView->page()->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleImageProperties));
 			}
 
 			break;
@@ -480,9 +484,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case Action::StopAction:
 			m_webView->triggerPageAction(QWebEnginePage::Stop);
 
-			break;
-		case Action::StopScheduledReloadAction:
-//TODO
 			break;
 		case Action::ReloadAction:
 			emit aboutToReload();
@@ -760,6 +761,38 @@ void QtWebEngineWebWidget::handleHotClick(const QVariant &result)
 	if (!m_hitResult.isContentEditable && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
 	{
 		QTimer::singleShot(250, this, SLOT(showHotClickMenu()));
+	}
+}
+
+void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
+{
+	QVariantMap properties;
+	properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
+	properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
+
+	if (result.isValid())
+	{
+		properties[QLatin1String("width")] = result.toList()[0].toInt();
+		properties[QLatin1String("height")] = result.toList()[1].toInt();
+	}
+
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+	ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
+	imagePropertiesDialog->setButtonsVisible(false);
+
+	if (parent)
+	{
+		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
+		QEventLoop eventLoop;
+
+		parent->showDialog(&dialog);
+
+		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		parent->hideDialog(&dialog);
 	}
 }
 
@@ -1068,11 +1101,6 @@ void QtWebEngineWebWidget::updateImageActions()
 		m_actions[Action::SaveImageToDiskAction]->setEnabled(isImage);
 	}
 
-	if (m_actions.contains(Action::CopyImageToClipboardAction))
-	{
-		m_actions[Action::CopyImageToClipboardAction]->setEnabled(isImage);
-	}
-
 	if (m_actions.contains(Action::CopyImageUrlToClipboardAction))
 	{
 		m_actions[Action::CopyImageUrlToClipboardAction]->setEnabled(isImage);
@@ -1281,6 +1309,8 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 			action->setEnabled(true);
 
 			break;
+		case Action::StopScheduledReloadAction:
+		case Action::CopyImageToClipboardAction:
 		case Action::CheckSpellingAction:
 		case Action::ViewSourceAction:
 		case Action::InspectPageAction:
@@ -1379,7 +1409,6 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 			break;
 		case Action::OpenImageInNewTabAction:
 		case Action::SaveImageToDiskAction:
-		case Action::CopyImageToClipboardAction:
 		case Action::CopyImageUrlToClipboardAction:
 		case Action::ReloadImageAction:
 		case Action::ImagePropertiesAction:

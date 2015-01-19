@@ -121,6 +121,7 @@ protected:
 	void handleContextMenu(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void handleHotClick(const QVariant &result);
+	void handleImageProperties(const QVariant &result);
 	void handleScroll(const QVariant &result);
 	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);

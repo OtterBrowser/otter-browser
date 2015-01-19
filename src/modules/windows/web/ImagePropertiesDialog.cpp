@@ -28,13 +28,16 @@
 namespace Otter
 {
 
-ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alternativeText, const QString &longDescription, const QPixmap &pixmap, QIODevice *device, QWidget *parent) : QDialog(parent),
+ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::ImagePropertiesDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->addressLabelWidget->setText(url.toString());
-	m_ui->alternativeTextLabelWidget->setText(alternativeText);
-	m_ui->longDescriptionLabelWidget->setText(longDescription);
+	m_ui->sizeLabelWidget->setText(tr("Unknown"));
+	m_ui->typeLabelWidget->setText(tr("Unknown"));
+	m_ui->fileSizeLabelWidget->setText(tr("Unknown"));
+	m_ui->alternativeTextLabelWidget->setText(properties.value(QLatin1String("alternativeText")).toString());
+	m_ui->longDescriptionLabelWidget->setText(properties.value(QLatin1String("longDescription")).toString());
 
 	QByteArray array;
 	QImage image;
@@ -96,9 +99,16 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QString &alt
 			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 	}
-	else if (!pixmap.isNull())
+	else if (properties.contains(QLatin1String("width")))
 	{
-		m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(pixmap.width()).arg(pixmap.height()).arg(pixmap.depth()));
+		if (properties.contains(QLatin1String("depth")))
+		{
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel").arg(properties.value(QLatin1String("width")).toInt()).arg(properties.value(QLatin1String("height")).toInt()).arg(properties.value(QLatin1String("depth")).toInt()));
+		}
+		else
+		{
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels").arg(properties.value(QLatin1String("width")).toInt()).arg(properties.value(QLatin1String("height")).toInt()));
+		}
 	}
 
 	if (device)

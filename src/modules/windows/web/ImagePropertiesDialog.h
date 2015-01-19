@@ -36,7 +36,7 @@ class ImagePropertiesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ImagePropertiesDialog(const QUrl &url, const QString &alternativeText, const QString &longDescription, const QPixmap &pixmap, QIODevice *device, QWidget *parent = NULL);
+	explicit ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent = NULL);
 	~ImagePropertiesDialog();
 
 	void setButtonsVisible(bool visible);

@@ -1034,8 +1034,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case Action::ImagePropertiesAction:
 			{
+				QVariantMap properties;
+				properties[QLatin1String("alternativeText")] = m_hitResult.element().attribute(QLatin1String("alt"));
+				properties[QLatin1String("longDescription")] = m_hitResult.element().attribute(QLatin1String("longdesc"));
+
+				if (!m_hitResult.pixmap().isNull())
+				{
+					properties[QLatin1String("width")] = m_hitResult.pixmap().width();
+					properties[QLatin1String("height")] = m_hitResult.pixmap().height();
+					properties[QLatin1String("depth")] = m_hitResult.pixmap().depth();
+				}
+
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), m_hitResult.element().attribute(QLatin1String("alt")), m_hitResult.element().attribute(QLatin1String("longdesc")), m_hitResult.pixmap(), (m_networkManager->cache() ? m_networkManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
+				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), properties, (m_networkManager->cache() ? m_networkManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)
