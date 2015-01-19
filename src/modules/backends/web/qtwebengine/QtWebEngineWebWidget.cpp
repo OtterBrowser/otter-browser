@@ -30,6 +30,7 @@
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
+#include "../../../../ui/MainWindow.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QEventLoop>
@@ -1844,6 +1845,13 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 					event->accept();
 
 					return true;
+				}
+
+				MainWindow *window = MainWindow::findMainWindow(this);
+
+				if (window && window->isFullScreen())
+				{
+					window->triggerAction(Action::FullScreenAction);
 				}
 			}
 		}
