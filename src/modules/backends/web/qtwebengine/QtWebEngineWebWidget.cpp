@@ -39,6 +39,7 @@
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
 template<typename Arg, typename R, typename C>
@@ -669,6 +670,42 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
 {
 	m_hitResult = HitTestResult(result);
+}
+
+void QtWebEngineWebWidget::handleToolTip(const QVariant &result)
+{
+	const HitTestResult hitResult(result);
+	const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
+	const QString link = (hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString();
+	QString text;
+
+	if (toolTipsMode != QLatin1String("disabled"))
+	{
+		const QString title = QString(hitResult.title).replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
+
+		if (toolTipsMode == QLatin1String("extended"))
+		{
+			if (!link.isEmpty())
+			{
+				text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link);
+			}
+			else if (!title.isEmpty())
+			{
+				text = title;
+			}
+		}
+		else
+		{
+			text = title;
+		}
+	}
+
+	setStatusMessage((link.isEmpty() ? hitResult.title : link), true);
+
+	if (!text.isEmpty())
+	{
+		QToolTip::showText(m_webView->mapToGlobal(m_clickPosition), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
+	}
 }
 
 void QtWebEngineWebWidget::notifyTitleChanged()
@@ -1397,6 +1434,25 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		m_webView->page()->runJavaScript(QString(file.readAll()).arg(contextMenuEvent->pos().x() / m_webView->zoomFactor()).arg(contextMenuEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
 
 		file.close();
+
+		return true;
+	}
+	else if (event->type() == QEvent::Resize)
+	{
+		emit progressBarGeometryChanged();
+	}
+	else if (event->type() == QEvent::ToolTip)
+	{
+		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+		file.open(QIODevice::ReadOnly);
+
+		m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+
+		m_webView->page()->runJavaScript(QString(file.readAll()).arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleToolTip));
+
+		file.close();
+
+		event->accept();
 
 		return true;
 	}

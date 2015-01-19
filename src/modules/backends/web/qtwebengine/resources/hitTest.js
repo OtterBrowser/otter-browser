@@ -55,7 +55,7 @@ if (element)
 		result.mediaUrl = link.href;
 	}
 
-	var isForm = ((result.tagName == 'input'|| result.tagName == 'button') && (element.getAttribute('type').toLowerCase() == 'submit' || element.getAttribute('type').toLowerCase() == 'image'))
+	var isForm = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'))
 
 		while (element && ((isForm && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
 	{

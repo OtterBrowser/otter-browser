@@ -111,6 +111,7 @@ protected:
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void handleContextMenu(const QVariant &result);
 	void handleHitTest(const QVariant &result);
+	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
