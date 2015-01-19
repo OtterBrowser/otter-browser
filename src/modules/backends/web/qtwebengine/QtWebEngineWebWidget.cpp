@@ -162,8 +162,6 @@ void QtWebEngineWebWidget::goToHistoryIndex(int index)
 
 void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 {
-	Q_UNUSED(checked)
-
 	switch (identifier)
 	{
 		case Action::OpenLinkAction:
@@ -387,16 +385,20 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::MediaControlsAction:
-//TODO
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.controls = %3; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
+
 			break;
 		case Action::MediaLoopAction:
-//TODO
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.loop = %3; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
+
 			break;
 		case Action::MediaPlayPauseAction:
-//TODO
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { if (element.paused) { element.play(); } else { element.pause(); } }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()));
+
 			break;
 		case Action::MediaMuteAction:
-//TODO
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.muted = !element.muted; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()));
+
 			break;
 		case Action::GoBackAction:
 			m_webView->triggerPageAction(QWebEnginePage::Back);

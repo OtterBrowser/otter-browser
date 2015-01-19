@@ -3,7 +3,7 @@ var result = {
 	alternateText: '',
 	formUrl: '',
 	frameUrl: '',
-	geometry: { x: 0, y: 0, w: 0, h: 0 },
+	geometry: { x: -1, y: -1, w: 0, h: 0 },
 	hasControls: false,
 	imageUrl: '',
 	isContentEditable: false,

@@ -84,7 +84,7 @@ void WebWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(action->getIdentifier());
+		triggerAction(action->getIdentifier(), (action->isCheckable() && action->isChecked()));
 	}
 }
 
