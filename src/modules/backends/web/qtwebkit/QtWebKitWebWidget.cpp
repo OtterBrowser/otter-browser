@@ -2305,19 +2305,19 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 						return true;
 					}
-				}
 
-				if (mouseEvent->button() == Qt::MiddleButton)
-				{
-					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
-
-					const QString tagName = m_hitResult.element().tagName().toLower();
-
-					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+					if (mouseEvent->button() == Qt::MiddleButton)
 					{
-						triggerAction(Action::StartMoveScrollAction);
+						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
 
-						return true;
+						const QString tagName = m_hitResult.element().tagName().toLower();
+
+						if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+						{
+							triggerAction(Action::StartMoveScrollAction);
+
+							return true;
+						}
 					}
 				}
 			}
@@ -2453,7 +2453,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
 
-				if (wheelEvent->modifiers() & Qt::CTRL)
+				if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
 				{
 					setZoom(getZoom() + (wheelEvent->delta() / 16));
 
@@ -2462,7 +2462,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
-
 		}
 		else if (event->type() == QEvent::KeyPress)
 		{

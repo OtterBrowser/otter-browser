@@ -21,6 +21,7 @@
 #include "QtWebEnginePage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/Console.h"
+#include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
 #include "../../../../core/SearchesManager.h"
@@ -33,6 +34,7 @@
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
+#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
@@ -70,13 +72,25 @@ namespace Otter
 
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
+	m_childWidget(NULL),
 	m_ignoreContextMenu(false),
+	m_ignoreContextMenuNextTime(false),
+	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
 	m_isTyped(false)
 {
 	m_webView->setPage(new QtWebEnginePage(this));
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->installEventFilter(this);
+
+	const QList<QWidget*> children = m_webView->findChildren<QWidget*>();
+
+	for (int i = 0; i < children.count(); ++i)
+	{
+		children.at(i)->installEventFilter(this);
+
+		m_childWidget = children.at(i);
+	}
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(m_webView);
@@ -94,6 +108,25 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
 	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
+}
+
+void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
+{
+	WebWidget::focusInEvent(event);
+
+	m_webView->setFocus();
+}
+
+void QtWebEngineWebWidget::mousePressEvent(QMouseEvent *event)
+{
+	WebWidget::mousePressEvent(event);
+
+	if (getScrollMode() == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+
+		m_ignoreContextMenuNextTime = true;
+	}
 }
 
 void QtWebEngineWebWidget::print(QPrinter *printer)
@@ -450,9 +483,9 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
 				file.open(QIODevice::ReadOnly);
 
-				m_clickPosition = QPoint();
-
 				m_webView->page()->runJavaScript(QString(file.readAll()).arg(-1).arg(-1), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
+
+				file.close();
 			}
 
 			break;
@@ -533,6 +566,18 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case Action::ScrollPageRightAction:
 			m_webView->page()->runJavaScript(QStringLiteral("window.scrollBy(%1, 0)").arg(m_webView->width()));
+
+			break;
+		case Action::StartDragScrollAction:
+			setScrollMode(DragScroll);
+
+			break;
+		case Action::StartMoveScrollAction:
+			setScrollMode(MoveScroll);
+
+			break;
+		case Action::EndScrollAction:
+			setScrollMode(NoScroll);
 
 			break;
 		case Action::ActivateContentAction:
@@ -621,6 +666,8 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 {
 	m_hitResult = HitTestResult(result);
 
+	emit hitTestResultReady();
+
 	if (m_ignoreContextMenu || (!m_hitResult.geometry.isValid() && m_clickPosition.isNull()))
 	{
 		return;
@@ -629,6 +676,11 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 	updateEditActions();
 
 	MenuFlags flags = NoMenu;
+
+	if (!m_hitResult.imageUrl.isValid() && m_hitResult.isSelected && !m_webView->selectedText().isEmpty())
+	{
+		flags |= SelectionMenu;
+	}
 
 	if (m_hitResult.linkUrl.isValid())
 	{
@@ -673,6 +725,20 @@ void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
 void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
 {
 	m_hitResult = HitTestResult(result);
+
+	emit hitTestResultReady();
+}
+
+void QtWebEngineWebWidget::handleHotClick(const QVariant &result)
+{
+	m_hitResult = HitTestResult(result);
+
+	emit hitTestResultReady();
+
+	if (!m_hitResult.isContentEditable && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
+	{
+		QTimer::singleShot(250, this, SLOT(showHotClickMenu()));
+	}
 }
 
 void QtWebEngineWebWidget::handleToolTip(const QVariant &result)
@@ -1052,6 +1118,11 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
+}
+
+void QtWebEngineWebWidget::showHotClickMenu()
+{
+	triggerAction(Action::ContextMenuAction);
 }
 
 void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
@@ -1440,39 +1511,298 @@ bool QtWebEngineWebWidget::find(const QString &text, FindFlags flags)
 
 bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::ContextMenu)
+	if (object == m_webView)
 	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		if (event->type() == QEvent::ChildAdded)
+		{
+			QChildEvent *childEvent = static_cast<QChildEvent*>(event);
 
-		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-		file.open(QIODevice::ReadOnly);
+			if (childEvent->child())
+			{
+				childEvent->child()->installEventFilter(this);
 
-		m_clickPosition = contextMenuEvent->pos();
+				m_childWidget = qobject_cast<QWidget*>(childEvent->child());
+			}
+		}
+		else if (event->type() == QEvent::ContextMenu)
+		{
+			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
-		m_webView->page()->runJavaScript(QString(file.readAll()).arg(contextMenuEvent->pos().x() / m_webView->zoomFactor()).arg(contextMenuEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
+			m_ignoreContextMenu = (contextMenuEvent->reason() == QContextMenuEvent::Mouse);
+			m_clickPosition = contextMenuEvent->pos();
 
-		file.close();
+			if (contextMenuEvent->reason() == QContextMenuEvent::Keyboard)
+			{
+				triggerAction(Action::ContextMenuAction);
+			}
 
-		return true;
+			return true;
+		}
+		else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
+		{
+			emit progressBarGeometryChanged();
+		}
+		else if (event->type() == QEvent::ToolTip)
+		{
+			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+			file.open(QIODevice::ReadOnly);
+
+			m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+
+			m_webView->page()->runJavaScript(QString(file.readAll()).arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleToolTip));
+
+			file.close();
+
+			event->accept();
+
+			return true;
+		}
 	}
-	else if (event->type() == QEvent::Resize)
+	else
 	{
-		emit progressBarGeometryChanged();
-	}
-	else if (event->type() == QEvent::ToolTip)
-	{
-		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-		file.open(QIODevice::ReadOnly);
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-		m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+			if (mouseEvent->button() == Qt::BackButton)
+			{
+				triggerAction(Action::GoBackAction);
 
-		m_webView->page()->runJavaScript(QString(file.readAll()).arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleToolTip));
+				event->accept();
 
-		file.close();
+				return true;
+			}
 
-		event->accept();
+			if (mouseEvent->button() == Qt::ForwardButton)
+			{
+				triggerAction(Action::GoForwardAction);
 
-		return true;
+				event->accept();
+
+				return true;
+			}
+
+			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
+			{
+				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
+				{
+					m_isUsingRockerNavigation = true;
+
+					triggerAction(Action::GoBackAction);
+
+					return true;
+				}
+
+				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
+				{
+					QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+					file.open(QIODevice::ReadOnly);
+
+					QEventLoop eventLoop;
+
+					m_webView->page()->runJavaScript(QString(file.readAll()).arg(mouseEvent->pos().x() / m_webView->zoomFactor()).arg(mouseEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHitTest));
+
+					file.close();
+
+					connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+					eventLoop.exec();
+
+					if (m_hitResult.linkUrl.isValid())
+					{
+						openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
+
+						event->accept();
+
+						return true;
+					}
+
+					if (mouseEvent->button() == Qt::MiddleButton)
+					{
+						if (!m_hitResult.linkUrl.isValid() && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName != QLatin1String("input"))
+						{
+							triggerAction(Action::StartMoveScrollAction);
+
+							return true;
+						}
+					}
+				}
+			}
+			else if (mouseEvent->button() == Qt::RightButton)
+			{
+				if (mouseEvent->buttons().testFlag(Qt::LeftButton))
+				{
+					triggerAction(Action::GoForwardAction);
+
+					event->ignore();
+				}
+				else
+				{
+					event->accept();
+
+					QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+					file.open(QIODevice::ReadOnly);
+
+					QEventLoop eventLoop;
+
+					m_webView->page()->runJavaScript(QString(file.readAll()).arg(mouseEvent->pos().x() / m_webView->zoomFactor()).arg(mouseEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHitTest));
+
+					file.close();
+
+					connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+					eventLoop.exec();
+
+					if (m_hitResult.linkUrl.isValid())
+					{
+						m_clickPosition = mouseEvent->pos();
+					}
+
+					GesturesManager::startGesture((m_hitResult.linkUrl.isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), m_childWidget, mouseEvent);
+				}
+
+				return true;
+			}
+		}
+		else if (event->type() == QEvent::MouseButtonRelease)
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (getScrollMode() == MoveScroll)
+			{
+				return true;
+			}
+
+			if (mouseEvent->button() == Qt::MiddleButton)
+			{
+				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+				file.open(QIODevice::ReadOnly);
+
+				QEventLoop eventLoop;
+
+				m_webView->page()->runJavaScript(QString(file.readAll()).arg(mouseEvent->pos().x() / m_webView->zoomFactor()).arg(mouseEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHitTest));
+
+				file.close();
+
+				connect(this, SIGNAL(hitTestResultReady()), &eventLoop, SLOT(quit()));
+				connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+				connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+				eventLoop.exec();
+
+				if (getScrollMode() == DragScroll)
+				{
+					triggerAction(Action::EndScrollAction);
+				}
+				else if (m_hitResult.linkUrl.isValid())
+				{
+					return true;
+				}
+			}
+			else if (mouseEvent->button() == Qt::RightButton && !mouseEvent->buttons().testFlag(Qt::LeftButton))
+			{
+				if (m_isUsingRockerNavigation)
+				{
+					m_isUsingRockerNavigation = false;
+					m_ignoreContextMenuNextTime = true;
+
+					QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+					QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+
+					QCoreApplication::sendEvent(m_webView, &mousePressEvent);
+					QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
+				}
+				else
+				{
+					m_ignoreContextMenu = false;
+
+					if (!GesturesManager::endGesture(m_childWidget, mouseEvent))
+					{
+						if (m_ignoreContextMenuNextTime)
+						{
+							m_ignoreContextMenuNextTime = false;
+						}
+						else
+						{
+							m_clickPosition = mouseEvent->pos();
+
+							triggerAction(Action::ContextMenuAction);
+						}
+					}
+				}
+
+				return true;
+			}
+		}
+		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+			{
+				m_clickPosition = mouseEvent->pos();
+
+				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+				file.open(QIODevice::ReadOnly);
+
+				m_webView->page()->runJavaScript(QString(file.readAll()).arg(mouseEvent->pos().x() / m_webView->zoomFactor()).arg(mouseEvent->pos().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHotClick));
+
+				file.close();
+			}
+		}
+		else if (event->type() == QEvent::Wheel)
+		{
+			if (getScrollMode() == MoveScroll)
+			{
+				triggerAction(Action::EndScrollAction);
+
+				return true;
+			}
+			else
+			{
+				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+				if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
+				{
+					setZoom(getZoom() + (wheelEvent->delta() / 16));
+
+					event->accept();
+
+					return true;
+				}
+			}
+		}
+		else if (event->type() == QEvent::KeyPress)
+		{
+			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+			if (keyEvent->key() == Qt::Key_Escape)
+			{
+				if (isLoading())
+				{
+					triggerAction(Action::StopAction);
+
+					ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
+
+					event->accept();
+
+					return true;
+				}
+
+				if (m_webView->hasSelection())
+				{
+					m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
+
+					event->accept();
+
+					return true;
+				}
+			}
+		}
 	}
 
 	return QObject::eventFilter(object, event);

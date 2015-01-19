@@ -52,8 +52,9 @@ public:
 		bool isLooped;
 		bool isMuted;
 		bool isPaused;
+		bool isSelected;
 
-		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isLooped(false), isMuted(false), isPaused(false) {}
+		HitTestResult() : hasControls(false), isContentEditable(false), isEmpty(true), isLooped(false), isMuted(false), isPaused(false), isSelected(false) {}
 
 		HitTestResult(const QVariant &result)
 		{
@@ -76,6 +77,7 @@ public:
 			isLooped = map.value(QLatin1String("isLooped")).toBool();
 			isMuted = map.value(QLatin1String("isMuted")).toBool();
 			isPaused = map.value(QLatin1String("isPaused")).toBool();
+			isSelected = map.value(QLatin1String("isSelected")).toBool();
 		}
 	};
 
@@ -112,9 +114,12 @@ public slots:
 protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
+	void focusInEvent(QFocusEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void handleContextMenu(const QVariant &result);
 	void handleHitTest(const QVariant &result);
+	void handleHotClick(const QVariant &result);
 	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setOptions(const QVariantHash &options);
@@ -139,20 +144,25 @@ protected slots:
 	void updateImageActions();
 	void updateMediaActions();
 	void updateBookmarkActions();
+	void showHotClickMenu();
 
 private:
 	QWebEngineView *m_webView;
+	QWidget *m_childWidget;
 	QIcon m_icon;
 	HitTestResult m_hitResult;
 	QPoint m_clickPosition;
 	QPoint m_scrollPosition;
 	QHash<int, Action*> m_actions;
 	bool m_ignoreContextMenu;
+	bool m_ignoreContextMenuNextTime;
+	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
 
 signals:
 	void aboutToReload();
+	void hitTestResultReady();
 
 friend class QtWebEnginePage;
 friend class QtWebEngineWebBackend;

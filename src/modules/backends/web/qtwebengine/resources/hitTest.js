@@ -11,6 +11,7 @@ var result = {
 	isLooped: false,
 	isMuted: false,
 	isPaused: false,
+	isSelected: false,
 	linkUrl: '',
 	longDescription: '',
 	mediaUrl: '',
@@ -24,6 +25,7 @@ if (element)
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 	result.isContentEditable = element.isContentEditable;
+	result.isSelected = window.getSelection().containsNode(element, true);
 	result.tagName = element.tagName.toLowerCase();
 
 	if (result.tagName == 'iframe' || result.tagName == 'frame')
