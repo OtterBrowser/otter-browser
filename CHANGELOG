@@ -1,4 +1,4 @@
-0.9.04 (01.01.2015):
+0.9.04 (2015-01-01):
 - added support for mouse gestures;
 - added initial support for customizing toolbars;
 - allow to load plugins on demand;
@@ -7,7 +7,7 @@
 - allow to customize menu button (JSON file);
 - lots of other fixes and improvements.
 
-0.9.03 (01.11.2014):
+0.9.03 (2014-11-01):
 - initial version of sidebar;
 - added possibility to set Otter Browser as default under Windows;
 - added initial versions of Website Preferences and Quick Preferences (F12);
@@ -18,7 +18,7 @@
 - allow to customize menu bar (JSON file);
 - various minor fixes and improvements.
 
-0.9.02 (01.08.2014):
+0.9.02 (2014-08-01):
 - added initial support for content blocking (Adblock Plus compatible);
 - added Opera and HTML (Netscape) bookmarks import;
 - added rocker navigation;
@@ -28,7 +28,7 @@
 - translation related improvements;
 - some other fixes and minor improvements.
 
-0.9.01 (01.06.2014):
+0.9.01 (2014-06-01):
 - added application icon by Walerian Walawski;
 - added error console;
 - added support for additional attributes for bookmarks;
@@ -38,26 +38,26 @@
 - allow to compile using Qt stack available in Ubuntu (outdated QtWebKit);
 - various minor fixes and improvements.
 
-0.5.01 (01.05.2014):
+0.5.01 (2014-05-01):
 - added startup / crash recovery dialog;
 - implemented "Reload Image" action;
 - improved handling of bookmarklets;
 - some other fixes and minor improvements.
 
-0.4.01 (01.04.2014):
+0.4.01 (2014-04-01):
 - added basic full screen mode support;
 - User Agents configuration;
 - various tab bar related fixes;
 - some other fixes and changes.
 
-0.3.01 (01.03.2014):
+0.3.01 (2014-03-01):
 - added option to set custom User Agent (for single tab or whole application);
 - added support for proxy auto-config (PAC);
 - added option to decide if JavaScript should be able to show status messages;
 - implemented "Reuse Current Tab" option;
 - various small fixes.
 
-0.2.01 (01.02.2014):
+0.2.01 (2014-02-01):
 - added support for profiles defining keyboard shortcuts and action macros;
 - added support for proxy configuration;
 - added quick go to or search of clipboard contents on middle click on address field;
@@ -67,7 +67,7 @@
 - minor improvements in cache viewer;
 - some other fixes and minor improvements.
 
-0.1.01 (01.01.2014):
+0.1.01 (2014-01-01):
 - added dedicated context menu for media content (AUDIO and VIDEO tags);
 - added global history with manager;
 - added dialog to clear history (browsing, cookies, caches etc.);
@@ -76,7 +76,7 @@
 - overhauled about: pages;
 - some optimizations and other changes.
 
-0.0.02 (22.12.2013):
+0.0.02 (2013-12-22):
 - added warning in case of SSL errors;
 - added web search capabilities;
 - added advanced configuration page (about:config);
@@ -90,7 +90,7 @@
 - implemented restoring of tab history from previous session;
 - many other changes.
 
-0.0.01 (11.12.2013):
+0.0.01 (2013-12-11):
 - initial release;
 - added basic MDI+TDI interface;
 - added private browsing capabilities;
