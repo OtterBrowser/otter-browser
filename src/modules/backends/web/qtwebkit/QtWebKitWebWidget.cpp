@@ -69,8 +69,6 @@
 namespace Otter
 {
 
-QMap<int, QPixmap> QtWebKitWebWidget::m_scrollCursors;
-
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
 	m_page(NULL),
@@ -79,8 +77,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspectorCloseButton(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
-	m_scrollMode(NoScroll),
-	m_scrollTimer(0),
 	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
@@ -153,82 +149,6 @@ QtWebKitWebWidget::~QtWebKitWebWidget()
 	m_webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 }
 
-void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_scrollTimer)
-	{
-		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
-
-		ScrollDirections directions = NoDirection;
-
-		if (scrollDelta.x() < 0)
- 		{
- 			directions |= LeftDirection;
- 		}
-		else if (scrollDelta.x() > 0)
- 		{
- 			directions |= RightDirection;
- 		}
-
-		if (scrollDelta.y() < 0)
- 		{
- 			directions |= TopDirection;
- 		}
-		else if (scrollDelta.y() > 0)
- 		{
- 			directions |= BottomDirection;
- 		}
-
-		if (!m_scrollCursors.contains(directions))
-		{
-			if (directions == (BottomDirection | LeftDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom-left.png");
-			}
-			else if (directions == (BottomDirection | RightDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom-right.png");
-			}
-			else if (directions == BottomDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-bottom.png");
-			}
-			else if (directions == LeftDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-left.png");
-			}
-			else if (directions == RightDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-right.png");
-			}
-			else if (directions == (TopDirection | LeftDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top-left.png");
-			}
-			else if (directions == (TopDirection | RightDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top-right.png");
-			}
-			else if (directions == TopDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-top.png");
-			}
-			else if (directions == NoDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(":/cursors/scroll-vertical.png");
-			}
-		}
-
- 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
-
-		m_webView->page()->mainFrame()->setScrollPosition(m_webView->page()->mainFrame()->scrollPosition() + scrollDelta);
-	}
-	else
-	{
-		WebWidget::timerEvent(event);
-	}
-}
-
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 {
 	WebWidget::focusInEvent(event);
@@ -241,31 +161,11 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void QtWebKitWebWidget::keyPressEvent(QKeyEvent *event)
-{
-	WebWidget::keyPressEvent(event);
-
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(Action::EndScrollAction);
-	}
-}
-
-void QtWebKitWebWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(Action::EndScrollAction);
-	}
-
-	event->accept();
-}
-
 void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
 {
 	WebWidget::mousePressEvent(event);
 
-	if (m_scrollMode == MoveScroll)
+	if (getScrollMode() == MoveScroll)
 	{
 		triggerAction(Action::EndScrollAction);
 
@@ -1472,44 +1372,15 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::StartDragScrollAction:
-			QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-
-			m_beginCursorPosition = QCursor::pos();
-			m_beginScrollPosition = m_webView->page()->mainFrame()->scrollPosition();
-			m_scrollMode = DragScroll;
+			setScrollMode(DragScroll);
 
 			break;
 		case Action::StartMoveScrollAction:
-			if (!m_scrollCursors.contains(NoDirection))
-			{
-				m_scrollCursors[NoDirection] = QPixmap(":/cursors/scroll-vertical.png");
-			}
-
-			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
-
-			grabKeyboard();
-			grabMouse();
-
-			m_beginCursorPosition = QCursor::pos();
-			m_scrollMode = MoveScroll;
-			m_scrollTimer = startTimer(10);
+			setScrollMode(MoveScroll);
 
 			break;
 		case Action::EndScrollAction:
-			if (m_scrollMode == MoveScroll)
-			{
-				killTimer(m_scrollTimer);
-
-				m_scrollTimer = 0;
-
-				releaseKeyboard();
-				releaseMouse();
-
-			}
-
-			QApplication::restoreOverrideCursor();
-
-			m_scrollMode = NoScroll;
+			setScrollMode(NoScroll);
 
 			break;
 		case Action::ActivateContentAction:
@@ -1874,6 +1745,11 @@ void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 	}
 }
 
+void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
+{
+	m_webView->page()->mainFrame()->setScrollPosition(position);
+}
+
 void QtWebKitWebWidget::setOptions(const QVariantHash &options)
 {
 	WebWidget::setOptions(options);
@@ -2173,6 +2049,11 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 	return pixmap;
 }
 
+QPoint QtWebKitWebWidget::getScrollPosition() const
+{
+	return m_webView->page()->mainFrame()->scrollPosition();
+}
+
 QRect QtWebKitWebWidget::getProgressBarGeometry() const
 {
 	QRect geometry(QPoint(0, (height() - ((m_inspector && m_inspector->isVisible()) ? m_inspector->height() : 0) - 30)), QSize(width(), 30));
@@ -2469,7 +2350,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (m_scrollMode == MoveScroll)
+			if (getScrollMode() == MoveScroll)
 			{
 				return true;
 			}
@@ -2478,7 +2359,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (m_scrollMode == DragScroll)
+				if (getScrollMode() == DragScroll)
 				{
 					triggerAction(Action::EndScrollAction);
 				}
@@ -2562,7 +2443,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::Wheel)
 		{
-			if (m_scrollMode == MoveScroll)
+			if (getScrollMode() == MoveScroll)
 			{
 				triggerAction(Action::EndScrollAction);
 
@@ -2618,10 +2499,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 			}
-		}
-		else if (event->type() == QEvent::MouseMove && m_scrollMode == DragScroll)
-		{
-			m_webView->page()->mainFrame()->setScrollPosition(m_beginScrollPosition + m_beginCursorPosition - QCursor::pos());
 		}
 		else if (event->type() == QEvent::ShortcutOverride)
 		{

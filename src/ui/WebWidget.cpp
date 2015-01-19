@@ -25,17 +25,23 @@
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QUrl>
+#include <QtGui/QContextMenuEvent>
 #include <QtGui/QIcon>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
+QMap<int, QPixmap> WebWidget::m_scrollCursors;
+
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
-	m_reloadTimer(0)
+	m_scrollMode(NoScroll),
+	m_reloadTimer(0),
+	m_scrollTimer(0)
 {
 	Q_UNUSED(isPrivate)
 
@@ -54,6 +60,102 @@ void WebWidget::timerEvent(QTimerEvent *event)
 		{
 			triggerAction(Action::ReloadAction);
 		}
+	}
+	else if (event->timerId() == m_scrollTimer)
+	{
+		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
+
+		ScrollDirections directions = NoDirection;
+
+		if (scrollDelta.x() < 0)
+ 		{
+ 			directions |= LeftDirection;
+ 		}
+		else if (scrollDelta.x() > 0)
+ 		{
+ 			directions |= RightDirection;
+ 		}
+
+		if (scrollDelta.y() < 0)
+ 		{
+ 			directions |= TopDirection;
+ 		}
+		else if (scrollDelta.y() > 0)
+ 		{
+ 			directions |= BottomDirection;
+ 		}
+
+		if (!m_scrollCursors.contains(directions))
+		{
+			if (directions == (BottomDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-left.png"));
+			}
+			else if (directions == (BottomDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-right.png"));
+			}
+			else if (directions == BottomDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom.png"));
+			}
+			else if (directions == LeftDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-left.png"));
+			}
+			else if (directions == RightDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-right.png"));
+			}
+			else if (directions == (TopDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-left.png"));
+			}
+			else if (directions == (TopDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-right.png"));
+			}
+			else if (directions == TopDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top.png"));
+			}
+			else if (directions == NoDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
+			}
+		}
+
+ 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
+
+		setScrollPosition(getScrollPosition() + scrollDelta);
+	}
+}
+
+void WebWidget::keyPressEvent(QKeyEvent *event)
+{
+	WebWidget::keyPressEvent(event);
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+	}
+}
+
+void WebWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(Action::EndScrollAction);
+	}
+
+	event->accept();
+}
+
+void WebWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (m_scrollMode == DragScroll && event->button() == Qt::LeftButton)
+	{
+		setScrollPosition(m_beginScrollPosition + m_beginCursorPosition - QCursor::pos());
 	}
 }
 
@@ -349,6 +451,27 @@ void WebWidget::updateQuickSearch()
 	}
 }
 
+void WebWidget::setStatusMessage(const QString &message, bool override)
+{
+	const QString oldMessage = getStatusMessage();
+
+	if (override)
+	{
+		m_overridingStatusMessage = message;
+	}
+	else
+	{
+		m_javaScriptStatusMessage = message;
+	}
+
+	const QString newMessage = getStatusMessage();
+
+	if (newMessage != oldMessage)
+	{
+		emit statusMessageChanged(newMessage);
+	}
+}
+
 void WebWidget::setOption(const QString &key, const QVariant &value)
 {
 	if (key == QLatin1String("Search/DefaultQuickSearchEngine"))
@@ -443,24 +566,59 @@ void WebWidget::setReloadTime(QAction *action)
 	}
 }
 
-void WebWidget::setStatusMessage(const QString &message, bool override)
+void WebWidget::setScrollMode(WebWidget::ScrollMode mode)
 {
-	const QString oldMessage = getStatusMessage();
+	m_scrollMode = mode;
 
-	if (override)
+	switch (mode)
 	{
-		m_overridingStatusMessage = message;
+		case MoveScroll:
+			if (!m_scrollCursors.contains(NoDirection))
+			{
+				m_scrollCursors[NoDirection] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
+			}
+
+			if (m_scrollTimer == 0)
+			{
+				m_scrollTimer = startTimer(10);
+			}
+
+			grabKeyboard();
+			grabMouse();
+
+			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
+
+			break;
+		case DragScroll:
+			QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+
+			break;
+		default:
+			QApplication::restoreOverrideCursor();
+
+			break;
+	}
+
+	if (mode == NoScroll)
+	{
+		m_beginCursorPosition = QPoint();
+		m_beginScrollPosition = QPoint();
+
+		if (m_scrollTimer > 0)
+		{
+			killTimer(m_scrollTimer);
+
+			m_scrollTimer = 0;
+
+			releaseKeyboard();
+			releaseMouse();
+		}
 	}
 	else
 	{
-		m_javaScriptStatusMessage = message;
-	}
+		m_beginCursorPosition = QCursor::pos();
+		m_beginScrollPosition = getScrollPosition();
 
-	const QString newMessage = getStatusMessage();
-
-	if (newMessage != oldMessage)
-	{
-		emit statusMessageChanged(newMessage);
 	}
 }
 
@@ -541,6 +699,11 @@ QUrl WebWidget::getRequestedUrl() const
 QVariantHash WebWidget::getOptions() const
 {
 	return m_options;
+}
+
+WebWidget::ScrollMode WebWidget::getScrollMode() const
+{
+	return m_scrollMode;
 }
 
 bool WebWidget::hasOption(const QString &key) const

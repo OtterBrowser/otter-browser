@@ -1061,6 +1061,11 @@ void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
 	updateOptions(getUrl());
 }
 
+void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
+{
+	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2)").arg(position.x(), position.y()));
+}
+
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
@@ -1345,6 +1350,11 @@ QIcon QtWebEngineWebWidget::getIcon() const
 QPixmap QtWebEngineWebWidget::getThumbnail()
 {
 	return QPixmap();
+}
+
+QPoint QtWebEngineWebWidget::getScrollPosition() const
+{
+	return m_scrollPosition;
 }
 
 QRect QtWebEngineWebWidget::getProgressBarGeometry() const

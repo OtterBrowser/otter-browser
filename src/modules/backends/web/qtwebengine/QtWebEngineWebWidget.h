@@ -87,6 +87,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
+	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
@@ -103,6 +104,7 @@ public slots:
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
+	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
@@ -143,6 +145,7 @@ private:
 	QIcon m_icon;
 	HitTestResult m_hitResult;
 	QPoint m_clickPosition;
+	QPoint m_scrollPosition;
 	QHash<int, Action*> m_actions;
 	bool m_ignoreContextMenu;
 	bool m_isLoading;

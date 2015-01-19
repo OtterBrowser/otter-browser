@@ -409,16 +409,16 @@ void WebContentsWidget::updateFind(bool backwards)
 		backwards = true;
 	}
 
-	FindFlags flags;
+	WebWidget::FindFlags flags;
 
 	if (backwards)
 	{
-		flags |= BackwardFind;
+		flags |= WebWidget::BackwardFind;
 	}
 
 	if (m_ui->caseSensitiveButton->isChecked())
 	{
-		flags |= CaseSensitiveFind;
+		flags |= WebWidget::CaseSensitiveFind;
 	}
 
 	QPalette palette = parentWidget()->palette();
@@ -442,7 +442,7 @@ void WebContentsWidget::updateFind(bool backwards)
 
 	if (sender() && sender()->objectName() == QLatin1String("caseSensitiveButton"))
 	{
-		m_webWidget->find(m_ui->findLineEdit->text(), (flags | BackwardFind));
+		m_webWidget->find(m_ui->findLineEdit->text(), (flags | WebWidget::BackwardFind));
 	}
 
 	if (m_ui->findWidget->isVisible() && !isPrivate())
@@ -455,19 +455,19 @@ void WebContentsWidget::updateFind(bool backwards)
 
 void WebContentsWidget::updateFindHighlight()
 {
-	FindFlags flags = NoFlagsFind;
+	WebWidget::FindFlags flags = WebWidget::NoFlagsFind;
 
 	if (m_ui->highlightButton->isChecked())
 	{
-		flags |= HighlightAllFind;
+		flags |= WebWidget::HighlightAllFind;
 	}
 
 	if (m_ui->caseSensitiveButton->isChecked())
 	{
-		flags |= CaseSensitiveFind;
+		flags |= WebWidget::CaseSensitiveFind;
 	}
 
-	m_webWidget->find(QString(), (flags | HighlightAllFind));
+	m_webWidget->find(QString(), (flags | WebWidget::HighlightAllFind));
 
 	if (m_ui->findWidget->isVisible())
 	{

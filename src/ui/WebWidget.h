@@ -30,32 +30,6 @@
 namespace Otter
 {
 
-enum MenuFlag
-{
-	NoMenu = 0,
-	StandardMenu = 1,
-	LinkMenu = 2,
-	MailMenu = 4,
-	ImageMenu = 8,
-	MediaMenu = 16,
-	SelectionMenu = 32,
-	EditMenu = 64,
-	FrameMenu = 128,
-	FormMenu = 256
-};
-
-Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
-
-enum FindFlag
-{
-	NoFlagsFind = 0,
-	BackwardFind = 1,
-	CaseSensitiveFind = 2,
-	HighlightAllFind = 4
-};
-
-Q_DECLARE_FLAGS(FindFlags, FindFlag)
-
 class WebBackend;
 
 class WebWidget : public QWidget
@@ -63,6 +37,50 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum ScrollMode
+	{
+		NoScroll = 0,
+		MoveScroll = 1,
+		DragScroll = 2
+	};
+
+	enum ScrollDirection
+	{
+		NoDirection = 0,
+		TopDirection = 1,
+		BottomDirection = 2,
+		RightDirection = 4,
+		LeftDirection = 8
+	};
+
+	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
+
+	enum MenuFlag
+	{
+		NoMenu = 0,
+		StandardMenu = 1,
+		LinkMenu = 2,
+		MailMenu = 4,
+		ImageMenu = 8,
+		MediaMenu = 16,
+		SelectionMenu = 32,
+		EditMenu = 64,
+		FrameMenu = 128,
+		FormMenu = 256
+	};
+
+	Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
+
+	enum FindFlag
+	{
+		NoFlagsFind = 0,
+		BackwardFind = 1,
+		CaseSensitiveFind = 2,
+		HighlightAllFind = 4
+	};
+
+	Q_DECLARE_FLAGS(FindFlags, FindFlag)
+
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
@@ -78,11 +96,13 @@ public:
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
+	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
+	ScrollMode getScrollMode() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;
 	virtual bool isLoading() const = 0;
@@ -95,7 +115,9 @@ public slots:
 	virtual void triggerAction(int identifier, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setOption(const QString &key, const QVariant &value);
+	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
+	void setScrollMode(ScrollMode mode);
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
@@ -104,6 +126,9 @@ protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
 	void startReloadTimer();
 	virtual void setOptions(const QVariantHash &options);
 
@@ -124,8 +149,14 @@ private:
 	QString m_quickSearchEngine;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
+	QPoint m_beginCursorPosition;
+	QPoint m_beginScrollPosition;
 	QVariantHash m_options;
+	ScrollMode m_scrollMode;
 	int m_reloadTimer;
+	int m_scrollTimer;
+
+	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);

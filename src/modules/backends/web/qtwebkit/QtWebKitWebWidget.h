@@ -56,6 +56,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
+	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
@@ -73,6 +74,7 @@ public slots:
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
 	void setOption(const QString &key, const QVariant &value);
+	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
@@ -87,10 +89,7 @@ protected:
 
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
 
-	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void clearPluginToken();
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
@@ -133,24 +132,6 @@ protected slots:
 	void showContextMenu(const QPoint &position = QPoint());
 
 private:
-	enum ScrollMode
-	{
-		NoScroll = 0,
-		MoveScroll = 1,
-		DragScroll = 2
-	};
-
-	enum ScrollDirection
-	{
-		NoDirection = 0,
-		TopDirection = 1,
-		BottomDirection = 2,
-		RightDirection = 4,
-		LeftDirection = 8
-	};
-
-	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
-
 	QWebView *m_webView;
 	QtWebKitPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
@@ -160,23 +141,18 @@ private:
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
-	QPoint m_beginCursorPosition;
-	QPoint m_beginScrollPosition;
 	QPoint m_clickPosition;
 	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QHash<int, Action*> m_actions;
 	QNetworkAccessManager::Operation m_formRequestOperation;
-	ScrollMode m_scrollMode;
-	int m_scrollTimer;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
-	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
 	void aboutToReload();
