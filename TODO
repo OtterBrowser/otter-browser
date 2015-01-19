@@ -1,6 +1,6 @@
 Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
 
-0.9.05 - beta 5 (01.03.2015):
+0.9.05 - beta 5 (2015-03-01):
 - user scripts
 - address field suggestions / drop down history
 - UI for customizing toolbars
@@ -9,7 +9,7 @@ Release schedule of planned features (not a full list), note that specific featu
 - exposing MDI features
 - additional panels for sidebar (page information, notes etc.)
 
-0.9.06 - beta 6 (01.05.2015):
+0.9.06 - beta 6 (2015-05-01):
 - start page
 - passwords manager
 - helper for mouse gestures
@@ -17,7 +17,7 @@ Release schedule of planned features (not a full list), note that specific featu
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
 
-1.0.01 - first stable release (01.06.2015):
+1.0.01 - first stable release (2015-06-01):
 - fine-tune UI (sizes, margins and other details)
 - (at least) preview Blink (QtWebEngine) backend (assuming that there will be usable (pre)release of Qt 5.5 at that time)
 
