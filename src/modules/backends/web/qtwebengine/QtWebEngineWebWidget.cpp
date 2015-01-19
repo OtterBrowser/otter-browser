@@ -129,6 +129,33 @@ void QtWebEngineWebWidget::mousePressEvent(QMouseEvent *event)
 	}
 }
 
+void QtWebEngineWebWidget::search(const QString &query, const QString &engine)
+{
+	QNetworkRequest request;
+	QNetworkAccessManager::Operation method;
+	QByteArray body;
+
+	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
+	{
+		setRequestedUrl(request.url(), false, true);
+		updateOptions(request.url());
+
+		if (method == QNetworkAccessManager::PostOperation)
+		{
+			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/sendPost.js"));
+			file.open(QIODevice::ReadOnly);
+
+			m_webView->page()->runJavaScript(QString(file.readAll()).arg(request.url().toString()).arg(QString(body)));
+
+			file.close();
+		}
+		else
+		{
+			setUrl(request.url(), false);
+		}
+	}
+}
+
 void QtWebEngineWebWidget::print(QPrinter *printer)
 {
 	m_webView->render(printer);
