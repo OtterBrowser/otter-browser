@@ -1305,7 +1305,10 @@ void QtWebEngineWebWidget::showContextMenu(const QPoint &position)
 
 void QtWebEngineWebWidget::showHotClickMenu()
 {
-	showContextMenu(m_clickPosition);
+	if (!m_webView->selectedText().trimmed().isEmpty())
+	{
+		showContextMenu(m_clickPosition);
+	}
 }
 
 void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
