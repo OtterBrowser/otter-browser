@@ -804,6 +804,14 @@ void QtWebEngineWebWidget::handleScroll(const QVariant &result)
 	}
 }
 
+void QtWebEngineWebWidget::handleScrollToAnchor(const QVariant &result)
+{
+	if (result.isValid())
+	{
+		setScrollPosition(QPoint(result.toList()[0].toInt(), result.toList()[1].toInt()));
+	}
+}
+
 void QtWebEngineWebWidget::handleToolTip(const QVariant &result)
 {
 	const HitTestResult hitResult(result);
@@ -1239,8 +1247,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 
 	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
-///FIXME
-//		m_webView->page()->scrollToAnchor(url.fragment());
+		m_webView->page()->runJavaScript(QStringLiteral("var element = document.querySelector('a[name=%1], [id=%1]'); if (element) { var geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), invoke(this, &QtWebEngineWebWidget::handleScrollToAnchor));
 
 		return;
 	}
