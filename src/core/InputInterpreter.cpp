@@ -110,8 +110,9 @@ void InputInterpreter::interpret(const QString &text, OpenHints hints, bool igno
 	}
 
 	const QUrl url = QUrl::fromUserInput(text);
+	const QHostAddress address(text);
 
-	if (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch()))
+	if (!address.isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
 	{
 		emit requestedOpenUrl(url, hints);
 
