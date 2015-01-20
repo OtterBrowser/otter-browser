@@ -25,6 +25,7 @@
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
 #include "../../../../core/SearchesManager.h"
+#include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/AuthenticationDialog.h"
@@ -290,11 +291,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::SaveLinkToDiskAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), isPrivate());
+			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), false, isPrivate());
 
 			break;
 		case Action::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), isPrivate(), true);
+			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), true, isPrivate());
 
 			break;
 		case Action::OpenSelectionAsLinkAction:
@@ -379,7 +380,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				}
 				else
 				{
-					TransfersManager::startTransfer(m_hitResult.imageUrl.toString(), QString(), isPrivate());
+					new Transfer(m_hitResult.imageUrl, QString(), false, isPrivate(), this);
 				}
 			}
 
@@ -441,7 +442,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case Action::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl.isValid())
 			{
-				TransfersManager::startTransfer(m_hitResult.mediaUrl.toString(), QString(), isPrivate());
+				new Transfer(m_hitResult.mediaUrl, QString(), false, isPrivate(), this);
 			}
 
 			break;

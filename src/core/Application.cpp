@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
+#include "Transfer.h"
 #include "TransfersManager.h"
 #include "WebBackendsManager.h"
 #include "./config.h"
@@ -493,13 +494,13 @@ QList<MainWindow*> Application::getWindows() const
 
 bool Application::canClose()
 {
-	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+	const QVector<Transfer*> transfers = TransfersManager::getTransfers();
 	int runningTransfers = 0;
 	bool transfersDialog = false;
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
-		if (transfers.at(i)->state == RunningTransfer)
+		if (transfers.at(i)->getState() == Transfer::RunningState)
 		{
 			++runningTransfers;
 		}

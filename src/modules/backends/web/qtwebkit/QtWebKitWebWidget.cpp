@@ -37,6 +37,7 @@
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
+#include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -332,17 +333,17 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 		QNetworkRequest mutableRequest(request);
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-		TransfersManager::startTransfer(mutableRequest, QString(), isPrivate(), false, true);
+		new Transfer(mutableRequest, QString(), false, isPrivate(), this);
 	}
 	else
 	{
-		TransfersManager::startTransfer(request, QString(), isPrivate());
+		TransfersManager::startTransfer(request, QString(), false, isPrivate());
 	}
 }
 
 void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
-	TransfersManager::startTransfer(reply, QString(), isPrivate());
+	TransfersManager::startTransfer(reply, QString(), false, isPrivate());
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
@@ -923,7 +924,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), isPrivate(), true);
+			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), true, isPrivate());
 
 			break;
 		case Action::OpenSelectionAsLinkAction:

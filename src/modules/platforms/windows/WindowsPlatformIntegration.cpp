@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,6 +20,7 @@
 #include "WindowsPlatformIntegration.h"
 #include "../../../core/Application.h"
 #include "../../../core/Console.h"
+#include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/MainWindow.h"
 
@@ -49,11 +50,11 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
 	{
 		connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(removeWindow(MainWindow*)));
-		connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(TransferInformation*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this , SLOT(updateTaskbarButtons()));
 	}
 }
 
@@ -78,18 +79,18 @@ void WindowsPlatformIntegration::removeWindow(MainWindow *window)
 
 void WindowsPlatformIntegration::updateTaskbarButtons()
 {
-	const QList<TransferInformation*> transfers = TransfersManager::getInstance()->getTransfers();
+	const QVector<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
 	qint64 bytesTotal = 0;
 	qint64 bytesReceived = 0;
 	bool hasActiveTransfers = false;
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
-		if (transfers[i]->state == RunningTransfer && transfers[i]->bytesTotal > 0)
+		if (transfers[i]->getState() == Transfer::RunningState && transfers[i]->getBytesTotal() > 0)
 		{
 			hasActiveTransfers = true;
-			bytesTotal += transfers[i]->bytesTotal;
-			bytesReceived += transfers[i]->bytesReceived;
+			bytesTotal += transfers[i]->getBytesTotal();
+			bytesReceived += transfers[i]->getBytesReceived();
 		}
 	}
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,93 +20,56 @@
 #ifndef OTTER_TRANSFERSMANAGER_H
 #define OTTER_TRANSFERSMANAGER_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QFile>
-#include <QtCore/QMimeType>
 #include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkRequest>
 
 namespace Otter
 {
 
-enum TransferState
-{
-	UnknownTransfer = 0,
-	RunningTransfer = 1,
-	FinishedTransfer = 2,
-	ErrorTransfer = 3
-};
-
-struct TransferInformation
-{
-	QIODevice *device;
-	QString source;
-	QString target;
-	QDateTime started;
-	QDateTime finished;
-	QMimeType mimeType;
-	qint64 speed;
-	qint64 bytesStart;
-	qint64 bytesReceivedDifference;
-	qint64 bytesReceived;
-	qint64 bytesTotal;
-	TransferState state;
-	bool isPrivate;
-	bool isHidden;
-
-	TransferInformation() : device(NULL), speed(0), bytesStart(0), bytesReceivedDifference(0), bytesReceived(0), bytesTotal(-1), state(UnknownTransfer), isPrivate(false), isHidden(false) {}
-};
-
-class NetworkManager;
+class Transfer;
 
 class TransfersManager : public QObject
 {
 	Q_OBJECT
 
 public:
-	~TransfersManager();
-
 	static void createInstance(QObject *parent = NULL);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
-	static TransferInformation* startTransfer(const QString &source, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
-	static TransferInformation* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
-	static TransferInformation* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool privateTransfer = false, bool quickTransfer = false, bool skipTransfers = false);
+	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
+	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
+	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
 	static QString getSavePath(const QString &fileName, QString path = QString());
-	static QList<TransferInformation*> getTransfers();
-	static bool resumeTransfer(TransferInformation *transfer);
-	static bool restartTransfer(TransferInformation *transfer);
-	static bool removeTransfer(TransferInformation *transfer, bool keepFile = true);
-	static bool stopTransfer(TransferInformation *transfer);
+	static QVector<Transfer*> getTransfers();
+	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = QString());
 
 protected:
 	explicit TransfersManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	void startUpdates();
+	void scheduleSave();
+	static void addTransfer(Transfer *transfer);
 
 protected slots:
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void downloadData(QNetworkReply *reply = NULL);
-	void downloadFinished(QNetworkReply *reply = NULL);
-	void downloadError(QNetworkReply::NetworkError error);
 	void save();
+	void transferStarted();
+	void transferFinished();
+	void transferChanged();
+	void transferStopped();
 
 private:
-	int m_updateTimer;
+	int m_saveTimer;
 
 	static TransfersManager *m_instance;
-	static NetworkManager *m_networkManager;
-	static QHash<QNetworkReply*, TransferInformation*> m_replies;
-	static QList<TransferInformation*> m_transfers;
+	static QVector<Transfer*> m_transfers;
+	static bool m_initilized;
 
 signals:
-	void transferStarted(TransferInformation *transfer);
-	void transferFinished(TransferInformation *transfer);
-	void transferUpdated(TransferInformation *transfer);
-	void transferStopped(TransferInformation *transfer);
-	void transferRemoved(TransferInformation *transfer);
+	void transferStarted(Transfer *transfer);
+	void transferFinished(Transfer *transfer);
+	void transferChanged(Transfer *transfer);
+	void transferStopped(Transfer *transfer);
+	void transferRemoved(Transfer *transfer);
 };
 
 }

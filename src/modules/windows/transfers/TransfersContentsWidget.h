@@ -57,15 +57,15 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	TransferInformation* getTransfer(const QModelIndex &index);
-	int findTransfer(TransferInformation *transfer) const;
+	Transfer* getTransfer(const QModelIndex &index);
+	int findTransfer(Transfer *transfer) const;
 
 protected slots:
 	void triggerAction();
-	void addTransfer(TransferInformation *transfer);
-	void removeTransfer(TransferInformation *transfer);
+	void addTransfer(Transfer *transfer);
+	void removeTransfer(Transfer *transfer);
 	void removeTransfer();
-	void updateTransfer(TransferInformation *transfer);
+	void updateTransfer(Transfer *transfer);
 	void openTransfer(const QModelIndex &index = QModelIndex());
 	void openTransfer(QAction *action);
 	void openTransferFolder(const QModelIndex &index = QModelIndex());
@@ -80,7 +80,7 @@ protected slots:
 private:
 	QStandardItemModel *m_model;
 	QHash<int, Action*> m_actions;
-	QHash<TransferInformation*, QQueue<qint64> > m_speeds;
+	QHash<Transfer*, QQueue<qint64> > m_speeds;
 	bool m_isLoading;
 	Ui::TransfersContentsWidget *m_ui;
 };

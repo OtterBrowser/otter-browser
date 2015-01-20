@@ -20,6 +20,7 @@
 #include "TransfersContentsWidget.h"
 #include "ProgressBarDelegate.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/Transfer.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ItemDelegate.h"
 
@@ -64,16 +65,16 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	// In order for the sizeHint method to be called, the ResizeToContents needs to be set up
 	m_ui->transfersView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+	const QVector<Transfer*> transfers = TransfersManager::getTransfers();
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
 		addTransfer(transfers.at(i));
 	}
 
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(TransferInformation*)), this, SLOT(addTransfer(TransferInformation*)));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(TransferInformation*)), this, SLOT(removeTransfer(TransferInformation*)));
-	connect(TransfersManager::getInstance(), SIGNAL(transferUpdated(TransferInformation*)), this, SLOT(updateTransfer(TransferInformation*)));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(addTransfer(Transfer*)));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(removeTransfer(Transfer*)));
+	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfer(Transfer*)));
 	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->transfersView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	connect(m_ui->transfersView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openTransfer(QModelIndex)));
@@ -113,20 +114,15 @@ void TransfersContentsWidget::triggerAction()
 	}
 }
 
-void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
+void TransfersContentsWidget::addTransfer(Transfer *transfer)
 {
-	if (!transfer || transfer->isHidden)
-	{
-		return;
-	}
-
 	QList<QStandardItem*> items;
 	QStandardItem *item = new QStandardItem();
 	item->setData(qVariantFromValue((void*) transfer), Qt::UserRole);
 
 	items.append(item);
 
-	item = new QStandardItem(QFileInfo(transfer->target).fileName());
+	item = new QStandardItem(QFileInfo(transfer->getTarget()).fileName());
 
 	items.append(item);
 
@@ -137,7 +133,7 @@ void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 
 	m_model->appendRow(items);
 
-	if (transfer->state == RunningTransfer)
+	if (transfer->getState() == Transfer::RunningState)
 	{
 		m_speeds[transfer] = QQueue<qint64>();
 	}
@@ -145,7 +141,7 @@ void TransfersContentsWidget::addTransfer(TransferInformation *transfer)
 	updateTransfer(transfer);
 }
 
-void TransfersContentsWidget::removeTransfer(TransferInformation *transfer)
+void TransfersContentsWidget::removeTransfer(Transfer *transfer)
 {
 	const int row = findTransfer(transfer);
 
@@ -159,20 +155,24 @@ void TransfersContentsWidget::removeTransfer(TransferInformation *transfer)
 
 void TransfersContentsWidget::removeTransfer()
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->currentIndex());
+	Transfer *transfer = getTransfer(m_ui->transfersView->currentIndex());
 
 	if (transfer)
 	{
-		if (transfer->state == RunningTransfer && QMessageBox::warning(this, tr("Warning"), tr("This transfer is still running.\nDo you really want to remove it?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+		if (transfer->getState() == Transfer::RunningState && QMessageBox::warning(this, tr("Warning"), tr("This transfer is still running.\nDo you really want to remove it?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 		{
 			return;
 		}
+
+		m_speeds.remove(transfer);
+
+		m_model->removeRow(m_ui->transfersView->currentIndex().row());
 
 		TransfersManager::removeTransfer(transfer);
 	}
 }
 
-void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
+void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 {
 	const int row = findTransfer(transfer);
 
@@ -183,21 +183,21 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 	QString remainingTime;
 
-	if (transfer->state == RunningTransfer)
+	if (transfer->getState() == Transfer::RunningState)
 	{
 		if (!m_speeds.contains(transfer))
 		{
 			m_speeds[transfer] = QQueue<qint64>();
 		}
 
-		m_speeds[transfer].enqueue(transfer->speed);
+		m_speeds[transfer].enqueue(transfer->getSpeed());
 
 		if (m_speeds[transfer].count() > 10)
 		{
 			m_speeds[transfer].dequeue();
 		}
 
-		if (transfer->bytesTotal > 0)
+		if (transfer->getBytesTotal() > 0)
 		{
 			qint64 speedSum = 0;
 			const QList<qint64> speeds = m_speeds[transfer];
@@ -209,7 +209,7 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 			speedSum /= (speeds.count());
 
-			remainingTime = Utils::formatTime(qreal(transfer->bytesTotal - transfer->bytesReceived) / speedSum);
+			remainingTime = Utils::formatTime(qreal(transfer->getBytesTotal() - transfer->getBytesReceived()) / speedSum);
 		}
 	}
 	else
@@ -219,17 +219,17 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 	QIcon icon;
 
-	switch (transfer->state)
+	switch (transfer->getState())
 	{
-		case RunningTransfer:
+		case Transfer::RunningState:
 			icon = Utils::getIcon(QLatin1String("task-ongoing"));
 
 			break;
-		case FinishedTransfer:
+		case Transfer::FinishedState:
 			icon = Utils::getIcon(QLatin1String("task-complete"));
 
 			break;
-		case ErrorTransfer:
+		case Transfer::ErrorState:
 			icon = Utils::getIcon(QLatin1String("task-reject"));
 
 			break;
@@ -238,14 +238,15 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 	}
 
 	m_model->item(row, 0)->setIcon(icon);
-	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->bytesTotal, false, 1));
-	m_model->item(row, 3)->setText((transfer->bytesTotal > 0) ? QString::number(qFloor(((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100), 'f', 0) : QString());
+	m_model->item(row, 1)->setText(QFileInfo(transfer->getTarget()).fileName());
+	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->getBytesTotal(), false, 1));
+	m_model->item(row, 3)->setText((transfer->getBytesTotal() > 0) ? QString::number(qFloor(((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100), 'f', 0) : QString());
 	m_model->item(row, 4)->setText(remainingTime);
-	m_model->item(row, 5)->setText((transfer->state == RunningTransfer) ? Utils::formatUnit(transfer->speed, true, 1) : QString());
-	m_model->item(row, 6)->setText(transfer->started.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
-	m_model->item(row, 7)->setText(transfer->finished.toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
+	m_model->item(row, 5)->setText((transfer->getState() == Transfer::RunningState) ? Utils::formatUnit(transfer->getSpeed(), true, 1) : QString());
+	m_model->item(row, 6)->setText(transfer->getTimeStarted().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
+	m_model->item(row, 7)->setText(transfer->getTimeFinished().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 
-	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->source.toHtmlEscaped()).arg(transfer->target.toHtmlEscaped()).arg((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?')).arg(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived))).arg(QStringLiteral("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg((transfer->getBytesTotal() > 0) ? tr("%1 (%n B)", "", transfer->getBytesTotal()).arg(Utils::formatUnit(transfer->getBytesTotal())) : QString('?')).arg(tr("%1 (%n B)", "", transfer->getBytesReceived()).arg(Utils::formatUnit(transfer->getBytesReceived()))).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? (((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -257,7 +258,7 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		updateActions();
 	}
 
-	const bool isRunning = (transfer && transfer->state == RunningTransfer);
+	const bool isRunning = (transfer && transfer->getState() == Transfer::RunningState);
 
 	if (isRunning != m_isLoading)
 	{
@@ -269,12 +270,12 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 		}
 		else
 		{
-			const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+			const QVector<Transfer*> transfers = TransfersManager::getTransfers();
 			bool hasRunning = false;
 
 			for (int i = 0; i < transfers.count(); ++i)
 			{
-				if (transfers.at(i) && transfers.at(i)->state == RunningTransfer)
+				if (transfers.at(i) && transfers.at(i)->getState() == Transfer::RunningState)
 				{
 					hasRunning = true;
 
@@ -294,31 +295,31 @@ void TransfersContentsWidget::updateTransfer(TransferInformation *transfer)
 
 void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 {
-	TransferInformation *transfer = getTransfer(index.isValid() ? index : m_ui->transfersView->currentIndex());
+	Transfer *transfer = getTransfer(index.isValid() ? index : m_ui->transfersView->currentIndex());
 
 	if (transfer)
 	{
-		Utils::runApplication(QString(), transfer->target);
+		Utils::runApplication(QString(), transfer->getTarget());
 	}
 }
 
 void TransfersContentsWidget::openTransfer(QAction *action)
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->currentIndex());
+	Transfer *transfer = getTransfer(m_ui->transfersView->currentIndex());
 
 	if (transfer && action && !action->data().isNull())
 	{
-		Utils::runApplication(action->data().toString(), transfer->target);
+		Utils::runApplication(action->data().toString(), transfer->getTarget());
 	}
 }
 
 void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 {
-	TransferInformation *transfer = getTransfer(index.isValid() ? index : m_ui->transfersView->currentIndex());
+	Transfer *transfer = getTransfer(index.isValid() ? index : m_ui->transfersView->currentIndex());
 
 	if (transfer)
 	{
-		Utils::runApplication(QString(), QFileInfo(transfer->target).dir().canonicalPath());
+		Utils::runApplication(QString(), QFileInfo(transfer->getTarget()).dir().canonicalPath());
 	}
 }
 
@@ -334,17 +335,17 @@ void TransfersContentsWidget::copyTransferInformation()
 
 void TransfersContentsWidget::stopResumeTransfer()
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
 
 	if (transfer)
 	{
-		if (transfer->state == RunningTransfer)
+		if (transfer->getState() == Transfer::RunningState)
 		{
-			TransfersManager::stopTransfer(transfer);
+			transfer->stop();
 		}
-		else if (transfer->state == ErrorTransfer)
+		else if (transfer->getState() == Transfer::ErrorState)
 		{
-			TransfersManager::resumeTransfer(transfer);
+			transfer->resume();
 		}
 
 		updateActions();
@@ -353,17 +354,17 @@ void TransfersContentsWidget::stopResumeTransfer()
 
 void TransfersContentsWidget::redownloadTransfer()
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
 
 	if (transfer)
 	{
-		TransfersManager::restartTransfer(transfer);
+		transfer->restart();
 	}
 }
 
 void TransfersContentsWidget::startQuickTransfer()
 {
-	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), false, true);
+	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), true, SessionsManager::isPrivate());
 
 	m_ui->downloadLineEdit->clear();
 }
@@ -375,14 +376,14 @@ void TransfersContentsWidget::clearFinishedTransfers()
 
 void TransfersContentsWidget::showContextMenu(const QPoint &point)
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->indexAt(point));
+	Transfer *transfer = getTransfer(m_ui->transfersView->indexAt(point));
 	QMenu menu(this);
 
 	if (transfer)
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
 
-		const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(transfer->mimeType);
+		const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(transfer->getMimeType());
 
 		if (applications.count() > 1)
 		{
@@ -403,7 +404,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 
 		menu.addAction(tr("Open Folder"), this, SLOT(openTransferFolder()));
 		menu.addSeparator();
-		menu.addAction(((transfer->state == ErrorTransfer) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->state == RunningTransfer || transfer->state == ErrorTransfer);
+		menu.addAction(((transfer->getState() == Transfer::ErrorState) ? tr("Resume") : tr("Stop")), this, SLOT(stopResumeTransfer()))->setEnabled(transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState);
 		menu.addAction(tr("Redownload"), this, SLOT(redownloadTransfer()));
 		menu.addSeparator();
 		menu.addAction(tr("Copy Transfer Information"), this, SLOT(copyTransferInformation()));
@@ -411,12 +412,12 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Remove"), this, SLOT(removeTransfer()));
 	}
 
-	const QList<TransferInformation*> transfers = TransfersManager::getTransfers();
+	const QVector<Transfer*> transfers = TransfersManager::getTransfers();
 	int finishedTransfers = 0;
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
-		if (transfers.at(i)->state == FinishedTransfer)
+		if (transfers.at(i)->getState() == Transfer::FinishedState)
 		{
 			++finishedTransfers;
 		}
@@ -428,9 +429,9 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 
 void TransfersContentsWidget::updateActions()
 {
-	TransferInformation *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer = getTransfer(m_ui->transfersView->selectionModel()->hasSelection() ? m_ui->transfersView->selectionModel()->currentIndex() : QModelIndex());
 
-	if (transfer && transfer->state == ErrorTransfer)
+	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{
 		m_ui->stopResumeButton->setText(tr("Resume"));
 		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
@@ -441,7 +442,7 @@ void TransfersContentsWidget::updateActions()
 		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-reject")));
 	}
 
-	m_ui->stopResumeButton->setEnabled(transfer && (transfer->state == RunningTransfer || transfer->state == ErrorTransfer));
+	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
 	m_ui->redownloadButton->setEnabled(transfer);
 
 	getAction(Action::CopyAction)->setEnabled(transfer);
@@ -449,11 +450,11 @@ void TransfersContentsWidget::updateActions()
 
 	if (transfer)
 	{
-		m_ui->sourceLabelWidget->setText(transfer->source);
-		m_ui->targetLabelWidget->setText(transfer->target);
-		m_ui->sizeLabelWidget->setText((transfer->bytesTotal > 0) ? tr("%1 (%n B)", "", transfer->bytesTotal).arg(Utils::formatUnit(transfer->bytesTotal)) : QString('?'));
-		m_ui->downloadedLabelWidget->setText(tr("%1 (%n B)", "", transfer->bytesReceived).arg(Utils::formatUnit(transfer->bytesReceived)));
-		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->bytesTotal > 0) ? (((qreal) transfer->bytesReceived / transfer->bytesTotal) * 100) : 0.0), 0, 'f', 1));
+		m_ui->sourceLabelWidget->setText(transfer->getSource().toString());
+		m_ui->targetLabelWidget->setText(transfer->getTarget());
+		m_ui->sizeLabelWidget->setText((transfer->getBytesTotal() > 0) ? tr("%1 (%n B)", "", transfer->getBytesTotal()).arg(Utils::formatUnit(transfer->getBytesTotal())) : QString('?'));
+		m_ui->downloadedLabelWidget->setText(tr("%1 (%n B)", "", transfer->getBytesReceived()).arg(Utils::formatUnit(transfer->getBytesReceived())));
+		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? (((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
 	}
 	else
 	{
@@ -511,11 +512,11 @@ void TransfersContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-TransferInformation* TransfersContentsWidget::getTransfer(const QModelIndex &index)
+Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index)
 {
 	if (index.isValid() && m_model->item(index.row(), 0))
 	{
-		return static_cast<TransferInformation*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
+		return static_cast<Transfer*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
 	}
 
 	return NULL;
@@ -562,7 +563,7 @@ QIcon TransfersContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("transfers"), false);
 }
 
-int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
+int TransfersContentsWidget::findTransfer(Transfer *transfer) const
 {
 	if (!transfer)
 	{
@@ -571,7 +572,7 @@ int TransfersContentsWidget::findTransfer(TransferInformation *transfer) const
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (transfer == static_cast<TransferInformation*>(m_model->item(i, 0)->data(Qt::UserRole).value<void*>()))
+		if (transfer == static_cast<Transfer*>(m_model->item(i, 0)->data(Qt::UserRole).value<void*>()))
 		{
 			return i;
 		}
