@@ -79,7 +79,7 @@ void WindowsPlatformIntegration::removeWindow(MainWindow *window)
 
 void WindowsPlatformIntegration::updateTaskbarButtons()
 {
-	const QVector<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
+	const QList<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
 	qint64 bytesTotal = 0;
 	qint64 bytesReceived = 0;
 	bool hasActiveTransfers = false;

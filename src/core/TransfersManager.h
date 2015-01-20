@@ -39,7 +39,7 @@ public:
 	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
 	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
 	static QString getSavePath(const QString &fileName, QString path = QString());
-	static QVector<Transfer*> getTransfers();
+	static QList<Transfer*> getTransfers();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = QString());
 
@@ -61,7 +61,7 @@ private:
 	int m_saveTimer;
 
 	static TransfersManager *m_instance;
-	static QVector<Transfer*> m_transfers;
+	static QList<Transfer*> m_transfers;
 	static bool m_initilized;
 
 signals:

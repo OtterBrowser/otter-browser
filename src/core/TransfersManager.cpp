@@ -30,7 +30,7 @@ namespace Otter
 {
 
 TransfersManager* TransfersManager::m_instance = NULL;
-QVector<Transfer*> TransfersManager::m_transfers;
+QList<Transfer*> TransfersManager::m_transfers;
 bool TransfersManager::m_initilized = false;
 
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
@@ -288,7 +288,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 	return path;
 }
 
-QVector<Transfer*> TransfersManager::getTransfers()
+QList<Transfer*> TransfersManager::getTransfers()
 {
 	if (!m_initilized)
 	{
@@ -326,7 +326,10 @@ bool TransfersManager::removeTransfer(Transfer *transfer, bool keepFile)
 
 	m_transfers.removeAll(transfer);
 
-	transfer->stop();
+	if (transfer->getState() == Transfer::RunningState)
+	{
+		transfer->stop();
+	}
 
 	if (!keepFile && !transfer->getTarget().isEmpty() && QFile::exists(transfer->getTarget()))
 	{

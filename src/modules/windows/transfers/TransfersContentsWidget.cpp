@@ -65,7 +65,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	// In order for the sizeHint method to be called, the ResizeToContents needs to be set up
 	m_ui->transfersView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-	const QVector<Transfer*> transfers = TransfersManager::getTransfers();
+	const QList<Transfer*> transfers = TransfersManager::getTransfers();
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -270,7 +270,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 		}
 		else
 		{
-			const QVector<Transfer*> transfers = TransfersManager::getTransfers();
+			const QList<Transfer*> transfers = TransfersManager::getTransfers();
 			bool hasRunning = false;
 
 			for (int i = 0; i < transfers.count(); ++i)
@@ -412,7 +412,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Remove"), this, SLOT(removeTransfer()));
 	}
 
-	const QVector<Transfer*> transfers = TransfersManager::getTransfers();
+	const QList<Transfer*> transfers = TransfersManager::getTransfers();
 	int finishedTransfers = 0;
 
 	for (int i = 0; i < transfers.count(); ++i)
