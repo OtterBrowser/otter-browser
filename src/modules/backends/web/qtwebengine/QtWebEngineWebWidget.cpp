@@ -113,6 +113,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
 	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
+	connect(m_webView->page(), SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
@@ -971,6 +972,46 @@ void QtWebEngineWebWidget::handleToolTip(const QVariant &result)
 	if (!text.isEmpty())
 	{
 		QToolTip::showText(m_webView->mapToGlobal(m_clickPosition), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
+	}
+}
+
+void QtWebEngineWebWidget::handleWindowCloseRequest()
+{
+	const QString mode = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), getUrl()).toString();
+
+	if (mode != QLatin1String("ask"))
+	{
+		if (mode == QLatin1String("allow"))
+		{
+			emit requestedCloseWindow();
+		}
+
+		return;
+	}
+
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	dialog.setCheckBox(tr("Do not show this message again"), false);
+
+	QEventLoop eventLoop;
+
+	showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	hideDialog(&dialog);
+
+	if (dialog.getCheckBoxState())
+	{
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
+	}
+
+	if (dialog.isAccepted())
+	{
+		emit requestedCloseWindow();
 	}
 }
 
