@@ -583,6 +583,8 @@ bool Transfer::resume()
 	{
 		m_updateTimer = startTimer(500);
 	}
+
+	return true;
 }
 
 bool Transfer::restart()
@@ -623,6 +625,8 @@ bool Transfer::restart()
 	{
 		m_updateTimer = startTimer(500);
 	}
+
+	return true;
 }
 
 }
