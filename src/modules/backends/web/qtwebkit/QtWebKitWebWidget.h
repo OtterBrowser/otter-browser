@@ -114,6 +114,7 @@ protected slots:
 	void hideInspector();
 	void linkHovered(const QString &link);
 	void openFormRequest();
+	void handleWindowCloseRequest();
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();

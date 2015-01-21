@@ -43,6 +43,7 @@ public:
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
+	void setParent(Window *window);
 	WebContentsWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
 	WebWidget* getWebWidget();

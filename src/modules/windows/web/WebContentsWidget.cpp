@@ -62,6 +62,11 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	optionChanged(QLatin1String("Browser/ShowDetailedProgressBar"), SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")));
 	optionChanged(QLatin1String("Search/EnableFindInPageAsYouType"), SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")));
 
+	if (window)
+	{
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(updateFind()));
 	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(updateFind()));
@@ -355,31 +360,6 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void WebContentsWidget::setOption(const QString &key, const QVariant &value)
-{
-	m_webWidget->setOption(key, value);
-}
-
-void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
-{
-	m_webWidget->setHistory(history);
-}
-
-void WebContentsWidget::setZoom(int zoom)
-{
-	m_webWidget->setZoom(zoom);
-}
-
-void WebContentsWidget::setUrl(const QUrl &url, bool typed)
-{
-	m_webWidget->setRequestedUrl(url, typed);
-
-	if (typed)
-	{
-		m_webWidget->setFocus();
-	}
-}
-
 void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
 {
 	if (isPrivate())
@@ -488,6 +468,41 @@ void WebContentsWidget::setLoading(bool loading)
 	}
 
 	scheduleGeometryUpdate();
+}
+
+void WebContentsWidget::setOption(const QString &key, const QVariant &value)
+{
+	m_webWidget->setOption(key, value);
+}
+
+void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
+{
+	m_webWidget->setHistory(history);
+}
+
+void WebContentsWidget::setZoom(int zoom)
+{
+	m_webWidget->setZoom(zoom);
+}
+
+void WebContentsWidget::setUrl(const QUrl &url, bool typed)
+{
+	m_webWidget->setRequestedUrl(url, typed);
+
+	if (typed)
+	{
+		m_webWidget->setFocus();
+	}
+}
+
+void WebContentsWidget::setParent(Window *window)
+{
+	ContentsWidget::setParent(window);
+
+	if (window)
+	{
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
+	}
 }
 
 WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)

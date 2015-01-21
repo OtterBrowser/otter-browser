@@ -60,7 +60,6 @@ public:
 	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
 
 	void clear();
-	void close();
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
@@ -82,6 +81,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, bool checked = false);
+	void close();
 	void search(const QString &query, const QString &engine);
 	void setOption(const QString &key, const QVariant &value);
 	void setSearchEngine(const QString &engine);

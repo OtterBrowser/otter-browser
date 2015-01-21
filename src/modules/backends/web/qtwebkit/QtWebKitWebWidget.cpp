@@ -130,6 +130,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
 	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
 	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
+	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
@@ -438,6 +439,74 @@ void QtWebKitWebWidget::openFormRequest()
 
 	m_formRequestUrl = QUrl();
 	m_formRequestBody = QByteArray();
+}
+
+void QtWebKitWebWidget::handleHistory()
+{
+	if (isPrivate())
+	{
+		return;
+	}
+
+	const QUrl url = getUrl();
+	const qint64 identifier = m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toLongLong();
+
+	if (identifier == 0)
+	{
+		QVariantList data;
+		data.append(HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
+		data.append(getZoom());
+		data.append(QPoint(0, 0));
+
+		m_page->history()->currentItem().setUserData(data);
+
+		SessionsManager::markSessionModified();
+		BookmarksManager::updateVisits(url.toString());
+	}
+	else if (identifier > 0)
+	{
+		HistoryManager::updateEntry(identifier, url, getTitle(), m_webView->icon());
+	}
+}
+
+void QtWebKitWebWidget::handleWindowCloseRequest()
+{
+	const QString mode = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), getUrl()).toString();
+
+	if (mode != QLatin1String("ask"))
+	{
+		if (mode == QLatin1String("allow"))
+		{
+			emit requestedCloseWindow();
+		}
+
+		return;
+	}
+
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	dialog.setCheckBox(tr("Do not show this message again"), false);
+
+	QEventLoop eventLoop;
+
+	showDialog(&dialog);
+
+	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	hideDialog(&dialog);
+
+	if (dialog.getCheckBoxState())
+	{
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
+	}
+
+	if (dialog.isAccepted())
+	{
+		emit requestedCloseWindow();
+	}
 }
 
 void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
@@ -1610,34 +1679,6 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 	}
 
 	WebWidget::showContextMenu(hitPosition, flags);
-}
-
-void QtWebKitWebWidget::handleHistory()
-{
-	if (isPrivate())
-	{
-		return;
-	}
-
-	const QUrl url = getUrl();
-	const qint64 identifier = m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toLongLong();
-
-	if (identifier == 0)
-	{
-		QVariantList data;
-		data.append(HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
-		data.append(getZoom());
-		data.append(QPoint(0, 0));
-
-		m_page->history()->currentItem().setUserData(data);
-
-		SessionsManager::markSessionModified();
-		BookmarksManager::updateVisits(url.toString());
-	}
-	else if (identifier > 0)
-	{
-		HistoryManager::updateEntry(identifier, url, getTitle(), m_webView->icon());
-	}
 }
 
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)

@@ -45,7 +45,7 @@ class ContentsWidget : public QWidget
 public:
 	explicit ContentsWidget(Window *window);
 
-	void setParent(Window *window);
+	virtual void setParent(Window *window);
 	virtual ContentsWidget* clone(bool cloneHistory = true);
 	virtual Action* getAction(int identifier);
 	Window* getParent();

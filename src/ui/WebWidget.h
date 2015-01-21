@@ -160,6 +160,7 @@ private:
 	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
+	void requestedCloseWindow();
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
