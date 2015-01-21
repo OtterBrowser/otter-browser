@@ -28,9 +28,16 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->javaScriptCanShowStatusMessagesCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
-	m_ui->javaScriptCanAccessClipboardCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
-	m_ui->javaScriptCanDisableContextMenuCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool());
+	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
+	m_ui->canAccessClipboardCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
+	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool());
+	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
+	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
+
+	const int canCloseWindowsIndex = m_ui->canCloseWindowsComboBox->findData(options.value(QLatin1String("Browser/JavaScriptCanCloseWindows")).toString());
+
+	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -59,9 +66,10 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 QVariantMap JavaScriptPreferencesDialog::getOptions() const
 {
 	QVariantMap options;
-	options[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = m_ui->javaScriptCanShowStatusMessagesCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = m_ui->javaScriptCanAccessClipboardCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->javaScriptCanDisableContextMenuCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = m_ui->canShowStatusMessagesCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = m_ui->canAccessClipboardCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->canDisableContextMenuCheckBox->isChecked();
+	options[QLatin1String("Browser/JavaScriptCanCloseWindows")] = m_ui->canCloseWindowsComboBox->currentData().toString();
 
 	return options;
 }

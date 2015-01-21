@@ -43,7 +43,7 @@
       <attribute name="title">
        <string>Content</string>
       </attribute>
-      <layout class="QGridLayout" name="contentLayout">
+      <layout class="QGridLayout" name="contentLayout" columnminimumwidth="0,1,1">
        <item row="1" column="2">
         <widget class="QComboBox" name="encodingComboBox"/>
        </item>
@@ -467,81 +467,7 @@
       <attribute name="title">
        <string>Scripting</string>
       </attribute>
-      <layout class="QGridLayout" name="scriptingLayout">
-       <item row="3" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="scriptingOverrideLabel">
-         <property name="text">
-          <string>Override</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="javaScriptCanHideAddressBarOverrideCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QCheckBox" name="javaScriptCanAccessClipboardCheckBox">
-         <property name="text">
-          <string>Allow access to clipboard</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QCheckBox" name="javaScriptCanHideAddressBarCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Allow script to hide address bar</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <spacer name="scriptingSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="9" column="1">
-        <spacer name="scriptingHorizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="5" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="javaScriptCanAccessClipboardOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
+      <layout class="QGridLayout" name="scriptingLayout" columnstretch="0,1,1">
        <item row="1" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="enableJavaScriptOverrideCheckBox">
          <property name="text">
@@ -556,15 +482,8 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesCheckBox">
-         <property name="text">
-          <string>Allow changing of status field</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryOverrideCheckBox">
+        <widget class="QCheckBox" name="canChangeWndowGeometryOverrideCheckBox">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -573,8 +492,18 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="canHideAddressBarCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Allow script to hide address bar</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
-        <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryCheckBox">
+        <widget class="QCheckBox" name="canChangeWndowGeometryCheckBox">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -583,17 +512,108 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canShowStatusMessagesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="scriptingOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
+         <property name="text">
+          <string>Allow changing of status field</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canHideAddressBarOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <spacer name="scriptingSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canAccessClipboardOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QCheckBox" name="canAccessClipboardCheckBox">
+         <property name="text">
+          <string>Allow access to clipboard</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canDisableContextMenuOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
        <item row="6" column="1">
-        <widget class="QCheckBox" name="javaScriptCanDisableContextMenuCheckBox">
+        <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
          <property name="text">
           <string>Allow to disable context menu</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="javaScriptCanDisableContextMenuOverrideCheckBox">
+       <item row="7" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canCloseWindowsOverrideCheckBox">
          <property name="text">
           <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="canCloseWindowsComboBox"/>
+       </item>
+       <item row="9" column="1">
+        <spacer name="scriptingHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="canCloseWindowsLabel">
+         <property name="text">
+          <string>Allow to close windows:</string>
+         </property>
+         <property name="buddy">
+          <cstring>canCloseWindowsComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -952,15 +972,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -983,14 +1003,14 @@
   <tabstop>deleteCookieButton</tabstop>
   <tabstop>enableJavaScriptOverrideCheckBox</tabstop>
   <tabstop>enableJavaScriptCheckBox</tabstop>
-  <tabstop>javaScriptCanChangeWndowGeometryOverrideCheckBox</tabstop>
-  <tabstop>javaScriptCanChangeWndowGeometryCheckBox</tabstop>
-  <tabstop>javaScriptCanShowStatusMessagesOverrideCheckBox</tabstop>
-  <tabstop>javaScriptCanShowStatusMessagesCheckBox</tabstop>
-  <tabstop>javaScriptCanHideAddressBarOverrideCheckBox</tabstop>
-  <tabstop>javaScriptCanHideAddressBarCheckBox</tabstop>
-  <tabstop>javaScriptCanAccessClipboardOverrideCheckBox</tabstop>
-  <tabstop>javaScriptCanAccessClipboardCheckBox</tabstop>
+  <tabstop>canChangeWndowGeometryOverrideCheckBox</tabstop>
+  <tabstop>canChangeWndowGeometryCheckBox</tabstop>
+  <tabstop>canShowStatusMessagesOverrideCheckBox</tabstop>
+  <tabstop>canShowStatusMessagesCheckBox</tabstop>
+  <tabstop>canHideAddressBarOverrideCheckBox</tabstop>
+  <tabstop>canHideAddressBarCheckBox</tabstop>
+  <tabstop>canAccessClipboardOverrideCheckBox</tabstop>
+  <tabstop>canAccessClipboardCheckBox</tabstop>
   <tabstop>sendReferrerOverrideCheckBox</tabstop>
   <tabstop>userAgentOverrideCheckBox</tabstop>
   <tabstop>userAgentComboBox</tabstop>

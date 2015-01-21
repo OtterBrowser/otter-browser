@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
+    <width>400</width>
     <height>250</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="javaScriptCanChangeWndowGeometryCheckBox">
+    <widget class="QCheckBox" name="canChangeWndowGeometryCheckBox">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -31,7 +31,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="javaScriptCanShowStatusMessagesCheckBox">
+    <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -44,7 +44,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="javaScriptCanHideAddressBarCheckBox">
+    <widget class="QCheckBox" name="canHideAddressBarCheckBox">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -54,18 +54,35 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="javaScriptCanAccessClipboardCheckBox">
+    <widget class="QCheckBox" name="canAccessClipboardCheckBox">
      <property name="text">
       <string>Allow access to clipboard</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="javaScriptCanDisableContextMenuCheckBox">
+    <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
      <property name="text">
       <string>Allow to disable context menu</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="canCloseWindowsLabel">
+       <property name="text">
+        <string>Allow to close windows:</string>
+       </property>
+       <property name="buddy">
+        <cstring>canCloseWindowsComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="canCloseWindowsComboBox"/>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer">
