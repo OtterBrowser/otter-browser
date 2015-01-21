@@ -41,7 +41,7 @@ namespace Otter
 
 NetworkManager* Transfer::m_networkManager = NULL;
 
-Transfer::Transfer(bool isPrivate, QObject *parent) : QObject(parent),
+Transfer::Transfer(QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_speed(0),
@@ -50,7 +50,8 @@ Transfer::Transfer(bool isPrivate, QObject *parent) : QObject(parent),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_updateInterval(0)
 {
 }
 
@@ -68,7 +69,8 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent)
 	m_bytesReceived(settings.value(QLatin1String("bytesReceived")).toLongLong()),
 	m_bytesTotal(settings.value(QLatin1String("bytesTotal")).toLongLong()),
 	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived) ? FinishedState : ErrorState),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_updateInterval(0)
 {
 }
 
@@ -83,7 +85,8 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_updateInterval(0)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
@@ -109,7 +112,8 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_updateInterval(0)
 {
 	if (!m_networkManager)
 	{
@@ -129,7 +133,8 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransf
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_updateInterval(0)
 {
 	start(reply, target, quickTransfer);
 }
@@ -357,11 +362,6 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 
 		m_state = FinishedState;
 	}
-
-	if (m_state == RunningState)
-	{
-		m_updateTimer = startTimer(500);
-	}
 }
 
 void Transfer::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
@@ -491,6 +491,23 @@ void Transfer::stop()
 	emit changed();
 }
 
+void Transfer::setUpdateInterval(int interval)
+{
+	m_updateInterval = interval;
+
+	if (m_updateTimer != 0)
+	{
+		killTimer(m_updateTimer);
+
+		m_updateTimer = 0;
+	}
+
+	if (interval > 0 && m_updateInterval > 0 && m_state == Transfer::RunningState)
+	{
+		m_updateTimer = startTimer(m_updateInterval);
+	}
+}
+
 QUrl Transfer::getSource() const
 {
 	return m_source;
@@ -579,9 +596,9 @@ bool Transfer::resume()
 	connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 	connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
 
-	if (m_updateTimer == 0)
+	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
-		m_updateTimer = startTimer(500);
+		m_updateTimer = startTimer(m_updateInterval);
 	}
 
 	return true;
@@ -621,13 +638,12 @@ bool Transfer::restart()
 	connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 	connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
 
-	if (m_updateTimer == 0)
+	if (m_updateTimer == 0 && m_updateInterval > 0)
 	{
-		m_updateTimer = startTimer(500);
+		m_updateTimer = startTimer(m_updateInterval);
 	}
 
 	return true;
 }
 
 }
-

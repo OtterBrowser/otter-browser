@@ -71,6 +71,8 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
 {
 	m_transfers.prepend(transfer);
 
+	transfer->setUpdateInterval(500);
+
 	connect(transfer, SIGNAL(started()), m_instance, SLOT(transferStarted()));
 	connect(transfer, SIGNAL(finished()), m_instance, SLOT(transferFinished()));
 	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
@@ -78,7 +80,7 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
 
 	emit m_instance->transferStarted(transfer);
 
-	if (transfer->getState() != Transfer::RunningState)
+	if (transfer->getState() == Transfer::RunningState)
 	{
 		emit m_instance->transferFinished(transfer);
 	}

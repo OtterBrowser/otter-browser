@@ -45,12 +45,13 @@ public:
 		CancelledState = 4
 	};
 
-	explicit Transfer(bool isPrivate, QObject *parent);
+	explicit Transfer(QObject *parent);
 	Transfer(const QSettings &settings, QObject *parent);
 	Transfer(const QUrl &source, const QString &target, bool quickTransfer, QObject *parent);
 	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent);
 	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent);
 
+	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
 	virtual QString getTarget() const;
 	virtual QDateTime getTimeStarted() const;
@@ -91,6 +92,7 @@ private:
 	qint64 m_bytesTotal;
 	TransferState m_state;
 	int m_updateTimer;
+	int m_updateInterval;
 
 	static NetworkManager *m_networkManager;
 
