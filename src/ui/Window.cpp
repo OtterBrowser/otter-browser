@@ -180,6 +180,11 @@ void Window::triggerAction(int identifier, bool checked)
 		printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 		printPreviewtDialog.setWindowTitle(tr("Print Preview"));
 
+		if (QApplication::activeWindow())
+		{
+			printPreviewtDialog.resize(QApplication::activeWindow()->size());
+		}
+
 		connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
 
 		printPreviewtDialog.exec();
