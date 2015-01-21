@@ -176,18 +176,18 @@ void Window::triggerAction(int identifier, bool checked)
 	}
 	else if (identifier == Action::PrintPreviewAction)
 	{
-		QPrintPreviewDialog printPreviewtDialog(this);
-		printPreviewtDialog.setWindowFlags(printPreviewtDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
-		printPreviewtDialog.setWindowTitle(tr("Print Preview"));
+		QPrintPreviewDialog printPreviewDialog(this);
+		printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+		printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
 		if (QApplication::activeWindow())
 		{
-			printPreviewtDialog.resize(QApplication::activeWindow()->size());
+			printPreviewDialog.resize(QApplication::activeWindow()->size());
 		}
 
-		connect(&printPreviewtDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
+		connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
 
-		printPreviewtDialog.exec();
+		printPreviewDialog.exec();
 	}
 	else
 	{

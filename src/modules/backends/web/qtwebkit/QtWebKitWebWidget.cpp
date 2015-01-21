@@ -55,6 +55,7 @@
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QMovie>
+#include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKit/QtWebKitVersion>
@@ -130,6 +131,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(unsupportedContent(QNetworkReply*)), this, SLOT(downloadFile(QNetworkReply*)));
 	connect(m_page, SIGNAL(linkHovered(QString,QString,QString)), this, SLOT(linkHovered(QString)));
 	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
+	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
@@ -439,6 +441,22 @@ void QtWebKitWebWidget::openFormRequest()
 
 	m_formRequestUrl = QUrl();
 	m_formRequestBody = QByteArray();
+}
+
+void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
+{
+	QPrintPreviewDialog printPreviewDialog(this);
+	printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+	printPreviewDialog.setWindowTitle(tr("Print Preview"));
+
+	if (QApplication::activeWindow())
+	{
+		printPreviewDialog.resize(QApplication::activeWindow()->size());
+	}
+
+	connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), frame, SLOT(print(QPrinter*)));
+
+	printPreviewDialog.exec();
 }
 
 void QtWebKitWebWidget::handleHistory()
