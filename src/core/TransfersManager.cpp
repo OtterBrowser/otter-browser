@@ -31,6 +31,7 @@ namespace Otter
 
 TransfersManager* TransfersManager::m_instance = NULL;
 QList<Transfer*> TransfersManager::m_transfers;
+QList<Transfer*> TransfersManager::m_privateTransfers;
 bool TransfersManager::m_initilized = false;
 
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
@@ -66,7 +67,7 @@ void TransfersManager::scheduleSave()
 	}
 }
 
-void TransfersManager::addTransfer(Transfer *transfer)
+void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
 {
 	m_transfers.prepend(transfer);
 
@@ -80,6 +81,11 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	if (transfer->getState() != Transfer::RunningState)
 	{
 		emit m_instance->transferFinished(transfer);
+	}
+
+	if (isPrivate)
+	{
+		m_privateTransfers.append(transfer);
 	}
 }
 
@@ -98,7 +104,7 @@ void TransfersManager::save()
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
-		if (m_transfers.at(i)->isPrivate() || (m_transfers.at(i)->getState() == Transfer::FinishedState && m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().daysTo(QDateTime::currentDateTime()) > limit))
+		if (m_privateTransfers.contains(m_transfers.at(i)) || (m_transfers.at(i)->getState() == Transfer::FinishedState && m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().daysTo(QDateTime::currentDateTime()) > limit))
 		{
 			continue;
 		}
@@ -136,11 +142,7 @@ void TransfersManager::transferFinished()
 	{
 		emit transferFinished(transfer);
 
-		if (transfer->isPrivate())
-		{
-			removeTransfer(transfer);
-		}
-		else
+		if (!m_privateTransfers.contains(transfer))
 		{
 			scheduleSave();
 		}
@@ -189,7 +191,7 @@ TransfersManager* TransfersManager::getInstance()
 
 Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(source, target, quickTransfer, isPrivate, m_instance);
+	Transfer *transfer = new Transfer(source, target, quickTransfer, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -198,14 +200,14 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 		return NULL;
 	}
 
-	addTransfer(transfer);
+	addTransfer(transfer, isPrivate);
 
 	return transfer;
 }
 
 Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(request, target, quickTransfer, isPrivate, m_instance);
+	Transfer *transfer = new Transfer(request, target, quickTransfer, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -214,14 +216,14 @@ Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const 
 		return NULL;
 	}
 
-	addTransfer(transfer);
+	addTransfer(transfer, isPrivate);
 
 	return transfer;
 }
 
 Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(reply, target, quickTransfer, isPrivate, m_instance);
+	Transfer *transfer = new Transfer(reply, target, quickTransfer, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -230,7 +232,7 @@ Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &t
 		return NULL;
 	}
 
-	addTransfer(transfer);
+	addTransfer(transfer, isPrivate);
 
 	return transfer;
 }
@@ -305,7 +307,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 
 			if (!history.value(QLatin1String("source")).toString().isEmpty() && !history.value(QLatin1String("target")).toString().isEmpty())
 			{
-				addTransfer(new Transfer(history, m_instance));
+				addTransfer(new Transfer(history, m_instance), false);
 			}
 
 			history.endGroup();
@@ -325,6 +327,8 @@ bool TransfersManager::removeTransfer(Transfer *transfer, bool keepFile)
 	}
 
 	m_transfers.removeAll(transfer);
+
+	m_privateTransfers.removeAll(transfer);
 
 	if (transfer->getState() == Transfer::RunningState)
 	{

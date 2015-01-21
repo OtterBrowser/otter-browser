@@ -380,7 +380,16 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				}
 				else
 				{
-					new Transfer(m_hitResult.imageUrl, QString(), false, isPrivate(), this);
+					Transfer *transfer = new Transfer(m_hitResult.imageUrl, QString(), false, this);
+
+					if (transfer->getState() == Transfer::RunningState)
+					{
+						connect(transfer, SIGNAL(finished()), transfer, SLOT(deleteLater()));
+					}
+					else
+					{
+						transfer->deleteLater();
+					}
 				}
 			}
 
@@ -442,7 +451,16 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case Action::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl.isValid())
 			{
-				new Transfer(m_hitResult.mediaUrl, QString(), false, isPrivate(), this);
+				Transfer *transfer = new Transfer(m_hitResult.mediaUrl, QString(), false, this);
+
+				if (transfer->getState() == Transfer::RunningState)
+				{
+					connect(transfer, SIGNAL(finished()), transfer, SLOT(deleteLater()));
+				}
+				else
+				{
+					transfer->deleteLater();
+				}
 			}
 
 			break;

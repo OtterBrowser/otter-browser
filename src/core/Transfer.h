@@ -47,9 +47,9 @@ public:
 
 	explicit Transfer(bool isPrivate, QObject *parent);
 	Transfer(const QSettings &settings, QObject *parent);
-	Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent);
-	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent);
-	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent);
+	Transfer(const QUrl &source, const QString &target, bool quickTransfer, QObject *parent);
+	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent);
+	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent);
 
 	virtual QUrl getSource() const;
 	virtual QString getTarget() const;
@@ -60,7 +60,6 @@ public:
 	virtual qint64 getBytesReceived() const;
 	virtual qint64 getBytesTotal() const;
 	virtual TransferState getState() const;
-	const bool isPrivate() const;
 
 public slots:
 	virtual void stop();
@@ -92,7 +91,6 @@ private:
 	qint64 m_bytesTotal;
 	TransferState m_state;
 	int m_updateTimer;
-	bool m_isPrivate;
 
 	static NetworkManager *m_networkManager;
 

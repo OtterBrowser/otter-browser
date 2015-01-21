@@ -50,8 +50,7 @@ Transfer::Transfer(bool isPrivate, QObject *parent) : QObject(parent),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0),
-	m_isPrivate(isPrivate)
+	m_updateTimer(0)
 {
 }
 
@@ -69,12 +68,11 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent)
 	m_bytesReceived(settings.value(QLatin1String("bytesReceived")).toLongLong()),
 	m_bytesTotal(settings.value(QLatin1String("bytesTotal")).toLongLong()),
 	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived) ? FinishedState : ErrorState),
-	m_updateTimer(0),
-	m_isPrivate(false)
+	m_updateTimer(0)
 {
 }
 
-Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(source),
@@ -85,8 +83,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0),
-	m_isPrivate(isPrivate)
+	m_updateTimer(0)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
@@ -101,7 +98,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	start(m_networkManager->get(request), target, quickTransfer);
 }
 
-Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(request.url()),
@@ -112,8 +109,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0),
-	m_isPrivate(isPrivate)
+	m_updateTimer(0)
 {
 	if (!m_networkManager)
 	{
@@ -123,7 +119,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	start(m_networkManager->get(request), target, quickTransfer);
 }
 
-Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool isPrivate, QObject *parent) : QObject(parent),
+Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
 	m_reply(reply),
 	m_source(m_reply->url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
 	m_target(target),
@@ -133,8 +129,7 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransf
 	m_bytesReceived(0),
 	m_bytesTotal(0),
 	m_state(UnknownState),
-	m_updateTimer(0),
-	m_isPrivate(isPrivate)
+	m_updateTimer(0)
 {
 	start(reply, target, quickTransfer);
 }
@@ -539,11 +534,6 @@ qint64 Transfer::getBytesTotal() const
 Transfer::TransferState Transfer::getState() const
 {
 	return m_state;
-}
-
-const bool Transfer::isPrivate() const
-{
-	return m_isPrivate;
 }
 
 bool Transfer::resume()

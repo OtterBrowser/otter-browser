@@ -48,7 +48,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
-	static void addTransfer(Transfer *transfer);
+	static void addTransfer(Transfer *transfer, bool isPrivate);
 
 protected slots:
 	void save();
@@ -62,6 +62,7 @@ private:
 
 	static TransfersManager *m_instance;
 	static QList<Transfer*> m_transfers;
+	static QList<Transfer*> m_privateTransfers;
 	static bool m_initilized;
 
 signals:
