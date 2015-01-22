@@ -131,7 +131,9 @@ SOURCES += src/main.cpp \
     src/modules/windows/transfers/ProgressBarDelegate.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
     src/modules/windows/web/ImagePropertiesDialog.cpp \
+    src/modules/windows/web/PermissionBarWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
+    src/modules/windows/web/SearchBarWidget.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     3rdparty/mousegestures/MouseGestures.cpp
 
@@ -238,7 +240,9 @@ HEADERS += src/core/Action.h \
     src/modules/windows/transfers/ProgressBarDelegate.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
     src/modules/windows/web/ImagePropertiesDialog.h \
+    src/modules/windows/web/PermissionBarWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
+    src/modules/windows/web/SearchBarWidget.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
 
@@ -274,7 +278,8 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/modules/windows/history/HistoryContentsWidget.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
     src/modules/windows/web/ImagePropertiesDialog.ui \
-    src/modules/windows/web/WebContentsWidget.ui
+    src/modules/windows/web/PermissionBarWidget.ui \
+    src/modules/windows/web/SearchBarWidget.ui
 
 RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc

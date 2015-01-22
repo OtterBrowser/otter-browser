@@ -1734,7 +1734,7 @@ bool QtWebEngineWebWidget::isPrivate() const
 	return false;
 }
 
-bool QtWebEngineWebWidget::find(const QString &text, FindFlags flags)
+bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
 	QWebEnginePage::FindFlags nativeFlags = 0;
 

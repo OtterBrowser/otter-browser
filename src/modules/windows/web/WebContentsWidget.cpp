@@ -18,11 +18,12 @@
 **************************************************************************/
 
 #include "WebContentsWidget.h"
+#include "PermissionBarWidget.h"
 #include "ProgressBarWidget.h"
+#include "SearchBarWidget.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
-#include "../../../ui/WebWidget.h"
 
 #include "ui_WebContentsWidget.h"
 
@@ -35,12 +36,12 @@ QString WebContentsWidget::m_quickFindQuery = NULL;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
+	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
 	m_progressBarTimer(0),
 	m_quickFindTimer(0),
 	m_isProgressBarEnabled(true),
-	m_isTabPreferencesMenuVisible(false),
-	m_ui(new Ui::WebContentsWidget)
+	m_isTabPreferencesMenuVisible(false)
 {
 	if (m_webWidget)
 	{
@@ -54,13 +55,14 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(QLatin1String("workaround"));
 
-	m_ui->setupUi(this);
-	m_ui->findWidget->hide();
-	m_ui->findWidget->installEventFilter(this);
-	m_ui->verticalLayout->addWidget(m_webWidget);
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->addWidget(m_webWidget);
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(0);
+
+	setLayout(layout);
 
 	optionChanged(QLatin1String("Browser/ShowDetailedProgressBar"), SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")));
-	optionChanged(QLatin1String("Search/EnableFindInPageAsYouType"), SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")));
 
 	if (window)
 	{
@@ -68,13 +70,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(m_ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(updateFind()));
-	connect(m_ui->caseSensitiveButton, SIGNAL(clicked()), this, SLOT(updateFind()));
-	connect(m_ui->highlightButton, SIGNAL(clicked()), this, SLOT(updateFindHighlight()));
-	connect(m_ui->findNextButton, SIGNAL(clicked()), this, SLOT(updateFind()));
-	connect(m_ui->findPreviousButton, SIGNAL(clicked()), this, SLOT(updateFind()));
-	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findWidget, SLOT(hide()));
-	connect(m_ui->closeButton, SIGNAL(clicked()), m_ui->findLineEdit, SLOT(clear()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
@@ -86,11 +81,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-}
-
-WebContentsWidget::~WebContentsWidget()
-{
-	delete m_ui;
 }
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
@@ -121,28 +111,13 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 			m_progressBarWidget->hide();
 		}
 	}
-	else if (event->timerId() == m_quickFindTimer)
+	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
 		killTimer(m_quickFindTimer);
 
 		m_quickFindTimer = 0;
 
-		m_ui->findWidget->hide();
-	}
-}
-
-void WebContentsWidget::changeEvent(QEvent *event)
-{
-	QWidget::changeEvent(event);
-
-	switch (event->type())
-	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_searchBarWidget->hide();
 	}
 }
 
@@ -184,15 +159,15 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
 		}
 	}
-	else if (option == QLatin1String("Search/EnableFindInPageAsYouType"))
+	else if (option == QLatin1String("Search/EnableFindInPageAsYouType") && m_searchBarWidget)
 	{
 		if (value.toBool())
 		{
-			connect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
+			connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
 		}
 		else
 		{
-			disconnect(m_ui->findLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFind()));
+			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
 		}
 	}
 }
@@ -229,9 +204,25 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 		case Action::FindNextAction:
 		case Action::FindPreviousAction:
 			{
+				if (!m_searchBarWidget)
+				{
+					m_searchBarWidget = new SearchBarWidget(this);
+					m_searchBarWidget->hide();
+
+					qobject_cast<QVBoxLayout*>(layout())->insertWidget(0, m_searchBarWidget);
+
+					connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
+					connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
+
+					if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
+					{
+						connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
+					}
+				}
+
 				const bool isFindAction = (identifier == Action::FindAction || identifier == Action::QuickFindAction);
 
-				if (!m_ui->findWidget->isVisible())
+				if (!m_searchBarWidget->isVisible())
 				{
 					if (identifier == Action::QuickFindAction)
 					{
@@ -242,23 +233,29 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 
 					if (!isFindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 					{
-						m_ui->findLineEdit->setText(m_quickFindQuery);
+						m_searchBarWidget->setQuery(m_quickFindQuery);
 
 						if (isFindAction)
 						{
-							updateFind();
+							findInPage(m_searchBarWidget->getFlags());
 						}
 					}
 
-					m_ui->findWidget->setVisible(true);
+					m_searchBarWidget->show();
 				}
 
-				m_ui->findLineEdit->setFocus();
-				m_ui->findLineEdit->selectAll();
+				m_searchBarWidget->selectAll();
 
 				if (!isFindAction)
 				{
-					updateFind(identifier == Action::FindPreviousAction);
+					WebWidget::FindFlags flags = m_searchBarWidget->getFlags();
+
+					if (identifier == Action::FindPreviousAction)
+					{
+						flags |= WebWidget::BackwardFind;
+					}
+
+					findInPage(flags);
 				}
 			}
 
@@ -360,6 +357,33 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
+void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
+{
+	if (m_quickFindTimer != 0)
+	{
+		killTimer(m_quickFindTimer);
+
+		m_quickFindTimer = startTimer(2000);
+	}
+
+	if (!m_searchBarWidget)
+	{
+		return;
+	}
+
+	if (flags == WebWidget::NoFlagsFind)
+	{
+		flags = m_searchBarWidget->getFlags();
+	}
+
+	m_searchBarWidget->setResultsFound(m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags));
+
+	if (m_searchBarWidget->isVisible() && !isPrivate())
+	{
+		m_quickFindQuery = m_searchBarWidget->getQuery();
+	}
+}
+
 void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
 {
 	if (isPrivate())
@@ -375,83 +399,12 @@ void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, OpenHints hi
 	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL), hints);
 }
 
-void WebContentsWidget::updateFind(bool backwards)
+void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 {
-	if (m_quickFindTimer != 0)
+	if (m_searchBarWidget)
 	{
-		killTimer(m_quickFindTimer);
-
-		m_quickFindTimer = startTimer(2000);
-	}
-
-	if (sender() && sender()->objectName() == QLatin1String("findPreviousButton"))
-	{
-		backwards = true;
-	}
-
-	WebWidget::FindFlags flags;
-
-	if (backwards)
-	{
-		flags |= WebWidget::BackwardFind;
-	}
-
-	if (m_ui->caseSensitiveButton->isChecked())
-	{
-		flags |= WebWidget::CaseSensitiveFind;
-	}
-
-	QPalette palette = parentWidget()->palette();
-	const bool found = m_webWidget->find(m_ui->findLineEdit->text(), flags);
-
-	if (!m_ui->findLineEdit->text().isEmpty())
-	{
-		if (found)
-		{
-			palette.setColor(QPalette::Base, QColor(QLatin1String("#CEF6DF")));
-		}
-		else
-		{
-			palette.setColor(QPalette::Base, QColor(QLatin1String("#F1E7E4")));
-		}
-	}
-
-	m_ui->findLineEdit->setPalette(palette);
-	m_ui->findNextButton->setEnabled(found);
-	m_ui->findPreviousButton->setEnabled(found);
-
-	if (sender() && sender()->objectName() == QLatin1String("caseSensitiveButton"))
-	{
-		m_webWidget->find(m_ui->findLineEdit->text(), (flags | WebWidget::BackwardFind));
-	}
-
-	if (m_ui->findWidget->isVisible() && !isPrivate())
-	{
-		m_quickFindQuery = m_ui->findLineEdit->text();
-	}
-
-	updateFindHighlight();
-}
-
-void WebContentsWidget::updateFindHighlight()
-{
-	WebWidget::FindFlags flags = WebWidget::NoFlagsFind;
-
-	if (m_ui->highlightButton->isChecked())
-	{
-		flags |= WebWidget::HighlightAllFind;
-	}
-
-	if (m_ui->caseSensitiveButton->isChecked())
-	{
-		flags |= WebWidget::CaseSensitiveFind;
-	}
-
-	m_webWidget->find(QString(), (flags | WebWidget::HighlightAllFind));
-
-	if (m_ui->findWidget->isVisible())
-	{
-		m_webWidget->find(m_ui->findLineEdit->text(), flags);
+		m_webWidget->findInPage(QString(), (flags | WebWidget::HighlightAllFind));
+		m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
 	}
 }
 
@@ -596,22 +549,6 @@ bool WebContentsWidget::isLoading() const
 bool WebContentsWidget::isPrivate() const
 {
 	return m_webWidget->isPrivate();
-}
-
-bool WebContentsWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == m_ui->findWidget && event->type() == QEvent::KeyPress)
-	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-		if (keyEvent->key() == Qt::Key_Escape)
-		{
-			m_ui->findWidget->hide();
-			m_ui->findLineEdit->clear();
-		}
-	}
-
-	return QObject::eventFilter(object, event);
 }
 
 }

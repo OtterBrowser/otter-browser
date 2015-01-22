@@ -179,7 +179,9 @@ set(otter_src
 	src/modules/windows/transfers/ProgressBarDelegate.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/ImagePropertiesDialog.cpp
+	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
+	src/modules/windows/web/SearchBarWidget.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
 )
@@ -220,7 +222,8 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/history/HistoryContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/ImagePropertiesDialog.ui
-	src/modules/windows/web/WebContentsWidget.ui
+	src/modules/windows/web/PermissionBarWidget.ui
+	src/modules/windows/web/SearchBarWidget.ui
 )
 
 if (${EnableQtwebengine})

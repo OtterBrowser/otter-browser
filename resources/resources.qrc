@@ -83,9 +83,17 @@
         <file>icons/otter-browser-64.png</file>
         <file>icons/otter-browser-128.png</file>
         <file>icons/otter-browser-256.png</file>
+        <file>icons/otter-browser-file-type-256.png</file>
+        <file>icons/otter-browser-file-type.ico</file>
         <file>icons/otter-browser.ico</file>
         <file>icons/otter-browser.png</file>
         <file>icons/otter-browser.svg</file>
+        <file>icons/permission-capture-audio-video.png</file>
+        <file>icons/permission-capture-audio.png</file>
+        <file>icons/permission-capture-video.png</file>
+        <file>icons/permission-geolocation.png</file>
+        <file>icons/permission-notifications.png</file>
+        <file>icons/permission-pointer-lock.png</file>
         <file>icons/preferences-desktop-locale.png</file>
         <file>icons/preferences-plugin.png</file>
         <file>icons/process-stop.png</file>

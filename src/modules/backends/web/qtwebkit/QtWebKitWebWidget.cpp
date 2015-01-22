@@ -2237,7 +2237,7 @@ bool QtWebKitWebWidget::isPrivate() const
 	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
-bool QtWebKitWebWidget::find(const QString &text, FindFlags flags)
+bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 {
 #if QTWEBKIT_VERSION >= 0x050200
 	QWebPage::FindFlags nativeFlags = (QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
@@ -2255,9 +2255,10 @@ bool QtWebKitWebWidget::find(const QString &text, FindFlags flags)
 		nativeFlags |= QWebPage::FindCaseSensitively;
 	}
 
-	if (flags & HighlightAllFind)
+	if (flags & HighlightAllFind || text.isEmpty())
 	{
-		nativeFlags |= QWebPage::HighlightAllOccurrences;
+		m_webView->findText(QString(), QWebPage::HighlightAllOccurrences);
+		m_webView->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));
 	}
 
 	return m_webView->findText(text, nativeFlags);

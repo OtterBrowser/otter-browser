@@ -21,16 +21,14 @@
 #define OTTER_WEBCONTENTSWIDGET_H
 
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/WebWidget.h"
 
 namespace Otter
 {
 
-namespace Ui
-{
-	class WebContentsWidget;
-}
-
+class PermissionsBarWidget;
 class ProgressBarWidget;
+class SearchBarWidget;
 class WebWidget;
 
 class WebContentsWidget : public ContentsWidget
@@ -39,7 +37,6 @@ class WebContentsWidget : public ContentsWidget
 
 public:
 	explicit WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window);
-	~WebContentsWidget();
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
@@ -60,7 +57,6 @@ public:
 	bool canZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
-	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void goToHistoryIndex(int index);
@@ -72,27 +68,27 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	void changeEvent(QEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void scheduleGeometryUpdate();
+	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, OpenHints hints);
-	void updateFind(bool backwards = false);
-	void updateFindHighlight();
+	void updateFindHighlight(WebWidget::FindFlags flags);
 	void setLoading(bool loading);
 
 private:
 	WebWidget *m_webWidget;
+	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	QVector<PermissionsBarWidget> *m_permissionBarWidgets;
 	int m_progressBarTimer;
 	int m_quickFindTimer;
 	bool m_isProgressBarEnabled;
 	bool m_isTabPreferencesMenuVisible;
-	Ui::WebContentsWidget *m_ui;
 
 	static QString m_quickFindQuery;
 };

@@ -108,7 +108,7 @@ public:
 	bool hasOption(const QString &key) const;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
-	virtual bool find(const QString &text, FindFlags flags = HighlightAllFind) = 0;
+	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
 public slots:
 	virtual void clearOptions();
