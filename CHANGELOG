@@ -1,5 +1,6 @@
 0.9.05 (2015-??-??):
-- experimental backend for QtWebEngine (Blink), disabled by default.
+- experimental backend for QtWebEngine (Blink), disabled by default;
+- added interface to deny or grant permission to use geolocation etc. (set of available permissions depends on what is supported by backend).
 
 0.9.04 (2015-01-01):
 - added support for mouse gestures;

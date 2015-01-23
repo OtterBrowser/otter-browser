@@ -18,16 +18,57 @@
 **************************************************************************/
 
 #include "PermissionBarWidget.h"
+#include "../../../core/Utils.h"
 
 #include "ui_PermissionBarWidget.h"
 
 namespace Otter
 {
 
-PermissionBarWidget::PermissionBarWidget(QWidget *parent) : QWidget(parent),
+PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url, QWidget *parent) : QWidget(parent),
+	m_option(option),
+	m_url(url),
 	m_ui(new Ui::PermissionBarWidget)
 {
+	const QString domain = url.toString(QUrl::RemoveUserInfo | QUrl::RemovePath | QUrl::PreferLocalFile | QUrl::StripTrailingSlash);
+
 	m_ui->setupUi(this);
+
+	if (option == QLatin1String("Browser/EnableGeolocation"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
+	}
+	else if (option == QLatin1String("Browser/EnableNotifications"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to show notifications.").arg(domain));
+	}
+	else if (option == QLatin1String("Browser/EnableMediaCaptureAudio"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
+	}
+	else if (option == QLatin1String("Browser/EnableMediaCaptureVideo"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
+	}
+	else if (option == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
+	}
+	else
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("Invalid permission request from %1.").arg(domain));
+		m_ui->permissionComboBox->hide();
+		m_ui->okButton->hide();
+	}
+
+	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));
+	connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(rejected()));
 }
 
 PermissionBarWidget::~PermissionBarWidget()
@@ -49,4 +90,47 @@ void PermissionBarWidget::changeEvent(QEvent *event)
 			break;
 	}
 }
+
+void PermissionBarWidget::accepted()
+{
+	hide();
+
+	if (m_ui->permissionComboBox->currentIndex() == 0)
+	{
+		emit permissionChanged(WebWidget::GrantedPermission);
+	}
+	else
+	{
+		WebWidget::PermissionPolicies policies = WebWidget::RememberPermission;
+
+		if (m_ui->permissionComboBox->currentIndex() == 1)
+		{
+			policies |= WebWidget::GrantedPermission;
+		}
+		else
+		{
+			policies |= WebWidget::DeniedPermission;
+		}
+
+		emit permissionChanged(policies);
+	}
+}
+
+void PermissionBarWidget::rejected()
+{
+	hide();
+
+	emit permissionChanged(WebWidget::DeniedPermission);
+}
+
+QString PermissionBarWidget::getOption() const
+{
+	return m_option;
+}
+
+QUrl PermissionBarWidget::getUrl() const
+{
+	return m_url;
+}
+
 }

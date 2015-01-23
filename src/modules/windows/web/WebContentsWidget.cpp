@@ -25,9 +25,8 @@
 #include "../../../core/WebBackend.h"
 #include "../../../core/WebBackendsManager.h"
 
-#include "ui_WebContentsWidget.h"
-
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
@@ -381,6 +380,62 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	if (m_searchBarWidget->isVisible() && !isPrivate())
 	{
 		m_quickFindQuery = m_searchBarWidget->getQuery();
+	}
+}
+
+void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url, bool cancel)
+{
+	if (cancel)
+	{
+		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
+		{
+			if (m_permissionBarWidgets.at(i)->getOption() == option && m_permissionBarWidgets.at(i)->getUrl() == url)
+			{
+				layout()->removeWidget(m_permissionBarWidgets.at(i));
+
+				m_permissionBarWidgets.at(i)->deleteLater();
+
+				m_permissionBarWidgets.removeAt(i);
+
+				break;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
+		{
+			if (m_permissionBarWidgets.at(i)->getOption() == option && m_permissionBarWidgets.at(i)->getUrl() == url)
+			{
+				return;
+			}
+		}
+
+		PermissionBarWidget *widget = new PermissionBarWidget(option, url, this);
+
+		qobject_cast<QVBoxLayout*>(layout())->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
+
+		widget->show();
+
+		m_permissionBarWidgets.append(widget);
+
+		connect(widget, SIGNAL(permissionChanged(WebWidget::PermissionPolicies)), this, SLOT(notifyPermissionChanged(WebWidget::PermissionPolicies)));
+	}
+}
+
+void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies policies)
+{
+	PermissionBarWidget *widget = qobject_cast<PermissionBarWidget*>(sender());
+
+	if (widget)
+	{
+		m_webWidget->setPermission(widget->getOption(), widget->getUrl(), policies);
+
+		m_permissionBarWidgets.removeAll(widget);
+
+		layout()->removeWidget(widget);
+
+		widget->deleteLater();
 	}
 }
 

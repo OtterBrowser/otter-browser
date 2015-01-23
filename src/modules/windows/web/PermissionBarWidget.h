@@ -20,7 +20,7 @@
 #ifndef OTTER_PERMISSIONBARWIDGET_H
 #define OTTER_PERMISSIONBARWIDGET_H
 
-#include <QtWidgets/QWidget>
+#include "../../../ui/WebWidget.h"
 
 namespace Otter
 {
@@ -35,14 +35,26 @@ class PermissionBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PermissionBarWidget(QWidget *parent = NULL);
+	explicit PermissionBarWidget(const QString &option, const QUrl &url, QWidget *parent = NULL);
 	~PermissionBarWidget();
+
+	QString getOption() const;
+	QUrl getUrl() const;
 
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void accepted();
+	void rejected();
+
 private:
+	QString m_option;
+	QUrl m_url;
 	Ui::PermissionBarWidget *m_ui;
+
+signals:
+	void permissionChanged(WebWidget::PermissionPolicies policies);
 };
 
 }

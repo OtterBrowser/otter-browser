@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-class PermissionsBarWidget;
+class PermissionBarWidget;
 class ProgressBarWidget;
 class SearchBarWidget;
 class WebWidget;
@@ -75,6 +75,8 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void scheduleGeometryUpdate();
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
+	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
@@ -84,7 +86,7 @@ private:
 	WebWidget *m_webWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
-	QVector<PermissionsBarWidget> *m_permissionBarWidgets;
+	QList<PermissionBarWidget*> m_permissionBarWidgets;
 	int m_progressBarTimer;
 	int m_quickFindTimer;
 	bool m_isProgressBarEnabled;

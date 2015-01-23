@@ -473,6 +473,22 @@ void WebWidget::setStatusMessage(const QString &message, bool override)
 	}
 }
 
+void WebWidget::setPermission(const QString &key, const QUrl &url, PermissionPolicies policies)
+{
+	if (policies.testFlag(RememberPermission))
+	{
+		if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
+		{
+			SettingsManager::setValue(QLatin1String("Browser/EnableMediaAudioVideo"), policies.testFlag(GrantedPermission), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableMediaCaptureVideo"), policies.testFlag(GrantedPermission), url);
+		}
+		else
+		{
+			SettingsManager::setValue(key, policies.testFlag(GrantedPermission), url);
+		}
+	}
+}
+
 void WebWidget::setOption(const QString &key, const QVariant &value)
 {
 	if (key == QLatin1String("Search/DefaultQuickSearchEngine"))

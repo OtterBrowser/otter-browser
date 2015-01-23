@@ -72,6 +72,15 @@ public:
 
 	Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
 
+	enum PermissionPolicy
+	{
+		DeniedPermission = 0,
+		GrantedPermission = 1,
+		RememberPermission = 2
+	};
+
+	Q_DECLARE_FLAGS(PermissionPolicies, PermissionPolicy)
+
 	enum FindFlag
 	{
 		NoFlagsFind = 0,
@@ -115,6 +124,7 @@ public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(int identifier, bool checked = false) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
+	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
@@ -165,6 +175,7 @@ signals:
 	void requestedAddBookmark(QUrl url, QString title);
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
+	void requestedPermission(QString option, QUrl url, bool cancel);
 	void progressBarGeometryChanged();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
