@@ -43,7 +43,8 @@ enum OpenHint
 	NewTabPrivateOpen = (NewTabOpen | PrivateOpen),
 	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
 	NewTabBackgroundEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
-	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen)
+	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
+	NewWindowBackgroundEndOpen = (NewWindowOpen | EndOpen | BackgroundOpen)
 };
 
 Q_DECLARE_FLAGS(OpenHints, OpenHint)

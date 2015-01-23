@@ -759,6 +759,8 @@ QList<SessionWindow> WindowsManager::getClosedWindows() const
 
 OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
 {
+	const bool useNewTab = SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool();
+
 	if (modifiers == Qt::NoModifier)
 	{
 		modifiers = QGuiApplication::keyboardModifiers();
@@ -766,17 +768,17 @@ OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt
 
 	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
-		return NewTabBackgroundEndOpen;
+		return (useNewTab ? NewTabBackgroundEndOpen : NewWindowBackgroundEndOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
-		return NewTabBackgroundOpen;
+		return (useNewTab ? NewTabBackgroundOpen : NewWindowBackgroundOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ShiftModifier))
 	{
-		return NewTabOpen;
+		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}
 
 	if (hints != DefaultOpen)
@@ -789,7 +791,7 @@ OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt
 		return CurrentTabOpen;
 	}
 
-	return NewTabOpen;
+	return (useNewTab ? NewTabOpen : NewWindowOpen);
 }
 
 int WindowsManager::getWindowIndex(Window *window) const
