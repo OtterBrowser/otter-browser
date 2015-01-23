@@ -133,6 +133,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
 	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
+	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
@@ -527,6 +529,16 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 	}
 }
 
+void QtWebKitWebWidget::handlePermissionRequest(QWebFrame *frame, QWebPage::Feature feature)
+{
+	notifyPermissionRequested(frame, feature, false);
+}
+
+void QtWebKitWebWidget::handlePermissionCancel(QWebFrame *frame, QWebPage::Feature feature)
+{
+	notifyPermissionRequested(frame, feature, true);
+}
+
 void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
 	m_webView->stop();
@@ -560,6 +572,45 @@ void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 void QtWebKitWebWidget::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
+}
+
+void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel)
+{
+	QString option;
+
+	if (feature == QWebPage::Geolocation)
+	{
+		option = QLatin1String("Browser/EnableGeolocation");
+	}
+	else if (feature == QWebPage::Notifications)
+	{
+		option = QLatin1String("Browser/EnableNotifications");
+	}
+
+	if (!option.isEmpty())
+	{
+		if (cancel)
+		{
+			emit requestedPermission(option, frame->url(), true);
+		}
+		else
+		{
+			const QString value = SettingsManager::getValue(option, frame->url()).toString();
+
+			if (value == QLatin1String("allow"))
+			{
+				m_page->setFeaturePermission(frame, feature, QWebPage::PermissionGrantedByUser);
+			}
+			else if (value == QLatin1String("disallow"))
+			{
+				m_page->setFeaturePermission(frame, feature, QWebPage::PermissionDeniedByUser);
+			}
+			else
+			{
+				emit requestedPermission(option, frame->url(), false);
+			}
+		}
+	}
 }
 
 void QtWebKitWebWidget::updateUndoText(const QString &text)
@@ -1810,6 +1861,41 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 	notifyTitleChanged();
 	notifyIconChanged();
+}
+
+void QtWebKitWebWidget::setPermission(const QString &key, const QUrl &url, WebWidget::PermissionPolicies policies)
+{
+	WebWidget::setPermission(key, url, policies);
+
+	QWebPage::Feature feature = QWebPage::Geolocation;
+
+	if (key == QLatin1String("Browser/EnableGeolocation"))
+	{
+		feature = QWebPage::Geolocation;
+	}
+	else if (key == QLatin1String("Browser/EnableNotifications"))
+	{
+		feature = QWebPage::Notifications;
+	}
+	else
+	{
+		return;
+	}
+
+	QList<QWebFrame*> frames;
+	frames.append(m_page->mainFrame());
+
+	while (!frames.isEmpty())
+	{
+		QWebFrame *frame = frames.takeFirst();
+
+		if (frame->url() == url)
+		{
+			m_page->setFeaturePermission(frame, feature, (policies.testFlag(GrantedPermission) ? QWebPage::PermissionGrantedByUser : QWebPage::PermissionDeniedByUser));
+		}
+
+		frames.append(frame->childFrames());
+	}
 }
 
 void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)

@@ -484,7 +484,7 @@ void WebWidget::setPermission(const QString &key, const QUrl &url, PermissionPol
 		}
 		else
 		{
-			SettingsManager::setValue(key, policies.testFlag(GrantedPermission), url);
+			SettingsManager::setValue(key, (policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow")), url);
 		}
 	}
 }
