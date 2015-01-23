@@ -114,6 +114,8 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 	connect(m_webView->page(), SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+	connect(m_webView->page(), SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
+	connect(m_webView->page(), SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
@@ -923,6 +925,16 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 	}
 }
 
+void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature)
+{
+	notifyPermissionRequested(url, feature, false);
+}
+
+void QtWebEngineWebWidget::handlePermissionCancel(const QUrl &url, QWebEnginePage::Feature feature)
+{
+	notifyPermissionRequested(url, feature, true);
+}
+
 void QtWebEngineWebWidget::handleScroll(const QVariant &result)
 {
 	if (result.isValid())
@@ -1034,6 +1046,57 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 void QtWebEngineWebWidget::notifyIconChanged()
 {
 	emit iconChanged(getIcon());
+}
+
+void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel)
+{
+	QString option;
+
+	if (feature == QWebEnginePage::Geolocation)
+	{
+		option = QLatin1String("Browser/EnableGeolocation");
+	}
+	else if (feature == QWebEnginePage::Notifications)
+	{
+		option = QLatin1String("Browser/EnableNotifications");
+	}
+	else if (feature == QWebEnginePage::MediaAudioCapture)
+	{
+		option = QLatin1String("Browser/EnableMediaCaptureAudio");
+	}
+	else if (feature == QWebEnginePage::MediaVideoCapture)
+	{
+		option = QLatin1String("Browser/EnableMediaCaptureVideo");
+	}
+	else if (feature == QWebEnginePage::MediaAudioVideoCapture)
+	{
+		option = QLatin1String("Browser/EnableMediaCaptureAudioVideo");
+	}
+
+	if (!option.isEmpty())
+	{
+		if (cancel)
+		{
+			emit requestedPermission(option, url, true);
+		}
+		else
+		{
+			const QString value = SettingsManager::getValue(option, url).toString();
+
+			if (value == QLatin1String("allow"))
+			{
+				m_webView->page()->setFeaturePermission(url, feature, QWebEnginePage::PermissionGrantedByUser);
+			}
+			else if (value == QLatin1String("disallow"))
+			{
+				m_webView->page()->setFeaturePermission(url, feature, QWebEnginePage::PermissionDeniedByUser);
+			}
+			else
+			{
+				emit requestedPermission(option, url, false);
+			}
+		}
+	}
 }
 
 void QtWebEngineWebWidget::updateUndo()
@@ -1445,6 +1508,40 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 
 	notifyTitleChanged();
 	notifyIconChanged();
+}
+
+void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, WebWidget::PermissionPolicies policies)
+{
+	WebWidget::setPermission(key, url, policies);
+
+	QWebEnginePage::Feature feature = QWebEnginePage::Geolocation;
+
+	if (key == QLatin1String("Browser/EnableGeolocation"))
+	{
+		feature = QWebEnginePage::Geolocation;
+	}
+	else if (key == QLatin1String("Browser/EnableNotifications"))
+	{
+		feature = QWebEnginePage::Notifications;
+	}
+	else if (key == QLatin1String("Browser/EnableMediaCaptureAudio"))
+	{
+		feature = QWebEnginePage::MediaAudioCapture;
+	}
+	else if (key == QLatin1String("Browser/EnableMediaCaptureVideo"))
+	{
+		feature = QWebEnginePage::MediaVideoCapture;
+	}
+	else if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
+	{
+		feature = QWebEnginePage::MediaAudioVideoCapture;
+	}
+	else
+	{
+		return;
+	}
+
+	m_webView->page()->setFeaturePermission(url, feature, (policies.testFlag(GrantedPermission) ? QWebEnginePage::PermissionGrantedByUser : QWebEnginePage::PermissionDeniedByUser));
 }
 
 WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory)

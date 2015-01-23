@@ -110,6 +110,7 @@ public slots:
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
+	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -139,10 +140,13 @@ protected slots:
 	void linkHovered(const QString &link);
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
+	void handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature);
+	void handlePermissionCancel(const QUrl &url, QWebEnginePage::Feature feature);
 	void handleWindowCloseRequest();
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
+	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel);
 	void updateUndo();
 	void updateRedo();
 	void updatePageActions(const QUrl &url);

@@ -46,17 +46,17 @@ PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url,
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureAudio"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureVideo"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
 	}
 	else
