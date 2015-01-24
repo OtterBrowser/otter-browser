@@ -152,6 +152,7 @@ public:
 		WorkOfflineAction,
 		FullScreenAction,
 		ShowMenuBarAction,
+		ShowTabBarAction,
 		ShowSidebarAction,
 		ShowErrorConsoleAction,
 		LockToolBarsAction,

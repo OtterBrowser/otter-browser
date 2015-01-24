@@ -385,6 +385,10 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), checked);
 
 			break;
+		case Action::ShowTabBarAction:
+			m_tabBarToolBarWidget->setVisible(checked);
+
+			break;
 		case Action::ShowSidebarAction:
 			m_ui->sidebarDockWidget->setVisible(checked);
 

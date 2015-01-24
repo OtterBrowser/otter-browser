@@ -114,6 +114,7 @@
 			"title": "Toolbars",
 			"actions":
 			[
+				"ShowTabBar",
 				"ShowSidebar",
 				"ShowErrorConsole",
 				"separator",
