@@ -236,6 +236,11 @@ void Window::search(const QString &query, const QString &engine)
 	}
 }
 
+void Window::markActive()
+{
+	m_lastActivity = QDateTime::currentDateTime();
+}
+
 void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
 {
 	if (getType() == QLatin1String("web") && (hints == DefaultOpen || hints == CurrentTabOpen))
@@ -630,6 +635,11 @@ QIcon Window::getIcon() const
 QPixmap Window::getThumbnail() const
 {
 	return (m_contentsWidget ? m_contentsWidget->getThumbnail() : QPixmap());
+}
+
+QDateTime Window::getLastActivity() const
+{
+	return m_lastActivity;
 }
 
 SessionWindow Window::getSession() const

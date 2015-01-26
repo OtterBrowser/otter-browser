@@ -23,6 +23,7 @@
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
+#include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
 #include <QtPrintSupport/QPrinter>
@@ -70,6 +71,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
+	QDateTime getLastActivity() const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	WindowLoadingState getLoadingState() const;
@@ -83,6 +85,7 @@ public slots:
 	void triggerAction(int identifier, bool checked = false);
 	void close();
 	void search(const QString &query, const QString &engine);
+	void markActive();
 	void setOption(const QString &key, const QVariant &value);
 	void setSearchEngine(const QString &engine);
 	void setUrl(const QUrl &url, bool typed = true);
@@ -105,6 +108,7 @@ private:
 	AddressWidget *m_addressWidget;
 	SearchWidget *m_searchWidget;
 	ContentsWidget *m_contentsWidget;
+	QDateTime m_lastActivity;
 	SessionWindow m_session;
 	qint64 m_identifier;
 	bool m_areControlsHidden;

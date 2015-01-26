@@ -652,6 +652,7 @@ void WindowsManager::setActiveWindow(int index)
 		m_mainWindow->getMdi()->setActiveWindow(window);
 
 		window->setFocus();
+		window->markActive();
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
