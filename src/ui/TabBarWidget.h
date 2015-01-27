@@ -76,6 +76,7 @@ protected slots:
 	void updatePinnedTabsAmount();
 	void updateButtons();
 	void updateTabs(int index = -1);
+	void setCycle(bool enable);
 	void setIsMoved(bool isMoved);
 
 private:

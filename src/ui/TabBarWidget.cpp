@@ -138,7 +138,17 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+
+	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
+	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
+	cycleAction->setCheckable(true);
+	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
+
+	customizeMenu->addSeparator();
+	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+
+	connect(cycleAction, SIGNAL(toggled(bool)), this, SLOT(setCycle(bool)));
+
 	menu.exec(event->globalPos());
 
 	m_clickedTab = -1;
@@ -636,6 +646,11 @@ void TabBarWidget::updateTabs(int index)
 	m_hoveredTab = -1;
 
 	tabHovered(tabAt(mapFromGlobal(QCursor::pos())));
+}
+
+void TabBarWidget::setCycle(bool enable)
+{
+	SettingsManager::setValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll"), !enable);
 }
 
 void TabBarWidget::setIsMoved(bool isMoved)
