@@ -130,6 +130,7 @@
 				"Preferences",
 				"separator",
 				"WorkOffline",
+				"ClearHistory",
 				"separator",
 				{
 					"identifier": "ImportExportMenu",
