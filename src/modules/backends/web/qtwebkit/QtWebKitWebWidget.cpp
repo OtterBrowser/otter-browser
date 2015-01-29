@@ -1062,7 +1062,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::BookmarkLinkAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				emit requestedAddBookmark(m_hitResult.linkUrl(), m_hitResult.element().attribute(QLatin1String("title")));
+				const QString title = m_hitResult.element().attribute(QLatin1String("title"));
+
+				emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title));
 			}
 
 			break;
