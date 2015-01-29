@@ -115,7 +115,7 @@ private:
 	bool m_isRestored;
 
 signals:
-	void requestedAddBookmark(QUrl url, QString title);
+	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);

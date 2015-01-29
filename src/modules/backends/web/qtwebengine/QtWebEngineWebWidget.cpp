@@ -289,7 +289,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case Action::BookmarkLinkAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				emit requestedAddBookmark(m_hitResult.linkUrl, m_hitResult.title);
+				emit requestedAddBookmark(m_hitResult.linkUrl, m_hitResult.title, QString());
 			}
 
 			break;
@@ -643,7 +643,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::AddBookmarkAction:
-			emit requestedAddBookmark(getUrl(), getTitle());
+			emit requestedAddBookmark(getUrl(), getTitle(), QString());
 
 			break;
 		case Action::WebsitePreferencesAction:

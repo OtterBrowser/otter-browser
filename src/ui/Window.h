@@ -122,7 +122,7 @@ signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
 	void requestedSearch(QString query, QString engine, OpenHints hints = DefaultOpen);
-	void requestedAddBookmark(QUrl url, QString title);
+	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedCloseWindow(Window *window);
 	void canZoomChanged(bool can);

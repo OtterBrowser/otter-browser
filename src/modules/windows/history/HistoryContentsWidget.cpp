@@ -355,7 +355,7 @@ void HistoryContentsWidget::bookmarkEntry()
 
 	if (entryItem)
 	{
-		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyView->currentIndex().sibling(m_ui->historyView->currentIndex().row(), 1).data(Qt::DisplayRole).toString());
+		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyView->currentIndex().sibling(m_ui->historyView->currentIndex().row(), 1).data(Qt::DisplayRole).toString(), QString());
 	}
 }
 

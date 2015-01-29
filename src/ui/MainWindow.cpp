@@ -107,7 +107,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
-	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString)), this, SLOT(addBookmark(QUrl,QString)));
+	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowErrorConsoleAction), SLOT(setChecked(bool)));
@@ -339,7 +339,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::AddBookmarkAction:
-			addBookmark(QUrl(), QString(), true);
+			addBookmark(QUrl(), QString(), QString(), true);
 
 			break;
 		case Action::QuickBookmarkAccessAction:
@@ -496,7 +496,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 	}
 }
 
-void MainWindow::addBookmark(const QUrl &url, const QString &title, bool warn)
+void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description, bool warn)
 {
 	const QString bookmarkUrl = (url.isValid() ? url.toString(QUrl::RemovePassword) : m_windowsManager->getUrl().toString(QUrl::RemovePassword));
 
@@ -506,6 +506,8 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, bool warn)
 	}
 
 	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
+	bookmark->setData(description, BookmarksModel::DescriptionRole);
+
 	BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 
 	if (dialog.exec() == QDialog::Rejected)

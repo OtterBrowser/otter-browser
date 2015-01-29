@@ -1064,7 +1064,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			{
 				const QString title = m_hitResult.element().attribute(QLatin1String("title"));
 
-				emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title));
+				emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title), QString());
 			}
 
 			break;
@@ -1559,7 +1559,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::AddBookmarkAction:
-			emit requestedAddBookmark(getUrl(), getTitle());
+			{
+				const QString description = m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content"));
+
+				emit requestedAddBookmark(getUrl(), getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
+			}
 
 			break;
 		case Action::LoadPluginsAction:

@@ -86,7 +86,7 @@ private:
 
 signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);
-	void requestedAddBookmark(QUrl url, QString title);
+	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
 	void canZoomChanged(bool can);
