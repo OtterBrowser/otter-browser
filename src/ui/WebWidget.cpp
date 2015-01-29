@@ -175,6 +175,11 @@ void WebWidget::startReloadTimer()
 	}
 }
 
+void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
+{
+	m_alternateStyleSheets = styleSheets;
+}
+
 void WebWidget::search(const QString &query, const QString &engine)
 {
 	Q_UNUSED(query)
@@ -711,6 +716,11 @@ QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
 QUrl WebWidget::getRequestedUrl() const
 {
 	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
+}
+
+QStringList WebWidget::getAlternateStyleSheets() const
+{
+	return m_alternateStyleSheets;
 }
 
 QVariantHash WebWidget::getOptions() const

@@ -109,6 +109,7 @@ public:
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	QStringList getAlternateStyleSheets() const;
 	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
@@ -141,6 +142,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void startReloadTimer();
+	void setAlternateStyleSheets(const QStringList &styleSheets);
 	virtual void setOptions(const QVariantHash &options);
 
 protected slots:
@@ -162,6 +164,7 @@ private:
 	QString m_overridingStatusMessage;
 	QPoint m_beginCursorPosition;
 	QPoint m_beginScrollPosition;
+	QStringList m_alternateStyleSheets;
 	QVariantHash m_options;
 	ScrollMode m_scrollMode;
 	int m_reloadTimer;
