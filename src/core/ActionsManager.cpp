@@ -74,6 +74,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::DetachTabAction, QT_TRANSLATE_NOOP("actions", "Detach Tab"));
 	registerAction(Action::CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
 	registerAction(Action::CloseOtherTabs, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
+	registerAction(Action::ClosePrivateTabs, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"));
 	registerAction(Action::ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
 	registerAction(Action::CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"));
 	registerAction(Action::SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions..."));

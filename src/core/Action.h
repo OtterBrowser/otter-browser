@@ -44,6 +44,7 @@ public:
 		DetachTabAction,
 		CloseTabAction,
 		CloseOtherTabs,
+		ClosePrivateTabs,
 		ReopenTabAction,
 		CloseWindowAction,
 		SessionsAction,
