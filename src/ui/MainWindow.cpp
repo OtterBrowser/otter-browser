@@ -34,6 +34,7 @@
 #include "preferences/ContentBlockingDialog.h"
 #include "toolbars/ZoomWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/AddonsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
@@ -43,7 +44,6 @@
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
-#include "../core/WebBackendsManager.h"
 
 #include "ui_MainWindow.h"
 
@@ -464,7 +464,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			break;
 		case Action::AboutApplicationAction:
 			{
-				WebBackend *backend = WebBackendsManager::getBackend();
+				WebBackend *backend = AddonsManager::getWebBackend();
 				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
 				about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(backend->getTitle()).arg(backend->getEngineVersion()) + QLatin1String("<br><br>"));
 

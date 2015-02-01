@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "NetworkManagerFactory.h"
+#include "AddonsManager.h"
 #include "ContentBlockingManager.h"
 #include "CookieJar.h"
 #include "NetworkCache.h"
@@ -27,7 +28,6 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "WebBackend.h"
-#include "WebBackendsManager.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>

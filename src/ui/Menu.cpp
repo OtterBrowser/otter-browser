@@ -21,13 +21,13 @@
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "../core/ActionsManager.h"
+#include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SessionsManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
-#include "../core/WebBackendsManager.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
@@ -395,7 +395,7 @@ void Menu::populateClosedWindowsMenu()
 		addSeparator();
 	}
 
-	WebBackend *backend = WebBackendsManager::getBackend();
+	WebBackend *backend = AddonsManager::getWebBackend();
 	MainWindow *window = MainWindow::findMainWindow(parent());
 
 	if (window)

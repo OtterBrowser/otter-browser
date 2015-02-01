@@ -19,12 +19,12 @@
 **************************************************************************/
 
 #include "Transfer.h"
+#include "AddonsManager.h"
 #include "NetworkManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "WebBackend.h"
-#include "WebBackendsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QCoreApplication>
@@ -90,7 +90,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
 	request.setUrl(QUrl(source));
 
 	if (!m_networkManager)
@@ -578,7 +578,7 @@ bool Transfer::resume()
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
 	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 	request.setUrl(m_source);
 
@@ -621,7 +621,7 @@ bool Transfer::restart()
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, WebBackendsManager::getBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
 	request.setUrl(QUrl(m_source));
 
 	if (!m_networkManager)

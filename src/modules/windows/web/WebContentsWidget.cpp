@@ -21,9 +21,9 @@
 #include "PermissionBarWidget.h"
 #include "ProgressBarWidget.h"
 #include "SearchBarWidget.h"
+#include "../../../core/AddonsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
-#include "../../../core/WebBackendsManager.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QVBoxLayout>
@@ -48,7 +48,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	}
 	else
 	{
-		m_webWidget = WebBackendsManager::getBackend()->createWidget(isPrivate, this);
+		m_webWidget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
 	}
 
 	setFocusPolicy(Qt::StrongFocus);

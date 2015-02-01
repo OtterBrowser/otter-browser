@@ -22,12 +22,12 @@
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitWebBackend.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
-#include "../../../../core/WebBackendsManager.h"
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
@@ -50,7 +50,7 @@ namespace Otter
 
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
-	m_backend(WebBackendsManager::getBackend(QLatin1String("qtwebkit"))),
+	m_backend(AddonsManager::getWebBackend(QLatin1String("qtwebkit"))),
 	m_networkManager(networkManager),
 	m_ignoreJavaScriptPopups(false)
 {

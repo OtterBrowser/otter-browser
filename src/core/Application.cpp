@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Application.h"
+#include "AddonsManager.h"
 #include "BookmarksManager.h"
 #include "Console.h"
 #include "HistoryManager.h"
@@ -26,7 +27,6 @@
 #include "SettingsManager.h"
 #include "Transfer.h"
 #include "TransfersManager.h"
-#include "WebBackendsManager.h"
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
@@ -191,7 +191,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	HistoryManager::createInstance(this);
 
-	WebBackendsManager::createInstance(this);
+	AddonsManager::createInstance(this);
 
 	SearchesManager::createInstance(this);
 

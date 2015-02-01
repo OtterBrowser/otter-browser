@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "WebBackendsManager.h"
+#include "AddonsManager.h"
 #include "SettingsManager.h"
 #include "WebBackend.h"
 #ifdef OTTER_ENABLE_QTWEBENGINE
@@ -28,55 +28,56 @@
 namespace Otter
 {
 
-WebBackendsManager *WebBackendsManager::m_instance = NULL;
-QHash<QString, WebBackend*> WebBackendsManager::m_backends;
+AddonsManager *AddonsManager::m_instance = NULL;
+QHash<QString, WebBackend*> AddonsManager::m_webBackends;
 
-WebBackendsManager::WebBackendsManager(QObject *parent) : QObject(parent)
+AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 {
 #ifdef OTTER_ENABLE_QTWEBENGINE
-	registerBackend(new QtWebEngineWebBackend(this), QLatin1String("qtwebengine"));
+	registerWebBackend(new QtWebEngineWebBackend(this), QLatin1String("qtwebengine"));
 #endif
-	registerBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
+	registerWebBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
 }
 
-void WebBackendsManager::createInstance(QObject *parent)
+void AddonsManager::createInstance(QObject *parent)
 {
 	if (!m_instance)
 	{
-		m_instance = new WebBackendsManager(parent);
+		m_instance = new AddonsManager(parent);
 	}
 }
 
-void WebBackendsManager::registerBackend(WebBackend *backend, const QString &name)
+void AddonsManager::registerWebBackend(WebBackend *backend, const QString &name)
 {
-	m_backends[name] = backend;
+	m_webBackends[name] = backend;
 }
 
-QStringList WebBackendsManager::getBackends()
+QStringList AddonsManager::getWebBackends()
 {
-	return m_backends.keys();
+	return m_webBackends.keys();
 }
 
-WebBackend* WebBackendsManager::getBackend(const QString &name)
+WebBackend* AddonsManager::getWebBackend(const QString &name)
 {
-	if (m_backends.contains(name))
+	if (m_webBackends.contains(name))
 	{
-		return m_backends[name];
+		return m_webBackends[name];
 	}
 
 	if (name.isEmpty())
 	{
 		const QString defaultName = SettingsManager::getValue(QLatin1String("Backends/Web")).toString();
 
-		if (m_backends.contains(defaultName))
+		if (m_webBackends.contains(defaultName))
 		{
-			return m_backends[defaultName];
+			return m_webBackends[defaultName];
 		}
 
-		return m_backends.value(m_backends.keys().first(), NULL);
+		return m_webBackends.value(m_webBackends.keys().first(), NULL);
 	}
 
 	return NULL;
 }
 
 }
+

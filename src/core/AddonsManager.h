@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,33 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_WEBBACKENDSMANAGER_H
-#define OTTER_WEBBACKENDSMANAGER_H
+#ifndef OTTER_ADDONSMANAGER_H
+#define OTTER_ADDONSMANAGER_H
 
-#include <QtCore/QHash>
 #include <QtCore/QObject>
-#include <QtCore/QStringList>
 
 namespace Otter
 {
 
 class WebBackend;
 
-class WebBackendsManager : public QObject
+class AddonsManager : public QObject
 {
 	Q_OBJECT
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void registerBackend(WebBackend *backend, const QString &name);
-	static WebBackend* getBackend(const QString &backend = QString());
-	static QStringList getBackends();
+	static void registerWebBackend(WebBackend *backend, const QString &name);
+	static WebBackend* getWebBackend(const QString &backend = QString());
+	static QStringList getWebBackends();
 
 protected:
-	explicit WebBackendsManager(QObject *parent = NULL);
+	explicit AddonsManager(QObject *parent = NULL);
 
 private:
-	static WebBackendsManager *m_instance;
-	static QHash<QString, WebBackend*> m_backends;
+	static AddonsManager *m_instance;
+	static QHash<QString, WebBackend*> m_webBackends;
+
 };
 
 }

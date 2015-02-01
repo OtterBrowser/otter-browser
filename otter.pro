@@ -32,6 +32,7 @@ QMAKE_SUBSTITUTES += configHeader
 SOURCES += src/main.cpp \
     src/core/Action.cpp \
     src/core/ActionsManager.cpp \
+    src/core/AddonsManager.cpp \
     src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
     src/core/BookmarksImporter.cpp \
@@ -62,7 +63,6 @@ SOURCES += src/main.cpp \
     src/core/TransfersManager.cpp \
     src/core/Utils.cpp \
     src/core/WebBackend.cpp \
-    src/core/WebBackendsManager.cpp \
     src/core/WindowsManager.cpp \
     src/ui/ActionWidget.cpp \
     src/ui/AddressWidget.cpp \
@@ -141,6 +141,7 @@ win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
 HEADERS += src/core/Action.h \
     src/core/ActionsManager.h \
+    src/core/AddonsManager.h \
     src/core/AddressCompletionModel.h \
     src/core/Application.h \
     src/core/BookmarksImporter.h \
@@ -171,7 +172,6 @@ HEADERS += src/core/Action.h \
     src/core/TransfersManager.h \
     src/core/Utils.h \
     src/core/WebBackend.h \
-    src/core/WebBackendsManager.h \
     src/core/WindowsManager.h \
     src/ui/ActionWidget.h \
     src/ui/AddressWidget.h \

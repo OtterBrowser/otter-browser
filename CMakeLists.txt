@@ -80,6 +80,7 @@ set(otter_src
 	src/main.cpp
 	src/core/Action.cpp
 	src/core/ActionsManager.cpp
+	src/core/AddonsManager.cpp
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp
 	src/core/BookmarksImporter.cpp
@@ -110,7 +111,6 @@ set(otter_src
 	src/core/TransfersManager.cpp
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
-	src/core/WebBackendsManager.cpp
 	src/core/WindowsManager.cpp
 	src/ui/ActionWidget.cpp
 	src/ui/AddressWidget.cpp

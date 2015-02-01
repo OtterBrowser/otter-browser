@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "BookmarksModel.h"
+#include "AddonsManager.h"
 #include "Utils.h"
 #include "WebBackend.h"
-#include "WebBackendsManager.h"
 
 #include <QtCore/QMimeData>
 
@@ -181,7 +181,7 @@ QVariant BookmarksItem::data(int role) const
 		}
 		else if (type == UrlBookmark)
 		{
-			return WebBackendsManager::getBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
+			return AddonsManager::getWebBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
 		}
 
 		return QVariant();

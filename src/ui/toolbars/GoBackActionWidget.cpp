@@ -21,7 +21,7 @@
 #include "../ContentsWidget.h"
 #include "../Window.h"
 #include "../../core/WebBackend.h"
-#include "../../core/WebBackendsManager.h"
+#include "../../core/AddonsManager.h"
 
 #include <QtWidgets/QMenu>
 
@@ -85,7 +85,7 @@ void GoBackActionWidget::updateMenu()
 
 	menu()->clear();
 
-	WebBackend *backend = WebBackendsManager::getBackend();
+	WebBackend *backend = AddonsManager::getWebBackend();
 	const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
 
 	for (int i = (history.index - 1); i >= 0; --i)

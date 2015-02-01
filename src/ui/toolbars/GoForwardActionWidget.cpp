@@ -20,8 +20,8 @@
 #include "GoForwardActionWidget.h"
 #include "../ContentsWidget.h"
 #include "../Window.h"
+#include "../../core/AddonsManager.h"
 #include "../../core/WebBackend.h"
-#include "../../core/WebBackendsManager.h"
 
 #include <QtWidgets/QMenu>
 
@@ -85,7 +85,7 @@ void GoForwardActionWidget::updateMenu()
 
 	menu()->clear();
 
-	WebBackend *backend = WebBackendsManager::getBackend();
+	WebBackend *backend = AddonsManager::getWebBackend();
 	const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
 
 	for (int i = (history.index + 1); i < history.entries.count(); ++i)
