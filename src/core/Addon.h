@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_WEBBACKEND_H
-#define OTTER_WEBBACKEND_H
+#ifndef OTTER_ADDON_H
+#define OTTER_ADDON_H
 
-#include "Addon.h"
+#include <QtCore/QObject>
+#include <QtCore/QUrl>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
 
-class ContentsWidget;
-class WebWidget;
-
-class WebBackend : public Addon
+class Addon : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit WebBackend(QObject *parent = NULL);
+	explicit Addon(QObject *parent = NULL);
 
-	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL) = 0;
-	virtual QString getEngineVersion() const = 0;
-	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
-	virtual QIcon getIconForUrl(const QUrl &url) = 0;
-	QUrl getUpdateUrl() const;
+	virtual QString getTitle() const = 0;
+	virtual QString getDescription() const = 0;
+	virtual QString getVersion() const = 0;
+	virtual QUrl getHomePage() const = 0;
+	virtual QUrl getUpdateUrl() const = 0;
+	virtual QIcon getIcon() const = 0;
 };
 
 }

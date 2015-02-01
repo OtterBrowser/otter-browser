@@ -38,6 +38,8 @@ public:
 	QString getVersion() const;
 	QString getEngineVersion() const;
 	QString getUserAgent(const QString &pattern = QString()) const;
+	QUrl getHomePage() const;
+	QIcon getIcon() const;
 	QIcon getIconForUrl(const QUrl &url);
 
 protected slots:

@@ -32,6 +32,7 @@ QMAKE_SUBSTITUTES += configHeader
 SOURCES += src/main.cpp \
     src/core/Action.cpp \
     src/core/ActionsManager.cpp \
+    src/core/Addon.cpp \
     src/core/AddonsManager.cpp \
     src/core/AddressCompletionModel.cpp \
     src/core/Application.cpp \
@@ -141,6 +142,7 @@ win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
 HEADERS += src/core/Action.h \
     src/core/ActionsManager.h \
+    src/core/Addon.h \
     src/core/AddonsManager.h \
     src/core/AddressCompletionModel.h \
     src/core/Application.h \

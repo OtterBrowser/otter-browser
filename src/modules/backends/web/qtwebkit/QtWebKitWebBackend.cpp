@@ -184,6 +184,16 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }
 
+QUrl QtWebKitWebBackend::getHomePage() const
+{
+	return QUrl(QLatin1String("http://otter-browser.org/"));
+}
+
+QIcon QtWebKitWebBackend::getIcon() const
+{
+	return QIcon();
+}
+
 QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)
 {
 	const QIcon icon = QWebSettings::iconForUrl(url);

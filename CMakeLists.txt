@@ -80,6 +80,7 @@ set(otter_src
 	src/main.cpp
 	src/core/Action.cpp
 	src/core/ActionsManager.cpp
+	src/core/Addon.cpp
 	src/core/AddonsManager.cpp
 	src/core/AddressCompletionModel.cpp
 	src/core/Application.cpp

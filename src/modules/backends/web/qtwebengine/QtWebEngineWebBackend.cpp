@@ -97,6 +97,16 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 	return pattern;
 }
 
+QUrl QtWebEngineWebBackend::getHomePage() const
+{
+	return QUrl(QLatin1String("http://otter-browser.org/"));
+}
+
+QIcon QtWebEngineWebBackend::getIcon() const
+{
+	return QIcon();
+}
+
 QIcon QtWebEngineWebBackend::getIconForUrl(const QUrl &url)
 {
 	Q_UNUSED(url)
