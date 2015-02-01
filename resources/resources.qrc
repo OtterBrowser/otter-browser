@@ -124,8 +124,6 @@
         <file>icons/zoom-out.png</file>
         <file>keyboard/default.ini</file>
         <file>keyboard/platform.ini</file>
-        <file>macros/default.ini</file>
-        <file>macros/platform.ini</file>
         <file>other/adblock.ini</file>
         <file>other/menuBar.json</file>
         <file>other/menuButton.json</file>

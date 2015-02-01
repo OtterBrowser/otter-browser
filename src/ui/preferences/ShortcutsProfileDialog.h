@@ -36,7 +36,7 @@ class ShortcutsProfileDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, bool macrosMode, QWidget *parent = NULL);
+	explicit ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, QWidget *parent = NULL);
 	~ShortcutsProfileDialog();
 
 	QHash<QString, QString> getInformation() const;
@@ -46,16 +46,13 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void addMacro();
 	void addShortcut();
-	void updateMacrosActions();
 	void updateShortcutsActions();
 	void saveShortcuts();
 
 private:
 	QHash<QString, QList<QKeySequence> > m_shortcuts;
 	QModelIndex m_currentAction;
-	bool m_macrosMode;
 	Ui::ShortcutsProfileDialog *m_ui;
 };
 

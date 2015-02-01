@@ -28,63 +28,31 @@
 namespace Otter
 {
 
-ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, bool macrosMode, QWidget *parent) : QDialog(parent),
+ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, QWidget *parent) : QDialog(parent),
 	m_shortcuts(shortcuts),
-	m_macrosMode(macrosMode),
 	m_ui(new Ui::ShortcutsProfileDialog)
 {
 	m_ui->setupUi(this);
 
-	QStringList labels;
 	QStandardItemModel *model = new QStandardItemModel(this);
+	const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
+	QStringList labels;
+	labels << tr("Action");
 
-	if (m_macrosMode)
+	for (int i = 0; i < actions.count(); ++i)
 	{
-		labels << tr("Macro") << tr("Actions");
+		const QString name = ActionsManager::getActionName(actions.at(i).identifier);
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
+		items[0]->setData(name, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		QHash<QString, QVariantHash>::const_iterator iterator;
-
-		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
+		if (data.contains(name))
 		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(iterator.value().value(QLatin1String("title"), tr("(Untitled)")).toString()));
-			items[0]->setData(iterator.key(), Qt::UserRole);
-			items[0]->setData(iterator.value().value(QLatin1String("shortcuts")), (Qt::UserRole + 1));
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-			items.append(new QStandardItem(iterator.value().value(QLatin1String("actions"), QStringList()).toStringList().join(QLatin1String(", "))));
-			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-
-			model->appendRow(items);
+			items[0]->setData(data[name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
 		}
 
-		m_ui->addMacroButton->setEnabled(true);
-
-		connect(m_ui->addMacroButton, SIGNAL(clicked()), this, SLOT(addMacro()));
-		connect(m_ui->removeMacroButton, SIGNAL(clicked()), m_ui->actionsViewWidget, SLOT(removeRow()));
-	}
-	else
-	{
-		labels << tr("Action");
-
-		const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
-
-		for (int i = 0; i < actions.count(); ++i)
-		{
-			const QString name = ActionsManager::getActionName(actions.at(i).identifier);
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
-			items[0]->setData(name, Qt::UserRole);
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-			if (data.contains(name))
-			{
-				items[0]->setData(data[name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
-			}
-
-			model->appendRow(items);
-		}
-
-		m_ui->macrosWidget->hide();
+		model->appendRow(items);
 	}
 
 	model->setHorizontalHeaderLabels(labels);
@@ -98,10 +66,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	m_ui->versionLineEdit->setText(information.value(QLatin1String("Version"), QString()));
 	m_ui->authorLineEdit->setText(information.value(QLatin1String("Author"), QString()));
 
-	updateMacrosActions();
-
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
-	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosActions()));
 	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
 	connect(m_ui->addShortcutButton, SIGNAL(clicked()), this, SLOT(addShortcut()));
 	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), m_ui->shortcutsViewWidget, SLOT(removeRow()));
@@ -127,39 +92,6 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ShortcutsProfileDialog::addMacro()
-{
-///TODO create list from profiles, like shortcuts
-	QStringList identifiers = m_shortcuts.keys();
-	QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
-	QString identifier;
-
-	for (int i = 0; i < actions.count(); ++i)
-	{
-		identifiers.append(ActionsManager::getActionName(actions.at(i).identifier));
-	}
-
-	do
-	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Macro Identifier:"));
-
-		if (identifier.isEmpty())
-		{
-			return;
-		}
-	}
-	while (identifiers.contains(identifier));
-
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(tr("(Untitled)")));
-	items[0]->setData(identifier, Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	items.append(new QStandardItem(QString()));
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-
-	m_ui->actionsViewWidget->insertRow(items);
-}
-
 void ShortcutsProfileDialog::addShortcut()
 {
 	QList<QStandardItem*> items;
@@ -167,51 +99,6 @@ void ShortcutsProfileDialog::addShortcut()
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
-}
-
-void ShortcutsProfileDialog::updateMacrosActions()
-{
-	disconnect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
-
-	m_ui->shortcutsViewWidget->getModel()->clear();
-
-	QStringList labels;
-	labels << tr("Shortcut");
-
-	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
-
-	m_ui->shortcutsViewWidget->getModel()->setHorizontalHeaderLabels(labels);
-	m_ui->removeMacroButton->setEnabled(m_macrosMode && m_currentAction.isValid());
-
-	if (!m_currentAction.isValid())
-	{
-		m_ui->addShortcutButton->setEnabled(false);
-		m_ui->removeShortcutButton->setEnabled(true);
-
-		return;
-	}
-
-	updateShortcutsActions();
-
-	m_ui->addShortcutButton->setEnabled(true);
-
-	const QStringList rawShortcuts = m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-
-	for (int i = 0; i < rawShortcuts.count(); ++i)
-	{
-		const QKeySequence shortcut(rawShortcuts.at(i));
-
-		if (!shortcut.isEmpty())
-		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(shortcut.toString()));
-			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-
-			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
-		}
-	}
-
-	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }
 
 void ShortcutsProfileDialog::updateShortcutsActions()
@@ -261,17 +148,10 @@ QHash<QString, QVariantHash> ShortcutsProfileDialog::getData() const
 		QVariantHash hash;
 		hash[QLatin1String("shortcuts")] = m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString();
 
-		if (m_macrosMode)
+		if (!hash[QLatin1String("shortcuts")].isNull())
 		{
-			hash[QLatin1String("title")] = m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::DisplayRole);
-			hash[QLatin1String("actions")] = m_ui->actionsViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toStringList();
+			data[m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole).toString()] = hash;
 		}
-		else if (hash[QLatin1String("shortcuts")].isNull())
-		{
-			continue;
-		}
-
-		data[m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole).toString()] = hash;
 	}
 
 	return data;

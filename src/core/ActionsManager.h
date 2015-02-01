@@ -72,13 +72,6 @@ struct ActionDefinition
 	ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
 };
 
-struct MacroDefinition
-{
-//	QString script;
-	QVector<int> actions;
-	QVector<QKeySequence> shortcuts;
-};
-
 class ActionsManager;
 class MainWindow;
 class Window;
@@ -95,7 +88,6 @@ protected:
 
 	int reloadShortcutsTimer;
 	QVector<ActionDefinition> actionDefinitions;
-	QVector<MacroDefinition> macroDefinitions;
 	QHash<QString, ToolBarDefinition> toolBarDefinitions;
 
 protected slots:
@@ -122,7 +114,6 @@ public:
 	static Action* getAction(int identifier, QObject *parent);
 	static QString getActionName(int identifier);
 	static QList<ActionDefinition> getActionDefinitions();
-	static QList<MacroDefinition> getMacroDefinitions();
 	static QList<ToolBarDefinition> getToolBarDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
 	static ToolBarDefinition getToolBarDefinition(const QString &toolBar);
@@ -135,7 +126,6 @@ protected:
 protected slots:
 	void actionTriggered();
 	void actionTriggered(bool checked);
-	void macroTriggered();
 	void updateShortcuts();
 
 private:

@@ -361,11 +361,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_ui->actionShortcutsMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->actionShortcutsMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
-	m_ui->actionMacrosMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->actionMacrosMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
 	loadProfiles(QLatin1String("keyboard"), QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), m_ui->actionShortcutsViewWidget);
-	loadProfiles(QLatin1String("macros"), QLatin1String("Browser/ActionMacrosProfilesOrder"), m_ui->actionMacrosViewWidget);
 
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
@@ -439,16 +436,6 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
 	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionMacrosMoveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->actionMacrosViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionMacrosMoveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->actionMacrosViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMacrosProfleActions()));
-	connect(m_ui->actionMacrosViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
-	connect(m_ui->actionMacrosAddButton, SIGNAL(clicked()), this, SLOT(addMacrosProfile()));
-	connect(m_ui->actionMacrosEditButton, SIGNAL(clicked()), this, SLOT(editMacrosProfile()));
-	connect(m_ui->actionMacrosCloneButton, SIGNAL(clicked()), this, SLOT(cloneMacrosProfile()));
-	connect(m_ui->actionMacrosRemoveButton, SIGNAL(clicked()), this, SLOT(removeMacrosProfile()));
-	connect(m_ui->actionMacrosMoveDownButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->actionMacrosMoveUpButton, SIGNAL(clicked()), m_ui->actionMacrosViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(manageAcceptLanguage()));
 }
 
@@ -882,7 +869,7 @@ void PreferencesDialog::editKeyboardProfile()
 	}
 
 	const QString path = index.data(Qt::UserRole).toString();
-	ShortcutsProfileDialog dialog((m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path)), (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path)), getShortcuts(), false, this);
+	ShortcutsProfileDialog dialog((m_keyboardProfilesInformation.contains(profile) ? m_keyboardProfilesInformation[profile] : getProfileInformation(path)), (m_keyboardProfilesData.contains(profile) ? m_keyboardProfilesData[profile] : getProfileData(path)), getShortcuts(), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -982,145 +969,6 @@ void PreferencesDialog::updateKeyboardProfleActions()
 	m_ui->actionShortcutsEditButton->setEnabled(isSelected && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')));
 	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
 	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
-}
-
-void PreferencesDialog::addMacrosProfile()
-{
-	const QString identifier = createProfileIdentifier(m_ui->actionMacrosViewWidget);
-
-	if (identifier.isEmpty())
-	{
-		return;
-	}
-
-	QHash<QString, QString> hash;
-	hash[QLatin1String("Title")] = tr("(Untitled)");
-
-	m_macrosProfilesInformation[identifier] = hash;
-	m_macrosProfilesData[identifier] = QHash<QString, QVariantHash>();
-
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(tr("(Untitled)")));
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(identifier));
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-
-	m_ui->actionMacrosViewWidget->insertRow(items);
-
-	markModified();
-}
-
-void PreferencesDialog::editMacrosProfile()
-{
-	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 0);
-	const QString profile = m_ui->actionMacrosViewWidget->getIndex(index.row(), 1).data().toString();
-
-	if (profile.isEmpty())
-	{
-		return;
-	}
-
-	const QString path = index.data(Qt::UserRole).toString();
-	ShortcutsProfileDialog dialog((m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path)), (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path)), getShortcuts(), true, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		return;
-	}
-
-	m_macrosProfilesInformation[profile] = dialog.getInformation();
-	m_macrosProfilesData[profile] = dialog.getData();
-
-	const QString title = m_macrosProfilesInformation[profile].value(QLatin1String("Title"), QString());
-
-	m_ui->actionMacrosViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
-	m_ui->actionMacrosViewWidget->setData(index, m_macrosProfilesInformation[profile].value(QLatin1String("Description"), QString()), Qt::ToolTipRole);
-
-	markModified();
-}
-
-void PreferencesDialog::cloneMacrosProfile()
-{
-	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 1);
-
-	if (!index.isValid())
-	{
-		return;
-	}
-
-	const QString profile = index.data().toString();
-	const QString identifier = createProfileIdentifier(m_ui->actionMacrosViewWidget, profile);
-
-	if (identifier.isEmpty())
-	{
-		return;
-	}
-
-	const QString path = getProfilePath(QLatin1String("macros"), profile);
-
-	m_macrosProfilesInformation[identifier] = (m_macrosProfilesInformation.contains(profile) ? m_macrosProfilesInformation[profile] : getProfileInformation(path));
-	m_macrosProfilesData[identifier] = (m_macrosProfilesData.contains(profile) ? m_macrosProfilesData[profile] : getProfileData(path));
-
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(m_macrosProfilesInformation[identifier].value(QLatin1String("Title"), tr("(Untitled)"))));
-	items[0]->setToolTip(m_macrosProfilesInformation[identifier].value(QLatin1String("Description"), QString()));
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(identifier));
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-
-	m_ui->actionMacrosViewWidget->insertRow(items);
-
-	markModified();
-}
-
-void PreferencesDialog::removeMacrosProfile()
-{
-	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(m_ui->actionMacrosViewWidget->getCurrentRow(), 0);
-
-	if (!index.isValid())
-	{
-		return;
-	}
-
-	QMessageBox messageBox;
-	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("Do you really want to remove this profile?"));
-	messageBox.setIcon(QMessageBox::Question);
-	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-	messageBox.setDefaultButton(QMessageBox::Cancel);
-
-	if (!index.data(Qt::UserRole).toString().isEmpty() && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')))
-	{
-		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
-	}
-
-	if (messageBox.exec() == QMessageBox::Yes)
-	{
-		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
-		{
-			m_removedProfiles.append(index.data(Qt::UserRole).toString());
-		}
-
-		const QString profile = m_ui->actionMacrosViewWidget->getIndex(index.row(), 1).data().toString();
-
-		m_macrosProfilesInformation.remove(profile);
-		m_macrosProfilesData.remove(profile);
-
-		m_ui->actionMacrosViewWidget->removeRow();
-
-		markModified();
-	}
-}
-
-void PreferencesDialog::updateMacrosProfleActions()
-{
-	const int currentRow = m_ui->actionMacrosViewWidget->getCurrentRow();
-	const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(currentRow, 0);
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionMacrosViewWidget->getRowCount());
-
-	m_ui->actionMacrosEditButton->setEnabled(isSelected && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')));
-	m_ui->actionMacrosCloneButton->setEnabled(isSelected);
-	m_ui->actionMacrosRemoveButton->setEnabled(isSelected);
 }
 
 void PreferencesDialog::updateJavaScriptOptions()
@@ -1406,43 +1254,6 @@ void PreferencesDialog::save()
 		file.close();
 	}
 
-	QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/macros/"));
-
-	const QStringList modifiedMacrosProfiles = m_macrosProfilesInformation.keys();
-
-	for (int i = 0; i < modifiedMacrosProfiles.count(); ++i)
-	{
-		QFile file(SessionsManager::getProfilePath() + QLatin1String("/macros/") + modifiedMacrosProfiles.at(i) + QLatin1String(".ini"));
-
-		if (!file.open(QIODevice::WriteOnly))
-		{
-			continue;
-		}
-
-		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
-		stream << QLatin1String("; Title: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Title"), tr("(Untitled)")) << QLatin1Char('\n');
-		stream << QLatin1String("; Description: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Description"), QString()) << QLatin1Char('\n');
-		stream << QLatin1String("; Type: macros-profile\n");
-		stream << QLatin1String("; Author: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Author"), QString()) << QLatin1Char('\n');
-		stream << QLatin1String("; Version: ") << m_macrosProfilesInformation[modifiedMacrosProfiles.at(i)].value(QLatin1String("Version"), QString()) << QLatin1String("\n\n");
-
-		QHash<QString, QVariantHash>::iterator iterator;
-
-		for (iterator = m_macrosProfilesData[modifiedMacrosProfiles.at(i)].begin(); iterator != m_macrosProfilesData[modifiedMacrosProfiles.at(i)].end(); ++iterator)
-		{
-			if (!iterator.key().isEmpty() && !iterator.value().value(QLatin1String("actions")).isNull())
-			{
-				stream << QLatin1Char('[') << iterator.key() << QLatin1String("]\n");
-				stream << Utils::formatConfigurationEntry(QLatin1String("title"), iterator.value().value(QLatin1String("title")).toString(), true);
-				stream << QLatin1String("actions=") << iterator.value().value(QLatin1String("actions")).toString() << QLatin1Char('\n');
-				stream << QLatin1String("shortcuts=") << iterator.value().value(QLatin1String("shortcuts")).toString() << QLatin1String("\n\n");
-			}
-		}
-
-		file.close();
-	}
-
 	QStringList keyboardProfiles;
 
 	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
@@ -1456,20 +1267,6 @@ void PreferencesDialog::save()
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
-
-	QStringList macrosProfiles;
-
-	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
-
-		if (!index.data().toString().isEmpty())
-		{
-			macrosProfiles.append(index.data().toString());
-		}
-	}
-
-	SettingsManager::setValue(QLatin1String("Browser/ActionMacrosProfilesOrder"), macrosProfiles);
 
 	ActionsManager::loadShortcuts();
 
@@ -1602,40 +1399,6 @@ QHash<QString, QList<QKeySequence> > PreferencesDialog::getShortcuts() const
 		}
 
 		const QHash<QString, QVariantHash> data = (m_keyboardProfilesData.contains(index.data().toString()) ? m_keyboardProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
-		QHash<QString, QVariantHash>::const_iterator iterator;
-
-		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)
-		{
-			const QStringList rawShortcuts = iterator.value().value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-			QList<QKeySequence> actionShortcuts;
-
-			for (int j = 0; j < rawShortcuts.count(); ++j)
-			{
-				const QKeySequence shortcut(rawShortcuts.at(j));
-
-				if (!shortcut.isEmpty())
-				{
-					actionShortcuts.append(shortcut);
-				}
-			}
-
-			if (!actionShortcuts.isEmpty())
-			{
-				shortcuts[iterator.key()] = actionShortcuts;
-			}
-		}
-	}
-
-	for (int i = 0; i < m_ui->actionMacrosViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex index = m_ui->actionMacrosViewWidget->getIndex(i, 1);
-
-		if (index.data().toString().isEmpty())
-		{
-			continue;
-		}
-
-		const QHash<QString, QVariantHash> data = (m_macrosProfilesData.contains(index.data().toString()) ? m_macrosProfilesData[index.data().toString()] : getProfileData(index.data(Qt::UserRole).toString()));
 		QHash<QString, QVariantHash>::const_iterator iterator;
 
 		for (iterator = data.constBegin(); iterator != data.constEnd(); ++iterator)

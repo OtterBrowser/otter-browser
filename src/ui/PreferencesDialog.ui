@@ -1932,7 +1932,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Action Shortcuts</string>
+              <string>Keyboard Shortcuts</string>
              </property>
             </widget>
            </item>
@@ -2045,142 +2045,6 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="actionShortcutsMoveDownButton">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>Move Down</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QLabel" name="actionMacrosHeader">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Action Macros</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="actionMacrosLayout">
-             <item>
-              <widget class="Otter::ItemViewWidget" name="actionMacrosViewWidget">
-               <property name="dragEnabled">
-                <bool>true</bool>
-               </property>
-               <property name="dragDropOverwriteMode">
-                <bool>false</bool>
-               </property>
-               <property name="dragDropMode">
-                <enum>QAbstractItemView::InternalMove</enum>
-               </property>
-               <property name="defaultDropAction">
-                <enum>Qt::MoveAction</enum>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SingleSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="pushButtonsLayout" stretch="0,0,0,0,1,0">
-               <item>
-                <widget class="QPushButton" name="actionMacrosAddButton">
-                 <property name="text">
-                  <string>Add</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="actionMacrosEditButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Edit...</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="actionMacrosCloneButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Clone</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="actionMacrosRemoveButton">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Remove</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="actionMacrosSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="actionMacrosMoveButtonsLayout">
-                 <item>
-                  <widget class="QToolButton" name="actionMacrosMoveUpButton">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>Move Up</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="actionMacrosMoveButtonsSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Minimum</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QToolButton" name="actionMacrosMoveDownButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -2362,13 +2226,6 @@
   <tabstop>actionShortcutsRemoveButton</tabstop>
   <tabstop>actionShortcutsMoveUpButton</tabstop>
   <tabstop>actionShortcutsMoveDownButton</tabstop>
-  <tabstop>actionMacrosViewWidget</tabstop>
-  <tabstop>actionMacrosAddButton</tabstop>
-  <tabstop>actionMacrosEditButton</tabstop>
-  <tabstop>actionMacrosCloneButton</tabstop>
-  <tabstop>actionMacrosRemoveButton</tabstop>
-  <tabstop>actionMacrosMoveUpButton</tabstop>
-  <tabstop>actionMacrosMoveDownButton</tabstop>
   <tabstop>enableTrayIconCheckBox</tabstop>
   <tabstop>allSettingsButton</tabstop>
  </tabstops>

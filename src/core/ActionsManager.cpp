@@ -309,7 +309,7 @@ int ActionsManagerHelper::registerAction(int identifier, const QString &text, co
 
 void ActionsManagerHelper::optionChanged(const QString &option)
 {
-	if ((option == QLatin1String("Browser/ActionMacrosProfilesOrder") || option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder")) && reloadShortcutsTimer == 0)
+	if (option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder") && reloadShortcutsTimer == 0)
 	{
 		reloadShortcutsTimer = startTimer(250);
 	}
@@ -406,38 +406,6 @@ void ActionsManager::actionTriggered(bool checked)
 	}
 }
 
-void ActionsManager::macroTriggered()
-{
-	if (!m_helper)
-	{
-		initialize();
-	}
-
-	QShortcut *shortcut = qobject_cast<QShortcut*>(sender());
-
-	if (shortcut)
-	{
-		m_mutex.lock();
-
-		for (int i = 0; i < m_macroShortcuts.count(); ++i)
-		{
-			if (m_macroShortcuts[i].second.contains(shortcut))
-			{
-				const QVector<int> actions = m_helper->macroDefinitions.value(m_macroShortcuts[i].first).actions;
-
-				for (int j = 0; j < actions.count(); ++j)
-				{
-					triggerAction(actions[j]);
-				}
-
-				break;
-			}
-		}
-
-		m_mutex.unlock();
-	}
-}
-
 void ActionsManager::updateShortcuts()
 {
 	if (!m_helper)
@@ -476,23 +444,6 @@ void ActionsManager::updateShortcuts()
 		}
 
 		m_actionShortcuts.append(qMakePair(i, shortcuts));
-	}
-
-	for (int i = 0; i < m_helper->macroDefinitions.count(); ++i)
-	{
-		QVector<QShortcut*> shortcuts;
-		shortcuts.reserve(m_helper->macroDefinitions[i].shortcuts.count());
-
-		for (int j = 0; j < m_helper->macroDefinitions[i].shortcuts.count(); ++j)
-		{
-			QShortcut *shortcut = new QShortcut(m_helper->macroDefinitions[i].shortcuts[j], m_mainWindow);
-
-			shortcuts.append(shortcut);
-
-			connect(shortcut, SIGNAL(activated()), this, SLOT(macroTriggered()));
-		}
-
-		m_macroShortcuts.append(qMakePair(i, shortcuts));
 	}
 
 	m_mutex.unlock();
@@ -559,59 +510,6 @@ void ActionsManager::loadShortcuts()
 	for (int i = 0; i < m_helper->actionDefinitions.count(); ++i)
 	{
 		m_helper->actionDefinitions[i].shortcuts = actionShortcuts.value(i);
-	}
-
-	m_helper->macroDefinitions.clear();
-
-	const QStringList macroProfiles = SettingsManager::getValue(QLatin1String("Browser/ActionMacrosProfilesOrder")).toStringList();
-
-	for (int i = 0; i < macroProfiles.count(); ++i)
-	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/macros/") + macroProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/macros/") + macroProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList macros = profile.childGroups();
-
-		for (int j = 0; j < macros.count(); ++j)
-		{
-			const QStringList rawActions = profile.value(macros.at(j) + QLatin1String("/actions"), QString()).toStringList();
-			QVector<int> actions;
-
-			for (int k = 0; k < rawActions.count(); ++k)
-			{
-				const int action = ActionsManager::getActionIdentifier(rawActions.at(k));
-
-				if (action >= 0)
-				{
-					actions.append(action);
-				}
-			}
-
-			const QStringList rawShortcuts = profile.value(macros.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-			QVector<QKeySequence> shortcuts;
-			shortcuts.reserve(rawShortcuts.count());
-
-			for (int k = 0; k < rawShortcuts.count(); ++k)
-			{
-				const QKeySequence shortcut(rawShortcuts.at(k));
-
-				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut))
-				{
-					shortcuts.append(shortcut);
-					allShortcuts.append(shortcut);
-				}
-			}
-
-			if (actions.isEmpty() || shortcuts.isEmpty())
-			{
-				continue;
-			}
-
-			MacroDefinition macro;
-			macro.actions = actions;
-			macro.shortcuts = shortcuts;
-
-			m_helper->macroDefinitions.append(macro);
-		}
 	}
 
 	m_mutex.unlock();
@@ -723,16 +621,6 @@ QList<ActionDefinition> ActionsManager::getActionDefinitions()
 	}
 
 	return m_helper->actionDefinitions.toList();
-}
-
-QList<MacroDefinition> ActionsManager::getMacroDefinitions()
-{
-	if (!m_helper)
-	{
-		initialize();
-	}
-
-	return m_helper->macroDefinitions.toList();
 }
 
 QList<ToolBarDefinition> ActionsManager::getToolBarDefinitions()

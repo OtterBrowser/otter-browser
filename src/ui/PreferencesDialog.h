@@ -73,11 +73,6 @@ protected slots:
 	void cloneKeyboardProfile();
 	void removeKeyboardProfile();
 	void updateKeyboardProfleActions();
-	void addMacrosProfile();
-	void editMacrosProfile();
-	void cloneMacrosProfile();
-	void removeMacrosProfile();
-	void updateMacrosProfleActions();
 	void updateJavaScriptOptions();
 	void openConfigurationManager();
 	void markModified();
@@ -89,9 +84,7 @@ private:
 	QStringList m_removedProfiles;
 	QVariantMap m_javaScriptOptions;
 	QHash<QString, QHash<QString, QString> > m_keyboardProfilesInformation;
-	QHash<QString, QHash<QString, QString> > m_macrosProfilesInformation;
 	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;
-	QHash<QString, QHash<QString, QVariantHash> > m_macrosProfilesData;
 	bool m_userAgentsModified;
 	Ui::PreferencesDialog *m_ui;
 };
