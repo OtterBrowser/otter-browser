@@ -177,7 +177,7 @@ void TransfersManager::transferStopped()
 
 void TransfersManager::clearTransfers(int period)
 {
-	for (int i = 0; i < m_transfers.count(); ++i)
+	for (int i = (m_transfers.count() - 1); i >= 0; --i)
 	{
 		if (m_transfers.at(i)->getState() == Transfer::FinishedState && (period == 0 || (m_transfers.at(i)->getTimeFinished().isValid() && m_transfers.at(i)->getTimeFinished().secsTo(QDateTime::currentDateTime()) > (period * 3600))))
 		{
