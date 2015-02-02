@@ -245,7 +245,18 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 	{
 		if (path.isEmpty())
 		{
-			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName, tr("All files (*)"));
+			const QString suffix = QFileInfo(fileName).completeSuffix();
+			QStringList filters;
+
+			if (!suffix.isEmpty())
+			{
+				filters << tr("%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix);
+			}
+
+			filters << tr("All files (*)");
+
+			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName);
+			dialog.setNameFilters(filters);
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);
 
