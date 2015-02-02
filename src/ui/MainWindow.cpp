@@ -286,6 +286,29 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case Action::ClosePrivateTabsPanicAction:
+			if (SessionsManager::isPrivate())
+			{
+				Application::getInstance()->close();
+			}
+			else
+			{
+				const QList<MainWindow*> windows = SessionsManager::getWindows();
+
+				for (int i = 0; i < windows.count(); ++i)
+				{
+					if (windows[i]->getWindowsManager()->isPrivate())
+					{
+						windows[i]->close();
+					}
+					else
+					{
+						windows[i]->getWindowsManager()->triggerAction(Action::ClosePrivateTabsAction);
+					}
+				}
+			}
+
+			break;
 		case Action::CloseWindowAction:
 			close();
 

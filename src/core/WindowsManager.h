@@ -69,7 +69,7 @@ public:
 	SessionMainWindow getSession() const;
 	QList<SessionWindow> getClosedWindows() const;
 	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
-	int getWindowCount() const;
+	int getWindowCount(bool onlyPrivate = false) const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool isPrivate() const;

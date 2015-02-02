@@ -342,6 +342,18 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			closeOther(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
+		case Action::ClosePrivateTabsAction:
+			ActionsManager::getAction(Action::ClosePrivateTabsAction, this)->setEnabled(false);
+
+			for (int i = (m_mainWindow->getTabBar()->count() - 1); i > 0; --i)
+			{
+				if (getWindow(i)->isPrivate())
+				{
+					closeWindow(i);
+				}
+			}
+
+			break;
 		case Action::ActivateTabOnLeftAction:
 			m_mainWindow->getTabBar()->activateTabOnLeft();
 
@@ -381,6 +393,11 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 	if (!window)
 	{
 		return;
+	}
+
+	if (window->isPrivate())
+	{
+		ActionsManager::getAction(Action::ClosePrivateTabsAction, this)->setEnabled(true);
 	}
 
 	window->setControlsHidden(m_mainWindow->isFullScreen());
@@ -474,6 +491,13 @@ void WindowsManager::detachWindow(int index)
 		mainWindow->getWindowsManager()->closeOther();
 
 		m_mainWindow->getTabBar()->removeTab(index);
+
+		Action *closePrivateTabsAction = ActionsManager::getAction(Action::ClosePrivateTabsAction, this);
+
+		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+		{
+			closePrivateTabsAction->setEnabled(false);
+		}
 
 		emit windowRemoved(index);
 	}
@@ -571,6 +595,13 @@ void WindowsManager::closeWindow(Window *window)
 	}
 
 	m_mainWindow->getTabBar()->removeTab(index);
+
+	Action *closePrivateTabsAction = ActionsManager::getAction(Action::ClosePrivateTabsAction, this);
+
+	if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+	{
+		closePrivateTabsAction->setEnabled(false);
+	}
 
 	emit windowRemoved(index);
 
@@ -808,9 +839,24 @@ int WindowsManager::getWindowIndex(Window *window) const
 	return -1;
 }
 
-int WindowsManager::getWindowCount() const
+int WindowsManager::getWindowCount(bool onlyPrivate) const
 {
-	return m_mainWindow->getTabBar()->count();
+	if (!onlyPrivate || isPrivate())
+	{
+		return m_mainWindow->getTabBar()->count();
+	}
+
+	int amount = 0;
+
+	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+	{
+		if (getWindow(i)->isPrivate())
+		{
+			++amount;
+		}
+	}
+
+	return amount;
 }
 
 int WindowsManager::getZoom() const

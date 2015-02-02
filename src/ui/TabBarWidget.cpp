@@ -130,6 +130,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
 		menu.addAction(closeOtherTabsAction);
+		menu.addAction(ActionsManager::getAction(Action::ClosePrivateTabsAction, this));
 
 		connect(cloneTabAction, SIGNAL(triggered()), this, SLOT(cloneTab()));
 		connect(pinTabAction, SIGNAL(triggered()), this, SLOT(pinTab()));

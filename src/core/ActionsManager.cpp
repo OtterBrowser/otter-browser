@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -74,7 +74,8 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::DetachTabAction, QT_TRANSLATE_NOOP("actions", "Detach Tab"));
 	registerAction(Action::CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")));
 	registerAction(Action::CloseOtherTabs, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
-	registerAction(Action::ClosePrivateTabs, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"));
+	registerAction(Action::ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), false);
+	registerAction(Action::ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"));
 	registerAction(Action::ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
 	registerAction(Action::CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"));
 	registerAction(Action::SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions..."));
