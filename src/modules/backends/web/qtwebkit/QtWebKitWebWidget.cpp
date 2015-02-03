@@ -629,6 +629,11 @@ void QtWebKitWebWidget::updatePageActions(const QUrl &url)
 	{
 		m_actions[Action::AddBookmarkAction]->setOverrideText(HistoryManager::hasUrl(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
 	}
+
+	if (m_actions.contains(Action::WebsitePreferencesAction))
+	{
+		m_actions[Action::WebsitePreferencesAction]->setEnabled(!url.isEmpty() && url.scheme() != QLatin1String("about"));
+	}
 }
 
 void QtWebKitWebWidget::updateNavigationActions()
@@ -1986,6 +1991,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 			break;
 		case Action::AddBookmarkAction:
+		case Action::WebsitePreferencesAction:
 			updatePageActions(getUrl());
 
 			break;
