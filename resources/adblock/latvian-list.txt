@@ -1,2 +1,0 @@
-[Adblock Plus 2.0]
-! URL: https://gitorious.org/adblock-latvian/adblock-latvian/raw/master:lists/latvian-list.txt

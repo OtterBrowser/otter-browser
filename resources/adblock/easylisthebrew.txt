@@ -1,2 +1,0 @@
-[Adblock Plus 2.0]
-! URL: https://raw.github.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt

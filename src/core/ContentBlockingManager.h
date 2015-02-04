@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,7 +27,8 @@
 namespace Otter
 {
 
-class ContentBlockingList;
+class ContentBlockingProfile;
+struct ContentBlockingInformation;
 
 class ContentBlockingManager : public QObject
 {
@@ -34,34 +36,23 @@ class ContentBlockingManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void updateLists();
 	static ContentBlockingManager* getInstance();
-	static QByteArray getStyleSheetHidingRules();
+	static QByteArray getStyleSheet(const QVector<int> &profiles);
 	static QStringList createSubdomainList(const QString &domain);
-	static QList<ContentBlockingList*> getBlockingDefinitions();
-	static QMultiHash<QString, QString> getSpecificDomainHidingRules();
-	static QMultiHash<QString, QString> getHidingRulesExceptions();
-	static bool isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl);
-	static bool isContentBlockingEnabled();
+	static QVector<ContentBlockingInformation> getProfiles();
+	static QMultiHash<QString, QString> getStyleSheetBlackList(const QVector<int> &profiles);
+	static QMultiHash<QString, QString> getStyleSheetWhiteList(const QVector<int> &profiles);
+	static QVector<int> getProfileList(const QStringList &names);
+	static bool isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl);
 
 protected:
 	explicit ContentBlockingManager(QObject *parent = NULL);
 
-	static void loadLists();
-
-protected slots:
-	void updateCustomStyleSheets();
+	static void loadProfiles();
 
 private:
 	static ContentBlockingManager *m_instance;
-	static QList<ContentBlockingList*> m_blockingLists;
-	static QByteArray m_hidingRules;
-	static QMultiHash<QString, QString> m_specificDomainHidingRules;
-	static QMultiHash<QString, QString> m_hidingRulesExceptions;
-	static bool m_isContentBlockingEnabled;
-
-signals:
-	void styleSheetsUpdated();
+	static QVector<ContentBlockingProfile*> m_profiles;
 };
 
 }

@@ -58,6 +58,7 @@ public:
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	QVector<int> getContentBlockingProfiles();
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	int getZoom() const;
@@ -150,6 +151,7 @@ private:
 	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
+	QVector<int> m_contentBlockingProfiles;
 	QHash<int, Action*> m_actions;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;

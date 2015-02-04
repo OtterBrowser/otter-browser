@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
+! Title: Adblock Polska

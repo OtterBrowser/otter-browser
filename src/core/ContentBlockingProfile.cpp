@@ -1,7 +1,8 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010-2014 David Rosca <nowrep@gmail.com>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
 *
 **************************************************************************/
 
-#include "ContentBlockingList.h"
+#include "ContentBlockingProfile.h"
 #include "Console.h"
 #include "ContentBlockingManager.h"
 
@@ -32,112 +33,97 @@
 namespace Otter
 {
 
-NetworkManager* ContentBlockingList::m_networkManager = NULL;
+NetworkManager* ContentBlockingProfile::m_networkManager = NULL;
 
-ContentBlockingList::ContentBlockingList(QObject *parent) : QObject(parent),
+ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
 	m_root(NULL),
-	m_networkReply(NULL),
-	m_daysToExpire(4),
-	m_isUpdated(false),
-	m_isEnabled(false)
+	m_networkReply(NULL)
 {
+	m_information.name = QFileInfo(path).baseName();
+	m_information.title = tr("(Unknown)");
+	m_information.path = path;
+
+	load(true);
 }
 
-void ContentBlockingList::parseRules()
+void ContentBlockingProfile::load(bool onlyHeader)
 {
-	QFile rulesFile(m_fullFilePath);
-	bool isFileEmpty = true;
+	QFile file(m_information.path);
 
-	if (!rulesFile.open(QIODevice::ReadOnly | QIODevice::Text))
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to load adblock file: %0").arg(rulesFile.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to load adblock file: %1").arg(file.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
 
-	QTextStream adFileStream(&rulesFile);
-	const QString fileHeader = adFileStream.readLine().trimmed();
+	QTextStream stream(&file);
 
-	while (!adFileStream.atEnd())
+	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus 2.")))
 	{
-		QString headerLine = adFileStream.readLine();
+		Console::addMessage(QCoreApplication::translate("main", "Loaded adblock file is not valid: %1").arg(file.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
-		if (!headerLine.startsWith(QLatin1Char('!')))
+		file.close();
+
+		return;
+	}
+
+	while (!stream.atEnd())
+	{
+		QString line = stream.readLine().trimmed();
+
+		if (!line.startsWith(QLatin1Char('!')))
 		{
-			isFileEmpty = false;
+			m_information.isEmpty = false;
 
 			break;
 		}
 
-		if (headerLine.contains(QLatin1String("! Expires: ")))
+		if (line.startsWith(QLatin1String("! Title: ")))
 		{
-			m_daysToExpire = headerLine.remove(QLatin1String("! Expires: ")).split(QLatin1Char(' ')).at(0).toInt();
+			m_information.title = line.remove(QLatin1String("! Title: "));
+
+			continue;
 		}
 
-		headerLine.remove(QLatin1Char(' '));
+		if (line.startsWith(QLatin1String("! Expires: ")))
+		{
+			m_information.daysToExpire = line.remove(QLatin1String("! Expires: ")).split(QLatin1Char(' ')).at(0).toInt();
 
-		if (headerLine.contains(QLatin1String("!URL:")))
-		{
-			m_updateUrl = headerLine.remove(QLatin1String("!URL:"));
+			continue;
 		}
-		else if (headerLine.contains(QLatin1String("!Lastmodified:")))
+
+		line.remove(QLatin1Char(' '));
+
+		if (line.startsWith(QLatin1String("!URL:")))
 		{
-			m_lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(headerLine.remove(QLatin1String("!Lastmodified:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
-			m_lastUpdate.setTimeSpec(Qt::UTC);
+			m_information.updateUrl = line.remove(QLatin1String("!URL:"));
+
+			continue;
+		}
+
+		if (line.startsWith(QLatin1String("!Lastmodified:")))
+		{
+			m_information.lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(line.remove(QLatin1String("!Lastmodified:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
+			m_information.lastUpdate.setTimeSpec(Qt::UTC);
 		}
 	}
 
-	if (!fileHeader.startsWith(QLatin1String("[Adblock Plus 2.")))
+	file.close();
+
+	if (!m_information.updateRequested && (m_information.lastUpdate.isValid() && m_information.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_information.daysToExpire))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Loaded adblock file is not valid: %0").arg(rulesFile.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
-
-		return;
+		// TODO - enable after update interval implementation
+		//downloadUpdate();
 	}
-	else if ((isFileEmpty && m_updateUrl.isValid()) || (m_lastUpdate.isValid() && m_lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_daysToExpire))
+
+	if (!onlyHeader)
 	{
-		if (!m_isUpdated)
-		{
-			downloadUpdate();
-		}
+		loadRules();
 	}
-
-	rulesFile.close();
-
-	QtConcurrent::run(this, &ContentBlockingList::loadRuleFile);
 }
 
-void ContentBlockingList::loadRuleFile()
-{
-	m_root = new Node();
-	m_domainExpression = QRegularExpression(QLatin1String("[:\?&/=]"));
-
-	QFile rulesFile(m_fullFilePath);
-
-	rulesFile.open(QIODevice::ReadOnly | QIODevice::Text);
-
-	QTextStream adFileStream(&rulesFile);
-
-	adFileStream.readLine(); // header
-
-	while (!adFileStream.atEnd())
-	{
-		parseRuleLine(adFileStream.readLine());
-	}
-
-	if (m_cssHidingRules.length() > 0)
-	{
-		m_cssHidingRules = m_cssHidingRules.left(m_cssHidingRules.length() - 1);
-		m_cssHidingRules += QLatin1String("{display:none;}");
-	}
-
-	m_isEnabled = true;
-
-	emit updateCustomStyleSheets();
-
-	rulesFile.close();
-}
-
-void ContentBlockingList::parseRuleLine(QString line)
+void ContentBlockingProfile::parseRuleLine(QString line)
 {
 	if (line.indexOf(QLatin1Char('!')) == 0 || line.isEmpty())
 	{
@@ -146,21 +132,21 @@ void ContentBlockingList::parseRuleLine(QString line)
 
 	if (line.startsWith(QLatin1String("##")))
 	{
-		m_cssHidingRules += line.mid(2) + QLatin1Char(',');
+		m_styleSheet += line.mid(2) + QLatin1Char(',');
 
 		return;
 	}
 
 	if (line.contains(QLatin1String("##")))
 	{
-		parseCssRule(line.split(QLatin1String("##")), m_cssSpecificDomainHidingRules);
+		parseStyleSheetRule(line.split(QLatin1String("##")), m_styleSheetBlackList);
 
 		return;
 	}
 
 	if (line.contains(QLatin1String("#@#")))
 	{
-		parseCssRule(line.split(QLatin1String("#@#")), m_cssHidingRulesExceptions);
+		parseStyleSheetRule(line.split(QLatin1String("#@#")), m_styleSheetWhiteList);
 
 		return;
 	}
@@ -293,7 +279,7 @@ void ContentBlockingList::parseRuleLine(QString line)
 	return;
 }
 
-void ContentBlockingList::parseCssRule(const QStringList &line, QMultiHash<QString, QString> &list)
+void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
 {
 	const QStringList domains = line.at(0).split(QLatin1Char(','));
 
@@ -303,7 +289,7 @@ void ContentBlockingList::parseCssRule(const QStringList &line, QMultiHash<QStri
 	}
 }
 
-void ContentBlockingList::resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked)
+void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked)
 {
 	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
@@ -395,27 +381,7 @@ void ContentBlockingList::resolveRuleOptions(ContentBlockingRule *rule, const QN
 	}
 }
 
-void ContentBlockingList::setFile(const QString &path, const QString &name)
-{
-	m_fileName = name;
-	m_fullFilePath = path + name;
-}
-
-void ContentBlockingList::setEnabled(const bool enabled)
-{
-	if (!enabled && m_isEnabled)
-	{
-		m_isEnabled = enabled;
-
-		clear();
-	}
-	else if (enabled && !m_isEnabled)
-	{
-		parseRules();
-	}
-}
-
-void ContentBlockingList::addRule(ContentBlockingRule *rule, const QString ruleString)
+void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &ruleString)
 {
 	Node *node = m_root;
 
@@ -452,7 +418,7 @@ void ContentBlockingList::addRule(ContentBlockingRule *rule, const QString ruleS
 	node->rule = rule;
 }
 
-void ContentBlockingList::deleteNode(Node *node)
+void ContentBlockingProfile::deleteNode(Node *node)
 {
 	for (int j = 0; j < node->children.count(); ++j)
 	{
@@ -463,8 +429,20 @@ void ContentBlockingList::deleteNode(Node *node)
 	delete node;
 }
 
-void ContentBlockingList::downloadUpdate()
+void ContentBlockingProfile::downloadUpdate()
 {
+	if (m_information.updateRequested)
+	{
+		return;
+	}
+
+	if (!m_information.updateUrl.isValid())
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Content blocking URL for %1 update is not valid. \n%2").arg(m_information.name).arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel);
+
+		return;
+	}
+
 	if (!m_networkManager)
 	{
 		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
@@ -472,12 +450,14 @@ void ContentBlockingList::downloadUpdate()
 
 	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateDownloaded(QNetworkReply*)));
 
-	QNetworkRequest request(m_updateUrl);
+	QNetworkRequest request(m_information.updateUrl);
 
 	m_networkReply = m_networkManager->get(request);
+
+	m_information.updateRequested = true;
 }
 
-void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
+void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 {
 	if (m_networkReply != reply)
 	{
@@ -490,7 +470,7 @@ void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 
 	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %0.\nError: %1").arg(m_fullFilePath).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %1.\nError: %2").arg(m_information.path).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		reply->deleteLater();
 
@@ -505,100 +485,136 @@ void ContentBlockingList::updateDownloaded(QNetworkReply *reply)
 
 		if (QCryptographicHash::hash(downloadedDataHeader + downloadedData, QCryptographicHash::Md5).toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Content blocking file checksum mismatch: %0").arg(m_fullFilePath), Otter::OtherMessageCategory, ErrorMessageLevel);
+			Console::addMessage(QCoreApplication::translate("main", "Content blocking file checksum mismatch: %1").arg(m_information.path), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 			return;
 		}
 	}
 
-	QFile ruleFile(m_fullFilePath);
+	QFile file(m_information.path);
 
-	if (!ruleFile.open(QFile::ReadWrite | QFile::Truncate))
+	if (!file.open(QFile::ReadWrite | QFile::Truncate))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to write downloaded content blocking file: %0").arg(m_fullFilePath), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Unable to write downloaded content blocking file: %1").arg(m_information.path), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
 
-	ruleFile.write(downloadedDataHeader);
-	ruleFile.write(QString("! URL: %0\n").arg(m_updateUrl.toString()).toUtf8());
-	ruleFile.write(downloadedDataChecksum);
+	file.write(downloadedDataHeader);
+	file.write(QString("! URL: %1\n").arg(m_information.updateUrl.toString()).toUtf8());
+	file.write(downloadedDataChecksum);
 
 	if (!downloadedData.contains(QByteArray("! Last modified: ")))
 	{
-		ruleFile.write(QString("! Last modified: " + QLocale(QLatin1String("UnitedStates")).toString(QDateTime::currentDateTimeUtc(), QLatin1String("dd MMM yyyy hh:mm")) + " UTC\n").toUtf8());
+		file.write(QString("! Last modified: " + QLocale(QLatin1String("UnitedStates")).toString(QDateTime::currentDateTimeUtc(), QLatin1String("dd MMM yyyy hh:mm")) + " UTC\n").toUtf8());
 	}
 
-	ruleFile.write(downloadedData);
-	ruleFile.close();
+	file.write(downloadedData);
+	file.close();
 
-	if (ruleFile.error() != QFile::NoError)
+	if (file.error() != QFile::NoError)
 	{
 		// TODO
 	}
 
-	m_isUpdated = true;
-	m_isEnabled = false;
+	if (m_information.isLoaded)
+	{
+		if (m_root)
+		{
+			QtConcurrent::run(this, &ContentBlockingProfile::deleteNode, m_root);
+		}
 
-	clear();
-	parseRules();
+		m_styleSheet.clear();
+		m_styleSheetWhiteList.clear();
+		m_styleSheetBlackList.clear();
+	}
+
+	load(!m_information.isLoaded);
 }
 
-void ContentBlockingList::clear()
+QString ContentBlockingProfile::getStyleSheet()
 {
-	QtConcurrent::run(this, &ContentBlockingList::deleteNode, m_root);
+	if (!m_information.isLoaded)
+	{
+		loadRules();
+	}
 
-	m_cssHidingRules.clear();
-	m_cssHidingRulesExceptions.clear();
-	m_cssSpecificDomainHidingRules.clear();
+	return m_styleSheet;
 }
 
-void ContentBlockingList::setListName(const QString &title)
+ContentBlockingInformation ContentBlockingProfile::getInformation() const
 {
-	m_listName = title;
+	return m_information;
 }
 
-void ContentBlockingList::setConfigListName(const QString &name)
+QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
 {
-	m_configListName = name;
+	if (!m_information.isLoaded)
+	{
+		loadRules();
+	}
+
+	return m_styleSheetBlackList;
 }
 
-QString ContentBlockingList::getFileName() const
+QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 {
-	return m_fileName;
+	if (!m_information.isLoaded)
+	{
+		loadRules();
+	}
+
+	return m_styleSheetWhiteList;
 }
 
-QString ContentBlockingList::getListName() const
+bool ContentBlockingProfile::loadRules()
 {
-	return m_listName;
+	if (m_information.isEmpty)
+	{
+		downloadUpdate();
+
+		return false;
+	}
+
+	m_information.isLoaded = true;
+
+	if (m_domainExpression.pattern().isEmpty())
+	{
+		m_domainExpression = QRegularExpression(QLatin1String("[:\?&/=]"));
+#if QT_VERSION >= 0x050400
+		m_domainExpression.optimize();
+#endif
+	}
+
+	QFile file(m_information.path);
+
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	QTextStream stream(&file);
+
+	stream.readLine(); // header
+
+	m_root = new Node();
+
+	while (!stream.atEnd())
+	{
+		parseRuleLine(stream.readLine());
+	}
+
+	file.close();
+
+	if (m_styleSheet.length() > 0)
+	{
+		m_styleSheet = m_styleSheet.left(m_styleSheet.length() - 1);
+		m_styleSheet += QLatin1String("{display:none;}");
+	}
+
+	emit updateCustomStyleSheets();
+
+	return true;
 }
 
-QString ContentBlockingList::getCssRules() const
-{
-	return m_cssHidingRules;
-}
-
-QString ContentBlockingList::getConfigListName() const
-{
-	return m_configListName;
-}
-
-QDateTime ContentBlockingList::getLastUpdate() const
-{
-	return m_lastUpdate.toLocalTime();
-}
-
-QMultiHash<QString, QString> ContentBlockingList::getSpecificDomainHidingRules() const
-{
-	return m_cssSpecificDomainHidingRules;
-}
-
-QMultiHash<QString, QString> ContentBlockingList::getHidingRulesExceptions() const
-{
-	return m_cssHidingRulesExceptions;
-}
-
-bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStringList &ruleList)
+bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const QStringList &ruleList)
 {
 	for (int i = 0; i < ruleList.count(); ++i)
 	{
@@ -611,7 +627,7 @@ bool ContentBlockingList::resolveDomainExceptions(const QString &url, const QStr
 	return false;
 }
 
-bool ContentBlockingList::checkUrlSubstring(const QString &subString, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkUrlSubstring(const QString &subString, const QNetworkRequest &request)
 {
 	Node *node = m_root;
 	m_currentRule.clear();
@@ -657,7 +673,7 @@ bool ContentBlockingList::checkUrlSubstring(const QString &subString, const QNet
 	return false;
 }
 
-bool ContentBlockingList::checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request)
 {
 	bool isBlocked = false;
 
@@ -688,13 +704,16 @@ bool ContentBlockingList::checkRuleMatch(ContentBlockingRule *rule, const QNetwo
 	return isBlocked;
 }
 
-bool ContentBlockingList::isEnabled() const
+bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
 {
-	return m_isEnabled;
-}
+	if (!m_information.isLoaded)
+	{
+		if (!loadRules())
+		{
+			return false;
+		}
+	}
 
-bool ContentBlockingList::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
-{
 	const QString url = request.url().url();
 	const int urlLenght = url.length();
 

@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt
+! Title: Indonesian

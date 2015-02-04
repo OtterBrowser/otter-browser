@@ -28,6 +28,7 @@
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
+#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
@@ -967,7 +968,9 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 		setStatusMessage(QString());
 	}
 
-	m_page->updatePageStyleSheets(url);
+	m_contentBlockingProfiles = ContentBlockingManager::getProfileList(getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+
+	m_page->updateStyleSheets(url);
 
 	m_networkManager->updateOptions(url);
 
@@ -2313,6 +2316,11 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 int QtWebKitWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
+}
+
+QVector<int> QtWebKitWebWidget::getContentBlockingProfiles()
+{
+	return m_contentBlockingProfiles;
 }
 
 bool QtWebKitWebWidget::canLoadPlugins() const

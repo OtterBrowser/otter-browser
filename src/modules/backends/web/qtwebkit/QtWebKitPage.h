@@ -47,12 +47,12 @@ public:
 	bool supportsExtension(Extension extension) const;
 
 public slots:
-	void updatePageStyleSheets(const QUrl &url = QUrl());
+	void updateStyleSheets(const QUrl &url = QUrl());
 
 protected:
 	QtWebKitPage();
 
-	void updateBlockedPageElements(const QStringList domainList, const bool isException);
+	void applyContentBlockingRules(const QStringList &rules, bool remove);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 	QWebPage* createWindow(WebWindowType type);

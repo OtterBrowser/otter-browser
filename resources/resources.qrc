@@ -1,20 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>adblock/abpindo.txt</file>
-        <file>adblock/adblock_bg.txt</file>
-        <file>adblock/adblock_polska.txt</file>
-        <file>adblock/advblock.txt</file>
-        <file>adblock/easylist.txt</file>
-        <file>adblock/easylistdutch.txt</file>
-        <file>adblock/easylistgermany.txt</file>
-        <file>adblock/easylisthebrew.txt</file>
-        <file>adblock/easylistchina.txt</file>
-        <file>adblock/easylistitaly.txt</file>
-        <file>adblock/easylistlithuania.txt</file>
-        <file>adblock/filters.txt</file>
-        <file>adblock/latvian-list.txt</file>
-        <file>adblock/liste_ar.txt</file>
-        <file>adblock/liste_fr.txt</file>
+        <file>blocking/arabic.txt</file>
+        <file>blocking/bulgarian.txt</file>
+        <file>blocking/chinese.txt</file>
+        <file>blocking/czechAndSlovak.txt</file>
+        <file>blocking/dutch.txt</file>
+        <file>blocking/easylist.txt</file>
+        <file>blocking/french.txt</file>
+        <file>blocking/german.txt</file>
+        <file>blocking/hebrew.txt</file>
+        <file>blocking/indonesian.txt</file>
+        <file>blocking/italian.txt</file>
+        <file>blocking/latvian.txt</file>
+        <file>blocking/lithuanian.txt</file>
+        <file>blocking/polish.txt</file>
+        <file>blocking/russian.txt</file>
         <file>cursors/scroll-bottom-left.png</file>
         <file>cursors/scroll-bottom-right.png</file>
         <file>cursors/scroll-bottom.png</file>
@@ -124,7 +124,6 @@
         <file>icons/zoom-out.png</file>
         <file>keyboard/default.ini</file>
         <file>keyboard/platform.ini</file>
-        <file>other/adblock.ini</file>
         <file>other/menuBar.json</file>
         <file>other/menuButton.json</file>
         <file>other/toolBars.json</file>

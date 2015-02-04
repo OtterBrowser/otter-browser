@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -347,9 +347,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	++m_startedRequests;
 
-	if (ContentBlockingManager::isContentBlockingEnabled() && ContentBlockingManager::isUrlBlocked(request, m_widget->getUrl()))
+	if (ContentBlockingManager::isUrlBlocked(m_widget->getContentBlockingProfiles(), request, m_widget->getUrl()))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %0").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Blocked content: %1").arg(request.url().url()), Otter::NetworkMessageCategory, LogMessageLevel);
 
 		QUrl url = QUrl();
 		url.setScheme(QLatin1String("http"));

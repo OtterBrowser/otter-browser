@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,13 @@
 
 #include "ContentBlockingDialog.h"
 #include "../OptionDelegate.h"
-#include "../../core/ContentBlockingList.h"
 #include "../../core/ContentBlockingManager.h"
-#include "../../core/SessionsManager.h"
+#include "../../core/ContentBlockingProfile.h"
+#include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_ContentBlockingDialog.h"
 
-#include <QtCore/QSettings>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -38,24 +37,27 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QList<ContentBlockingList*> definitions = ContentBlockingManager::getBlockingDefinitions();
+	const QStringList globalProfiles = SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList();
+	const QVector<ContentBlockingInformation> profiles = ContentBlockingManager::getProfiles();
 	QStandardItemModel *model = new QStandardItemModel(this);
 	QStringList labels;
-	labels << tr("Name") << tr("Last update");
+	labels << tr("Title") << tr("Identifier") << tr("Last Update");
 
 	model->setHorizontalHeaderLabels(labels);
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (int i = 0; i < profiles.count(); ++i)
 	{
 		QList<QStandardItem*> items;
-		items.append(new QStandardItem(definitions.at(i)->getListName()));
+		items.append(new QStandardItem(profiles.at(i).title));
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-		items[0]->setData(definitions.at(i)->getConfigListName(), Qt::UserRole);
 		items[0]->setCheckable(true);
-		items[0]->setCheckState(definitions.at(i)->isEnabled() ? Qt::Checked : Qt::Unchecked);
+		items[0]->setCheckState(globalProfiles.contains(profiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
 
-		items.append(new QStandardItem(Utils::formatDateTime(definitions.at(i)->getLastUpdate())));
+		items.append(new QStandardItem(profiles.at(i).name));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		items.append(new QStandardItem(Utils::formatDateTime(profiles.at(i).lastUpdate)));
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 		model->appendRow(items);
 	}
@@ -91,19 +93,17 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 
 void ContentBlockingDialog::save()
 {
-	QSettings adBlock(SessionsManager::getProfilePath() + QLatin1String("/adblock.ini"), QSettings::IniFormat);
-	adBlock.setIniCodec("UTF-8");
+	QStringList profiles;
 
 	for (int i = 0; i < m_ui->filtersViewWidget->getRowCount(); ++i)
 	{
-		const QModelIndex index = m_ui->filtersViewWidget->getIndex(i, 0);
-
-		adBlock.setValue(index.data(Qt::UserRole).toString() + QLatin1String("/enabled"), index.data(Qt::CheckStateRole).toBool());
+		if (m_ui->filtersViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+		{
+			profiles.append(m_ui->filtersViewWidget->getIndex(i, 1).data().toString());
+		}
 	}
 
-	adBlock.sync();
-
-	ContentBlockingManager::updateLists();
+	SettingsManager::setValue(QLatin1String("Content/BlockingProfiles"), profiles);
 
 	close();
 }

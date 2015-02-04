@@ -39,8 +39,8 @@ SOURCES += src/main.cpp \
     src/core/BookmarksImporter.cpp \
     src/core/BookmarksManager.cpp \
     src/core/BookmarksModel.cpp \
-    src/core/ContentBlockingList.cpp \
     src/core/ContentBlockingManager.cpp \
+    src/core/ContentBlockingProfile.cpp \
     src/core/Console.cpp \
     src/core/CookieJar.cpp \
     src/core/FileSystemCompleterModel.cpp \
@@ -149,8 +149,8 @@ HEADERS += src/core/Action.h \
     src/core/BookmarksImporter.h \
     src/core/BookmarksManager.h \
     src/core/BookmarksModel.h \
-    src/core/ContentBlockingList.h \
     src/core/ContentBlockingManager.h \
+    src/core/ContentBlockingProfile.h \
     src/core/Console.h \
     src/core/CookieJar.h \
     src/core/FileSystemCompleterModel.h \

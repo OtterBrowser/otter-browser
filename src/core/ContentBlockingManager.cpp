@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,22 +20,17 @@
 
 #include "ContentBlockingManager.h"
 #include "Console.h"
-#include "ContentBlockingList.h"
+#include "ContentBlockingProfile.h"
 #include "SettingsManager.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QSettings>
 
 namespace Otter
 {
 
 ContentBlockingManager* ContentBlockingManager::m_instance = NULL;
-QList<ContentBlockingList*> ContentBlockingManager::m_blockingLists;
-QByteArray ContentBlockingManager::m_hidingRules;
-QMultiHash<QString, QString> ContentBlockingManager::m_specificDomainHidingRules;
-QMultiHash<QString, QString> ContentBlockingManager::m_hidingRulesExceptions;
-bool ContentBlockingManager::m_isContentBlockingEnabled = false;
+QVector<ContentBlockingProfile*> ContentBlockingManager::m_profiles;
 
 ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent)
 {
@@ -46,150 +42,39 @@ void ContentBlockingManager::createInstance(QObject *parent)
 	{
 		m_instance = new ContentBlockingManager(parent);
 
-		loadLists();
+		loadProfiles();
 	}
 }
 
-void ContentBlockingManager::loadLists()
+void ContentBlockingManager::loadProfiles()
 {
-	const QString adBlockPath = SessionsManager::getProfilePath() + QLatin1String("/adblock/");
-	const QString configPath = SessionsManager::getProfilePath() + QLatin1String("/adblock.ini");
-	const QDir directory(adBlockPath);
+	const QString contentBlockingPath = SessionsManager::getProfilePath() + QLatin1String("/blocking/");
+	const QDir directory(contentBlockingPath);
 
 	if (!directory.exists())
 	{
-		QDir().mkpath(adBlockPath);
+		QDir().mkpath(contentBlockingPath);
 	}
 
-	if (!QFile::exists(configPath))
+	const QList<QFileInfo> availableProfiles = QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files);
+
+	for (int i = 0; i < availableProfiles.count(); ++i)
 	{
-		QFile::copy(QLatin1String(":/other/adblock.ini"), configPath);
-		QFile::setPermissions(configPath, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
-	}
+		const QString path = directory.filePath(availableProfiles.at(i).fileName());
 
-	const QStringList definitions = QDir(QLatin1String(":/adblock/")).entryList(QDir::Files);
-
-	for (int i = 0; i < definitions.count(); ++i)
-	{
-		const QString filePath = directory.filePath(definitions.at(i));
-
-		if (!QFile::exists(filePath))
+		if (!QFile::exists(path))
 		{
-			QFile::copy(QLatin1String(":/adblock/") + definitions.at(i), filePath);
-			QFile::setPermissions(filePath, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
+			QFile::copy(availableProfiles.at(i).filePath(), path);
+			QFile::setPermissions(path, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
 		}
 	}
 
-	QStringList adBlockList = directory.entryList(QStringList(QLatin1String("*.txt")), QDir::Files);
-	QSettings adblock(configPath, QSettings::IniFormat);
-	adblock.setIniCodec("UTF-8");
+	const QList<QFileInfo> existingProfiles = directory.entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files);
 
-	const QStringList entries = adblock.childGroups();
-
-	for (int i = 0; i < entries.count(); ++i)
+	for (int i = 0; i < existingProfiles.count(); ++i)
 	{
-		const QString entry = entries.at(i);
-		int indexOfFile = adBlockList.indexOf(adblock.value(QStringLiteral("%1/file").arg(entry)).toString());
-
-		if (indexOfFile >= 0)
-		{
-			ContentBlockingList *definition = new ContentBlockingList();
-			definition->setFile(adBlockPath, adBlockList.at(indexOfFile));
-			definition->setListName(adblock.value(QStringLiteral("%1/title").arg(entry)).toString());
-			definition->setConfigListName(entry);
-
-			if (adblock.value(QStringLiteral("%1/enabled").arg(entry)).toBool())
-			{
-				connect(definition, SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
-
-				definition->setEnabled(true);
-
-				m_isContentBlockingEnabled = true;
-			}
-			else
-			{
-				definition->setEnabled(false);
-			}
-
-			m_blockingLists.append(definition);
-
-			adBlockList.removeAt(indexOfFile);
-		}
-		else
-		{
-			adblock.remove(entry);
-		}
+		m_profiles.append(new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance));
 	}
-
-	for (int i = 0; i < adBlockList.count(); ++i)
-	{
-		const QString value = adBlockList.at(i);
-		const QString parsedValue = value.endsWith(QLatin1String(".txt")) ? value.left(value.length() - 4) : value;
-
-		adblock.setValue(QStringLiteral("%1/title").arg(parsedValue), value);
-		adblock.setValue(QStringLiteral("%1/file").arg(parsedValue), value);
-		adblock.setValue(QStringLiteral("%1/enabled").arg(parsedValue), false);
-
-		ContentBlockingList* definition = new ContentBlockingList();
-		definition->setFile(adBlockPath, value);
-		definition->setEnabled(false);
-
-		m_blockingLists.append(definition);
-	}
-}
-
-void ContentBlockingManager::updateLists()
-{
-	QSettings adblock(SessionsManager::getProfilePath() + QLatin1String("/adblock.ini"), QSettings::IniFormat);
-	adblock.setIniCodec("UTF-8");
-
-	const QStringList entries = adblock.childGroups();
-
-	m_isContentBlockingEnabled = false;
-
-	for (int i = 0; i < entries.count(); ++i)
-	{
-		for (int j = 0; j < m_blockingLists.count(); ++j)
-		{
-			if (m_blockingLists.at(j)->getFileName() == adblock.value(QStringLiteral("%1/file").arg(entries.at(i))).toString())
-			{
-				if (adblock.value(QStringLiteral("%1/enabled").arg(entries.at(i))).toBool())
-				{
-					connect(m_blockingLists.at(j), SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
-
-					m_blockingLists.at(j)->setEnabled(true);
-
-					m_isContentBlockingEnabled = true;
-
-					break;
-				}
-				else
-				{
-					disconnect(m_blockingLists.at(j), SIGNAL(updateCustomStyleSheets()), ContentBlockingManager::getInstance(), SLOT(updateCustomStyleSheets()));
-
-					m_blockingLists.at(j)->setEnabled(false);
-
-					break;
-				}
-			}
-		}
-	}
-}
-
-void ContentBlockingManager::updateCustomStyleSheets()
-{
-	m_hidingRules.clear();
-	m_specificDomainHidingRules.clear();
-	m_hidingRulesExceptions.clear();
-
-	for (int i = 0; i < m_blockingLists.count(); ++i)
-	{
-		m_hidingRules.append(m_blockingLists.at(i)->getCssRules());
-		m_specificDomainHidingRules += m_blockingLists.at(i)->getSpecificDomainHidingRules();
-		m_hidingRulesExceptions += m_blockingLists.at(i)->getHidingRulesExceptions();
-	}
-
-	emit styleSheetsUpdated();
 }
 
 ContentBlockingManager* ContentBlockingManager::getInstance()
@@ -197,9 +82,19 @@ ContentBlockingManager* ContentBlockingManager::getInstance()
 	return m_instance;
 }
 
-QByteArray ContentBlockingManager::getStyleSheetHidingRules()
+QByteArray ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
 {
-	return m_hidingRules;
+	QByteArray styleSheet;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			styleSheet += m_profiles.at(profiles[i])->getStyleSheet();
+		}
+	}
+
+	return styleSheet;
 }
 
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
@@ -220,23 +115,72 @@ QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
-QList<ContentBlockingList*> ContentBlockingManager::getBlockingDefinitions()
+QVector<ContentBlockingInformation> ContentBlockingManager::getProfiles()
 {
-	return m_blockingLists;
+	QVector<ContentBlockingInformation> profiles;
+	profiles.reserve(m_profiles.count());
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		profiles.append(m_profiles.at(i)->getInformation());
+	}
+
+	return profiles;
 }
 
-QMultiHash<QString, QString> ContentBlockingManager::getSpecificDomainHidingRules()
+QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetBlackList(const QVector<int> &profiles)
 {
-	return m_specificDomainHidingRules;
+	QMultiHash<QString, QString> blackList;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			blackList += m_profiles.at(profiles[i])->getStyleSheetWhiteList();
+		}
+	}
+
+	return blackList;
 }
 
-QMultiHash<QString, QString> ContentBlockingManager::getHidingRulesExceptions()
+QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetWhiteList(const QVector<int> &profiles)
 {
-	return m_hidingRulesExceptions;
+	QMultiHash<QString, QString> whiteList;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			whiteList += m_profiles.at(profiles[i])->getStyleSheetBlackList();
+		}
+	}
+
+	return whiteList;
 }
 
-bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
+QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
 {
+	QVector<int> profiles;
+	profiles.reserve(names.count());
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		if (names.contains(m_profiles.at(i)->getInformation().name))
+		{
+			profiles.append(i);
+		}
+	}
+
+	return profiles;
+}
+
+bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl)
+{
+	if (profiles.isEmpty())
+	{
+		return false;
+	}
+
 	const QString scheme = request.url().scheme();
 
 	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
@@ -244,23 +188,15 @@ bool ContentBlockingManager::isUrlBlocked(const QNetworkRequest &request, const 
 		return false;
 	}
 
-	for (int i = 0; i < m_blockingLists.count(); ++i)
+	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (m_blockingLists.at(i)->isEnabled())
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count() && m_profiles.at(profiles[i])->isUrlBlocked(request, baseUrl))
 		{
-			if (m_blockingLists.at(i)->isUrlBlocked(request, baseUrl))
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 
 	return false;
-}
-
-bool ContentBlockingManager::isContentBlockingEnabled()
-{
-	return m_isContentBlockingEnabled;
 }
 
 }

@@ -56,10 +56,9 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 {
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
-	updatePageStyleSheets();
+	updateStyleSheets();
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
-	connect(ContentBlockingManager::getInstance(), SIGNAL(styleSheetsUpdated()), this, SLOT(updatePageStyleSheets()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
@@ -77,7 +76,7 @@ void QtWebKitPage::optionChanged(const QString &option, const QVariant &value)
 
 	if (option.startsWith(QLatin1String("Content/")))
 	{
-		updatePageStyleSheets();
+		updateStyleSheets();
 	}
 }
 
@@ -85,21 +84,51 @@ void QtWebKitPage::pageLoadFinished()
 {
 	m_ignoreJavaScriptPopups = false;
 
-	updatePageStyleSheets();
+	updateStyleSheets();
 
-	if (ContentBlockingManager::isContentBlockingEnabled() && mainFrame()->url().isValid())
+	if (m_widget)
 	{
-		const QStringList domainList = ContentBlockingManager::createSubdomainList(mainFrame()->url().host());
+		const QStringList domainList = ContentBlockingManager::createSubdomainList(m_widget->getUrl().host());
 
-		updateBlockedPageElements(domainList, false);
-		updateBlockedPageElements(domainList, true);
+		for (int i = 0; i < domainList.count(); ++i)
+		{
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(m_widget->getContentBlockingProfiles()).values(domainList.at(i)), true);
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(m_widget->getContentBlockingProfiles()).values(domainList.at(i)), false);
+		}
 	}
 }
 
-void QtWebKitPage::updatePageStyleSheets(const QUrl &url)
+void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
+{
+	for (int i = 0; i < rules.count(); ++i)
+	{
+		const QWebElementCollection elements = mainFrame()->documentElement().findAll(rules.at(i));
+
+		for (int j = 0; j < elements.count(); ++j)
+		{
+			QWebElement element = elements.at(j);
+
+			if (element.isNull())
+			{
+				continue;
+			}
+
+			if (remove)
+			{
+				element.removeFromDocument();
+			}
+			else
+			{
+				element.setStyleProperty(QLatin1String("display"), QLatin1String("block"));
+			}
+		}
+	}
+}
+
+void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + ContentBlockingManager::getStyleSheetHidingRules();
+	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + (m_widget ? ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()) : QByteArray());
 	QWebElement image = mainFrame()->findFirstElement(QLatin1String("img"));
 
 	if (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl)
@@ -127,38 +156,6 @@ void QtWebKitPage::updatePageStyleSheets(const QUrl &url)
 	}
 
 	settings()->setUserStyleSheetUrl(QUrl(QLatin1String("data:text/css;charset=utf-8;base64,") + styleSheet.toUtf8().toBase64()));
-}
-
-void QtWebKitPage::updateBlockedPageElements(const QStringList domainList, const bool isException)
-{
-	for (int i = 0; i < domainList.count(); ++i)
-	{
-		const QList<QString> exceptionList = isException ? ContentBlockingManager::getHidingRulesExceptions().values(domainList.at(i)) : ContentBlockingManager::getSpecificDomainHidingRules().values(domainList.at(i));
-
-		for (int j = 0; j < exceptionList.count(); ++j)
-		{
-			const QWebElementCollection elements = mainFrame()->documentElement().findAll(exceptionList.at(j));
-
-			for (int k = 0; k < elements.count(); ++k)
-			{
-				QWebElement element = elements.at(k);
-
-				if (element.isNull())
-				{
-					continue;
-				}
-
-				if (isException)
-				{
-					element.setStyleProperty(QLatin1String("display"), QLatin1String("block"));
-				}
-				else
-				{
-					element.removeFromDocument();
-				}
-			}
-		}
-	}
 }
 
 void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
