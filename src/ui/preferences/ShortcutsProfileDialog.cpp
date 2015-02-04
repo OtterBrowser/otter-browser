@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	m_ui->authorLineEdit->setText(information.value(QLatin1String("Author"), QString()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
+	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
 	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
 	connect(m_ui->addShortcutButton, SIGNAL(clicked()), this, SLOT(addShortcut()));
 	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), m_ui->shortcutsViewWidget, SLOT(removeRow()));
@@ -99,6 +100,50 @@ void ShortcutsProfileDialog::addShortcut()
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
+}
+
+void ShortcutsProfileDialog::updateActionsActions()
+{
+	disconnect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
+
+	m_ui->shortcutsViewWidget->getModel()->clear();
+
+	QStringList labels;
+	labels << tr("Shortcut");
+
+	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
+
+	m_ui->shortcutsViewWidget->getModel()->setHorizontalHeaderLabels(labels);
+
+	if (!m_currentAction.isValid())
+	{
+		m_ui->addShortcutButton->setEnabled(false);
+		m_ui->removeShortcutButton->setEnabled(true);
+
+		return;
+	}
+
+	updateShortcutsActions();
+
+	m_ui->addShortcutButton->setEnabled(true);
+
+	const QStringList rawShortcuts = m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+
+	for (int i = 0; i < rawShortcuts.count(); ++i)
+	{
+		const QKeySequence shortcut(rawShortcuts.at(i));
+
+		if (!shortcut.isEmpty())
+		{
+			QList<QStandardItem*> items;
+			items.append(new QStandardItem(shortcut.toString()));
+			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+		}
+	}
+
+	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }
 
 void ShortcutsProfileDialog::updateShortcutsActions()
