@@ -453,7 +453,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			{
 				const QUrl url(QLatin1String("about:transfers"));
 
-				if (!SessionsManager::hasUrl(url, (sender() != TransfersManager::getInstance())))
+				if (!SessionsManager::hasUrl(url, true))
 				{
 					m_windowsManager->open(url);
 				}
