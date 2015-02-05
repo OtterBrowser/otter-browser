@@ -59,7 +59,7 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 	QTextStream stream(&file);
 
-	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus 2.")))
+	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus")))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Loaded adblock file is not valid: %1").arg(file.fileName()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
@@ -102,9 +102,9 @@ void ContentBlockingProfile::load(bool onlyHeader)
 			continue;
 		}
 
-		if (line.startsWith(QLatin1String("!Lastmodified:")))
+		if (line.startsWith(QLatin1String("!Lastupdate:")))
 		{
-			m_information.lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(line.remove(QLatin1String("!Lastmodified:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
+			m_information.lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(line.remove(QLatin1String("!Lastupdate:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
 			m_information.lastUpdate.setTimeSpec(Qt::UTC);
 		}
 	}
@@ -468,7 +468,7 @@ void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 	const QByteArray downloadedDataChecksum = reply->readLine();
 	const QByteArray downloadedData = reply->readAll();
 
-	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus 2.")))
+	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Unable to download update for content blocking: %1.\nError: %2").arg(m_information.path).arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
@@ -482,8 +482,9 @@ void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 	if (downloadedDataChecksum.contains(QByteArray("! Checksum: ")))
 	{
 		QByteArray checksum = downloadedDataChecksum;
+		const QByteArray verifiedChecksum = QCryptographicHash::hash(downloadedDataHeader + QString(downloadedData).replace(QRegExp("^*\n{2,}"), QString("\n")).toStdString().c_str(), QCryptographicHash::Md5);
 
-		if (QCryptographicHash::hash(downloadedDataHeader + downloadedData, QCryptographicHash::Md5).toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
+		if (verifiedChecksum.toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
 			Console::addMessage(QCoreApplication::translate("main", "Content blocking file checksum mismatch: %1").arg(m_information.path), Otter::OtherMessageCategory, ErrorMessageLevel);
 
@@ -503,12 +504,7 @@ void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 	file.write(downloadedDataHeader);
 	file.write(QString("! URL: %1\n").arg(m_information.updateUrl.toString()).toUtf8());
 	file.write(downloadedDataChecksum);
-
-	if (!downloadedData.contains(QByteArray("! Last modified: ")))
-	{
-		file.write(QString("! Last modified: " + QLocale(QLatin1String("UnitedStates")).toString(QDateTime::currentDateTimeUtc(), QLatin1String("dd MMM yyyy hh:mm")) + " UTC\n").toUtf8());
-	}
-
+	file.write(QString("! Last update: " + QLocale(QLatin1String("UnitedStates")).toString(QDateTime::currentDateTimeUtc(), QLatin1String("dd MMM yyyy hh:mm")) + " UTC\n").toUtf8());
 	file.write(downloadedData);
 	file.close();
 
