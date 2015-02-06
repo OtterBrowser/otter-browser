@@ -9,5 +9,5 @@ cmake ../
 make
 make install
 
-Alternatively you can use either Qt Creator IDE to compile sources or export native project files using CMake generators.'
+Alternatively you can use either Qt Creator IDE to compile sources or export native project files using CMake generators.
 You can also use CPack to create packages.

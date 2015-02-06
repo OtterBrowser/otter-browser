@@ -6,6 +6,7 @@ If you want to help with the development of Otter Browser, please observe the fo
 
 * Make sure that you have a [GitHub account](https://github.com/signup/free).
 * Check if the issue has already been reported (including closed tickets).
+* Check list of [known upstream issues](https://github.com/OtterBrowser/otter-browser/wiki/Upstream-Bugs).
 * Create a ticket for your issue.
 * Describe the issue clearly and succinctly.
 * In case of bug reports:
