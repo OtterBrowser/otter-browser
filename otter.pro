@@ -287,6 +287,7 @@ RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 
 TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
+    resources/translations/otter-browser_da.ts \
     resources/translations/otter-browser_de_DE.ts \
     resources/translations/otter-browser_el.ts \
     resources/translations/otter-browser_en_GB.ts \
