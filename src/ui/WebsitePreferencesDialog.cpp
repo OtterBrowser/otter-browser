@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -114,6 +114,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanAccessClipboard")));
 	m_ui->canDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
+	m_ui->canOpenWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanOpenWindows")));
 	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanCloseWindows")));
 	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/EnableReferrer")));
 	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/UserAgent")));
@@ -188,6 +189,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->canShowStatusMessagesCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? m_ui->canAccessClipboardCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->canDisableContextMenuCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), (m_ui->canOpenWindowsOverrideCheckBox->isChecked() ? m_ui->canOpenWindowsCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? m_ui->canCloseWindowsComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()) : QVariant()), url);
@@ -233,6 +235,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canOpenWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), (m_ui->canOpenWindowsCheckBox->isChecked() ? url : QUrl())).toBool());
 
 	const int canCloseWindowsIndex = m_ui->canCloseWindowsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 
