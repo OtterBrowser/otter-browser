@@ -20,6 +20,7 @@
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
 #include "../../../windows/web/ImagePropertiesDialog.h"
+#include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
@@ -1121,7 +1122,7 @@ void QtWebEngineWebWidget::updatePageActions(const QUrl &url)
 {
 	if (m_actions.contains(Action::AddBookmarkAction))
 	{
-		m_actions[Action::AddBookmarkAction]->setOverrideText(HistoryManager::hasUrl(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
+		m_actions[Action::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url.toString()) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
 	}
 
 	if (m_actions.contains(Action::WebsitePreferencesAction))
@@ -1277,7 +1278,7 @@ void QtWebEngineWebWidget::updateLinkActions()
 
 	if (m_actions.contains(Action::BookmarkLinkAction))
 	{
-		m_actions[Action::BookmarkLinkAction]->setOverrideText(HistoryManager::hasUrl(m_hitResult.linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark...") : QT_TRANSLATE_NOOP("actions", "Bookmark Link..."));
+		m_actions[Action::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl.toString()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark...") : QT_TRANSLATE_NOOP("actions", "Bookmark Link..."));
 		m_actions[Action::BookmarkLinkAction]->setEnabled(isLink);
 	}
 
