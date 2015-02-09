@@ -146,6 +146,11 @@ MainWindow::~MainWindow()
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
+	menu.addAction(m_actionsManager->getAction(Action::ShowMenuBarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowTabBarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowSidebarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowErrorConsoleAction));
+	menu.addSeparator();
 	menu.addAction(m_actionsManager->getAction(Action::LockToolBarsAction));
 	menu.exec(event->globalPos());
 }
