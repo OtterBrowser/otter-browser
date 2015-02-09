@@ -1041,7 +1041,17 @@ void PreferencesDialog::markModified()
 
 void PreferencesDialog::openConfigurationManager()
 {
-	Application::getInstance()->getWindow()->openUrl(QLatin1String("about:config"));
+	const QUrl url(QLatin1String("about:config"));
+
+	if (!SessionsManager::hasUrl(url, true))
+	{
+		WindowsManager *manager = SessionsManager::getWindowsManager();
+
+		if (manager)
+		{
+			manager->open(url);
+		}
+	}
 }
 
 void PreferencesDialog::save()
