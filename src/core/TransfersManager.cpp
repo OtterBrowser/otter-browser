@@ -78,11 +78,14 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
 	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
 	connect(transfer, SIGNAL(stopped()), m_instance, SLOT(transferStopped()));
 
-	emit m_instance->transferStarted(transfer);
-
-	if (transfer->getState() == Transfer::RunningState)
+	if (m_initilized)
 	{
-		emit m_instance->transferFinished(transfer);
+		emit m_instance->transferStarted(transfer);
+
+		if (transfer->getState() == Transfer::RunningState)
+		{
+			emit m_instance->transferFinished(transfer);
+		}
 	}
 
 	if (isPrivate)
@@ -307,8 +310,6 @@ QList<Transfer*> TransfersManager::getTransfers()
 {
 	if (!m_initilized)
 	{
-		m_initilized = true;
-
 		QSettings history(SessionsManager::getProfilePath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
 		const QStringList entries = history.childGroups();
 
@@ -325,6 +326,8 @@ QList<Transfer*> TransfersManager::getTransfers()
 
 			history.endGroup();
 		}
+
+		m_initilized = true;
 
 		connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), m_instance, SLOT(save()));
 	}
