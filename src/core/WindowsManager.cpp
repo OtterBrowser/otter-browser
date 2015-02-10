@@ -40,7 +40,6 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
-	connect(ActionsManager::getAction(Action::ReopenTabAction, this), SIGNAL(triggered()), this, SLOT(restore()));
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
@@ -352,6 +351,10 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 					closeWindow(i);
 				}
 			}
+
+			break;
+		case Action::ReopenTabAction:
+			restore();
 
 			break;
 		case Action::ActivateTabOnLeftAction:
