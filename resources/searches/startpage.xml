@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<Shortcut>s</Shortcut>
+	<ShortName>Startpage</ShortName>
+	<Description>Search Startape.com</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACMVBMVEWUyvqZzvqNxvqVy/qIwfqAu/qFv/p6uPl+u/l1s/h5s/ltrvhxsvllqvhsr/hfpvhlqPdbofdfofdWnfdZnvdSmPdVnfdIjvZDi/VDi/ZEi/ZEi/VEjfZFi/ZLkveRx/qRyfqRyfuUyfuUyfqVzPuVyfqLxPmLx/mLxPqLx/qNx/qNx/mQu+mYlruQu+qQx/qDvfmFvvmFvfmFvfqFvvqHwvmaepu0Gx+3Dw+hY32Hwvp7ufl8t/l8ufl/ufmzGh+nPE2bYH2hU21/ufp1t/l1tfl3t/iElMqZXXx7rOl3t/mBn9qKirttr/ltrvlvr/lvr/ikO02yGh91qOlwr/hzr/iIfKuTZoxmqfhmqflnq/l9tPl7tPluoemnLj6YTWxpq/hrq/iDd6uOYoxgpvhrrPjL4v3////1+f9sr/honOimLT6sJC6QV3yxGR+mLj5rn+hcofje7P30+f6z0/yTwPpysPmIuvpvneilLD6BaJtjnOhgpPily/t3sflipPix0fve6/1flOikLD6RSGxZnvhanvjF3fyt0Pvz+P7o8v6Bt/lalOijKz2QSGxVnfeIuPq41fxZnPd+sflPmfdUjOeiKj2ORmxQmfZMlPdHkPd4rvmdxPtgn/dhn/dtp/jm8P7b6f1KkPdJkfdJkfZRiOdKkfdKkfZPmPZEjfabwvra6f1Ql/dEkPZGkPZHkfY/h/U/ifWZwPrM4P2awPpOkfZBifU/ifZBi/ZCifZCi/ZNQYN7AAAAH3RSTlP+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+avpWVgAAAAFiS0dEZ1vT6bMAAACwSURBVBgZBcG9KoZhHAfg3/V3+7if5yWDUhZFUVZiVjaz1Xk5C4NVduUEpJTBuzIgicd1ybZMQiQ8tVo2pQA/i9VqEED8LE3NSDIV/r7XtFZdpuKrk8+NatUD8y2ML2O1GsHe4z4yq1Yz4PDhiBPVahVwenc8o6pmH+M4vr/1fn4/DENVDRmG+c7ua+8XN71Xq57nHPjLCpeUKwBAW0/iNmd+myRcS4CIsCkhMk0LEf8sRyKNzEccygAA</Image>
+	<Url type="text/html" method="GET" template="https://startpage.com/do/search?query={searchTerms}" />
+</OpenSearchDescription>
