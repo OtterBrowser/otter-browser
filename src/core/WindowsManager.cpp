@@ -115,7 +115,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 					QMessageBox messageBox;
 					messageBox.setWindowTitle(tr("Question"));
 					messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
-					messageBox.setInformativeText("Do you want to continue?");
+					messageBox.setInformativeText(tr("Do you want to continue?"));
 					messageBox.setIcon(QMessageBox::Question);
 					messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 					messageBox.setDefaultButton(QMessageBox::Yes);
