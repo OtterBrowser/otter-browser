@@ -61,6 +61,7 @@ public:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
+	void save();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

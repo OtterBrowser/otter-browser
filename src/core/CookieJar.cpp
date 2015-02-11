@@ -89,31 +89,7 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 	m_saveTimer = 0;
 
-	QSaveFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return;
-	}
-
-	QList<QNetworkCookie> cookies = allCookies();
-	QDataStream stream(&file);
-	stream << quint32(cookies.size());
-
-	for (int i = 0; i < cookies.size(); ++i)
-	{
-		stream << cookies.at(i).toRawForm();
-	}
-
-	file.commit();
-}
-
-void CookieJar::scheduleSave()
-{
-	if (!m_isPrivate && m_saveTimer == 0)
-	{
-		m_saveTimer = startTimer(500);
-	}
+	save();
 }
 
 void CookieJar::optionChanged(const QString &option, const QVariant &value)
@@ -133,7 +109,36 @@ void CookieJar::clearCookies(int period)
 	Q_UNUSED(period)
 
 	setAllCookies(QList<QNetworkCookie>());
-	scheduleSave();
+	save();
+}
+
+void CookieJar::scheduleSave()
+{
+	if (!m_isPrivate && m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(500);
+	}
+}
+
+void CookieJar::save()
+{
+	QSaveFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QList<QNetworkCookie> cookies = allCookies();
+	QDataStream stream(&file);
+	stream << quint32(cookies.size());
+
+	for (int i = 0; i < cookies.size(); ++i)
+	{
+		stream << cookies.at(i).toRawForm();
+	}
+
+	file.commit();
 }
 
 CookieJar* CookieJar::clone(QObject *parent)
