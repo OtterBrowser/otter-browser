@@ -9,7 +9,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Чтобы добавить язык, выберите его из списка или напечатайте код языка.</translation>
+        <translation>Чтобы добавить язык, выберите его из списка или введите код языка.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -425,7 +425,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksManager.cpp" line="422"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation>Не удалось загрузить файл закладок правильно, QXmlStreamReader код ошибки: %1</translation>
+        <translation>Не удалось загрузить файл закладок правильно, код ошибки QXmlStreamReader: %1</translation>
     </message>
 </context>
 <context>
@@ -1359,7 +1359,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/Menu.cpp" line="449"/>
         <location filename="../../src/ui/Menu.cpp" line="486"/>
         <source>(Untitled)</source>
-        <translation>(непоименованно)</translation>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="329"/>
@@ -1682,7 +1682,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="283"/>
         <source>System Defaults</source>
-        <translation>Системное значение по умолчанию</translation>
+        <translation>Системные умолчания</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="295"/>
@@ -4859,12 +4859,12 @@ Error: %2</source>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="403"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation>Не удалось запустить ассоциированный файловый менеджер, код ошибки: %1</translation>
+        <translation>Не удалось запустить менеджер ассоциаций файлов, код ошибки: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="458"/>
         <source>Failed to register application to system registry: %0, %1</source>
-        <translation>Не удалось зарегистрировать приложение в системном регистре: %0, %1</translation>
+        <translation>Не удалось зарегистрировать приложение в системном реестре: %0, %1</translation>
     </message>
 </context>
 </TS>
