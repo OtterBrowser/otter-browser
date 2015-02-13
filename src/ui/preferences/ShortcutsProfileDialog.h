@@ -47,6 +47,7 @@ protected:
 
 protected slots:
 	void addShortcut();
+	void removeShortcut();
 	void updateActionsActions();
 	void updateShortcutsActions();
 	void saveShortcuts();

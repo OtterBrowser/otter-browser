@@ -70,7 +70,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
 	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
 	connect(m_ui->addShortcutButton, SIGNAL(clicked()), this, SLOT(addShortcut()));
-	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), m_ui->shortcutsViewWidget, SLOT(removeRow()));
+	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), this, SLOT(removeShortcut()));
 }
 
 ShortcutsProfileDialog::~ShortcutsProfileDialog()
@@ -100,6 +100,13 @@ void ShortcutsProfileDialog::addShortcut()
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
+}
+
+void ShortcutsProfileDialog::removeShortcut()
+{
+	m_ui->shortcutsViewWidget->removeRow();
+
+	saveShortcuts();
 }
 
 void ShortcutsProfileDialog::updateActionsActions()
