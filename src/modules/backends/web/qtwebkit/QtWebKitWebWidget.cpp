@@ -47,6 +47,7 @@
 #include "../../../../ui/SearchPropertiesDialog.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
+#include <QtCore/QDataStream>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>

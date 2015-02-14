@@ -21,6 +21,7 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QDataStream>
 #include <QtCore/QFile>
 #include <QtCore/QSaveFile>
 #include <QtCore/QTimerEvent>
