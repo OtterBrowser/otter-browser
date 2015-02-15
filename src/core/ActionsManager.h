@@ -133,7 +133,6 @@ private:
 	QPointer<Window> m_window;
 	QVector<Action*> m_standardActions;
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
-	QVector<QPair<int, QVector<QShortcut*> > > m_macroShortcuts;
 
 	static ActionsManagerHelper *m_helper;
 	static Action *m_dummyAction;

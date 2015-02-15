@@ -421,13 +421,6 @@ void ActionsManager::updateShortcuts()
 
 	m_actionShortcuts.clear();
 
-	for (int i = 0; i < m_macroShortcuts.count(); ++i)
-	{
-		qDeleteAll(m_macroShortcuts[i].second);
-	}
-
-	m_macroShortcuts.clear();
-
 	m_mutex.lock();
 
 	for (int i = 0; i < m_helper->actionDefinitions.count(); ++i)
@@ -473,7 +466,7 @@ void ActionsManager::loadShortcuts()
 	}
 
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
-	QList<QKeySequence> allShortcuts;
+	QVector<QKeySequence> allShortcuts;
 	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 
 	m_mutex.lock();
