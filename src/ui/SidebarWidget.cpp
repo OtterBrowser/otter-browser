@@ -42,6 +42,9 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 {
 	m_ui->setupUi(this);
 
+	m_ui->panelsChooseButton->setPopupMode(QToolButton::InstantPopup);
+	m_ui->panelsChooseButton->setIcon(Utils::getIcon(QLatin1String("configure")));
+
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
 
@@ -67,6 +70,15 @@ void SidebarWidget::changeEvent(QEvent *event)
 				iterator.value()->setToolTip(translate(iterator.key()));
 			}
 
+			if (m_ui->panelsChooseButton->menu())
+			{
+				QList<QAction*> actions = m_ui->panelsChooseButton->menu()->actions();
+				for (int i = 0; i < actions.count(); ++i)
+				{
+					actions[i]->setText(translate(actions[i]->data().toString()));
+				}
+			}
+
 			break;
 		default:
 			break;
@@ -81,12 +93,9 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Sidebar/Panels"))
 	{
-		for (QHash<QString, QToolButton*>::const_iterator iterator = m_buttons.constBegin(); iterator != m_buttons.constEnd(); ++iterator)
-		{
-			m_ui->buttonsLayout->removeWidget(iterator.value());
+		qDeleteAll(m_buttons.begin(), m_buttons.end());
 
-			iterator.value()->deleteLater();
-		}
+		m_buttons.clear();
 
 		const QStringList panels = value.toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 
@@ -94,7 +103,32 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 		{
 			registerPanel(panels.at(i));
 		}
+
+		updatePanelsMenu();
 	}
+}
+
+void SidebarWidget::choosePanel(bool checked)
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (!action)
+	{
+		return;
+	}
+
+	QStringList chosenPanels = SettingsManager::getValue("Sidebar/Panels").toString().split(QLatin1Char(','));
+
+	if (checked)
+	{
+		chosenPanels.append(action->data().toString());
+	}
+	else
+	{
+		chosenPanels.removeAll(action->data().toString());
+	}
+
+	SettingsManager::setValue("Sidebar/Panels", chosenPanels.join(QLatin1Char(',')));
 }
 
 void SidebarWidget::openPanel()
@@ -247,6 +281,38 @@ void SidebarWidget::registerPanel(const QString &identifier)
 void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 {
 	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ?  QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+}
+
+void SidebarWidget::updatePanelsMenu()
+{
+	QMenu *menu = new QMenu(m_ui->panelsChooseButton);
+	QAction *action;
+
+	QStringList allPanels;
+	allPanels << QLatin1String("bookmarks") << QLatin1String("history") << QLatin1String("transfers") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config");
+
+	QStringList chosenPanels = SettingsManager::getValue("Sidebar/Panels").toString().split(QLatin1Char(','));
+
+	for (int i = 0; i < allPanels.count(); ++i)
+	{
+		action = new QAction(menu);
+
+		action->setCheckable(true);
+		action->setChecked(chosenPanels.contains(allPanels[i]));
+		action->setData(allPanels[i]);
+		action->setText(translate(allPanels[i]));
+
+		connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+
+		menu->addAction(action);
+	}
+
+	if (m_ui->panelsChooseButton->menu())
+	{
+		m_ui->panelsChooseButton->menu()->deleteLater();
+	}
+
+	m_ui->panelsChooseButton->setMenu(menu);
 }
 
 QSize SidebarWidget::sizeHint()

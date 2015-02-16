@@ -48,9 +48,11 @@ public:
 
 protected:
 	void registerPanel(const QString &identifier);
+	void updatePanelsMenu();
 	QString translate(const QString &identifier);
 
 protected slots:
+	void choosePanel(bool checked);
 	void openPanel();
 	void openUrl(const QUrl &url, OpenHints);
 	void optionChanged(const QString &option, const QVariant &value);
