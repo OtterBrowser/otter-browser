@@ -177,8 +177,7 @@ void SidebarWidget::openPanel(const QString &identifier)
 	else if (identifier.startsWith(QLatin1String("web:")))
 	{
 		WebContentsWidget *webWidget = new WebContentsWidget(true, NULL, NULL);
-
-		webWidget->setUrl(identifier.section(':', 1, -1), false);
+		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
 
 		widget = webWidget;
 	}
