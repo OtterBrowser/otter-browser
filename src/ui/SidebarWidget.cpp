@@ -73,6 +73,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 			if (m_ui->panelsChooseButton->menu())
 			{
 				QList<QAction*> actions = m_ui->panelsChooseButton->menu()->actions();
+
 				for (int i = 0; i < actions.count(); ++i)
 				{
 					actions[i]->setText(translate(actions[i]->data().toString()));
@@ -97,7 +98,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_buttons.clear();
 
-		const QStringList panels = value.toString().split(QLatin1Char(','), QString::SkipEmptyParts);
+		const QStringList panels = value.toStringList();
 
 		for (int i = 0; i < panels.count(); ++i)
 		{
@@ -117,7 +118,7 @@ void SidebarWidget::choosePanel(bool checked)
 		return;
 	}
 
-	QStringList chosenPanels = SettingsManager::getValue("Sidebar/Panels").toString().split(QLatin1Char(','));
+	QStringList chosenPanels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
 
 	if (checked)
 	{
@@ -128,7 +129,7 @@ void SidebarWidget::choosePanel(bool checked)
 		chosenPanels.removeAll(action->data().toString());
 	}
 
-	SettingsManager::setValue("Sidebar/Panels", chosenPanels.join(QLatin1Char(',')));
+	SettingsManager::setValue(QLatin1String("Sidebar/Panels"), chosenPanels);
 }
 
 void SidebarWidget::openPanel()
@@ -286,17 +287,13 @@ void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 void SidebarWidget::updatePanelsMenu()
 {
 	QMenu *menu = new QMenu(m_ui->panelsChooseButton);
-	QAction *action;
-
+	const QStringList chosenPanels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
 	QStringList allPanels;
 	allPanels << QLatin1String("bookmarks") << QLatin1String("history") << QLatin1String("transfers") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config");
 
-	QStringList chosenPanels = SettingsManager::getValue("Sidebar/Panels").toString().split(QLatin1Char(','));
-
 	for (int i = 0; i < allPanels.count(); ++i)
 	{
-		action = new QAction(menu);
-
+		QAction *action = new QAction(menu);
 		action->setCheckable(true);
 		action->setChecked(chosenPanels.contains(allPanels[i]));
 		action->setData(allPanels[i]);

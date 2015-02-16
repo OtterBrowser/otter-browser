@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -214,7 +214,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Sidebar/CurrentPanel"))
 	{
-		setSidebarSizes();
+		updateSidebars();
 	}
 	else if (option == QLatin1String("Sidebar/Reverse"))
 	{
@@ -223,7 +223,8 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	else if (option == QLatin1String("Sidebar/Visible"))
 	{
 		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
-		setSidebarSizes();
+
+		updateSidebars();
 	}
 }
 
@@ -248,28 +249,6 @@ void MainWindow::createMenuBar()
 	}
 }
 
-void MainWindow::placeSidebars()
-{
-	if (!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
-	{
-		m_splitter->addWidget(m_sidebarWidget);
-		m_splitter->addWidget(m_mdiWidget);
-
-		m_sidebarWidget->setButtonsEdge(Qt::LeftEdge);
-	}
-	else
-	{
-		m_splitter->addWidget(m_mdiWidget);
-		m_splitter->addWidget(m_sidebarWidget);
-
-		m_sidebarWidget->setButtonsEdge(Qt::RightEdge);
-	}
-
-	m_sidebarWidget->setVisible(SettingsManager::getValue("Sidebar/Visible").toBool());
-
-	connect(m_splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMove()));
-}
-
 void MainWindow::openUrl(const QString &text)
 {
 	if (text.isEmpty())
@@ -290,30 +269,7 @@ void MainWindow::openUrl(const QString &text)
 	}
 }
 
-void MainWindow::setSidebarSizes()
-{
-	int sidebar = m_sidebarWidget->sizeHint().width();
-	int count = m_splitter->count();
-
-	if (!SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool())
-	{
-		sidebar = 0;
-		--count;
-	}
-
-	int mdi = m_splitter->width() - sidebar - ((count - 1) * m_splitter->handleWidth());
-
-	if (!SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
-	{
-		m_splitter->setSizes(QList<int>() << sidebar << mdi);
-	}
-	else
-	{
-		m_splitter->setSizes(QList<int>() << mdi << sidebar);
-	}
-}
-
-void MainWindow::splitterMove()
+void MainWindow::splitterMoved()
 {
 	if (!SettingsManager::getValue(QString("Sidebar/CurrentPanel")).toString().isEmpty())
 	{
@@ -641,6 +597,51 @@ void MainWindow::transferStarted()
 	}
 }
 
+void MainWindow::placeSidebars()
+{
+	if (!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
+	{
+		m_splitter->addWidget(m_sidebarWidget);
+		m_splitter->addWidget(m_mdiWidget);
+
+		m_sidebarWidget->setButtonsEdge(Qt::LeftEdge);
+	}
+	else
+	{
+		m_splitter->addWidget(m_mdiWidget);
+		m_splitter->addWidget(m_sidebarWidget);
+
+		m_sidebarWidget->setButtonsEdge(Qt::RightEdge);
+	}
+
+	m_sidebarWidget->setVisible(SettingsManager::getValue("Sidebar/Visible").toBool());
+
+	connect(m_splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved()));
+}
+
+void MainWindow::updateSidebars()
+{
+	int sidebarSize = m_sidebarWidget->sizeHint().width();
+	int count = m_splitter->count();
+
+	if (!SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool())
+	{
+		sidebarSize = 0;
+		--count;
+	}
+
+	int mdiSize = (m_splitter->width() - sidebarSize - ((count - 1) * m_splitter->handleWidth()));
+
+	if (!SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
+	{
+		m_splitter->setSizes(QList<int>() << sidebarSize << mdiSize);
+	}
+	else
+	{
+		m_splitter->setSizes(QList<int>() << mdiSize << sidebarSize);
+	}
+}
+
 void MainWindow::updateWindowTitle(const QString &title)
 {
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
@@ -770,7 +771,8 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowActivate:
 			SessionsManager::setActiveWindow(this);
 		case QEvent::Resize:
-			setSidebarSizes();
+			updateSidebars();
+
 			SessionsManager::markSessionModified();
 
 			break;

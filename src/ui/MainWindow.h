@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -69,14 +69,14 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
-	bool event(QEvent *event);
 	void placeSidebars();
-	void setSidebarSizes();
+	void updateSidebars();
+	bool event(QEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
-	void splitterMove();
+	void splitterMoved();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);
 
