@@ -41,12 +41,14 @@ public:
 	explicit SidebarWidget(QWidget *parent = NULL);
 	~SidebarWidget();
 
+	void changeEvent(QEvent *event);
 	void openPanel(const QString &identifier);
 	void setButtonsEdge(Qt::Edge);
 	QSize sizeHint();
 
 protected:
 	void registerPanel(const QString &identifier);
+	QString translate(const QString &identifier);
 
 protected slots:
 	void openPanel();

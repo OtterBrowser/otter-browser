@@ -53,6 +53,26 @@ SidebarWidget::~SidebarWidget()
 	delete m_ui;
 }
 
+void SidebarWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+
+			for (QHash<QString, QToolButton*>::iterator iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
+			{
+				iterator.value()->setToolTip(translate(iterator.key()));
+			}
+
+			break;
+		default:
+			break;
+	}
+}
+
 void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Sidebar/CurrentPanel"))
@@ -181,42 +201,35 @@ void SidebarWidget::registerPanel(const QString &identifier)
 	if (identifier == QLatin1String("bookmarks"))
 	{
 		icon = Utils::getIcon(QLatin1String("bookmarks"));
-		title = tr("Bookmarks");
 	}
 	else if (identifier == QLatin1String("cache"))
 	{
 		icon  = Utils::getIcon(QLatin1String("cache"));
-		title = tr("Cache");
 	}
 	else if (identifier == QLatin1String("config"))
 	{
 		icon  = Utils::getIcon(QLatin1String("configuration"));
-		title = tr("Configuration");
 	}
 	else if (identifier == QLatin1String("cookies"))
 	{
 		icon  = Utils::getIcon(QLatin1String("cookies"));
-		title = tr("Cookies");
 	}
 	else if (identifier == QLatin1String("history"))
 	{
 		icon  = Utils::getIcon(QLatin1String("view-history"));
-		title = tr("History");
 	}
 	else if (identifier == QLatin1String("transfers"))
 	{
 		icon  = Utils::getIcon(QLatin1String("transfers"));
-		title = tr("Transfers");
 	}
 	else
 	{
 		icon  = Utils::getIcon(QLatin1String("text-html"));
-		title = identifier.section(':', 1, -1);
 	}
 
 	QToolButton *button = new QToolButton(this);
 	button->setIcon(icon);
-	button->setToolTip(title);
+	button->setToolTip(translate(identifier));
 	button->setCheckable(true);
 	button->setAutoRaise(true);
 
@@ -245,6 +258,38 @@ QSize SidebarWidget::sizeHint()
 	else
 	{
 		return m_ui->buttonsLayout->sizeHint();
+	}
+}
+
+QString SidebarWidget::translate(const QString &identifier)
+{
+	if (identifier == QLatin1String("bookmarks"))
+	{
+		return tr("Bookmarks");
+	}
+	else if (identifier == QLatin1String("history"))
+	{
+		return tr("History");
+	}
+	else if (identifier == QLatin1String("transfers"))
+	{
+		return tr("Transfers");
+	}
+	else if (identifier == QLatin1String("cache"))
+	{
+		return tr("Cache");
+	}
+	else if (identifier == QLatin1String("cookies"))
+	{
+		return tr("Cookies");
+	}
+	else if (identifier == QLatin1String("config"))
+	{
+		return tr("Configuration");
+	}
+	else
+	{
+		return identifier;
 	}
 }
 
