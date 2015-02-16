@@ -20,7 +20,6 @@
 #ifndef OTTER_SIDEBARWIDGET_H
 #define OTTER_SIDEBARWIDGET_H
 
-#include "Window.h"
 #include "../core/WindowsManager.h"
 
 #include <QtWidgets/QToolButton>

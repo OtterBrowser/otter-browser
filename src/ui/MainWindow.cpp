@@ -31,6 +31,7 @@
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "TabBarToolBarWidget.h"
+#include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "toolbars/ZoomWidget.h"
 #include "../core/ActionsManager.h"

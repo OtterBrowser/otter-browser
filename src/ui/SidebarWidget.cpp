@@ -21,6 +21,13 @@
 #include "MainWindow.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
+#include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
+#include "../modules/windows/cache/CacheContentsWidget.h"
+#include "../modules/windows/configuration/ConfigurationContentsWidget.h"
+#include "../modules/windows/cookies/CookiesContentsWidget.h"
+#include "../modules/windows/history/HistoryContentsWidget.h"
+#include "../modules/windows/transfers/TransfersContentsWidget.h"
+#include "../modules/windows/web/WebContentsWidget.h"
 
 #include "ui_SidebarWidget.h"
 
@@ -88,23 +95,42 @@ void SidebarWidget::openPanel(const QString &identifier)
 	{
 		widget = NULL;
 	}
-	else if (identifier == QLatin1String("bookmarks") || identifier == QLatin1String("cache") || identifier == QLatin1String("config") || identifier == QLatin1String("cookies") || identifier == QLatin1String("history") || identifier == QLatin1String("transfers"))
+	else if (identifier == QLatin1String("bookmarks"))
 	{
-		Window *window = new Window(false, NULL, this);
-		window->setUrl(QLatin1String("about:") + identifier, false);
-
-		connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
-
-		widget = window;
+		widget = new BookmarksContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("cache"))
+	{
+		widget = new CacheContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("config"))
+	{
+		widget = new ConfigurationContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("cookies"))
+	{
+		widget = new CookiesContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("history"))
+	{
+		widget = new HistoryContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("transfers"))
+	{
+		widget = new TransfersContentsWidget(NULL);
 	}
 	else if (identifier.startsWith(QLatin1String("web:")))
 	{
-		Window *window = new Window(false, NULL, this);
-		window->setUrl(identifier.section(':', 1, -1));
+		WebContentsWidget *webWidget = new WebContentsWidget(true, NULL, NULL);
 
-		connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
+		webWidget->setUrl(identifier.section(':', 1, -1), false);
 
-		widget = window;
+		widget = webWidget;
+	}
+
+	if (qobject_cast<ContentsWidget*>(widget))
+	{
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
 	}
 
 	if (m_currentWidget)
