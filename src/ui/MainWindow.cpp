@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -64,8 +64,11 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_actionsManager(NULL),
 	m_windowsManager(NULL),
+	m_mdiWidget(new MdiWidget(this)),
 	m_tabBarToolBarWidget(NULL),
 	m_menuBar(NULL),
+	m_sidebarWidget(new SidebarWidget(this)),
+	m_splitter(new QSplitter(this)),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -74,9 +77,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
-	m_mdiWidget = new MdiWidget(this);
+	m_splitter->setChildrenCollapsible(false);
+	m_splitter->addWidget(m_mdiWidget);
 
-	setCentralWidget(m_mdiWidget);
+	setCentralWidget(m_splitter);
 
 	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
@@ -94,6 +98,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+	m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
 	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 	m_actionsManager->getAction(Action::ExitAction)->setMenuRole(QAction::QuitRole);
 	m_actionsManager->getAction(Action::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
@@ -105,18 +110,17 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 		createMenuBar();
 	}
 
+	placeSidebars();
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowErrorConsoleAction), SLOT(setChecked(bool)));
-	connect(m_ui->sidebarDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowSidebarAction), SLOT(setChecked(bool)));
-	connect(m_ui->sidebarDockWidget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), m_ui->sidebarWidget, SLOT(locationChanged(Qt::DockWidgetArea)));
 
 	m_windowsManager->restore(session);
 
-	m_ui->sidebarDockWidget->hide();
 	m_ui->consoleDockWidget->hide();
 
 	updateWindowTitle(m_windowsManager->getTitle());
@@ -207,6 +211,19 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(value.toBool());
 	}
+	else if (option == QLatin1String("Sidebar/CurrentPanel"))
+	{
+		setSidebarSizes();
+	}
+	else if (option == QLatin1String("Sidebar/Reverse"))
+	{
+		placeSidebars();
+	}
+	else if (option == QLatin1String("Sidebar/Visible"))
+	{
+		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
+		setSidebarSizes();
+	}
 }
 
 void MainWindow::createMenuBar()
@@ -230,6 +247,28 @@ void MainWindow::createMenuBar()
 	}
 }
 
+void MainWindow::placeSidebars()
+{
+	if (!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
+	{
+		m_splitter->addWidget(m_sidebarWidget);
+		m_splitter->addWidget(m_mdiWidget);
+
+		m_sidebarWidget->setButtonsEdge(Qt::LeftEdge);
+	}
+	else
+	{
+		m_splitter->addWidget(m_mdiWidget);
+		m_splitter->addWidget(m_sidebarWidget);
+
+		m_sidebarWidget->setButtonsEdge(Qt::RightEdge);
+	}
+
+	m_sidebarWidget->setVisible(SettingsManager::getValue("Sidebar/Visible").toBool());
+
+	connect(m_splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMove()));
+}
+
 void MainWindow::openUrl(const QString &text)
 {
 	if (text.isEmpty())
@@ -247,6 +286,37 @@ void MainWindow::openUrl(const QString &text)
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
 
 		interpreter->interpret(text, ((m_windowsManager->getWindowCount() == 0 || m_windowsManager->getWindow()->isUrlEmpty()) ? CurrentTabOpen : NewTabOpen));
+	}
+}
+
+void MainWindow::setSidebarSizes()
+{
+	int sidebar = m_sidebarWidget->sizeHint().width();
+	int count = m_splitter->count();
+
+	if (!SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool())
+	{
+		sidebar = 0;
+		--count;
+	}
+
+	int mdi = m_splitter->width() - sidebar - ((count - 1) * m_splitter->handleWidth());
+
+	if (!SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
+	{
+		m_splitter->setSizes(QList<int>() << sidebar << mdi);
+	}
+	else
+	{
+		m_splitter->setSizes(QList<int>() << mdi << sidebar);
+	}
+}
+
+void MainWindow::splitterMove()
+{
+	if (!SettingsManager::getValue(QString("Sidebar/CurrentPanel")).toString().isEmpty())
+	{
+		SettingsManager::setValue(QString("Sidebar/Width"), m_splitter->sizes().at(!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool() ? 0 : 1));
 	}
 }
 
@@ -418,7 +488,9 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ShowSidebarAction:
-			m_ui->sidebarDockWidget->setVisible(checked);
+			m_sidebarWidget->setVisible(checked);
+
+			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), checked);
 
 			break;
 		case Action::ShowErrorConsoleAction:
@@ -563,8 +635,8 @@ void MainWindow::transferStarted()
 	}
 	else if (action == QLatin1String("openPanel"))
 	{
-		m_ui->sidebarDockWidget->setVisible(true);
-		m_ui->sidebarWidget->openPanel(QLatin1String("transfers"));
+		m_sidebarWidget->setVisible(true);
+		m_sidebarWidget->openPanel(QLatin1String("transfers"));
 	}
 }
 
@@ -697,6 +769,10 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowActivate:
 			SessionsManager::setActiveWindow(this);
 		case QEvent::Resize:
+			setSidebarSizes();
+			SessionsManager::markSessionModified();
+
+			break;
 		case QEvent::Move:
 			SessionsManager::markSessionModified();
 

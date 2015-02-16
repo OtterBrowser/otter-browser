@@ -21,8 +21,8 @@
 #define OTTER_SIDEBARWIDGET_H
 
 #include "Window.h"
+#include "../core/WindowsManager.h"
 
-#include <QtGui/QIcon>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QWidget>
 
@@ -42,15 +42,12 @@ public:
 	explicit SidebarWidget(QWidget *parent = NULL);
 	~SidebarWidget();
 
-public slots:
-	void locationChanged(Qt::DockWidgetArea area);
 	void openPanel(const QString &identifier);
+	void setButtonsEdge(Qt::Edge);
+	QSize sizeHint();
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void showEvent(QShowEvent *event);
 	void registerPanel(const QString &identifier);
-	void updateSize();
 
 protected slots:
 	void openPanel();

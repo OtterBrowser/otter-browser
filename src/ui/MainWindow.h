@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,11 +21,13 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
+#include "SidebarWidget.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QSplitter>
 
 namespace Otter
 {
@@ -67,10 +70,13 @@ protected:
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
 	bool event(QEvent *event);
+	void placeSidebars();
+	void setSidebarSizes();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
+	void splitterMove();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);
 
@@ -80,6 +86,8 @@ private:
 	MdiWidget *m_mdiWidget;
 	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;
+	SidebarWidget *m_sidebarWidget;
+	QSplitter *m_splitter;
 	QString m_currentBookmark;
 	Qt::WindowStates m_previousState;
 	Ui::MainWindow *m_ui;

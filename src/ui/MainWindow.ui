@@ -14,15 +14,6 @@
    <set>QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget"/>
-  <widget class="QDockWidget" name="sidebarDockWidget">
-   <property name="features">
-    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="Otter::SidebarWidget" name="sidebarWidget"/>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="windowTitle">
@@ -41,11 +32,6 @@
    <extends>QWidget</extends>
    <header>src/ui/ConsoleWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::SidebarWidget</class>
-   <extends>QWidget</extends>
-   <header>src/ui/SidebarWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

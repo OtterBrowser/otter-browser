@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 #include "ui_SidebarWidget.h"
 
-#include <QtWidgets/QDockWidget>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
@@ -37,7 +37,6 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
-	updateSize();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
@@ -45,23 +44,6 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 SidebarWidget::~SidebarWidget()
 {
 	delete m_ui;
-}
-
-void SidebarWidget::resizeEvent(QResizeEvent *event)
-{
-	QWidget::resizeEvent(event);
-
-	if (m_currentWidget)
-	{
-		SettingsManager::setValue(QLatin1String("Window/SidebarWidth"), width());
-	}
-}
-
-void SidebarWidget::showEvent(QShowEvent *event)
-{
-	updateSize();
-
-	QWidget::showEvent(event);
 }
 
 void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
@@ -85,18 +67,6 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 		{
 			registerPanel(panels.at(i));
 		}
-	}
-}
-
-void SidebarWidget::locationChanged(Qt::DockWidgetArea area)
-{
-	if (area == Qt::RightDockWidgetArea)
-	{
-		qobject_cast<QBoxLayout*>(layout())->setDirection(QBoxLayout::RightToLeft);
-	}
-	else
-	{
-		qobject_cast<QBoxLayout*>(layout())->setDirection(QBoxLayout::LeftToRight);
 	}
 }
 
@@ -165,8 +135,6 @@ void SidebarWidget::openPanel(const QString &identifier)
 
 	m_currentPanel = identifier;
 	m_currentWidget = widget;
-
-	updateSize();
 }
 
 void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
@@ -237,25 +205,20 @@ void SidebarWidget::registerPanel(const QString &identifier)
 	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
 }
 
-void SidebarWidget::updateSize()
+void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 {
-	QDockWidget *dockWidget = qobject_cast<QDockWidget*>(parentWidget());
+	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ?  QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+}
 
-	if (dockWidget)
+QSize SidebarWidget::sizeHint()
+{
+	if (m_currentWidget)
 	{
-		if (m_currentWidget)
-		{
-			dockWidget->setMaximumWidth(QWIDGETSIZE_MAX);
-
-			resize(SettingsManager::getValue(QLatin1String("Window/SidebarWidth")).toInt(), height());
-			setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-		}
-		else
-		{
-			dockWidget->setMaximumWidth(m_ui->buttonsLayout->contentsRect().width());
-
-			setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-		}
+		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
+	}
+	else
+	{
+		return m_ui->buttonsLayout->sizeHint();
 	}
 }
 
