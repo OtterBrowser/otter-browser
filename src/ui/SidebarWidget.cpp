@@ -32,6 +32,7 @@
 #include "ui_SidebarWidget.h"
 
 #include <QtGui/QIcon>
+#include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
@@ -76,7 +77,10 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 				for (int i = 0; i < actions.count(); ++i)
 				{
-					actions[i]->setText(translate(actions[i]->data().toString()));
+					if (!actions[i]->data().toString().isEmpty() && !actions[i]->data().toString().startsWith(QLatin1String("web:")))
+					{
+						actions[i]->setText(translate(actions[i]->data().toString()));
+					}
 				}
 			}
 
@@ -106,6 +110,26 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 		}
 
 		updatePanelsMenu();
+	}
+}
+
+void SidebarWidget::addWebPanel()
+{
+	WindowsManager *manager = SessionsManager::getWindowsManager();
+	QString url;
+
+	if (manager)
+	{
+		url = manager->getUrl().toString(QUrl::RemovePassword);
+	}
+
+	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to show in panel:"), QLineEdit::Normal, url);
+
+	if (!url.isEmpty())
+	{
+		url = QLatin1String("web:") + url;
+
+		SettingsManager::setValue(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList() << url);
 	}
 }
 
@@ -302,6 +326,33 @@ void SidebarWidget::updatePanelsMenu()
 
 		menu->addAction(action);
 	}
+
+	menu->addSeparator();
+
+	for (int i = 0; i < chosenPanels.count(); ++i)
+	{
+		if (chosenPanels[i].startsWith(QLatin1String("web:")))
+		{
+			QAction *action = new QAction(menu);
+			action->setCheckable(true);
+			action->setChecked(true);
+			action->setData(chosenPanels[i]);
+			action->setText(chosenPanels[i].section(QLatin1Char(':'), 1, -1));
+
+			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+
+			menu->addAction(action);
+		}
+	}
+
+
+	QAction *addPanelAction = new QAction(menu);
+	addPanelAction->setText(tr("Add web panel"));
+
+	connect(addPanelAction, SIGNAL(triggered()), this, SLOT(addWebPanel()));
+
+	menu->addSeparator();
+	menu->addAction(addPanelAction);
 
 	if (m_ui->panelsChooseButton->menu())
 	{

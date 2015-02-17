@@ -52,6 +52,7 @@ protected:
 	QString translate(const QString &identifier);
 
 protected slots:
+	void addWebPanel();
 	void choosePanel(bool checked);
 	void openPanel();
 	void openUrl(const QUrl &url, OpenHints);
