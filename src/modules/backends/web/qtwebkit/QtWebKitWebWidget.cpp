@@ -2699,6 +2699,13 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+
+			if (keyEvent->modifiers().testFlag(Qt::GroupSwitchModifier) && m_page->currentFrame()->hitTestContent(m_page->inputMethodQuery(Qt::ImCursorRectangle).toRect().center()).isContentEditable())
+			{
+				event->accept();
+
+				return true;
+			}
 		}
 	}
 	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
