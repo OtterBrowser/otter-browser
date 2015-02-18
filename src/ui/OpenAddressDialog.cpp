@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,12 @@
 
 #include "OpenAddressDialog.h"
 #include "AddressWidget.h"
+#include "../core/InputInterpreter.h"
 
 #include "ui_OpenAddressDialog.h"
 
-#include <QtCore/QTimer>
+#include <QtGui/QKeyEvent>
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -39,30 +41,12 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
-	connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
-	connect(m_addressWidget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SLOT(openBookmark(BookmarksItem*,OpenHints)));
-	connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(openSearch(QString,QString,OpenHints)));
-	connect(this, SIGNAL(accepted()), this, SLOT(handleInput()));
+	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(handleUserInput()));
 }
 
 OpenAddressDialog::~OpenAddressDialog()
 {
 	delete m_ui;
-}
-
-void OpenAddressDialog::setText(const QString &text)
-{
-	m_addressWidget->setText(text);
-	m_addressWidget->clearFocus();
-	m_addressWidget->setFocus(Qt::OtherFocusReason);
-}
-
-void OpenAddressDialog::handleInput()
-{
-	if (!m_addressWidget->text().trimmed().isEmpty())
-	{
-		m_addressWidget->handleUserInput(m_addressWidget->text());
-	}
 }
 
 void OpenAddressDialog::changeEvent(QEvent *event)
@@ -80,25 +64,40 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 	}
 }
 
-void OpenAddressDialog::openUrl(const QUrl &url, OpenHints hints)
+void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
 {
-	emit requestedLoadUrl(url, hints);
+	QDialog::keyPressEvent(event);
 
-	close();
+	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	{
+		handleUserInput();
+	}
 }
 
-void OpenAddressDialog::openBookmark(BookmarksItem *bookmark, OpenHints hints)
+void OpenAddressDialog::handleUserInput()
 {
-	emit requestedOpenBookmark(bookmark, hints);
+	if (m_addressWidget->text().trimmed().isEmpty())
+	{
+		accept();
+	}
+	else
+	{
+		InputInterpreter *interpreter = new InputInterpreter(this);
 
-	close();
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		connect(interpreter, SIGNAL(destroyed()), this, SLOT(accept()));
+
+		interpreter->interpret(m_addressWidget->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+	}
 }
 
-void OpenAddressDialog::openSearch(const QString &query, const QString &engine, OpenHints hints)
+void OpenAddressDialog::setText(const QString &text)
 {
-	emit requestedSearch(query, engine, hints);
-
-	close();
+	m_addressWidget->setText(text);
+	m_addressWidget->clearFocus();
+	m_addressWidget->setFocus(Qt::OtherFocusReason);
 }
 
 }

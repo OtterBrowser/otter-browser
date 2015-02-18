@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -158,7 +158,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 		}
 	}
 
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	if (!m_simpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
 		handleUserInput(text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, CurrentTabOpen));
 	}

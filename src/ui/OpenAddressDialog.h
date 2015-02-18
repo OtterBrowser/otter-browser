@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -44,14 +44,12 @@ public:
 
 	void setText(const QString &text);
 
-protected slots:
-	void handleInput();
-	void openUrl(const QUrl &url, OpenHints hints);
-	void openBookmark(BookmarksItem *bookmark, OpenHints hints);
-	void openSearch(const QString &query, const QString &engine, OpenHints hints);
-
 protected:
 	void changeEvent(QEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+
+protected slots:
+	void handleUserInput();
 
 private:
 	AddressWidget *m_addressWidget;
