@@ -390,7 +390,7 @@ void AddressWidget::updateLoadPlugins()
 		m_loadPluginsLabel->setFixedSize(16, 16);
 		m_loadPluginsLabel->setPixmap(Utils::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
 		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
-		m_loadPluginsLabel->setToolTip(tr("Click to load all contents handled by plugins on the page"));
+		m_loadPluginsLabel->setToolTip(tr("Click to load all plugins on the page"));
 		m_loadPluginsLabel->setFocusPolicy(Qt::NoFocus);
 		m_loadPluginsLabel->installEventFilter(this);
 
