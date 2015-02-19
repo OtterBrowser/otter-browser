@@ -68,6 +68,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_mdiWidget(new MdiWidget(this)),
 	m_tabBarToolBarWidget(NULL),
 	m_menuBar(NULL),
+	m_toggleEdge(NULL),
 	m_sidebarWidget(new SidebarWidget(this)),
 	m_splitter(new QSplitter(this)),
 	m_ui(new Ui::MainWindow)
@@ -220,6 +221,17 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	{
 		placeSidebars();
 	}
+	else if (option == QLatin1String("Sidebar/ShowToggleEdge"))
+	{
+		if (!m_toggleEdge)
+		{
+			createToggleEdge();
+		}
+
+		placeSidebars();
+
+		m_toggleEdge->setVisible(value.toBool());
+	}
 	else if (option == QLatin1String("Sidebar/Visible"))
 	{
 		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
@@ -249,6 +261,18 @@ void MainWindow::createMenuBar()
 	}
 }
 
+void MainWindow::createToggleEdge()
+{
+	if (m_toggleEdge)
+	{
+		return;
+	}
+
+	m_toggleEdge = new ActionWidget(Action::ShowSidebarAction, NULL, this);
+	m_toggleEdge->setFixedWidth(6);
+	m_toggleEdge->setText(QString());
+}
+
 void MainWindow::openUrl(const QString &text)
 {
 	if (text.isEmpty())
@@ -273,7 +297,7 @@ void MainWindow::splitterMoved()
 {
 	if (!SettingsManager::getValue(QString("Sidebar/CurrentPanel")).toString().isEmpty())
 	{
-		SettingsManager::setValue(QString("Sidebar/Width"), m_splitter->sizes().at(!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool() ? 0 : 1));
+		SettingsManager::setValue(QString("Sidebar/Width"), m_splitter->sizes().at(m_splitter->indexOf(m_sidebarWidget)));
 	}
 }
 
@@ -601,6 +625,13 @@ void MainWindow::placeSidebars()
 {
 	if (!SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
 	{
+		if (SettingsManager::getValue("Sidebar/ShowToggleEdge").toBool())
+		{
+			createToggleEdge();
+
+			m_splitter->addWidget(m_toggleEdge);
+		}
+
 		m_splitter->addWidget(m_sidebarWidget);
 		m_splitter->addWidget(m_mdiWidget);
 
@@ -610,6 +641,13 @@ void MainWindow::placeSidebars()
 	{
 		m_splitter->addWidget(m_mdiWidget);
 		m_splitter->addWidget(m_sidebarWidget);
+
+		if (SettingsManager::getValue("Sidebar/ShowToggleEdge").toBool())
+		{
+			createToggleEdge();
+
+			m_splitter->addWidget(m_toggleEdge);
+		}
 
 		m_sidebarWidget->setButtonsEdge(Qt::RightEdge);
 	}
@@ -622,24 +660,45 @@ void MainWindow::placeSidebars()
 void MainWindow::updateSidebars()
 {
 	int sidebarSize = m_sidebarWidget->sizeHint().width();
-	int count = m_splitter->count();
+	int toggleEdgeSize = m_toggleEdge ? m_toggleEdge->width() : 0;
+	int columns = 3;
 
 	if (!SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool())
 	{
 		sidebarSize = 0;
-		--count;
+		--columns;
+	}
+	if (!SettingsManager::getValue(QLatin1String("Sidebar/ShowToggleEdge")).toBool())
+	{
+		toggleEdgeSize = 0;
+		--columns;
 	}
 
-	int mdiSize = (m_splitter->width() - sidebarSize - ((count - 1) * m_splitter->handleWidth()));
+	int mdiSize = (m_splitter->width() - sidebarSize - toggleEdgeSize - ((columns - 1) * m_splitter->handleWidth()));
 
-	if (!SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
+	QList<int> sizes;
+
+	if (SettingsManager::getValue(QLatin1String("Sidebar/ShowToggleEdge")).toBool())
 	{
-		m_splitter->setSizes(QList<int>() << sidebarSize << mdiSize);
+		sizes.append(toggleEdgeSize);
 	}
-	else
+
+	sizes.append(sidebarSize);
+	sizes.append(mdiSize);
+
+	if (SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
 	{
-		m_splitter->setSizes(QList<int>() << mdiSize << sidebarSize);
+		QList<int> sizesCopy(sizes);
+
+		sizes.clear();
+
+		for (int i = sizesCopy.count() - 1; i >= 0 ; --i)
+		{
+			sizes.append(sizesCopy[i]);
+		}
 	}
+
+	m_splitter->setSizes(sizes);
 }
 
 void MainWindow::updateWindowTitle(const QString &title)

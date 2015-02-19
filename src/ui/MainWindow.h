@@ -21,6 +21,7 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
+#include "ActionWidget.h"
 #include "SidebarWidget.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
@@ -69,6 +70,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void createMenuBar();
+	void createToggleEdge();
 	void placeSidebars();
 	void updateSidebars();
 	bool event(QEvent *event);
@@ -86,6 +88,7 @@ private:
 	MdiWidget *m_mdiWidget;
 	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;
+	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
 	QSplitter *m_splitter;
 	QString m_currentBookmark;
