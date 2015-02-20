@@ -320,7 +320,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::NewTabPrivateAction:
-			m_windowsManager->open(QUrl(), NewTabPrivateOpen);
+			m_windowsManager->open(QUrl(), NewPrivateTabOpen);
 
 			break;
 		case Action::NewWindowAction:
@@ -611,7 +611,7 @@ void MainWindow::transferStarted()
 
 		if (!SessionsManager::hasUrl(url, false))
 		{
-			m_windowsManager->open(url, NewTabBackgroundOpen);
+			m_windowsManager->open(url, NewBackgroundTabOpen);
 		}
 	}
 	else if (action == QLatin1String("openPanel"))

@@ -381,10 +381,10 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(NewTabBackgroundOpen);
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(NewBackgroundTabOpen);
 		menu.addSeparator();
 		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(NewWindowBackgroundOpen);
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(NewBackgroundWindowOpen);
 		menu.addSeparator();
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
 		menu.addSeparator();

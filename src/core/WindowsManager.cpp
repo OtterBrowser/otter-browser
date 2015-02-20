@@ -803,12 +803,12 @@ OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt
 
 	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
-		return (useNewTab ? NewTabBackgroundEndOpen : NewWindowBackgroundEndOpen);
+		return (useNewTab ? NewBackgroundTabEndOpen : NewBackgroundWindowEndOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
-		return (useNewTab ? NewTabBackgroundOpen : NewWindowBackgroundOpen);
+		return (useNewTab ? NewBackgroundTabOpen : NewBackgroundWindowOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ShiftModifier))

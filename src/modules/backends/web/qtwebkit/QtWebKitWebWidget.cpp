@@ -777,6 +777,26 @@ void QtWebKitWebWidget::updateLinkActions()
 		m_actions[Action::OpenLinkInNewWindowBackgroundAction]->setEnabled(isLink);
 	}
 
+	if (m_actions.contains(Action::OpenLinkInNewPrivateTabAction))
+	{
+		m_actions[Action::OpenLinkInNewPrivateTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewPrivateTabBackgroundAction))
+	{
+		m_actions[Action::OpenLinkInNewPrivateTabBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewPrivateWindowAction))
+	{
+		m_actions[Action::OpenLinkInNewPrivateWindowAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(Action::OpenLinkInNewPrivateWindowBackgroundAction))
+	{
+		m_actions[Action::OpenLinkInNewPrivateWindowBackgroundAction]->setEnabled(isLink);
+	}
+
 	if (m_actions.contains(Action::CopyLinkToClipboardAction))
 	{
 		m_actions[Action::CopyLinkToClipboardAction]->setEnabled(isLink);
@@ -1043,7 +1063,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewTabBackgroundOpen);
+				openUrl(m_hitResult.linkUrl(), NewBackgroundTabOpen);
 			}
 
 			break;
@@ -1057,7 +1077,35 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewWindowBackgroundOpen);
+				openUrl(m_hitResult.linkUrl(), NewBackgroundWindowOpen);
+			}
+
+			break;
+		case Action::OpenLinkInNewPrivateTabAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewPrivateTabOpen);
+			}
+
+			break;
+		case Action::OpenLinkInNewPrivateTabBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewPrivateBackgroundTabOpen);
+			}
+
+			break;
+		case Action::OpenLinkInNewPrivateWindowAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewPrivateWindowOpen);
+			}
+
+			break;
+		case Action::OpenLinkInNewPrivateWindowBackgroundAction:
+			if (m_hitResult.linkUrl().isValid())
+			{
+				openUrl(m_hitResult.linkUrl(), NewPrivateBackgroundWindowOpen);
 			}
 
 			break;
@@ -1118,7 +1166,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case Action::OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frame())
 			{
-				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewTabBackgroundOpen);
+				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewBackgroundTabOpen);
 			}
 
 			break;
@@ -2073,6 +2121,10 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		case Action::OpenLinkInNewTabBackgroundAction:
 		case Action::OpenLinkInNewWindowAction:
 		case Action::OpenLinkInNewWindowBackgroundAction:
+		case Action::OpenLinkInNewPrivateTabAction:
+		case Action::OpenLinkInNewPrivateTabBackgroundAction:
+		case Action::OpenLinkInNewPrivateWindowAction:
+		case Action::OpenLinkInNewPrivateWindowBackgroundAction:
 		case Action::CopyLinkToClipboardAction:
 		case Action::BookmarkLinkAction:
 		case Action::SaveLinkToDiskAction:

@@ -86,6 +86,10 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::OpenLinkInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"));
 	registerAction(Action::OpenLinkInNewWindowAction, QT_TRANSLATE_NOOP("actions", "Open in New Window"));
 	registerAction(Action::OpenLinkInNewWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Window"));
+	registerAction(Action::OpenLinkInNewPrivateTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Tab"));
+	registerAction(Action::OpenLinkInNewPrivateTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Tab"));
+	registerAction(Action::OpenLinkInNewPrivateWindowAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Window"));
+	registerAction(Action::OpenLinkInNewPrivateWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Window"));
 	registerAction(Action::CopyLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Link to Clipboard"));
 	registerAction(Action::BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link..."), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(Action::SaveLinkToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Link Target As..."));

@@ -40,11 +40,14 @@ enum OpenHint
 	NewWindowOpen = 8,
 	BackgroundOpen = 16,
 	EndOpen = 32,
-	NewTabPrivateOpen = (NewTabOpen | PrivateOpen),
-	NewTabBackgroundOpen = (NewTabOpen | BackgroundOpen),
-	NewTabBackgroundEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
-	NewWindowBackgroundOpen = (NewWindowOpen | BackgroundOpen),
-	NewWindowBackgroundEndOpen = (NewWindowOpen | EndOpen | BackgroundOpen)
+	NewBackgroundTabOpen = (NewTabOpen | BackgroundOpen),
+	NewBackgroundTabEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
+	NewBackgroundWindowOpen = (NewWindowOpen | BackgroundOpen),
+	NewBackgroundWindowEndOpen = (NewWindowOpen | EndOpen | BackgroundOpen),
+	NewPrivateTabOpen = (NewTabOpen | PrivateOpen),
+	NewPrivateBackgroundTabOpen = (NewBackgroundTabOpen | PrivateOpen),
+	NewPrivateWindowOpen = (NewWindowOpen | PrivateOpen),
+	NewPrivateBackgroundWindowOpen = (NewBackgroundWindowOpen | PrivateOpen)
 };
 
 Q_DECLARE_FLAGS(OpenHints, OpenHint)
