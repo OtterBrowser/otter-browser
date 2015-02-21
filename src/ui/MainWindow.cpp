@@ -772,7 +772,7 @@ bool MainWindow::event(QEvent *event)
 
 				SessionsManager::markSessionModified();
 
-				if (windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
+				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
 					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
 
