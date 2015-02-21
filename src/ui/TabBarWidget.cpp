@@ -126,7 +126,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
-		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabs, &menu);
+		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, &menu);
 		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
 		menu.addAction(closeOtherTabsAction);

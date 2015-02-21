@@ -337,7 +337,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			closeWindow(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
-		case Action::CloseOtherTabs:
+		case Action::CloseOtherTabsAction:
 			closeOther(m_mainWindow->getTabBar()->currentIndex());
 
 			break;

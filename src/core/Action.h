@@ -43,7 +43,7 @@ public:
 		PinTabAction,
 		DetachTabAction,
 		CloseTabAction,
-		CloseOtherTabs,
+		CloseOtherTabsAction,
 		ClosePrivateTabsAction,
 		ClosePrivateTabsPanicAction,
 		ReopenTabAction,
