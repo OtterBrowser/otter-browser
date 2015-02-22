@@ -136,7 +136,10 @@ void CookieJar::save()
 
 	for (int i = 0; i < cookies.size(); ++i)
 	{
-		stream << cookies.at(i).toRawForm();
+		if (!cookies.at(i).isSessionCookie())
+		{
+			stream << cookies.at(i).toRawForm();
+		}
 	}
 
 	file.commit();
