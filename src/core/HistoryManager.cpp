@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -239,9 +239,9 @@ HistoryEntry HistoryManager::getEntry(const QSqlRecord &record)
 	pixmap.loadFromData(record.field(QLatin1String("icon")).value().toByteArray());
 
 	HistoryEntry historyEntry;
-	historyEntry.url.setScheme(record.field(QLatin1String("scheme")).value().toString());
+	historyEntry.url = QUrl(record.field(QLatin1String("path")).value().toString());
 	historyEntry.url.setHost(record.field(QLatin1String("host")).value().toString());
-	historyEntry.url.setPath(record.field(QLatin1String("path")).value().toString());
+	historyEntry.url.setScheme(record.field(QLatin1String("scheme")).value().toString());
 	historyEntry.title = record.field(QLatin1String("title")).value().toString();
 	historyEntry.time = QDateTime::fromTime_t(record.field(QLatin1String("time")).value().toInt(), Qt::LocalTime);
 	historyEntry.icon = QIcon(pixmap);
