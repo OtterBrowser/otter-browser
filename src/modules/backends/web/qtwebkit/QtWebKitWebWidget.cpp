@@ -137,10 +137,10 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
+	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
-	connect(m_page->mainFrame(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
-	connect(m_page->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(const QUrl)), this, SLOT(notifyUrlChanged(const QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
@@ -259,7 +259,6 @@ void QtWebKitWebWidget::pageLoadStarted()
 void QtWebKitWebWidget::pageLoadFinished()
 {
 	m_isLoading = false;
-
 	m_thumbnail = QPixmap();
 
 	m_networkManager->resetStatistics();

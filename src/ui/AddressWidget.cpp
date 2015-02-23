@@ -398,7 +398,11 @@ void AddressWidget::updateLoadPlugins()
 void AddressWidget::updateIcons()
 {
 	QMargins margins;
-	margins.setLeft(30);
+
+	if (!m_simpleMode)
+	{
+		margins.setLeft(30);
+	}
 
 	if (m_urlIconLabel)
 	{
