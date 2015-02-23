@@ -45,6 +45,8 @@ Transfer::Transfer(QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_speed(0),
+	m_listReceivedSize(0),
+	m_lastReceivedIndex(0),
 	m_bytesStart(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -64,6 +66,8 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent)
 	m_timeFinished(settings.value(QLatin1String("timeFinished")).toDateTime()),
 	m_mimeType(QMimeDatabase().mimeTypeForFile(m_target)),
 	m_speed(0),
+	m_listReceivedSize(0),
+	m_lastReceivedIndex(0),
 	m_bytesStart(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(settings.value(QLatin1String("bytesReceived")).toLongLong()),
@@ -80,6 +84,8 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	m_source(source),
 	m_target(target),
 	m_speed(0),
+	m_listReceivedSize(0),
+	m_lastReceivedIndex(0),
 	m_bytesStart(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -107,6 +113,8 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	m_source(request.url()),
 	m_target(target),
 	m_speed(0),
+	m_listReceivedSize(0),
+	m_lastReceivedIndex(0),
 	m_bytesStart(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -128,6 +136,8 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransf
 	m_source(m_reply->url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
 	m_target(target),
 	m_speed(0),
+	m_listReceivedSize(0),
+	m_lastReceivedIndex(0),
 	m_bytesStart(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -143,10 +153,49 @@ void Transfer::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_updateTimer)
 	{
+		qint64 currentTimeMSecs = QDateTime::currentDateTime().toMSecsSinceEpoch();
 		const qint64 oldSpeed = m_speed;
 
 		m_speed = (m_bytesReceivedDifference * 2);
 		m_bytesReceivedDifference = 0;
+
+		if (m_listReceivedSize < m_listReceivedMax)
+		{
+			m_listReceived[m_listReceivedSize] = m_bytesReceived;
+			m_listTime[m_listReceivedSize++] = currentTimeMSecs;
+
+			// Used m_speed for first call
+			if (m_listReceivedSize > 1)
+			{
+				qint64 time = m_listTime[m_listReceivedSize - 1] - m_listTime[0];
+				qint64 size = m_listReceived[m_listReceivedSize - 1] - m_listReceived[0];
+				m_lastReceivedIndex = 0;
+
+				if (time > 0)
+				{
+					m_speed = (size / time) * 1000;
+				}
+			}
+		}
+		else
+		{
+			m_listReceived[m_lastReceivedIndex] = m_bytesReceived;
+			m_listTime[m_lastReceivedIndex] = currentTimeMSecs;
+
+			uint index = (m_lastReceivedIndex + 1) % m_listReceivedSize;
+			qint64 time = m_listTime[m_lastReceivedIndex] - m_listTime[index];
+			qint64 size = m_listReceived[m_lastReceivedIndex] - m_listReceived[index];
+
+			if (time > 0)
+			{
+				m_speed = (size / time) * 1000;
+			}
+
+			if (++m_lastReceivedIndex >= m_listReceivedSize)
+			{
+				m_lastReceivedIndex = 0;
+			}
+		}
 
 		if (m_speed != oldSpeed)
 		{
@@ -486,6 +535,7 @@ void Transfer::stop()
 	}
 
 	m_timeFinished = QDateTime::currentDateTime();
+	m_listReceivedSize = 0;
 
 	emit stopped();
 	emit changed();
@@ -575,6 +625,7 @@ bool Transfer::resume()
 	m_device = file;
 	m_timeStarted = QDateTime::currentDateTime();
 	m_bytesStart = file->size();
+	m_listReceivedSize = 0;
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
