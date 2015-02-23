@@ -138,10 +138,14 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 	if (domainItem)
 	{
+		QPoint point;
+
 		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
 			if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
 			{
+				point = m_ui->cookiesView->visualRect(domainItem->child(j, 0)->index()).center();
+
 				domainItem->removeRow(j);
 
 				break;
@@ -155,6 +159,14 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 		else
 		{
 			domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
+		}
+
+		if (!point.isNull())
+		{
+			const QModelIndex index = m_ui->cookiesView->indexAt(point);
+
+			m_ui->cookiesView->setCurrentIndex(index);
+			m_ui->cookiesView->selectionModel()->select(index, QItemSelectionModel::Select);
 		}
 	}
 }
