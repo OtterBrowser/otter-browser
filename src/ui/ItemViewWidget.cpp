@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ItemViewWidget.h"
+#include "../core/SettingsManager.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
@@ -30,6 +31,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_dropRow(-1),
 	m_isModified(false)
 {
+	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
 
@@ -58,6 +60,15 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 		emit modified();
 
 		QTimer::singleShot(50, this, SLOT(updateDropSelection()));
+	}
+}
+
+void ItemViewWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Interface/ShowScrollBars"))
+	{
+		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 	}
 }
 

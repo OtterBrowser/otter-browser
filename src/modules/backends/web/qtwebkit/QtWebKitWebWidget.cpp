@@ -117,9 +117,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
-	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
+	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
 	updateEditActions();
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
@@ -202,11 +202,7 @@ void QtWebKitWebWidget::print(QPrinter *printer)
 
 void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
-	{
-		m_webView->page()->history()->setMaximumItemCount(value.toInt());
-	}
-	else if (option == QLatin1String("Browser/JavaScriptCanShowStatusMessages"))
+	if (option == QLatin1String("Browser/JavaScriptCanShowStatusMessages"))
 	{
 		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
@@ -225,6 +221,10 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 		palette.setColor(QPalette::Base, QColor(value.toString()));
 
 		m_page->setPalette(palette);
+	}
+	else if (option == QLatin1String("History/BrowsingLimitAmountWindow"))
+	{
+		m_webView->page()->history()->setMaximumItemCount(value.toInt());
 	}
 }
 

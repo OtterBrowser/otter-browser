@@ -44,7 +44,7 @@ public:
 	void changeEvent(QEvent *event);
 	void openPanel(const QString &identifier);
 	void setButtonsEdge(Qt::Edge);
-	QSize sizeHint();
+	QSize sizeHint() const;
 
 protected:
 	void registerPanel(const QString &identifier);

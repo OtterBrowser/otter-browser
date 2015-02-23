@@ -362,7 +362,7 @@ void SidebarWidget::updatePanelsMenu()
 	m_ui->panelsChooseButton->setMenu(menu);
 }
 
-QSize SidebarWidget::sizeHint()
+QSize SidebarWidget::sizeHint() const
 {
 	if (m_currentWidget)
 	{

@@ -57,6 +57,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
 	updateStyleSheets();
+	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -74,7 +75,7 @@ void QtWebKitPage::optionChanged(const QString &option, const QVariant &value)
 {
 	Q_UNUSED(value)
 
-	if (option.startsWith(QLatin1String("Content/")))
+	if (option.startsWith(QLatin1String("Content/")) || option == QLatin1String("Interface/ShowScrollBars"))
 	{
 		updateStyleSheets();
 	}
@@ -143,6 +144,11 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		mainFrame()->evaluateJavaScript(file.readAll());
 
 		file.close();
+	}
+
+	if (!SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")).toBool())
+	{
+		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
 
 	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());

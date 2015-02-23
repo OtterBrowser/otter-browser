@@ -26,8 +26,6 @@
 namespace Otter
 {
 
-class ItemViewWidget;
-
 namespace Ui
 {
 	class ContentBlockingDialog;
