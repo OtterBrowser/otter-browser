@@ -280,17 +280,10 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setFocusPolicy(Qt::NoFocus);
 			m_urlIconLabel->installEventFilter(this);
 
-			QMargins margins = textMargins();
-			margins.setLeft(52);
-
-			setTextMargins(margins);
-
 			if (m_window)
 			{
 				connect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 			}
-
-			updateIcons();
 		}
 		else
 		{
@@ -302,16 +295,13 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 				updateIcons();
 			}
 
-			QMargins margins = textMargins();
-			margins.setLeft(30);
-
-			setTextMargins(margins);
-
 			if (m_window)
 			{
 				disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 			}
 		}
+
+		updateIcons();
 	}
 	else if (option == QLatin1String("AddressField/ShowLoadPluginsIcon") && m_window)
 	{
@@ -407,20 +397,31 @@ void AddressWidget::updateLoadPlugins()
 
 void AddressWidget::updateIcons()
 {
+	QMargins margins;
+	margins.setLeft(30);
+
+	if (m_urlIconLabel)
+	{
+		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
+
+		margins.setLeft(margins.left() + 22);
+	}
+
 	if (m_bookmarkLabel)
 	{
 		m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
+
+		margins.setRight(margins.right() + 22);
 	}
 
 	if (m_loadPluginsLabel)
 	{
 		m_loadPluginsLabel->move((width() - 22 - (m_bookmarkLabel ? 22 : 0)), ((height() - m_loadPluginsLabel->height()) / 2));
+
+		margins.setRight(margins.right() + 22);
 	}
 
-	if (m_urlIconLabel)
-	{
-		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
-	}
+	setTextMargins(margins);
 }
 
 void AddressWidget::setCompletion(const QString &text)
