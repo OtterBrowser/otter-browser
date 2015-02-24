@@ -319,6 +319,7 @@ void Application::newConnection()
 		}
 		else
 		{
+			window->storeWindowState();
 			window->restoreWindowState();
 		}
 	}
