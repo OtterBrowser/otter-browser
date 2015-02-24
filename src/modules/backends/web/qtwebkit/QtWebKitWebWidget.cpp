@@ -1825,11 +1825,12 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		return;
 	}
 
+	const int index = qMin(history.index, (m_webView->history()->maximumItemCount() - 1));
 	qint64 documentSequence = 0;
 	qint64 itemSequence = 0;
 	QByteArray data;
 	QDataStream stream(&data, QIODevice::ReadWrite);
-	stream << int(2) << history.entries.count() << history.index;
+	stream << int(2) << history.entries.count() << index;
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
@@ -1849,9 +1850,9 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		m_webView->page()->history()->itemAt(i).setUserData(data);
 	}
 
-	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
+	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(index));
 
-	const QUrl url = m_webView->page()->history()->itemAt(history.index).url();
+	const QUrl url = m_webView->page()->history()->itemAt(index).url();
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
