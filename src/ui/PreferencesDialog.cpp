@@ -458,7 +458,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				for (int i = 0; i < shortcutsProfiles.count(); ++i)
 				{
-					const QString path = getProfilePath(QLatin1String("keyboard"), shortcutsProfiles.at(i));
+					QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
+					path = (QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini"));
 
 					QFile file(path);
 
@@ -1050,9 +1051,8 @@ void PreferencesDialog::cloneKeyboardProfile()
 		return;
 	}
 
-	const QString path = getProfilePath(QLatin1String("keyboard"), profile);
-
 	m_shortcutsProfiles[identifier] = (m_shortcutsProfiles.contains(profile) ? m_shortcutsProfiles[profile] : ShortcutsProfile());
+	m_shortcutsProfiles[identifier].isModified = true;
 
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title));
@@ -1473,14 +1473,6 @@ QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, QString
 	while (identifiers.contains(identifier));
 
 	return identifier;
-}
-
-QString PreferencesDialog::getProfilePath(const QString &type, const QString &identifier)
-{
-	const QString directory = QLatin1Char('/') + type + QLatin1Char('/');
-	const QString path = SessionsManager::getProfilePath() + directory + identifier + QLatin1String(".ini");
-
-	return (QFile::exists(path) ? path : QLatin1Char(':') + directory + identifier + QLatin1String(".ini"));
 }
 
 }

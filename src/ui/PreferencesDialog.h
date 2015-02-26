@@ -46,7 +46,6 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	QString createProfileIdentifier(ItemViewWidget *view, QString identifier = QString());
-	QString getProfilePath(const QString &type, const QString &identifier);
 
 protected slots:
 	void currentTabChanged(int tab);
