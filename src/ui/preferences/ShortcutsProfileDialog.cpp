@@ -28,8 +28,9 @@
 namespace Otter
 {
 
-ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, QWidget *parent) : QDialog(parent),
-	m_shortcuts(shortcuts),
+ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent) : QDialog(parent),
+	m_profile(profile),
+	m_isModified(profiles[profile].isModified),
 	m_ui(new Ui::ShortcutsProfileDialog)
 {
 	m_ui->setupUi(this);
@@ -41,18 +42,24 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		const QString name = ActionsManager::getActionName(actions.at(i).identifier);
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description)));
-		items[0]->setData(name, Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		QStandardItem* item = new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description));
+		item->setData(actions.at(i).identifier, Qt::UserRole);
+		item->setToolTip(ActionsManager::getActionName(actions.at(i).identifier));
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		if (data.contains(name))
+		if (profiles[profile].shortcuts.contains(actions.at(i).identifier))
 		{
-			items[0]->setData(data[name].value(QLatin1String("shortcuts"), QString()), (Qt::UserRole + 1));
+			QStringList shortcuts;
+
+			for (int j = 0; j < profiles[profile].shortcuts[actions.at(i).identifier].count(); ++j)
+			{
+				shortcuts.append(profiles[profile].shortcuts[actions.at(i).identifier].at(j).toString());
+			}
+
+			item->setData(shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
 		}
 
-		model->appendRow(items);
+		model->appendRow(item);
 	}
 
 	model->setHorizontalHeaderLabels(labels);
@@ -61,10 +68,10 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QHash<QString, QString> &in
 	m_ui->actionsViewWidget->setModel(model);
 	m_ui->shortcutsViewWidget->setModel(new QStandardItemModel(this));
 	m_ui->shortcutsViewWidget->setItemDelegate(new KeyboardShortcutDelegate(this));
-	m_ui->titleLineEdit->setText(information.value(QLatin1String("Title"), QString()));
-	m_ui->descriptionLineEdit->setText(information.value(QLatin1String("Description"), QString()));
-	m_ui->versionLineEdit->setText(information.value(QLatin1String("Version"), QString()));
-	m_ui->authorLineEdit->setText(information.value(QLatin1String("Author"), QString()));
+	m_ui->titleLineEdit->setText(profiles[profile].title);
+	m_ui->descriptionLineEdit->setText(profiles[profile].description);
+	m_ui->versionLineEdit->setText(profiles[profile].version);
+	m_ui->authorLineEdit->setText(profiles[profile].author);
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
 	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
@@ -100,6 +107,8 @@ void ShortcutsProfileDialog::addShortcut()
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
+
+	m_isModified = true;
 }
 
 void ShortcutsProfileDialog::removeShortcut()
@@ -107,6 +116,8 @@ void ShortcutsProfileDialog::removeShortcut()
 	m_ui->shortcutsViewWidget->removeRow();
 
 	saveShortcuts();
+
+	m_isModified = true;
 }
 
 void ShortcutsProfileDialog::updateActionsActions()
@@ -180,33 +191,33 @@ void ShortcutsProfileDialog::saveShortcuts()
 	m_ui->actionsViewWidget->setData(m_currentAction, shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
 }
 
-QHash<QString, QString> ShortcutsProfileDialog::getInformation() const
+ShortcutsProfile ShortcutsProfileDialog::getProfile() const
 {
-	QHash<QString, QString> information;
-	information[QLatin1String("Title")] = m_ui->titleLineEdit->text();
-	information[QLatin1String("Description")] = m_ui->descriptionLineEdit->text();
-	information[QLatin1String("Version")] = m_ui->versionLineEdit->text();
-	information[QLatin1String("Author")] = m_ui->authorLineEdit->text();
-
-	return information;
-}
-
-QHash<QString, QVariantHash> ShortcutsProfileDialog::getData() const
-{
-	QHash<QString, QVariantHash> data;
+	ShortcutsProfile profile;
+	profile.title = m_ui->titleLineEdit->text();
+	profile.description = m_ui->descriptionLineEdit->text();
+	profile.version = m_ui->versionLineEdit->text();
+	profile.author = m_ui->authorLineEdit->text();
+	profile.isModified = m_isModified;
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{
-		QVariantHash hash;
-		hash[QLatin1String("shortcuts")] = m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString();
+		const QStringList rawShortcuts = m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 
-		if (!hash[QLatin1String("shortcuts")].isNull())
+		if (!rawShortcuts.isEmpty())
 		{
-			data[m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole).toString()] = hash;
+			QVector<QKeySequence> shortcuts;
+
+			for (int j = 0; j < rawShortcuts.count(); ++j)
+			{
+				shortcuts.append(QKeySequence(rawShortcuts.at(j)));
+			}
+
+			profile.shortcuts[m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole).toInt()] = shortcuts;
 		}
 	}
 
-	return data;
+	return profile;
 }
 
 }

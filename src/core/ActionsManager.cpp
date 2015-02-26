@@ -487,6 +487,11 @@ void ActionsManager::loadShortcuts()
 			const QStringList rawShortcuts = profile.value(rawActions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 			QVector<QKeySequence> shortcuts;
 
+			if (actionShortcuts.contains(action))
+			{
+				shortcuts = actionShortcuts[action];
+			}
+
 			for (int k = 0; k < rawShortcuts.count(); ++k)
 			{
 				const QKeySequence shortcut(rawShortcuts.at(k));

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+struct ShortcutsProfile;
 class ItemViewWidget;
 
 namespace Ui
@@ -44,14 +45,11 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
-	void loadProfiles(const QString &type, const QString &key, ItemViewWidget *view);
 	QString createProfileIdentifier(ItemViewWidget *view, QString identifier = QString());
 	QString getProfilePath(const QString &type, const QString &identifier);
-	QHash<QString, QString> getProfileInformation(const QString &path) const;
-	QHash<QString, QVariantHash> getProfileData(const QString &path) const;
-	QHash<QString, QList<QKeySequence> > getShortcuts() const;
 
 protected slots:
+	void currentTabChanged(int tab);
 	void useCurrentAsHomePage();
 	void restoreHomePage();
 	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -81,10 +79,10 @@ protected slots:
 private:
 	QString m_defaultSearch;
 	QStringList m_clearSettings;
-	QStringList m_removedProfiles;
+	QStringList m_removedShortcutsProfiles;
+	QVector<bool> m_loadedTabs;
 	QVariantMap m_javaScriptOptions;
-	QHash<QString, QHash<QString, QString> > m_keyboardProfilesInformation;
-	QHash<QString, QHash<QString, QVariantHash> > m_keyboardProfilesData;
+	QHash<QString, ShortcutsProfile> m_shortcutsProfiles;
 	bool m_userAgentsModified;
 	Ui::PreferencesDialog *m_ui;
 };

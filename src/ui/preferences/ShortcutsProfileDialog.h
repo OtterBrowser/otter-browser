@@ -31,16 +31,28 @@ namespace Ui
 	class ShortcutsProfileDialog;
 }
 
+struct ShortcutsProfile
+{
+	QString title;
+	QString description;
+	QString author;
+	QString version;
+	QString path;
+	QHash<int, QVector<QKeySequence> > shortcuts;
+	bool isModified;
+
+	ShortcutsProfile() : isModified(false) {}
+};
+
 class ShortcutsProfileDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit ShortcutsProfileDialog(const QHash<QString, QString> &information, const QHash<QString, QVariantHash> &data, const QHash<QString, QList<QKeySequence> > &shortcuts, QWidget *parent = NULL);
+	explicit ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent = NULL);
 	~ShortcutsProfileDialog();
 
-	QHash<QString, QString> getInformation() const;
-	QHash<QString, QVariantHash> getData() const;
+	ShortcutsProfile getProfile() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -53,8 +65,9 @@ protected slots:
 	void saveShortcuts();
 
 private:
-	QHash<QString, QList<QKeySequence> > m_shortcuts;
+	QString m_profile;
 	QModelIndex m_currentAction;
+	bool m_isModified;
 	Ui::ShortcutsProfileDialog *m_ui;
 };
 
