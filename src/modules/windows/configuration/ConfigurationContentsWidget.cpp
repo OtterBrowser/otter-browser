@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 #include "ui_ConfigurationContentsWidget.h"
 
 #include <QtCore/QSettings>
+#include <QtGui/QClipboard>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -51,7 +53,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 		{
 			const QString key = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
 			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
-			const QVariant defaultValue = SettingsManager::getDefaultValue(key);
 			const QVariant value = SettingsManager::getValue(key);
 			QList<QStandardItem*> optionItems;
 			optionItems.append(new QStandardItem(keys.at(j)));
@@ -60,9 +61,9 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
 			optionItems[2]->setData(key, Qt::UserRole);
 			optionItems[2]->setData(type, (Qt::UserRole + 1));
-			optionItems[2]->setData(((type == "enumeration") ? defaults.value(QStringLiteral("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
+			optionItems[2]->setData(((type == QLatin1String("enumeration")) ? defaults.value(QStringLiteral("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
 
-			if (value != defaultValue)
+			if (value != SettingsManager::getDefaultValue(key))
 			{
 				QFont font = optionItems[0]->font();
 				font.setBold(true);
@@ -90,6 +91,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationView->header()->setTextElideMode(Qt::ElideRight);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(m_ui->configurationView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterConfiguration(QString)));
 }
@@ -114,9 +116,82 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
+void ConfigurationContentsWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *groupItem = m_model->item(i, 0);
+
+		if (!groupItem || !QString(option).startsWith(groupItem->text()))
+		{
+			continue;
+		}
+
+		for (int j = 0; j < groupItem->rowCount(); ++j)
+		{
+			QStandardItem *optionItem = groupItem->child(j, 0);
+
+			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
+			{
+				QFont font = optionItem->font();
+				font.setBold(value != SettingsManager::getDefaultValue(option));
+
+				optionItem->setFont(font);
+
+				groupItem->child(j, 2)->setText(value.toString());
+
+				break;
+			}
+		}
+	}
+}
+
 void ConfigurationContentsWidget::print(QPrinter *printer)
 {
 	m_ui->configurationView->render(printer);
+}
+
+void ConfigurationContentsWidget::currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+{
+	m_ui->configurationView->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
+
+	if (currentIndex.parent().isValid())
+	{
+		m_ui->configurationView->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
+	}
+}
+
+void ConfigurationContentsWidget::copyOptionName()
+{
+	const QModelIndex index = m_ui->configurationView->currentIndex().sibling(m_ui->configurationView->currentIndex().row(), 2);
+
+	if (index.isValid())
+	{
+		QApplication::clipboard()->setText(index.data(Qt::UserRole).toString());
+	}
+}
+
+void ConfigurationContentsWidget::copyOptionValue()
+{
+	const QModelIndex index = m_ui->configurationView->currentIndex().sibling(m_ui->configurationView->currentIndex().row(), 2);
+
+	if (index.isValid())
+	{
+		QApplication::clipboard()->setText(index.data(Qt::EditRole).toString());
+	}
+}
+
+void ConfigurationContentsWidget::restoreDefaults()
+{
+	const QModelIndex index = m_ui->configurationView->currentIndex().sibling(m_ui->configurationView->currentIndex().row(), 2);
+
+	if (index.isValid())
+	{
+		SettingsManager::setValue(index.data(Qt::UserRole).toString(), SettingsManager::getDefaultValue(index.data(Qt::UserRole).toString()));
+
+		m_ui->configurationView->setCurrentIndex(QModelIndex());
+		m_ui->configurationView->setCurrentIndex(index);
+	}
 }
 
 void ConfigurationContentsWidget::filterConfiguration(const QString &filter)
@@ -156,43 +231,18 @@ void ConfigurationContentsWidget::filterConfiguration(const QString &filter)
 	}
 }
 
-void ConfigurationContentsWidget::currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
+void ConfigurationContentsWidget::showContextMenu(const QPoint &point)
 {
-	m_ui->configurationView->closePersistentEditor(previousIndex.parent().child(previousIndex.row(), 2));
+	const QModelIndex index = m_ui->configurationView->indexAt(point);
 
-	if (currentIndex.parent().isValid())
+	if (index.isValid() && index.parent() != m_ui->configurationView->rootIndex())
 	{
-		m_ui->configurationView->openPersistentEditor(currentIndex.parent().child(currentIndex.row(), 2));
-	}
-}
-
-void ConfigurationContentsWidget::optionChanged(const QString &option, const QVariant &value)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *groupItem = m_model->item(i, 0);
-
-		if (!groupItem || !QString(option).startsWith(groupItem->text()))
-		{
-			continue;
-		}
-
-		for (int j = 0; j < groupItem->rowCount(); ++j)
-		{
-			QStandardItem *optionItem = groupItem->child(j, 0);
-
-			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
-			{
-				QFont font = optionItem->font();
-				font.setBold(value != SettingsManager::getDefaultValue(option));
-
-				optionItem->setFont(font);
-
-				groupItem->child(j, 2)->setText(value.toString());
-
-				break;
-			}
-		}
+		QMenu menu(this);
+		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
+		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
+		menu.addSeparator();
+		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getDefaultValue(index.sibling(index.row(), 2).data(Qt::UserRole).toString()));
+		menu.exec(m_ui->configurationView->mapToGlobal(point));
 	}
 }
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -52,9 +52,13 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void filterConfiguration(const QString &filter);
-	void currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void optionChanged(const QString &option, const QVariant &value);
+	void currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
+	void copyOptionName();
+	void copyOptionValue();
+	void restoreDefaults();
+	void filterConfiguration(const QString &filter);
+	void showContextMenu(const QPoint &point);
 
 private:
 	QStandardItemModel *m_model;
