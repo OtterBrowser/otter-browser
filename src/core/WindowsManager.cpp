@@ -46,6 +46,11 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
 	Window *window = m_mainWindow->getMdi()->getActiveWindow();
 
+	if (hints == NewTabOpen && !url.isEmpty() && window && window->isUrlEmpty())
+	{
+		hints = CurrentTabOpen;
+	}
+
 	if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !window->isUrlEmpty()))
 	{
 		hints = NewTabOpen;
@@ -190,6 +195,11 @@ void WindowsManager::gatherBookmarks(QStandardItem *branch)
 void WindowsManager::search(const QString &query, const QString &engine, OpenHints hints)
 {
 	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+
+	if (hints == NewTabOpen && window && window->isUrlEmpty())
+	{
+		hints = CurrentTabOpen;
+	}
 
 	if (hints == DefaultOpen && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{

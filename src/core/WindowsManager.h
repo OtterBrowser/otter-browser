@@ -100,7 +100,7 @@ protected:
 
 protected slots:
 	void addWindow(Window *window, OpenHints hints = DefaultOpen);
-	void openWindow(ContentsWidget *widget, OpenHints hints = false);
+	void openWindow(ContentsWidget *widget, OpenHints hints = DefaultOpen);
 	void cloneWindow(int index);
 	void detachWindow(int index);
 	void pinWindow(int index, bool pin);
