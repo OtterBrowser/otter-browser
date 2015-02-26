@@ -34,8 +34,8 @@ namespace Otter
 {
 
 HistoryManager* HistoryManager::m_instance = NULL;
-bool HistoryManager::m_enabled = false;
-bool HistoryManager::m_storeFavicons = true;
+bool HistoryManager::m_isEnabled = false;
+bool HistoryManager::m_isStoringFavicons = true;
 
 HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 	m_cleanupTimer(0)
@@ -190,7 +190,7 @@ void HistoryManager::optionChanged(const QString &option)
 	{
 		const bool enabled = (SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool() && !SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
 
-		if (enabled && !m_enabled)
+		if (enabled && !m_isEnabled)
 		{
 			QSqlDatabase database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
 			database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
@@ -210,16 +210,16 @@ void HistoryManager::optionChanged(const QString &option)
 				}
 			}
 		}
-		else if (!enabled && m_enabled)
+		else if (!enabled && m_isEnabled)
 		{
 			QSqlDatabase::database(QLatin1String("browsingHistory")).close();
 		}
 
-		m_enabled = enabled;
+		m_isEnabled = enabled;
 	}
 	else if (option == QLatin1String("History/StoreFavicons"))
 	{
-		m_storeFavicons = SettingsManager::getValue(option).toBool();
+		m_isStoringFavicons = SettingsManager::getValue(option).toBool();
 	}
 }
 
@@ -254,6 +254,11 @@ HistoryEntry HistoryManager::getEntry(const QSqlRecord &record)
 
 HistoryEntry HistoryManager::getEntry(qint64 entry)
 {
+	if (!m_isEnabled)
+	{
+		return HistoryEntry();
+	}
+
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" WHERE \"visits\".\"id\" = ?;"));
 	query.bindValue(0, entry);
@@ -270,6 +275,12 @@ HistoryEntry HistoryManager::getEntry(qint64 entry)
 QList<HistoryEntry> HistoryManager::getEntries(bool typed)
 {
 	QList<HistoryEntry> entries;
+
+	if (!m_isEnabled)
+	{
+		return entries;
+	}
+
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\"") + (typed ? QLatin1String(" \"visits\".\"typed\" = 1") : QString()) + QLatin1String(" ORDER BY \"visits\".\"time\" DESC;"));
 	query.exec();
@@ -344,7 +355,7 @@ qint64 HistoryManager::getLocation(const QUrl &url, bool canCreate)
 
 qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 {
-	if (!m_storeFavicons)
+	if (!m_isStoringFavicons)
 	{
 		return 0;
 	}
@@ -363,7 +374,7 @@ qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 
 qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed)
 {
-	if (!m_enabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
+	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
 	{
 		return -1;
 	}
@@ -391,12 +402,12 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 
 bool HistoryManager::hasUrl(const QUrl &url)
 {
-	return (getLocation(url, false) >= 0);
+	return (m_isEnabled && getLocation(url, false) >= 0);
 }
 
 bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon)
 {
-	if (!m_enabled || !url.isValid())
+	if (!m_isEnabled || !url.isValid())
 	{
 		return false;
 	}
@@ -430,6 +441,11 @@ bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &t
 
 bool HistoryManager::removeEntry(qint64 entry)
 {
+	if (!m_isEnabled)
+	{
+		return false;
+	}
+
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("DELETE FROM \"visits\" WHERE \"id\" = ?;"));
 	query.bindValue(0, entry);
@@ -449,6 +465,11 @@ bool HistoryManager::removeEntry(qint64 entry)
 
 bool HistoryManager::removeEntries(const QList<qint64> &entries)
 {
+	if (!m_isEnabled)
+	{
+		return false;
+	}
+
 	QStringList list;
 
 	for (int i = 0; i < entries.count(); ++i)

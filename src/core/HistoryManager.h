@@ -77,8 +77,8 @@ private:
 	int m_dayTimer;
 
 	static HistoryManager *m_instance;
-	static bool m_enabled;
-	static bool m_storeFavicons;
+	static bool m_isEnabled;
+	static bool m_isStoringFavicons;
 
 signals:
 	void cleared();
