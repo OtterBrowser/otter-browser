@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -106,6 +106,14 @@ void SearchesManager::initialize()
 
 	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
 	m_searchEnginesOrder.removeAll(QString());
+
+	for (int i = 0; i < m_searchEnginesOrder.count(); ++i)
+	{
+		if (!m_searchEngines.contains(m_searchEnginesOrder.at(i)))
+		{
+			m_searchEnginesOrder.removeAll(m_searchEnginesOrder.at(i));
+		}
+	}
 
 	if (m_searchEnginesOrder.isEmpty())
 	{

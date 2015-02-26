@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,6 @@ SearchWidget::SearchWidget(QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-
 	setEditable(true);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
@@ -80,15 +79,18 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
-	currentData(Qt::DecorationRole).value<QIcon>().paint(&painter, m_selectButtonIconRectangle);
+	if (isEnabled())
+	{
+		currentData(Qt::DecorationRole).value<QIcon>().paint(&painter, m_selectButtonIconRectangle);
 
-	QStyleOption arrow;
-	arrow.initFrom(this);
-	arrow.rect = m_selectButtonArrowRectangle;
+		QStyleOption arrow;
+		arrow.initFrom(this);
+		arrow.rect = m_selectButtonArrowRectangle;
 
-	style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+	}
 
-	Utils::getIcon(QLatin1String("edit-find")).paint(&painter, m_searchButtonRectangle);
+	Utils::getIcon(QLatin1String("edit-find")).paint(&painter, m_searchButtonRectangle, Qt::AlignCenter, (isEnabled() ? QIcon::Active : QIcon::Disabled));
 }
 
 void SearchWidget::resizeEvent(QResizeEvent *event)
