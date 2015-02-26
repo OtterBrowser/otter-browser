@@ -577,7 +577,6 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 
 	Window *window = new Window(false, m_contentsWidget->clone(cloneHistory), parent);
 	window->setSearchEngine(getSearchEngine());
-	window->setPinned(isPinned());
 
 	return window;
 }
