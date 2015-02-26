@@ -1112,10 +1112,10 @@ void PreferencesDialog::removeKeyboardProfile()
 void PreferencesDialog::updateKeyboardProfleActions()
 {
 	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 0);
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
+	const QString profile = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 1).data(Qt::DisplayRole).toString();
 
-	m_ui->actionShortcutsEditButton->setEnabled(isSelected && !index.data(Qt::UserRole).toString().startsWith(QLatin1Char(':')));
+	m_ui->actionShortcutsEditButton->setEnabled(isSelected && (m_shortcutsProfiles.contains(profile) && !m_shortcutsProfiles[profile].path.startsWith(QLatin1Char(':'))));
 	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
 	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
 }
