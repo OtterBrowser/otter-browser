@@ -109,7 +109,15 @@ void CookieJar::clearCookies(int period)
 {
 	Q_UNUSED(period)
 
-	setAllCookies(QList<QNetworkCookie>());
+	const QList<QNetworkCookie> cookies = allCookies();
+
+	for (int i = 0; i < cookies.length(); ++i)
+	{
+		QNetworkCookieJar::deleteCookie(cookies.at(i));
+
+		emit cookieRemoved(cookies.at(i));
+	}
+
 	save();
 }
 
@@ -130,11 +138,11 @@ void CookieJar::save()
 		return;
 	}
 
-	QList<QNetworkCookie> cookies = allCookies();
+	const QList<QNetworkCookie> cookies = allCookies();
 	QDataStream stream(&file);
-	stream << quint32(cookies.size());
+	stream << quint32(cookies.length());
 
-	for (int i = 0; i < cookies.size(); ++i)
+	for (int i = 0; i < cookies.length(); ++i)
 	{
 		if (!cookies.at(i).isSessionCookie())
 		{
