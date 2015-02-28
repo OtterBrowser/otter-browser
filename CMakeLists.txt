@@ -147,6 +147,7 @@ set(otter_src
 	src/ui/StartupDialog.cpp
 	src/ui/TabBarToolBarWidget.cpp
 	src/ui/TabBarWidget.cpp
+	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp

@@ -65,7 +65,8 @@ public:
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
 	Action* getAction(int identifier);
-	Window* getWindow(int index = -1) const;
+	Window* getWindowByIndex(int index) const;
+	Window* getWindowByIdentifier(qint64 identifier) const;
 	QVariant getOption(const QString &key) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
@@ -88,7 +89,8 @@ public slots:
 	void restore(const SessionMainWindow &session);
 	void triggerAction(int identifier, bool checked = false);
 	void clearClosedWindows();
-	void setActiveWindow(int index);
+	void setActiveWindowByIndex(int index);
+	void setActiveWindowByIdentifier(qint64 identifier);
 	void setOption(const QString &key, const QVariant &value);
 	void setZoom(int zoom);
 

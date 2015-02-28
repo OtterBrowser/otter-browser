@@ -43,6 +43,7 @@ class MdiWidget;
 class Menu;
 class TabBarToolBarWidget;
 class TabBarWidget;
+class TabSwitcherWidget;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -67,8 +68,10 @@ public slots:
 	void triggerAction(int identifier, bool checked = false);
 
 protected:
-	void contextMenuEvent(QContextMenuEvent *event);
 	void closeEvent(QCloseEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+	void keyReleaseEvent(QKeyEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void createMenuBar();
 	void createToggleEdge();
 	void placeSidebars();
@@ -85,6 +88,7 @@ protected slots:
 private:
 	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
+	TabSwitcherWidget *m_tabSwitcher;
 	MdiWidget *m_mdiWidget;
 	TabBarToolBarWidget *m_tabBarToolBarWidget;
 	QMenuBar *m_menuBar;

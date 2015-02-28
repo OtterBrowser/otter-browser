@@ -236,7 +236,7 @@ void WindowsManager::closeAll()
 {
 	for (int i = (m_mainWindow->getTabBar()->count() - 1); i >= 0; --i)
 	{
-		Window *window = getWindow(i);
+		Window *window = getWindowByIndex(i);
 
 		if (window)
 		{
@@ -288,14 +288,14 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	m_isRestored = true;
 
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(currentChanged(int)), this, SLOT(setActiveWindow(int)));
+	connect(m_mainWindow->getTabBar(), SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
-	setActiveWindow(session.index);
+	setActiveWindowByIndex(session.index);
 }
 
 void WindowsManager::restore(int index)
@@ -356,7 +356,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 
 			for (int i = (m_mainWindow->getTabBar()->count() - 1); i > 0; --i)
 			{
-				if (getWindow(i)->isPrivate())
+				if (getWindowByIndex(i)->isPrivate())
 				{
 					closeWindow(i);
 				}
@@ -436,7 +436,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 
 		if (m_isRestored)
 		{
-			setActiveWindow(index);
+			setActiveWindowByIndex(index);
 		}
 	}
 
@@ -477,7 +477,7 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 
 void WindowsManager::cloneWindow(int index)
 {
-	Window *window = getWindow(index);
+	Window *window = getWindowByIndex(index);
 
 	if (window && window->canClone())
 	{
@@ -487,7 +487,7 @@ void WindowsManager::cloneWindow(int index)
 
 void WindowsManager::detachWindow(int index)
 {
-	Window *window = getWindow(index);
+	Window *window = getWindowByIndex(index);
 
 	if (!window)
 	{
@@ -541,7 +541,7 @@ void WindowsManager::closeWindow(int index)
 		return;
 	}
 
-	Window *window = getWindow(index);
+	Window *window = getWindowByIndex(index);
 
 	if (window)
 	{
@@ -590,7 +590,7 @@ void WindowsManager::closeWindow(Window *window)
 
 		if (lastTabClosingAction == QLatin1String("openTab"))
 		{
-			window = getWindow(0);
+			window = getWindowByIndex(0);
 
 			if (window)
 			{
@@ -662,7 +662,7 @@ void WindowsManager::setZoom(int zoom)
 	}
 }
 
-void WindowsManager::setActiveWindow(int index)
+void WindowsManager::setActiveWindowByIndex(int index)
 {
 	if (index < 0 || index >= m_mainWindow->getTabBar()->count())
 	{
@@ -687,7 +687,7 @@ void WindowsManager::setActiveWindow(int index)
 
 	setStatusMessage(QString());
 
-	window = getWindow(index);
+	window = getWindowByIndex(index);
 
 	m_mainWindow->getActionsManager()->setCurrentWindow(window);
 
@@ -712,6 +712,21 @@ void WindowsManager::setActiveWindow(int index)
 	ActionsManager::getAction(Action::CloneTabAction, m_mainWindow->getMdi())->setEnabled(window && window->canClone());
 
 	emit currentWindowChanged(index);
+}
+
+void WindowsManager::setActiveWindowByIdentifier(qint64 identifier)
+{
+	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+	{
+		Window *window = getWindowByIndex(i);
+
+		if (window && window->getIdentifier() == identifier)
+		{
+			setActiveWindowByIndex(i);
+
+			break;
+		}
+	}
 }
 
 void WindowsManager::setTitle(const QString &title)
@@ -744,14 +759,24 @@ Action* WindowsManager::getAction(int identifier)
 	return (window ? window->getContentsWidget()->getAction(identifier) : NULL);
 }
 
-Window* WindowsManager::getWindow(int index) const
+Window* WindowsManager::getWindowByIndex(int index) const
 {
-	if (index < 0)
+	return ((index >= m_mainWindow->getTabBar()->count()) ? NULL : qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(index)));
+}
+
+Window* WindowsManager::getWindowByIdentifier(qint64 identifier) const
+{
+	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		return m_mainWindow->getMdi()->getActiveWindow();
+		Window *window = getWindowByIndex(i);
+
+		if (window && window->getIdentifier() == identifier)
+		{
+			return window;
+		}
 	}
 
-	return ((index >= m_mainWindow->getTabBar()->count()) ? NULL : qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(index)));
+	return NULL;
 }
 
 QVariant WindowsManager::getOption(const QString &key) const
@@ -782,7 +807,7 @@ SessionMainWindow WindowsManager::getSession() const
 
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = getWindow(i);
+		Window *window = getWindowByIndex(i);
 
 		if (window && !window->isPrivate())
 		{
@@ -863,7 +888,7 @@ int WindowsManager::getWindowCount(bool onlyPrivate) const
 
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		if (getWindow(i)->isPrivate())
+		if (getWindowByIndex(i)->isPrivate())
 		{
 			++amount;
 		}
@@ -885,7 +910,7 @@ bool WindowsManager::event(QEvent *event)
 	{
 		for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 		{
-			Window *window = getWindow(i);
+			Window *window = getWindowByIndex(i);
 
 			if (window)
 			{
@@ -923,13 +948,13 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = getWindow(i);
+		Window *window = getWindowByIndex(i);
 
 		if (window && window->getUrl() == url)
 		{
 			if (activate)
 			{
-				setActiveWindow(i);
+				setActiveWindowByIndex(i);
 			}
 
 			return true;

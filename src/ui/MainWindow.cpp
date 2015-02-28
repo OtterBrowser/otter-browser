@@ -31,6 +31,7 @@
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "TabBarToolBarWidget.h"
+#include "TabSwitcherWidget.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "toolbars/ZoomWidget.h"
@@ -65,6 +66,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_actionsManager(NULL),
 	m_windowsManager(NULL),
+	m_tabSwitcher(NULL),
 	m_mdiWidget(new MdiWidget(this)),
 	m_tabBarToolBarWidget(NULL),
 	m_menuBar(NULL),
@@ -149,18 +151,6 @@ MainWindow::~MainWindow()
 	delete m_ui;
 }
 
-void MainWindow::contextMenuEvent(QContextMenuEvent *event)
-{
-	QMenu menu(this);
-	menu.addAction(m_actionsManager->getAction(Action::ShowMenuBarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowTabBarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowSidebarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowErrorConsoleAction));
-	menu.addSeparator();
-	menu.addAction(m_actionsManager->getAction(Action::LockToolBarsAction));
-	menu.exec(event->globalPos());
-}
-
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	if (SessionsManager::isLastWindow() && !Application::getInstance()->canClose())
@@ -189,6 +179,66 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	application->removeWindow(this);
 
 	event->accept();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
+	{
+		if (m_windowsManager->getWindowCount() > 1)
+		{
+			if (!m_tabSwitcher)
+			{
+				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+			}
+
+			m_tabSwitcher->raise();
+			m_tabSwitcher->resize(size());
+			m_tabSwitcher->show();
+			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
+		}
+		else
+		{
+			m_windowsManager->triggerAction(((event->key() == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction), parentWidget());
+		}
+
+		event->accept();
+	}
+	else
+	{
+		QMainWindow::keyPressEvent(event);
+	}
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Control && m_tabSwitcher && m_tabSwitcher->isVisible())
+	{
+		m_tabSwitcher->accept();
+
+		event->accept();
+	}
+	else
+	{
+		QMainWindow::keyReleaseEvent(event);
+	}
+}
+
+void MainWindow::contextMenuEvent(QContextMenuEvent *event)
+{
+	if (m_tabSwitcher && m_tabSwitcher->isVisible())
+	{
+		return;
+	}
+
+	QMenu menu(this);
+	menu.addAction(m_actionsManager->getAction(Action::ShowMenuBarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowTabBarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowSidebarAction));
+	menu.addAction(m_actionsManager->getAction(Action::ShowErrorConsoleAction));
+	menu.addSeparator();
+	menu.addAction(m_actionsManager->getAction(Action::LockToolBarsAction));
+	menu.exec(event->globalPos());
 }
 
 void MainWindow::optionChanged(const QString &option, const QVariant &value)
@@ -289,7 +339,7 @@ void MainWindow::openUrl(const QString &text)
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
 
-		interpreter->interpret(text, ((m_windowsManager->getWindowCount() == 0 || m_windowsManager->getWindow()->isUrlEmpty()) ? CurrentTabOpen : NewTabOpen));
+		interpreter->interpret(text, ((!m_mdiWidget->getActiveWindow() || m_mdiWidget->getActiveWindow()->isUrlEmpty()) ? CurrentTabOpen : NewTabOpen));
 	}
 }
 
@@ -831,6 +881,11 @@ bool MainWindow::event(QEvent *event)
 			SessionsManager::setActiveWindow(this);
 		case QEvent::Resize:
 			updateSidebars();
+
+			if (m_tabSwitcher && m_tabSwitcher->isVisible())
+			{
+				m_tabSwitcher->resize(size());
+			}
 
 			SessionsManager::markSessionModified();
 

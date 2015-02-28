@@ -99,6 +99,7 @@ SOURCES += src/main.cpp \
     src/ui/StartupDialog.cpp \
     src/ui/TabBarToolBarWidget.cpp \
     src/ui/TabBarWidget.cpp \
+    src/ui/TabSwitcherWidget.cpp \
     src/ui/TextLabelWidget.cpp \
     src/ui/TrayIcon.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
@@ -209,6 +210,7 @@ HEADERS += src/core/Action.h \
     src/ui/StartupDialog.h \
     src/ui/TabBarToolBarWidget.h \
     src/ui/TabBarWidget.h \
+    src/ui/TabSwitcherWidget.h \
     src/ui/TextLabelWidget.h \
     src/ui/TrayIcon.h \
     src/ui/UserAgentsManagerDialog.h \
