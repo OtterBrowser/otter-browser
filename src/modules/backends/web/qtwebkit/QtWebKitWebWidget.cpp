@@ -2532,31 +2532,38 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 
-				if (mouseEvent->modifiers() != Qt::NoModifier || mouseEvent->button() == Qt::MiddleButton)
+				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+
+				if (m_hitResult.linkUrl().isValid())
 				{
-					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-					if (m_hitResult.linkUrl().isValid())
+					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::NoModifier)
 					{
-						openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
-
-						event->accept();
-
-						return true;
-					}
-
-					if (mouseEvent->button() == Qt::MiddleButton)
-					{
-						m_hitResult = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(QCursor::pos()));
-
-						const QString tagName = m_hitResult.element().tagName().toLower();
-
-						if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+						if (!m_hitResult.linkUrl().fragment().isEmpty() && m_hitResult.linkUrl().matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 						{
-							triggerAction(Action::StartMoveScrollAction);
+							m_webView->page()->mainFrame()->scrollToAnchor(m_hitResult.linkUrl().fragment());
 
 							return true;
 						}
+
+						return false;
+					}
+
+					openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
+
+					event->accept();
+
+					return true;
+				}
+
+				if (mouseEvent->button() == Qt::MiddleButton)
+				{
+					const QString tagName = m_hitResult.element().tagName().toLower();
+
+					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
+					{
+						triggerAction(Action::StartMoveScrollAction);
+
+						return true;
 					}
 				}
 			}
