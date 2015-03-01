@@ -55,6 +55,7 @@ private:
 	QFrame *m_frame;
 	QListView *m_tabsView;
 	QLabel *m_previewLabel;
+	QMovie *m_loadingMovie;
 };
 
 }

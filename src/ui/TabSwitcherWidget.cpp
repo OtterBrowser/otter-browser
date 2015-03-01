@@ -22,6 +22,7 @@
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
+#include <QtGui/QMovie>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 
@@ -33,7 +34,8 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_model(new QStandardItemModel(this)),
 	m_frame(new QFrame(this)),
 	m_tabsView(new QListView(m_frame)),
-	m_previewLabel(new QLabel(m_frame))
+	m_previewLabel(new QLabel(m_frame)),
+	m_loadingMovie(NULL)
 {
 	QHBoxLayout *mainLayout = new QHBoxLayout(this);
 	mainLayout->addWidget(m_frame, 0, Qt::AlignCenter);
@@ -127,7 +129,32 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 {
 	Window *window = m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toLongLong());
 
-	m_previewLabel->setPixmap(window ? window->getThumbnail() : QPixmap());
+	if (window)
+	{
+		if (window->getLoadingState() == LoadedState)
+		{
+			m_previewLabel->setMovie(NULL);
+			m_previewLabel->setPixmap(window->getThumbnail());
+		}
+		else
+		{
+			if (!m_loadingMovie)
+			{
+				m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), m_previewLabel);
+				m_loadingMovie->start();
+			}
+
+			m_previewLabel->setPixmap(QPixmap());
+			m_previewLabel->setMovie(m_loadingMovie);
+
+			m_loadingMovie->setSpeed((window->getLoadingState() == LoadingState) ? 100 : 10);
+		}
+	}
+	else
+	{
+		m_previewLabel->setMovie(NULL);
+		m_previewLabel->setPixmap(QPixmap());
+	}
 }
 
 void TabSwitcherWidget::accept()
