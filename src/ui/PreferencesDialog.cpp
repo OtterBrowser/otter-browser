@@ -1052,6 +1052,7 @@ void PreferencesDialog::cloneKeyboardProfile()
 	}
 
 	m_shortcutsProfiles[identifier] = (m_shortcutsProfiles.contains(profile) ? m_shortcutsProfiles[profile] : ShortcutsProfile());
+	m_shortcutsProfiles[identifier].path = QString();
 	m_shortcutsProfiles[identifier].isModified = true;
 
 	QList<QStandardItem*> items;
