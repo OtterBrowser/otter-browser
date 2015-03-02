@@ -157,6 +157,7 @@ public:
 		InspectElementAction,
 		WorkOfflineAction,
 		FullScreenAction,
+		ShowTabSwitcherAction,
 		ShowMenuBarAction,
 		ShowTabBarAction,
 		ShowSidebarAction,

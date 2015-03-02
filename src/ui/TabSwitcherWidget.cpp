@@ -35,7 +35,8 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_frame(new QFrame(this)),
 	m_tabsView(new QListView(m_frame)),
 	m_previewLabel(new QLabel(m_frame)),
-	m_loadingMovie(NULL)
+	m_loadingMovie(NULL),
+	m_triggeredByAction(false)
 {
 	QHBoxLayout *mainLayout = new QHBoxLayout(this);
 	mainLayout->addWidget(m_frame, 0, Qt::AlignCenter);
@@ -101,13 +102,17 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 
 void TabSwitcherWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Tab)
+	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Down)
 	{
 		selectTab(true);
 	}
-	else if (event->key() == Qt::Key_Backtab)
+	else if (event->key() == Qt::Key_Backtab || event->key() == Qt::Key_Up)
 	{
 		selectTab(false);
+	}
+	else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	{
+		accept();
 	}
 	else if (event->key() == Qt::Key_Escape)
 	{
@@ -117,7 +122,7 @@ void TabSwitcherWidget::keyPressEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Control)
+	if (event->key() == Qt::Key_Control && !m_triggeredByAction)
 	{
 		accept();
 
@@ -155,6 +160,13 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 		m_previewLabel->setMovie(NULL);
 		m_previewLabel->setPixmap(QPixmap());
 	}
+}
+
+void TabSwitcherWidget::show(bool triggeredByAction)
+{
+	m_triggeredByAction = triggeredByAction;
+
+	QWidget::show();
 }
 
 void TabSwitcherWidget::accept()

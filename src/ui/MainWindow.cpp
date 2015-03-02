@@ -194,7 +194,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 			m_tabSwitcher->raise();
 			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show();
+			m_tabSwitcher->show(false);
 			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
 		}
 		else
@@ -207,20 +207,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 	else
 	{
 		QMainWindow::keyPressEvent(event);
-	}
-}
-
-void MainWindow::keyReleaseEvent(QKeyEvent *event)
-{
-	if (event->key() == Qt::Key_Control && m_tabSwitcher && m_tabSwitcher->isVisible())
-	{
-		m_tabSwitcher->accept();
-
-		event->accept();
-	}
-	else
-	{
-		QMainWindow::keyReleaseEvent(event);
 	}
 }
 
@@ -495,6 +481,17 @@ void MainWindow::triggerAction(int identifier, bool checked)
 				storeWindowState();
 				showFullScreen();
 			}
+
+			break;
+		case Action::ShowTabSwitcherAction:
+			if (!m_tabSwitcher)
+			{
+				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+			}
+
+			m_tabSwitcher->raise();
+			m_tabSwitcher->resize(size());
+			m_tabSwitcher->show(true);
 
 			break;
 		case Action::ShowMenuBarAction:

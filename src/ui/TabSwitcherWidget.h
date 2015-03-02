@@ -37,6 +37,7 @@ class TabSwitcherWidget : public QWidget
 public:
 	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = NULL);
 
+	void show(bool triggeredByAction);
 	void accept();
 	void selectTab(bool next);
 
@@ -56,6 +57,7 @@ private:
 	QListView *m_tabsView;
 	QLabel *m_previewLabel;
 	QMovie *m_loadingMovie;
+	bool m_triggeredByAction;
 };
 
 }

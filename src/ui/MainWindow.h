@@ -70,7 +70,6 @@ public slots:
 protected:
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *event);
-	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void createMenuBar();
 	void createToggleEdge();
