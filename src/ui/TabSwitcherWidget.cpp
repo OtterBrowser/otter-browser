@@ -45,11 +45,12 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	setAutoFillBackground(false);
 
 	QHBoxLayout *frameLayout = new QHBoxLayout(m_frame);
-	frameLayout->addWidget(m_tabsView);
+	frameLayout->addWidget(m_tabsView, 1);
 	frameLayout->addWidget(m_previewLabel, 0, Qt::AlignCenter);
 
 	m_frame->setLayout(frameLayout);
 	m_frame->setAutoFillBackground(true);
+	m_frame->setMinimumWidth(600);
 	m_frame->setObjectName(QLatin1String("tabSwitcher"));
 	m_frame->setStyleSheet(QStringLiteral("#tabSwitcher {background:%1;border:1px solid #B3B3B3;border-radius:4px;}").arg(palette().color(QPalette::Base).name()));
 
@@ -88,6 +89,10 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 	m_model->sort(1, Qt::DescendingOrder);
 
 	m_tabsView->setCurrentIndex(m_model->index(0, 0));
+
+	const int contentsHeight = (m_model->rowCount() * 22);
+
+	m_tabsView->setMinimumHeight(qMin(contentsHeight, int(height() * 0.9)));
 
 	QWidget::showEvent(event);
 }
