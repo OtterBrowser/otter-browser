@@ -91,6 +91,7 @@ private:
 	bool m_showUrlIcon;
 	bool m_enablePreviews;
 	bool m_isMoved;
+	int m_minTabWidth;
 
 signals:
 	void requestedClone(int index);
