@@ -449,7 +449,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
 
-	emit windowAdded(index);
+	emit windowAdded(window->getIdentifier());
 }
 
 void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
@@ -512,7 +512,7 @@ void WindowsManager::detachWindow(int index)
 			closePrivateTabsAction->setEnabled(false);
 		}
 
-		emit windowRemoved(index);
+		emit windowRemoved(window->getIdentifier());
 	}
 }
 
@@ -616,7 +616,7 @@ void WindowsManager::closeWindow(Window *window)
 		closePrivateTabsAction->setEnabled(false);
 	}
 
-	emit windowRemoved(index);
+	emit windowRemoved(window->getIdentifier());
 
 	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction != QLatin1String("doNothing"))
 	{

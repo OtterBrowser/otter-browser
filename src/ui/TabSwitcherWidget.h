@@ -49,6 +49,8 @@ protected:
 
 protected slots:
 	void currentTabChanged(const QModelIndex &index);
+	void tabAdded(qint64 identifier);
+	void tabRemoved(qint64 identifier);
 
 private:
 	WindowsManager *m_windowsManager;

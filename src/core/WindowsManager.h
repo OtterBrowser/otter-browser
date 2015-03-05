@@ -124,8 +124,8 @@ signals:
 	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
-	void windowAdded(int index);
-	void windowRemoved(int index);
+	void windowAdded(qint64 identifier);
+	void windowRemoved(qint64 identifier);
 	void currentWindowChanged(int index);
 	void windowTitleChanged(QString title);
 	void closedWindowsAvailableChanged(bool available);

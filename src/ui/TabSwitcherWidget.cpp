@@ -95,6 +95,9 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 	m_tabsView->setMinimumHeight(qMin(contentsHeight, int(height() * 0.9)));
 
 	QWidget::showEvent(event);
+
+	connect(m_windowsManager, SIGNAL(windowAdded(qint64)), this, SLOT(tabAdded(qint64)));
+	connect(m_windowsManager, SIGNAL(windowRemoved(qint64)), this, SLOT(tabRemoved(qint64)));
 }
 
 void TabSwitcherWidget::hideEvent(QHideEvent *event)
@@ -102,6 +105,9 @@ void TabSwitcherWidget::hideEvent(QHideEvent *event)
 	releaseKeyboard();
 
 	QWidget::hideEvent(event);
+
+	disconnect(m_windowsManager, SIGNAL(windowAdded(qint64)), this, SLOT(tabAdded(qint64)));
+	disconnect(m_windowsManager, SIGNAL(windowRemoved(qint64)), this, SLOT(tabRemoved(qint64)));
 
 	m_model->clear();
 }
@@ -165,6 +171,34 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 	{
 		m_previewLabel->setMovie(NULL);
 		m_previewLabel->setPixmap(QPixmap());
+	}
+}
+
+void TabSwitcherWidget::tabAdded(qint64 identifier)
+{
+	Window *window = m_windowsManager->getWindowByIdentifier(identifier);
+
+	if (window)
+	{
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(window->getIcon(), window->getTitle()));
+		items.append(new QStandardItem(window->getLastActivity().toString()));
+		items[0]->setData(identifier, Qt::UserRole);
+
+		m_model->insertRow(0, items);
+	}
+}
+
+void TabSwitcherWidget::tabRemoved(qint64 identifier)
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		if (m_model->index(i, 0).data(Qt::UserRole).toLongLong() == identifier)
+		{
+			m_model->removeRow(i);
+
+			break;
+		}
 	}
 }
 
