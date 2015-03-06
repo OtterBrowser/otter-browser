@@ -77,12 +77,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 		if (window)
 		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(window->getIcon(), window->getTitle()));
-			items.append(new QStandardItem(window->getLastActivity().toString()));
-			items[0]->setData(window->getIdentifier(), Qt::UserRole);
-
-			m_model->appendRow(items);
+			m_model->appendRow(createRow(window));
 		}
 	}
 
@@ -180,25 +175,17 @@ void TabSwitcherWidget::tabAdded(qint64 identifier)
 
 	if (window)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(window->getIcon(), window->getTitle()));
-		items.append(new QStandardItem(window->getLastActivity().toString()));
-		items[0]->setData(identifier, Qt::UserRole);
-
-		m_model->insertRow(0, items);
+		m_model->insertRow(0, createRow(window));
 	}
 }
 
 void TabSwitcherWidget::tabRemoved(qint64 identifier)
 {
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		if (m_model->index(i, 0).data(Qt::UserRole).toLongLong() == identifier)
-		{
-			m_model->removeRow(i);
+	const int row = findRow(identifier);
 
-			break;
-		}
+	if (row >= 0)
+	{
+		m_model->removeRow(row);
 	}
 }
 
@@ -221,6 +208,62 @@ void TabSwitcherWidget::selectTab(bool next)
 	const int currentRow = m_tabsView->currentIndex().row();
 
 	m_tabsView->setCurrentIndex(m_model->index((next ? ((currentRow == (m_model->rowCount() - 1)) ? 0 : (currentRow + 1)) : ((currentRow == 0) ? (m_model->rowCount() - 1) : (currentRow - 1))), 0));
+}
+
+void TabSwitcherWidget::setTitle(const QString &title)
+{
+	Window *window = qobject_cast<Window*>(sender());
+
+	if (window)
+	{
+		const int row = findRow(window->getIdentifier());
+
+		if (row >= 0)
+		{
+			m_model->setData(m_model->index(row, 0), title, Qt::DisplayRole);
+		}
+	}
+}
+
+void TabSwitcherWidget::setIcon(const QIcon &icon)
+{
+	Window *window = qobject_cast<Window*>(sender());
+
+	if (window)
+	{
+		const int row = findRow(window->getIdentifier());
+
+		if (row >= 0)
+		{
+			m_model->setData(m_model->index(row, 0), icon, Qt::DecorationRole);
+		}
+	}
+}
+
+QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
+{
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(window->getIcon(), window->getTitle()));
+	items.append(new QStandardItem(window->getLastActivity().toString()));
+	items[0]->setData(window->getIdentifier(), Qt::UserRole);
+
+	connect(window, SIGNAL(setTitle(QString)), this, SLOT(setTitle(QString)));
+	connect(window, SIGNAL(setIcon(QIcon)), this, SLOT(setIcon(QIcon)));
+
+	return items;
+}
+
+int TabSwitcherWidget::findRow(qint64 identifier) const
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		if (m_model->index(i, 0).data(Qt::UserRole).toLongLong() == identifier)
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 }

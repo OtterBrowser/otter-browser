@@ -28,6 +28,7 @@
 namespace Otter
 {
 
+class Window;
 class WindowsManager;
 
 class TabSwitcherWidget : public QWidget
@@ -46,11 +47,15 @@ protected:
 	void hideEvent(QHideEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void keyReleaseEvent(QKeyEvent *event);
+	QList<QStandardItem*> createRow(Window *window) const;
+	int findRow(qint64 identifier) const;
 
 protected slots:
 	void currentTabChanged(const QModelIndex &index);
 	void tabAdded(qint64 identifier);
 	void tabRemoved(qint64 identifier);
+	void setTitle(const QString &title);
+	void setIcon(const QIcon &icon);
 
 private:
 	WindowsManager *m_windowsManager;
