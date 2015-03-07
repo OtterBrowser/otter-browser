@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -74,20 +74,22 @@ public:
 	QList<SessionWindow> getClosedWindows() const;
 	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
 	int getWindowCount(bool onlyPrivate = false) const;
+	int getWindowIndex(qint64 identifier) const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool isPrivate() const;
 	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:
+	void triggerAction(int identifier, bool checked = false);
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
+	void closeWindow(int index);
 	void closeAll();
 	void closeOther(int index = -1);
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
-	void triggerAction(int identifier, bool checked = false);
 	void clearClosedWindows();
 	void setActiveWindowByIndex(int index);
 	void setActiveWindowByIdentifier(qint64 identifier);
@@ -97,7 +99,6 @@ public slots:
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
 	void gatherBookmarks(QStandardItem *branch);
-	int getWindowIndex(Window *window) const;
 	bool event(QEvent *event);
 
 protected slots:
@@ -106,7 +107,6 @@ protected slots:
 	void cloneWindow(int index);
 	void detachWindow(int index);
 	void pinWindow(int index, bool pin);
-	void closeWindow(int index);
 	void closeWindow(Window *window);
 	void removeStoredUrl(const QString &url);
 	void setTitle(const QString &title);

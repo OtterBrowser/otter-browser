@@ -41,6 +41,7 @@ public:
 	void show(bool triggeredByAction);
 	void accept();
 	void selectTab(bool next);
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
 	void showEvent(QShowEvent *event);

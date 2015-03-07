@@ -59,6 +59,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_tabsView->setGridSize(QSize(200, 22));
 	m_tabsView->setIconSize(QSize(22, 22));
 	m_tabsView->setStyleSheet(QLatin1String("border:0;"));
+	m_tabsView->viewport()->installEventFilter(this);
 
 	m_previewLabel->setFixedSize(260, 170);
 	m_previewLabel->setAlignment(Qt::AlignCenter);
@@ -247,8 +248,8 @@ QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
 	items.append(new QStandardItem(window->getLastActivity().toString()));
 	items[0]->setData(window->getIdentifier(), Qt::UserRole);
 
-	connect(window, SIGNAL(setTitle(QString)), this, SLOT(setTitle(QString)));
-	connect(window, SIGNAL(setIcon(QIcon)), this, SLOT(setIcon(QIcon)));
+	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
+	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 
 	return items;
 }
@@ -264,6 +265,28 @@ int TabSwitcherWidget::findRow(qint64 identifier) const
 	}
 
 	return -1;
+}
+
+bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_tabsView->viewport() && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton)
+		{
+			const int index = m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toLongLong());
+
+			if (index >= 0)
+			{
+				m_windowsManager->closeWindow(index);
+			}
+
+			return true;
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }

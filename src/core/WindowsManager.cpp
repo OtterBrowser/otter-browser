@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,79 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 	m_isPrivate(isPrivate),
 	m_isRestored(false)
 {
+}
+
+void WindowsManager::triggerAction(int identifier, bool checked)
+{
+	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+
+	switch (identifier)
+	{
+		case Action::CloneTabAction:
+			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
+
+			break;
+		case Action::PinTabAction:
+			{
+				const int index = m_mainWindow->getTabBar()->currentIndex();
+
+				pinWindow(index, !m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool());
+			}
+
+			break;
+		case Action::DetachTabAction:
+			if (m_mainWindow->getTabBar()->count() > 1)
+			{
+				detachWindow(m_mainWindow->getTabBar()->currentIndex());
+			}
+
+			break;
+		case Action::CloseTabAction:
+			closeWindow(m_mainWindow->getTabBar()->currentIndex());
+
+			break;
+		case Action::CloseOtherTabsAction:
+			closeOther(m_mainWindow->getTabBar()->currentIndex());
+
+			break;
+		case Action::ClosePrivateTabsAction:
+			ActionsManager::getAction(Action::ClosePrivateTabsAction, this)->setEnabled(false);
+
+			for (int i = (m_mainWindow->getTabBar()->count() - 1); i > 0; --i)
+			{
+				if (getWindowByIndex(i)->isPrivate())
+				{
+					closeWindow(i);
+				}
+			}
+
+			break;
+		case Action::ReopenTabAction:
+			restore();
+
+			break;
+		case Action::ActivateTabOnLeftAction:
+			m_mainWindow->getTabBar()->activateTabOnLeft();
+
+			break;
+		case Action::ActivateTabOnRightAction:
+			m_mainWindow->getTabBar()->activateTabOnRight();
+
+			break;
+		default:
+			if (identifier == Action::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+			{
+				window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
+
+				addWindow(window, NewTabOpen);
+
+				window->triggerAction(Action::PasteAndGoAction);
+			}
+			else if (window)
+			{
+				window->triggerAction(identifier, checked);
+			}
+	}
 }
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
@@ -318,79 +391,6 @@ void WindowsManager::restore(int index)
 	addWindow(window);
 }
 
-void WindowsManager::triggerAction(int identifier, bool checked)
-{
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
-
-	switch (identifier)
-	{
-		case Action::CloneTabAction:
-			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
-
-			break;
-		case Action::PinTabAction:
-			{
-				const int index = m_mainWindow->getTabBar()->currentIndex();
-
-				pinWindow(index, !m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool());
-			}
-
-			break;
-		case Action::DetachTabAction:
-			if (m_mainWindow->getTabBar()->count() > 1)
-			{
-				detachWindow(m_mainWindow->getTabBar()->currentIndex());
-			}
-
-			break;
-		case Action::CloseTabAction:
-			closeWindow(m_mainWindow->getTabBar()->currentIndex());
-
-			break;
-		case Action::CloseOtherTabsAction:
-			closeOther(m_mainWindow->getTabBar()->currentIndex());
-
-			break;
-		case Action::ClosePrivateTabsAction:
-			ActionsManager::getAction(Action::ClosePrivateTabsAction, this)->setEnabled(false);
-
-			for (int i = (m_mainWindow->getTabBar()->count() - 1); i > 0; --i)
-			{
-				if (getWindowByIndex(i)->isPrivate())
-				{
-					closeWindow(i);
-				}
-			}
-
-			break;
-		case Action::ReopenTabAction:
-			restore();
-
-			break;
-		case Action::ActivateTabOnLeftAction:
-			m_mainWindow->getTabBar()->activateTabOnLeft();
-
-			break;
-		case Action::ActivateTabOnRightAction:
-			m_mainWindow->getTabBar()->activateTabOnRight();
-
-			break;
-		default:
-			if (identifier == Action::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
-			{
-				window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
-
-				addWindow(window, NewTabOpen);
-
-				window->triggerAction(Action::PasteAndGoAction);
-			}
-			else if (window)
-			{
-				window->triggerAction(identifier, checked);
-			}
-	}
-}
-
 void WindowsManager::clearClosedWindows()
 {
 	m_closedWindows.clear();
@@ -551,7 +551,7 @@ void WindowsManager::closeWindow(int index)
 
 void WindowsManager::closeWindow(Window *window)
 {
-	const int index = getWindowIndex(window);
+	const int index = getWindowIndex(window->getIdentifier());
 
 	if (index < 0)
 	{
@@ -732,7 +732,14 @@ void WindowsManager::setActiveWindowByIdentifier(qint64 identifier)
 void WindowsManager::setTitle(const QString &title)
 {
 	const QString text = (title.isEmpty() ? tr("Empty") : title);
-	const int index = getWindowIndex(qobject_cast<Window*>(sender()));
+	Window *window = qobject_cast<Window*>(sender());
+
+	if (!window)
+	{
+		return;
+	}
+
+	const int index = getWindowIndex(window->getIdentifier());
 
 	if (!m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
@@ -864,19 +871,6 @@ OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt
 	return (useNewTab ? NewTabOpen : NewWindowOpen);
 }
 
-int WindowsManager::getWindowIndex(Window *window) const
-{
-	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
-	{
-		if (window == qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(i)))
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
-
 int WindowsManager::getWindowCount(bool onlyPrivate) const
 {
 	if (!onlyPrivate || isPrivate())
@@ -895,6 +889,21 @@ int WindowsManager::getWindowCount(bool onlyPrivate) const
 	}
 
 	return amount;
+}
+
+int WindowsManager::getWindowIndex(qint64 identifier) const
+{
+	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+	{
+		Window *window = qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(i));
+
+		if (window && identifier == window->getIdentifier())
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 int WindowsManager::getZoom() const
