@@ -85,9 +85,9 @@ public slots:
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
-	void closeWindow(int index);
-	void closeAll();
+	void close(int index);
 	void closeOther(int index = -1);
+	void closeAll();
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
 	void clearClosedWindows();
@@ -107,8 +107,8 @@ protected slots:
 	void cloneWindow(int index);
 	void detachWindow(int index);
 	void pinWindow(int index, bool pin);
-	void closeWindow(Window *window);
 	void removeStoredUrl(const QString &url);
+	void handleWindowClose(Window *window);
 	void setTitle(const QString &title);
 	void setStatusMessage(const QString &message);
 

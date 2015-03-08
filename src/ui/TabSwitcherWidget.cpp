@@ -279,7 +279,7 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (index >= 0)
 			{
-				m_windowsManager->closeWindow(index);
+				m_windowsManager->close(index);
 			}
 
 			return true;

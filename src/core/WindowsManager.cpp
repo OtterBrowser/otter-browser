@@ -68,7 +68,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::CloseTabAction:
-			closeWindow(m_mainWindow->getTabBar()->currentIndex());
+			close(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
 		case Action::CloseOtherTabsAction:
@@ -82,7 +82,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			{
 				if (getWindowByIndex(i)->isPrivate())
 				{
-					closeWindow(i);
+					close(i);
 				}
 			}
 
@@ -152,7 +152,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 		}
 		else
 		{
-			closeWindow(m_mainWindow->getTabBar()->currentIndex());
+			close(m_mainWindow->getTabBar()->currentIndex());
 			openTab(url, hints);
 		}
 	}
@@ -305,16 +305,18 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 	}
 }
 
-void WindowsManager::closeAll()
+void WindowsManager::close(int index)
 {
-	for (int i = (m_mainWindow->getTabBar()->count() - 1); i >= 0; --i)
+	if (index < 0 || index >= m_mainWindow->getTabBar()->count() || m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
-		Window *window = getWindowByIndex(i);
+		return;
+	}
 
-		if (window)
-		{
-			window->close();
-		}
+	Window *window = getWindowByIndex(index);
+
+	if (window)
+	{
+		window->close();
 	}
 }
 
@@ -332,12 +334,20 @@ void WindowsManager::closeOther(int index)
 
 	for (int i = (m_mainWindow->getTabBar()->count() - 1); i > index; --i)
 	{
-		closeWindow(i);
+		close(i);
 	}
 
 	for (int i = (index - 1); i >= 0; --i)
 	{
-		closeWindow(i);
+		close(i);
+	}
+}
+
+void WindowsManager::closeAll()
+{
+	for (int i = (m_mainWindow->getTabBar()->count() - 1); i >= 0; --i)
+	{
+		close(i);
 	}
 }
 
@@ -365,7 +375,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClose(int)), this, SLOT(closeWindow(int)));
+	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClose(int)), this, SLOT(close(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
 	setActiveWindowByIndex(session.index);
@@ -447,7 +457,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 	connect(window, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(search(QString,QString,OpenHints)));
 	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
-	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(closeWindow(Window*)));
+	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));
 
 	emit windowAdded(window->getIdentifier());
 }
@@ -534,22 +544,25 @@ void WindowsManager::pinWindow(int index, bool pin)
 	m_mainWindow->getTabBar()->moveTab(index, offset);
 }
 
-void WindowsManager::closeWindow(int index)
+void WindowsManager::removeStoredUrl(const QString &url)
 {
-	if (index < 0 || index >= m_mainWindow->getTabBar()->count() || m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
+	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
 	{
-		return;
+		if (url == m_closedWindows.at(i).getUrl())
+		{
+			m_closedWindows.removeAt(i);
+
+			break;
+		}
 	}
 
-	Window *window = getWindowByIndex(index);
-
-	if (window)
+	if (m_closedWindows.isEmpty())
 	{
-		window->close();
+		emit closedWindowsAvailableChanged(false);
 	}
 }
 
-void WindowsManager::closeWindow(Window *window)
+void WindowsManager::handleWindowClose(Window *window)
 {
 	const int index = getWindowIndex(window->getIdentifier());
 
@@ -621,24 +634,6 @@ void WindowsManager::closeWindow(Window *window)
 	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction != QLatin1String("doNothing"))
 	{
 		open();
-	}
-}
-
-void WindowsManager::removeStoredUrl(const QString &url)
-{
-	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
-	{
-		if (url == m_closedWindows.at(i).getUrl())
-		{
-			m_closedWindows.removeAt(i);
-
-			break;
-		}
-	}
-
-	if (m_closedWindows.isEmpty())
-	{
-		emit closedWindowsAvailableChanged(false);
 	}
 }
 
