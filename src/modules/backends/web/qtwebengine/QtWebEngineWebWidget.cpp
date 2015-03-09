@@ -1226,7 +1226,7 @@ void QtWebEngineWebWidget::updateEditActions()
 
 	if (m_actions.contains(Action::PasteAndGoAction))
 	{
-		m_actions[Action::PasteAndGoAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled());
+		m_actions[Action::PasteAndGoAction]->setEnabled(!QApplication::clipboard()->text().isEmpty());
 	}
 
 	if (m_actions.contains(Action::DeleteAction))
