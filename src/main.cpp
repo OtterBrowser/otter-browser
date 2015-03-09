@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), NULL, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || !SessionsManager::getSession(session).clean)
+	else if (startupBehavior == QLatin1String("showDialog") || parser->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).clean)
 	{
 		StartupDialog dialog(session);
 
