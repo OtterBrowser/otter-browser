@@ -161,6 +161,8 @@ public:
 		ShowMenuBarAction,
 		ShowTabBarAction,
 		ShowSidebarAction,
+		OpenPanelAction,
+		ClosePanelAction,
 		ShowErrorConsoleAction,
 		LockToolBarsAction,
 		ContentBlockingAction,

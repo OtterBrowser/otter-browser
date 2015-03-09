@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ public:
 	~SidebarWidget();
 
 	void changeEvent(QEvent *event);
-	void openPanel(const QString &identifier);
+	void openPanel();
+	void selectPanel(const QString &identifier);
 	void setButtonsEdge(Qt::Edge);
 	QSize sizeHint() const;
 
@@ -54,9 +55,9 @@ protected:
 protected slots:
 	void addWebPanel();
 	void choosePanel(bool checked);
-	void openPanel();
 	void openUrl(const QUrl &url, OpenHints);
 	void optionChanged(const QString &option, const QVariant &value);
+	void selectPanel();
 
 private:
 	QWidget *m_currentWidget;

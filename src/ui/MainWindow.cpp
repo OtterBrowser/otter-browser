@@ -533,6 +533,16 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), checked);
 
 			break;
+		case Action::OpenPanelAction:
+			createSidebar();
+
+			m_sidebarWidget->openPanel();
+
+			break;
+		case Action::ClosePanelAction:
+			SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), QString());
+
+			break;
 		case Action::ShowErrorConsoleAction:
 			m_ui->consoleDockWidget->setVisible(checked);
 
@@ -678,7 +688,7 @@ void MainWindow::transferStarted()
 		createSidebar();
 
 		m_sidebarWidget->setVisible(true);
-		m_sidebarWidget->openPanel(QLatin1String("transfers"));
+		m_sidebarWidget->selectPanel(QLatin1String("transfers"));
 	}
 }
 
@@ -711,7 +721,6 @@ void MainWindow::placeSidebars()
 	if (m_sidebarWidget)
 	{
 		m_sidebarWidget->setButtonsEdge(SettingsManager::getValue(QString("Sidebar/Reverse")).toBool() ? Qt::RightEdge : Qt::LeftEdge);
-
 		m_sidebarWidget->setVisible(SettingsManager::getValue("Sidebar/Visible").toBool());
 	}
 

@@ -19,6 +19,7 @@
 
 #include "SidebarWidget.h"
 #include "MainWindow.h"
+#include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
@@ -33,6 +34,7 @@
 
 #include <QtGui/QIcon>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QToolBar>
 
 namespace Otter
 {
@@ -42,6 +44,18 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
+
+	QToolBar *toolbar = new QToolBar(this);
+	toolbar->setIconSize(QSize(16, 16));
+	toolbar->addAction(ActionsManager::getAction(Action::OpenPanelAction, this));
+
+	QWidget* spacer = new QWidget(toolbar);
+	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	toolbar->addWidget(spacer);
+
+	toolbar->addAction(ActionsManager::getAction(Action::ClosePanelAction, this));
+
+	m_ui->panelLayout->addWidget(toolbar);
 
 	m_ui->panelsChooseButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsChooseButton->setIcon(Utils::getIcon(QLatin1String("configure")));
@@ -94,7 +108,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Sidebar/CurrentPanel"))
 	{
-		openPanel(value.toString());
+		selectPanel(value.toString());
 	}
 	else if (option == QLatin1String("Sidebar/Panels"))
 	{
@@ -158,94 +172,12 @@ void SidebarWidget::choosePanel(bool checked)
 
 void SidebarWidget::openPanel()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	const QUrl url(m_currentPanel.startsWith(QLatin1String("web:")) ? m_currentPanel.section(QLatin1Char(':'), 1, -1) : (QLatin1String("about:") + m_currentPanel));
 
-	if (action)
+	if (url.scheme() != QLatin1String("about") || !SessionsManager::hasUrl(url, true))
 	{
-		SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), ((action->data().toString() == m_currentPanel) ? QString() : action->data().toString()));
+		openUrl(url, NewTabOpen);
 	}
-}
-
-void SidebarWidget::openPanel(const QString &identifier)
-{
-	QWidget *widget = NULL;
-
-	if (identifier.isEmpty())
-	{
-		widget = NULL;
-	}
-	else if (identifier == QLatin1String("bookmarks"))
-	{
-		widget = new BookmarksContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("cache"))
-	{
-		widget = new CacheContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("config"))
-	{
-		widget = new ConfigurationContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("cookies"))
-	{
-		widget = new CookiesContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("history"))
-	{
-		widget = new HistoryContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("transfers"))
-	{
-		widget = new TransfersContentsWidget(NULL);
-	}
-	else if (identifier.startsWith(QLatin1String("web:")))
-	{
-		WebContentsWidget *webWidget = new WebContentsWidget(true, NULL, NULL);
-		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
-
-		widget = webWidget;
-	}
-
-	if (qobject_cast<ContentsWidget*>(widget))
-	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
-	}
-
-	if (m_currentWidget)
-	{
-		QWidget *currentWidget = m_currentWidget;
-
-		m_currentWidget = NULL;
-
-		layout()->removeWidget(currentWidget);
-
-		currentWidget->deleteLater();
-	}
-
-	if (m_buttons.contains(m_currentPanel) && m_buttons[m_currentPanel])
-	{
-		m_buttons[m_currentPanel]->setChecked(false);
-	}
-
-	if (widget)
-	{
-		layout()->addWidget(widget);
-
-		if (m_buttons.contains(identifier) && m_buttons[identifier])
-		{
-			m_buttons[identifier]->setChecked(true);
-		}
-
-		setMinimumWidth(0);
-		setMaximumWidth(QWIDGETSIZE_MAX);
-	}
-	else
-	{
-		setFixedWidth(m_ui->buttonsLayout->sizeHint().width());
-	}
-
-	m_currentPanel = identifier;
-	m_currentWidget = widget;
 }
 
 void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
@@ -306,12 +238,14 @@ void SidebarWidget::registerPanel(const QString &identifier)
 	m_buttons.insert(identifier, button);
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
-	connect(action, SIGNAL(triggered()), this, SLOT(openPanel()));
+	connect(action, SIGNAL(triggered()), this, SLOT(selectPanel()));
 }
 
 void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 {
 	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ?  QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+
+	ActionsManager::getAction(Action::OpenPanelAction, this)->setIcon(Utils::getIcon((edge == Qt::RightEdge) ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
 }
 
 void SidebarWidget::updatePanelsMenu()
@@ -367,6 +301,107 @@ void SidebarWidget::updatePanelsMenu()
 	}
 
 	m_ui->panelsChooseButton->setMenu(menu);
+}
+
+void SidebarWidget::selectPanel()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		selectPanel((action->data().toString() == m_currentPanel) ? QString() : action->data().toString());
+	}
+}
+
+void SidebarWidget::selectPanel(const QString &identifier)
+{
+	if (identifier == m_currentPanel && !identifier.isEmpty())
+	{
+		return;
+	}
+
+	QWidget *widget = NULL;
+
+	if (identifier.isEmpty())
+	{
+		widget = NULL;
+	}
+	else if (identifier == QLatin1String("bookmarks"))
+	{
+		widget = new BookmarksContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("cache"))
+	{
+		widget = new CacheContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("config"))
+	{
+		widget = new ConfigurationContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("cookies"))
+	{
+		widget = new CookiesContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("history"))
+	{
+		widget = new HistoryContentsWidget(NULL);
+	}
+	else if (identifier == QLatin1String("transfers"))
+	{
+		widget = new TransfersContentsWidget(NULL);
+	}
+	else if (identifier.startsWith(QLatin1String("web:")))
+	{
+		WebContentsWidget *webWidget = new WebContentsWidget(true, NULL, NULL);
+		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
+
+		widget = webWidget;
+	}
+
+	if (qobject_cast<ContentsWidget*>(widget))
+	{
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
+	}
+
+	if (m_currentWidget)
+	{
+		QWidget *currentWidget = m_currentWidget;
+
+		m_currentWidget = NULL;
+
+		m_ui->panelLayout->removeWidget(currentWidget);
+
+		currentWidget->deleteLater();
+	}
+
+	if (m_buttons.contains(m_currentPanel) && m_buttons[m_currentPanel])
+	{
+		m_buttons[m_currentPanel]->setChecked(false);
+	}
+
+	if (widget)
+	{
+		m_ui->panelLayout->addWidget(widget);
+
+		if (m_buttons.contains(identifier) && m_buttons[identifier])
+		{
+			m_buttons[identifier]->setChecked(true);
+		}
+
+		setMinimumWidth(0);
+		setMaximumWidth(QWIDGETSIZE_MAX);
+	}
+	else
+	{
+		setFixedWidth(m_ui->buttonsLayout->sizeHint().width());
+	}
+
+	m_ui->containerWidget->setVisible(widget != NULL);
+
+	m_currentPanel = identifier;
+	m_currentWidget = widget;
+
+	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
 }
 
 QSize SidebarWidget::sizeHint() const

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -191,6 +191,8 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
+	registerAction(Action::OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), Utils::getIcon(QLatin1String("arrow-right")), true, false, false);
+	registerAction(Action::ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), Utils::getIcon(QLatin1String("window-close")), true, false, false);
 	registerAction(Action::ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Error Console"), QString(), QIcon(), true, true, false);
 	registerAction(Action::LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), true, true, false);
 	registerAction(Action::ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking..."));
