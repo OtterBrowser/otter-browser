@@ -420,7 +420,7 @@ QCommandLineParser* Application::createCommandLineParser() const
 	QCommandLineParser *parser = new QCommandLineParser();
 	parser->addHelpOption();
 	parser->addVersionOption();
-	parser->addPositionalArgument("url", QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
+	parser->addPositionalArgument(QLatin1String("url"), QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
 	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
 	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
 	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));

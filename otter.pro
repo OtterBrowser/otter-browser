@@ -66,6 +66,7 @@ SOURCES += src/main.cpp \
     src/core/WebBackend.cpp \
     src/core/WindowsManager.cpp \
     src/ui/ActionWidget.cpp \
+    src/ui/AddressDelegate.cpp \
     src/ui/AddressWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
@@ -177,6 +178,7 @@ HEADERS += src/core/Action.h \
     src/core/WebBackend.h \
     src/core/WindowsManager.h \
     src/ui/ActionWidget.h \
+    src/ui/AddressDelegate.h \
     src/ui/AddressWidget.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \

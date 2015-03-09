@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TabSwitcherWidget.h"
+#include "AddressDelegate.h"
 #include "Window.h"
 #include "../core/WindowsManager.h"
 
@@ -55,6 +56,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_frame->setStyleSheet(QStringLiteral("#tabSwitcher {background:%1;border:1px solid #B3B3B3;border-radius:4px;}").arg(palette().color(QPalette::Base).name()));
 
 	m_tabsView->setModel(m_model);
+	m_tabsView->setItemDelegate(new AddressDelegate(m_tabsView));
 	m_tabsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	m_tabsView->setGridSize(QSize(200, 22));
 	m_tabsView->setIconSize(QSize(22, 22));

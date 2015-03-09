@@ -114,6 +114,7 @@ set(otter_src
 	src/core/WebBackend.cpp
 	src/core/WindowsManager.cpp
 	src/ui/ActionWidget.cpp
+	src/ui/AddressDelegate.cpp
 	src/ui/AddressWidget.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
