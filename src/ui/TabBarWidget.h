@@ -84,6 +84,7 @@ private:
 	QTabBar::ButtonPosition m_closeButtonPosition;
 	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
+	int m_minimumTabSize;
 	int m_pinnedTabsAmount;
 	int m_clickedTab;
 	int m_hoveredTab;
@@ -91,7 +92,6 @@ private:
 	bool m_showUrlIcon;
 	bool m_enablePreviews;
 	bool m_isMoved;
-	int m_minTabWidth;
 
 signals:
 	void requestedClone(int index);

@@ -44,13 +44,13 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
 	m_tabSize(0),
+	m_minimumTabSize(40),
 	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
 	m_showUrlIcon(true),
 	m_enablePreviews(true),
-	m_minTabWidth(40),
 	m_isMoved(false)
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
@@ -68,7 +68,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
 	optionChanged(QLatin1String("TabBar/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")));
 	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
-	optionChanged(QLatin1String("TabBar/MinTabWidth"), SettingsManager::getValue(QLatin1String("TabBar/MinTabWidth")));
+	optionChanged(QLatin1String("TabBar/MinimumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MinimumTabSize")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
@@ -513,9 +513,9 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_enablePreviews = value.toBool();
 	}
-	else if (option == QLatin1String("TabBar/MinTabWidth"))
+	else if (option == QLatin1String("TabBar/MinimumTabSize"))
 	{
-		m_minTabWidth = value.toInt();
+		m_minimumTabSize = value.toInt();
 	}
 }
 
@@ -755,14 +755,14 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	{
 		if (isHorizontal)
 		{
-			return QSize(m_minTabWidth, QTabBar::tabSizeHint(0).height());
+			return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
 		}
 
-		return QSize(QTabBar::tabSizeHint(0).width(), m_minTabWidth);
+		return QSize(QTabBar::tabSizeHint(0).width(), m_minimumTabSize);
 	}
 
 	const int amount = getPinnedTabsAmount();
-	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(m_minTabWidth, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minTabWidth)) / qMax(1, (count() - amount))), 250));
+	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), 250));
 
 	if (isHorizontal)
 	{
