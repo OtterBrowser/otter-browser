@@ -235,6 +235,13 @@ void SidebarWidget::openPanel(const QString &identifier)
 		{
 			m_buttons[identifier]->setChecked(true);
 		}
+
+		setMinimumWidth(0);
+		setMaximumWidth(QWIDGETSIZE_MAX);
+	}
+	else
+	{
+		setFixedWidth(m_ui->buttonsLayout->sizeHint().width());
 	}
 
 	m_currentPanel = identifier;
@@ -364,13 +371,13 @@ void SidebarWidget::updatePanelsMenu()
 
 QSize SidebarWidget::sizeHint() const
 {
-	if (m_currentWidget)
+	if (SettingsManager::getValue("Sidebar/CurrentPanel").toString().isEmpty())
 	{
-		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
+		return m_ui->buttonsLayout->sizeHint();
 	}
 	else
 	{
-		return m_ui->buttonsLayout->sizeHint();
+		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
 	}
 }
 

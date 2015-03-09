@@ -72,6 +72,7 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void createMenuBar();
+	void createSidebar();
 	void createToggleEdge();
 	void placeSidebars();
 	void updateSidebars();
