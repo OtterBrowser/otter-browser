@@ -19,6 +19,7 @@
 
 #include "SidebarWidget.h"
 #include "MainWindow.h"
+#include "toolbars/PanelChooserWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
@@ -47,6 +48,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	QToolBar *toolbar = new QToolBar(this);
 	toolbar->setIconSize(QSize(16, 16));
+	toolbar->addWidget(new PanelChooserWidget(this));
 	toolbar->addAction(ActionsManager::getAction(Action::OpenPanelAction, this));
 
 	QWidget* spacer = new QWidget(toolbar);
@@ -82,7 +84,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 			for (QHash<QString, QToolButton*>::iterator iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
 			{
-				iterator.value()->setToolTip(translate(iterator.key()));
+				iterator.value()->setToolTip(getPanelTitle(iterator.key()));
 			}
 
 			if (m_ui->panelsChooseButton->menu())
@@ -91,9 +93,9 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 				for (int i = 0; i < actions.count(); ++i)
 				{
-					if (!actions[i]->data().toString().isEmpty() && !actions[i]->data().toString().startsWith(QLatin1String("web:")))
+					if (!actions[i]->data().toString().isEmpty())
 					{
-						actions[i]->setText(translate(actions[i]->data().toString()));
+						actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
 					}
 				}
 			}
@@ -226,7 +228,7 @@ void SidebarWidget::registerPanel(const QString &identifier)
 
 	QToolButton *button = new QToolButton(this);
 	button->setIcon(icon);
-	button->setToolTip(translate(identifier));
+	button->setToolTip(getPanelTitle(identifier));
 	button->setCheckable(true);
 	button->setAutoRaise(true);
 
@@ -243,7 +245,21 @@ void SidebarWidget::registerPanel(const QString &identifier)
 
 void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 {
-	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ?  QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+
+	QToolBar *toolbar = findChild<QToolBar*>();
+
+	if (toolbar)
+	{
+		toolbar->setLayoutDirection((edge == Qt::RightEdge) ? Qt::RightToLeft : Qt::LeftToRight);
+
+		QList<QWidget*> widgets = toolbar->findChildren<QWidget *>();
+
+		for (int i = 0; i < widgets.count(); ++i)
+		{
+			widgets[i]->setLayoutDirection(Qt::LeftToRight);
+		}
+	}
 
 	ActionsManager::getAction(Action::OpenPanelAction, this)->setIcon(Utils::getIcon((edge == Qt::RightEdge) ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
 }
@@ -261,7 +277,7 @@ void SidebarWidget::updatePanelsMenu()
 		action->setCheckable(true);
 		action->setChecked(chosenPanels.contains(allPanels[i]));
 		action->setData(allPanels[i]);
-		action->setText(translate(allPanels[i]));
+		action->setText(getPanelTitle(allPanels[i]));
 
 		connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
 
@@ -278,7 +294,7 @@ void SidebarWidget::updatePanelsMenu()
 			action->setCheckable(true);
 			action->setChecked(true);
 			action->setData(chosenPanels[i]);
-			action->setText(chosenPanels[i].section(QLatin1Char(':'), 1, -1));
+			action->setText(getPanelTitle(chosenPanels[i]));
 
 			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
 
@@ -404,19 +420,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
 }
 
-QSize SidebarWidget::sizeHint() const
-{
-	if (SettingsManager::getValue("Sidebar/CurrentPanel").toString().isEmpty())
-	{
-		return m_ui->buttonsLayout->sizeHint();
-	}
-	else
-	{
-		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
-	}
-}
-
-QString SidebarWidget::translate(const QString &identifier)
+QString SidebarWidget::getPanelTitle(const QString &identifier)
 {
 	if (identifier == QLatin1String("bookmarks"))
 	{
@@ -442,9 +446,25 @@ QString SidebarWidget::translate(const QString &identifier)
 	{
 		return tr("Configuration");
 	}
+	else if (identifier.startsWith(QLatin1String("web:")))
+	{
+		return identifier.mid(4);
+	}
 	else
 	{
 		return identifier;
+	}
+}
+
+QSize SidebarWidget::sizeHint() const
+{
+	if (SettingsManager::getValue("Sidebar/CurrentPanel").toString().isEmpty())
+	{
+		return m_ui->buttonsLayout->sizeHint();
+	}
+	else
+	{
+		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
 	}
 }
 

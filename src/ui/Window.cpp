@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +25,7 @@
 #include "SearchWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
+#include "toolbars/PanelChooserWidget.h"
 #include "../core/AddonsManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
@@ -469,6 +471,10 @@ void Window::setContentsWidget(ContentsWidget *widget)
 				navigationLayout->addWidget(m_searchWidget);
 
 				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+			}
+			else if (toolBar.actions.at(i).action == QLatin1String("PanelChooserWidget"))
+			{
+				navigationLayout->addWidget(new PanelChooserWidget(this));
 			}
 			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
 			{

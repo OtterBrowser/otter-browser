@@ -45,12 +45,12 @@ public:
 	void openPanel();
 	void selectPanel(const QString &identifier);
 	void setButtonsEdge(Qt::Edge);
+	static QString getPanelTitle(const QString &identifier);
 	QSize sizeHint() const;
 
 protected:
 	void registerPanel(const QString &identifier);
 	void updatePanelsMenu();
-	QString translate(const QString &identifier);
 
 protected slots:
 	void addWebPanel();

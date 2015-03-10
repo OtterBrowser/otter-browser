@@ -164,6 +164,7 @@ set(otter_src
 	src/ui/toolbars/GoBackActionWidget.cpp
 	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuActionWidget.cpp
+	src/ui/toolbars/PanelChooserWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp

@@ -116,6 +116,7 @@ SOURCES += src/main.cpp \
     src/ui/toolbars/GoBackActionWidget.cpp \
     src/ui/toolbars/GoForwardActionWidget.cpp \
     src/ui/toolbars/MenuActionWidget.cpp \
+    src/ui/toolbars/PanelChooserWidget.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp \
@@ -228,6 +229,7 @@ HEADERS += src/core/Action.h \
     src/ui/toolbars/GoBackActionWidget.h \
     src/ui/toolbars/GoForwardActionWidget.h \
     src/ui/toolbars/MenuActionWidget.h \
+    src/ui/toolbars/PanelChooserWidget.h \
     src/ui/toolbars/ZoomWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.h \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.h \
