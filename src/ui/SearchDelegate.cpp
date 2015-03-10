@@ -53,13 +53,13 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 	{
 		QRect decorationRectangle = option.rect;
-		decorationRectangle.setRight(option.rect.left() + 20);
+		decorationRectangle.setRight(option.rect.height());
 		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
 	}
 
-	titleReactangle.setLeft(option.rect.left() + 32);
+	titleReactangle.setLeft(option.rect.height());
 
 	if (shortcutWidth > 0)
 	{
