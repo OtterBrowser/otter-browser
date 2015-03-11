@@ -191,10 +191,10 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), true, true, true);
 	registerAction(Action::ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
+	registerAction(Action::ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), true, true, false);
+	registerAction(Action::LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), true, true, false);
 	registerAction(Action::OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), Utils::getIcon(QLatin1String("arrow-right")), true, false, false);
 	registerAction(Action::ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), Utils::getIcon(QLatin1String("window-close")), true, false, false);
-	registerAction(Action::ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Error Console"), QString(), QIcon(), true, true, false);
-	registerAction(Action::LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), true, true, false);
 	registerAction(Action::ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking..."));
 	registerAction(Action::HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
 	registerAction(Action::ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History..."), QString(), Utils::getIcon(QLatin1String("edit-clear-history")));
