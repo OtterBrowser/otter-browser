@@ -51,10 +51,10 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	toolbar->addWidget(new PanelChooserWidget(this));
 	toolbar->addAction(ActionsManager::getAction(Action::OpenPanelAction, this));
 
-	QWidget* spacer = new QWidget(toolbar);
+	QWidget *spacer = new QWidget(toolbar);
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	toolbar->addWidget(spacer);
 
+	toolbar->addWidget(spacer);
 	toolbar->addAction(ActionsManager::getAction(Action::ClosePanelAction, this));
 
 	m_ui->panelLayout->addWidget(toolbar);

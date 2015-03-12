@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -94,12 +94,12 @@ private:
 	bool m_isMoved;
 
 signals:
+	void layoutChanged();
 	void requestedClone(int index);
 	void requestedDetach(int index);
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);
-	void newTabPositionChanged();
 };
 
 }

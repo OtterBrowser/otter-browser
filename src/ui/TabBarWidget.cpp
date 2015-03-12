@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -278,9 +278,9 @@ void TabBarWidget::tabLayoutChange()
 {
 	QTabBar::tabLayoutChange();
 
-	emit newTabPositionChanged();
-
 	updateButtons();
+
+	emit layoutChanged();
 }
 
 void TabBarWidget::tabInserted(int index)
@@ -695,14 +695,10 @@ void TabBarWidget::setShape(QTabBar::Shape shape)
 	if (shape == QTabBar::RoundedNorth || shape == QTabBar::RoundedSouth)
 	{
 		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
-		parentWidget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	}
 	else
 	{
 		setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-
-		parentWidget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 	}
 
 	QTabBar::setShape(shape);

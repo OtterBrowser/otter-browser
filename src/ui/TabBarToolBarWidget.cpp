@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,6 @@ TabBarToolBarWidget::TabBarToolBarWidget(QMainWindow *parent) : QToolBar(parent)
 	QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this);
 	Menu *closedWindowsMenu = new Menu(m_widget);
 	closedWindowsMenu->setRole(ClosedWindowsMenu);
-
 	closedWindowsAction->setMenu(closedWindowsMenu);
 	closedWindowsAction->setEnabled(false);
 
@@ -61,46 +60,61 @@ TabBarToolBarWidget::TabBarToolBarWidget(QMainWindow *parent) : QToolBar(parent)
 	layout->setSpacing(3);
 	layout->addSpacing(3);
 	layout->addWidget(new MenuActionWidget(m_widget));
-	layout->addWidget(m_tabBar);
-	layout->addSpacing(32);
+	layout->addWidget(m_tabBar, 1);
+	layout->addWidget(m_newTabButton, 0, Qt::AlignCenter);
+	layout->addStretch();
 	layout->addWidget(closedWindowsMenuButton, 0, Qt::AlignCenter);
 	layout->addSpacing(3);
 
 	m_widget->setLayout(layout);
 	m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_newTabButton->setFixedSize(32, 32);
-	m_newTabButton->show();
-	m_newTabButton->raise();
-
 	addWidget(m_widget);
 	updateOrientation();
 
 	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(updateOrientation()));
 	connect(this, SIGNAL(topLevelChanged(bool)), m_tabBar, SLOT(setIsMoved(bool)));
-	connect(m_tabBar, SIGNAL(newTabPositionChanged()), this, SLOT(updateNewTabPosition()));
+	connect(m_tabBar, SIGNAL(layoutChanged()), this, SLOT(updateLayout()));
 }
 
-void TabBarToolBarWidget::updateNewTabPosition()
+void TabBarToolBarWidget::resizeEvent(QResizeEvent *event)
 {
-	const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
-	int position = (isHorizontal ? m_tabBar->pos().x() : m_tabBar->pos().y());
+	QToolBar::resizeEvent(event);
 
-	for (int i = 0; i < m_tabBar->count(); ++i)
+	updateLayout();
+}
+
+void TabBarToolBarWidget::updateLayout()
+{
+	QBoxLayout *layout = dynamic_cast<QBoxLayout*>(m_widget->layout());
+
+	if (!layout)
 	{
-		if (isHorizontal)
-		{
-			position += m_tabBar->tabRect(i).width();
-		}
-		else
-		{
-			position += m_tabBar->tabRect(i).height();
-		}
+		return;
 	}
 
-	const int handleSize = (isMovable() ? style()->pixelMetric(QStyle::PM_ToolBarHandleExtent) : 0);
+	const int spacing = 3;
+	int size = ((isMovable() ? style()->pixelMetric(QStyle::PM_ToolBarHandleExtent) : 0) + spacing);
+	const bool isHorizontal = (m_tabBar->shape() == QTabBar::RoundedNorth || m_tabBar->shape() == QTabBar::RoundedSouth);
 
-	m_newTabButton->move(isHorizontal ? QPoint((qMin(position, width()) + handleSize), ((height() - m_newTabButton->height()) / 2)) : QPoint(((width() - m_newTabButton->width()) / 2), (qMin(position, height()) + handleSize)));
+	for (int i = 0; i < layout->count(); ++i)
+	{
+		if (layout->itemAt(i)->widget() && layout->itemAt(i)->widget()->isVisible() && layout->itemAt(i)->widget() != m_tabBar)
+		{
+			size += (isHorizontal ? layout->itemAt(i)->geometry().width() : layout->itemAt(i)->geometry().height());
+		}
+
+		size += spacing;
+	}
+
+	if (isHorizontal)
+	{
+		m_tabBar->setMaximumSize(qMax(0, qMin((m_tabBar->count() * 250), (width() - size))), QWIDGETSIZE_MAX);
+	}
+	else
+	{
+		m_tabBar->setMaximumSize(QWIDGETSIZE_MAX, qMax(0, qMin((m_tabBar->count() * 250), (height() - size))));
+	}
 }
 
 void TabBarToolBarWidget::updateOrientation()
@@ -115,14 +129,18 @@ void TabBarToolBarWidget::updateOrientation()
 		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 		{
 			layout->setDirection(QBoxLayout::TopToBottom);
+
+			m_widget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 		}
 		else
 		{
 			layout->setDirection(QBoxLayout::LeftToRight);
+
+			m_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 		}
 	}
 
-	updateNewTabPosition();
+	updateLayout();
 }
 
 TabBarWidget* TabBarToolBarWidget::getTabBar()
