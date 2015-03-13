@@ -100,13 +100,13 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_clickedTab >= 0)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
-		Action *cloneTabAction = new Action(Action::CloneTabAction, &menu);
+		Action *cloneTabAction = new Action(Action::CloneTabAction, NULL, &menu);
 		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 
-		Action *pinTabAction = new Action(Action::PinTabAction, &menu);
+		Action *pinTabAction = new Action(Action::PinTabAction, NULL, &menu);
 		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
 
-		Action *detachTabAction = new Action(Action::DetachTabAction, &menu);
+		Action *detachTabAction = new Action(Action::DetachTabAction, NULL, &menu);
 		detachTabAction->setEnabled(count() > 1);
 
 		menu.addAction(cloneTabAction);
@@ -117,7 +117,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			Action *closeTabAction = new Action(Action::CloseTabAction, &menu);
+			Action *closeTabAction = new Action(Action::CloseTabAction, NULL, &menu);
 			closeTabAction->setEnabled(false);
 
 			menu.addAction(closeTabAction);
@@ -128,7 +128,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
-		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, &menu);
+		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, NULL, &menu);
 		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
 		menu.addAction(closeOtherTabsAction);

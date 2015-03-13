@@ -1621,7 +1621,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action = new Action(identifier, NULL, this);
 
 	m_actions[identifier] = action;
 

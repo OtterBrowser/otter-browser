@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ enum WindowLoadingState
 class AddressWidget;
 class ContentsWidget;
 class SearchWidget;
+class ToolBarWidget;
 
 class Window : public QWidget
 {
@@ -61,6 +62,10 @@ public:
 	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
 
 	void clear();
+	void attachAddressWidget(AddressWidget *widget);
+	void detachAddressWidget(AddressWidget *widget);
+	void attachSearchWidget(SearchWidget *widget);
+	void detachSearchWidget(SearchWidget *widget);
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
 	ContentsWidget* getContentsWidget();
@@ -104,9 +109,9 @@ protected slots:
 	void notifyRequestedCloseWindow();
 
 private:
-	QWidget *m_navigationBar;
-	AddressWidget *m_addressWidget;
-	SearchWidget *m_searchWidget;
+	ToolBarWidget *m_navigationBar;
+	QList<QPointer<AddressWidget> > m_addressWidgets;
+	QList<QPointer<SearchWidget> > m_searchWidgets;
 	ContentsWidget *m_contentsWidget;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;

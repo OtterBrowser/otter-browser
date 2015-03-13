@@ -574,7 +574,7 @@ Action* ActionsManager::getAction(int identifier)
 	if (!m_standardActions[identifier])
 	{
 		const ActionDefinition definition = m_helper->actionDefinitions[identifier];
-		Action *action = new Action(identifier, m_mainWindow);
+		Action *action = new Action(identifier, NULL, m_mainWindow);
 
 		m_standardActions[identifier] = action;
 
@@ -604,7 +604,7 @@ QString ActionsManager::getActionName(int identifier)
 {
 	if (!m_dummyAction)
 	{
-		m_dummyAction = new Action(-1, QCoreApplication::instance());
+		m_dummyAction = new Action(-1, NULL, QCoreApplication::instance());
 	}
 
 	QString name = m_dummyAction->metaObject()->enumerator(m_dummyAction->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data())).valueToKey(identifier);
@@ -668,7 +668,7 @@ int ActionsManager::getActionIdentifier(const QString &name)
 {
 	if (!m_dummyAction)
 	{
-		m_dummyAction = new Action(-1, QCoreApplication::instance());
+		m_dummyAction = new Action(-1, NULL, QCoreApplication::instance());
 	}
 
 	const int enumerator = m_dummyAction->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());

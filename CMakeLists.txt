@@ -150,6 +150,7 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp
+	src/ui/ToolBarWidget.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebsitePreferencesDialog.cpp

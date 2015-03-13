@@ -387,7 +387,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action = new Action(identifier, qobject_cast<Window*>(parentWidget()), this);
 
 	m_actions[identifier] = action;
 

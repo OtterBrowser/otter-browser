@@ -23,6 +23,7 @@
 #include "AddressWidget.h"
 #include "OpenAddressDialog.h"
 #include "SearchWidget.h"
+#include "ToolBarWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
@@ -56,8 +57,6 @@ qint64 Window::m_identifierCounter = 0;
 
 Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_navigationBar(NULL),
-	m_addressWidget(NULL),
-	m_searchWidget(NULL),
 	m_contentsWidget(NULL),
 	m_identifier(++m_identifierCounter),
 	m_areControlsHidden(false),
@@ -66,6 +65,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 {
 	QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
 	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(0);
 
 	setLayout(layout);
 
@@ -91,9 +91,9 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (isUrlEmpty() && !m_contentsWidget->isLoading() && m_addressWidget)
+	if (isUrlEmpty() && !m_contentsWidget->isLoading() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 	{
-		m_addressWidget->setFocus();
+		m_addressWidgets.at(0)->setFocus();
 	}
 	else if (m_contentsWidget)
 	{
@@ -103,33 +103,33 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::triggerAction(int identifier, bool checked)
 {
-	if (identifier == Action::ActivateSearchFieldAction && m_searchWidget)
+	if (identifier == Action::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
 	{
-		m_searchWidget->setFocus(Qt::ShortcutFocusReason);
+		m_searchWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
 	}
-	else if (m_addressWidget)
+	else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 	{
 		if (identifier == Action::ActivateAddressFieldAction)
 		{
-			m_addressWidget->setFocus(Qt::ShortcutFocusReason);
+			m_addressWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
 		}
 		else if (identifier == Action::ActivateSearchFieldAction)
 		{
-			m_addressWidget->setText(QLatin1String("? "));
-			m_addressWidget->setFocus(Qt::OtherFocusReason);
+			m_addressWidgets.at(0)->setText(QLatin1String("? "));
+			m_addressWidgets.at(0)->setFocus(Qt::OtherFocusReason);
 		}
 		else if (identifier == Action::PasteAndGoAction)
 		{
 			if (!QApplication::clipboard()->text().isEmpty())
 			{
-				m_addressWidget->handleUserInput(QApplication::clipboard()->text().trimmed());
+				m_addressWidgets.at(0)->handleUserInput(QApplication::clipboard()->text().trimmed());
 			}
 
 			return;
 		}
 		else if (identifier == Action::GoAction)
 		{
-			m_addressWidget->handleUserInput(m_addressWidget->text());
+			m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->text());
 
 			return;
 		}
@@ -199,12 +199,58 @@ void Window::triggerAction(int identifier, bool checked)
 
 void Window::clear()
 {
-	if (m_addressWidget)
+	if (!m_addressWidgets.isEmpty())
 	{
-		m_addressWidget->clear();
+		for (int i = 0; i < m_addressWidgets.count(); ++i)
+		{
+			if (m_addressWidgets.at(i))
+			{
+				m_addressWidgets.at(i)->clear();
+			}
+		}
 	}
 
 	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
+}
+
+void Window::attachAddressWidget(AddressWidget *widget)
+{
+	m_addressWidgets.append(widget);
+
+	widget->setUrl(getUrl());
+	widget->setWindow(this);
+
+	connect(this, SIGNAL(urlChanged(QUrl)), widget, SLOT(setUrl(QUrl)));
+	connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+	connect(widget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+	connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+}
+
+void Window::detachAddressWidget(AddressWidget *widget)
+{
+	m_addressWidgets.removeAll(widget);
+
+	widget->setUrl(QUrl());
+	widget->setWindow(NULL);
+
+	disconnect(this, SIGNAL(urlChanged(QUrl)), widget, SLOT(setUrl(QUrl)));
+	disconnect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+	disconnect(widget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+	disconnect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+}
+
+void Window::attachSearchWidget(SearchWidget *widget)
+{
+	m_searchWidgets.append(widget);
+
+	connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+}
+
+void Window::detachSearchWidget(SearchWidget *widget)
+{
+	m_searchWidgets.removeAll(widget);
+
+	disconnect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 }
 
 void Window::close()
@@ -225,16 +271,28 @@ void Window::search(const QString &query, const QString &engine)
 		setContentsWidget(widget);
 	}
 
-	if (m_addressWidget)
+	if (!m_addressWidgets.isEmpty())
 	{
-		m_addressWidget->clearFocus();
+		for (int i = 0; i < m_addressWidgets.count(); ++i)
+		{
+			if (m_addressWidgets.at(i))
+			{
+				m_addressWidgets.at(i)->clearFocus();
+			}
+		}
 	}
 
 	widget->search(query, engine);
 
-	if (m_addressWidget)
+	if (!m_addressWidgets.isEmpty())
 	{
-		m_addressWidget->setUrl(getUrl());
+		for (int i = 0; i < m_addressWidgets.count(); ++i)
+		{
+			if (m_addressWidgets.at(i))
+			{
+				m_addressWidgets.at(i)->setUrl(getUrl());
+			}
+		}
 	}
 }
 
@@ -323,9 +381,15 @@ void Window::setOption(const QString &key, const QVariant &value)
 
 void Window::setSearchEngine(const QString &engine)
 {
-	if (m_searchWidget)
+	if (!m_searchWidgets.isEmpty())
 	{
-		m_searchWidget->setCurrentSearchEngine(engine);
+		for (int i = 0; i < m_searchWidgets.count(); ++i)
+		{
+			if (m_searchWidgets.at(i))
+			{
+				m_searchWidgets.at(i)->setCurrentSearchEngine(engine);
+			}
+		}
 	}
 }
 
@@ -335,9 +399,15 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (m_addressWidget && m_session.index < 0 && !isUrlEmpty() && SessionsManager::hasUrl(url, true))
+		if (!m_addressWidgets.isEmpty() && m_session.index < 0 && !isUrlEmpty() && SessionsManager::hasUrl(url, true))
 		{
-			m_addressWidget->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
+			for (int i = 0; i < m_addressWidgets.count(); ++i)
+			{
+				if (m_addressWidgets.at(i))
+				{
+					m_addressWidgets.at(i)->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
+				}
+			}
 
 			return;
 		}
@@ -392,14 +462,20 @@ void Window::setUrl(const QUrl &url, bool typed)
 			m_contentsWidget->setUrl(url, typed);
 		}
 
-		if (m_addressWidget)
+		if (!m_addressWidgets.isEmpty())
 		{
-			if (!isUrlEmpty() || m_contentsWidget->isLoading())
+			for (int i = 0; i < m_addressWidgets.count(); ++i)
 			{
-				m_addressWidget->clearFocus();
-			}
+				if (m_addressWidgets.at(i))
+				{
+					if (!isUrlEmpty() || m_contentsWidget->isLoading())
+					{
+						m_addressWidgets.at(i)->clearFocus();
+					}
 
-			m_addressWidget->setUrl(url);
+					m_addressWidgets.at(i)->setUrl(url);
+				}
+			}
 		}
 	}
 }
@@ -442,60 +518,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (m_contentsWidget->getType() == QLatin1String("web") && !m_navigationBar)
 	{
-		const ToolBarDefinition toolBar = ActionsManager::getToolBarDefinition(QLatin1String("NavigationBar"));
-
-		m_navigationBar = new QWidget(this);
+		m_navigationBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("NavigationBar")), this, this);
 		m_navigationBar->setVisible(!m_areControlsHidden);
-
-		QBoxLayout *navigationLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_navigationBar);
-		navigationLayout->setContentsMargins(0, 0, 0, 0);
-
-		for (int i = 0; i < toolBar.actions.count(); ++i)
-		{
-			if (toolBar.actions.at(i).action == QLatin1String("AddressWidget"))
-			{
-				m_addressWidget = new AddressWidget(this, false, this);
-				m_addressWidget->setUrl(m_contentsWidget->getUrl());
-
-				navigationLayout->addWidget(m_addressWidget, 3);
-
-				connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), m_addressWidget, SLOT(setUrl(QUrl)));
-				connect(m_addressWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-				connect(m_addressWidget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-				connect(m_addressWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
-			}
-			else if (toolBar.actions.at(i).action == QLatin1String("SearchWidget"))
-			{
-				m_searchWidget = new SearchWidget(this);
-
-				navigationLayout->addWidget(m_searchWidget);
-
-				connect(m_searchWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-			}
-			else if (toolBar.actions.at(i).action == QLatin1String("PanelChooserWidget"))
-			{
-				navigationLayout->addWidget(new PanelChooserWidget(this));
-			}
-			else if (toolBar.actions.at(i).action == QLatin1String("GoBackAction"))
-			{
-				navigationLayout->addWidget(new GoBackActionWidget(this, m_navigationBar));
-			}
-			else if (toolBar.actions.at(i).action == QLatin1String("GoForwardAction"))
-			{
-				navigationLayout->addWidget(new GoForwardActionWidget(this, m_navigationBar));
-			}
-			else
-			{
-				const int action = ActionsManager::getActionIdentifier(toolBar.actions.at(i).action.left(toolBar.actions.at(i).action.length() - 6));
-
-				if (action >= 0)
-				{
-					navigationLayout->addWidget(new ActionWidget(action, this, m_navigationBar));
-				}
-			}
-		}
-
-		m_navigationBar->setLayout(navigationLayout);
 
 		layout()->addWidget(m_navigationBar);
 	}
@@ -506,8 +530,6 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		layout()->removeWidget(m_navigationBar);
 
 		m_navigationBar = NULL;
-		m_addressWidget = NULL;
-		m_searchWidget = NULL;
 	}
 
 	layout()->addWidget(m_contentsWidget);
@@ -546,9 +568,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 	else
 	{
-		if (isUrlEmpty() && m_addressWidget)
+		if (isUrlEmpty() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 		{
-			m_addressWidget->setFocus();
+			m_addressWidgets.at(0)->setFocus();
 		}
 
 		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || isUrlEmpty())
@@ -614,7 +636,7 @@ QVariant Window::getOption(const QString &key) const
 
 QString Window::getSearchEngine() const
 {
-	return (m_searchWidget ? m_searchWidget->getCurrentSearchEngine() : QString());
+	return ((m_searchWidgets.isEmpty() || !m_searchWidgets.at(0)) ? QString() : m_searchWidgets.at(0)->getCurrentSearchEngine());
 }
 
 QString Window::getTitle() const

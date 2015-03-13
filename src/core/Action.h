@@ -20,12 +20,14 @@
 #ifndef OTTER_ACTION_H
 #define OTTER_ACTION_H
 
-#include <QtWidgets/QAction>
+#include <QtWidgets/QWidgetAction>
 
 namespace Otter
 {
 
-class Action : public QAction
+class Window;
+
+class Action : public QWidgetAction
 {
 	Q_OBJECT
 	Q_ENUMS(ActionIdentifier)
@@ -180,8 +182,9 @@ public:
 		OtherAction
 	};
 
-	explicit Action(int identifier, QObject *parent = NULL);
+	explicit Action(int identifier, Window *window, QObject *parent = NULL);
 
+	void setWindow(Window *window);
 	void setOverrideText(const QString &text);
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
@@ -192,9 +195,11 @@ public slots:
 	void setup(Action *action = NULL);
 
 protected:
+	QWidget* createWidget(QWidget *parent);
 	void update(bool reset = false);
 
 private:
+	Window *m_window;
 	QString m_overrideText;
 	int m_identifier;
 	bool m_isOverridingText;
