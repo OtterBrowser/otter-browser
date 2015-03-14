@@ -42,6 +42,8 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
 
+	bool hasTabBar = false;
+
 	for (int i = 0; i < definition.actions.count(); ++i)
 	{
 		if (definition.actions.at(i).action == QLatin1String("separator"))
@@ -101,8 +103,10 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		{
 			addWidget(new PanelChooserWidget(this));
 		}
-		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && definition.name == QLatin1String("TabBar"))
+		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && !hasTabBar && definition.name == QLatin1String("TabBar"))
 		{
+			hasTabBar = true;
+
 			TabBarWidget *tabBar = new TabBarWidget(this);
 			MainWindow *window = qobject_cast<MainWindow*>(parent);
 
@@ -141,6 +145,19 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 				}
 			}
 		}
+	}
+
+	if (!hasTabBar && definition.name == QLatin1String("TabBar"))
+	{
+		TabBarWidget *tabBar = new TabBarWidget(this);
+		MainWindow *window = qobject_cast<MainWindow*>(parent);
+
+		if (window)
+		{
+			window->setTabBar(tabBar);
+		}
+
+		addWidget(tabBar);
 	}
 
 	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));

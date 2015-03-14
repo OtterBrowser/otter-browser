@@ -30,7 +30,6 @@
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
-#include "TabBarToolBarWidget.h"
 #include "TabSwitcherWidget.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
