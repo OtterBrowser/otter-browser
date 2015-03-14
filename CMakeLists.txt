@@ -146,7 +146,6 @@ set(otter_src
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/SidebarWidget.cpp
 	src/ui/StartupDialog.cpp
-	src/ui/TabBarToolBarWidget.cpp
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp

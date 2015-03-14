@@ -20,6 +20,7 @@
 
 #include "TabBarWidget.h"
 #include "PreviewWidget.h"
+#include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
@@ -61,6 +62,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
 	setDocumentMode(true);
+	setIsMoved(false);
 
 	m_closeButtonPosition = static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition));
 	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
@@ -69,6 +71,14 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	optionChanged(QLatin1String("TabBar/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")));
 	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
 	optionChanged(QLatin1String("TabBar/MinimumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MinimumTabSize")));
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
+	{
+		connect(toolBar, SIGNAL(topLevelChanged(bool)), this, SLOT(setIsMoved(bool)));
+		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
+	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
@@ -667,9 +677,9 @@ void TabBarWidget::setIsMoved(bool isMoved)
 	hidePreview();
 }
 
-void TabBarWidget::setOrientation(Qt::ToolBarArea orientation)
+void TabBarWidget::setArea(Qt::ToolBarArea area)
 {
-	switch (orientation)
+	switch (area)
 	{
 		case Qt::LeftToolBarArea:
 			setShape(QTabBar::RoundedWest);
@@ -766,6 +776,23 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	}
 
 	return QSize(QTabBar::tabSizeHint(0).width(), size);
+}
+
+QSize TabBarWidget::sizeHint() const
+{
+	int size = 0;
+
+	for (int i = 0; i < count(); ++i)
+	{
+		size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : 250);
+	}
+
+	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+	{
+		return QSize(size, QTabBar::sizeHint().height());
+	}
+
+	return QSize(QTabBar::sizeHint().width(), size);
 }
 
 int TabBarWidget::getPinnedTabsAmount() const

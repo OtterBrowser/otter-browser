@@ -32,6 +32,7 @@ class PanelChooserWidget : public QToolButton
 
 public:
 	explicit PanelChooserWidget(QWidget *parent);
+
 	void changeEvent(QEvent *event);
 
 protected slots:

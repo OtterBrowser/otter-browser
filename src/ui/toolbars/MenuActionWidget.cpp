@@ -36,7 +36,7 @@ MenuActionWidget::MenuActionWidget(QWidget *parent) : ActionWidget(-1, NULL, par
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	setVisible(!SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+	optionChanged(QLatin1String("Interface/ShowMenuBar"), SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
@@ -46,7 +46,14 @@ void MenuActionWidget::optionChanged(const QString &option, const QVariant &valu
 {
 	if (option == QLatin1String("Interface/ShowMenuBar"))
 	{
-		setVisible(!value.toBool());
+		if (value.toBool())
+		{
+			setMaximumSize(0, 0);
+		}
+		else
+		{
+			setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+		}
 	}
 }
 

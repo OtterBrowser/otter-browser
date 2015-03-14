@@ -29,11 +29,19 @@ namespace Otter
 
 class ToolBarWidget : public QToolBar
 {
+	Q_OBJECT
+
 public:
 	ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent);
 
+public slots:
+	void notifyAreaChanged();
+
 private:
 	Window *m_window;
+
+signals:
+	void areaChanged(Qt::ToolBarArea area);
 };
 
 }

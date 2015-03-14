@@ -44,7 +44,7 @@ public:
 	int getPinnedTabsAmount() const;
 
 public slots:
-	void setOrientation(Qt::ToolBarArea orientation);
+	void setArea(Qt::ToolBarArea area);
 	void setShape(QTabBar::Shape shape);
 	void setTabProperty(int index, const QString &key, const QVariant &value);
 
@@ -65,6 +65,7 @@ protected:
 	void showPreview(int index);
 	void hidePreview();
 	QSize tabSizeHint(int index) const;
+	QSize sizeHint() const;
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

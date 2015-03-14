@@ -32,6 +32,7 @@
 #include "SessionsManagerDialog.h"
 #include "TabBarToolBarWidget.h"
 #include "TabSwitcherWidget.h"
+#include "ToolBarWidget.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "toolbars/ZoomWidget.h"
@@ -68,7 +69,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
 	m_mdiWidget(new MdiWidget(this)),
-	m_tabBarToolBarWidget(NULL),
+	m_tabBar(NULL),
+	m_tabBarToolBar(NULL),
 	m_menuBar(NULL),
 	m_toggleEdge(NULL),
 	m_sidebarWidget(NULL),
@@ -88,10 +90,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
-	m_tabBarToolBarWidget = new TabBarToolBarWidget(this);
-	m_tabBarToolBarWidget->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
+	m_tabBarToolBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("TabBar")), NULL, this);
+	m_tabBarToolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
-	addToolBar(m_tabBarToolBarWidget);
+	addToolBar(m_tabBarToolBar);
 
 	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
 	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
@@ -143,7 +145,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 		restoreState(session.state);
 	}
 
-	m_tabBarToolBarWidget->updateOrientation();
+	m_tabBarToolBar->notifyAreaChanged();
 }
 
 MainWindow::~MainWindow()
@@ -522,7 +524,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ShowTabBarAction:
-			m_tabBarToolBarWidget->setVisible(checked);
+			m_tabBarToolBar->setVisible(checked);
 
 			break;
 		case Action::ShowSidebarAction:
@@ -783,6 +785,11 @@ void MainWindow::updateWindowTitle(const QString &title)
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
+void MainWindow::setTabBar(TabBarWidget *tabBar)
+{
+	m_tabBar = tabBar;
+}
+
 MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
 	MainWindow *window = NULL;
@@ -820,7 +827,7 @@ MdiWidget* MainWindow::getMdi()
 
 TabBarWidget* MainWindow::getTabBar()
 {
-	return (m_tabBarToolBarWidget ? m_tabBarToolBarWidget->getTabBar() : NULL);
+	return m_tabBar;
 }
 
 ActionsManager* MainWindow::getActionsManager()
@@ -851,7 +858,7 @@ bool MainWindow::event(QEvent *event)
 
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
-					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
 
 					if (isFullScreen())
 					{
@@ -859,11 +866,11 @@ bool MainWindow::event(QEvent *event)
 
 						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 						{
-							m_tabBarToolBarWidget->setMaximumWidth(1);
+							m_tabBarToolBar->setMaximumWidth(1);
 						}
 						else
 						{
-							m_tabBarToolBarWidget->setMaximumHeight(1);
+							m_tabBarToolBar->setMaximumHeight(1);
 						}
 
 						m_ui->statusBar->hide();
@@ -874,7 +881,7 @@ bool MainWindow::event(QEvent *event)
 						}
 
 						m_mdiWidget->installEventFilter(this);
-						m_tabBarToolBarWidget->installEventFilter(this);
+						m_tabBarToolBar->installEventFilter(this);
 					}
 					else
 					{
@@ -883,11 +890,11 @@ bool MainWindow::event(QEvent *event)
 
 						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 						{
-							m_tabBarToolBarWidget->setMaximumWidth(QWIDGETSIZE_MAX);
+							m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
 						}
 						else
 						{
-							m_tabBarToolBarWidget->setMaximumHeight(QWIDGETSIZE_MAX);
+							m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
 						}
 
 						if (m_menuBar)
@@ -896,7 +903,7 @@ bool MainWindow::event(QEvent *event)
 						}
 
 						m_mdiWidget->removeEventFilter(this);
-						m_tabBarToolBarWidget->removeEventFilter(this);
+						m_tabBarToolBar->removeEventFilter(this);
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
@@ -940,31 +947,31 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (object == m_tabBarToolBarWidget && event->type() == QEvent::Enter)
+	if (object == m_tabBarToolBar && event->type() == QEvent::Enter)
 	{
-		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
 
 		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 		{
-			m_tabBarToolBarWidget->setMaximumWidth(QWIDGETSIZE_MAX);
+			m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
 		}
 		else
 		{
-			m_tabBarToolBarWidget->setMaximumHeight(QWIDGETSIZE_MAX);
+			m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
 		}
 	}
 
-	if (object == m_tabBarToolBarWidget && event->type() == QEvent::Leave)
+	if (object == m_tabBarToolBar && event->type() == QEvent::Leave)
 	{
-		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBarWidget);
+		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
 
 		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 		{
-			m_tabBarToolBarWidget->setMaximumWidth(1);
+			m_tabBarToolBar->setMaximumWidth(1);
 		}
 		else
 		{
-			m_tabBarToolBarWidget->setMaximumHeight(1);
+			m_tabBarToolBar->setMaximumHeight(1);
 		}
 	}
 

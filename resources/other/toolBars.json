@@ -1,5 +1,18 @@
 [
 	{
+		"identifier": "TabBar",
+		"location": "top",
+		"title": "Tab Bar",
+		"actions":
+		[
+			"MenuWidget",
+			"TabBarWidget",
+			"NewTabAction",
+			"spacer",
+			"ClosedWindowsWidget"
+		]
+	},
+	{
 		"identifier": "NavigationBar",
 		"location": "navigation",
 		"title": "Navigation Bar",

@@ -41,9 +41,9 @@ namespace Ui
 class ActionsManager;
 class MdiWidget;
 class Menu;
-class TabBarToolBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
+class ToolBarWidget;
 class WindowsManager;
 
 class MainWindow : public QMainWindow
@@ -76,6 +76,7 @@ protected:
 	void createToggleEdge();
 	void placeSidebars();
 	void updateSidebars();
+	void setTabBar(TabBarWidget *tabBar);
 	bool event(QEvent *event);
 
 protected slots:
@@ -90,7 +91,8 @@ private:
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
 	MdiWidget *m_mdiWidget;
-	TabBarToolBarWidget *m_tabBarToolBarWidget;
+	TabBarWidget *m_tabBar;
+	ToolBarWidget *m_tabBarToolBar;
 	QMenuBar *m_menuBar;
 	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
@@ -102,6 +104,8 @@ private:
 signals:
 	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, QUrl url = QUrl());
 	void controlsHiddenChanged(bool hidden);
+
+friend class ToolBarWidget;
 };
 
 }

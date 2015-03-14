@@ -20,11 +20,16 @@
 #include "ToolBarWidget.h"
 #include "AddressWidget.h"
 #include "ContentsWidget.h"
+#include "MainWindow.h"
+#include "Menu.h"
 #include "SearchWidget.h"
+#include "TabBarWidget.h"
 #include "Window.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
+#include "toolbars/MenuActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
+#include "../core/Utils.h"
 
 namespace Otter
 {
@@ -33,7 +38,7 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	m_window(window)
 {
 	setObjectName(definition.name);
-	setStyleSheet(QLatin1String("QToolBar {padding:1px 3px;spacing:3px;}"));
+	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
 
@@ -46,9 +51,29 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		else if (definition.actions.at(i).action == QLatin1String("spacer"))
 		{
 			QWidget *spacer = new QWidget(this);
-			spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+			spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
 			addWidget(spacer);
+		}
+		else if (definition.actions.at(i).action == QLatin1String("ClosedWindowsWidget"))
+		{
+			QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this);
+			Menu *closedWindowsMenu = new Menu(this);
+			closedWindowsMenu->setRole(ClosedWindowsMenu);
+
+			closedWindowsAction->setMenu(closedWindowsMenu);
+			closedWindowsAction->setEnabled(false);
+
+			QToolButton *closedWindowsMenuButton = new QToolButton(this);
+			closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
+			closedWindowsMenuButton->setAutoRaise(true);
+			closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
+
+			addWidget(closedWindowsMenuButton);
+		}
+		else if (definition.actions.at(i).action == QLatin1String("MenuWidget"))
+		{
+			addWidget(new MenuActionWidget(this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("AddressWidget"))
 		{
@@ -75,6 +100,18 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		else if (definition.actions.at(i).action == QLatin1String("PanelChooserWidget"))
 		{
 			addWidget(new PanelChooserWidget(this));
+		}
+		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && definition.name == QLatin1String("TabBar"))
+		{
+			TabBarWidget *tabBar = new TabBarWidget(this);
+			MainWindow *window = qobject_cast<MainWindow*>(parent);
+
+			if (window)
+			{
+				window->setTabBar(tabBar);
+			}
+
+			addWidget(tabBar);
 		}
 		else
 		{
@@ -104,6 +141,18 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 				}
 			}
 		}
+	}
+
+	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
+}
+
+void ToolBarWidget::notifyAreaChanged()
+{
+	MainWindow *window = MainWindow::findMainWindow(this);
+
+	if (window)
+	{
+		emit areaChanged(window->toolBarArea(this));
 	}
 }
 
