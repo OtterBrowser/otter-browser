@@ -35,7 +35,7 @@ enum ToolBarLocation
 {
 	UnknownToolBarLocation = 0,
 	TopToolBarLocation = 1,
-	BottomBarArea = 2,
+	BottomToolBarArea = 2,
 	LeftToolBarLocation = 3,
 	RightToolBarLocation = 4,
 	NavigationToolBarLocation = 5,

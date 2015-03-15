@@ -89,10 +89,41 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
-	m_tabBarToolBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("TabBar")), NULL, this);
-	m_tabBarToolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
+	const QList<ToolBarDefinition> toolBarDefinitions = ActionsManager::getToolBarDefinitions();
+	const bool areToolBarsMovable = !SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
 
-	addToolBar(m_tabBarToolBar);
+	for (int i = 0; i < toolBarDefinitions.count(); ++i)
+	{
+		if (toolBarDefinitions.at(i).location != UnknownToolBarLocation && toolBarDefinitions.at(i).location != TopToolBarLocation&& toolBarDefinitions.at(i).location != BottomToolBarArea && toolBarDefinitions.at(i).location != LeftToolBarLocation && toolBarDefinitions.at(i).location != RightToolBarLocation)
+		{
+			continue;
+		}
+
+		Qt::ToolBarArea area = Qt::TopToolBarArea;
+
+		if (toolBarDefinitions.at(i).location == BottomToolBarArea)
+		{
+			area = Qt::BottomToolBarArea;
+		}
+		else if (toolBarDefinitions.at(i).location == LeftToolBarLocation)
+		{
+			area = Qt::LeftToolBarArea;
+		}
+		else if (toolBarDefinitions.at(i).location == RightToolBarLocation)
+		{
+			area = Qt::RightToolBarArea;
+		}
+
+		ToolBarWidget *toolBar = new ToolBarWidget(toolBarDefinitions.at(i), NULL, this);
+		toolBar->setMovable(areToolBarsMovable);
+
+		addToolBar(area, toolBar);
+
+		if (toolBarDefinitions.at(i).name == QLatin1String("TabBar"))
+		{
+			m_tabBarToolBar = toolBar;
+		}
+	}
 
 	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
 	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
@@ -144,7 +175,12 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 		restoreState(session.state);
 	}
 
-	m_tabBarToolBar->notifyAreaChanged();
+	const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
+
+	for (int i = 0; i < toolBars.count(); ++i)
+	{
+		toolBars.at(i)->notifyAreaChanged();
+	}
 }
 
 MainWindow::~MainWindow()

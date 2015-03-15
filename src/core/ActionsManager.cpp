@@ -267,7 +267,7 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		}
 		else if (location == QLatin1String("bottom"))
 		{
-			toolBar.location = BottomBarArea;
+			toolBar.location = BottomToolBarArea;
 		}
 		else if (location == QLatin1String("left"))
 		{
