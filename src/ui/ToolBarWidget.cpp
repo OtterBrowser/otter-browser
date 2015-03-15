@@ -44,6 +44,12 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
+	setToolButtonStyle(definition.iconStyle);
+
+	if (definition.iconSize > 0)
+	{
+		setIconSize(QSize(definition.iconSize, definition.iconSize));
+	}
 
 	bool hasTabBar = false;
 

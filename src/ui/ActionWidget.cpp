@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "ActionWidget.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
+#include "ToolBarWidget.h"
 #include "Window.h"
 
 #include <QtGui/QMouseEvent>
@@ -39,6 +40,17 @@ ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QT
 	else
 	{
 		setDefaultAction(ActionsManager::getAction(identifier, this));
+	}
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
+	{
+		setIconSize(toolBar->iconSize());
+		setToolButtonStyle(toolBar->toolButtonStyle());
+
+		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
+		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
 	}
 }
 

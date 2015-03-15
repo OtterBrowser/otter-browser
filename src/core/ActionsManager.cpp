@@ -257,9 +257,12 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		const QJsonObject toolBarObject = toolBars.at(i).toObject();
 		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
 		const QString location = toolBarObject.value(QLatin1String("location")).toString();
+		const QString iconStyle = toolBarObject.value(QLatin1String("iconStyle")).toString();
 		ToolBarDefinition toolBar;
 		toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
+		toolBar.iconStyle = Qt::ToolButtonIconOnly;
+		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 
 		if (location == QLatin1String("top"))
 		{
@@ -296,6 +299,23 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		else
 		{
 			toolBar.location = UnknownToolBarLocation;
+		}
+
+		if (iconStyle == QLatin1String("auto"))
+		{
+			toolBar.iconStyle = Qt::ToolButtonFollowStyle;
+		}
+		else if (iconStyle == QLatin1String("textOnly"))
+		{
+			toolBar.iconStyle = Qt::ToolButtonTextOnly;
+		}
+		else if (iconStyle == QLatin1String("textBesideIcon"))
+		{
+			toolBar.iconStyle = Qt::ToolButtonTextBesideIcon;
+		}
+		else if (iconStyle == QLatin1String("textUnderIcon"))
+		{
+			toolBar.iconStyle = Qt::ToolButtonTextUnderIcon;
 		}
 
 		for (int j = 0; j < actions.count(); ++j)

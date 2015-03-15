@@ -56,6 +56,10 @@ struct ToolBarDefinition
 	QString title;
 	QList<ToolBarActionDefinition> actions;
 	ToolBarLocation location;
+	Qt::ToolButtonStyle iconStyle;
+	int iconSize;
+
+	ToolBarDefinition() : iconStyle(Qt::ToolButtonFollowStyle), iconSize(-1) {}
 };
 
 struct ActionDefinition
