@@ -30,19 +30,21 @@ namespace Otter
 {
 
 class SearchSuggester;
+class Window;
 
 class SearchWidget : public QComboBox
 {
 	Q_OBJECT
 
 public:
-	explicit SearchWidget(QWidget *parent = NULL);
+	explicit SearchWidget(Window *window, QWidget *parent = NULL);
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
 
 public slots:
-	void setCurrentSearchEngine(const QString &engine = QString());
+	void setWindow(Window *window);
+	void setSearchEngine(const QString &engine = QString());
 
 protected:
 	void paintEvent(QPaintEvent *event);
@@ -56,14 +58,15 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void currentSearchEngineChanged(int index);
-	void searchEngineSelected(int index);
+	void currentIndexChanged(int index);
+	void indexActivated(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
 
 private:
+	Window *m_window;
 	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;
@@ -76,7 +79,8 @@ private:
 	bool m_popupUpdated;
 
 signals:
-	void requestedSearch(QString query, QString engine, OpenHints hints);
+	void searchEngineChanged(const QString &engine);
+	void requestedSearch(const QString &query, const QString &engine, OpenHints hints);
 };
 
 }

@@ -110,11 +110,12 @@ protected slots:
 
 private:
 	ToolBarWidget *m_navigationBar;
-	QList<QPointer<AddressWidget> > m_addressWidgets;
-	QList<QPointer<SearchWidget> > m_searchWidgets;
 	ContentsWidget *m_contentsWidget;
+	QString m_searchEngine;
 	QDateTime m_lastActivity;
 	SessionWindow m_session;
+	QList<QPointer<AddressWidget> > m_addressWidgets;
+	QList<QPointer<SearchWidget> > m_searchWidgets;
 	qint64 m_identifier;
 	bool m_areControlsHidden;
 	bool m_isPinned;
@@ -131,6 +132,7 @@ signals:
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedCloseWindow(Window *window);
 	void canZoomChanged(bool can);
+	void searchEngineChanged(const QString &engine);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

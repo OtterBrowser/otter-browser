@@ -706,7 +706,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 
 	ActionsManager::getAction(Action::CloneTabAction, m_mainWindow->getMdi())->setEnabled(window && window->canClone());
 
-	emit currentWindowChanged(index);
+	emit currentWindowChanged(window ? window->getIdentifier() : -1);
 }
 
 void WindowsManager::setActiveWindowByIdentifier(qint64 identifier)

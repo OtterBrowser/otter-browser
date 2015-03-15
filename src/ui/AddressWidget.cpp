@@ -22,6 +22,7 @@
 #include "AddressWidget.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ContentsWidget.h"
+#include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/BookmarksManager.h"
@@ -41,13 +42,13 @@
 namespace Otter
 {
 
-AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) : QLineEdit(parent),
+AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent),
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
-	m_simpleMode(simpleMode)
+	m_simpleMode(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
@@ -58,7 +59,9 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 	setCompleter(m_completer);
 	setMinimumWidth(100);
 
-	if (!m_simpleMode)
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
 	{
 		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
@@ -66,6 +69,11 @@ AddressWidget::AddressWidget(Window *window, bool simpleMode, QWidget *parent) :
 		setMouseTracking(true);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+	}
+	else
+	{
+		m_simpleMode = true;
 	}
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
@@ -455,8 +463,14 @@ void AddressWidget::setWindow(Window *window)
 {
 	if (m_window)
 	{
-		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		m_window->detachAddressWidget(this);
+
+		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		disconnect(m_window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
 		if (m_window->getContentsWidget()->getAction(Action::LoadPluginsAction))
 		{
@@ -468,6 +482,8 @@ void AddressWidget::setWindow(Window *window)
 
 	if (window)
 	{
+		window->attachAddressWidget(this);
+
 		if (m_urlIconLabel)
 		{
 			setIcon(window->getIcon());
@@ -476,6 +492,10 @@ void AddressWidget::setWindow(Window *window)
 			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		}
 
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		connect(window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
 		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
 		if (window->getContentsWidget()->getAction(Action::LoadPluginsAction))

@@ -27,6 +27,8 @@
 namespace Otter
 {
 
+class MainWindow;
+
 class ToolBarWidget : public QToolBar
 {
 	Q_OBJECT
@@ -37,11 +39,16 @@ public:
 public slots:
 	void notifyAreaChanged();
 
+protected slots:
+	void notifyWindowChanged(qint64 identifier);
+
 private:
+	MainWindow *m_mainWindow;
 	Window *m_window;
 
 signals:
 	void areaChanged(Qt::ToolBarArea area);
+	void windowChanged(Window *window);
 };
 
 }

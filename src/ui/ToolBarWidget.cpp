@@ -30,11 +30,13 @@
 #include "toolbars/MenuActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
 #include "../core/Utils.h"
+#include "../core/WindowsManager.h"
 
 namespace Otter
 {
 
 ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent) : QToolBar(parent),
+	m_mainWindow(qobject_cast<MainWindow*>(parent)),
 	m_window(window)
 {
 	setObjectName(definition.name);
@@ -79,25 +81,11 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		}
 		else if (definition.actions.at(i).action == QLatin1String("AddressWidget"))
 		{
-			AddressWidget *addressWidget = new AddressWidget(m_window, false, this);
-
-			if (m_window)
-			{
-				m_window->attachAddressWidget(addressWidget);
-			}
-
-			addWidget(addressWidget);
+			addWidget(new AddressWidget(m_window, this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("SearchWidget"))
 		{
-			SearchWidget *searchWidget = new SearchWidget(this);
-
-			if (m_window)
-			{
-				m_window->attachSearchWidget(searchWidget);
-			}
-
-			addWidget(searchWidget);
+			addWidget(new SearchWidget(m_window, this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("PanelChooserWidget"))
 		{
@@ -160,17 +148,27 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		addWidget(tabBar);
 	}
 
+	if (m_mainWindow)
+	{
+		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
+	}
+
 	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 }
 
 void ToolBarWidget::notifyAreaChanged()
 {
-	MainWindow *window = MainWindow::findMainWindow(this);
-
-	if (window)
+	if (m_mainWindow)
 	{
-		emit areaChanged(window->toolBarArea(this));
+		emit areaChanged(m_mainWindow->toolBarArea(this));
 	}
+}
+
+void ToolBarWidget::notifyWindowChanged(qint64 identifier)
+{
+	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
+
+	emit windowChanged(m_window);
 }
 
 }

@@ -35,7 +35,7 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 {
 	m_ui->setupUi(this);
 
-	m_addressWidget = new AddressWidget(NULL, true, this);
+	m_addressWidget = new AddressWidget(NULL, this);
 	m_addressWidget->setFocus();
 
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);

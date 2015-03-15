@@ -216,41 +216,21 @@ void Window::clear()
 void Window::attachAddressWidget(AddressWidget *widget)
 {
 	m_addressWidgets.append(widget);
-
-	widget->setUrl(getUrl());
-	widget->setWindow(this);
-
-	connect(this, SIGNAL(urlChanged(QUrl)), widget, SLOT(setUrl(QUrl)));
-	connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-	connect(widget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-	connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 }
 
 void Window::detachAddressWidget(AddressWidget *widget)
 {
 	m_addressWidgets.removeAll(widget);
-
-	widget->setUrl(QUrl());
-	widget->setWindow(NULL);
-
-	disconnect(this, SIGNAL(urlChanged(QUrl)), widget, SLOT(setUrl(QUrl)));
-	disconnect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-	disconnect(widget, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-	disconnect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 }
 
 void Window::attachSearchWidget(SearchWidget *widget)
 {
 	m_searchWidgets.append(widget);
-
-	connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 }
 
 void Window::detachSearchWidget(SearchWidget *widget)
 {
 	m_searchWidgets.removeAll(widget);
-
-	disconnect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 }
 
 void Window::close()
@@ -381,16 +361,14 @@ void Window::setOption(const QString &key, const QVariant &value)
 
 void Window::setSearchEngine(const QString &engine)
 {
-	if (!m_searchWidgets.isEmpty())
+	if (engine == m_searchEngine)
 	{
-		for (int i = 0; i < m_searchWidgets.count(); ++i)
-		{
-			if (m_searchWidgets.at(i))
-			{
-				m_searchWidgets.at(i)->setCurrentSearchEngine(engine);
-			}
-		}
+		return;
 	}
+
+	m_searchEngine = engine;
+
+	emit searchEngineChanged(engine);
 }
 
 void Window::setUrl(const QUrl &url, bool typed)
@@ -636,7 +614,7 @@ QVariant Window::getOption(const QString &key) const
 
 QString Window::getSearchEngine() const
 {
-	return ((m_searchWidgets.isEmpty() || !m_searchWidgets.at(0)) ? QString() : m_searchWidgets.at(0)->getCurrentSearchEngine());
+	return m_searchEngine;
 }
 
 QString Window::getTitle() const
