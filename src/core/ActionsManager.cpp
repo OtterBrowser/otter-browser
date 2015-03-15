@@ -210,11 +210,47 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 
 	GesturesManager::createInstance(Application::getInstance());
 
-	const QString toolBarsPath = (SessionsManager::getProfilePath() + QLatin1String("/toolBars.json"));
-	QFile toolBarsFile(QFile::exists(toolBarsPath) ? toolBarsPath : QLatin1String(":/other/toolBars.json"));
-	toolBarsFile.open(QFile::ReadOnly);
+	toolBarDefinitions = loadToolBars(QLatin1String(":/other/toolBars.json"));
 
-	const QJsonArray toolBars = QJsonDocument::fromJson(toolBarsFile.readAll()).array();
+	const QString customToolBarsPath = SessionsManager::getProfilePath() + QLatin1String("/toolBars.json");
+
+	if (QFile::exists(customToolBarsPath))
+	{
+		const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath);
+		QHash<QString, ToolBarDefinition>::const_iterator iterator;
+
+		for (iterator = customToolBarDefinitions.constBegin(); iterator != customToolBarDefinitions.constEnd(); ++iterator)
+		{
+			toolBarDefinitions[iterator.key()] = iterator.value();
+		}
+	}
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+}
+
+void ActionsManagerHelper::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == reloadShortcutsTimer)
+	{
+		killTimer(reloadShortcutsTimer);
+
+		reloadShortcutsTimer = 0;
+
+		ActionsManager::loadShortcuts();
+	}
+}
+
+QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QString &path) const
+{
+	QHash<QString, ToolBarDefinition> definitions;
+	QFile file(path);
+
+	if (!file.open(QFile::ReadOnly))
+	{
+		return definitions;
+	}
+
+	const QJsonArray toolBars = QJsonDocument::fromJson(file.readAll()).array();
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
@@ -281,22 +317,10 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 			toolBar.actions.append(action);
 		}
 
-		toolBarDefinitions[toolBar.name] = toolBar;
+		definitions[toolBar.name] = toolBar;
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
-}
-
-void ActionsManagerHelper::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == reloadShortcutsTimer)
-	{
-		killTimer(reloadShortcutsTimer);
-
-		reloadShortcutsTimer = 0;
-
-		ActionsManager::loadShortcuts();
-	}
+	return definitions;
 }
 
 int ActionsManagerHelper::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked)
@@ -661,7 +685,15 @@ ToolBarDefinition ActionsManager::getToolBarDefinition(const QString &toolBar)
 		initialize();
 	}
 
-	return m_helper->toolBarDefinitions.value(toolBar, ToolBarDefinition());
+	if (!m_helper->toolBarDefinitions.contains(toolBar))
+	{
+		ToolBarDefinition definition;
+		definition.name = toolBar;
+
+		return definition;
+	}
+
+	return m_helper->toolBarDefinitions[toolBar];
 }
 
 int ActionsManager::getActionIdentifier(const QString &name)

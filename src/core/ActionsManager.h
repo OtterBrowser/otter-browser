@@ -84,6 +84,7 @@ protected:
 	ActionsManagerHelper(QObject *parent);
 
 	void timerEvent(QTimerEvent *event);
+	QHash<QString, ToolBarDefinition> loadToolBars(const QString &path) const;
 	int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
 
 	int reloadShortcutsTimer;
