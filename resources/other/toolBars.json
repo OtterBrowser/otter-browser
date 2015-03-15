@@ -24,5 +24,17 @@
 			"AddressWidget",
 			"SearchWidget"
 		]
+	},
+	{
+		"identifier": "StatusBar",
+		"location": "status",
+		"title": "Status Bar",
+		"actions":
+		[
+			"StatusMessageWidget",
+			"ZoomOutAction",
+			"ZoomWidget",
+			"ZoomInAction"
+		]
 	}
 ]
