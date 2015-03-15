@@ -272,12 +272,12 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Interface/LockToolBars"))
 	{
-		const QList<QToolBar*> toolBars = findChildren<QToolBar*>();
-		const bool movable = !value.toBool();
+		const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
+		const bool areToolBarsMovable = !value.toBool();
 
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
-			toolBars.at(i)->setMovable(movable);
+			toolBars.at(i)->setMovable(areToolBarsMovable);
 		}
 
 		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
