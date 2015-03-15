@@ -67,7 +67,6 @@ SOURCES += src/main.cpp \
     src/core/WindowsManager.cpp \
     src/ui/ActionWidget.cpp \
     src/ui/AddressDelegate.cpp \
-    src/ui/AddressWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
     src/ui/BookmarksComboBoxWidget.cpp \
@@ -94,7 +93,6 @@ SOURCES += src/main.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/SearchDelegate.cpp \
     src/ui/SearchPropertiesDialog.cpp \
-    src/ui/SearchWidget.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SidebarWidget.cpp \
     src/ui/StartupDialog.cpp \
@@ -113,10 +111,12 @@ SOURCES += src/main.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
+    src/ui/toolbars/AddressWidget.cpp \
     src/ui/toolbars/GoBackActionWidget.cpp \
     src/ui/toolbars/GoForwardActionWidget.cpp \
     src/ui/toolbars/MenuActionWidget.cpp \
     src/ui/toolbars/PanelChooserWidget.cpp \
+    src/ui/toolbars/SearchWidget.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp \
@@ -180,7 +180,6 @@ HEADERS += src/core/Action.h \
     src/core/WindowsManager.h \
     src/ui/ActionWidget.h \
     src/ui/AddressDelegate.h \
-    src/ui/AddressWidget.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
     src/ui/BookmarksComboBoxWidget.h \
@@ -207,7 +206,6 @@ HEADERS += src/core/Action.h \
     src/ui/SaveSessionDialog.h \
     src/ui/SearchDelegate.h \
     src/ui/SearchPropertiesDialog.h \
-    src/ui/SearchWidget.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SidebarWidget.h \
     src/ui/StartupDialog.h \
@@ -226,10 +224,12 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
+    src/ui/toolbars/AddressWidget.h \
     src/ui/toolbars/GoBackActionWidget.h \
     src/ui/toolbars/GoForwardActionWidget.h \
     src/ui/toolbars/MenuActionWidget.h \
     src/ui/toolbars/PanelChooserWidget.h \
+    src/ui/toolbars/SearchWidget.h \
     src/ui/toolbars/ZoomWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.h \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.h \

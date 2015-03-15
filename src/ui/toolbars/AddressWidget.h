@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,69 +17,69 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SEARCHWIDGET_H
-#define OTTER_SEARCHWIDGET_H
+#ifndef OTTER_ADDRESSWIDGET_H
+#define OTTER_ADDRESSWIDGET_H
 
-#include "../core/WindowsManager.h"
+#include "../../core/WindowsManager.h"
 
-#include <QtWidgets/QComboBox>
+#include <QtCore/QUrl>
 #include <QtWidgets/QCompleter>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
-class SearchSuggester;
 class Window;
 
-class SearchWidget : public QComboBox
+class AddressWidget : public QLineEdit
 {
 	Q_OBJECT
 
 public:
-	explicit SearchWidget(Window *window, QWidget *parent = NULL);
+	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
-	void hidePopup();
-	QString getCurrentSearchEngine() const;
+	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
+	QUrl getUrl() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void setWindow(Window *window);
-	void setSearchEngine(const QString &engine = QString());
+	void setUrl(const QUrl &url);
+	void setWindow(Window *window = NULL);
 
 protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void keyPressEvent(QKeyEvent *event);
-	void mousePressEvent(QMouseEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
-	bool setPlaceholderText(int index);
+	void mouseDoubleClickEvent(QMouseEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void currentIndexChanged(int index);
-	void indexActivated(int index);
-	void queryChanged(const QString &query);
-	void sendRequest(const QString &query = QString());
-	void storeCurrentSearchEngine();
-	void restoreCurrentSearchEngine();
+	void removeIcon();
+	void updateBookmark();
+	void updateLoadPlugins();
+	void updateIcons();
+	void setCompletion(const QString &text);
+	void setIcon(const QIcon &icon);
 
 private:
 	Window *m_window;
 	QCompleter *m_completer;
-	SearchSuggester *m_suggester;
-	QString m_query;
-	QString m_storedSearchEngine;
-	QRect m_selectButtonIconRectangle;
-	QRect m_selectButtonArrowRectangle;
-	QRect m_lineEditRectangle;
-	QRect m_searchButtonRectangle;
-	int m_index;
-	bool m_popupUpdated;
+	QLabel *m_bookmarkLabel;
+	QLabel *m_loadPluginsLabel;
+	QLabel *m_urlIconLabel;
+	QRect m_securityBadgeRectangle;
+	OpenHints m_hints;
+	bool m_simpleMode;
 
 signals:
-	void searchEngineChanged(const QString &engine);
-	void requestedSearch(const QString &query, const QString &engine, OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
+	void requestedOpenUrl(QUrl url, OpenHints hints);
+	void requestedSearch(QString query, QString engine, OpenHints hints);
 };
 
 }

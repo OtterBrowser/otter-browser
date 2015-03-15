@@ -115,7 +115,6 @@ set(otter_src
 	src/core/WindowsManager.cpp
 	src/ui/ActionWidget.cpp
 	src/ui/AddressDelegate.cpp
-	src/ui/AddressWidget.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
 	src/ui/BookmarksComboBoxWidget.cpp
@@ -142,7 +141,6 @@ set(otter_src
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchDelegate.cpp
 	src/ui/SearchPropertiesDialog.cpp
-	src/ui/SearchWidget.cpp
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/SidebarWidget.cpp
 	src/ui/StartupDialog.cpp
@@ -161,10 +159,12 @@ set(otter_src
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
+	src/ui/toolbars/AddressWidget.cpp
 	src/ui/toolbars/GoBackActionWidget.cpp
 	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuActionWidget.cpp
 	src/ui/toolbars/PanelChooserWidget.cpp
+	src/ui/toolbars/SearchWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp

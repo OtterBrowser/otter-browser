@@ -18,17 +18,18 @@
 **************************************************************************/
 
 #include "ToolBarWidget.h"
-#include "AddressWidget.h"
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "Menu.h"
-#include "SearchWidget.h"
 #include "TabBarWidget.h"
 #include "Window.h"
+#include "toolbars/AddressWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/MenuActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
+#include "toolbars/SearchWidget.h"
+#include "toolbars/ZoomWidget.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
@@ -83,13 +84,17 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		{
 			addWidget(new AddressWidget(m_window, this));
 		}
+		else if (definition.actions.at(i).action == QLatin1String("PanelChooserWidget"))
+		{
+			addWidget(new PanelChooserWidget(this));
+		}
 		else if (definition.actions.at(i).action == QLatin1String("SearchWidget"))
 		{
 			addWidget(new SearchWidget(m_window, this));
 		}
-		else if (definition.actions.at(i).action == QLatin1String("PanelChooserWidget"))
+		else if (definition.actions.at(i).action == QLatin1String("ZoomWidget"))
 		{
-			addWidget(new PanelChooserWidget(this));
+			addWidget(new ZoomWidget(this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && !hasTabBar && definition.name == QLatin1String("TabBar"))
 		{

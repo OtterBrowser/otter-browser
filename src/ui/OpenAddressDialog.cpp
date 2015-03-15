@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "OpenAddressDialog.h"
-#include "AddressWidget.h"
+#include "toolbars/AddressWidget.h"
 #include "../core/InputInterpreter.h"
 
 #include "ui_OpenAddressDialog.h"

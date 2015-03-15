@@ -19,15 +19,15 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
-#include "PreferencesDialog.h"
-#include "SearchDelegate.h"
-#include "ToolBarWidget.h"
-#include "Window.h"
-#include "../core/SearchesManager.h"
-#include "../core/SearchSuggester.h"
-#include "../core/SessionsManager.h"
-#include "../core/SettingsManager.h"
-#include "../core/Utils.h"
+#include "../PreferencesDialog.h"
+#include "../SearchDelegate.h"
+#include "../ToolBarWidget.h"
+#include "../Window.h"
+#include "../../core/SearchesManager.h"
+#include "../../core/SearchSuggester.h"
+#include "../../core/SessionsManager.h"
+#include "../../core/SettingsManager.h"
+#include "../../core/Utils.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QGuiApplication>

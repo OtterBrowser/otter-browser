@@ -20,16 +20,16 @@
 **************************************************************************/
 
 #include "AddressWidget.h"
-#include "BookmarkPropertiesDialog.h"
-#include "ContentsWidget.h"
-#include "ToolBarWidget.h"
-#include "Window.h"
-#include "../core/AddressCompletionModel.h"
-#include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
-#include "../core/InputInterpreter.h"
-#include "../core/SearchesManager.h"
-#include "../core/Utils.h"
+#include "../BookmarkPropertiesDialog.h"
+#include "../ContentsWidget.h"
+#include "../ToolBarWidget.h"
+#include "../Window.h"
+#include "../../core/AddressCompletionModel.h"
+#include "../../core/BookmarksManager.h"
+#include "../../core/BookmarksModel.h"
+#include "../../core/InputInterpreter.h"
+#include "../../core/SearchesManager.h"
+#include "../../core/Utils.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
