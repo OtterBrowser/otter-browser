@@ -456,6 +456,7 @@ void AddressWidget::setUrl(const QUrl &url)
 	if (m_window && !hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
 		setText(m_window->isUrlEmpty() ? QString() : url.toString());
+		setCursorPosition(0);
 	}
 }
 
