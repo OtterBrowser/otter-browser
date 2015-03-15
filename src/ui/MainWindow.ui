@@ -14,7 +14,6 @@
    <set>QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget"/>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="consoleDockWidget">
    <property name="windowTitle">
     <string>Console</string>

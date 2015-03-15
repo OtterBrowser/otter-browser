@@ -93,6 +93,7 @@ private:
 	MdiWidget *m_mdiWidget;
 	TabBarWidget *m_tabBar;
 	ToolBarWidget *m_tabBarToolBar;
+	ToolBarWidget *m_statusBar;
 	QMenuBar *m_menuBar;
 	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
@@ -102,8 +103,9 @@ private:
 	Ui::MainWindow *m_ui;
 
 signals:
-	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, QUrl url = QUrl());
+	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	void controlsHiddenChanged(bool hidden);
+	void statusMessageChanged(const QString &message);
 
 friend class ToolBarWidget;
 };

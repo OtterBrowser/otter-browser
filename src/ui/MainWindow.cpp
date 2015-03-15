@@ -59,6 +59,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
@@ -70,6 +71,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_mdiWidget(new MdiWidget(this)),
 	m_tabBar(NULL),
 	m_tabBarToolBar(NULL),
+	m_statusBar(NULL),
 	m_menuBar(NULL),
 	m_toggleEdge(NULL),
 	m_sidebarWidget(NULL),
@@ -82,12 +84,23 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
+	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+
 	m_splitter->setChildrenCollapsible(false);
 	m_splitter->addWidget(m_mdiWidget);
 
-	setCentralWidget(m_splitter);
+	QWidget *centralWidget = new QWidget(this);
+	QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
+	centralLayout->setContentsMargins(0, 0, 0, 0);
+	centralLayout->setSpacing(0);
+	centralLayout->addWidget(m_splitter);
 
-	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_statusBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("StatusBar")), NULL, centralWidget);
+	m_statusBar->setFixedHeight(20);
+
+	centralLayout->addWidget(m_statusBar);
+
+	setCentralWidget(centralWidget);
 
 	const QList<ToolBarDefinition> toolBarDefinitions = ActionsManager::getToolBarDefinitions();
 	const bool areToolBarsMovable = !SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
@@ -124,11 +137,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 			m_tabBarToolBar = toolBar;
 		}
 	}
-
-	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomOutAction, NULL, this));
-	m_ui->statusBar->addPermanentWidget(new ZoomWidget(this));
-	m_ui->statusBar->addPermanentWidget(new ActionWidget(Action::ZoomInAction, NULL, this));
-	m_ui->statusBar->setFixedHeight(m_ui->statusBar->sizeHint().height() * 0.7);
 
 	SessionsManager::registerWindow(this);
 
@@ -908,7 +916,7 @@ bool MainWindow::event(QEvent *event)
 							m_tabBarToolBar->setMaximumHeight(1);
 						}
 
-						m_ui->statusBar->hide();
+						m_statusBar->hide();
 
 						if (m_menuBar)
 						{
@@ -921,7 +929,7 @@ bool MainWindow::event(QEvent *event)
 					else
 					{
 						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-						m_ui->statusBar->show();
+						m_statusBar->show();
 
 						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 						{
@@ -959,6 +967,17 @@ bool MainWindow::event(QEvent *event)
 			SessionsManager::markSessionModified();
 
 			break;
+		case QEvent::StatusTip:
+			{
+				QStatusTipEvent *statusTipEvent = static_cast<QStatusTipEvent*>(event);
+
+				if (statusTipEvent)
+				{
+					emit statusMessageChanged(statusTipEvent->tip());
+				}
+			}
+
+			break;
 		case QEvent::Move:
 			SessionsManager::markSessionModified();
 
@@ -976,7 +995,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
-		if (keyEvent->key() == Qt::Key_Escape)
+		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
 			triggerAction(Action::FullScreenAction);
 		}

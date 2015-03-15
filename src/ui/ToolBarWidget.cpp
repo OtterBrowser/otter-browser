@@ -29,6 +29,7 @@
 #include "toolbars/MenuActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
 #include "toolbars/SearchWidget.h"
+#include "toolbars/StatusMessageWidget.h"
 #include "toolbars/ZoomWidget.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
@@ -97,6 +98,10 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		else if (definition.actions.at(i).action == QLatin1String("SearchWidget"))
 		{
 			addWidget(new SearchWidget(m_window, this));
+		}
+		else if (definition.actions.at(i).action == QLatin1String("StatusMessageWidget"))
+		{
+			addWidget(new StatusMessageWidget(this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("ZoomWidget"))
 		{
