@@ -23,6 +23,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
+#include "../core/WindowsManager.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
@@ -178,17 +179,12 @@ void SidebarWidget::openPanel()
 
 	if (url.scheme() != QLatin1String("about") || !SessionsManager::hasUrl(url, true))
 	{
-		openUrl(url, NewTabOpen);
-	}
-}
+		MainWindow *window = MainWindow::findMainWindow(parent());
 
-void SidebarWidget::openUrl(const QUrl &url, OpenHints hints)
-{
-	MainWindow *window = MainWindow::findMainWindow(parent());
-
-	if (window)
-	{
-		window->getWindowsManager()->open(url, hints);
+		if (window)
+		{
+			window->getWindowsManager()->open(url, NewTabOpen);
+		}
 	}
 }
 
@@ -253,7 +249,7 @@ void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 	{
 		toolbar->setLayoutDirection((edge == Qt::RightEdge) ? Qt::RightToLeft : Qt::LeftToRight);
 
-		QList<QWidget*> widgets = toolbar->findChildren<QWidget *>();
+		QList<QWidget*> widgets = toolbar->findChildren<QWidget*>();
 
 		for (int i = 0; i < widgets.count(); ++i)
 		{
@@ -338,11 +334,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	QWidget *widget = NULL;
 
-	if (identifier.isEmpty())
-	{
-		widget = NULL;
-	}
-	else if (identifier == QLatin1String("bookmarks"))
+	if (identifier == QLatin1String("bookmarks"))
 	{
 		widget = new BookmarksContentsWidget(NULL);
 	}
@@ -374,9 +366,17 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		widget = webWidget;
 	}
 
-	if (qobject_cast<ContentsWidget*>(widget))
+	if (widget)
 	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(openUrl(QUrl,OpenHints)));
+		MainWindow *window = MainWindow::findMainWindow(parent());
+
+		if (window)
+		{
+			connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), window->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
+			connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), window->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+			connect(widget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), window->getWindowsManager(), SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
+			connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), window->getWindowsManager(), SLOT(openWindow(ContentsWidget*,OpenHints)));
+		}
 	}
 
 	if (m_currentWidget)
@@ -426,34 +426,38 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 	{
 		return tr("Bookmarks");
 	}
-	else if (identifier == QLatin1String("history"))
+
+	if (identifier == QLatin1String("history"))
 	{
 		return tr("History");
 	}
-	else if (identifier == QLatin1String("transfers"))
+
+	if (identifier == QLatin1String("transfers"))
 	{
 		return tr("Transfers");
 	}
-	else if (identifier == QLatin1String("cache"))
+
+	if (identifier == QLatin1String("cache"))
 	{
 		return tr("Cache");
 	}
-	else if (identifier == QLatin1String("cookies"))
+
+	if (identifier == QLatin1String("cookies"))
 	{
 		return tr("Cookies");
 	}
-	else if (identifier == QLatin1String("config"))
+
+	if (identifier == QLatin1String("config"))
 	{
 		return tr("Configuration");
 	}
-	else if (identifier.startsWith(QLatin1String("web:")))
+
+	if (identifier.startsWith(QLatin1String("web:")))
 	{
 		return identifier.mid(4);
 	}
-	else
-	{
-		return identifier;
-	}
+
+	return identifier;
 }
 
 QSize SidebarWidget::sizeHint() const
@@ -462,10 +466,8 @@ QSize SidebarWidget::sizeHint() const
 	{
 		return m_ui->buttonsLayout->sizeHint();
 	}
-	else
-	{
-		return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
-	}
+
+	return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
 }
 
 }

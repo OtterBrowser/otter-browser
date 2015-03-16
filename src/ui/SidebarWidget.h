@@ -55,7 +55,6 @@ protected:
 protected slots:
 	void addWebPanel();
 	void choosePanel(bool checked);
-	void openUrl(const QUrl &url, OpenHints);
 	void optionChanged(const QString &option, const QVariant &value);
 	void selectPanel();
 
