@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,41 +22,36 @@
 #include "../../core/WindowsManager.h"
 
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleOptionSlider>
 
 namespace Otter
 {
 
 ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
-	m_manager(NULL)
+	m_mainWindow(NULL)
 {
-	MainWindow *window = MainWindow::findMainWindow(parent);
+	m_mainWindow = MainWindow::findMainWindow(parent);
 
-	if (window)
+	if (m_mainWindow)
 	{
-		m_manager = window->getWindowsManager();
-
-		connect(m_manager, SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
-		connect(m_manager, SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
-		connect(this, SIGNAL(valueChanged(int)), m_manager, SLOT(setZoom(int)));
+		connect(m_mainWindow->getWindowsManager(), SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
+		connect(m_mainWindow->getWindowsManager(), SIGNAL(zoomChanged(int)), this, SLOT(setZoom(int)));
+		connect(this, SIGNAL(valueChanged(int)), m_mainWindow->getWindowsManager(), SLOT(setZoom(int)));
 	}
 	else
 	{
 		setEnabled(false);
 	}
 
-	setRange(10, 250);
+	setRange(0, 300);
 	setTracking(true);
 	setOrientation(Qt::Horizontal);
 	setFocusPolicy(Qt::TabFocus);
-	setMaximumWidth(100);
+	setTickPosition(QSlider::TicksBelow);
+	setTickInterval(100);
+	setMaximumWidth(150);
 	setZoom(100);
-}
-
-void ZoomWidget::setZoom(int zoom)
-{
-	setValue(zoom);
-	setToolTip(tr("Zoom %1%").arg(zoom));
 }
 
 void ZoomWidget::mousePressEvent(QMouseEvent *event)
@@ -74,14 +69,6 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 	option.sliderValue = value();
 
 	const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this);
-
-	if (handle.contains(event->pos()))
-	{
-		QSlider::mousePressEvent(event);
-
-		return;
-	}
-
 	const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
 	int value = 0;
 
@@ -94,7 +81,28 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 		value = QStyle::sliderValueFromPosition(minimum(), maximum(), (event->y() - (handle.height() / 2) - groove.y()), (groove.bottom() - handle.height()), true);
 	}
 
-	setValue(value);
+	setZoom(value);
+
+	if (handle.contains(event->pos()))
+	{
+		QSlider::mousePressEvent(event);
+	}
+}
+
+void ZoomWidget::setZoom(int zoom)
+{
+	zoom = qMax(zoom, 10);
+
+	setValue(zoom);
+	setToolTip(tr("Zoom %1%").arg(zoom));
+	setStatusTip(tr("Zoom %1%").arg(zoom));
+
+	if (m_mainWindow && (underMouse() || isSliderDown()))
+	{
+		QStatusTipEvent event(statusTip());
+
+		QApplication::sendEvent(m_mainWindow, &event);
+	}
 }
 
 }
