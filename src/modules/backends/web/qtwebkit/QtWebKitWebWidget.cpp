@@ -726,6 +726,7 @@ void QtWebKitWebWidget::updateEditActions()
 		SearchInformation *engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
 
 		m_actions[Action::SearchAction]->setEnabled(engine != NULL);
+		m_actions[Action::SearchAction]->setData(engine ? engine->identifier : QVariant());
 		m_actions[Action::SearchAction]->setIcon((!engine || engine->icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
 		m_actions[Action::SearchAction]->setOverrideText(engine ? engine->title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[Action::SearchAction]->setToolTip(engine ? engine->description : tr("No search engines defined"));

@@ -159,7 +159,6 @@ private:
 	QMenu *m_reloadTimeMenu;
 	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;
-	QString m_quickSearchEngine;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
 	QPoint m_beginCursorPosition;
