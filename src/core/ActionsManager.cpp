@@ -261,44 +261,23 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		ToolBarDefinition toolBar;
 		toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
-		toolBar.iconStyle = Qt::ToolButtonIconOnly;
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 
 		if (location == QLatin1String("top"))
 		{
-			toolBar.location = TopToolBarLocation;
+			toolBar.location = Qt::TopToolBarArea;
 		}
 		else if (location == QLatin1String("bottom"))
 		{
-			toolBar.location = BottomToolBarArea;
+			toolBar.location = Qt::BottomToolBarArea;
 		}
 		else if (location == QLatin1String("left"))
 		{
-			toolBar.location = LeftToolBarLocation;
+			toolBar.location = Qt::LeftToolBarArea;
 		}
 		else if (location == QLatin1String("right"))
 		{
-			toolBar.location = RightToolBarLocation;
-		}
-		else if (location == QLatin1String("navigation"))
-		{
-			toolBar.location = NavigationToolBarLocation;
-		}
-		else if (location == QLatin1String("status"))
-		{
-			toolBar.location = StatusToolBarLocation;
-		}
-		else if (location == QLatin1String("tabs"))
-		{
-			toolBar.location = TabsToolBarLocation;
-		}
-		else if (location == QLatin1String("menu"))
-		{
-			toolBar.location = MenuToolBarLocation;
-		}
-		else
-		{
-			toolBar.location = UnknownToolBarLocation;
+			toolBar.location = Qt::RightToolBarArea;
 		}
 
 		if (iconStyle == QLatin1String("auto"))

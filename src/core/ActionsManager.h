@@ -31,19 +31,6 @@
 namespace Otter
 {
 
-enum ToolBarLocation
-{
-	UnknownToolBarLocation = 0,
-	TopToolBarLocation = 1,
-	BottomToolBarArea = 2,
-	LeftToolBarLocation = 3,
-	RightToolBarLocation = 4,
-	NavigationToolBarLocation = 5,
-	StatusToolBarLocation = 6,
-	TabsToolBarLocation = 7,
-	MenuToolBarLocation = 8
-};
-
 struct ToolBarActionDefinition
 {
 	QString action;
@@ -55,11 +42,11 @@ struct ToolBarDefinition
 	QString name;
 	QString title;
 	QList<ToolBarActionDefinition> actions;
-	ToolBarLocation location;
+	Qt::ToolBarArea location;
 	Qt::ToolButtonStyle iconStyle;
 	int iconSize;
 
-	ToolBarDefinition() : iconStyle(Qt::ToolButtonFollowStyle), iconSize(-1) {}
+	ToolBarDefinition() : location(Qt::NoToolBarArea), iconStyle(Qt::ToolButtonIconOnly), iconSize(-1) {}
 };
 
 struct ActionDefinition

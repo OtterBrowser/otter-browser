@@ -107,30 +107,15 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
-		if (toolBarDefinitions.at(i).location != UnknownToolBarLocation && toolBarDefinitions.at(i).location != TopToolBarLocation&& toolBarDefinitions.at(i).location != BottomToolBarArea && toolBarDefinitions.at(i).location != LeftToolBarLocation && toolBarDefinitions.at(i).location != RightToolBarLocation)
+		if (toolBarDefinitions.at(i).location == Qt::NoToolBarArea)
 		{
 			continue;
-		}
-
-		Qt::ToolBarArea area = Qt::TopToolBarArea;
-
-		if (toolBarDefinitions.at(i).location == BottomToolBarArea)
-		{
-			area = Qt::BottomToolBarArea;
-		}
-		else if (toolBarDefinitions.at(i).location == LeftToolBarLocation)
-		{
-			area = Qt::LeftToolBarArea;
-		}
-		else if (toolBarDefinitions.at(i).location == RightToolBarLocation)
-		{
-			area = Qt::RightToolBarArea;
 		}
 
 		ToolBarWidget *toolBar = new ToolBarWidget(toolBarDefinitions.at(i), NULL, this);
 		toolBar->setMovable(areToolBarsMovable);
 
-		addToolBar(area, toolBar);
+		addToolBar(toolBarDefinitions.at(i).location, toolBar);
 
 		if (toolBarDefinitions.at(i).name == QLatin1String("TabBar"))
 		{

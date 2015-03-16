@@ -14,7 +14,6 @@
 	},
 	{
 		"identifier": "NavigationBar",
-		"location": "navigation",
 		"title": "Navigation Bar",
 		"actions":
 		[
@@ -27,7 +26,6 @@
 	},
 	{
 		"identifier": "StatusBar",
-		"location": "status",
 		"title": "Status Bar",
 		"actions":
 		[
