@@ -86,6 +86,11 @@ private:
 	QDateTime m_timeFinished;
 	QMimeType m_mimeType;
 	qint64 m_speed;
+	static const qint8 m_listReceivedMax = 10;
+	qint64 m_listReceived[m_listReceivedMax];
+	qint64 m_listTime[m_listReceivedMax];
+	qint8 m_listReceivedSize;
+	qint8 m_lastReceivedIndex;
 	qint64 m_bytesStart;
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
