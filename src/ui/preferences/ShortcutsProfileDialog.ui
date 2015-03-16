@@ -23,7 +23,7 @@
       <attribute name="title">
        <string>Actions</string>
       </attribute>
-      <layout class="QVBoxLayout" name="actionsLayout" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="actionsLayout" stretch="0,2,1">
        <item>
         <widget class="QLineEdit" name="filterLineEdit">
          <property name="placeholderText">
@@ -35,24 +35,20 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="Otter::ItemViewWidget" name="actionsViewWidget">
+         <property name="editTriggers">
+          <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="shortcutsLayout">
