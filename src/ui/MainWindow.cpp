@@ -887,6 +887,7 @@ bool MainWindow::event(QEvent *event)
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
 					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
+					const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
 
 					if (isFullScreen())
 					{
@@ -901,7 +902,10 @@ bool MainWindow::event(QEvent *event)
 							m_tabBarToolBar->setMaximumHeight(1);
 						}
 
-						m_statusBar->hide();
+						if (m_statusBar)
+						{
+							m_statusBar->hide();
+						}
 
 						if (m_menuBar)
 						{
@@ -910,11 +914,18 @@ bool MainWindow::event(QEvent *event)
 
 						m_mdiWidget->installEventFilter(this);
 						m_tabBarToolBar->installEventFilter(this);
+
+						for (int i = 0; i < toolBars.count(); ++i)
+						{
+							if (toolBars.at(i) != m_tabBarToolBar)
+							{
+								toolBars.at(i)->hide();
+							}
+						}
 					}
 					else
 					{
 						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-						m_statusBar->show();
 
 						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
 						{
@@ -925,6 +936,11 @@ bool MainWindow::event(QEvent *event)
 							m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
 						}
 
+						if (m_statusBar)
+						{
+							m_statusBar->show();
+						}
+
 						if (m_menuBar)
 						{
 							m_menuBar->show();
@@ -932,6 +948,14 @@ bool MainWindow::event(QEvent *event)
 
 						m_mdiWidget->removeEventFilter(this);
 						m_tabBarToolBar->removeEventFilter(this);
+
+						for (int i = 0; i < toolBars.count(); ++i)
+						{
+							if (toolBars.at(i) != m_tabBarToolBar)
+							{
+								toolBars.at(i)->show();
+							}
+						}
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
