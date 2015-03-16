@@ -414,8 +414,6 @@ void Transfer::downloadFinished()
 	disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
 	disconnect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 
-	m_state = FinishedState;
-	m_timeFinished = QDateTime::currentDateTime();
 	m_bytesReceived = (m_device ? m_device->size() : -1);
 
 	if (m_bytesTotal <= 0 && m_bytesReceived > 0)
@@ -429,6 +427,8 @@ void Transfer::downloadFinished()
 	}
 	else
 	{
+		m_state = FinishedState;
+		m_timeFinished = QDateTime::currentDateTime();
 		m_mimeType = QMimeDatabase().mimeTypeForFile(m_target);
 	}
 
@@ -484,8 +484,6 @@ void Transfer::stop()
 	{
 		m_state = ErrorState;
 	}
-
-	m_timeFinished = QDateTime::currentDateTime();
 
 	emit stopped();
 	emit changed();
@@ -572,8 +570,10 @@ bool Transfer::resume()
 		return false;
 	}
 
+	m_state = RunningState;
 	m_device = file;
 	m_timeStarted = QDateTime::currentDateTime();
+	m_timeFinished = QDateTime();
 	m_bytesStart = file->size();
 
 	QNetworkRequest request;
@@ -615,8 +615,10 @@ bool Transfer::restart()
 		return false;
 	}
 
+	m_state = RunningState;
 	m_device = file;
 	m_timeStarted = QDateTime::currentDateTime();
+	m_timeFinished = QDateTime();
 	m_bytesStart = 0;
 
 	QNetworkRequest request;
