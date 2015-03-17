@@ -44,6 +44,7 @@ public:
 	int getPinnedTabsAmount() const;
 
 public slots:
+	void setCycle(bool enable);
 	void setArea(Qt::ToolBarArea area);
 	void setShape(QTabBar::Shape shape);
 	void setTabProperty(int index, const QString &key, const QVariant &value);
@@ -77,7 +78,6 @@ protected slots:
 	void updatePinnedTabsAmount();
 	void updateButtons();
 	void updateTabs(int index = -1);
-	void setCycle(bool enable);
 	void setIsMoved(bool isMoved);
 
 private:

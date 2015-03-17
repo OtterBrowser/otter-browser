@@ -40,6 +40,7 @@ public slots:
 	void notifyAreaChanged();
 
 protected:
+	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 
 protected slots:

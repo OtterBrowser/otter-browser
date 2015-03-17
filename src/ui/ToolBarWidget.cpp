@@ -174,6 +174,39 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 }
 
+void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+
+	if (objectName() != QLatin1String("TabBar"))
+	{
+		menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+		menu.exec(event->globalPos());
+
+		return;
+	}
+
+	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
+	menu.addSeparator();
+
+	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
+	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
+	cycleAction->setCheckable(true);
+	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
+	cycleAction->setEnabled(m_mainWindow->getTabBar());
+
+	customizeMenu->addSeparator();
+	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+
+	if (m_mainWindow->getTabBar())
+	{
+		connect(cycleAction, SIGNAL(toggled(bool)), m_mainWindow->getTabBar(), SLOT(setCycle(bool)));
+	}
+
+	menu.exec(event->globalPos());
+}
+
 void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton && objectName() == QLatin1String("TabBar"))
