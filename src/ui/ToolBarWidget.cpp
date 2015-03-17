@@ -34,6 +34,8 @@
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
+#include <QtGui/QMouseEvent>
+
 namespace Otter
 {
 
@@ -170,6 +172,14 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	}
 
 	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
+}
+
+void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton && objectName() == QLatin1String("TabBar"))
+	{
+		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
+	}
 }
 
 void ToolBarWidget::notifyAreaChanged()

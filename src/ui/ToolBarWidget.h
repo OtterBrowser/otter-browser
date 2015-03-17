@@ -39,6 +39,9 @@ public:
 public slots:
 	void notifyAreaChanged();
 
+protected:
+	void mouseDoubleClickEvent(QMouseEvent *event);
+
 protected slots:
 	void notifyWindowChanged(qint64 identifier);
 

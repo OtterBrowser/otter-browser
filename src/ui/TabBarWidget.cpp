@@ -214,11 +214,7 @@ void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 	const int tab = tabAt(event->pos());
 
-	if (tab < 0)
-	{
-		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
-	}
-	else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
+	if (tab >= 0 && SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
 	{
 		emit requestedClose(tab);
 	}
