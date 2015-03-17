@@ -63,6 +63,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMouseTracking(true);
 	setDocumentMode(true);
 	setIsMoved(false);
+	setMaximumSize(0, 0);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
 	m_closeButtonPosition = static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition));
 	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
@@ -291,6 +293,8 @@ void TabBarWidget::tabLayoutChange()
 
 void TabBarWidget::tabInserted(int index)
 {
+	setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+
 	QTabBar::tabInserted(index);
 
 	if (m_showUrlIcon)
@@ -312,7 +316,14 @@ void TabBarWidget::tabRemoved(int index)
 {
 	QTabBar::tabRemoved(index);
 
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
+	if (count() == 0)
+	{
+		setMaximumSize(0, 0);
+	}
+	else
+	{
+		QTimer::singleShot(100, this, SLOT(updateTabs()));
+	}
 }
 
 void TabBarWidget::tabHovered(int index)
@@ -698,15 +709,6 @@ void TabBarWidget::setArea(Qt::ToolBarArea area)
 
 void TabBarWidget::setShape(QTabBar::Shape shape)
 {
-	if (shape == QTabBar::RoundedNorth || shape == QTabBar::RoundedSouth)
-	{
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	}
-	else
-	{
-		setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-	}
-
 	QTabBar::setShape(shape);
 
 	QTimer::singleShot(100, this, SLOT(updateTabs()));
