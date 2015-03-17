@@ -60,23 +60,6 @@ void SearchBarWidget::changeEvent(QEvent *event)
 	}
 }
 
-void SearchBarWidget::hideEvent(QHideEvent *event)
-{
-	QWidget::hideEvent(event);
-
-	emit requestedSearch(getFlags());
-}
-
-void SearchBarWidget::showEvent(QShowEvent *event)
-{
-	QWidget::showEvent(event);
-
-	if (!m_ui->queryLineEdit->text().isEmpty())
-	{
-		emit requestedSearch(getFlags());
-	}
-}
-
 void SearchBarWidget::keyPressEvent(QKeyEvent *event)
 {
 	QWidget::keyPressEvent(event);
@@ -113,6 +96,23 @@ void SearchBarWidget::selectAll()
 void SearchBarWidget::setQuery(const QString &query)
 {
 	m_ui->queryLineEdit->setText(query);
+}
+
+void SearchBarWidget::setVisible(bool visible)
+{
+	QWidget::setVisible(visible);
+
+	if (visible)
+	{
+		if (!m_ui->queryLineEdit->text().isEmpty())
+		{
+			emit requestedSearch(getFlags());
+		}
+	}
+	else
+	{
+		emit requestedSearch(getFlags());
+	}
 }
 
 void SearchBarWidget::setResultsFound(bool found)

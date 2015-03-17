@@ -40,6 +40,7 @@ public:
 
 	void selectAll();
 	void setQuery(const QString &query);
+	void setVisible(bool visible);
 	QString getQuery() const;
 	WebWidget::FindFlags getFlags() const;
 
@@ -48,8 +49,6 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	void hideEvent(QHideEvent *event);
-	void showEvent(QShowEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 
 protected slots:

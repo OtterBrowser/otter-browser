@@ -53,9 +53,9 @@ protected:
 	void updatePanelsMenu();
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void addWebPanel();
 	void choosePanel(bool checked);
-	void optionChanged(const QString &option, const QVariant &value);
 	void selectPanel();
 
 private:
