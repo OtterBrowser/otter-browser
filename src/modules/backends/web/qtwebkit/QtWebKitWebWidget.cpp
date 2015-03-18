@@ -117,6 +117,11 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
+	if (isPrivate)
+	{
+		m_webView->settings()->setIconDatabasePath(QString());
+	}
+
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
