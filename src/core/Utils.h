@@ -45,6 +45,7 @@ QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
 QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QIcon getIcon(const QLatin1String &name, bool fromTheme = true);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
+bool isUrlEmpty(const QUrl &url);
 
 }
 

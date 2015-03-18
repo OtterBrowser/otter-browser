@@ -22,6 +22,7 @@
 #include "Application.h"
 #include "BookmarksModel.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
 #include "../ui/MdiWidget.h"
@@ -119,17 +120,17 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
 	Window *window = m_mainWindow->getMdi()->getActiveWindow();
 
-	if (hints == NewTabOpen && !url.isEmpty() && window && window->isUrlEmpty())
+	if (hints == NewTabOpen && !url.isEmpty() && window && Utils::isUrlEmpty(window->getUrl()))
 	{
 		hints = CurrentTabOpen;
 	}
 
-	if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !window->isUrlEmpty()))
+	if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
 	{
 		hints = NewTabOpen;
 	}
 
-	if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
+	if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -171,7 +172,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 	Window *window = m_mainWindow->getMdi()->getActiveWindow();
 
-	if (hints == DefaultOpen && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
+	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -269,12 +270,12 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 {
 	Window *window = m_mainWindow->getMdi()->getActiveWindow();
 
-	if (hints == NewTabOpen && window && window->isUrlEmpty())
+	if (hints == NewTabOpen && window && Utils::isUrlEmpty(window->getUrl()))
 	{
 		hints = CurrentTabOpen;
 	}
 
-	if (hints == DefaultOpen && ((window && window->isUrlEmpty()) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
+	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -575,7 +576,7 @@ void WindowsManager::handleWindowClose(Window *window)
 	{
 		const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
 
-		if (!window->isUrlEmpty() || history.entries.count() > 1)
+		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{
 			const SessionWindow information = window->getSession();
 

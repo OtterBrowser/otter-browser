@@ -153,7 +153,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 
 		if (text().trimmed().isEmpty() || text().trimmed() != url.toString())
 		{
-			setText(m_window->isUrlEmpty() ? QString() : url.toString());
+			setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
 			if (!text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
 			{
@@ -359,7 +359,7 @@ void AddressWidget::updateBookmark()
 
 	const QUrl url = getUrl();
 
-	if (url.scheme() == QLatin1String("about"))
+	if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
 	{
 		m_bookmarkLabel->setEnabled(false);
 		m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
@@ -445,7 +445,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 {
 	if (m_urlIconLabel)
 	{
-		m_urlIconLabel->setPixmap(icon.pixmap(m_urlIconLabel->size()));
+		m_urlIconLabel->setPixmap((icon.isNull() ? Utils::getIcon(QLatin1String("tab")) : icon).pixmap(m_urlIconLabel->size()));
 	}
 }
 
@@ -453,9 +453,9 @@ void AddressWidget::setUrl(const QUrl &url)
 {
 	updateBookmark();
 
-	if (m_window && !hasFocus() && url.scheme() != QLatin1String("javascript"))
+	if (!hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
-		setText(m_window->isUrlEmpty() ? QString() : url.toString());
+		setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
 		setCursorPosition(0);
 	}
 }
@@ -487,9 +487,6 @@ void AddressWidget::setWindow(Window *window)
 
 		if (m_urlIconLabel)
 		{
-			setIcon(window->getIcon());
-			setUrl(window->getUrl());
-
 			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		}
 
@@ -505,12 +502,14 @@ void AddressWidget::setWindow(Window *window)
 		}
 	}
 
+	setIcon(window ? window->getIcon() : QIcon());
+	setUrl(window ? window->getUrl() : QUrl());
 	updateLoadPlugins();
 }
 
 QUrl AddressWidget::getUrl() const
 {
-	return QUrl(text().isEmpty() ? QLatin1String("about:blank") : text());
+	return (m_window ? m_window->getUrl() : QUrl(QLatin1String("about:blank")));
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)

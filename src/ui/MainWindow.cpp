@@ -365,7 +365,7 @@ void MainWindow::openUrl(const QString &text)
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
 
-		interpreter->interpret(text, ((!m_mdiWidget->getActiveWindow() || m_mdiWidget->getActiveWindow()->isUrlEmpty()) ? CurrentTabOpen : NewTabOpen));
+		interpreter->interpret(text, ((!m_mdiWidget->getActiveWindow() || Utils::isUrlEmpty(m_mdiWidget->getActiveWindow()->getUrl())) ? CurrentTabOpen : NewTabOpen));
 	}
 }
 

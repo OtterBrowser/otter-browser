@@ -141,6 +141,11 @@ QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeTy
 	return QList<ApplicationInformation>();
 }
 
+bool isUrlEmpty(const QUrl &url)
+{
+	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));
+}
+
 }
 
 }

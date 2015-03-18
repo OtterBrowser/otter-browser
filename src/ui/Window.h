@@ -84,7 +84,6 @@ public:
 	bool canClone() const;
 	bool isPinned() const;
 	bool isPrivate() const;
-	bool isUrlEmpty() const;
 
 public slots:
 	void triggerAction(int identifier, bool checked = false);

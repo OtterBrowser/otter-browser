@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,14 @@
 #include "ActionWidget.h"
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
+#include "WebWidget.h"
 #include "toolbars/AddressWidget.h"
 #include "toolbars/SearchWidget.h"
 #include "../core/AddonsManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
+#include "../core/Utils.h"
 #include "../core/WebBackend.h"
-#include "../ui/WebWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
@@ -88,7 +89,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (isUrlEmpty() && !m_contentsWidget->isLoading() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
+	if (Utils::isUrlEmpty(getUrl()) && !m_contentsWidget->isLoading() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 	{
 		m_addressWidgets.at(0)->setFocus();
 	}
@@ -297,7 +298,7 @@ void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
 
 void Window::handleSearchRequest(const QString &query, const QString &engine, OpenHints hints)
 {
-	if ((getType() == QLatin1String("web") && isUrlEmpty()) || (hints == DefaultOpen || hints == CurrentTabOpen))
+	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == DefaultOpen || hints == CurrentTabOpen))
 	{
 		search(query, engine);
 	}
@@ -374,7 +375,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (!m_addressWidgets.isEmpty() && m_session.index < 0 && !isUrlEmpty() && SessionsManager::hasUrl(url, true))
+		if (!m_addressWidgets.isEmpty() && m_session.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
 			for (int i = 0; i < m_addressWidgets.count(); ++i)
 			{
@@ -443,7 +444,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 			{
 				if (m_addressWidgets.at(i))
 				{
-					if (!isUrlEmpty() || m_contentsWidget->isLoading())
+					if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->isLoading())
 					{
 						m_addressWidgets.at(i)->clearFocus();
 					}
@@ -543,12 +544,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 	else
 	{
-		if (isUrlEmpty() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
+		if (Utils::isUrlEmpty(getUrl()) && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 		{
 			m_addressWidgets.at(0)->setFocus();
 		}
 
-		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || isUrlEmpty())
+		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || Utils::isUrlEmpty(getUrl()))
 		{
 			emit titleChanged(m_contentsWidget->getTitle());
 		}
@@ -705,13 +706,6 @@ bool Window::isPinned() const
 bool Window::isPrivate() const
 {
 	return (m_contentsWidget ? m_contentsWidget->isPrivate() : m_isPrivate);
-}
-
-bool Window::isUrlEmpty() const
-{
-	const QUrl url = getUrl();
-
-	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));
 }
 
 }
