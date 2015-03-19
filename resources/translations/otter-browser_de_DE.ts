@@ -9,7 +9,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Um eine Sprache hinzuzufügen, wählen Sie bitte eine aus der Liste aus oder tippen Sie ihren Code ein.</translation>
+        <translation>Um eine Sprache hinzuzufügen, wählen Sie bitte eine aus der Liste aus oder geben Sie ihren Code ein.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -727,7 +727,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>Profiles (AdBlock Plus compatible)</source>
-        <translation type="unfinished"/>
+        <translation>Profile (AdBlock Plus kompatibel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="69"/>
@@ -752,12 +752,12 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Bezeichner</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
@@ -1188,17 +1188,17 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="66"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Kontextmenü abschalten zulassen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="75"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>Fenster schließen zulassen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="34"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Nachfragen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="35"/>
@@ -1515,7 +1515,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="59"/>
         <source>Always deny</source>
-        <translation type="unfinished"/>
+        <translation>Immer ablehnen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
@@ -1535,7 +1535,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
         <source>%1 wants to show notifications.</source>
-        <translation type="unfinished"/>
+        <translation>%1 will Benachrichtigungen zeigen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
@@ -1555,7 +1555,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>Invalid permission request from %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ungültige Zugangsanfrage von %1.</translation>
     </message>
 </context>
 <context>
@@ -2413,7 +2413,7 @@ Wollen Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="66"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="97"/>
         <source>Waiting for authentication…</source>
-        <translation type="unfinished"/>
+        <translation>Warte auf Authentifizierung...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="157"/>
@@ -2433,17 +2433,17 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="241"/>
         <source>Receiving data from %1…</source>
-        <translation type="unfinished"/>
+        <translation>Empfange Daten von %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="280"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>Anfrage an %1 beendet.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="388"/>
         <source>Sending request to %1…</source>
-        <translation type="unfinished"/>
+        <translation>Sende Anfrage an %1...</translation>
     </message>
 </context>
 <context>
@@ -2460,32 +2460,32 @@ Wollen Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="332"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="376"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript-Pop-ups deaktivieren</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="294"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Frage</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="295"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Sollen die Formulardaten wirklich erneut gesendet werden?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="296"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>Sollen die Daten erneut gesendet werden?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="300"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Diese Nachricht nicht mehr anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="410"/>
@@ -2500,17 +2500,17 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="462"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 Fehler #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation type="unfinished"/>
+        <translation>Das Skript dieser Webseite ist fehlerhaft.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>Do you want to stop the script?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie das Script anhalten?</translation>
     </message>
 </context>
 <context>
@@ -2559,7 +2559,7 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="453"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Druckvorschau</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="507"/>
@@ -2569,12 +2569,12 @@ Wollen Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="507"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation type="unfinished"/>
+        <translation>Die Seite will diesen Tab schließen. Erlauben?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="508"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Diese Nachricht nicht mehr anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
@@ -2720,12 +2720,12 @@ Soll sie überschrieben werden?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Nächste Stelle</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="59"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Vorherige Stelle</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
@@ -3102,12 +3102,12 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="143"/>
         <source>Customize</source>
-        <translation type="unfinished"/>
+        <translation>Anpassen</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="144"/>
         <source>Switch tabs using the mouse wheel</source>
-        <translation type="unfinished"/>
+        <translation>Tabs mit Mausrad wechseln</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="415"/>
@@ -3120,13 +3120,13 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="234"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="264"/>
         <location filename="../../src/core/Transfer.cpp" line="292"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Frage</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="264"/>
@@ -3311,7 +3311,7 @@ Fortschritt: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="253"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 Dateien (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="256"/>
@@ -3659,12 +3659,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="583"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Kontextmenü abschalten zulassen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="613"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>Fenster schließen zulassen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="624"/>
@@ -3774,7 +3774,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Nachfragen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -3908,14 +3908,16 @@ Bitte wählen Sie einen anderen aus.</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="217"/>
         <source>There is no valid suffix for given MIME type
  %1</source>
-        <translation type="unfinished"/>
+        <translation>Es gibt kein gültiges Suffix für den MIME-Typ
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="279"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="329"/>
         <source>Failed to load a valid application path for MIME type %1:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Es konnte kein gültiger Anwendungspfad für MIME-Typ %1 geladen werden:
+% 2</translation>
     </message>
 </context>
 <context>
@@ -4074,17 +4076,17 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Close All Private Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Alle privaten Tabs schließen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="77"/>
         <source>Close All Private Tabs in Current Window</source>
-        <translation type="unfinished"/>
+        <translation>Alle privaten Tabs im aktuellen Fenster schließen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="78"/>
         <source>Close Private Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Private Tabs und Fenster schließen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="79"/>
@@ -4334,7 +4336,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
         <source>Show Context Menu</source>
-        <translation type="unfinished"/>
+        <translation>Kontextmenü anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
@@ -4490,7 +4492,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
         <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Scroll-Modus verlassen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="158"/>
@@ -4636,7 +4638,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="187"/>
         <source>Show Tabbar</source>
-        <translation type="unfinished"/>
+        <translation>Tableiste anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="188"/>
@@ -4809,34 +4811,36 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="55"/>
         <source>Failed to load adblock file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Konnte Adblock-Datei nicht laden: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="64"/>
         <source>Loaded adblock file is not valid: %1</source>
-        <translation type="unfinished"/>
+        <translation>Geladene Adblock-Datei ist ungültig: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="441"/>
         <source>Content blocking URL for %1 update is not valid.
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Inhaltsblockierung URL für %1 update ist ungültig.
+%2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="473"/>
         <source>Unable to download update for content blocking: %1.
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Kann Update für Inhaltblockierung nicht herunterladen: %1.
+Fehler: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="489"/>
         <source>Content blocking file checksum mismatch: %1</source>
-        <translation type="unfinished"/>
+        <translation>Prüfsummendiskrepanz der Inhaltsblockierungsdatei: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="499"/>
         <source>Unable to write downloaded content blocking file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Heruntergeladene Inhaltsblockierung kann nicht geschrieben werden: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
@@ -4859,7 +4863,7 @@ Error: %2</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="352"/>
         <source>Blocked content: %1</source>
-        <translation type="unfinished"/>
+        <translation>Blockierter Inhalt: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="403"/>

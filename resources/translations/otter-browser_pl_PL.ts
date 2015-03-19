@@ -1555,7 +1555,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>Invalid permission request from %1.</source>
-        <translation>Niepoprawne żądanie zezwolenia przez %1.</translation>
+        <translation>Nieprawidłowe żądanie praw dostępu przez %1.</translation>
     </message>
 </context>
 <context>
@@ -3908,14 +3908,16 @@ Wybierz inną.</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="217"/>
         <source>There is no valid suffix for given MIME type
  %1</source>
-        <translation type="unfinished"/>
+        <translation>Brak prawidłowego sufiksu dla danego typu MIME
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="279"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="329"/>
         <source>Failed to load a valid application path for MIME type %1:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się załadować poprawnej ścieżki aplikacji dla typu MIME %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4480,17 +4482,17 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Włącz tryb przewijania przez przeciąganie</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Włącz tryb przewijania przez przesuwanie</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
         <source>Exit Scroll Mode</source>
-        <translation>Opuść tryb przewijania.</translation>
+        <translation>Zakończ tryb przewijania</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="158"/>
@@ -4820,7 +4822,8 @@ Wybierz inną.</translation>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="441"/>
         <source>Content blocking URL for %1 update is not valid.
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Adres URL profilu blokowania zawartości o identyfikatorze %1 jest nieprawidłowy.
+%2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="473"/>

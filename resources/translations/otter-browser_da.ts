@@ -364,7 +364,7 @@ Er du sikker på at du vil gendanne denne session alligevel?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="372"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Bogmærke Manager</translation>
     </message>
 </context>
 <context>
@@ -372,12 +372,12 @@ Er du sikker på at du vil gendanne denne session alligevel?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Fjern eksisterende bogmærker</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importer til mappe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
@@ -387,7 +387,7 @@ Er du sikker på at du vil gendanne denne session alligevel?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Tillad at duplikere allerede eksisterende bogmærker</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>

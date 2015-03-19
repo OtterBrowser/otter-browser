@@ -762,7 +762,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Последнее Обновление</translation>
     </message>
 </context>
 <context>
@@ -770,7 +770,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="43"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Неизвестный)</translation>
     </message>
 </context>
 <context>
@@ -1050,7 +1050,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="190"/>
         <source>HTML files (*.htm; *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTML файлы (*.htm; *.html)</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1095,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="38"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестный</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="65"/>
@@ -1188,27 +1188,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="66"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Отключить контекстное меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="75"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить закрывать окна:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="34"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Спросить</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="35"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Всегда</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="36"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Никогда</translation>
     </message>
 </context>
 <context>
@@ -1504,27 +1504,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="49"/>
         <source>Allow this time</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить сейчас</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="54"/>
         <source>Always allow</source>
-        <translation type="unfinished"/>
+        <translation>Всегда разрешать</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="59"/>
         <source>Always deny</source>
-        <translation type="unfinished"/>
+        <translation>Всегда запрещать</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
@@ -2459,20 +2459,20 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="332"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="376"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>Отключить всплывающие окна JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="294"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="295"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что вы хотите отправить данные формы снова?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
@@ -2484,17 +2484,17 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="300"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать это сообщение снова</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="410"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Открыть Файл</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="432"/>
         <source>Error %1</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="462"/>
@@ -2714,17 +2714,17 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Поиск Дальше</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="59"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Поиск Ранее</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
@@ -2739,7 +2739,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="118"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -4711,7 +4711,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="631"/>
         <source>Edit Bookmark...</source>
-        <translation type="unfinished"/>
+        <translation>Править Закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="786"/>
@@ -4751,7 +4751,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="346"/>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Удалить Закладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="105"/>

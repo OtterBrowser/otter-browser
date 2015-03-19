@@ -4482,17 +4482,17 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Vstoupit do režimu posunování tažením</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Vstoupit do režimu posunování pohybem</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
         <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Ukončit režim posunování</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="158"/>

@@ -3909,14 +3909,16 @@ Elige otro distinto.</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="217"/>
         <source>There is no valid suffix for given MIME type
  %1</source>
-        <translation type="unfinished"/>
+        <translation>No hay sufijo válido para el tipo MIME dado
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="279"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="329"/>
         <source>Failed to load a valid application path for MIME type %1:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo cargar una ruta de aplicación válida para el tipo MIME %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4482,17 +4484,17 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Entrar en modo de arrastrar para desplazar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Entrar en modo de mover para desplazar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="157"/>
         <source>Exit Scroll Mode</source>
-        <translation>Salir del Modo de Desplazamiento</translation>
+        <translation>Salir del modo de desplazamiento</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="158"/>
@@ -4822,7 +4824,8 @@ Elige otro distinto.</translation>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="441"/>
         <source>Content blocking URL for %1 update is not valid.
 %2</source>
-        <translation type="unfinished"/>
+        <translation>La actualización de la URL de bloqueo de contenido para la actualización %1 no es válida.
+%2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="473"/>

@@ -727,7 +727,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>Profiles (AdBlock Plus compatible)</source>
-        <translation type="unfinished"/>
+        <translation>情景模式(兼容Adblock Plus)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="69"/>
@@ -752,17 +752,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>标识符</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>上次更新</translation>
     </message>
 </context>
 <context>
@@ -770,7 +770,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="43"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(未知)</translation>
     </message>
 </context>
 <context>
@@ -1050,7 +1050,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="190"/>
         <source>HTML files (*.htm; *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTML 文件 (*.htm; *.html)</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1095,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="38"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="65"/>
@@ -1131,7 +1131,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="110"/>
         <source>%1 x %2 pixels</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 像素</translation>
     </message>
 </context>
 <context>
@@ -1188,27 +1188,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="66"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>允许禁用右键菜单</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="75"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>允许关闭窗口</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="34"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>总是询问</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="35"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>一直</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="36"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>从不</translation>
     </message>
 </context>
 <context>
@@ -1504,57 +1504,57 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="49"/>
         <source>Allow this time</source>
-        <translation type="unfinished"/>
+        <translation>只允许本次</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="54"/>
         <source>Always allow</source>
-        <translation type="unfinished"/>
+        <translation>总是允许</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="59"/>
         <source>Always deny</source>
-        <translation type="unfinished"/>
+        <translation>总是拒绝</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants access to your location.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要获取你的位置。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
         <source>%1 wants to show notifications.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要显示通知。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your microphone.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要使用你的麦克风。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
         <source>%1 wants to access your camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要使用你的摄像头。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要使用你的麦克风和摄像头。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>Invalid permission request from %1.</source>
-        <translation type="unfinished"/>
+        <translation>来自 %1 的权限请求无效。</translation>
     </message>
 </context>
 <context>
@@ -2164,7 +2164,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1935"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>键盘快捷键</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1991"/>
@@ -2412,7 +2412,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="66"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="97"/>
         <source>Waiting for authentication…</source>
-        <translation type="unfinished"/>
+        <translation>正在等待验证...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="157"/>
@@ -2432,17 +2432,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="241"/>
         <source>Receiving data from %1…</source>
-        <translation type="unfinished"/>
+        <translation>正在从 %1接收数据…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="280"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>已向 %1提交请求</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="388"/>
         <source>Sending request to %1…</source>
-        <translation type="unfinished"/>
+        <translation>正在向 %1提交请求…</translation>
     </message>
 </context>
 <context>
@@ -2452,64 +2452,64 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="331"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="375"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="176"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="332"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="376"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>禁用 JavaScript 弹出窗口</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="294"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>询问</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="295"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>确认再次提交数据？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="296"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>重新发送数据？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="300"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>不再弹出此提示</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="410"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>打开文件</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="432"/>
         <source>Error %1</source>
-        <translation type="unfinished"/>
+        <translation>错误 %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="462"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 错误 #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation type="unfinished"/>
+        <translation>这个页面的脚本似乎出现了问题。</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="474"/>
         <source>Do you want to stop the script?</source>
-        <translation type="unfinished"/>
+        <translation>停止载入脚本？</translation>
     </message>
 </context>
 <context>
@@ -2558,22 +2558,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="453"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>打印预览</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="507"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="507"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation type="unfinished"/>
+        <translation>该网页试图关闭这个标签。确认关闭？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="508"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>不再弹出此提示</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="619"/>
@@ -2714,32 +2714,32 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>查找...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>查找下一条</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="59"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>查找上一条</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>高亮</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="105"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>区分大小写</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="118"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>

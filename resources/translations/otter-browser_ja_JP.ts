@@ -727,7 +727,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>Profiles (AdBlock Plus compatible)</source>
-        <translation type="unfinished"/>
+        <translation>プロファイル(広告ブロック互換)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="69"/>
@@ -752,17 +752,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>タイトル</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>識別子</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>最後の更新</translation>
     </message>
 </context>
 <context>
@@ -770,7 +770,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="43"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(未知)</translation>
     </message>
 </context>
 <context>
@@ -1050,7 +1050,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="190"/>
         <source>HTML files (*.htm; *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTMLファイル(*.htm; *.html)</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1095,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="38"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="65"/>

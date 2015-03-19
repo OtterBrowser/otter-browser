@@ -752,17 +752,17 @@ Bu oturumu yeniden yüklemek istediğinize emin misiniz?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Başlık</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Tanımlayıcı</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="44"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Son Güncelleme</translation>
     </message>
 </context>
 <context>

@@ -1787,7 +1787,7 @@ Biztos folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="581"/>
         <source>None</source>
-        <translation>Nem</translation>
+        <translation>Nincs</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="605"/>
@@ -3237,7 +3237,7 @@ Biztos felül akarja írni?
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>Ez a letöltés még nincs kész.
-Biztos törölni akarja?</translation>
+Biztos, hogy abbahagyja?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="249"/>
@@ -3488,7 +3488,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="662"/>
         <source>Custom...</source>
-        <translation>Saját...</translation>
+        <translation>Egyéni...</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="664"/>
@@ -3519,7 +3519,7 @@ Kérem válasszon egy másikat.</translation>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="525"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="654"/>
         <source>Override</source>
-        <translation>Felülír</translation>
+        <translation>Változtat</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
@@ -3774,7 +3774,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="61"/>
         <source>Ask</source>
-        <translation>Kérdés</translation>
+        <translation>Kérdezzen rá</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
