@@ -43,7 +43,7 @@ public:
 	QString getCurrentSearchEngine() const;
 
 public slots:
-	void setWindow(Window *window);
+	void setWindow(Window *window = NULL);
 	void setSearchEngine(const QString &engine = QString());
 
 protected:

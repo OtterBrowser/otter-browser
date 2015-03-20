@@ -381,6 +381,7 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window, SLOT(setSearchEngine(QString)));
 		disconnect(m_window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
+		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
 		setSearchEngine();
 	}
@@ -396,6 +397,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
+		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 	}
 }
 
