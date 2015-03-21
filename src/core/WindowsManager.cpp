@@ -354,9 +354,16 @@ void WindowsManager::closeAll()
 
 void WindowsManager::restore(const SessionMainWindow &session)
 {
-	if (session.windows.isEmpty() && SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString() != QLatin1String("doNothing"))
+	if (session.windows.isEmpty())
 	{
-		open();
+		if (SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString() != QLatin1String("doNothing"))
+		{
+			open();
+		}
+		else
+		{
+			m_mainWindow->getActionsManager()->setCurrentWindow(NULL);
+		}
 	}
 	else
 	{
@@ -616,6 +623,8 @@ void WindowsManager::handleWindowClose(Window *window)
 		else
 		{
 			ActionsManager::getAction(Action::CloneTabAction, m_mainWindow->getMdi())->setEnabled(false);
+
+			m_mainWindow->getActionsManager()->setCurrentWindow(NULL);
 
 			emit windowTitleChanged(QString());
 		}

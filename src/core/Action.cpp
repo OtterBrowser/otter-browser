@@ -31,8 +31,8 @@ namespace Otter
 {
 
 Action::Action(int identifier, Window *window, QObject *parent) : QWidgetAction(parent),
-	m_identifier(identifier),
 	m_window(window),
+	m_identifier(identifier),
 	m_isOverridingText(false)
 {
 	update(true);
