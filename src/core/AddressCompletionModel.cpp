@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		m_updateTimer = 0;
 
-		QStringList urls;
-		urls << QLatin1String("about:bookmarks") << QLatin1String("about:cache") << QLatin1String("about:config") << QLatin1String("about:cookies") << QLatin1String("about:history") << QLatin1String("about:transfers");
+		QList<QUrl> urls;
+		urls << QUrl(QLatin1String("about:bookmarks")) << QUrl(QLatin1String("about:cache")) << QUrl(QLatin1String("about:config")) << QUrl(QLatin1String("about:cookies")) << QUrl(QLatin1String("about:history")) << QUrl(QLatin1String("about:transfers"));
 		urls << BookmarksManager::getUrls();
 
 		beginResetModel();

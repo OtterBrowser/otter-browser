@@ -38,15 +38,15 @@ class BookmarksManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void updateVisits(const QString &url);
-	static void deleteBookmark(const QString &url);
+	static void updateVisits(const QUrl &url);
+	static void deleteBookmark(const QUrl &url);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static QStringList getKeywords();
-	static QStringList getUrls();
-	static bool hasBookmark(const QString &url);
+	static QList<QUrl> getUrls();
+	static bool hasBookmark(const QUrl &url);
 	static bool hasKeyword(const QString &keyword);
 	static bool save(const QString &path = QString());
 

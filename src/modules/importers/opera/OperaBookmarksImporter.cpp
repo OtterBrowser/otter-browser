@@ -164,7 +164,7 @@ bool OperaBookmarksImporter::import()
 		}
 		else if (line.startsWith(QLatin1String("\tURL=")) && bookmark)
 		{
-			const QString url = line.section(QLatin1Char('='), 1, -1);
+			const QUrl url(line.section(QLatin1Char('='), 1, -1));
 
 			if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
 			{

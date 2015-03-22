@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_ADDRESSCOMPLETIONMODEL_H
 
 #include <QtCore/QAbstractListModel>
+#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -36,6 +37,8 @@ public:
 	int rowCount(const QModelIndex &index = QModelIndex()) const;
 
 protected:
+	explicit AddressCompletionModel(QObject *parent = NULL);
+
 	void timerEvent(QTimerEvent *event);
 
 protected slots:
@@ -43,9 +46,7 @@ protected slots:
 	void updateCompletion();
 
 private:
-	explicit AddressCompletionModel(QObject *parent = NULL);
-
-	QStringList m_urls;
+	QList<QUrl> m_urls;
 	int m_updateTimer;
 
 	static AddressCompletionModel *m_instance;

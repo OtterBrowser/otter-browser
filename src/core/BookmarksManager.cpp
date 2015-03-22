@@ -345,28 +345,32 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 	}
 }
 
-void BookmarksManager::updateVisits(const QString &url)
+void BookmarksManager::updateVisits(const QUrl &url)
 {
-	if (BookmarksItem::hasBookmark(url))
+	const QUrl adjustedUrl = BookmarksItem::adjustUrl(url);
+
+	if (BookmarksItem::hasBookmark(adjustedUrl))
 	{
-		const QList<BookmarksItem*> bookmarks = BookmarksItem::getBookmarks(url);
+		const QList<BookmarksItem*> bookmarks = BookmarksItem::getBookmarks(adjustedUrl);
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
-			bookmarks.at(i)->setData(bookmarks.at(i)->data(BookmarksModel::VisitsRole).toInt(), BookmarksModel::VisitsRole);
+			bookmarks.at(i)->setData((bookmarks.at(i)->data(BookmarksModel::VisitsRole).toInt() + 1), BookmarksModel::VisitsRole);
 			bookmarks.at(i)->setData(QDateTime::currentDateTime(), BookmarksModel::TimeVisitedRole);
 		}
 	}
 }
 
-void BookmarksManager::deleteBookmark(const QString &url)
+void BookmarksManager::deleteBookmark(const QUrl &url)
 {
-	if (!hasBookmark(url))
+	const QUrl adjustedUrl = BookmarksItem::adjustUrl(url);
+
+	if (!hasBookmark(adjustedUrl))
 	{
 		return;
 	}
 
-	const QList<QStandardItem*> items = m_model->findUrls(url);
+	const QList<QStandardItem*> items = m_model->findUrls(adjustedUrl);
 
 	for (int i = 0; i < items.count(); ++i)
 	{
@@ -474,7 +478,7 @@ QStringList BookmarksManager::getKeywords()
 	return BookmarksItem::getKeywords();
 }
 
-QStringList BookmarksManager::getUrls()
+QList<QUrl> BookmarksManager::getUrls()
 {
 	if (!m_model)
 	{
@@ -484,7 +488,7 @@ QStringList BookmarksManager::getUrls()
 	return BookmarksItem::getUrls();
 }
 
-bool BookmarksManager::hasBookmark(const QString &url)
+bool BookmarksManager::hasBookmark(const QUrl &url)
 {
 	if (!m_model)
 	{

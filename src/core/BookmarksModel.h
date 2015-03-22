@@ -49,17 +49,18 @@ public:
 	QVariant data(int role) const;
 
 protected:
-	static QList<BookmarksItem*> getBookmarks(const QString &url);
-	static QStringList getKeywords();
-	static QStringList getUrls();
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
-	static bool hasBookmark(const QString &url);
+	static QUrl adjustUrl(QUrl url);
+	static QStringList getKeywords();
+	static QList<BookmarksItem*> getBookmarks(const QUrl &url);
+	static QList<QUrl> getUrls();
+	static bool hasBookmark(const QUrl &url);
 	static bool hasKeyword(const QString &keyword);
-	static bool hasUrl(const QString &url);
+	static bool hasUrl(const QUrl &url);
 
 private:
-	static QHash<QString, QList<BookmarksItem*> > m_urls;
+	static QHash<QUrl, QList<BookmarksItem*> > m_urls;
 	static QHash<QString, BookmarksItem*> m_keywords;
 	static QMap<quint64, BookmarksItem*> m_identifiers;
 
@@ -93,7 +94,7 @@ public:
 	BookmarksItem* getTrashItem();
 	BookmarksItem* getItem(const QString &path);
 	QStringList mimeTypes() const;
-	QList<QStandardItem*> findUrls(const QString &url, QStandardItem *branch = NULL);
+	QList<QStandardItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 };
 

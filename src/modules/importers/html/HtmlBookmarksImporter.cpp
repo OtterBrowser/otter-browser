@@ -102,14 +102,14 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 	}
 	else if (element.tagName().toLower() == QLatin1String("a"))
 	{
-		const QString url = element.attribute(QLatin1String("href"));
+		const QUrl url(element.attribute(QLatin1String("href")));
 
 		if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
 		{
 			return;
 		}
 
-		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, QUrl(url), element.toPlainText());
+		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, url, element.toPlainText());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))

@@ -368,7 +368,7 @@ void AddressWidget::updateBookmark()
 		return;
 	}
 
-	const bool hasBookmark = BookmarksManager::hasBookmark(url.toString());
+	const bool hasBookmark = BookmarksManager::hasBookmark(url);
 
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
@@ -522,7 +522,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			if (m_bookmarkLabel->isEnabled())
 			{
-				const QString url = getUrl().toString();
+				const QUrl url = getUrl();
 
 				if (BookmarksManager::hasBookmark(url))
 				{
@@ -530,7 +530,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				}
 				else
 				{
-					BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, getUrl().adjusted(QUrl::RemovePassword), m_window->getTitle());
+					BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, url.adjusted(QUrl::RemovePassword), m_window->getTitle());
 					BookmarkPropertiesDialog dialog(bookmark, NULL, this);
 
 					if (dialog.exec() == QDialog::Rejected)
