@@ -51,7 +51,7 @@
 namespace Otter
 {
 
-qint64 Window::m_identifierCounter = 0;
+quint64 Window::m_identifierCounter = 0;
 
 Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_navigationBar(NULL),
@@ -688,7 +688,7 @@ WindowLoadingState Window::getLoadingState() const
 	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
 }
 
-qint64 Window::getIdentifier() const
+quint64 Window::getIdentifier() const
 {
 	return m_identifier;
 }

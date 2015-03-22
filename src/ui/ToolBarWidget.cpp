@@ -136,9 +136,9 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 
 			addWidget(tabBar);
 		}
-		else if (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:/")))
+		else if (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:")))
 		{
-			BookmarksItem *bookmark = BookmarksManager::getModel()->getItem(definition.actions.at(i).action.mid(10));
+			BookmarksItem *bookmark = (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.actions.at(i).action.mid(11)) : BookmarksManager::getBookmark(definition.actions.at(i).action.mid(11).toULongLong()));
 
 			if (bookmark)
 			{
@@ -256,7 +256,7 @@ void ToolBarWidget::updateBookmarks()
 {
 	clear();
 
-	BookmarksItem *item = BookmarksManager::getModel()->getItem(m_definition.bookmarksPath);
+	BookmarksItem *item = (m_definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(m_definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
 
 	if (!item)
 	{

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ void OperaBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->importIntoSubfolder())
 		{
-			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
+			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), m_optionsWidget->getSubfolderName());
 
 			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
 

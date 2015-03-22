@@ -80,7 +80,7 @@ public:
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	WindowLoadingState getLoadingState() const;
-	qint64 getIdentifier() const;
+	quint64 getIdentifier() const;
 	bool canClone() const;
 	bool isPinned() const;
 	bool isPrivate() const;
@@ -115,12 +115,12 @@ private:
 	SessionWindow m_session;
 	QList<QPointer<AddressWidget> > m_addressWidgets;
 	QList<QPointer<SearchWidget> > m_searchWidgets;
-	qint64 m_identifier;
+	quint64 m_identifier;
 	bool m_areControlsHidden;
 	bool m_isPinned;
 	bool m_isPrivate;
 
-	static qint64 m_identifierCounter;
+	static quint64 m_identifierCounter;
 
 signals:
 	void aboutToClose();

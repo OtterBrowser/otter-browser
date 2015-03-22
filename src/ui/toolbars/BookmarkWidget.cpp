@@ -87,7 +87,8 @@ void BookmarkWidget::updateBookmark()
 {
 	if (m_bookmark)
 	{
-		const bool isFolder = (static_cast<BookmarksItem::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksItem::FolderBookmark);
+		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt());
+		const bool isFolder = (type == BookmarksItem::RootBookmark || type == BookmarksItem::TrashBookmark || type == BookmarksItem::FolderBookmark);
 
 		if (isFolder)
 		{

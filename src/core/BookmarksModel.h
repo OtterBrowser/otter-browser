@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ public:
 		SeparatorBookmark = 5
 	};
 
-	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
+	explicit BookmarksItem(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString());
 	~BookmarksItem();
 
 	void setData(const QVariant &value, int role);
@@ -53,6 +53,7 @@ protected:
 	static QStringList getKeywords();
 	static QStringList getUrls();
 	static BookmarksItem* getBookmark(const QString &keyword);
+	static BookmarksItem* getBookmark(quint64 identifier);
 	static bool hasBookmark(const QString &url);
 	static bool hasKeyword(const QString &keyword);
 	static bool hasUrl(const QString &url);
@@ -60,6 +61,7 @@ protected:
 private:
 	static QHash<QString, QList<BookmarksItem*> > m_urls;
 	static QHash<QString, BookmarksItem*> m_keywords;
+	static QMap<quint64, BookmarksItem*> m_identifiers;
 
 	friend class BookmarksManager;
 	friend class BookmarkPropertiesDialog;
@@ -74,13 +76,14 @@ public:
 	{
 		TitleRole = Qt::DisplayRole,
 		DescriptionRole = Qt::ToolTipRole,
-		TypeRole = Qt::UserRole,
-		UrlRole = (Qt::UserRole + 1),
-		KeywordRole = (Qt::UserRole + 2),
-		TimeAddedRole = (Qt::UserRole + 3),
-		TimeModifiedRole = (Qt::UserRole + 4),
-		TimeVisitedRole = (Qt::UserRole + 5),
-		VisitsRole = (Qt::UserRole + 6)
+		IdentifierRole = Qt::UserRole,
+		TypeRole = (Qt::UserRole + 1),
+		UrlRole = (Qt::UserRole + 2),
+		KeywordRole = (Qt::UserRole + 3),
+		TimeAddedRole = (Qt::UserRole + 4),
+		TimeModifiedRole = (Qt::UserRole + 5),
+		TimeVisitedRole = (Qt::UserRole + 6),
+		VisitsRole = (Qt::UserRole + 7)
 	};
 
 	explicit BookmarksModel(QObject *parent = NULL);

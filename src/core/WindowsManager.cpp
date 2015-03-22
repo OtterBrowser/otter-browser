@@ -719,7 +719,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 	emit currentWindowChanged(window ? window->getIdentifier() : -1);
 }
 
-void WindowsManager::setActiveWindowByIdentifier(qint64 identifier)
+void WindowsManager::setActiveWindowByIdentifier(quint64 identifier)
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
@@ -776,7 +776,7 @@ Window* WindowsManager::getWindowByIndex(int index) const
 	return ((index >= m_mainWindow->getTabBar()->count()) ? NULL : qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(index)));
 }
 
-Window* WindowsManager::getWindowByIdentifier(qint64 identifier) const
+Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
@@ -896,7 +896,7 @@ int WindowsManager::getWindowCount(bool onlyPrivate) const
 	return amount;
 }
 
-int WindowsManager::getWindowIndex(qint64 identifier) const
+int WindowsManager::getWindowIndex(quint64 identifier) const
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{

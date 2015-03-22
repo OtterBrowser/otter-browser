@@ -52,7 +52,7 @@ void BookmarksComboBoxWidget::createFolder()
 		return;
 	}
 
-	BookmarksItem *item = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), title);
+	BookmarksItem *item = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), title);
 
 	getCurrentFolder()->appendRow(item);
 	setCurrentFolder(item->index());

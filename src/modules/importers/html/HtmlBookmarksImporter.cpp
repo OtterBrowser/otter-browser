@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ void HtmlBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->importIntoSubfolder())
 		{
-			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
+			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), m_optionsWidget->getSubfolderName());
 
 			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
 
@@ -81,7 +81,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	if (element.tagName().toLower() == QLatin1String("h3"))
 	{
-		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::FolderBookmark, QUrl(), element.toPlainText());
+		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), element.toPlainText());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))
@@ -109,7 +109,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			return;
 		}
 
-		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, QUrl(url), element.toPlainText());
+		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, QUrl(url), element.toPlainText());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))

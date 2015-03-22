@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 
 	if (reader->name() == QLatin1String("folder"))
 	{
-		bookmark = new BookmarksItem(BookmarksItem::FolderBookmark);
+		bookmark = new BookmarksItem(BookmarksItem::FolderBookmark, reader->attributes().value(QLatin1String("id")).toULongLong());
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
 
@@ -152,7 +152,7 @@ void BookmarksManager::readBookmark(QXmlStreamReader *reader, BookmarksItem *par
 	}
 	else if (reader->name() == QLatin1String("bookmark"))
 	{
-		bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, reader->attributes().value(QLatin1String("href")).toString());
+		bookmark = new BookmarksItem(BookmarksItem::UrlBookmark,reader->attributes().value(QLatin1String("id")).toULongLong(), reader->attributes().value(QLatin1String("href")).toString());
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("added")).toString(), Qt::ISODate), BookmarksModel::TimeAddedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("modified")).toString(), Qt::ISODate), BookmarksModel::TimeModifiedRole);
 		bookmark->setData(QDateTime::fromString(reader->attributes().value(QLatin1String("visited")).toString(), Qt::ISODate), BookmarksModel::TimeVisitedRole);
@@ -247,6 +247,7 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 	{
 		case BookmarksItem::FolderBookmark:
 			writer->writeStartElement(QLatin1String("folder"));
+			writer->writeAttribute(QLatin1String("id"), QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
 
 			if (bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isValid())
 			{
@@ -285,6 +286,7 @@ void BookmarksManager::writeBookmark(QXmlStreamWriter *writer, QStandardItem *bo
 			break;
 		case BookmarksItem::UrlBookmark:
 			writer->writeStartElement(QLatin1String("bookmark"));
+			writer->writeAttribute(QLatin1String("id"), QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()));
 
 			if (!bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())
 			{
@@ -445,6 +447,21 @@ BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 	}
 
 	return BookmarksItem::getBookmark(keyword);
+}
+
+BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
+{
+	if (!m_model)
+	{
+		getModel();
+	}
+
+	if (identifier == 0)
+	{
+		return m_model->getRootItem();
+	}
+
+	return BookmarksItem::getBookmark(identifier);
 }
 
 QStringList BookmarksManager::getKeywords()

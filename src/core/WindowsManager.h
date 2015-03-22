@@ -66,7 +66,7 @@ public:
 
 	Action* getAction(int identifier);
 	Window* getWindowByIndex(int index) const;
-	Window* getWindowByIdentifier(qint64 identifier) const;
+	Window* getWindowByIdentifier(quint64 identifier) const;
 	QVariant getOption(const QString &key) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
@@ -74,7 +74,7 @@ public:
 	QList<SessionWindow> getClosedWindows() const;
 	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
 	int getWindowCount(bool onlyPrivate = false) const;
-	int getWindowIndex(qint64 identifier) const;
+	int getWindowIndex(quint64 identifier) const;
 	int getZoom() const;
 	bool canZoom() const;
 	bool isPrivate() const;
@@ -92,7 +92,7 @@ public slots:
 	void restore(const SessionMainWindow &session);
 	void clearClosedWindows();
 	void setActiveWindowByIndex(int index);
-	void setActiveWindowByIdentifier(qint64 identifier);
+	void setActiveWindowByIdentifier(quint64 identifier);
 	void setOption(const QString &key, const QVariant &value);
 	void setZoom(int zoom);
 

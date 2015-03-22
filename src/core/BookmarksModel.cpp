@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,12 +29,25 @@ namespace Otter
 
 QHash<QString, QList<BookmarksItem*> > BookmarksItem::m_urls;
 QHash<QString, BookmarksItem*> BookmarksItem::m_keywords;
+QMap<quint64, BookmarksItem*> BookmarksItem::m_identifiers;
 
-BookmarksItem::BookmarksItem(BookmarkType type, const QUrl &url, const QString &title) : QStandardItem()
+BookmarksItem::BookmarksItem(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title) : QStandardItem()
 {
 	setData(type, BookmarksModel::TypeRole);
 	setData(url, BookmarksModel::UrlRole);
 	setData(title, BookmarksModel::TitleRole);
+
+	if (type != SeparatorBookmark && type != TrashBookmark && type != UnknownBookmark)
+	{
+		if (identifier == 0 || m_identifiers.contains(identifier))
+		{
+			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
+		}
+
+		setData(identifier, BookmarksModel::IdentifierRole);
+
+		m_identifiers[identifier] = this;
+	}
 
 	if (type == UrlBookmark || type == SeparatorBookmark)
 	{
@@ -124,7 +137,7 @@ void BookmarksItem::setData(const QVariant &value, int role)
 
 QStandardItem* BookmarksItem::clone() const
 {
-	BookmarksItem *item = new BookmarksItem(static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()), data(BookmarksModel::UrlRole).toUrl(), data(BookmarksModel::TitleRole).toString());
+	BookmarksItem *item = new BookmarksItem(static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()), 0, data(BookmarksModel::UrlRole).toUrl(), data(BookmarksModel::TitleRole).toString());
 	item->setData(data(BookmarksModel::DescriptionRole), BookmarksModel::DescriptionRole);
 	item->setData(data(BookmarksModel::KeywordRole), BookmarksModel::KeywordRole);
 	item->setData(data(BookmarksModel::TimeAddedRole), BookmarksModel::TimeAddedRole);
@@ -140,6 +153,16 @@ BookmarksItem* BookmarksItem::getBookmark(const QString &keyword)
 	if (m_keywords.contains(keyword))
 	{
 		return m_keywords[keyword];
+	}
+
+	return NULL;
+}
+
+BookmarksItem* BookmarksItem::getBookmark(quint64 identifier)
+{
+	if (m_identifiers.contains(identifier))
+	{
+		return m_identifiers[identifier];
 	}
 
 	return NULL;
@@ -214,8 +237,8 @@ bool BookmarksItem::hasUrl(const QString &url)
 
 BookmarksModel::BookmarksModel(QObject *parent) : QStandardItemModel(parent)
 {
-	appendRow(new BookmarksItem(BookmarksItem::RootBookmark, QUrl(), tr("Bookmarks")));
-	appendRow(new BookmarksItem(BookmarksItem::TrashBookmark, QUrl(), tr("Trash")));
+	appendRow(new BookmarksItem(BookmarksItem::RootBookmark, 0, QUrl(), tr("Bookmarks")));
+	appendRow(new BookmarksItem(BookmarksItem::TrashBookmark, 0, QUrl(), tr("Trash")));
 	setItemPrototype(new BookmarksItem(BookmarksItem::UnknownBookmark));
 }
 

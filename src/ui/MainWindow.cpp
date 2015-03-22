@@ -685,7 +685,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 		return;
 	}
 
-	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
+	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
 	bookmark->setData(description, BookmarksModel::DescriptionRole);
 
 	BookmarkPropertiesDialog dialog(bookmark, NULL, this);
