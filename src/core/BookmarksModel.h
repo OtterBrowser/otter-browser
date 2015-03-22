@@ -75,15 +75,15 @@ public:
 	enum BookmarkRole
 	{
 		TitleRole = Qt::DisplayRole,
+		UrlRole = Qt::StatusTipRole,
 		DescriptionRole = Qt::ToolTipRole,
 		IdentifierRole = Qt::UserRole,
 		TypeRole = (Qt::UserRole + 1),
-		UrlRole = (Qt::UserRole + 2),
-		KeywordRole = (Qt::UserRole + 3),
-		TimeAddedRole = (Qt::UserRole + 4),
-		TimeModifiedRole = (Qt::UserRole + 5),
-		TimeVisitedRole = (Qt::UserRole + 6),
-		VisitsRole = (Qt::UserRole + 7)
+		KeywordRole = (Qt::UserRole + 2),
+		TimeAddedRole = (Qt::UserRole + 3),
+		TimeModifiedRole = (Qt::UserRole + 4),
+		TimeVisitedRole = (Qt::UserRole + 5),
+		VisitsRole = (Qt::UserRole + 6)
 	};
 
 	explicit BookmarksModel(QObject *parent = NULL);
