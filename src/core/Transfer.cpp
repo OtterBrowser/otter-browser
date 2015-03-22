@@ -302,6 +302,8 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 	{
 		m_state = ErrorState;
 
+		file->deleteLater();
+
 		return;
 	}
 
@@ -395,6 +397,13 @@ void Transfer::downloadFinished()
 {
 	if (!m_reply)
 	{
+		if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
+		{
+			m_device->close();
+			m_device->deleteLater();
+			m_device = NULL;
+		}
+
 		return;
 	}
 
