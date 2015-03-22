@@ -576,6 +576,8 @@ bool Transfer::resume()
 
 	if (!file->open(QIODevice::WriteOnly | QIODevice::Append))
 	{
+		file->deleteLater();
+
 		return false;
 	}
 
@@ -621,6 +623,8 @@ bool Transfer::restart()
 
 	if (!file->open(QIODevice::WriteOnly))
 	{
+		file->deleteLater();
+
 		return false;
 	}
 
