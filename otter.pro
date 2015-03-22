@@ -112,6 +112,7 @@ SOURCES += src/main.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/ui/toolbars/AddressWidget.cpp \
+    src/ui/toolbars/BookmarkWidget.cpp \
     src/ui/toolbars/GoBackActionWidget.cpp \
     src/ui/toolbars/GoForwardActionWidget.cpp \
     src/ui/toolbars/MenuActionWidget.cpp \
@@ -226,6 +227,7 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
     src/ui/toolbars/AddressWidget.h \
+    src/ui/toolbars/BookmarkWidget.h \
     src/ui/toolbars/GoBackActionWidget.h \
     src/ui/toolbars/GoForwardActionWidget.h \
     src/ui/toolbars/MenuActionWidget.h \

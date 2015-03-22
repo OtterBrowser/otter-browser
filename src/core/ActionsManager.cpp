@@ -210,13 +210,13 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 
 	GesturesManager::createInstance(Application::getInstance());
 
-	toolBarDefinitions = loadToolBars(QLatin1String(":/other/toolBars.json"));
+	toolBarDefinitions = loadToolBars(QLatin1String(":/other/toolBars.json"), true);
 
 	const QString customToolBarsPath = SessionsManager::getProfilePath() + QLatin1String("/toolBars.json");
 
 	if (QFile::exists(customToolBarsPath))
 	{
-		const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath);
+		const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath, false);
 		QHash<QString, ToolBarDefinition>::const_iterator iterator;
 
 		for (iterator = customToolBarDefinitions.constBegin(); iterator != customToolBarDefinitions.constEnd(); ++iterator)
@@ -240,7 +240,7 @@ void ActionsManagerHelper::timerEvent(QTimerEvent *event)
 	}
 }
 
-QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QString &path) const
+QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QString &path, bool isDefault) const
 {
 	QHash<QString, ToolBarDefinition> definitions;
 	QFile file(path);
@@ -261,7 +261,9 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		ToolBarDefinition toolBar;
 		toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
+		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
+		toolBar.isDefault = isDefault;
 
 		if (location == QLatin1String("top"))
 		{

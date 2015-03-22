@@ -41,12 +41,14 @@ struct ToolBarDefinition
 {
 	QString name;
 	QString title;
+	QString bookmarksPath;
 	QList<ToolBarActionDefinition> actions;
 	Qt::ToolBarArea location;
 	Qt::ToolButtonStyle iconStyle;
 	int iconSize;
+	bool isDefault;
 
-	ToolBarDefinition() : location(Qt::NoToolBarArea), iconStyle(Qt::ToolButtonIconOnly), iconSize(-1) {}
+	ToolBarDefinition() : location(Qt::NoToolBarArea), iconStyle(Qt::ToolButtonIconOnly), iconSize(-1), isDefault(false) {}
 };
 
 struct ActionDefinition
@@ -75,7 +77,7 @@ protected:
 	ActionsManagerHelper(QObject *parent);
 
 	void timerEvent(QTimerEvent *event);
-	QHash<QString, ToolBarDefinition> loadToolBars(const QString &path) const;
+	QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault) const;
 	int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
 
 	int reloadShortcutsTimer;

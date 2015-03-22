@@ -34,7 +34,7 @@ class ToolBarWidget : public QToolBar
 	Q_OBJECT
 
 public:
-	ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent);
+	explicit ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent);
 
 public slots:
 	void notifyAreaChanged();
@@ -45,10 +45,12 @@ protected:
 
 protected slots:
 	void notifyWindowChanged(qint64 identifier);
+	void updateBookmarks();
 
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
+	ToolBarDefinition m_definition;
 
 signals:
 	void areaChanged(Qt::ToolBarArea area);

@@ -24,6 +24,7 @@
 #include "TabBarWidget.h"
 #include "Window.h"
 #include "toolbars/AddressWidget.h"
+#include "toolbars/BookmarkWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/MenuActionWidget.h"
@@ -31,6 +32,8 @@
 #include "toolbars/SearchWidget.h"
 #include "toolbars/StatusMessageWidget.h"
 #include "toolbars/ZoomWidget.h"
+#include "../core/BookmarksManager.h"
+#include "../core/BookmarksModel.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
@@ -41,7 +44,8 @@ namespace Otter
 
 ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(qobject_cast<MainWindow*>(parent)),
-	m_window(window)
+	m_window(window),
+	m_definition(definition)
 {
 	setObjectName(definition.name);
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
@@ -52,6 +56,15 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	if (definition.iconSize > 0)
 	{
 		setIconSize(QSize(definition.iconSize, definition.iconSize));
+	}
+
+	if (!definition.bookmarksPath.isEmpty())
+	{
+		updateBookmarks();
+
+		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
+
+		return;
 	}
 
 	bool hasTabBar = false;
@@ -228,6 +241,35 @@ void ToolBarWidget::notifyWindowChanged(qint64 identifier)
 	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
 
 	emit windowChanged(m_window);
+}
+
+void ToolBarWidget::updateBookmarks()
+{
+	clear();
+
+	BookmarksItem *item = BookmarksManager::getModel()->getItem(m_definition.bookmarksPath);
+
+	if (!item)
+	{
+		return;
+	}
+
+	for (int i = 0; i < item->rowCount(); ++i)
+	{
+		BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(item->child(i));
+
+		if (bookmark)
+		{
+			if (static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksItem::SeparatorBookmark)
+			{
+				addSeparator();
+			}
+			else
+			{
+				addWidget(new BookmarkWidget(bookmark, this));
+			}
+		}
+	}
 }
 
 }

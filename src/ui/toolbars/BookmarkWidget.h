@@ -17,29 +17,33 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_STATUSMESSAGEWIDGET_H
-#define OTTER_STATUSMESSAGEWIDGET_H
+#ifndef OTTER_BOOKMARKWIDGET_H
+#define OTTER_BOOKMARKWIDGET_H
 
-#include <QtWidgets/QLabel>
+#include <QtCore/QModelIndex>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
-class StatusMessageWidget : public QLabel
+class BookmarksItem;
+
+class BookmarkWidget : public QToolButton
 {
 	Q_OBJECT
 
 public:
-	explicit StatusMessageWidget(QWidget *parent = NULL);
+	explicit BookmarkWidget(BookmarksItem *bookmark, QWidget *parent = NULL);
+	explicit BookmarkWidget(const QString &path, QWidget *parent = NULL);
 
 protected:
-	void resizeEvent(QResizeEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 
 protected slots:
-	void setMessage(const QString &message);
+	void updateBookmark();
 
 private:
-	QString m_message;
+	BookmarksItem *m_bookmark;
 };
 
 }

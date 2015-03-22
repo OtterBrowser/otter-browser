@@ -175,11 +175,13 @@ QVariant BookmarksItem::data(int role) const
 		{
 			return Utils::getIcon(QLatin1String("inode-directory"));
 		}
-		else if (type == TrashBookmark)
+
+		if (type == TrashBookmark)
 		{
 			return Utils::getIcon(QLatin1String("user-trash"));
 		}
-		else if (type == UrlBookmark)
+
+		if (type == UrlBookmark)
 		{
 			return AddonsManager::getWebBackend()->getIconForUrl(data(BookmarksModel::UrlRole).toUrl());
 		}
@@ -251,6 +253,41 @@ BookmarksItem* BookmarksModel::getRootItem()
 BookmarksItem* BookmarksModel::getTrashItem()
 {
 	return dynamic_cast<BookmarksItem*>(item(1, 0));
+}
+
+BookmarksItem* BookmarksModel::getItem(const QString &path)
+{
+	if (path == QLatin1String("/"))
+	{
+		return getRootItem();
+	}
+
+	QStandardItem *item = getRootItem();
+	const QStringList directories = path.split(QLatin1Char('/'), QString::SkipEmptyParts);
+
+	for (int i = 0; i < directories.count(); ++i)
+	{
+		bool found = false;
+
+		for (int j = 0; j < item->rowCount(); ++j)
+		{
+			if (item->child(j) && item->child(j)->data(Qt::DisplayRole) == directories.at(i))
+			{
+				item = item->child(j);
+
+				found = true;
+
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			return NULL;
+		}
+	}
+
+	return dynamic_cast<BookmarksItem*>(item);
 }
 
 QStringList BookmarksModel::mimeTypes() const

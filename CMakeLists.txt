@@ -160,6 +160,7 @@ set(otter_src
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/ui/toolbars/AddressWidget.cpp
+	src/ui/toolbars/BookmarkWidget.cpp
 	src/ui/toolbars/GoBackActionWidget.cpp
 	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuActionWidget.cpp

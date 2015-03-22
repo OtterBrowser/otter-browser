@@ -88,6 +88,7 @@ public:
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
 	BookmarksItem* getRootItem();
 	BookmarksItem* getTrashItem();
+	BookmarksItem* getItem(const QString &path);
 	QStringList mimeTypes() const;
 	QList<QStandardItem*> findUrls(const QString &url, QStandardItem *branch = NULL);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
