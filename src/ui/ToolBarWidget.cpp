@@ -136,6 +136,15 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 
 			addWidget(tabBar);
 		}
+		else if (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:/")))
+		{
+			BookmarksItem *bookmark = BookmarksManager::getModel()->getItem(definition.actions.at(i).action.mid(10));
+
+			if (bookmark)
+			{
+				addWidget(new BookmarkWidget(bookmark, this));
+			}
+		}
 		else
 		{
 			const int identifier = ActionsManager::getActionIdentifier(definition.actions.at(i).action.left(definition.actions.at(i).action.length() - 6));

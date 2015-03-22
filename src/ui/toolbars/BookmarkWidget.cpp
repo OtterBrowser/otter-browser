@@ -45,12 +45,27 @@ BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : QTool
 		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
 		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
 	}
+
+	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
 
 BookmarkWidget::BookmarkWidget(const QString &path, QWidget *parent) : QToolButton(parent),
 	m_bookmark(BookmarksManager::getModel()->getItem(path))
 {
 	updateBookmark();
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
+	{
+		setIconSize(toolBar->iconSize());
+		setToolButtonStyle(toolBar->toolButtonStyle());
+
+		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
+		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
+	}
+
+	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
 
 void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -110,11 +125,13 @@ void BookmarkWidget::updateBookmark()
 		}
 
 		setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
+		setStatusTip(m_bookmark->data(BookmarksModel::UrlRole).toString());
 		setIcon(m_bookmark->data(Qt::DecorationRole).value<QIcon>());
 	}
 	else
 	{
 		setText(QString());
+		setStatusTip(QString());
 		setToolTip(QString());
 		setIcon(Utils::getIcon(QLatin1String("text-html")));
 		setMenu(NULL);

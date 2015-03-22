@@ -296,6 +296,7 @@ void Menu::populateBookmarksMenu()
 			QAction *action = menu->addAction(item->data(Qt::DecorationRole).value<QIcon>(), (item->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(item->data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
 			action->setData(item->index());
 			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
+			action->setStatusTip(item->data(BookmarksModel::UrlRole).toString());
 
 			if (type == BookmarksItem::UrlBookmark)
 			{
