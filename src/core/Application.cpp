@@ -95,7 +95,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	{
 		profilePath = parser->value(QLatin1String("profile"));
 
-		if (QFileInfo(profilePath).isRelative())
+		if (!profilePath.contains(QDir::separator()))
 		{
 			profilePath = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter/profiles/")).absoluteFilePath(profilePath);
 		}
