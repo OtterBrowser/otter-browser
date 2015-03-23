@@ -76,7 +76,8 @@ private:
 	QRect m_lineEditRectangle;
 	QRect m_searchButtonRectangle;
 	int m_index;
-	bool m_popupUpdated;
+	bool m_isIgnoringActivation;
+	bool m_isPopupUpdated;
 
 signals:
 	void searchEngineChanged(const QString &engine);

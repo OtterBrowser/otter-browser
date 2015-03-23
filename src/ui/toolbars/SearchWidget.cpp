@@ -44,7 +44,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer(new QCompleter(this)),
 	m_suggester(NULL),
 	m_index(0),
-	m_popupUpdated(false)
+	m_isIgnoringActivation(false),
+	m_isPopupUpdated(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -169,7 +170,23 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 		}
 	}
 
+	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
+	{
+		disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+
+		m_isIgnoringActivation = true;
+	}
+
 	QComboBox::keyPressEvent(event);
+
+	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
+	{
+		m_isIgnoringActivation = false;
+
+		lineEdit()->setText(m_query);
+
+		connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	}
 }
 
 void SearchWidget::mousePressEvent(QMouseEvent *event)
@@ -197,7 +214,11 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 {
 	disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
+	m_isIgnoringActivation = true;
+
 	QComboBox::wheelEvent(event);
+
+	m_isIgnoringActivation = false;
 
 	lineEdit()->setText(m_query);
 
@@ -208,7 +229,7 @@ void SearchWidget::hidePopup()
 {
 	if (!m_query.isEmpty())
 	{
-		m_popupUpdated = true;
+		m_isPopupUpdated = true;
 	}
 
 	QComboBox::hidePopup();
@@ -293,9 +314,9 @@ void SearchWidget::indexActivated(int index)
 
 void SearchWidget::queryChanged(const QString &query)
 {
-	if (m_popupUpdated)
+	if (m_isPopupUpdated)
 	{
-		m_popupUpdated = false;
+		m_isPopupUpdated = false;
 	}
 	else
 	{
@@ -310,7 +331,7 @@ void SearchWidget::sendRequest(const QString &query)
 		m_query = query;
 	}
 
-	if (!m_query.isEmpty())
+	if (!m_query.isEmpty() && !m_isIgnoringActivation)
 	{
 		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
 	}
@@ -351,7 +372,6 @@ void SearchWidget::setSearchEngine(const QString &engine)
 		return;
 	}
 
-	const QString query = lineEdit()->text();
 	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : engine));
 
 	setCurrentIndex(index);
@@ -359,7 +379,7 @@ void SearchWidget::setSearchEngine(const QString &engine)
 	indexActivated(index);
 	setEnabled(true);
 
-	lineEdit()->setText(query);
+	lineEdit()->setText(m_query);
 
 	if (m_suggester)
 	{
