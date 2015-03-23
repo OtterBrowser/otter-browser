@@ -65,7 +65,6 @@ SOURCES += src/main.cpp \
     src/core/Utils.cpp \
     src/core/WebBackend.cpp \
     src/core/WindowsManager.cpp \
-    src/ui/ActionWidget.cpp \
     src/ui/AddressDelegate.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
@@ -100,6 +99,7 @@ SOURCES += src/main.cpp \
     src/ui/TabSwitcherWidget.cpp \
     src/ui/TextLabelWidget.cpp \
     src/ui/ToolBarWidget.cpp \
+    src/ui/ToolButtonWidget.cpp \
     src/ui/TrayIcon.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
     src/ui/WebsitePreferencesDialog.cpp \
@@ -111,11 +111,12 @@ SOURCES += src/main.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
+    src/ui/toolbars/ActionWidget.cpp \
     src/ui/toolbars/AddressWidget.cpp \
     src/ui/toolbars/BookmarkWidget.cpp \
     src/ui/toolbars/GoBackActionWidget.cpp \
     src/ui/toolbars/GoForwardActionWidget.cpp \
-    src/ui/toolbars/MenuActionWidget.cpp \
+    src/ui/toolbars/MenuButtonWidget.cpp \
     src/ui/toolbars/PanelChooserWidget.cpp \
     src/ui/toolbars/SearchWidget.cpp \
     src/ui/toolbars/StatusMessageWidget.cpp \
@@ -180,7 +181,6 @@ HEADERS += src/core/Action.h \
     src/core/Utils.h \
     src/core/WebBackend.h \
     src/core/WindowsManager.h \
-    src/ui/ActionWidget.h \
     src/ui/AddressDelegate.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
@@ -215,6 +215,7 @@ HEADERS += src/core/Action.h \
     src/ui/TabSwitcherWidget.h \
     src/ui/TextLabelWidget.h \
     src/ui/ToolBarWidget.h \
+    src/ui/ToolButtonWidget.h \
     src/ui/TrayIcon.h \
     src/ui/UserAgentsManagerDialog.h \
     src/ui/WebsitePreferencesDialog.h \
@@ -226,11 +227,12 @@ HEADERS += src/core/Action.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
+    src/ui/toolbars/ActionWidget.h \
     src/ui/toolbars/AddressWidget.h \
     src/ui/toolbars/BookmarkWidget.h \
     src/ui/toolbars/GoBackActionWidget.h \
     src/ui/toolbars/GoForwardActionWidget.h \
-    src/ui/toolbars/MenuActionWidget.h \
+    src/ui/toolbars/MenuButtonWidget.h \
     src/ui/toolbars/PanelChooserWidget.h \
     src/ui/toolbars/SearchWidget.h \
     src/ui/toolbars/StatusMessageWidget.h \

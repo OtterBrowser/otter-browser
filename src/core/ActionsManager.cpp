@@ -257,12 +257,13 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		const QJsonObject toolBarObject = toolBars.at(i).toObject();
 		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
 		const QString location = toolBarObject.value(QLatin1String("location")).toString();
-		const QString iconStyle = toolBarObject.value(QLatin1String("iconStyle")).toString();
+		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
 		ToolBarDefinition toolBar;
 		toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
+		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
 		toolBar.isDefault = isDefault;
 
 		if (location == QLatin1String("top"))
@@ -282,21 +283,21 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 			toolBar.location = Qt::RightToolBarArea;
 		}
 
-		if (iconStyle == QLatin1String("auto"))
+		if (buttonStyle == QLatin1String("auto"))
 		{
-			toolBar.iconStyle = Qt::ToolButtonFollowStyle;
+			toolBar.buttonStyle = Qt::ToolButtonFollowStyle;
 		}
-		else if (iconStyle == QLatin1String("textOnly"))
+		else if (buttonStyle == QLatin1String("textOnly"))
 		{
-			toolBar.iconStyle = Qt::ToolButtonTextOnly;
+			toolBar.buttonStyle = Qt::ToolButtonTextOnly;
 		}
-		else if (iconStyle == QLatin1String("textBesideIcon"))
+		else if (buttonStyle == QLatin1String("textBesideIcon"))
 		{
-			toolBar.iconStyle = Qt::ToolButtonTextBesideIcon;
+			toolBar.buttonStyle = Qt::ToolButtonTextBesideIcon;
 		}
-		else if (iconStyle == QLatin1String("textUnderIcon"))
+		else if (buttonStyle == QLatin1String("textUnderIcon"))
 		{
-			toolBar.iconStyle = Qt::ToolButtonTextUnderIcon;
+			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
 		}
 
 		for (int j = 0; j < actions.count(); ++j)

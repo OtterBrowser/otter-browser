@@ -19,10 +19,7 @@
 
 #include "Action.h"
 #include "ActionsManager.h"
-#include "../ui/ActionWidget.h"
 #include "../ui/Window.h"
-#include "../ui/toolbars/GoBackActionWidget.h"
-#include "../ui/toolbars/GoForwardActionWidget.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtWidgets/QMenu>
@@ -30,7 +27,7 @@
 namespace Otter
 {
 
-Action::Action(int identifier, Window *window, QObject *parent) : QWidgetAction(parent),
+Action::Action(int identifier, Window *window, QObject *parent) : QAction(parent),
 	m_window(window),
 	m_identifier(identifier),
 	m_isOverridingText(false)
@@ -97,25 +94,6 @@ void Action::setOverrideText(const QString &text)
 	m_isOverridingText = true;
 
 	update();
-}
-
-QWidget* Action::createWidget(QWidget *parent)
-{
-	if (qobject_cast<QMenu*>(parent))
-	{
-		return NULL;
-	}
-
-	if (m_identifier == GoBackAction)
-	{
-		return new GoBackActionWidget(m_window, parent);
-	}
-	else if (m_identifier == GoForwardAction)
-	{
-		return new GoForwardActionWidget(m_window, parent);
-	}
-
-	return new ActionWidget(m_identifier, NULL, parent);
 }
 
 QList<QKeySequence> Action::getShortcuts() const

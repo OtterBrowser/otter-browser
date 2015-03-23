@@ -113,7 +113,6 @@ set(otter_src
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
 	src/core/WindowsManager.cpp
-	src/ui/ActionWidget.cpp
 	src/ui/AddressDelegate.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
@@ -148,6 +147,7 @@ set(otter_src
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp
 	src/ui/ToolBarWidget.cpp
+	src/ui/ToolButtonWidget.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebsitePreferencesDialog.cpp
@@ -159,11 +159,12 @@ set(otter_src
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
+	src/ui/toolbars/ActionWidget.cpp
 	src/ui/toolbars/AddressWidget.cpp
 	src/ui/toolbars/BookmarkWidget.cpp
 	src/ui/toolbars/GoBackActionWidget.cpp
 	src/ui/toolbars/GoForwardActionWidget.cpp
-	src/ui/toolbars/MenuActionWidget.cpp
+	src/ui/toolbars/MenuButtonWidget.cpp
 	src/ui/toolbars/PanelChooserWidget.cpp
 	src/ui/toolbars/SearchWidget.cpp
 	src/ui/toolbars/StatusMessageWidget.cpp

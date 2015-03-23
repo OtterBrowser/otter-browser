@@ -20,7 +20,6 @@
 #include "BookmarkWidget.h"
 #include "../MainWindow.h"
 #include "../Menu.h"
-#include "../ToolBarWidget.h"
 #include "../../core/BookmarksModel.h"
 #include "../../core/Utils.h"
 #include "../../core/WindowsManager.h"
@@ -30,40 +29,18 @@
 namespace Otter
 {
 
-BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : QToolButton(parent),
+BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : ToolButtonWidget(parent),
 	m_bookmark(bookmark)
 {
 	updateBookmark();
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
-
-	if (toolBar)
-	{
-		setIconSize(toolBar->iconSize());
-		setToolButtonStyle(toolBar->toolButtonStyle());
-
-		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
-		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
-	}
-
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
 
-BookmarkWidget::BookmarkWidget(const QString &path, QWidget *parent) : QToolButton(parent),
+BookmarkWidget::BookmarkWidget(const QString &path, QWidget *parent) : ToolButtonWidget(parent),
 	m_bookmark(BookmarksManager::getModel()->getItem(path))
 {
 	updateBookmark();
-
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
-
-	if (toolBar)
-	{
-		setIconSize(toolBar->iconSize());
-		setToolButtonStyle(toolBar->toolButtonStyle());
-
-		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
-		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
-	}
 
 	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
@@ -140,4 +117,3 @@ void BookmarkWidget::updateBookmark()
 }
 
 }
-

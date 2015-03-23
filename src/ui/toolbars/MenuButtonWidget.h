@@ -17,31 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_ACTIONWIDGET_H
-#define OTTER_ACTIONWIDGET_H
+#ifndef OTTER_MENUBUTTONWIDGET_H
+#define OTTER_MENUBUTTONWIDGET_H
 
-#include "../core/Action.h"
-
-#include <QtWidgets/QToolButton>
+#include "../ToolButtonWidget.h"
 
 namespace Otter
 {
 
-class Window;
+class Menu;
 
-class ActionWidget : public QToolButton
+class MenuButtonWidget : public Otter::ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ActionWidget(int identifier, Window *window, QWidget *parent = NULL);
+	explicit MenuButtonWidget(QWidget *parent);
 
-protected:
-	void enterEvent(QEvent *event);
-	void mousePressEvent(QMouseEvent *event);
+protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
+	void updateMenu();
 
 private:
-	int m_identifier;
+	Menu *m_menu;
 };
 
 }

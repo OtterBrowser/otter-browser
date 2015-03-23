@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "Window.h"
-#include "ActionWidget.h"
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
 #include "WebWidget.h"

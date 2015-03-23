@@ -20,14 +20,14 @@
 #ifndef OTTER_ACTION_H
 #define OTTER_ACTION_H
 
-#include <QtWidgets/QWidgetAction>
+#include <QtWidgets/QAction>
 
 namespace Otter
 {
 
 class Window;
 
-class Action : public QWidgetAction
+class Action : public QAction
 {
 	Q_OBJECT
 	Q_ENUMS(ActionIdentifier)
@@ -195,7 +195,6 @@ public slots:
 	void setup(Action *action = NULL);
 
 protected:
-	QWidget* createWidget(QWidget *parent);
 	void update(bool reset = false);
 
 private:

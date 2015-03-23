@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,31 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKWIDGET_H
-#define OTTER_BOOKMARKWIDGET_H
+#ifndef OTTER_ACTIONWIDGET_H
+#define OTTER_ACTIONWIDGET_H
 
 #include "../ToolButtonWidget.h"
+#include "../../core/Action.h"
+
 
 namespace Otter
 {
 
-class BookmarksItem;
+class Window;
 
-class BookmarkWidget : public ToolButtonWidget
+class ActionWidget : public ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarkWidget(BookmarksItem *bookmark, QWidget *parent = NULL);
-	explicit BookmarkWidget(const QString &path, QWidget *parent = NULL);
+	explicit ActionWidget(int identifier, Window *window, QWidget *parent = NULL);
 
 protected:
-	void mouseReleaseEvent(QMouseEvent *event);
-
-protected slots:
-	void updateBookmark();
+	void enterEvent(QEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 
 private:
-	BookmarksItem *m_bookmark;
+	int m_identifier;
 };
 
 }

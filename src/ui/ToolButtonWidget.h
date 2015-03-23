@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,26 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_MENUACTIONWIDGET_H
-#define OTTER_MENUACTIONWIDGET_H
+#ifndef OTTER_TOOLBUTTONWIDGET_H
+#define OTTER_TOOLBUTTONWIDGET_H
 
-#include "../ActionWidget.h"
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
-class Menu;
-
-class MenuActionWidget : public Otter::ActionWidget
+class ToolButtonWidget : public QToolButton
 {
 	Q_OBJECT
 
 public:
-	explicit MenuActionWidget(QWidget *parent);
+	explicit ToolButtonWidget(QWidget *parent = NULL);
+
+protected:
+	void paintEvent(QPaintEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
-	void updateMenu();
-
-private:
-	Menu *m_menu;
+	void setMaximumButtonSize(int size);
 };
 
 }

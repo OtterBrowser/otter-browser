@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "MainWindow.h"
-#include "ActionWidget.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
@@ -34,7 +33,7 @@
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
-#include "toolbars/ZoomWidget.h"
+#include "toolbars/ActionWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/Application.h"

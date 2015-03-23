@@ -44,11 +44,12 @@ struct ToolBarDefinition
 	QString bookmarksPath;
 	QList<ToolBarActionDefinition> actions;
 	Qt::ToolBarArea location;
-	Qt::ToolButtonStyle iconStyle;
+	Qt::ToolButtonStyle buttonStyle;
 	int iconSize;
+	int maximumButtonSize;
 	bool isDefault;
 
-	ToolBarDefinition() : location(Qt::NoToolBarArea), iconStyle(Qt::ToolButtonIconOnly), iconSize(-1), isDefault(false) {}
+	ToolBarDefinition() : location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), iconSize(-1), maximumButtonSize(-1), isDefault(false) {}
 };
 
 struct ActionDefinition

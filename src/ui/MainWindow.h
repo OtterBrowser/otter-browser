@@ -21,8 +21,8 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
-#include "ActionWidget.h"
 #include "SidebarWidget.h"
+#include "toolbars/ActionWidget.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 

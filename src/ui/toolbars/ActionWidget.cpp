@@ -18,17 +18,16 @@
 **************************************************************************/
 
 #include "ActionWidget.h"
-#include "ContentsWidget.h"
-#include "MainWindow.h"
-#include "ToolBarWidget.h"
-#include "Window.h"
+#include "../ContentsWidget.h"
+#include "../MainWindow.h"
+#include "../Window.h"
 
 #include <QtGui/QMouseEvent>
 
 namespace Otter
 {
 
-ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QToolButton(parent),
+ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : ToolButtonWidget(parent),
 	m_identifier(identifier)
 {
 	setAutoRaise(true);
@@ -40,17 +39,6 @@ ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : QT
 	else
 	{
 		setDefaultAction(ActionsManager::getAction(identifier, this));
-	}
-
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
-
-	if (toolBar)
-	{
-		setIconSize(toolBar->iconSize());
-		setToolButtonStyle(toolBar->toolButtonStyle());
-
-		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
-		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
 	}
 }
 
@@ -100,7 +88,7 @@ void ActionWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
-	QToolButton::mousePressEvent(event);
+	ToolButtonWidget::mousePressEvent(event);
 }
 
 }

@@ -20,7 +20,7 @@
 #ifndef OTTER_GOBACKACTIONWIDGET_H
 #define OTTER_GOBACKACTIONWIDGET_H
 
-#include "../ActionWidget.h"
+#include "ActionWidget.h"
 
 namespace Otter
 {

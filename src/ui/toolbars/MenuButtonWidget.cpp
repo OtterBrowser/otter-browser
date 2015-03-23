@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 *
 **************************************************************************/
 
-#include "MenuActionWidget.h"
+#include "MenuButtonWidget.h"
 #include "../Menu.h"
+#include "../ToolBarWidget.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/Utils.h"
 
@@ -28,7 +29,7 @@
 namespace Otter
 {
 
-MenuActionWidget::MenuActionWidget(QWidget *parent) : ActionWidget(-1, NULL, parent),
+MenuButtonWidget::MenuButtonWidget(QWidget *parent) : ToolButtonWidget(parent),
 	m_menu(new Menu(this))
 {
 	setIcon(Utils::getIcon(QLatin1String("otter-browser"), false));
@@ -38,26 +39,42 @@ MenuActionWidget::MenuActionWidget(QWidget *parent) : ActionWidget(-1, NULL, par
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	optionChanged(QLatin1String("Interface/ShowMenuBar"), SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")));
 
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
+	{
+		disconnect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 }
 
-void MenuActionWidget::optionChanged(const QString &option, const QVariant &value)
+void MenuButtonWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Interface/ShowMenuBar"))
 	{
 		if (value.toBool())
 		{
-			setMaximumSize(0, 0);
+			QToolButton::setMaximumSize(0, 0);
 		}
 		else
 		{
-			setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+			ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+			if (toolBar)
+			{
+				setMaximumButtonSize(toolBar->getMaximumButtonSize());
+			}
+			else
+			{
+				setMaximumButtonSize(QWIDGETSIZE_MAX);
+			}
 		}
 	}
 }
 
-void MenuActionWidget::updateMenu()
+void MenuButtonWidget::updateMenu()
 {
 	disconnect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 

@@ -23,11 +23,12 @@
 #include "Menu.h"
 #include "TabBarWidget.h"
 #include "Window.h"
+#include "toolbars/ActionWidget.h"
 #include "toolbars/AddressWidget.h"
 #include "toolbars/BookmarkWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
-#include "toolbars/MenuActionWidget.h"
+#include "toolbars/MenuButtonWidget.h"
 #include "toolbars/PanelChooserWidget.h"
 #include "toolbars/SearchWidget.h"
 #include "toolbars/StatusMessageWidget.h"
@@ -51,7 +52,7 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
-	setToolButtonStyle(definition.iconStyle);
+	setToolButtonStyle(definition.buttonStyle);
 
 	if (definition.iconSize > 0)
 	{
@@ -98,9 +99,9 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 
 			addWidget(closedWindowsMenuButton);
 		}
-		else if (definition.actions.at(i).action == QLatin1String("MenuWidget"))
+		else if (definition.actions.at(i).action == QLatin1String("MenuButtonWidget"))
 		{
-			addWidget(new MenuActionWidget(this));
+			addWidget(new MenuButtonWidget(this));
 		}
 		else if (definition.actions.at(i).action == QLatin1String("AddressWidget"))
 		{
@@ -151,25 +152,17 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 
 			if (identifier >= 0)
 			{
-				Action *action = NULL;
-
-				if (m_window && Action::isLocal(identifier))
+				if (identifier == Action::GoBackAction)
 				{
-					action = m_window->getContentsWidget()->getAction(identifier);
+					addWidget(new GoBackActionWidget(m_window, this));
+				}
+				else if (identifier == Action::GoForwardAction)
+				{
+					addWidget(new GoForwardActionWidget(m_window, this));
 				}
 				else
 				{
-					action = ActionsManager::getAction(identifier, this);
-				}
-
-				if (action)
-				{
-					if (m_window)
-					{
-						action->setWindow(m_window);
-					}
-
-					addAction(action);
+					addWidget(new ActionWidget(identifier, m_window, this));
 				}
 			}
 		}
@@ -279,6 +272,11 @@ void ToolBarWidget::updateBookmarks()
 			}
 		}
 	}
+}
+
+int ToolBarWidget::getMaximumButtonSize() const
+{
+	return m_definition.maximumButtonSize;
 }
 
 }

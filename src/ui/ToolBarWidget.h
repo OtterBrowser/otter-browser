@@ -36,6 +36,8 @@ class ToolBarWidget : public QToolBar
 public:
 	explicit ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent);
 
+	int getMaximumButtonSize() const;
+
 public slots:
 	void notifyAreaChanged();
 
@@ -55,6 +57,7 @@ private:
 signals:
 	void areaChanged(Qt::ToolBarArea area);
 	void windowChanged(Window *window);
+	void maximumButtonSizeChanged(int size);
 };
 
 }
