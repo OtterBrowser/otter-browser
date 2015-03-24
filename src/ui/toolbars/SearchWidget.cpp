@@ -333,7 +333,6 @@ void SearchWidget::sendRequest(const QString &query)
 
 void SearchWidget::storeCurrentSearchEngine()
 {
-
 	m_storedSearchEngine = getCurrentSearchEngine();
 
 	hidePopup();
@@ -402,7 +401,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		m_window->detachSearchWidget(this);
 
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window, SLOT(setSearchEngine(QString)));
 		disconnect(m_window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
