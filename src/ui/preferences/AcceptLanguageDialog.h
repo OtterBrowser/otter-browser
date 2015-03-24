@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,11 +44,11 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
-	void chooseLanguage(const QString &languageCode);
-	static bool languageOrder(const QPair<QString, QString> &first, const QPair<QString, QString> &second);
+	void addLanguage(const QString &languageCode);
+	static bool compareLanguages(const QPair<QString, QString> &first, const QPair<QString, QString> &second);
 
 protected slots:
-	void languageFromComboBox();
+	void addLanguage();
 	void updateActions();
 
 private:

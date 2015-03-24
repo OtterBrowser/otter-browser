@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,11 +22,11 @@
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
+#include "ui_AcceptLanguageDialog.h"
+
 #include <QtCore/QList>
 #include <QtCore/QLocale>
 #include <QtGui/QKeyEvent>
-
-#include "ui_AcceptLanguageDialog.h"
 
 namespace Otter
 {
@@ -48,7 +49,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 
 	for (int i = 0; i < chosenLanguages.count(); ++i)
 	{
-		chooseLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
+		addLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
 	}
 
 	const QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
@@ -60,11 +61,11 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 
 		if (locale != QLocale::c())
 		{
-			allLanguages << QPair<QString, QString>(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name());
+			allLanguages << qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name());
 		}
 	}
 
-	qSort(allLanguages.begin(), allLanguages.end(), languageOrder);
+	qSort(allLanguages.begin(), allLanguages.end(), compareLanguages);
 
 	allLanguages.prepend(QPair<QString, QString>(tr("Any other"), QLatin1String("*")));
 	allLanguages.prepend(QPair<QString, QString>(tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QString("system")));
@@ -81,7 +82,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(removeRow()));
-	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(languageFromComboBox()));
+	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addLanguage()));
 	connect(m_ui->languagesViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->languagesViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->languagesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
@@ -92,51 +93,56 @@ AcceptLanguageDialog::~AcceptLanguageDialog()
 	delete m_ui;
 }
 
-void AcceptLanguageDialog::languageFromComboBox()
+void AcceptLanguageDialog::addLanguage()
 {
 	const int index = m_ui->languagesComboBox->currentIndex();
 
 	if (m_ui->languagesComboBox->currentText() == m_ui->languagesComboBox->itemText(index))
 	{
-		chooseLanguage(m_ui->languagesComboBox->currentData().toString());
+		addLanguage(m_ui->languagesComboBox->currentData().toString());
 	}
 	else
 	{
-		chooseLanguage(m_ui->languagesComboBox->currentText());
+		addLanguage(m_ui->languagesComboBox->currentText());
 	}
 }
 
-void AcceptLanguageDialog::chooseLanguage(const QString &languageCode)
+void AcceptLanguageDialog::addLanguage(const QString &language)
 {
-	QString languageName;
-
-	if (languageCode == QLatin1String("*"))
+	if (!m_model->match(m_model->index(0, 0), Qt::UserRole, language).isEmpty())
 	{
-		languageName = tr("Any other");
+		return;
 	}
-	else if (languageCode == QLatin1String("system"))
+
+	QString text;
+
+	if (language == QLatin1String("*"))
 	{
-		languageName = tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName());
+		text = tr("Any other");
+	}
+	else if (language == QLatin1String("system"))
+	{
+		text = tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName());
 	}
 	else
 	{
-		const QLocale locale(languageCode);
+		const QLocale locale(language);
 
 		if (locale == QLocale::c())
 		{
-			languageName = tr("Custom");
+			text = tr("Custom");
 		}
 		else
 		{
-			languageName = locale.nativeLanguageName() + QLatin1String(" - ") + locale.nativeCountryName();
+			text = locale.nativeLanguageName() + QLatin1String(" - ") + locale.nativeCountryName();
 		}
 	}
 
 	QList<QStandardItem*> items;
-	items.append(new QStandardItem(languageName));
+	items.append(new QStandardItem(text));
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items[0]->setData(languageCode);
-	items.append(new QStandardItem((languageCode == QLatin1String("system")) ? QLocale::system().bcp47Name() : languageCode));
+	items[0]->setData(language, Qt::UserRole);
+	items.append(new QStandardItem((language == QLatin1String("system")) ? QLocale::system().bcp47Name() : language));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_model->appendRow(items);
@@ -181,21 +187,21 @@ QString AcceptLanguageDialog::getLanguageList()
 	return result;
 }
 
+bool AcceptLanguageDialog::compareLanguages(const QPair<QString, QString> &first, const QPair<QString, QString> &second)
+{
+	return (first.first.toLower() < second.first.toLower());
+}
+
 bool AcceptLanguageDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->languagesComboBox && event->type() == QEvent::KeyPress && (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Enter || static_cast<QKeyEvent*>(event)->key() == Qt::Key_Return))
 	{
-		languageFromComboBox();
+		addLanguage();
 
 		return true;
 	}
 
 	return false;
-}
-
-bool AcceptLanguageDialog::languageOrder(const QPair<QString, QString> &first, const QPair<QString, QString> &second)
-{
-    return (first.first.toLower() < second.first.toLower());
 }
 
 }

@@ -164,6 +164,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				connect(m_ui->useCurrentAsHomePageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsHomePage()));
 				connect(m_ui->restoreHomePageButton, SIGNAL(clicked()), this, SLOT(restoreHomePage()));
+				connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(manageAcceptLanguage()));
 			}
 
 			break;
@@ -569,7 +570,6 @@ void PreferencesDialog::currentTabChanged(int tab)
 				connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
 				connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
 				connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
-				connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(manageAcceptLanguage()));
 			}
 
 			break;
