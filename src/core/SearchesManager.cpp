@@ -74,6 +74,7 @@ void SearchesManager::optionChanged(const QString &key)
 void SearchesManager::loadSearchEngines()
 {
 	m_searchEngines.clear();
+	m_searchKeywords.clear();
 
 	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
 

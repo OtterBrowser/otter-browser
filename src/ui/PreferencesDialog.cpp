@@ -1226,10 +1226,17 @@ void PreferencesDialog::save()
 		for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 		{
 			const QString identifier = m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
+			const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
 
 			if (!identifier.isEmpty())
 			{
 				searchEnginesOrder.append(identifier);
+			}
+
+			if (m_searchEngines.contains(identifier) && m_searchEngines[identifier].second.keyword != keyword)
+			{
+				m_searchEngines[identifier].first = true;
+				m_searchEngines[identifier].second.keyword = keyword;
 			}
 		}
 

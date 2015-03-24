@@ -352,6 +352,7 @@ void SearchWidget::restoreCurrentSearchEngine()
 	}
 
 	lineEdit()->setText(m_query);
+	lineEdit()->setGeometry(m_lineEditRectangle);
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
