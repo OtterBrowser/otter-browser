@@ -94,10 +94,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="bookmarkAsHomePageButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <widget class="QPushButton" name="useBookmarkAsHomePageButton">
              <property name="text">
               <string>Use Bookmark...</string>
              </property>
@@ -2145,7 +2142,7 @@
   <tabstop>startupBehaviorComboBox</tabstop>
   <tabstop>homePageLineEdit</tabstop>
   <tabstop>useCurrentAsHomePageButton</tabstop>
-  <tabstop>bookmarkAsHomePageButton</tabstop>
+  <tabstop>useBookmarkAsHomePageButton</tabstop>
   <tabstop>restoreHomePageButton</tabstop>
   <tabstop>alwaysAskCheckBox</tabstop>
   <tabstop>tabsInsteadOfWindowsCheckBox</tabstop>

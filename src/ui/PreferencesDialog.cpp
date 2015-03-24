@@ -22,6 +22,7 @@
 #include "PreferencesDialog.h"
 #include "ClearHistoryDialog.h"
 #include "MainWindow.h"
+#include "Menu.h"
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
 #include "SearchPropertiesDialog.h"
@@ -31,6 +32,8 @@
 #include "preferences/SearchKeywordDelegate.h"
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/Application.h"
+#include "../core/BookmarksManager.h"
+#include "../core/BookmarksModel.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/PlatformIntegration.h"
 #include "../core/SettingsManager.h"
@@ -138,6 +141,13 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
 				m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
+
+				Menu *bookmarksMenu = new Menu(m_ui->useBookmarkAsHomePageButton);
+				bookmarksMenu->setRole(BookmarkSelectorMenuRole);
+				bookmarksMenu->menuAction()->setData(BookmarksManager::getModel()->getRootItem()->index());
+
+				m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
+				m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
 				m_ui->downloadsFilePathWidget->setSelectFile(false);
 				m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
 				m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
@@ -162,6 +172,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 					connect(m_ui->setDefaultButton, SIGNAL(clicked()), integration, SLOT(setAsDefaultBrowser()));
 				}
 
+				connect(bookmarksMenu, SIGNAL(triggered(QAction*)), this, SLOT(useBookmarkAsHomePage(QAction*)));
 				connect(m_ui->useCurrentAsHomePageButton, SIGNAL(clicked()), this, SLOT(useCurrentAsHomePage()));
 				connect(m_ui->restoreHomePageButton, SIGNAL(clicked()), this, SLOT(restoreHomePage()));
 				connect(m_ui->acceptLanguageButton, SIGNAL(clicked()), this, SLOT(manageAcceptLanguage()));
@@ -605,6 +616,19 @@ void PreferencesDialog::useCurrentAsHomePage()
 	if (manager)
 	{
 		m_ui->homePageLineEdit->setText(manager->getUrl().toString(QUrl::RemovePassword));
+	}
+}
+
+void PreferencesDialog::useBookmarkAsHomePage(QAction *action)
+{
+	if (action)
+	{
+		const QString url = action->data().toModelIndex().data(BookmarksModel::UrlRole).toString();
+
+		if (!url.isEmpty())
+		{
+			m_ui->homePageLineEdit->setText(url);
+		}
 	}
 }
 

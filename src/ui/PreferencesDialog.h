@@ -51,6 +51,7 @@ protected:
 protected slots:
 	void currentTabChanged(int tab);
 	void useCurrentAsHomePage();
+	void useBookmarkAsHomePage(QAction *action);
 	void restoreHomePage();
 	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 	void fontChanged(QWidget *editor);

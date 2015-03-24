@@ -197,6 +197,7 @@ void Menu::setRole(MenuRole role)
 	switch (role)
 	{
 		case BookmarksMenuRole:
+		case BookmarkSelectorMenuRole:
 			installEventFilter(this);
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
@@ -272,7 +273,7 @@ void Menu::populateBookmarksMenu()
 		return;
 	}
 
-	if (index.isValid() && branch->rowCount() > 1)
+	if (index.isValid() && branch->rowCount() > 1 && m_role == BookmarksMenuRole)
 	{
 		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
 		openAllAction->setData(index);
@@ -298,14 +299,14 @@ void Menu::populateBookmarksMenu()
 			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(item->data(BookmarksModel::UrlRole).toString());
 
-			if (type == BookmarksItem::UrlBookmark)
+			if (type == BookmarksItem::UrlBookmark && m_role == BookmarksMenuRole)
 			{
 				connect(action, SIGNAL(triggered()), this, SLOT(openBookmark()));
 			}
-			else if (item->rowCount() > 0)
+			else if (type == BookmarksItem::FolderBookmark && item->rowCount() > 0)
 			{
 				Menu *subMenu = new Menu(this);
-				subMenu->setRole(BookmarksMenuRole);
+				subMenu->setRole(m_role);
 
 				action->setMenu(subMenu);
 			}

@@ -30,11 +30,12 @@ enum MenuRole
 {
 	NoMenuRole = 0,
 	BookmarksMenuRole = 1,
-	CharacterEncodingMenuRole = 2,
-	ClosedWindowsMenu = 3,
-	ImportExportMenuRole = 4,
-	SessionsMenuRole = 5,
-	UserAgentMenuRole = 6
+	BookmarkSelectorMenuRole = 2,
+	CharacterEncodingMenuRole = 3,
+	ClosedWindowsMenu = 4,
+	ImportExportMenuRole = 5,
+	SessionsMenuRole = 6,
+	UserAgentMenuRole = 7
 };
 
 class Action;
