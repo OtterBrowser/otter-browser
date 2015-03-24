@@ -38,7 +38,6 @@
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
-#include <QtCore/QRegularExpression>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
@@ -46,7 +45,6 @@
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
@@ -821,85 +819,32 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
 	const QStringList identifiers = SearchesManager::getSearchEngines();
 	const QStringList keywords = SearchesManager::getSearchKeywords();
-	QList<SearchInformation*> engines;
+	const QString identifier = Utils::createIdentifier(getUrl().host(), identifiers, tr("Enter unique search engine identifier:"), this);
 
-	for (int i = 0; i < identifiers.count(); ++i)
+	if (identifier.isEmpty())
 	{
-		SearchInformation *engine = SearchesManager::getSearchEngine(identifiers.at(i));
-
-		if (!engine)
-		{
-			continue;
-		}
-
-		engines.append(engine);
-	}
-
-	QString identifier = getUrl().host().toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9]")));
-
-	while (identifier.isEmpty() || identifiers.contains(identifier))
-	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Search Engine Identifier:"));
-
-		if (identifier.isEmpty())
-		{
-			return;
-		}
+		return;
 	}
 
 	const QIcon icon = getIcon();
 	const QUrl url(result.toMap().value(QLatin1String("url")).toString());
-	QVariantHash engineData;
-	engineData[QLatin1String("identifier")] = identifier;
-	engineData[QLatin1String("isDefault")] = false;
-	engineData[QLatin1String("encoding")] = QLatin1String("UTF-8");
-	engineData[QLatin1String("selfUrl")] = QString();
-	engineData[QLatin1String("resultsUrl")] = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-	engineData[QLatin1String("resultsEnctype")] = result.toMap().value(QLatin1String("enctype")).toString();
-	engineData[QLatin1String("resultsMethod")] = result.toMap().value(QLatin1String("method")).toString();
-	engineData[QLatin1String("resultsParameters")] = parameters.toString(QUrl::FullyDecoded);
-	engineData[QLatin1String("suggestionsUrl")] = QString();
-	engineData[QLatin1String("suggestionsEnctype")] = QString();
-	engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
-	engineData[QLatin1String("suggestionsParameters")] = QString();
-	engineData[QLatin1String("keyword")] = QString();
-	engineData[QLatin1String("title")] = getTitle();
-	engineData[QLatin1String("description")] = QString();
-	engineData[QLatin1String("icon")] = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+	SearchInformation engine;
+	engine.identifier = identifier;
+	engine.title = getTitle();
+	engine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+	engine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+	engine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
+	engine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
+	engine.resultsUrl.parameters = parameters;
 
-	SearchPropertiesDialog dialog(engineData, keywords, this);
+	SearchPropertiesDialog dialog(engine, keywords, false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	engineData = dialog.getEngineData();
-
-	if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
-	{
-		engineData[QLatin1String("keyword")] = QString();
-	}
-
-	SearchInformation *engine = new SearchInformation();
-	engine->identifier = engineData[QLatin1String("identifier")].toString();
-	engine->title = engineData[QLatin1String("title")].toString();
-	engine->description = engineData[QLatin1String("description")].toString();
-	engine->keyword = engineData[QLatin1String("keyword")].toString();
-	engine->encoding = engineData[QLatin1String("encoding")].toString();
-	engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
-	engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();
-	engine->resultsUrl.enctype = engineData[QLatin1String("resultsEnctype")].toString();
-	engine->resultsUrl.method = engineData[QLatin1String("resultsMethod")].toString();
-	engine->resultsUrl.parameters = QUrlQuery(engineData[QLatin1String("resultsParameters")].toString());
-	engine->icon = engineData[QLatin1String("icon")].value<QIcon>();
-
-	engines.append(engine);
-
-	if (SearchesManager::setSearchEngines(engines) && engineData[QLatin1String("isDefault")].toBool())
-	{
-		SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), engineData[QLatin1String("identifier")].toString());
-	}
+	SearchesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
 }
 
 void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
@@ -1246,13 +1191,14 @@ void QtWebEngineWebWidget::updateEditActions()
 
 	if (m_actions.contains(Action::SearchAction))
 	{
-		SearchInformation *engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+		const bool isValid = !engine.identifier.isEmpty();
 
-		m_actions[Action::SearchAction]->setEnabled(engine != NULL);
-		m_actions[Action::SearchAction]->setData(engine ? engine->identifier : QVariant());
-		m_actions[Action::SearchAction]->setIcon((!engine || engine->icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine->icon);
-		m_actions[Action::SearchAction]->setOverrideText(engine ? engine->title : QT_TRANSLATE_NOOP("actions", "Search"));
-		m_actions[Action::SearchAction]->setToolTip(engine ? engine->description : tr("No search engines defined"));
+		m_actions[Action::SearchAction]->setEnabled(isValid);
+		m_actions[Action::SearchAction]->setData(isValid ? engine.identifier : QVariant());
+		m_actions[Action::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
+		m_actions[Action::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[Action::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
 	}
 
 	if (m_actions.contains(Action::SearchMenuAction))

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,11 +23,13 @@
 #include "PlatformIntegration.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
@@ -47,6 +49,24 @@ void runApplication(const QString &command, const QString &fileName)
 	}
 
 	QDesktopServices::openUrl(QUrl(fileName));
+}
+
+QString createIdentifier(const QString &base, const QStringList &exclude, const QString &label, QWidget *parent)
+{
+	QString identifier = (base.isEmpty() ? QLatin1String("custom") : base.toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9]"))));
+
+	do
+	{
+		identifier = QInputDialog::getText(parent, QCoreApplication::translate("utils", "Select Identifier"), label, QLineEdit::Normal, identifier);
+
+		if (identifier.isEmpty())
+		{
+			return QString();
+		}
+	}
+	while (exclude.contains(identifier));
+
+	return identifier;
 }
 
 QString elideText(const QString &text, QWidget *widget, int width)

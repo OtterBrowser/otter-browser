@@ -122,11 +122,11 @@ void InputInterpreter::interpret(const QString &text, OpenHints hints, bool igno
 	}
 
 	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	SearchInformation *engine = SearchesManager::getSearchEngine(keyword, true);
+	const SearchInformation engine = SearchesManager::getSearchEngine(keyword, true);
 
-	if (engine)
+	if (!engine.identifier.isEmpty())
 	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), engine->identifier, hints);
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), engine.identifier, hints);
 
 		deleteLater();
 

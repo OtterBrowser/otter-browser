@@ -233,27 +233,27 @@ void WebWidget::reloadTimeMenuAboutToShow()
 
 void WebWidget::quickSearch(QAction *action)
 {
-	SearchInformation *engine = SearchesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
+	const SearchInformation engine = SearchesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
 
-	if (!engine)
+	if (engine.identifier.isEmpty())
 	{
 		return;
 	}
 
-	if (engine->identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+	if (engine.identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
 	{
-		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), engine->identifier);
+		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), engine.identifier);
 	}
 
 	const OpenHints hints = WindowsManager::calculateOpenHints();
 
 	if (hints == CurrentTabOpen)
 	{
-		search(getSelectedText(), engine->identifier);
+		search(getSelectedText(), engine.identifier);
 	}
 	else
 	{
-		emit requestedSearch(getSelectedText(), engine->identifier, hints);
+		emit requestedSearch(getSelectedText(), engine.identifier, hints);
 	}
 }
 
@@ -265,13 +265,13 @@ void WebWidget::quickSearchMenuAboutToShow()
 
 		for (int i = 0; i < engines.count(); ++i)
 		{
-			SearchInformation *engine = SearchesManager::getSearchEngine(engines.at(i));
+			const SearchInformation engine = SearchesManager::getSearchEngine(engines.at(i));
 
-			if (engine)
+			if (!engine.identifier.isEmpty())
 			{
-				QAction *action = m_quickSearchMenu->addAction(engine->icon, engine->title);
-				action->setData(engine->identifier);
-				action->setToolTip(engine->description);
+				QAction *action = m_quickSearchMenu->addAction(engine.icon, engine.title);
+				action->setData(engine.identifier);
+				action->setToolTip(engine.description);
 			}
 		}
 	}

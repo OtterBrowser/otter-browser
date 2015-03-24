@@ -36,21 +36,11 @@ SearchesManager* SearchesManager::m_instance = NULL;
 QStandardItemModel* SearchesManager::m_searchEnginesModel = NULL;
 QStringList SearchesManager::m_searchEnginesOrder;
 QStringList SearchesManager::m_searchKeywords;
-QHash<QString, SearchInformation*> SearchesManager::m_searchEngines;
-bool SearchesManager::m_initialized = false;
+QHash<QString, SearchInformation> SearchesManager::m_searchEngines;
+bool SearchesManager::m_isInitialized = false;
 
 SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
 {
-}
-
-SearchesManager::~SearchesManager()
-{
-	QHash<QString, SearchInformation*>::iterator iterator;
-
-	for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
-	{
-		delete iterator.value();
-	}
 }
 
 void SearchesManager::createInstance(QObject *parent)
@@ -63,64 +53,80 @@ void SearchesManager::createInstance(QObject *parent)
 
 void SearchesManager::initialize()
 {
-	m_initialized = true;
-
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/");
-	const QDir directory(path);
-
-	if (!QFile::exists(path))
+	if (!m_isInitialized)
 	{
-		QDir().mkpath(path);
+		m_isInitialized = true;
 
-		if (directory.entryList(QDir::Files).isEmpty())
-		{
-			const QStringList definitions = QDir(QLatin1String(":/searches/")).entryList(QDir::Files);
+		loadSearchEngines();
 
-			for (int i = 0; i < definitions.count(); ++i)
-			{
-				QFile::copy(QLatin1String(":/searches/") + definitions.at(i), directory.filePath(definitions.at(i)));
-				QFile::setPermissions(directory.filePath(definitions.at(i)), (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
-			}
-		}
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
 	}
+}
 
-	const QStringList entries = directory.entryList(QDir::Files);
-
-	for (int i = 0; i < entries.count(); ++i)
+void SearchesManager::optionChanged(const QString &key)
+{
+	if (key == QLatin1String("Search/SearchEnginesOrder"))
 	{
-		QFile file(directory.absoluteFilePath(entries.at(i)));
+		loadSearchEngines();
+	}
+}
+
+void SearchesManager::loadSearchEngines()
+{
+	m_searchEngines.clear();
+
+	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
+
+	const QStringList searchEnginesOrder = m_searchEnginesOrder;
+
+	for (int i = 0; i < searchEnginesOrder.count(); ++i)
+	{
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml");
+		QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml"));
 
 		if (file.open(QIODevice::ReadOnly))
 		{
-			const QString identifier = QFileInfo(entries.at(i)).baseName();
-			SearchInformation *search = readSearch(&file, identifier);
+			const SearchInformation search = loadSearchEngine(&file, searchEnginesOrder.at(i));
 
-			if (search)
+			if (search.identifier.isEmpty())
 			{
-				m_searchEngines[identifier] = search;
+				m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
+			}
+			else
+			{
+				m_searchEngines[searchEnginesOrder.at(i)] = search;
 			}
 
 			file.close();
 		}
 	}
 
-	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
-	m_searchEnginesOrder.removeAll(QString());
+	emit m_instance->searchEnginesModified();
 
-	for (int i = 0; i < m_searchEnginesOrder.count(); ++i)
+	updateSearchEnginesModel();
+}
+
+void SearchesManager::addSearchEngine(const SearchInformation &engine, bool isDefault)
+{
+	if (saveSearchEngine(engine))
 	{
-		if (!m_searchEngines.contains(m_searchEnginesOrder.at(i)))
+		if (isDefault)
 		{
-			m_searchEnginesOrder.removeAll(m_searchEnginesOrder.at(i));
+			SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), engine.identifier);
 		}
-	}
 
-	if (m_searchEnginesOrder.isEmpty())
-	{
-		QStringList engines = m_searchEngines.keys();
-		engines.sort();
+		if (m_searchEnginesOrder.contains(engine.identifier))
+		{
+			emit m_instance->searchEnginesModified();
 
-		m_searchEnginesOrder = engines;
+			updateSearchEnginesModel();
+		}
+		else
+		{
+			m_searchEnginesOrder.append(engine.identifier);
+
+			SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), m_searchEnginesOrder);
+		}
 	}
 }
 
@@ -137,14 +143,14 @@ void SearchesManager::updateSearchEnginesModel()
 
 	for (int i = 0; i < engines.count(); ++i)
 	{
-		SearchInformation *search = getSearchEngine(engines.at(i));
+		const SearchInformation search = getSearchEngine(engines.at(i));
 
-		if (search)
+		if (!search.identifier.isEmpty())
 		{
-			QStandardItem *item = new QStandardItem((search->icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search->icon), QString());
-			item->setData(search->title, Qt::UserRole);
-			item->setData(search->identifier, (Qt::UserRole + 1));
-			item->setData(search->keyword, (Qt::UserRole + 2));
+			QStandardItem *item = new QStandardItem((search.icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search.icon), QString());
+			item->setData(search.title, Qt::UserRole);
+			item->setData(search.identifier, (Qt::UserRole + 1));
+			item->setData(search.keyword, (Qt::UserRole + 2));
 			item->setData(QSize(-1, 22), Qt::SizeHintRole);
 
 			m_searchEnginesModel->appendRow(item);
@@ -256,8 +262,8 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 		}
 		else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 		{
-			request->setRawHeader("Content-Type", "multipart/form-data; boundary=AaB03x");
-			request->setRawHeader("Content-Length", QString::number(body->length()).toUtf8());
+			request->setRawHeader(QStringLiteral("Content-Type").toLatin1(), QStringLiteral("multipart/form-data; boundary=AaB03x").toLatin1());
+			request->setRawHeader(QStringLiteral("Content-Length").toLatin1(), QString::number(body->length()).toUtf8());
 		}
 	}
 
@@ -270,10 +276,10 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 }
 
-SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString &identifier)
+SearchInformation SearchesManager::loadSearchEngine(QIODevice *device, const QString &identifier)
 {
-	SearchInformation *search = new SearchInformation();
-	search->identifier = identifier;
+	SearchInformation engine;
+	engine.identifier = identifier;
 
 	QXmlStreamReader reader(device->readAll());
 
@@ -291,15 +297,15 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 				{
 					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self"))
 					{
-						search->selfUrl = reader.attributes().value(QLatin1String("template")).toString();
+						engine.selfUrl = reader.attributes().value(QLatin1String("template")).toString();
 					}
 					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
-						currentUrl = &search->suggestionsUrl;
+						currentUrl = &engine.suggestionsUrl;
 					}
 					else if (!reader.attributes().hasAttribute(QLatin1String("rel")) || reader.attributes().value(QLatin1String("rel")) == QLatin1String("results"))
 					{
-						currentUrl = &search->resultsUrl;
+						currentUrl = &engine.resultsUrl;
 					}
 					else
 					{
@@ -323,40 +329,38 @@ SearchInformation* SearchesManager::readSearch(QIODevice *device, const QString 
 
 					if (!keyword.isEmpty() && !m_searchKeywords.contains(keyword))
 					{
-						search->keyword = keyword;
+						engine.keyword = keyword;
 
 						m_searchKeywords.append(keyword);
 					}
 				}
 				else if (reader.name() == QLatin1String("ShortName"))
 				{
-					search->title = reader.readElementText();
+					engine.title = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("Description"))
 				{
-					search->description = reader.readElementText();
+					engine.description = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("InputEncoding"))
 				{
-					search->encoding = reader.readElementText();
+					engine.encoding = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("Image"))
 				{
 					const QString data = reader.readElementText();
 
-					search->icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+					engine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
 				}
 			}
 		}
 	}
 	else
 	{
-		delete search;
-
-		return NULL;
+		engine.identifier = QString();
 	}
 
-	return search;
+	return engine;
 }
 
 SearchesManager* SearchesManager::getInstance()
@@ -364,41 +368,13 @@ SearchesManager* SearchesManager::getInstance()
 	return m_instance;
 }
 
-SearchInformation* SearchesManager::getSearchEngine(const QString &identifier, bool byKeyword)
-{
-	if (!m_initialized && m_instance)
-	{
-		m_instance->initialize();
-	}
-
-	if (byKeyword)
-	{
-		if (!identifier.isEmpty())
-		{
-			QHash<QString, SearchInformation*>::iterator iterator;
-
-			for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
-			{
-				if (iterator.value()->keyword == identifier)
-				{
-					return iterator.value();
-				}
-			}
-		}
-
-		return NULL;
-	}
-
-	if (identifier.isEmpty())
-	{
-		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), NULL);
-	}
-
-	return m_searchEngines.value(identifier, NULL);
-}
-
 QStandardItemModel* SearchesManager::getSearchEnginesModel()
 {
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
 	if (!m_searchEnginesModel)
 	{
 		m_searchEnginesModel = new QStandardItemModel(m_instance);
@@ -409,11 +385,44 @@ QStandardItemModel* SearchesManager::getSearchEnginesModel()
 	return m_searchEnginesModel;
 }
 
+SearchInformation SearchesManager::getSearchEngine(const QString &identifier, bool byKeyword)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	if (byKeyword)
+	{
+		if (!identifier.isEmpty())
+		{
+			QHash<QString, SearchInformation>::iterator iterator;
+
+			for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
+			{
+				if (iterator.value().keyword == identifier)
+				{
+					return iterator.value();
+				}
+			}
+		}
+
+		return SearchInformation();
+	}
+
+	if (identifier.isEmpty())
+	{
+		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), SearchInformation());
+	}
+
+	return m_searchEngines.value(identifier, SearchInformation());
+}
+
 QStringList SearchesManager::getSearchEngines()
 {
-	if (!m_initialized && m_instance)
+	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	return m_searchEnginesOrder;
@@ -421,35 +430,47 @@ QStringList SearchesManager::getSearchEngines()
 
 QStringList SearchesManager::getSearchKeywords()
 {
-	if (!m_initialized && m_instance)
+	if (!m_isInitialized)
 	{
-		m_instance->initialize();
+		initialize();
 	}
 
 	return m_searchKeywords;
 }
 
-bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
+bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 {
-	QXmlStreamWriter writer(device);
+	if (engine.identifier.isEmpty())
+	{
+		return false;
+	}
+
+	QFile file(SessionsManager::getProfilePath() + QLatin1String("/searches/") + engine.identifier + QLatin1String(".xml"));
+
+	if (!file.open(QFile::WriteOnly))
+	{
+		return false;
+	}
+
+	QXmlStreamWriter writer(&file);
 	writer.setAutoFormatting(true);
 	writer.setAutoFormattingIndent(-1);
 	writer.writeStartDocument();
 	writer.writeStartElement(QLatin1String("OpenSearchDescription"));
 	writer.writeAttribute(QLatin1String("xmlns"), QLatin1String("http://a9.com/-/spec/opensearch/1.1/"));
-	writer.writeTextElement(QLatin1String("Shortcut"), search->keyword);
-	writer.writeTextElement(QLatin1String("ShortName"), search->title);
-	writer.writeTextElement(QLatin1String("Description"), search->description);
-	writer.writeTextElement(QLatin1String("InputEncoding"), search->encoding);
+	writer.writeTextElement(QLatin1String("Shortcut"), engine.keyword);
+	writer.writeTextElement(QLatin1String("ShortName"), engine.title);
+	writer.writeTextElement(QLatin1String("Description"), engine.description);
+	writer.writeTextElement(QLatin1String("InputEncoding"), engine.encoding);
 
-	if (!search->icon.isNull())
+	if (!engine.icon.isNull())
 	{
-		const QSize size = search->icon.availableSizes().value(0, QSize(16, 16));
+		const QSize size = engine.icon.availableSizes().value(0, QSize(16, 16));
 		QByteArray data;
 		QBuffer buffer(&data);
 		buffer.open(QIODevice::WriteOnly);
 
-		search->icon.pixmap(size).save(&buffer, "PNG");
+		engine.icon.pixmap(size).save(&buffer, "PNG");
 
 		writer.writeStartElement(QLatin1String("Image"));
 		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
@@ -459,24 +480,24 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 		writer.writeEndElement();
 	}
 
-	if (!search->selfUrl.isEmpty())
+	if (!engine.selfUrl.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/opensearchdescription+xml"));
-		writer.writeAttribute(QLatin1String("template"), search->selfUrl);
+		writer.writeAttribute(QLatin1String("template"), engine.selfUrl);
 		writer.writeEndElement();
 	}
 
-	if (!search->resultsUrl.url.isEmpty())
+	if (!engine.resultsUrl.url.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("rel"), QLatin1String("results"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("text/html"));
-		writer.writeAttribute(QLatin1String("method"), search->resultsUrl.method.toUpper());
-		writer.writeAttribute(QLatin1String("enctype"), search->resultsUrl.enctype.toLower());
-		writer.writeAttribute(QLatin1String("template"), search->resultsUrl.url);
+		writer.writeAttribute(QLatin1String("method"), engine.resultsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), engine.resultsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), engine.resultsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = search->resultsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters = engine.resultsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -489,16 +510,16 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 		writer.writeEndElement();
 	}
 
-	if (!search->suggestionsUrl.url.isEmpty())
+	if (!engine.suggestionsUrl.url.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("rel"), QLatin1String("suggestions"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/x-suggestions+json"));
-		writer.writeAttribute(QLatin1String("method"), search->suggestionsUrl.method.toUpper());
-		writer.writeAttribute(QLatin1String("enctype"), search->suggestionsUrl.enctype.toLower());
-		writer.writeAttribute(QLatin1String("template"), search->suggestionsUrl.url);
+		writer.writeAttribute(QLatin1String("method"), engine.suggestionsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), engine.suggestionsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), engine.suggestionsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = search->suggestionsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters = engine.suggestionsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -519,85 +540,14 @@ bool SearchesManager::writeSearch(QIODevice *device, SearchInformation *search)
 
 bool SearchesManager::setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	SearchInformation *information = getSearchEngine(engine);
+	const SearchInformation search = getSearchEngine(engine);
 
-	if (information)
+	if (search.identifier.isEmpty())
 	{
-		setupQuery(query, information->resultsUrl, request, method, body);
-
-		return true;
+		return false;
 	}
 
-	return false;
-}
-
-bool SearchesManager::setSearchEngines(const QList<SearchInformation*> &engines)
-{
-	const QList<SearchInformation*> existingEngines = m_searchEngines.values();
-
-	for (int i = 0; i < existingEngines.count(); ++i)
-	{
-		if (!engines.contains(existingEngines.at(i)))
-		{
-			const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + QString(existingEngines.at(i)->identifier).remove(QRegularExpression(QLatin1String("[\\/\\\\]"))) + QLatin1String(".xml");
-
-			if (QFile::exists(path) && !QFile::remove(path))
-			{
-				emit m_instance->searchEnginesModified();
-
-				m_instance->updateSearchEnginesModel();
-
-				return false;
-			}
-
-			m_searchEngines.remove(existingEngines.at(i)->identifier);
-			m_searchEnginesOrder.removeAll(existingEngines.at(i)->identifier);
-
-			delete existingEngines.at(i);
-		}
-	}
-
-	m_searchEnginesOrder.clear();
-
-	for (int i = 0; i < engines.count(); ++i)
-	{
-		if (engines.at(i)->identifier.isEmpty())
-		{
-			delete engines.at(i);
-
-			continue;
-		}
-
-		QFile file(SessionsManager::getProfilePath() + QLatin1String("/searches/") + QString(engines.at(i)->identifier).remove(QRegularExpression("[\\/\\\\]")) + ".xml");
-
-		if (!file.open(QIODevice::WriteOnly) || !writeSearch(&file, engines.at(i)))
-		{
-			for (int j = i; j < engines.count(); ++j)
-			{
-				delete engines.at(j);
-			}
-
-			SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), m_searchEnginesOrder);
-
-			emit m_instance->searchEnginesModified();
-
-			m_instance->updateSearchEnginesModel();
-
-			return false;
-		}
-
-		file.close();
-
-		m_searchEngines[engines.at(i)->identifier] = engines.at(i);
-
-		m_searchEnginesOrder.append(engines.at(i)->identifier);
-	}
-
-	SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), m_searchEnginesOrder);
-
-	emit m_instance->searchEnginesModified();
-
-	m_instance->updateSearchEnginesModel();
+	setupQuery(query, search.resultsUrl, request, method, body);
 
 	return true;
 }

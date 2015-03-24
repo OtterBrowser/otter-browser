@@ -46,7 +46,6 @@
 #include <QtNetwork/QSslCipher>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QFileDialog>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -54,8 +53,8 @@ namespace Otter
 {
 
 PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
-	m_defaultSearch(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString()),
-	m_clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
+	m_defaultSearchEngine(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString()),
+	m_clearHisorySettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
 	m_userAgentsModified(false),
 	m_ui(new Ui::PreferencesDialog)
 {
@@ -63,7 +62,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_loadedTabs.fill(false, 5);
 
-	m_clearSettings.removeAll(QString());
+	m_clearHisorySettings.removeAll(QString());
 
 	int tab = 0;
 
@@ -255,8 +254,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 				const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
 
 				m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
-				m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
-				m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
+				m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
+				m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
 
 				connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 				connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
@@ -277,33 +276,21 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				for (int i = 0; i < searchEngines.count(); ++i)
 				{
-					SearchInformation *engine = SearchesManager::getSearchEngine(searchEngines.at(i));
+					const SearchInformation engine = SearchesManager::getSearchEngine(searchEngines.at(i));
 
-					if (!engine)
+					if (engine.identifier.isEmpty())
 					{
 						continue;
 					}
 
-					QVariantHash engineData;
-					engineData[QLatin1String("identifier")] = engine->identifier;
-					engineData[QLatin1String("isDefault")] = (engine->identifier == m_defaultSearch);
-					engineData[QLatin1String("encoding")] = engine->encoding;
-					engineData[QLatin1String("selfUrl")] = engine->selfUrl;
-					engineData[QLatin1String("resultsUrl")] = engine->resultsUrl.url;
-					engineData[QLatin1String("resultsEnctype")] = engine->resultsUrl.enctype;
-					engineData[QLatin1String("resultsMethod")] = engine->resultsUrl.method;
-					engineData[QLatin1String("resultsParameters")] = engine->resultsUrl.parameters.toString(QUrl::FullyDecoded);
-					engineData[QLatin1String("suggestionsUrl")] = engine->suggestionsUrl.url;
-					engineData[QLatin1String("suggestionsEnctype")] = engine->suggestionsUrl.enctype;
-					engineData[QLatin1String("suggestionsMethod")] = engine->suggestionsUrl.method;
-					engineData[QLatin1String("suggestionsParameters")] = engine->suggestionsUrl.parameters.toString(QUrl::FullyDecoded);
+					m_searchEngines[engine.identifier] = qMakePair(false, engine);
 
 					QList<QStandardItem*> items;
-					items.append(new QStandardItem(engine->icon, engine->title));
-					items[0]->setToolTip(engine->description);
-					items[0]->setData(engineData, Qt::UserRole);
+					items.append(new QStandardItem(engine.icon, engine.title));
+					items[0]->setToolTip(engine.description);
+					items[0]->setData(engine.identifier, Qt::UserRole);
 					items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-					items.append(new QStandardItem(engine->keyword));
+					items.append(new QStandardItem(engine.keyword));
 					items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 					searchEnginesModel->appendRow(items);
@@ -322,9 +309,9 @@ void PreferencesDialog::currentTabChanged(int tab)
 				connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
 				connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchActions()));
 				connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
-				connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearch()));
-				connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearch()));
-				connect(m_ui->removeSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(removeRow()));
+				connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearchEngine()));
+				connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearchEngine()));
+				connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearchEngine()));
 				connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
 				connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
 			}
@@ -684,17 +671,17 @@ void PreferencesDialog::colorChanged(QWidget *editor)
 
 void PreferencesDialog::setupClearHistory()
 {
-	ClearHistoryDialog dialog(m_clearSettings, true, this);
+	ClearHistoryDialog dialog(m_clearHisorySettings, true, this);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		m_clearSettings = dialog.getClearSettings();
+		m_clearHisorySettings = dialog.getClearSettings();
 
 		markModified();
 	}
 
-	m_ui->clearHistoryCheckBox->setChecked(!m_clearSettings.isEmpty());
-	m_ui->clearHistoryButton->setEnabled(!m_clearSettings.isEmpty());
+	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
+	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
 }
 
 void PreferencesDialog::manageAcceptLanguage()
@@ -707,9 +694,8 @@ void PreferencesDialog::manageAcceptLanguage()
 	}
 }
 
-void PreferencesDialog::addSearch()
+void PreferencesDialog::addSearchEngine()
 {
-	QString identifier;
 	QStringList identifiers;
 	QStringList keywords;
 
@@ -725,60 +711,40 @@ void PreferencesDialog::addSearch()
 		}
 	}
 
-	do
+	const QString identifier = Utils::createIdentifier(QString(), identifiers, tr("Enter unique search engine identifier:"), this);
+
+	if (identifier.isEmpty())
 	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Search Engine Identifier:"));
-
-		if (identifier.isEmpty())
-		{
-			return;
-		}
+		return;
 	}
-	while (identifiers.contains(identifier));
 
-	QVariantHash engineData;
-	engineData[QLatin1String("identifier")] = identifier;
-	engineData[QLatin1String("isDefault")] = false;
-	engineData[QLatin1String("encoding")] = QLatin1String("UTF-8");
-	engineData[QLatin1String("selfUrl")] = QString();
-	engineData[QLatin1String("resultsUrl")] = QString();
-	engineData[QLatin1String("resultsEnctype")] = QString();
-	engineData[QLatin1String("resultsMethod")] = QLatin1String("get");
-	engineData[QLatin1String("resultsParameters")] = QString();
-	engineData[QLatin1String("suggestionsUrl")] = QString();
-	engineData[QLatin1String("suggestionsEnctype")] = QString();
-	engineData[QLatin1String("suggestionsMethod")] = QLatin1String("get");
-	engineData[QLatin1String("suggestionsParameters")] = QString();
-	engineData[QLatin1String("keyword")] = QString();
-	engineData[QLatin1String("title")] = tr("New Search Engine");
-	engineData[QLatin1String("description")] = QString();
-	engineData[QLatin1String("icon")] = Utils::getIcon(QLatin1String("edit-find"));
+	SearchInformation engine;
+	engine.identifier = identifier;
+	engine.title = tr("New Search Engine");
+	engine.icon = Utils::getIcon(QLatin1String("edit-find"));
 
-	SearchPropertiesDialog dialog(engineData, keywords, this);
+	SearchPropertiesDialog dialog(engine, keywords, false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	engineData = dialog.getEngineData();
+	engine = dialog.getSearchEngine();
 
-	if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
-	{
-		engineData[QLatin1String("keyword")] = QString();
-	}
+	m_searchEngines[identifier] = qMakePair(true, engine);
 
-	if (engineData[QLatin1String("isDefault")].toBool())
+	if (dialog.isDefault())
 	{
-		m_defaultSearch = engineData[QLatin1String("identifier")].toString();
+		m_defaultSearchEngine = identifier;
 	}
 
 	QList<QStandardItem*> items;
-	items.append(new QStandardItem(engineData[QLatin1String("icon")].value<QIcon>(), engineData[QLatin1String("title")].toString()));
-	items[0]->setToolTip(engineData[QLatin1String("description")].toString());
-	items[0]->setData(engineData, Qt::UserRole);
+	items.append(new QStandardItem(engine.icon, engine.title));
+	items[0]->setToolTip(engine.description);
+	items[0]->setData(identifier, Qt::UserRole);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(engineData[QLatin1String("keyword")].toString()));
+	items.append(new QStandardItem(engine.keyword));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
@@ -786,21 +752,15 @@ void PreferencesDialog::addSearch()
 	markModified();
 }
 
-void PreferencesDialog::editSearch()
+void PreferencesDialog::editSearchEngine()
 {
 	const QModelIndex index = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0);
+	const QString identifier = index.data(Qt::UserRole).toString();
 
-	if (!index.isValid())
+	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
 		return;
 	}
-
-	QVariantHash engineData = index.data(Qt::UserRole).toHash();
-	engineData[QLatin1String("keyword")] = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
-	engineData[QLatin1String("title")] = index.data(Qt::DisplayRole).toString();
-	engineData[QLatin1String("description")] = index.data(Qt::ToolTipRole).toString();
-	engineData[QLatin1String("icon")] = index.data(Qt::DecorationRole).value<QIcon>();
-	engineData[QLatin1String("isDefault")] = (engineData[QLatin1String("identifier")] == m_defaultSearch);
 
 	QStringList keywords;
 
@@ -814,32 +774,72 @@ void PreferencesDialog::editSearch()
 		}
 	}
 
-	SearchPropertiesDialog dialog(engineData, keywords, this);
+	SearchPropertiesDialog dialog(m_searchEngines[identifier].second, keywords, (identifier == m_defaultSearchEngine), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	engineData = dialog.getEngineData();
+	SearchInformation engine = dialog.getSearchEngine();
 
-	if (keywords.contains(engineData[QLatin1String("keyword")].toString()))
+	if (keywords.contains(engine.keyword))
 	{
-		engineData[QLatin1String("keyword")] = QString();
+		engine.keyword = QString();
 	}
 
-	if (engineData[QLatin1String("isDefault")].toBool())
+	m_searchEngines[identifier] = qMakePair(true, engine);
+
+	if (dialog.isDefault())
 	{
-		m_defaultSearch = engineData[QLatin1String("identifier")].toString();
+		m_defaultSearchEngine = identifier;
 	}
 
-	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("title")], Qt::DisplayRole);
-	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("description")], Qt::ToolTipRole);
-	m_ui->searchViewWidget->setData(index, engineData[QLatin1String("icon")], Qt::DecorationRole);
-	m_ui->searchViewWidget->setData(index, engineData, Qt::UserRole);
-	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engineData[QLatin1String("keyword")], Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(index, engine.title, Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(index, engine.description, Qt::ToolTipRole);
+	m_ui->searchViewWidget->setData(index, engine.icon, Qt::DecorationRole);
+	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engine.keyword, Qt::DisplayRole);
 
 	markModified();
+}
+
+void PreferencesDialog::removeSearchEngine()
+{
+	const QModelIndex index = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0);
+	const QString identifier = index.data(Qt::UserRole).toString();
+
+	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
+	{
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("Do you really want to remove this search engine?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Cancel);
+
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
+
+	if (QFile::exists(path))
+	{
+		messageBox.setCheckBox(new QCheckBox(tr("Delete search engine permanently")));
+	}
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+		{
+			m_filesToRemove.append(path);
+		}
+
+		m_searchEngines.remove(identifier);
+
+		m_ui->searchViewWidget->removeRow();
+
+		markModified();
+	}
 }
 
 void PreferencesDialog::updateSearchActions()
@@ -1099,7 +1099,7 @@ void PreferencesDialog::removeKeyboardProfile()
 	{
 		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
 		{
-			m_removedShortcutsProfiles.append(m_shortcutsProfiles[profile].path);
+			m_filesToRemove.append(m_shortcutsProfiles[profile].path);
 		}
 
 		m_shortcutsProfiles.remove(profile);
@@ -1170,6 +1170,13 @@ void PreferencesDialog::openConfigurationManager()
 
 void PreferencesDialog::save()
 {
+	for (int i = 0; i < m_filesToRemove.count(); ++i)
+	{
+		QFile::remove(m_filesToRemove.at(i));
+	}
+
+	m_filesToRemove.clear();
+
 	if (m_loadedTabs[0])
 	{
 		SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), m_ui->startupBehaviorComboBox->currentData().toString());
@@ -1209,48 +1216,45 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("Browser/EnableCookies"), m_ui->enableCookiesCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString());
-		SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearSettings : QStringList()));
+		SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
 	}
 
 	if (m_loadedTabs[3])
 	{
-		QList<SearchInformation*> searchEngines;
+		QStringList searchEnginesOrder;
 
 		for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 		{
-			const QModelIndex index = m_ui->searchViewWidget->getIndex(i, 0);
+			const QString identifier = m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
 
-			if (!index.isValid())
+			if (!identifier.isEmpty())
 			{
-				continue;
+				searchEnginesOrder.append(identifier);
 			}
-
-			const QVariantHash engineData = index.data(Qt::UserRole).toHash();
-			SearchInformation *engine = new SearchInformation();
-			engine->identifier = engineData[QLatin1String("identifier")].toString();
-			engine->title = index.data(Qt::DisplayRole).toString();
-			engine->description = index.data(Qt::ToolTipRole).toString();
-			engine->keyword = m_ui->searchViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
-			engine->encoding = engineData[QLatin1String("encoding")].toString();
-			engine->selfUrl = engineData[QLatin1String("selfUrl")].toString();
-			engine->resultsUrl.url = engineData[QLatin1String("resultsUrl")].toString();
-			engine->resultsUrl.enctype = engineData[QLatin1String("resultsEnctype")].toString();
-			engine->resultsUrl.method = engineData[QLatin1String("resultsMethod")].toString();
-			engine->resultsUrl.parameters = QUrlQuery(engineData[QLatin1String("resultsParameters")].toString());
-			engine->suggestionsUrl.url = engineData[QLatin1String("suggestionsUrl")].toString();
-			engine->suggestionsUrl.enctype = engineData[QLatin1String("suggestionsEnctype")].toString();
-			engine->suggestionsUrl.method = engineData[QLatin1String("suggestionsMethod")].toString();
-			engine->suggestionsUrl.parameters = QUrlQuery(engineData[QLatin1String("suggestionsParameters")].toString());
-			engine->icon = index.data(Qt::DecorationRole).value<QIcon>();
-
-			searchEngines.append(engine);
 		}
 
-		if (SearchesManager::setSearchEngines(searchEngines))
+		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/searches/"));
+
+		QHash<QString, QPair<bool, SearchInformation> >::iterator searchEnginesIterator;
+
+		for (searchEnginesIterator = m_searchEngines.begin(); searchEnginesIterator != m_searchEngines.end(); ++searchEnginesIterator)
 		{
-			SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), m_defaultSearch);
+			if (searchEnginesIterator.value().first)
+			{
+				SearchesManager::saveSearchEngine(searchEnginesIterator.value().second);
+			}
 		}
 
+		if (SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList() == searchEnginesOrder)
+		{
+			SearchesManager::loadSearchEngines();
+		}
+		else
+		{
+			SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), searchEnginesOrder);
+		}
+
+		SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), m_defaultSearchEngine);
 		SettingsManager::setValue(QLatin1String("Search/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
 	}
 
@@ -1351,11 +1355,6 @@ void PreferencesDialog::save()
 			}
 
 			SettingsManager::setValue(QLatin1String("Security/Ciphers"), ciphers);
-		}
-
-		for (int i = 0; i < m_removedShortcutsProfiles.count(); ++i)
-		{
-			QFile::remove(m_removedShortcutsProfiles.at(i));
 		}
 
 		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/keyboard/"));
@@ -1462,18 +1461,7 @@ QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, QString
 		identifier.append(QLatin1String("-copy"));
 	}
 
-	do
-	{
-		identifier = QInputDialog::getText(this, tr("Select Identifier"), tr("Enter Unique Profile Identifier:"), QLineEdit::Normal, identifier);
-
-		if (identifier.isEmpty())
-		{
-			return QString();
-		}
-	}
-	while (identifiers.contains(identifier));
-
-	return identifier;
+	return Utils::createIdentifier(identifier, identifiers, tr("Enter unique profile identifier:"), this);
 }
 
 }

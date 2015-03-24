@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>575</width>
-    <height>385</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,6 +87,23 @@
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="keywordLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="encodingLabel">
+       <property name="text">
+        <string>Encoding:</string>
+       </property>
+       <property name="buddy">
+        <cstring>encodingLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="encodingLineEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -347,6 +364,7 @@
   <tabstop>iconButton</tabstop>
   <tabstop>descriptionLineEdit</tabstop>
   <tabstop>keywordLineEdit</tabstop>
+  <tabstop>encodingLineEdit</tabstop>
   <tabstop>defaultSearchCheckBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>resultsAddressLineEdit</tabstop>
@@ -357,7 +375,6 @@
   <tabstop>suggestionsQueryLineEdit</tabstop>
   <tabstop>suggestionsPostMethodCheckBox</tabstop>
   <tabstop>suggestionsEnctypeComboBox</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
   <include location="../../resources/resources.qrc"/>

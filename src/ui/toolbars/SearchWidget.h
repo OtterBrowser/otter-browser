@@ -54,12 +54,10 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
-	bool setPlaceholderText(int index);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void currentIndexChanged(int index);
-	void indexActivated(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
 	void storeCurrentSearchEngine();
@@ -75,7 +73,7 @@ private:
 	QRect m_selectButtonArrowRectangle;
 	QRect m_lineEditRectangle;
 	QRect m_searchButtonRectangle;
-	int m_index;
+	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
 	bool m_isPopupUpdated;
 

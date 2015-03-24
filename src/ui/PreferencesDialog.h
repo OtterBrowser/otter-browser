@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+struct SearchInformation;
 struct ShortcutsProfile;
 class ItemViewWidget;
 
@@ -57,8 +58,9 @@ protected slots:
 	void colorChanged(QWidget *editor);
 	void setupClearHistory();
 	void manageAcceptLanguage();
-	void addSearch();
-	void editSearch();
+	void addSearchEngine();
+	void editSearchEngine();
+	void removeSearchEngine();
 	void updateSearchActions();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
@@ -76,12 +78,13 @@ protected slots:
 	void save();
 
 private:
-	QString m_defaultSearch;
-	QStringList m_clearSettings;
-	QStringList m_removedShortcutsProfiles;
+	QString m_defaultSearchEngine;
+	QStringList m_filesToRemove;
+	QStringList m_clearHisorySettings;
 	QVector<bool> m_loadedTabs;
 	QVariantMap m_javaScriptOptions;
 	QHash<QString, ShortcutsProfile> m_shortcutsProfiles;
+	QHash<QString, QPair<bool, SearchInformation> > m_searchEngines;
 	bool m_userAgentsModified;
 	Ui::PreferencesDialog *m_ui;
 };
