@@ -39,7 +39,7 @@ struct ToolBarActionDefinition
 
 struct ToolBarDefinition
 {
-	QString name;
+	QString identifier;
 	QString title;
 	QString bookmarksPath;
 	QList<ToolBarActionDefinition> actions;
@@ -132,6 +132,11 @@ private:
 	static ActionsManagerHelper *m_helper;
 	static Action *m_dummyAction;
 	static QMutex m_mutex;
+
+signals:
+	void toolBarAdded(const QString &identifier);
+	void toolBarModified(const QString &identifier);
+	void toolBarRemoved(const QString &identifier);
 };
 
 }

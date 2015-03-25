@@ -44,14 +44,77 @@ namespace Otter
 {
 
 ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent) : QToolBar(parent),
-	m_mainWindow(qobject_cast<MainWindow*>(parent)),
+	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
-	m_definition(definition)
+	m_identifier(definition.identifier)
 {
-	setObjectName(definition.name);
+	setObjectName(definition.identifier);
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
+	setup();
+
+	if (m_mainWindow)
+	{
+		if (parent == m_mainWindow)
+		{
+			connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
+		}
+
+		connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
+		connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
+	}
+
+	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
+}
+
+void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+
+	if (objectName() != QLatin1String("TabBar"))
+	{
+		menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+		menu.exec(event->globalPos());
+
+		return;
+	}
+
+	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
+	menu.addSeparator();
+
+	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
+	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
+	cycleAction->setCheckable(true);
+	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
+	cycleAction->setEnabled(m_mainWindow->getTabBar());
+
+	customizeMenu->addSeparator();
+	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+
+	if (m_mainWindow->getTabBar())
+	{
+		connect(cycleAction, SIGNAL(toggled(bool)), m_mainWindow->getTabBar(), SLOT(setCycle(bool)));
+	}
+
+	menu.exec(event->globalPos());
+}
+
+void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton && objectName() == QLatin1String("TabBar"))
+	{
+		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
+	}
+}
+
+void ToolBarWidget::setup()
+{
+	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(m_identifier);
+
+	clear();
+
 	setToolButtonStyle(definition.buttonStyle);
 
 	if (definition.iconSize > 0)
@@ -123,16 +186,15 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		{
 			addWidget(new ZoomWidget(this));
 		}
-		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && !hasTabBar && definition.name == QLatin1String("TabBar"))
+		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && !hasTabBar && definition.identifier == QLatin1String("TabBar"))
 		{
 			hasTabBar = true;
 
 			TabBarWidget *tabBar = new TabBarWidget(this);
-			MainWindow *window = qobject_cast<MainWindow*>(parent);
 
-			if (window)
+			if (m_mainWindow)
 			{
-				window->setTabBar(tabBar);
+				m_mainWindow->setTabBar(tabBar);
 			}
 
 			addWidget(tabBar);
@@ -168,65 +230,32 @@ ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window
 		}
 	}
 
-	if (!hasTabBar && definition.name == QLatin1String("TabBar"))
+	if (!hasTabBar && definition.identifier == QLatin1String("TabBar"))
 	{
 		TabBarWidget *tabBar = new TabBarWidget(this);
-		MainWindow *window = qobject_cast<MainWindow*>(parent);
 
-		if (window)
+		if (m_mainWindow)
 		{
-			window->setTabBar(tabBar);
+			m_mainWindow->setTabBar(tabBar);
 		}
 
 		addWidget(tabBar);
 	}
-
-	if (m_mainWindow)
-	{
-		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
-	}
-
-	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 }
 
-void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
+void ToolBarWidget::toolBarModified(const QString &identifier)
 {
-	QMenu menu(this);
-
-	if (objectName() != QLatin1String("TabBar"))
+	if (identifier == m_identifier)
 	{
-		menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
-		menu.exec(event->globalPos());
-
-		return;
+		setup();
 	}
-
-	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
-	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
-	menu.addSeparator();
-
-	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
-	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
-	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
-	cycleAction->setEnabled(m_mainWindow->getTabBar());
-
-	customizeMenu->addSeparator();
-	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
-
-	if (m_mainWindow->getTabBar())
-	{
-		connect(cycleAction, SIGNAL(toggled(bool)), m_mainWindow->getTabBar(), SLOT(setCycle(bool)));
-	}
-
-	menu.exec(event->globalPos());
 }
 
-void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
+void ToolBarWidget::toolBarRemoved(const QString &identifier)
 {
-	if (event->button() == Qt::LeftButton && objectName() == QLatin1String("TabBar"))
+	if (identifier == m_identifier)
 	{
-		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
+		deleteLater();
 	}
 }
 
@@ -247,9 +276,11 @@ void ToolBarWidget::notifyWindowChanged(qint64 identifier)
 
 void ToolBarWidget::updateBookmarks()
 {
+	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(m_identifier);
+
 	clear();
 
-	BookmarksItem *item = (m_definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(m_definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
+	BookmarksItem *item = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
 	if (!item)
 	{
@@ -276,7 +307,7 @@ void ToolBarWidget::updateBookmarks()
 
 int ToolBarWidget::getMaximumButtonSize() const
 {
-	return m_definition.maximumButtonSize;
+	return ActionsManager::getToolBarDefinition(m_identifier).maximumButtonSize;
 }
 
 }

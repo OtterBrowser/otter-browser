@@ -259,7 +259,7 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 		const QString location = toolBarObject.value(QLatin1String("location")).toString();
 		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
 		ToolBarDefinition toolBar;
-		toolBar.name = toolBarObject.value(QLatin1String("identifier")).toString();
+		toolBar.identifier = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
@@ -319,7 +319,7 @@ QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QStri
 			toolBar.actions.append(action);
 		}
 
-		definitions[toolBar.name] = toolBar;
+		definitions[toolBar.identifier] = toolBar;
 	}
 
 	return definitions;
@@ -690,7 +690,7 @@ ToolBarDefinition ActionsManager::getToolBarDefinition(const QString &toolBar)
 	if (!m_helper->toolBarDefinitions.contains(toolBar))
 	{
 		ToolBarDefinition definition;
-		definition.name = toolBar;
+		definition.identifier = toolBar;
 
 		return definition;
 	}

@@ -44,15 +44,18 @@ public slots:
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
+	void setup();
 
 protected slots:
+	void toolBarModified(const QString &identifier);
+	void toolBarRemoved(const QString &identifier);
 	void notifyWindowChanged(qint64 identifier);
 	void updateBookmarks();
 
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
-	ToolBarDefinition m_definition;
+	QString m_identifier;
 
 signals:
 	void areaChanged(Qt::ToolBarArea area);

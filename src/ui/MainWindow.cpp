@@ -102,23 +102,12 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	setCentralWidget(centralWidget);
 
 	const QList<ToolBarDefinition> toolBarDefinitions = ActionsManager::getToolBarDefinitions();
-	const bool areToolBarsMovable = !SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
-		if (toolBarDefinitions.at(i).location == Qt::NoToolBarArea)
+		if (toolBarDefinitions.at(i).location != Qt::NoToolBarArea)
 		{
-			continue;
-		}
-
-		ToolBarWidget *toolBar = new ToolBarWidget(toolBarDefinitions.at(i), NULL, this);
-		toolBar->setMovable(areToolBarsMovable);
-
-		addToolBar(toolBarDefinitions.at(i).location, toolBar);
-
-		if (toolBarDefinitions.at(i).name == QLatin1String("TabBar"))
-		{
-			m_tabBarToolBar = toolBar;
+			addToolBar(toolBarDefinitions.at(i).identifier);
 		}
 	}
 
@@ -142,6 +131,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
+	connect(m_actionsManager, SIGNAL(toolBarAdded(QString)), this, SLOT(addToolBar(QString)));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
@@ -692,6 +682,20 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		delete bookmark;
+	}
+}
+
+void MainWindow::addToolBar(const QString &identifier)
+{
+	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(identifier);
+	ToolBarWidget *toolBar = new ToolBarWidget(definition, NULL, this);
+	toolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
+
+	QMainWindow::addToolBar(definition.location, toolBar);
+
+	if (identifier == QLatin1String("TabBar"))
+	{
+		m_tabBarToolBar = toolBar;
 	}
 }
 
