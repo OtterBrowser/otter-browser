@@ -26,6 +26,7 @@ namespace Otter
 {
 
 class MainWindow;
+class ToolBarWidget;
 
 class MenuBarWidget : public QMenuBar
 {
@@ -35,10 +36,17 @@ public:
 	explicit MenuBarWidget(MainWindow *parent);
 
 protected:
+	void resizeEvent(QResizeEvent *event);
 	void setup();
 
 protected slots:
 	void toolBarModified(const QString &identifier);
+	void updateSize();
+
+private:
+	MainWindow *m_mainWindow;
+	ToolBarWidget *m_leftToolBar;
+	ToolBarWidget *m_rightToolBar;
 };
 
 }

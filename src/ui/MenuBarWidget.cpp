@@ -19,6 +19,7 @@
 
 #include "MenuBarWidget.h"
 #include "MainWindow.h"
+#include "MdiWidget.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
 #include "../core/ActionsManager.h"
@@ -28,13 +29,17 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QTimer>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOptionMenuItem>
 
 namespace Otter
 {
 
-MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent)
+MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
+	m_mainWindow(parent),
+	m_leftToolBar(NULL),
+	m_rightToolBar(NULL)
 {
 	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
 	QFile file(QFile::exists(path) ? path : QLatin1String(":/other/menuBar.json"));
@@ -58,6 +63,13 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent)
 	}
 }
 
+void MenuBarWidget::resizeEvent(QResizeEvent *event)
+{
+	QMenuBar::resizeEvent(event);
+
+	updateSize();
+}
+
 void MenuBarWidget::setup()
 {
 	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(QLatin1String("MenuBar"));
@@ -70,16 +82,18 @@ void MenuBarWidget::setup()
 
 	if (actions.count() == 1 && actions.at(0) == QLatin1String("MenuBarWidget"))
 	{
-		if (cornerWidget(Qt::TopLeftCorner))
+		if (m_leftToolBar)
 		{
-			cornerWidget(Qt::TopLeftCorner)->deleteLater();
+			m_leftToolBar->deleteLater();
+			m_leftToolBar = NULL;
 
 			setCornerWidget(NULL, Qt::TopLeftCorner);
 		}
 
-		if (cornerWidget(Qt::TopRightCorner))
+		if (m_rightToolBar)
 		{
-			cornerWidget(Qt::TopRightCorner)->deleteLater();
+			m_rightToolBar->deleteLater();
+			m_rightToolBar = NULL;
 
 			setCornerWidget(NULL, Qt::TopRightCorner);
 		}
@@ -87,34 +101,34 @@ void MenuBarWidget::setup()
 		return;
 	}
 
-	ToolBarWidget *leftToolBar = qobject_cast<ToolBarWidget*>(cornerWidget(Qt::TopLeftCorner));
-	ToolBarWidget *rightToolBar = qobject_cast<ToolBarWidget*>(cornerWidget(Qt::TopRightCorner));
 	const int position = actions.indexOf(QLatin1String("MenuBarWidget"));
 	const bool needsLeftToolbar = (position != 0);
 	const bool needsRightToolbar = (position != (definition.actions.count() - 1));
 
-	if (needsLeftToolbar && !leftToolBar)
+	if (needsLeftToolbar && !m_leftToolBar)
 	{
-		leftToolBar = new ToolBarWidget(QString(), NULL, this);
+		m_leftToolBar = new ToolBarWidget(QString(), m_mainWindow->getMdi()->getActiveWindow(), this);
 
-		setCornerWidget(leftToolBar, Qt::TopLeftCorner);
+		setCornerWidget(m_leftToolBar, Qt::TopLeftCorner);
 	}
-	else if (!needsLeftToolbar && leftToolBar)
+	else if (!needsLeftToolbar && m_leftToolBar)
 	{
-		leftToolBar->deleteLater();
+		m_leftToolBar->deleteLater();
+		m_leftToolBar = NULL;
 
 		setCornerWidget(NULL, Qt::TopLeftCorner);
 	}
 
-	if (needsRightToolbar && !rightToolBar)
+	if (needsRightToolbar && !m_rightToolBar)
 	{
-		rightToolBar = new ToolBarWidget(QString(), NULL, this);
+		m_rightToolBar = new ToolBarWidget(QString(), m_mainWindow->getMdi()->getActiveWindow(), this);
 
-		setCornerWidget(rightToolBar, Qt::TopRightCorner);
+		setCornerWidget(m_rightToolBar, Qt::TopRightCorner);
 	}
-	else if (!needsRightToolbar && rightToolBar)
+	else if (!needsRightToolbar && m_rightToolBar)
 	{
-		rightToolBar->deleteLater();
+		m_rightToolBar->deleteLater();
+		m_rightToolBar = NULL;
 
 		setCornerWidget(NULL, Qt::TopRightCorner);
 	}
@@ -123,7 +137,7 @@ void MenuBarWidget::setup()
 	{
 		if (i != position)
 		{
-			ToolBarWidget *toolBar = ((i < position) ? leftToolBar : rightToolBar);
+			ToolBarWidget *toolBar = ((i < position) ? m_leftToolBar : m_rightToolBar);
 
 			if (definition.actions.at(i).action == QLatin1String("separator"))
 			{
@@ -135,6 +149,8 @@ void MenuBarWidget::setup()
 			}
 		}
 	}
+
+	QTimer::singleShot(100, this, SLOT(updateSize()));
 }
 
 void MenuBarWidget::toolBarModified(const QString &identifier)
@@ -145,5 +161,36 @@ void MenuBarWidget::toolBarModified(const QString &identifier)
 	}
 }
 
+void MenuBarWidget::updateSize()
+{
+	if (!m_leftToolBar && !m_rightToolBar)
+	{
+		return;
+	}
+
+	int size = 0;
+
+	if (actions().count() > 0)
+	{
+		size = ((style()->pixelMetric(QStyle::PM_MenuBarHMargin, 0, this) * 2) + (style()->pixelMetric(QStyle::PM_MenuBarItemSpacing, 0, this) * actions().count()));
+
+		for (int i = 0; i < actions().count(); ++i)
+		{
+			QStyleOptionMenuItem option;
+
+			initStyleOption(&option, actions().at(i));
+
+			size += style()->sizeFromContents(QStyle::CT_MenuBarItem, &option, fontMetrics().size(Qt::TextShowMnemonic, option.text), this).width();
+		}
+	}
+
+	if (m_rightToolBar && width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + (m_rightToolBar ? m_rightToolBar->sizeHint().width() : 0)))
+	{
+		const int offset = (size - (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0));
+		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(m_rightToolBar);
+		toolBar->move(QPoint(offset, 0));
+		toolBar->resize((width() - offset), toolBar->height());
+	}
 }
 
+}

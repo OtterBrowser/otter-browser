@@ -59,16 +59,17 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 
 		if (m_mainWindow)
 		{
-			if (parent == m_mainWindow)
-			{
-				connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
-			}
 
 			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
 			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
 		}
 
 		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
+	}
+
+	if (m_mainWindow && (parent == m_mainWindow || m_identifier.isEmpty()))
+	{
+		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
 	}
 }
 

@@ -118,7 +118,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
 	{
-		setMenuBar(new MenuBarWidget(this));
+		m_menuBar = new MenuBarWidget(this);
+
+		setMenuBar(m_menuBar);
 	}
 
 	placeSidebars();
@@ -499,15 +501,16 @@ void MainWindow::triggerAction(int identifier, bool checked)
 		case Action::ShowMenuBarAction:
 			if (checked && !m_menuBar)
 			{
-				setMenuBar(new MenuBarWidget(this));
+				m_menuBar = new MenuBarWidget(this);
+
+				setMenuBar(m_menuBar);
 			}
 			else if (!checked && m_menuBar)
 			{
 				m_menuBar->deleteLater();
+				m_menuBar = NULL;
 
 				setMenuBar(NULL);
-
-				m_menuBar = NULL;
 			}
 
 			SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), checked);
