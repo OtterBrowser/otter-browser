@@ -26,7 +26,6 @@
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QSplitter>
 
@@ -40,7 +39,7 @@ namespace Ui
 
 class ActionsManager;
 class MdiWidget;
-class Menu;
+class MenuBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
 class ToolBarWidget;
@@ -71,12 +70,10 @@ protected:
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
-	void createMenuBar();
 	void createSidebar();
 	void createToggleEdge();
 	void placeSidebars();
 	void updateSidebars();
-	void setTabBar(TabBarWidget *tabBar);
 	bool event(QEvent *event);
 
 protected slots:
@@ -95,7 +92,7 @@ private:
 	TabBarWidget *m_tabBar;
 	ToolBarWidget *m_tabBarToolBar;
 	ToolBarWidget *m_statusBar;
-	QMenuBar *m_menuBar;
+	MenuBarWidget *m_menuBar;
 	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
 	QSplitter *m_splitter;
@@ -107,8 +104,6 @@ signals:
 	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	void controlsHiddenChanged(bool hidden);
 	void statusMessageChanged(const QString &message);
-
-friend class ToolBarWidget;
 };
 
 }

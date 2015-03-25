@@ -43,29 +43,33 @@
 namespace Otter
 {
 
-ToolBarWidget::ToolBarWidget(const ToolBarDefinition &definition, Window *window, QWidget *parent) : QToolBar(parent),
+ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
-	m_identifier(definition.identifier)
+	m_identifier(identifier)
 {
-	setObjectName(definition.identifier);
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
-	setup();
 
-	if (m_mainWindow)
+	if (!identifier.isEmpty())
 	{
-		if (parent == m_mainWindow)
+		setObjectName(identifier);
+		setup();
+
+		if (m_mainWindow)
 		{
-			connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
+			if (parent == m_mainWindow)
+			{
+				connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
+			}
+
+			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
+			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
 		}
 
-		connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
-		connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
+		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 	}
-
-	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -131,115 +135,16 @@ void ToolBarWidget::setup()
 		return;
 	}
 
-	bool hasTabBar = false;
-
 	for (int i = 0; i < definition.actions.count(); ++i)
 	{
 		if (definition.actions.at(i).action == QLatin1String("separator"))
 		{
 			addSeparator();
 		}
-		else if (definition.actions.at(i).action == QLatin1String("spacer"))
-		{
-			QWidget *spacer = new QWidget(this);
-			spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-			addWidget(spacer);
-		}
-		else if (definition.actions.at(i).action == QLatin1String("ClosedWindowsWidget"))
-		{
-			QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this);
-			Menu *closedWindowsMenu = new Menu(this);
-			closedWindowsMenu->setRole(ClosedWindowsMenu);
-
-			closedWindowsAction->setMenu(closedWindowsMenu);
-			closedWindowsAction->setEnabled(false);
-
-			QToolButton *closedWindowsMenuButton = new QToolButton(this);
-			closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
-			closedWindowsMenuButton->setAutoRaise(true);
-			closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
-
-			addWidget(closedWindowsMenuButton);
-		}
-		else if (definition.actions.at(i).action == QLatin1String("MenuButtonWidget"))
-		{
-			addWidget(new MenuButtonWidget(this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("AddressWidget"))
-		{
-			addWidget(new AddressWidget(m_window, this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("PanelChooserWidget"))
-		{
-			addWidget(new PanelChooserWidget(this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("SearchWidget"))
-		{
-			addWidget(new SearchWidget(m_window, this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("StatusMessageWidget"))
-		{
-			addWidget(new StatusMessageWidget(this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("ZoomWidget"))
-		{
-			addWidget(new ZoomWidget(this));
-		}
-		else if (definition.actions.at(i).action == QLatin1String("TabBarWidget") && !hasTabBar && definition.identifier == QLatin1String("TabBar"))
-		{
-			hasTabBar = true;
-
-			TabBarWidget *tabBar = new TabBarWidget(this);
-
-			if (m_mainWindow)
-			{
-				m_mainWindow->setTabBar(tabBar);
-			}
-
-			addWidget(tabBar);
-		}
-		else if (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:")))
-		{
-			BookmarksItem *bookmark = (definition.actions.at(i).action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.actions.at(i).action.mid(11)) : BookmarksManager::getBookmark(definition.actions.at(i).action.mid(11).toULongLong()));
-
-			if (bookmark)
-			{
-				addWidget(new BookmarkWidget(bookmark, this));
-			}
-		}
 		else
 		{
-			const int identifier = ActionsManager::getActionIdentifier(definition.actions.at(i).action.left(definition.actions.at(i).action.length() - 6));
-
-			if (identifier >= 0)
-			{
-				if (identifier == Action::GoBackAction)
-				{
-					addWidget(new GoBackActionWidget(m_window, this));
-				}
-				else if (identifier == Action::GoForwardAction)
-				{
-					addWidget(new GoForwardActionWidget(m_window, this));
-				}
-				else
-				{
-					addWidget(new ActionWidget(identifier, m_window, this));
-				}
-			}
+			addWidget(createWidget(definition.actions.at(i), m_window, this));
 		}
-	}
-
-	if (!hasTabBar && definition.identifier == QLatin1String("TabBar"))
-	{
-		TabBarWidget *tabBar = new TabBarWidget(this);
-
-		if (m_mainWindow)
-		{
-			m_mainWindow->setTabBar(tabBar);
-		}
-
-		addWidget(tabBar);
 	}
 }
 
@@ -303,6 +208,113 @@ void ToolBarWidget::updateBookmarks()
 			}
 		}
 	}
+}
+
+QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar)
+{
+	if (definition.action == QLatin1String("spacer"))
+	{
+		QWidget *spacer = new QWidget(toolBar);
+		spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+
+		return spacer;
+	}
+
+	if (definition.action == QLatin1String("ClosedWindowsWidget"))
+	{
+		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), toolBar);
+		Menu *closedWindowsMenu = new Menu(toolBar);
+		closedWindowsMenu->setRole(ClosedWindowsMenu);
+
+		closedWindowsAction->setMenu(closedWindowsMenu);
+		closedWindowsAction->setEnabled(false);
+
+		QToolButton *closedWindowsMenuButton = new QToolButton(toolBar);
+		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
+		closedWindowsMenuButton->setAutoRaise(true);
+		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
+
+		return closedWindowsMenuButton;
+	}
+
+	if (definition.action == QLatin1String("MenuButtonWidget"))
+	{
+		return new MenuButtonWidget(toolBar);
+	}
+
+	if (definition.action == QLatin1String("AddressWidget"))
+	{
+		return new AddressWidget(window, toolBar);
+	}
+
+	if (definition.action == QLatin1String("PanelChooserWidget"))
+	{
+		return new PanelChooserWidget(toolBar);
+	}
+
+	if (definition.action == QLatin1String("SearchWidget"))
+	{
+		return new SearchWidget(window, toolBar);
+	}
+
+	if (definition.action == QLatin1String("StatusMessageWidget"))
+	{
+		return new StatusMessageWidget(toolBar);
+	}
+
+	if (definition.action == QLatin1String("TabBarWidget"))
+	{
+		if (!toolBar || toolBar->objectName() != QLatin1String("TabBar"))
+		{
+			return NULL;
+		}
+
+		MainWindow *mainWindow = MainWindow::findMainWindow(toolBar);
+
+		if (!mainWindow || mainWindow->getTabBar())
+		{
+			return NULL;
+		}
+
+		return new TabBarWidget(toolBar);
+	}
+
+	if (definition.action == QLatin1String("ZoomWidget"))
+	{
+		return new ZoomWidget(toolBar);
+	}
+
+	if (definition.action.startsWith(QLatin1String("bookmarks:")))
+	{
+		BookmarksItem *bookmark = (definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(11).toULongLong()));
+
+		if (bookmark)
+		{
+			return new BookmarkWidget(bookmark, toolBar);
+		}
+	}
+
+	if (definition.action.endsWith(QLatin1String("Action")))
+	{
+		const int identifier = ActionsManager::getActionIdentifier(definition.action.left(definition.action.length() - 6));
+
+		if (identifier >= 0)
+		{
+			if (identifier == Action::GoBackAction)
+			{
+				return new GoBackActionWidget(window, toolBar);
+			}
+
+			if (identifier == Action::GoForwardAction)
+			{
+				return new GoForwardActionWidget(window, toolBar);
+			}
+
+			return new ActionWidget(identifier, window, toolBar);
+		}
+	}
+
+	return NULL;
 }
 
 int ToolBarWidget::getMaximumButtonSize() const

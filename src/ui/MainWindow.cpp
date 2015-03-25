@@ -23,12 +23,13 @@
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
 #include "MdiWidget.h"
-#include "Menu.h"
+#include "MenuBarWidget.h"
 #include "OpenAddressDialog.h"
 #include "OpenBookmarkDialog.h"
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
@@ -48,13 +49,6 @@
 
 #include "ui_MainWindow.h"
 
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QStandardPaths>
-#include <QtGui/QClipboard>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -94,7 +88,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	centralLayout->setSpacing(0);
 	centralLayout->addWidget(m_splitter);
 
-	m_statusBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("StatusBar")), NULL, centralWidget);
+	m_statusBar = new ToolBarWidget(QLatin1String("StatusBar"), NULL, centralWidget);
 	m_statusBar->setFixedHeight(20);
 
 	centralLayout->addWidget(m_statusBar);
@@ -124,7 +118,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
 	{
-		createMenuBar();
+		setMenuBar(new MenuBarWidget(this));
 	}
 
 	placeSidebars();
@@ -292,27 +286,6 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
 
 		placeSidebars();
-	}
-}
-
-void MainWindow::createMenuBar()
-{
-	m_menuBar = new QMenuBar(this);
-
-	setMenuBar(m_menuBar);
-
-	const QString menuBarPath = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
-	QFile menuBarFile(QFile::exists(menuBarPath) ? menuBarPath : QLatin1String(":/other/menuBar.json"));
-	menuBarFile.open(QFile::ReadOnly);
-
-	const QJsonArray menuBar = QJsonDocument::fromJson(menuBarFile.readAll()).array();
-
-	for (int i = 0; i < menuBar.count(); ++i)
-	{
-		Menu *menu = new Menu(m_menuBar);
-		menu->load(menuBar.at(i).toObject());
-
-		m_menuBar->addMenu(menu);
 	}
 }
 
@@ -526,7 +499,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 		case Action::ShowMenuBarAction:
 			if (checked && !m_menuBar)
 			{
-				createMenuBar();
+				setMenuBar(new MenuBarWidget(this));
 			}
 			else if (!checked && m_menuBar)
 			{
@@ -688,7 +661,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 void MainWindow::addToolBar(const QString &identifier)
 {
 	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(identifier);
-	ToolBarWidget *toolBar = new ToolBarWidget(definition, NULL, this);
+	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
 	toolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
 	QMainWindow::addToolBar(definition.location, toolBar);
@@ -696,6 +669,8 @@ void MainWindow::addToolBar(const QString &identifier)
 	if (identifier == QLatin1String("TabBar"))
 	{
 		m_tabBarToolBar = toolBar;
+
+		m_tabBar = toolBar->findChild<TabBarWidget*>();
 	}
 }
 
@@ -814,11 +789,6 @@ void MainWindow::updateSidebars()
 void MainWindow::updateWindowTitle(const QString &title)
 {
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
-}
-
-void MainWindow::setTabBar(TabBarWidget *tabBar)
-{
-	m_tabBar = tabBar;
 }
 
 MainWindow* MainWindow::findMainWindow(QObject *parent)

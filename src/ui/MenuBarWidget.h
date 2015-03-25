@@ -17,51 +17,28 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TOOLBARWIDGET_H
-#define OTTER_TOOLBARWIDGET_H
+#ifndef OTTER_MENUBARWIDGET_H
+#define OTTER_MENUBARWIDGET_H
 
-#include <QtWidgets/QToolBar>
-
-#include "../core/ActionsManager.h"
+#include <QtWidgets/QMenuBar>
 
 namespace Otter
 {
 
 class MainWindow;
 
-class ToolBarWidget : public QToolBar
+class MenuBarWidget : public QMenuBar
 {
 	Q_OBJECT
 
 public:
-	explicit ToolBarWidget(const QString &identifier, Window *window, QWidget *parent);
-
-	static QWidget* createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar);
-	int getMaximumButtonSize() const;
-
-public slots:
-	void notifyAreaChanged();
+	explicit MenuBarWidget(MainWindow *parent);
 
 protected:
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
 	void setup();
 
 protected slots:
 	void toolBarModified(const QString &identifier);
-	void toolBarRemoved(const QString &identifier);
-	void notifyWindowChanged(qint64 identifier);
-	void updateBookmarks();
-
-private:
-	MainWindow *m_mainWindow;
-	Window *m_window;
-	QString m_identifier;
-
-signals:
-	void areaChanged(Qt::ToolBarArea area);
-	void windowChanged(Window *window);
-	void maximumButtonSizeChanged(int size);
 };
 
 }

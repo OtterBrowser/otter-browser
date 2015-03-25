@@ -493,7 +493,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (m_contentsWidget->getType() == QLatin1String("web") && !m_navigationBar)
 	{
-		m_navigationBar = new ToolBarWidget(ActionsManager::getToolBarDefinition(QLatin1String("NavigationBar")), this, this);
+		m_navigationBar = new ToolBarWidget(QLatin1String("NavigationBar"), this, this);
 		m_navigationBar->setVisible(!m_areControlsHidden);
 
 		layout()->addWidget(m_navigationBar);

@@ -225,6 +225,52 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 		}
 	}
 
+	if (toolBarDefinitions.contains(QLatin1String("MenuBar")))
+	{
+		bool hasMenuBar = false;
+
+		for (int i = 0; i < toolBarDefinitions[QLatin1String("MenuBar")].actions.count(); ++i)
+		{
+			if (toolBarDefinitions[QLatin1String("MenuBar")].actions.at(i).action == QLatin1String("MenuBarWidget"))
+			{
+				hasMenuBar = true;
+
+				break;
+			}
+		}
+
+		if (!hasMenuBar)
+		{
+			ToolBarActionDefinition definition;
+			definition.action = QLatin1String("MenuBar");
+
+			toolBarDefinitions[QLatin1String("MenuBar")].actions.prepend(definition);
+		}
+	}
+
+	if (toolBarDefinitions.contains(QLatin1String("TabBar")))
+	{
+		bool hasTabBar = false;
+
+		for (int i = 0; i < toolBarDefinitions[QLatin1String("TabBar")].actions.count(); ++i)
+		{
+			if (toolBarDefinitions[QLatin1String("TabBar")].actions.at(i).action == QLatin1String("TabBarWidget"))
+			{
+				hasTabBar = true;
+
+				break;
+			}
+		}
+
+		if (!hasTabBar)
+		{
+			ToolBarActionDefinition definition;
+			definition.action = QLatin1String("TabBar");
+
+			toolBarDefinitions[QLatin1String("TabBar")].actions.prepend(definition);
+		}
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 

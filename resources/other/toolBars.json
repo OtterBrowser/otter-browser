@@ -1,11 +1,19 @@
 [
 	{
+		"identifier": "MenuBar",
+		"title": "Menu Bar",
+		"actions":
+		[
+ 			"MenuBarWidget"
+		]
+	},
+	{
 		"identifier": "TabBar",
 		"location": "top",
 		"title": "Tab Bar",
 		"actions":
 		[
-			"MenuWidget",
+			"MenuButtonWidget",
 			"TabBarWidget",
 			"NewTabAction",
 			"spacer",
