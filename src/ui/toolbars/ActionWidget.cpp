@@ -67,7 +67,7 @@ void ActionWidget::enterEvent(QEvent *event)
 	setToolTip(QString());
 }
 
-void ActionWidget::mousePressEvent(QMouseEvent *event)
+void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_identifier == Action::NewTabAction || m_identifier == Action::NewTabPrivateAction)
 	{
@@ -88,7 +88,7 @@ void ActionWidget::mousePressEvent(QMouseEvent *event)
 		}
 	}
 
-	ToolButtonWidget::mousePressEvent(event);
+	ToolButtonWidget::mouseReleaseEvent(event);
 }
 
 }

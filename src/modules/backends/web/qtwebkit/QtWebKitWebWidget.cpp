@@ -1010,6 +1010,20 @@ void QtWebKitWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
+void QtWebKitWebWidget::clearSelection()
+{
+	const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+	if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
+	{
+		m_page->triggerAction(QWebPage::MoveToPreviousChar);
+	}
+	else
+	{
+		m_page->mainFrame()->evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
+	}
+}
+
 void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
 {
 	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
@@ -2655,42 +2669,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
 				{
 					setZoom(getZoom() + (wheelEvent->delta() / 16));
-
-					event->accept();
-
-					return true;
-				}
-			}
-		}
-		else if (event->type() == QEvent::KeyPress)
-		{
-			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-			if (keyEvent->key() == Qt::Key_Escape)
-			{
-				if (isLoading())
-				{
-					triggerAction(Action::StopAction);
-
-					ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
-
-					event->accept();
-
-					return true;
-				}
-
-				if (m_webView->hasSelection())
-				{
-					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
-
-					if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
-					{
-						m_page->triggerAction(QWebPage::MoveToPreviousChar);
-					}
-					else
-					{
-						m_page->mainFrame()->evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
-					}
 
 					event->accept();
 

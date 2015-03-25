@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "../../../core/AddonsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
+#include "../../../ui/MainWindow.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QVBoxLayout>
@@ -31,7 +32,7 @@
 namespace Otter
 {
 
-QString WebContentsWidget::m_quickFindQuery = NULL;
+QString WebContentsWidget::m_sharedQuickFindQuery = NULL;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_webWidget(widget),
@@ -138,6 +139,46 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 	ContentsWidget::resizeEvent(event);
 }
 
+void WebContentsWidget::keyPressEvent(QKeyEvent *event)
+{
+	QWidget::keyPressEvent(event);
+
+	if (event->key() == Qt::Key_Escape)
+	{
+		if (m_webWidget->isLoading())
+		{
+			triggerAction(Action::StopAction);
+
+			ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
+
+			event->accept();
+		}
+		else if (!m_quickFindQuery.isEmpty())
+		{
+			m_quickFindQuery = QString();
+
+			m_webWidget->findInPage(QString());
+
+			event->accept();
+		}
+		else if (!m_webWidget->getSelectedText().isEmpty())
+		{
+			m_webWidget->clearSelection();
+
+			event->accept();
+		}
+		else
+		{
+			MainWindow *window = MainWindow::findMainWindow(this);
+
+			if (window && window->isFullScreen())
+			{
+				window->triggerAction(Action::FullScreenAction);
+			}
+		}
+	}
+}
+
 void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Browser/ShowDetailedProgressBar"))
@@ -204,51 +245,46 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 		case Action::FindNextAction:
 		case Action::FindPreviousAction:
 			{
-				if (!m_searchBarWidget)
+				if (identifier == Action::FindAction || identifier == Action::QuickFindAction)
 				{
-					m_searchBarWidget = new SearchBarWidget(this);
-					m_searchBarWidget->hide();
-
-					qobject_cast<QVBoxLayout*>(layout())->insertWidget(0, m_searchBarWidget);
-
-					connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
-					connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
-
-					if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
+					if (!m_searchBarWidget)
 					{
-						connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
-					}
-				}
+						m_searchBarWidget = new SearchBarWidget(this);
+						m_searchBarWidget->hide();
 
-				const bool isFindAction = (identifier == Action::FindAction || identifier == Action::QuickFindAction);
+						qobject_cast<QVBoxLayout*>(layout())->insertWidget(0, m_searchBarWidget);
 
-				if (!m_searchBarWidget->isVisible())
-				{
-					if (identifier == Action::QuickFindAction)
-					{
-						killTimer(m_quickFindTimer);
+						connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
+						connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
 
-						m_quickFindTimer = startTimer(2000);
-					}
-
-					if (!isFindAction || SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
-					{
-						m_searchBarWidget->setQuery(m_quickFindQuery);
-
-						if (isFindAction)
+						if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
 						{
-							findInPage(m_searchBarWidget->getFlags());
+							connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
 						}
 					}
 
-					m_searchBarWidget->show();
+					if (!m_searchBarWidget->isVisible())
+					{
+						if (identifier == Action::QuickFindAction)
+						{
+							killTimer(m_quickFindTimer);
+
+							m_quickFindTimer = startTimer(2000);
+						}
+
+						if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+						{
+							m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
+						}
+
+						m_searchBarWidget->show();
+					}
+
+					m_searchBarWidget->selectAll();
 				}
-
-				m_searchBarWidget->selectAll();
-
-				if (!isFindAction)
+				else
 				{
-					WebWidget::FindFlags flags = m_searchBarWidget->getFlags();
+					WebWidget::FindFlags flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
 
 					if (identifier == Action::FindPreviousAction)
 					{
@@ -366,21 +402,23 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 		m_quickFindTimer = startTimer(2000);
 	}
 
-	if (!m_searchBarWidget)
-	{
-		return;
-	}
-
 	if (flags == WebWidget::NoFlagsFind)
 	{
-		flags = m_searchBarWidget->getFlags();
+		flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::HighlightAllFind);
 	}
 
-	m_searchBarWidget->setResultsFound(m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags));
+	m_quickFindQuery = ((m_searchBarWidget && !m_searchBarWidget->getQuery().isEmpty()) ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
-	if (m_searchBarWidget->isVisible() && !isPrivate())
+	const bool found = m_webWidget->findInPage(m_quickFindQuery, flags);
+
+	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 	{
-		m_quickFindQuery = m_searchBarWidget->getQuery();
+		m_sharedQuickFindQuery = m_quickFindQuery;
+	}
+
+	if (m_searchBarWidget)
+	{
+		m_searchBarWidget->setResultsFound(found);
 	}
 }
 

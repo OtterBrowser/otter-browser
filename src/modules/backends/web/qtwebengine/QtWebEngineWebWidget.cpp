@@ -32,7 +32,6 @@
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
-#include "../../../../ui/MainWindow.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
@@ -200,6 +199,11 @@ void QtWebEngineWebWidget::clearOptions()
 	WebWidget::clearOptions();
 
 	updateOptions(getUrl());
+}
+
+void QtWebEngineWebWidget::clearSelection()
+{
+	m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
 }
 
 void QtWebEngineWebWidget::showDialog(ContentsDialog *dialog)
@@ -2125,40 +2129,6 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 					event->accept();
 
 					return true;
-				}
-			}
-		}
-		else if (event->type() == QEvent::KeyPress)
-		{
-			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-			if (keyEvent->key() == Qt::Key_Escape)
-			{
-				if (isLoading())
-				{
-					triggerAction(Action::StopAction);
-
-					ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
-
-					event->accept();
-
-					return true;
-				}
-
-				if (m_webView->hasSelection())
-				{
-					m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
-
-					event->accept();
-
-					return true;
-				}
-
-				MainWindow *window = MainWindow::findMainWindow(this);
-
-				if (window && window->isFullScreen())
-				{
-					window->triggerAction(Action::FullScreenAction);
 				}
 			}
 		}

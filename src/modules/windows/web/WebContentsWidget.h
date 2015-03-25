@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -86,13 +87,14 @@ private:
 	WebWidget *m_webWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	QString m_quickFindQuery;
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
 	int m_progressBarTimer;
 	int m_quickFindTimer;
 	bool m_isProgressBarEnabled;
 	bool m_isTabPreferencesMenuVisible;
 
-	static QString m_quickFindQuery;
+	static QString m_sharedQuickFindQuery;
 };
 
 }

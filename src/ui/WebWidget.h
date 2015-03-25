@@ -121,9 +121,10 @@ public:
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
 public slots:
-	virtual void clearOptions();
-	virtual void goToHistoryIndex(int index) = 0;
 	virtual void triggerAction(int identifier, bool checked = false) = 0;
+	virtual void clearOptions();
+	virtual void clearSelection() = 0;
+	virtual void goToHistoryIndex(int index) = 0;
 	void showContextMenu(const QPoint &position, MenuFlags flags);
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);

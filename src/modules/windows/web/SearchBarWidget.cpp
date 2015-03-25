@@ -67,6 +67,10 @@ void SearchBarWidget::keyPressEvent(QKeyEvent *event)
 	if (event->key() == Qt::Key_Escape)
 	{
 		hide();
+
+		m_ui->queryLineEdit->clear();
+
+		emit requestedSearch(getFlags());
 	}
 }
 
@@ -102,16 +106,9 @@ void SearchBarWidget::setVisible(bool visible)
 {
 	QWidget::setVisible(visible);
 
-	if (visible)
+	if (!visible && parentWidget())
 	{
-		if (!m_ui->queryLineEdit->text().isEmpty())
-		{
-			emit requestedSearch(getFlags());
-		}
-	}
-	else
-	{
-		emit requestedSearch(getFlags());
+		parentWidget()->setFocus();
 	}
 }
 
@@ -139,7 +136,7 @@ void SearchBarWidget::setResultsFound(bool found)
 
 QString SearchBarWidget::getQuery() const
 {
-	return (isVisible() ? m_ui->queryLineEdit->text() : QString());
+	return m_ui->queryLineEdit->text();
 }
 
 WebWidget::FindFlags SearchBarWidget::getFlags() const
@@ -158,6 +155,5 @@ WebWidget::FindFlags SearchBarWidget::getFlags() const
 
 	return flags;
 }
-
 
 }

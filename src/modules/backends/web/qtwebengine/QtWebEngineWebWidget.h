@@ -106,6 +106,7 @@ public:
 
 public slots:
 	void clearOptions();
+	void clearSelection();
 	void showDialog(ContentsDialog *dialog);
 	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
