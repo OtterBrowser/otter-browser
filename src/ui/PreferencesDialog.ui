@@ -96,7 +96,7 @@
            <item>
             <widget class="QPushButton" name="useBookmarkAsHomePageButton">
              <property name="text">
-              <string>Use Bookmark...</string>
+              <string>Use Bookmark</string>
              </property>
             </widget>
            </item>
@@ -245,12 +245,6 @@
         <layout class="QFormLayout" name="languageLayout">
          <item row="0" column="0">
           <widget class="QLabel" name="acceptLanguageLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="text">
             <string>Preferred Webpage Language:</string>
            </property>
@@ -260,11 +254,28 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="acceptLanguageButton">
-           <property name="text">
-            <string>Edit...</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="acceptLanguageButtonLayout">
+           <item>
+            <spacer name="acceptLanguageSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="acceptLanguageButton">
+             <property name="text">
+              <string>Edit...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -301,15 +312,9 @@
           </widget>
          </item>
          <item>
-          <spacer name="systemDefaultSpacer">
+          <spacer name="setDefaultSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
            </property>
           </spacer>
          </item>
@@ -1166,7 +1171,7 @@
            <item>
             <widget class="QPushButton" name="addSearchButton">
              <property name="text">
-              <string>Add...</string>
+              <string>Add</string>
              </property>
             </widget>
            </item>
