@@ -45,7 +45,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_suggester(NULL),
 	m_lastValidIndex(0),
 	m_isIgnoringActivation(false),
-	m_isPopupUpdated(false)
+	m_isPopupUpdated(false),
+	m_wasPopupVisible(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -190,6 +191,8 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 
 void SearchWidget::mousePressEvent(QMouseEvent *event)
 {
+	m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
+
 	QWidget::mousePressEvent(event);
 }
 
@@ -197,7 +200,16 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_selectButtonIconRectangle.contains(event->pos()) || m_selectButtonArrowRectangle.contains(event->pos()))
 	{
-		showPopup();
+		m_popupHideTime = QTime();
+
+		if (m_wasPopupVisible)
+		{
+			hidePopup();
+		}
+		else
+		{
+			showPopup();
+		}
 	}
 	else if (m_searchButtonRectangle.contains(event->pos()))
 	{
@@ -230,6 +242,8 @@ void SearchWidget::hidePopup()
 	{
 		m_isPopupUpdated = true;
 	}
+
+	m_popupHideTime = QTime::currentTime();
 
 	QComboBox::hidePopup();
 }

@@ -23,6 +23,7 @@
 
 #include "../../core/WindowsManager.h"
 
+#include <QtCore/QTime>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
 
@@ -69,6 +70,7 @@ private:
 	SearchSuggester *m_suggester;
 	QString m_query;
 	QString m_storedSearchEngine;
+	QTime m_popupHideTime;
 	QRect m_selectButtonIconRectangle;
 	QRect m_selectButtonArrowRectangle;
 	QRect m_lineEditRectangle;
@@ -76,6 +78,7 @@ private:
 	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
 	bool m_isPopupUpdated;
+	bool m_wasPopupVisible;
 
 signals:
 	void searchEngineChanged(const QString &engine);
