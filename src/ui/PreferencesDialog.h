@@ -47,7 +47,9 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void updateReaddSearchMenu();
-	QString createProfileIdentifier(ItemViewWidget *view, QString identifier = QString());
+	void updateReaddKeyboardProfileMenu();
+	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString());
+	ShortcutsProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 
 protected slots:
 	void currentTabChanged(int tab);
@@ -71,6 +73,7 @@ protected slots:
 	void removeCipher();
 	void updateCiphersActions();
 	void addKeyboardProfile();
+	void readdKeyboardProfile(QAction *action);
 	void editKeyboardProfile();
 	void cloneKeyboardProfile();
 	void removeKeyboardProfile();

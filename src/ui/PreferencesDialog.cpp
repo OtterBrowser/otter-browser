@@ -460,88 +460,11 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				for (int i = 0; i < shortcutsProfiles.count(); ++i)
 				{
-					QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini");
-					path = (QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutsProfiles.at(i) + QLatin1String(".ini"));
+					const ShortcutsProfile profile = loadKeyboardProfile(shortcutsProfiles.at(i), true);
 
-					QFile file(path);
-
-					if (!file.open(QIODevice::ReadOnly))
+					if (profile.identifier.isEmpty())
 					{
 						continue;
-					}
-
-					const QRegularExpression expression(QLatin1String(";\\s*"));
-					ShortcutsProfile profile;
-					profile.identifier = shortcutsProfiles.at(i);
-
-					while (!file.atEnd())
-					{
-						const QString line = QString(file.readLine()).trimmed();
-
-						if (!line.startsWith(QLatin1Char(';')))
-						{
-							break;
-						}
-
-						const QString key = line.section(QLatin1Char(':'), 0, 0).remove(expression);
-						const QString value = line.section(QLatin1Char(':'), 1).trimmed();
-
-						if (key == QLatin1String("Title"))
-						{
-							profile.title = value;
-						}
-						else if (key == QLatin1String("Description"))
-						{
-							profile.description = value;
-						}
-						else if (key == QLatin1String("Author"))
-						{
-							profile.author = value;
-						}
-						else if (key == QLatin1String("Version"))
-						{
-							profile.version = value;
-						}
-					}
-
-					file.close();
-
-					QSettings settings(path, QSettings::IniFormat);
-					settings.setIniCodec("UTF-8");
-
-					const QStringList actions = settings.childGroups();
-
-					for (int j = 0; j < actions.count(); ++j)
-					{
-						const int action = ActionsManager::getActionIdentifier(actions.at(j));
-
-						if (action < 0)
-						{
-							continue;
-						}
-
-						settings.beginGroup(actions.at(j));
-
-						const QStringList rawShortcuts = settings.value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
-						QVector<QKeySequence> shortcuts;
-						shortcuts.reserve(rawShortcuts.count());
-
-						for (int k = 0; k < rawShortcuts.count(); ++k)
-						{
-							const QKeySequence shortcut(QKeySequence(rawShortcuts.at(k)));
-
-							if (!shortcut.isEmpty())
-							{
-								shortcuts.append(shortcut);
-							}
-						}
-
-						if (!shortcuts.isEmpty())
-						{
-							profile.shortcuts[action] = shortcuts;
-						}
-
-						settings.endGroup();
 					}
 
 					m_shortcutsProfiles[shortcutsProfiles.at(i)] = profile;
@@ -557,7 +480,15 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->actionShortcutsViewWidget->setModel(model);
 				m_ui->actionShortcutsViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
+				QMenu *addKeyboardProfileMenu = new QMenu(m_ui->actionShortcutsAddButton);
+				addKeyboardProfileMenu->addAction(tr("New..."));
+				addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->actionShortcutsAddButton));
+
+				m_ui->actionShortcutsAddButton->setMenu(addKeyboardProfileMenu);
+
 				m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
+
+				updateReaddKeyboardProfileMenu();
 
 				connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
 				connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
@@ -575,7 +506,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
-				connect(m_ui->actionShortcutsAddButton, SIGNAL(clicked()), this, SLOT(addKeyboardProfile()));
+				connect(m_ui->actionShortcutsAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
+				connect(m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
 				connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
 				connect(m_ui->actionShortcutsCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
 				connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
@@ -784,7 +716,7 @@ void PreferencesDialog::readdSearchEngine(QAction *action)
 	}
 
 	const QString identifier = action->data().toString();
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
 	QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + identifier + QLatin1String(".xml"));
 
 	if (!file.open(QIODevice::ReadOnly))
@@ -870,8 +802,7 @@ void PreferencesDialog::editSearchEngine()
 
 void PreferencesDialog::removeSearchEngine()
 {
-	const QModelIndex index = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0);
-	const QString identifier = index.data(Qt::UserRole).toString();
+	const QString identifier = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
@@ -1117,9 +1048,37 @@ void PreferencesDialog::addKeyboardProfile()
 	markModified();
 }
 
+void PreferencesDialog::readdKeyboardProfile(QAction *action)
+{
+	if (!action || action->data().isNull())
+	{
+		return;
+	}
+
+	const QString identifier = action->data().toString();
+	const ShortcutsProfile profile = loadKeyboardProfile(identifier, true);
+
+	if (profile.identifier.isEmpty())
+	{
+		return;
+	}
+
+	m_shortcutsProfiles[identifier] = profile;
+
+	QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+	item->setToolTip(profile.description);
+	item->setData(profile.identifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->actionShortcutsViewWidget->insertRow(item);
+
+	updateReaddKeyboardProfileMenu();
+	markModified();
+}
+
 void PreferencesDialog::editKeyboardProfile()
 {
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
+	const QModelIndex index = m_ui->actionShortcutsViewWidget->currentIndex();
 	const QString identifier = index.data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
@@ -1144,14 +1103,13 @@ void PreferencesDialog::editKeyboardProfile()
 
 void PreferencesDialog::cloneKeyboardProfile()
 {
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 1);
+	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data().toString();
 
-	if (!index.isValid())
+	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	const QString identifier = index.data().toString();
 	const QString newIdentifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, identifier);
 
 	if (newIdentifier.isEmpty())
@@ -1159,7 +1117,7 @@ void PreferencesDialog::cloneKeyboardProfile()
 		return;
 	}
 
-	m_shortcutsProfiles[newIdentifier] = (m_shortcutsProfiles.contains(identifier) ? m_shortcutsProfiles[identifier] : ShortcutsProfile());
+	m_shortcutsProfiles[newIdentifier] = m_shortcutsProfiles[identifier];
 	m_shortcutsProfiles[newIdentifier].identifier = newIdentifier;
 	m_shortcutsProfiles[newIdentifier].isModified = true;
 
@@ -1175,16 +1133,9 @@ void PreferencesDialog::cloneKeyboardProfile()
 
 void PreferencesDialog::removeKeyboardProfile()
 {
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
+	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data(Qt::UserRole).toString();
 
-	if (!index.isValid())
-	{
-		return;
-	}
-
-	const QString identifier = index.data(Qt::UserRole).toString();
-
-	if (!m_shortcutsProfiles.contains(identifier))
+	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
 		return;
 	}
@@ -1214,6 +1165,7 @@ void PreferencesDialog::removeKeyboardProfile()
 
 		m_ui->actionShortcutsViewWidget->removeRow();
 
+		updateReaddKeyboardProfileMenu();
 		markModified();
 	}
 }
@@ -1226,6 +1178,44 @@ void PreferencesDialog::updateKeyboardProfleActions()
 	m_ui->actionShortcutsEditButton->setEnabled(isSelected);
 	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
 	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
+}
+
+void PreferencesDialog::updateReaddKeyboardProfileMenu()
+{
+	if (!m_ui->actionShortcutsAddButton->menu())
+	{
+		return;
+	}
+
+	QStringList availableIdentifiers;
+	QList<ShortcutsProfile> availableShortcutsProfiles;
+	QList<QFileInfo> allShortcutsProfiles = QDir(SessionsManager::getProfilePath() + QLatin1String("/keyboard/")).entryInfoList(QDir::Files);
+	allShortcutsProfiles.append(QDir(QLatin1String(":/keyboard/")).entryInfoList(QDir::Files));
+
+	for (int i = 0; i < allShortcutsProfiles.count(); ++i)
+	{
+		const QString identifier = allShortcutsProfiles.at(i).baseName();
+
+		if (!m_shortcutsProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
+		{
+			const ShortcutsProfile profile = loadKeyboardProfile(identifier, false);
+
+			if (!profile.identifier.isEmpty())
+			{
+				availableIdentifiers.append(identifier);
+
+				availableShortcutsProfiles.append(profile);
+			}
+		}
+	}
+
+	m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->clear();
+	m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableShortcutsProfiles.isEmpty());
+
+	for (int i = 0; i < availableShortcutsProfiles.count(); ++i)
+	{
+		m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->addAction((availableShortcutsProfiles.at(i).title.isEmpty() ? tr("(Untitled)") : availableShortcutsProfiles.at(i).title))->setData(availableShortcutsProfiles.at(i).identifier);
+	}
 }
 
 void PreferencesDialog::updateJavaScriptOptions()
@@ -1546,6 +1536,8 @@ void PreferencesDialog::save()
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanOpenWindows")));
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanCloseWindows")));
 		}
+
+		updateReaddKeyboardProfileMenu();
 	}
 
 	if (sender() == m_ui->buttonBox)
@@ -1558,26 +1550,115 @@ void PreferencesDialog::save()
 	}
 }
 
-QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, QString identifier)
+QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, const QString &base)
 {
 	QStringList identifiers;
 
 	for (int i = 0; i < view->getRowCount(); ++i)
 	{
-		const QString profile = view->getIndex(i, 0).data(Qt::UserRole).toString();
+		const QString identifier = view->getIndex(i, 0).data(Qt::UserRole).toString();
 
-		if (!profile.isEmpty())
+		if (!identifier.isEmpty())
 		{
-			identifiers.append(profile);
+			identifiers.append(identifier);
 		}
 	}
 
-	if (!identifier.isEmpty())
+	return Utils::createIdentifier(base + (identifiers.contains(base) ? QLatin1String("-copy") : QString()), identifiers, tr("Enter unique profile identifier:"), this);
+}
+
+ShortcutsProfile PreferencesDialog::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
+{
+	QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + identifier + QLatin1String(".ini");
+	path = (QFile::exists(path) ? path : QLatin1String(":/keyboard/") + identifier + QLatin1String(".ini"));
+
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly))
 	{
-		identifier.append(QLatin1String("-copy"));
+		return ShortcutsProfile();
 	}
 
-	return Utils::createIdentifier(identifier, identifiers, tr("Enter unique profile identifier:"), this);
+	const QRegularExpression expression(QLatin1String(";\\s*"));
+	ShortcutsProfile profile;
+	profile.identifier = identifier;
+
+	while (!file.atEnd())
+	{
+		const QString line = QString(file.readLine()).trimmed();
+
+		if (!line.startsWith(QLatin1Char(';')))
+		{
+			break;
+		}
+
+		const QString key = line.section(QLatin1Char(':'), 0, 0).remove(expression);
+		const QString value = line.section(QLatin1Char(':'), 1).trimmed();
+
+		if (key == QLatin1String("Title"))
+		{
+			profile.title = value;
+		}
+		else if (key == QLatin1String("Description"))
+		{
+			profile.description = value;
+		}
+		else if (key == QLatin1String("Author"))
+		{
+			profile.author = value;
+		}
+		else if (key == QLatin1String("Version"))
+		{
+			profile.version = value;
+		}
+	}
+
+	file.close();
+
+	if (!loadShortcuts)
+	{
+		return profile;
+	}
+
+	QSettings settings(path, QSettings::IniFormat);
+	settings.setIniCodec("UTF-8");
+
+	const QStringList actions = settings.childGroups();
+
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		const int action = ActionsManager::getActionIdentifier(actions.at(i));
+
+		if (action < 0)
+		{
+			continue;
+		}
+
+		settings.beginGroup(actions.at(i));
+
+		const QStringList rawShortcuts = settings.value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+		QVector<QKeySequence> shortcuts;
+		shortcuts.reserve(rawShortcuts.count());
+
+		for (int j = 0; j < rawShortcuts.count(); ++j)
+		{
+			const QKeySequence shortcut(QKeySequence(rawShortcuts.at(j)));
+
+			if (!shortcut.isEmpty())
+			{
+				shortcuts.append(shortcut);
+			}
+		}
+
+		if (!shortcuts.isEmpty())
+		{
+			profile.shortcuts[action] = shortcuts;
+		}
+
+		settings.endGroup();
+	}
+
+	return profile;
 }
 
 }
