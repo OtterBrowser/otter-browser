@@ -120,6 +120,14 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 	emit modified();
 }
 
+void ItemViewWidget::insertRow(QStandardItem *item)
+{
+	QList<QStandardItem*> items;
+	items.append(item);
+
+	insertRow(items);
+}
+
 void ItemViewWidget::removeRow()
 {
 	if (!m_model)

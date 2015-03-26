@@ -33,11 +33,11 @@ namespace Ui
 
 struct ShortcutsProfile
 {
+	QString identifier;
 	QString title;
 	QString description;
 	QString author;
 	QString version;
-	QString path;
 	QHash<int, QVector<QKeySequence> > shortcuts;
 	bool isModified;
 

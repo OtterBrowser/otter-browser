@@ -428,11 +428,10 @@ void PreferencesDialog::currentTabChanged(int tab)
 					{
 						if ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (selectedCiphers.isEmpty() || selectedCiphers.contains(supportedCiphers.at(i).name()))))
 						{
-							QList<QStandardItem*> items;
-							items.append(new QStandardItem(supportedCiphers.at(i).name()));
-							items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+							QStandardItem *item = new QStandardItem(supportedCiphers.at(i).name());
+							item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-							ciphersModel->appendRow(items);
+							ciphersModel->appendRow(item);
 						}
 						else
 						{
@@ -441,7 +440,6 @@ void PreferencesDialog::currentTabChanged(int tab)
 					}
 
 					m_ui->ciphersViewWidget->setModel(ciphersModel);
-					m_ui->ciphersViewWidget->header()->setSectionResizeMode(0,QHeaderView::Stretch);
 					m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
 					m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 				}
@@ -456,11 +454,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->actionShortcutsMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 				m_ui->actionShortcutsMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
-				QStringList labels;
-				labels << tr("Name") << tr("Identifier");
-
 				QStandardItemModel *model = new QStandardItemModel(this);
-				model->setHorizontalHeaderLabels(labels);
 
 				const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 
@@ -478,7 +472,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 					const QRegularExpression expression(QLatin1String(";\\s*"));
 					ShortcutsProfile profile;
-					profile.path = path;
+					profile.identifier = shortcutsProfiles.at(i);
 
 					while (!file.atEnd())
 					{
@@ -552,18 +546,15 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 					m_shortcutsProfiles[shortcutsProfiles.at(i)] = profile;
 
-					QList<QStandardItem*> items;
-					items.append(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
-					items[0]->setToolTip(profile.description);
-					items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-					items.append(new QStandardItem(shortcutsProfiles.at(i)));
-					items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+					QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+					item->setToolTip(profile.description);
+					item->setData(profile.identifier, Qt::UserRole);
+					item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-					model->appendRow(items);
+					model->appendRow(item);
 				}
 
 				m_ui->actionShortcutsViewWidget->setModel(model);
-				m_ui->actionShortcutsViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 				m_ui->actionShortcutsViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 				m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
@@ -1075,11 +1066,10 @@ void PreferencesDialog::addCipher(QAction *action)
 		return;
 	}
 
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(action->text()));
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	QStandardItem *item = new QStandardItem(action->text());
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->ciphersViewWidget->insertRow(items);
+	m_ui->ciphersViewWidget->insertRow(item);
 	m_ui->ciphersAddButton->menu()->removeAction(action);
 	m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 }
@@ -1118,13 +1108,11 @@ void PreferencesDialog::addKeyboardProfile()
 
 	m_shortcutsProfiles[identifier] = profile;
 
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(tr("(Untitled)")));
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(identifier));
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	QStandardItem *item = new QStandardItem(tr("(Untitled)"));
+	item->setData(identifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->actionShortcutsViewWidget->insertRow(items);
+	m_ui->actionShortcutsViewWidget->insertRow(item);
 
 	markModified();
 }
@@ -1132,24 +1120,24 @@ void PreferencesDialog::addKeyboardProfile()
 void PreferencesDialog::editKeyboardProfile()
 {
 	const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(m_ui->actionShortcutsViewWidget->getCurrentRow(), 0);
-	const QString profile = m_ui->actionShortcutsViewWidget->getIndex(index.row(), 1).data().toString();
+	const QString identifier = index.data(Qt::UserRole).toString();
 
-	if (profile.isEmpty() || !m_shortcutsProfiles.contains(profile))
+	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	ShortcutsProfileDialog dialog(profile, m_shortcutsProfiles, this);
+	ShortcutsProfileDialog dialog(identifier, m_shortcutsProfiles, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	m_shortcutsProfiles[profile] = dialog.getProfile();
+	m_shortcutsProfiles[identifier] = dialog.getProfile();
 
-	m_ui->actionShortcutsViewWidget->setData(index, (m_shortcutsProfiles[profile].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[profile].title), Qt::DisplayRole);
-	m_ui->actionShortcutsViewWidget->setData(index, m_shortcutsProfiles[profile].description, Qt::ToolTipRole);
+	m_ui->actionShortcutsViewWidget->setData(index, (m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title), Qt::DisplayRole);
+	m_ui->actionShortcutsViewWidget->setData(index, m_shortcutsProfiles[identifier].description, Qt::ToolTipRole);
 
 	markModified();
 }
@@ -1163,26 +1151,24 @@ void PreferencesDialog::cloneKeyboardProfile()
 		return;
 	}
 
-	const QString profile = index.data().toString();
-	const QString identifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, profile);
+	const QString identifier = index.data().toString();
+	const QString newIdentifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, identifier);
 
-	if (identifier.isEmpty())
+	if (newIdentifier.isEmpty())
 	{
 		return;
 	}
 
-	m_shortcutsProfiles[identifier] = (m_shortcutsProfiles.contains(profile) ? m_shortcutsProfiles[profile] : ShortcutsProfile());
-	m_shortcutsProfiles[identifier].path = QString();
-	m_shortcutsProfiles[identifier].isModified = true;
+	m_shortcutsProfiles[newIdentifier] = (m_shortcutsProfiles.contains(identifier) ? m_shortcutsProfiles[identifier] : ShortcutsProfile());
+	m_shortcutsProfiles[newIdentifier].identifier = newIdentifier;
+	m_shortcutsProfiles[newIdentifier].isModified = true;
 
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title));
-	items[0]->setToolTip(m_shortcutsProfiles[identifier].description);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(identifier));
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	QStandardItem *item = new QStandardItem(m_shortcutsProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[newIdentifier].title);
+	item->setToolTip(m_shortcutsProfiles[newIdentifier].description);
+	item->setData(newIdentifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->actionShortcutsViewWidget->insertRow(items);
+	m_ui->actionShortcutsViewWidget->insertRow(item);
 
 	markModified();
 }
@@ -1196,9 +1182,9 @@ void PreferencesDialog::removeKeyboardProfile()
 		return;
 	}
 
-	const QString profile = m_ui->actionShortcutsViewWidget->getIndex(index.row(), 1).data(Qt::DisplayRole).toString();
+	const QString identifier = index.data(Qt::UserRole).toString();
 
-	if (!m_shortcutsProfiles.contains(profile))
+	if (!m_shortcutsProfiles.contains(identifier))
 	{
 		return;
 	}
@@ -1210,7 +1196,9 @@ void PreferencesDialog::removeKeyboardProfile()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	if (!m_shortcutsProfiles[profile].path.startsWith(QLatin1Char(':')))
+	const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + identifier + QLatin1String(".ini");
+
+	if (QFile::exists(path))
 	{
 		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
 	}
@@ -1219,10 +1207,10 @@ void PreferencesDialog::removeKeyboardProfile()
 	{
 		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
 		{
-			m_filesToRemove.append(m_shortcutsProfiles[profile].path);
+			m_filesToRemove.append(path);
 		}
 
-		m_shortcutsProfiles.remove(profile);
+		m_shortcutsProfiles.remove(identifier);
 
 		m_ui->actionShortcutsViewWidget->removeRow();
 
@@ -1234,9 +1222,8 @@ void PreferencesDialog::updateKeyboardProfleActions()
 {
 	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
-	const QString profile = m_ui->actionShortcutsViewWidget->getIndex(currentRow, 1).data(Qt::DisplayRole).toString();
 
-	m_ui->actionShortcutsEditButton->setEnabled(isSelected && (m_shortcutsProfiles.contains(profile) && !m_shortcutsProfiles[profile].path.startsWith(QLatin1Char(':'))));
+	m_ui->actionShortcutsEditButton->setEnabled(isSelected);
 	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
 	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
 }
@@ -1537,11 +1524,11 @@ void PreferencesDialog::save()
 
 		for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
 		{
-			const QModelIndex index = m_ui->actionShortcutsViewWidget->getIndex(i, 1);
+			const QString identifier = m_ui->actionShortcutsViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
 
-			if (!index.data().toString().isEmpty())
+			if (!identifier.isEmpty())
 			{
-				shortcutsProfiles.append(index.data().toString());
+				shortcutsProfiles.append(identifier);
 			}
 		}
 
@@ -1577,7 +1564,7 @@ QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, QString
 
 	for (int i = 0; i < view->getRowCount(); ++i)
 	{
-		const QString profile = view->getIndex(i, 1).data().toString();
+		const QString profile = view->getIndex(i, 0).data(Qt::UserRole).toString();
 
 		if (!profile.isEmpty())
 		{

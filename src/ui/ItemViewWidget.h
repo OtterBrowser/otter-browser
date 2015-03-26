@@ -46,6 +46,7 @@ public:
 
 public slots:
 	void insertRow(const QList<QStandardItem*> &items = QList<QStandardItem*>());
+	void insertRow(QStandardItem *item);
 	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
