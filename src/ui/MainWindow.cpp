@@ -355,14 +355,6 @@ void MainWindow::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
 	{
-		case Action::NewTabAction:
-			m_windowsManager->open(QUrl(), NewTabOpen);
-
-			break;
-		case Action::NewTabPrivateAction:
-			m_windowsManager->open(QUrl(), NewPrivateTabOpen);
-
-			break;
 		case Action::NewWindowAction:
 			emit requestedNewWindow(false, false, QUrl());
 

@@ -49,6 +49,14 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
+		case Action::NewTabAction:
+			open(QUrl(), NewTabOpen);
+
+			break;
+		case Action::NewTabPrivateAction:
+			open(QUrl(), NewPrivateTabOpen);
+
+			break;
 		case Action::CloneTabAction:
 			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
 
@@ -90,6 +98,13 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			break;
 		case Action::ReopenTabAction:
 			restore();
+
+			break;
+		case Action::ReloadAllAction:
+			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+			{
+				getWindowByIndex(i)->triggerAction(Action::ReloadAction);
+			}
 
 			break;
 		case Action::ActivateTabOnLeftAction:

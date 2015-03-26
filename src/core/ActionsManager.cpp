@@ -126,6 +126,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ReloadAction, QT_TRANSLATE_NOOP("actions", "Reload"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
 	registerAction(Action::ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), Utils::getIcon(QLatin1String("view-refresh")));
 	registerAction(Action::ReloadAndBypassCacheAction, QT_TRANSLATE_NOOP("actions", "Reload and Bypass Cache"));
+	registerAction(Action::ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
 	registerAction(Action::ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Reload Every"));
 	registerAction(Action::ContextMenuAction, QT_TRANSLATE_NOOP("actions", "Show Context Menu"));
 	registerAction(Action::UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")));
