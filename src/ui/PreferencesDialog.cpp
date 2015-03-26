@@ -667,7 +667,7 @@ void PreferencesDialog::addSearchEngine()
 		}
 	}
 
-	const QString identifier = Utils::createIdentifier(QString(), identifiers, tr("Enter unique search engine identifier:"), this);
+	const QString identifier = Utils::createIdentifier(QString(), identifiers);
 
 	if (identifier.isEmpty())
 	{
@@ -1103,7 +1103,7 @@ void PreferencesDialog::editKeyboardProfile()
 
 void PreferencesDialog::cloneKeyboardProfile()
 {
-	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data().toString();
+	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
@@ -1550,7 +1550,7 @@ void PreferencesDialog::save()
 	}
 }
 
-QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, const QString &base)
+QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, const QString &base) const
 {
 	QStringList identifiers;
 
@@ -1564,7 +1564,7 @@ QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, const Q
 		}
 	}
 
-	return Utils::createIdentifier(base + (identifiers.contains(base) ? QLatin1String("-copy") : QString()), identifiers, tr("Enter unique profile identifier:"), this);
+	return Utils::createIdentifier(base, identifiers);
 }
 
 ShortcutsProfile PreferencesDialog::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const

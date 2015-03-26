@@ -48,7 +48,7 @@ protected:
 	void changeEvent(QEvent *event);
 	void updateReaddSearchMenu();
 	void updateReaddKeyboardProfileMenu();
-	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString());
+	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
 	ShortcutsProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 
 protected slots:

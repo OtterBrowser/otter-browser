@@ -29,7 +29,6 @@
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
-#include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
@@ -51,22 +50,43 @@ void runApplication(const QString &command, const QString &fileName)
 	QDesktopServices::openUrl(QUrl(fileName));
 }
 
-QString createIdentifier(const QString &base, const QStringList &exclude, const QString &label, QWidget *parent)
+QString createIdentifier(const QString &base, const QStringList &exclude)
 {
-	QString identifier = (base.isEmpty() ? QLatin1String("custom") : base.toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9]"))));
+	QString identifier;
 
-	do
+	if (!base.isEmpty())
 	{
-		identifier = QInputDialog::getText(parent, QCoreApplication::translate("utils", "Select Identifier"), label, QLineEdit::Normal, identifier);
-
-		if (identifier.isEmpty())
-		{
-			return QString();
-		}
+		identifier = base.toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9\\-_]")));
 	}
-	while (exclude.contains(identifier));
 
-	return identifier;
+	if (identifier.isEmpty())
+	{
+		identifier = QLatin1String("custom");
+	}
+
+	if (!exclude.contains(identifier))
+	{
+		return identifier;
+	}
+
+	int number = 2;
+
+	const QRegularExpression expression(QLatin1String("_([0-9]+)$"));
+	const QRegularExpressionMatch match = expression.match(identifier);
+
+	if (match.hasMatch())
+	{
+		identifier.remove(expression);
+
+		number = match.captured(1).toInt();
+	}
+
+	while (exclude.contains(identifier + QLatin1Char('_') + QString::number(number)))
+	{
+		++number;
+	}
+
+	return identifier + QLatin1Char('_') + QString::number(number);
 }
 
 QString elideText(const QString &text, QWidget *widget, int width)

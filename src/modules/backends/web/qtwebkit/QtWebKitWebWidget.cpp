@@ -1500,17 +1500,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 					const QStringList identifiers = SearchesManager::getSearchEngines();
 					const QStringList keywords = SearchesManager::getSearchKeywords();
-					const QString identifier = Utils::createIdentifier(getUrl().host(), identifiers, tr("Enter unique search engine identifier:"), this);
-
-					if (identifier.isEmpty())
-					{
-						return;
-					}
-
 					const QIcon icon = m_webView->icon();
 					const QUrl url(parentElement.attribute(QLatin1String("action")));
 					SearchInformation engine;
-					engine.identifier = identifier;
+					engine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
 					engine.title = getTitle();
 					engine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
 					engine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();

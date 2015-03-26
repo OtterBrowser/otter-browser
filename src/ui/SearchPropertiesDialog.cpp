@@ -110,7 +110,7 @@ SearchInformation SearchPropertiesDialog::getSearchEngine() const
 	engine.identifier = m_identifier;
 	engine.title = m_ui->titleLineEdit->text();
 	engine.description = m_ui->descriptionLineEdit->text();
-	engine.keyword = (m_keywords.contains(keyword) ? keyword : QString());
+	engine.keyword = (m_keywords.contains(keyword) ? QString() : keyword);
 	engine.encoding = m_ui->encodingLineEdit->text();
 	engine.icon = m_ui->iconButton->icon();
 	engine.resultsUrl.url = m_ui->resultsAddressLineEdit->text();
