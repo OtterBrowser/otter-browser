@@ -63,6 +63,16 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	}
 }
 
+void MenuBarWidget::changeEvent(QEvent *event)
+{
+	QMenuBar::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		QTimer::singleShot(100, this, SLOT(updateSize()));
+	}
+}
+
 void MenuBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QMenuBar::resizeEvent(event);

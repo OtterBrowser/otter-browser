@@ -36,6 +36,7 @@ public:
 	explicit MenuBarWidget(MainWindow *parent);
 
 protected:
+	void changeEvent(QEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void setup();
 
