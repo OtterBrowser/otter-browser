@@ -143,6 +143,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(m_page->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_webView, SIGNAL(titleChanged(const QString)), this, SLOT(notifyTitleChanged()));
@@ -262,6 +263,11 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 void QtWebKitWebWidget::pageLoadFinished()
 {
+	if (!m_isLoading)
+	{
+		return;
+	}
+
 	m_isLoading = false;
 	m_thumbnail = QPixmap();
 
@@ -2498,13 +2504,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::NoModifier)
 					{
-						if (!m_hitResult.linkUrl().fragment().isEmpty() && m_hitResult.linkUrl().matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
-						{
-							m_webView->page()->mainFrame()->scrollToAnchor(m_hitResult.linkUrl().fragment());
-
-							return true;
-						}
-
 						return false;
 					}
 
