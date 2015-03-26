@@ -42,6 +42,7 @@ public:
 	void activateTabOnRight();
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 	int getPinnedTabsAmount() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void setCycle(bool enable);
@@ -90,6 +91,7 @@ private:
 	int m_clickedTab;
 	int m_hoveredTab;
 	int m_previewTimer;
+	bool m_showCloseButton;
 	bool m_showUrlIcon;
 	bool m_enablePreviews;
 	bool m_isMoved;

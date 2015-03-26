@@ -122,7 +122,6 @@ bool Action::isLocal(int identifier)
 	{
 		case Action::SaveAction:
 		case Action::CloneTabAction:
-		case Action::CloseTabAction:
 		case Action::OpenLinkAction:
 		case Action::OpenLinkInCurrentTabAction:
 		case Action::OpenLinkInNewTabAction:

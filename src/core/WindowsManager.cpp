@@ -551,18 +551,7 @@ void WindowsManager::detachWindow(int index)
 
 void WindowsManager::pinWindow(int index, bool pin)
 {
-	const int offset = m_mainWindow->getTabBar()->getPinnedTabsAmount();
-
-	if (!pin)
-	{
-		m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), false);
-		m_mainWindow->getTabBar()->moveTab(index, offset);
-
-		return;
-	}
-
-	m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), true);
-	m_mainWindow->getTabBar()->moveTab(index, offset);
+	m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), pin);
 }
 
 void WindowsManager::removeStoredUrl(const QString &url)

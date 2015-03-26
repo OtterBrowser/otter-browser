@@ -84,6 +84,16 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 			window->getWindowsManager()->open(QUrl(), hints);
 		}
+
+		QAction *action = defaultAction();
+
+		setDefaultAction(NULL);
+
+		ToolButtonWidget::mouseReleaseEvent(event);
+
+		setDefaultAction(action);
+
+		return;
 	}
 
 	ToolButtonWidget::mouseReleaseEvent(event);
