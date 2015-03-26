@@ -556,14 +556,12 @@ void WindowsManager::pinWindow(int index, bool pin)
 	if (!pin)
 	{
 		m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), false);
-		m_mainWindow->getTabBar()->setTabText(index, m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString());
 		m_mainWindow->getTabBar()->moveTab(index, offset);
 
 		return;
 	}
 
 	m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), true);
-	m_mainWindow->getTabBar()->setTabText(index, QString());
 	m_mainWindow->getTabBar()->moveTab(index, offset);
 }
 
@@ -761,10 +759,7 @@ void WindowsManager::setTitle(const QString &title)
 
 	const int index = getWindowIndex(window->getIdentifier());
 
-	if (!m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
-	{
-		m_mainWindow->getTabBar()->setTabText(index, text);
-	}
+	m_mainWindow->getTabBar()->setTabText(index, text);
 
 	if (index == m_mainWindow->getTabBar()->currentIndex())
 	{
@@ -945,10 +940,7 @@ bool WindowsManager::event(QEvent *event)
 			{
 				const QString text = (window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
 
-				if (!m_mainWindow->getTabBar()->getTabProperty(i, QLatin1String("isPinned"), false).toBool())
-				{
-					m_mainWindow->getTabBar()->setTabText(i, text);
-				}
+				m_mainWindow->getTabBar()->setTabText(i, text);
 
 				if (i == m_mainWindow->getTabBar()->currentIndex())
 				{

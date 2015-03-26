@@ -20,6 +20,7 @@
 
 #include "TabBarWidget.h"
 #include "PreviewWidget.h"
+#include "TabBarStyle.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
@@ -35,7 +36,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDesktopWidget>
-#include <QtWidgets/QDockWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 
@@ -65,6 +65,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setIsMoved(false);
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	setStyle(new TabBarStyle());
 
 	m_closeButtonPosition = static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition));
 	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
@@ -371,10 +372,9 @@ void TabBarWidget::removeTab(int index)
 {
 	if (underMouse())
 	{
-		const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 		const QSize size = tabSizeHint(count() - 1);
 
-		m_tabSize = (isHorizontal ? size.width() : size.height());
+		m_tabSize = size.width();
 	}
 
 	Window *window = qvariant_cast<Window*>(tabData(index));
@@ -605,7 +605,7 @@ void TabBarWidget::updatePinnedTabsAmount()
 void TabBarWidget::updateButtons()
 {
 	const QSize size = tabSizeHint(count() - 1);
-	const bool isNarrow = (((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? size.width() : size.height()) < 60);
+	const bool isNarrow = (size.width() < 60);
 
 	for (int i = 0; i < count(); ++i)
 	{
@@ -755,42 +755,36 @@ QSize TabBarWidget::tabSizeHint(int index) const
 {
 	const bool isHorizontal = (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 
-	if (getTabProperty(index, QLatin1String("isPinned"), false).toBool())
+	if (isHorizontal && getTabProperty(index, QLatin1String("isPinned"), false).toBool())
 	{
-		if (isHorizontal)
-		{
-			return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
-		}
-
-		return QSize(QTabBar::tabSizeHint(0).width(), m_minimumTabSize);
+		return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
 	}
-
-	const int amount = getPinnedTabsAmount();
-	const int size = ((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), 250));
 
 	if (isHorizontal)
 	{
-		return QSize(size, QTabBar::tabSizeHint(0).height());
+		const int amount = getPinnedTabsAmount();
+
+		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), 250)), QTabBar::tabSizeHint(0).height());
 	}
 
-	return QSize(QTabBar::tabSizeHint(0).width(), size);
+	return QSize(250, QTabBar::tabSizeHint(0).height());
 }
 
 QSize TabBarWidget::sizeHint() const
 {
-	int size = 0;
-
-	for (int i = 0; i < count(); ++i)
-	{
-		size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : 250);
-	}
-
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
+		int size = 0;
+
+		for (int i = 0; i < count(); ++i)
+		{
+			size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : 250);
+		}
+
 		return QSize(size, QTabBar::sizeHint().height());
 	}
 
-	return QSize(QTabBar::sizeHint().width(), size);
+	return QSize(QTabBar::sizeHint().width(), (tabSizeHint(0).height() * count()));
 }
 
 int TabBarWidget::getPinnedTabsAmount() const

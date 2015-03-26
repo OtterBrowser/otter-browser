@@ -83,8 +83,6 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 			}
 
 			window->getWindowsManager()->open(QUrl(), hints);
-
-			return;
 		}
 	}
 

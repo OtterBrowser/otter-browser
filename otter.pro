@@ -96,6 +96,7 @@ SOURCES += src/main.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SidebarWidget.cpp \
     src/ui/StartupDialog.cpp \
+    src/ui/TabBarStyle.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TabSwitcherWidget.cpp \
     src/ui/TextLabelWidget.cpp \
@@ -213,6 +214,7 @@ HEADERS += src/core/Action.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SidebarWidget.h \
     src/ui/StartupDialog.h \
+    src/ui/TabBarStyle.h \
     src/ui/TabBarWidget.h \
     src/ui/TabSwitcherWidget.h \
     src/ui/TextLabelWidget.h \
