@@ -30,7 +30,6 @@
 #include <QtCore/QDir>
 #include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
-#include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
 {

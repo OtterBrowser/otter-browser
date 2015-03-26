@@ -20,9 +20,7 @@
 
 #include "QtWebKitPage.h"
 #include "QtWebKitNetworkManager.h"
-#include "QtWebKitWebBackend.h"
 #include "QtWebKitWebWidget.h"
-#include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -50,7 +48,6 @@ namespace Otter
 
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
-	m_backend(AddonsManager::getWebBackend(QLatin1String("qtwebkit"))),
 	m_networkManager(networkManager),
 	m_ignoreJavaScriptPopups(false)
 {
@@ -65,7 +62,6 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(NULL),
-	m_backend(NULL),
 	m_networkManager(NULL),
 	m_ignoreJavaScriptPopups(false)
 {
@@ -238,14 +234,9 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
-QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
-{
-	return m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
-}
-
 QString QtWebKitPage::getDefaultUserAgent() const
 {
-	return QWebPage::userAgentForUrl(QUrl());
+	return userAgentForUrl(QUrl());
 }
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)

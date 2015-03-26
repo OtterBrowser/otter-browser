@@ -20,6 +20,7 @@
 
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/AddonsManager.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
@@ -27,6 +28,7 @@
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 
@@ -37,6 +39,8 @@
 
 namespace Otter
 {
+
+WebBackend* QtWebKitNetworkManager::m_backend = NULL;
 
 QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget *widget) : NetworkManager(isPrivate, widget),
 	m_widget(widget),
@@ -293,10 +297,16 @@ void QtWebKitNetworkManager::updateStatus()
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 {
+	if (!m_backend)
+	{
+		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
+	}
+
 	QString acceptLanguage = SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString();
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
+	m_userAgent = m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
 
 	const QString policyValue = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString();
 
@@ -384,6 +394,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 
 	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
+	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
 	emit messageChanged(tr("Sending request to %1…").arg(request.url().host()));
 

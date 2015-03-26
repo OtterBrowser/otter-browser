@@ -29,6 +29,7 @@ namespace Otter
 {
 
 class QtWebKitWebWidget;
+class WebBackend;
 
 class QtWebKitNetworkManager : public NetworkManager
 {
@@ -61,6 +62,7 @@ private:
 	QtWebKitWebWidget *m_widget;
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
+	QString m_userAgent;
 	QUrl m_formRequestUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	qint64 m_speed;
@@ -72,6 +74,8 @@ private:
 	int m_updateTimer;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
 	bool m_canSendReferrer;
+
+	static WebBackend *m_backend;
 
 signals:
 	void messageChanged(const QString &message = QString());
