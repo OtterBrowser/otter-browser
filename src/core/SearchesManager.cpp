@@ -85,20 +85,24 @@ void SearchesManager::loadSearchEngines()
 		const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml");
 		QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml"));
 
-		if (file.open(QIODevice::ReadOnly))
+		if (!file.open(QIODevice::ReadOnly))
 		{
-			const SearchInformation search = loadSearchEngine(&file, searchEnginesOrder.at(i));
+			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
 
-			if (search.identifier.isEmpty())
-			{
-				m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
-			}
-			else
-			{
-				m_searchEngines[searchEnginesOrder.at(i)] = search;
-			}
+			continue;
+		}
 
-			file.close();
+		const SearchInformation engine = loadSearchEngine(&file, searchEnginesOrder.at(i));
+
+		file.close();
+
+		if (engine.identifier.isEmpty())
+		{
+			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
+		}
+		else
+		{
+			m_searchEngines[searchEnginesOrder.at(i)] = engine;
 		}
 	}
 

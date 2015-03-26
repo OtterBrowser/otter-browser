@@ -313,15 +313,24 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->searchViewWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 				m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 				m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
+
+				QMenu *addSearchMenu = new QMenu(m_ui->addSearchButton);
+				addSearchMenu->addAction(tr("New..."));
+				addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
+
+				m_ui->addSearchButton->setMenu(addSearchMenu);
 				m_ui->moveDownSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 				m_ui->moveUpSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+
+				updateReaddSearchMenu();
 
 				connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilter(QString)));
 				connect(m_ui->searchViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownSearchButton, SLOT(setEnabled(bool)));
 				connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
 				connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchActions()));
 				connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
-				connect(m_ui->addSearchButton, SIGNAL(clicked()), this, SLOT(addSearchEngine()));
+				connect(m_ui->addSearchButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addSearchEngine()));
+				connect(m_ui->addSearchButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdSearchEngine(QAction*)));
 				connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearchEngine()));
 				connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearchEngine()));
 				connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
@@ -776,6 +785,47 @@ void PreferencesDialog::addSearchEngine()
 	markModified();
 }
 
+void PreferencesDialog::readdSearchEngine(QAction *action)
+{
+	if (!action || action->data().isNull())
+	{
+		return;
+	}
+
+	const QString identifier = action->data().toString();
+		const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
+	QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + identifier + QLatin1String(".xml"));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return;
+	}
+
+	const SearchInformation engine = SearchesManager::loadSearchEngine(&file, identifier);
+
+	file.close();
+
+	if (engine.identifier.isEmpty() || m_searchEngines.contains(identifier))
+	{
+		return;
+	}
+
+	m_searchEngines[identifier] = qMakePair(false, engine);
+
+	QList<QStandardItem*> items;
+	items.append(new QStandardItem(engine.icon, engine.title));
+	items[0]->setToolTip(engine.description);
+	items[0]->setData(identifier, Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+	items.append(new QStandardItem(engine.keyword));
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+	m_ui->searchViewWidget->insertRow(items);
+
+	updateReaddSearchMenu();
+	markModified();
+}
+
 void PreferencesDialog::editSearchEngine()
 {
 	const QModelIndex index = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0);
@@ -862,6 +912,7 @@ void PreferencesDialog::removeSearchEngine()
 
 		m_ui->searchViewWidget->removeRow();
 
+		updateReaddSearchMenu();
 		markModified();
 	}
 }
@@ -873,6 +924,51 @@ void PreferencesDialog::updateSearchActions()
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);
+}
+
+void PreferencesDialog::updateReaddSearchMenu()
+{
+	if (!m_ui->addSearchButton->menu())
+	{
+		return;
+	}
+
+	QStringList availableIdentifiers;
+	QList<SearchInformation> availableSearchEngines;
+	QList<QFileInfo> allSearchEngines = QDir(SessionsManager::getProfilePath() + QLatin1String("/searches/")).entryInfoList(QDir::Files);
+	allSearchEngines.append(QDir(QLatin1String(":/searches/")).entryInfoList(QDir::Files));
+
+	for (int i = 0; i < allSearchEngines.count(); ++i)
+	{
+		const QString identifier = allSearchEngines.at(i).baseName();
+
+		if (!m_searchEngines.contains(identifier) && !availableIdentifiers.contains(identifier))
+		{
+			QFile file(allSearchEngines.at(i).absoluteFilePath());
+
+			if (file.open(QFile::ReadOnly))
+			{
+				const SearchInformation engine = SearchesManager::loadSearchEngine(&file, identifier);
+
+				if (!engine.identifier.isEmpty())
+				{
+					availableIdentifiers.append(identifier);
+
+					availableSearchEngines.append(engine);
+				}
+
+				file.close();
+			}
+		}
+	}
+
+	m_ui->addSearchButton->menu()->actions().at(1)->menu()->clear();
+	m_ui->addSearchButton->menu()->actions().at(1)->menu()->setEnabled(!availableSearchEngines.isEmpty());
+
+	for (int i = 0; i < availableSearchEngines.count(); ++i)
+	{
+		m_ui->addSearchButton->menu()->actions().at(1)->menu()->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
+	}
 }
 
 void PreferencesDialog::manageUserAgents()
@@ -1287,6 +1383,8 @@ void PreferencesDialog::save()
 
 		SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), m_defaultSearchEngine);
 		SettingsManager::setValue(QLatin1String("Search/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
+
+		updateReaddSearchMenu();
 	}
 
 	if (m_loadedTabs[4])

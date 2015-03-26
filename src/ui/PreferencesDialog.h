@@ -46,6 +46,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void updateReaddSearchMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, QString identifier = QString());
 
 protected slots:
@@ -60,6 +61,7 @@ protected slots:
 	void setupClearHistory();
 	void manageAcceptLanguage();
 	void addSearchEngine();
+	void readdSearchEngine(QAction *action);
 	void editSearchEngine();
 	void removeSearchEngine();
 	void updateSearchActions();
