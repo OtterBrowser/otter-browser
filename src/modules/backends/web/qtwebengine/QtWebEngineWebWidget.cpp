@@ -343,7 +343,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
 					connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 
-					interpreter->interpret(text, DefaultOpen, true);
+					interpreter->interpret(text, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
 				}
 			}
 
