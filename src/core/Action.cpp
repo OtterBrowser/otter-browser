@@ -168,6 +168,7 @@ bool Action::isLocal(int identifier)
 		case Action::CopyAction:
 		case Action::CopyPlainTextAction:
 		case Action::CopyAddressAction:
+		case Action::CopyToNoteAction:
 		case Action::PasteAction:
 		case Action::PasteAndGoAction:
 		case Action::DeleteAction:

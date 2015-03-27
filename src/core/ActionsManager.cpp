@@ -135,6 +135,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::CopyAction, QT_TRANSLATE_NOOP("actions", "Copy"), QString(), Utils::getIcon(QLatin1String("edit-copy")));
 	registerAction(Action::CopyPlainTextAction, QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"));
 	registerAction(Action::CopyAddressAction, QT_TRANSLATE_NOOP("actions", "Copy Address"));
+	registerAction(Action::CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"));
 	registerAction(Action::PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")));
 	registerAction(Action::PasteAndGoAction, QT_TRANSLATE_NOOP("actions", "Paste and Go"));
 	registerAction(Action::DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));

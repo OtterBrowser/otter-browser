@@ -35,6 +35,7 @@
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
@@ -705,6 +706,11 @@ void QtWebKitWebWidget::updateEditActions()
 	if (m_actions.contains(Action::CopyPlainTextAction))
 	{
 		m_actions[Action::CopyPlainTextAction]->setEnabled(m_page->action(QWebPage::Copy)->isEnabled());
+	}
+
+	if (m_actions.contains(Action::CopyToNoteAction))
+	{
+		m_actions[Action::CopyToNoteAction]->setEnabled(m_page->action(QWebPage::Copy)->isEnabled());
 	}
 
 	if (m_actions.contains(Action::PasteAction))
@@ -1433,6 +1439,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			QApplication::clipboard()->setText(getUrl().toString());
 
 			break;
+		case Action::CopyToNoteAction:
+			{
+				BookmarksItem *note = NotesManager::addNote(BookmarksItem::UrlBookmark, getUrl());
+				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
+			}
+
+			break;
 		case Action::PasteAction:
 			m_webView->page()->triggerAction(QWebPage::Paste);
 
@@ -2073,6 +2086,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		case Action::CutAction:
 		case Action::CopyAction:
 		case Action::CopyPlainTextAction:
+		case Action::CopyToNoteAction:
 		case Action::PasteAction:
 		case Action::PasteAndGoAction:
 		case Action::DeleteAction:

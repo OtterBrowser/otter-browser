@@ -25,6 +25,7 @@
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
+#include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
@@ -598,6 +599,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			QApplication::clipboard()->setText(getUrl().toString());
 
 			break;
+		case Action::CopyToNoteAction:
+			{
+				BookmarksItem *note = NotesManager::addNote(BookmarksItem::UrlBookmark, getUrl());
+				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
+			}
+
+			break;
 		case Action::PasteAction:
 			m_webView->triggerPageAction(QWebEnginePage::Paste);
 
@@ -1161,6 +1169,11 @@ void QtWebEngineWebWidget::updateEditActions()
 		m_actions[Action::CopyPlainTextAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
 	}
 
+	if (m_actions.contains(Action::CopyToNoteAction))
+	{
+		m_actions[Action::CopyToNoteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
+	}
+
 	if (m_actions.contains(Action::PasteAction))
 	{
 		m_actions[Action::PasteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled());
@@ -1648,6 +1661,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 		case Action::CutAction:
 		case Action::CopyAction:
 		case Action::CopyPlainTextAction:
+		case Action::CopyToNoteAction:
 		case Action::PasteAction:
 		case Action::PasteAndGoAction:
 		case Action::DeleteAction:

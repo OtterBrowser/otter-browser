@@ -107,6 +107,7 @@ public:
 		CopyAction,
 		CopyPlainTextAction,
 		CopyAddressAction,
+		CopyToNoteAction,
 		PasteAction,
 		PasteAndGoAction,
 		DeleteAction,

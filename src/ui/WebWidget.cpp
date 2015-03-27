@@ -342,6 +342,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			menu.addSeparator();
 			menu.addAction(getAction(Action::CutAction));
 			menu.addAction(getAction(Action::CopyAction));
+			menu.addAction(getAction(Action::CopyToNoteAction));
 			menu.addAction(getAction(Action::PasteAction));
 			menu.addAction(getAction(Action::DeleteAction));
 			menu.addSeparator();
@@ -374,6 +375,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			if (!(flags & EditMenu))
 			{
 				menu.addAction(getAction(Action::CopyAction));
+				menu.addAction(getAction(Action::CopyToNoteAction));
 				menu.addSeparator();
 			}
 
