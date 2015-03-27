@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_elapsedLabel(new QLabel(this)),
 	m_messageLabel(new QLabel(this)),
 	m_time(NULL),
+	m_geometryUpdateTimer(0),
 	m_isLoading(false)
 {
 	QHBoxLayout *layout = new QHBoxLayout(this);
@@ -69,6 +70,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_elapsedLabel->setPalette(palette);
 
 	setAutoFillBackground(true);
+	scheduleGeometryUpdate();
 	loadingChanged(webWidget->isLoading());
 
 	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
@@ -79,33 +81,55 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
 {
-	if (m_time)
+	if (event->timerId() == m_geometryUpdateTimer)
 	{
-		int seconds = (m_time->elapsed() / 1000);
-		int minutes = (seconds / 60);
+		killTimer(m_geometryUpdateTimer);
 
-		seconds = (seconds - (minutes * 60));
+		m_geometryUpdateTimer = 0;
 
-		m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
+		QRect geometry = m_webWidget->getProgressBarGeometry();
+
+		if (m_webWidget->isLoading() && geometry.width() > (width() / 2))
+		{
+			if (!isVisible())
+			{
+				connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			}
+
+			geometry.translate(0, m_webWidget->pos().y());
+
+			setGeometry(geometry);
+			show();
+			raise();
+		}
+		else
+		{
+			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+
+			hide();
+		}
 	}
 	else
 	{
-		m_elapsedLabel->setText(QString());
+		if (m_time)
+		{
+			int seconds = (m_time->elapsed() / 1000);
+			int minutes = (seconds / 60);
+
+			seconds = (seconds - (minutes * 60));
+
+			m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
+		}
+		else
+		{
+			m_elapsedLabel->setText(QString());
+		}
+
+		if (!m_webWidget->isLoading())
+		{
+			killTimer(event->timerId());
+		}
 	}
-
-	if (!m_webWidget->isLoading())
-	{
-		killTimer(event->timerId());
-	}
-}
-
-void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
-{
-	Q_UNUSED(bytesTotal)
-
-	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
-	m_totalLabel->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
-	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
 }
 
 void ProgressBarWidget::loadingChanged(bool isLoading)
@@ -122,15 +146,15 @@ void ProgressBarWidget::loadingChanged(bool isLoading)
 
 		updateLoadStatus(0, 0, 0, 0, 0);
 
-		if (geometry().width() > (parentWidget()->geometry().width() / 2))
-		{
-			show();
-		}
-
 		m_time = new QTime();
 		m_time->start();
 
 		startTimer(1000);
+
+		if (!isVisible())
+		{
+			scheduleGeometryUpdate();
+		}
 	}
 	else
 	{
@@ -141,10 +165,29 @@ void ProgressBarWidget::loadingChanged(bool isLoading)
 			m_time = NULL;
 		}
 
+		disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+
 		hide();
 	}
 
 	m_isLoading = isLoading;
+}
+
+void ProgressBarWidget::scheduleGeometryUpdate()
+{
+	if (m_geometryUpdateTimer == 0)
+	{
+		m_geometryUpdateTimer = startTimer(50);
+	}
+}
+
+void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
+{
+	Q_UNUSED(bytesTotal)
+
+	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
+	m_totalLabel->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
+	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
 }
 
 }

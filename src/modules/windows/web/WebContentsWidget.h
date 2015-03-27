@@ -74,7 +74,6 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void scheduleGeometryUpdate();
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
@@ -89,9 +88,7 @@ private:
 	ProgressBarWidget *m_progressBarWidget;
 	QString m_quickFindQuery;
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
-	int m_progressBarTimer;
 	int m_quickFindTimer;
-	bool m_isProgressBarEnabled;
 	bool m_isTabPreferencesMenuVisible;
 
 	static QString m_sharedQuickFindQuery;

@@ -38,9 +38,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_webWidget(widget),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
-	m_progressBarTimer(0),
 	m_quickFindTimer(0),
-	m_isProgressBarEnabled(true),
 	m_isTabPreferencesMenuVisible(false)
 {
 	if (m_webWidget)
@@ -61,8 +59,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	layout->setSpacing(0);
 
 	setLayout(layout);
-
-	optionChanged(QLatin1String("Browser/ShowDetailedProgressBar"), SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")));
 
 	if (window)
 	{
@@ -86,33 +82,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_progressBarTimer)
-	{
-		killTimer(m_progressBarTimer);
-
-		m_progressBarTimer = 0;
-
-		if (!m_progressBarWidget)
-		{
-			return;
-		}
-
-		QRect geometry = m_webWidget->getProgressBarGeometry();
-
-		if (m_webWidget->isLoading() && geometry.width() > (width() / 2))
-		{
-			geometry.translate(0, m_webWidget->pos().y());
-
-			m_progressBarWidget->show();
-			m_progressBarWidget->raise();
-			m_progressBarWidget->setGeometry(geometry);
-		}
-		else
-		{
-			m_progressBarWidget->hide();
-		}
-	}
-	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
+	if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
 		killTimer(m_quickFindTimer);
 
@@ -131,12 +101,12 @@ void WebContentsWidget::focusInEvent(QFocusEvent *event)
 
 void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
-	if (m_isProgressBarEnabled)
-	{
-		scheduleGeometryUpdate();
-	}
-
 	ContentsWidget::resizeEvent(event);
+
+	if (m_progressBarWidget)
+	{
+		m_progressBarWidget->scheduleGeometryUpdate();
+	}
 }
 
 void WebContentsWidget::keyPressEvent(QKeyEvent *event)
@@ -181,24 +151,10 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 
 void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/ShowDetailedProgressBar"))
+	if (option == QLatin1String("Browser/ShowDetailedProgressBar") && !value.toBool() && m_progressBarWidget)
 	{
-		m_isProgressBarEnabled = value.toBool();
-
-		if (!m_isProgressBarEnabled && m_progressBarWidget)
-		{
-			m_progressBarWidget->deleteLater();
-			m_progressBarWidget = NULL;
-		}
-
-		if (m_isProgressBarEnabled)
-		{
-			connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
-		}
-		else
-		{
-			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(updateProgressBarWidget()));
-		}
+		m_progressBarWidget->deleteLater();
+		m_progressBarWidget = NULL;
 	}
 	else if (option == QLatin1String("Search/EnableFindInPageAsYouType") && m_searchBarWidget)
 	{
@@ -210,14 +166,6 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 		{
 			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
 		}
-	}
-}
-
-void WebContentsWidget::scheduleGeometryUpdate()
-{
-	if (m_progressBarWidget && m_progressBarTimer == 0)
-	{
-		m_progressBarTimer = startTimer(50);
 	}
 }
 
@@ -504,7 +452,7 @@ void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 
 void WebContentsWidget::setLoading(bool loading)
 {
-	if (!m_isProgressBarEnabled)
+	if (!m_progressBarWidget && !SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
 	{
 		return;
 	}
@@ -513,8 +461,6 @@ void WebContentsWidget::setLoading(bool loading)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
 	}
-
-	scheduleGeometryUpdate();
 }
 
 void WebContentsWidget::setOption(const QString &key, const QVariant &value)

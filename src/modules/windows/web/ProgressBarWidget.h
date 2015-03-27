@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,12 +37,15 @@ class ProgressBarWidget : public QFrame
 public:
 	explicit ProgressBarWidget(WebWidget *webWidget, QWidget *parent = NULL);
 
+public slots:
+	void scheduleGeometryUpdate();
+
 protected:
 	void timerEvent(QTimerEvent *event);
 
 protected slots:
-	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 	void loadingChanged(bool isLoading);
+	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
 private:
 	WebWidget *m_webWidget;
@@ -53,6 +56,7 @@ private:
 	QLabel *m_elapsedLabel;
 	QLabel *m_messageLabel;
 	QTime *m_time;
+	int m_geometryUpdateTimer;
 	bool m_isLoading;
 };
 
