@@ -22,6 +22,7 @@
 
 #include "../core/BookmarksManager.h"
 
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QWidget>
 
 namespace Otter

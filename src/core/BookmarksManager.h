@@ -21,10 +21,7 @@
 #ifndef OTTER_BOOKMARKSMANAGER_H
 #define OTTER_BOOKMARKSMANAGER_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QXmlStreamReader>
-#include <QtCore/QXmlStreamWriter>
-#include <QtGui/QStandardItemModel>
+#include <QtCore/QObject>
 
 namespace Otter
 {
@@ -48,14 +45,11 @@ public:
 	static QList<QUrl> getUrls();
 	static bool hasBookmark(const QUrl &url);
 	static bool hasKeyword(const QString &keyword);
-	static bool save(const QString &path = QString());
 
 protected:
 	explicit BookmarksManager(QObject *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	static void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
-	static void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
 
 protected slots:
 	void scheduleSave();
@@ -64,7 +58,7 @@ private:
 	int m_saveTimer;
 
 	static BookmarksManager *m_instance;
-	static BookmarksModel* m_model;
+	static BookmarksModel *m_model;
 
 signals:
 	void modelModified();

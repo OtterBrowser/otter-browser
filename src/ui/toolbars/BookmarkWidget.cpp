@@ -24,6 +24,7 @@
 #include "../../core/Utils.h"
 #include "../../core/WindowsManager.h"
 
+#include <QtCore/QDateTime>
 #include <QtGui/QMouseEvent>
 
 namespace Otter

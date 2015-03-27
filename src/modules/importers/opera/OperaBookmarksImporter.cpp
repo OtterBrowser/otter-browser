@@ -21,6 +21,7 @@
 #include "OperaBookmarksImporter.h"
 #include "../../../core/BookmarksModel.h"
 
+#include <QtCore/QDateTime>
 #include <QtCore/QDir>
 #include <QtCore/QTextStream>
 

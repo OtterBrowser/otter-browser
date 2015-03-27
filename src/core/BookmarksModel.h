@@ -23,6 +23,8 @@
 #include "BookmarksManager.h"
 
 #include <QtCore/QUrl>
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -87,7 +89,7 @@ public:
 		VisitsRole = (Qt::UserRole + 6)
 	};
 
-	explicit BookmarksModel(QObject *parent = NULL);
+	explicit BookmarksModel(const QString &path, QObject *parent = NULL);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
 	BookmarksItem* getRootItem();
@@ -96,6 +98,11 @@ public:
 	QStringList mimeTypes() const;
 	QList<QStandardItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+	bool save(const QString &path);
+
+protected:
+	void readBookmark(QXmlStreamReader *reader, QStandardItem *parent);
+	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
 };
 
 }

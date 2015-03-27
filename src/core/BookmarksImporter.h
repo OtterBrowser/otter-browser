@@ -24,6 +24,8 @@
 #include "BookmarksManager.h"
 #include "Importer.h"
 
+#include <QtGui/QStandardItemModel>
+
 namespace Otter
 {
 
