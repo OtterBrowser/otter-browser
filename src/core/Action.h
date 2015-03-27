@@ -171,6 +171,7 @@ public:
 		ContentBlockingAction,
 		HistoryAction,
 		ClearHistoryAction,
+		NotesAction,
 		TransfersAction,
 		PreferencesAction,
 		WebsitePreferencesAction,

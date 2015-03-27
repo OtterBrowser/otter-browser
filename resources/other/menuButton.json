@@ -107,6 +107,7 @@
 		},
 		"History",
 		"Transfers",
+		"Notes",
 		"separator",
 		{
 			"identifier": "ToolBarsMenu",

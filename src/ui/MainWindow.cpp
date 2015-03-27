@@ -562,6 +562,17 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case Action::NotesAction:
+			{
+				const QUrl url(QLatin1String("about:notes"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
 		case Action::TransfersAction:
 			{
 				const QUrl url(QLatin1String("about:transfers"));

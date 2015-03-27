@@ -38,6 +38,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	menu->addAction(Action::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 	menu->addAction(Action::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
 	menu->addAction(Action::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+	menu->addAction(Action::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
 	menu->addSeparator();
 	menu->addAction(Action::ExitAction);
 

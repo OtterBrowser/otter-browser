@@ -167,7 +167,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ActivateContentAction, QT_TRANSLATE_NOOP("actions", "Activate Content"));
 	registerAction(Action::ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"));
 	registerAction(Action::ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"));
-	registerAction(Action::BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks..."), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
+	registerAction(Action::BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
 	registerAction(Action::AddBookmarkAction, QT_TRANSLATE_NOOP("actions", "Add Bookmark..."), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(Action::QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 	registerAction(Action::PopupsPolicyAction, QT_TRANSLATE_NOOP("actions", "Block pop-ups"));
@@ -199,7 +199,8 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking..."));
 	registerAction(Action::HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
 	registerAction(Action::ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History..."), QString(), Utils::getIcon(QLatin1String("edit-clear-history")));
-	registerAction(Action::TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers..."));
+	registerAction(Action::NotesAction, QT_TRANSLATE_NOOP("actions", "Notes"));
+	registerAction(Action::TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers"));
 	registerAction(Action::PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences..."));
 	registerAction(Action::WebsitePreferencesAction, QT_TRANSLATE_NOOP("actions", "Website Preferences..."));
 	registerAction(Action::QuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Quick Preferences"));

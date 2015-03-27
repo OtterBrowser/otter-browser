@@ -155,6 +155,7 @@
 		"actions":
 		[
 			"Transfers",
+			"Notes",
 			"Cookies",
 			"ContentBlocking",
 			"separator",
