@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -258,21 +258,26 @@ void Menu::populateBookmarksMenu()
 		return;
 	}
 
-	const QModelIndex index = menu->menuAction()->data().toModelIndex();
+	QModelIndex index = menu->menuAction()->data().toModelIndex();
 
 	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3))
 	{
 		return;
 	}
 
-	QStandardItem *branch = (index.isValid() ? BookmarksManager::getModel()->itemFromIndex(index) : BookmarksManager::getModel()->getRootItem());
+	if (!index.isValid())
+	{
+		index = BookmarksManager::getModel()->getRootItem()->index();
+	}
 
-	if (!branch)
+	const QAbstractItemModel *model = index.model();
+
+	if (!model)
 	{
 		return;
 	}
 
-	if (index.isValid() && branch->rowCount() > 1 && m_role == BookmarksMenuRole)
+	if (model->rowCount(index) > 1 && m_role == BookmarksMenuRole)
 	{
 		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
 		openAllAction->setData(index);
@@ -280,34 +285,41 @@ void Menu::populateBookmarksMenu()
 		menu->addSeparator();
 	}
 
-	for (int i = 0; i < branch->rowCount(); ++i)
+	for (int i = 0; i < model->rowCount(index); ++i)
 	{
-		QStandardItem *item = branch->child(i);
+		const QModelIndex childIndex = index.child(i, 0);
 
-		if (!item)
+		if (!childIndex.isValid())
 		{
 			continue;
 		}
 
-		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt());
 
 		if (type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)
 		{
-			QAction *action = menu->addAction(item->data(Qt::DecorationRole).value<QIcon>(), (item->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(item->data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
-			action->setData(item->index());
-			action->setToolTip(item->data(BookmarksModel::DescriptionRole).toString());
-			action->setStatusTip(item->data(BookmarksModel::UrlRole).toString());
+			QAction *action = menu->addAction(childIndex.data(Qt::DecorationRole).value<QIcon>(), (childIndex.data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(childIndex.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
+			action->setData(childIndex);
+			action->setToolTip(childIndex.data(BookmarksModel::DescriptionRole).toString());
+			action->setStatusTip(childIndex.data(BookmarksModel::UrlRole).toString());
 
 			if (type == BookmarksItem::UrlBookmark && m_role == BookmarksMenuRole)
 			{
 				connect(action, SIGNAL(triggered()), this, SLOT(openBookmark()));
 			}
-			else if (type == BookmarksItem::FolderBookmark && item->rowCount() > 0)
+			else if (type == BookmarksItem::FolderBookmark)
 			{
-				Menu *subMenu = new Menu(this);
-				subMenu->setRole(m_role);
+				if (model->rowCount(childIndex) > 0)
+				{
+					Menu *subMenu = new Menu(this);
+					subMenu->setRole(m_role);
 
-				action->setMenu(subMenu);
+					action->setMenu(subMenu);
+				}
+				else
+				{
+					action->setEnabled(false);
+				}
 			}
 		}
 		else
