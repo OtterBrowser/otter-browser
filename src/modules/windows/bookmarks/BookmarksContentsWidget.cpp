@@ -110,50 +110,12 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	QStandardItem *bookmark = BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex());
-	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt());
-
-	if (bookmark && type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark)
-	{
-		if (type == BookmarksItem::SeparatorBookmark || isInTrash(bookmark->index()))
-		{
-			bookmark->parent()->removeRow(bookmark->row());
-		}
-		else
-		{
-			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
-
-			BookmarksManager::getModel()->getTrashItem()->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-			BookmarksManager::getModel()->getTrashItem()->setEnabled(true);
-		}
-	}
+	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksView->currentIndex()));
 }
 
 void BookmarksContentsWidget::restoreBookmark()
 {
-	QStandardItem *bookmark = BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex());
-	QStandardItem *formerParent = (m_trash.contains(bookmark) ? BookmarksManager::getModel()->itemFromIndex(m_trash[bookmark].first) : BookmarksManager::getModel()->getRootItem());
-
-	if (!formerParent || static_cast<BookmarksItem::BookmarkType>(formerParent->data(BookmarksModel::TypeRole).toInt()) != BookmarksItem::FolderBookmark)
-	{
-		formerParent = BookmarksManager::getModel()->getRootItem();
-	}
-
-	if (bookmark)
-	{
-		if (m_trash.contains(bookmark))
-		{
-			formerParent->insertRow(m_trash[bookmark].second, bookmark->parent()->takeRow(bookmark->row()));
-
-			m_trash.remove(bookmark);
-		}
-		else
-		{
-			formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-		}
-
-		BookmarksManager::getModel()->getTrashItem()->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
-	}
+	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksView->currentIndex()));
 }
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
@@ -175,16 +137,10 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 	if (bookmark)
 	{
-		BookmarkPropertiesDialog(bookmark, (isInTrash(bookmark->index()) ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
+		BookmarkPropertiesDialog(bookmark, (bookmark->isInTrash() ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
 
 		updateActions();
 	}
-}
-
-void BookmarksContentsWidget::emptyTrash()
-{
-	BookmarksManager::getModel()->getTrashItem()->removeRows(0, BookmarksManager::getModel()->getTrashItem()->rowCount());
-	BookmarksManager::getModel()->getTrashItem()->setEnabled(false);
 }
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
@@ -195,7 +151,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 
 	if (type == BookmarksItem::TrashBookmark)
 	{
-		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), this, SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
+		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), BookmarksManager::getModel(), SLOT(emptyTrash()))->setEnabled(BookmarksManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
 	else if (type == BookmarksItem::UnknownBookmark)
 	{
@@ -205,7 +161,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		const bool inTrash = isInTrash(index);
+		const bool isInTrash = BookmarksManager::getModel()->bookmarkFromIndex(index)->isInTrash();
 
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
@@ -231,7 +187,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			menu.addAction(copyLinkAction);
 		}
 
-		if (!inTrash)
+		if (!isInTrash)
 		{
 			menu.addSeparator();
 
@@ -245,7 +201,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		{
 			menu.addSeparator();
 
-			if (inTrash)
+			if (isInTrash)
 			{
 				menu.addAction(tr("Restore Bookmark"), this, SLOT(restoreBookmark()));
 			}
@@ -418,30 +374,6 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
 
 	return found;
-}
-
-bool BookmarksContentsWidget::isInTrash(const QModelIndex &index) const
-{
-	QModelIndex parent = index;
-
-	while (parent.isValid())
-	{
-		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
-
-		if (type == BookmarksItem::TrashBookmark)
-		{
-			return true;
-		}
-
-		if (type == BookmarksItem::RootBookmark)
-		{
-			break;
-		}
-
-		parent = parent.parent();
-	}
-
-	return false;
 }
 
 bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)

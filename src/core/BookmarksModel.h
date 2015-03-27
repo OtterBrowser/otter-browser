@@ -50,6 +50,7 @@ public:
 	BookmarksModel* getModel() const;
 	QStandardItem* clone() const;
 	QVariant data(int role) const;
+	bool isInTrash() const;
 
 protected:
 	explicit BookmarksItem(BookmarkType type);
@@ -84,6 +85,8 @@ public:
 
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = NULL);
 
+	void trashBookmark(BookmarksItem *bookmark);
+	void restoreBookmark(BookmarksItem *bookmark);
 	BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(const QString &keyword) const;
@@ -105,12 +108,16 @@ public:
 	bool hasKeyword(const QString &keyword) const;
 	bool hasUrl(const QUrl &url) const;
 
+public slots:
+	void emptyTrash();
+
 protected:
 	void removeBookmark(BookmarksItem *bookmark);
 	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
 	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark) const;
 
 private:
+	QHash<BookmarksItem*, QPair<QModelIndex, int> > m_trash;
 	QHash<QUrl, QList<BookmarksItem*> > m_urls;
 	QHash<QString, BookmarksItem*> m_keywords;
 	QMap<quint64, BookmarksItem*> m_identifiers;

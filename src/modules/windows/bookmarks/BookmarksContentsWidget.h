@@ -57,7 +57,6 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	BookmarksItem* findFolder(const QModelIndex &index);
-	bool isInTrash(const QModelIndex &index) const;
 
 protected slots:
 	void triggerAction();
@@ -68,14 +67,12 @@ protected slots:
 	void restoreBookmark();
 	void openBookmark(const QModelIndex &index = QModelIndex());
 	void bookmarkProperties();
-	void emptyTrash();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
 	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
 
 private:
 	QHash<int, Action*> m_actions;
-	QHash<QStandardItem*, QPair<QModelIndex, int> > m_trash;
 	Ui::BookmarksContentsWidget *m_ui;
 };
 

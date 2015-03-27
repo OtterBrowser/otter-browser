@@ -130,6 +130,30 @@ QVariant BookmarksItem::data(int role) const
 	return QStandardItem::data(role);
 }
 
+bool BookmarksItem::isInTrash() const
+{
+	QModelIndex parent = index().parent();
+
+	while (parent.isValid())
+	{
+		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
+
+		if (type == BookmarksItem::TrashBookmark)
+		{
+			return true;
+		}
+
+		if (type == BookmarksItem::RootBookmark)
+		{
+			break;
+		}
+
+		parent = parent.parent();
+	}
+
+	return false;
+}
+
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
 	m_mode(mode)
 {
@@ -138,6 +162,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 	BookmarksItem *trashItem = new BookmarksItem(BookmarksItem::TrashBookmark);
 	trashItem->setData(tr("Trash"), BookmarksModel::TitleRole);
+	trashItem->setEnabled(false);
 
 	appendRow(rootItem);
 	appendRow(trashItem);
@@ -179,6 +204,63 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 			}
 		}
 	}
+}
+
+void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
+{
+	if (!bookmark)
+	{
+		return;
+	}
+
+	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
+
+	if (type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark)
+	{
+		if (type == BookmarksItem::SeparatorBookmark || bookmark->isInTrash())
+		{
+			bookmark->parent()->removeRow(bookmark->row());
+		}
+		else
+		{
+			BookmarksItem *trashItem = getTrashItem();
+
+			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
+
+			trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+			trashItem->setEnabled(true);
+		}
+	}
+}
+
+void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
+{
+	if (!bookmark)
+	{
+		return;
+	}
+
+	BookmarksItem *formerParent = (m_trash.contains(bookmark) ? bookmarkFromIndex(m_trash[bookmark].first) : getRootItem());
+
+	if (!formerParent || static_cast<BookmarksItem::BookmarkType>(formerParent->data(BookmarksModel::TypeRole).toInt()) != BookmarksItem::FolderBookmark)
+	{
+		formerParent = getRootItem();
+	}
+
+	if (m_trash.contains(bookmark))
+	{
+		formerParent->insertRow(m_trash[bookmark].second, bookmark->parent()->takeRow(bookmark->row()));
+
+		m_trash.remove(bookmark);
+	}
+	else
+	{
+		formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+	}
+
+	BookmarksItem *trashItem = getTrashItem();
+
+	trashItem->setEnabled(trashItem->rowCount() > 0);
 }
 
 void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
@@ -484,6 +566,16 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 
 			break;
 	}
+}
+
+void BookmarksModel::emptyTrash()
+{
+	BookmarksItem *trashItem = getTrashItem();
+
+	trashItem->removeRows(0, trashItem->rowCount());
+	trashItem->setEnabled(false);
+
+	m_trash.clear();
 }
 
 BookmarksItem* BookmarksModel::addBookmark(BookmarksItem::BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent)

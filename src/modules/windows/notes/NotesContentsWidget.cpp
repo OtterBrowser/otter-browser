@@ -104,50 +104,12 @@ void NotesContentsWidget::addSeparator()
 
 void NotesContentsWidget::removeNote()
 {
-	QStandardItem *bookmark = NotesManager::getModel()->itemFromIndex(m_ui->notesView->currentIndex());
-	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(m_ui->notesView->currentIndex().data(BookmarksModel::TypeRole).toInt());
-
-	if (bookmark && type != BookmarksItem::RootBookmark && type != BookmarksItem::TrashBookmark)
-	{
-		if (type == BookmarksItem::SeparatorBookmark || isInTrash(bookmark->index()))
-		{
-			bookmark->parent()->removeRow(bookmark->row());
-		}
-		else
-		{
-			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
-
-			NotesManager::getModel()->getTrashItem()->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-			NotesManager::getModel()->getTrashItem()->setEnabled(true);
-		}
-	}
+	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesView->currentIndex()));
 }
 
 void NotesContentsWidget::restoreNote()
 {
-	QStandardItem *bookmark = NotesManager::getModel()->itemFromIndex(m_ui->notesView->currentIndex());
-	QStandardItem *formerParent = (m_trash.contains(bookmark) ? NotesManager::getModel()->itemFromIndex(m_trash[bookmark].first) : NotesManager::getModel()->getRootItem());
-
-	if (!formerParent || static_cast<BookmarksItem::BookmarkType>(formerParent->data(BookmarksModel::TypeRole).toInt()) != BookmarksItem::FolderBookmark)
-	{
-		formerParent = NotesManager::getModel()->getRootItem();
-	}
-
-	if (bookmark)
-	{
-		if (m_trash.contains(bookmark))
-		{
-			formerParent->insertRow(m_trash[bookmark].second, bookmark->parent()->takeRow(bookmark->row()));
-
-			m_trash.remove(bookmark);
-		}
-		else
-		{
-			formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
-		}
-
-		NotesManager::getModel()->getTrashItem()->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
-	}
+	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesView->currentIndex()));
 }
 
 void NotesContentsWidget::openUrl(const QModelIndex &index)
@@ -159,12 +121,6 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 	{
 		manager->open(bookmark);
 	}
-}
-
-void NotesContentsWidget::emptyTrash()
-{
-	NotesManager::getModel()->getTrashItem()->removeRows(0, NotesManager::getModel()->getTrashItem()->rowCount());
-	NotesManager::getModel()->getTrashItem()->setEnabled(false);
 }
 
 void NotesContentsWidget::showContextMenu(const QPoint &point)
@@ -181,7 +137,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 
 	if (type == BookmarksItem::TrashBookmark)
 	{
-		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), this, SLOT(emptyTrash()))->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
+		menu.addAction(Utils::getIcon(QLatin1String("trash-empty")), tr("Empty Trash"), NotesManager::getModel(), SLOT(emptyTrash()))->setEnabled(NotesManager::getModel()->getTrashItem()->rowCount() > 0);
 	}
 	else if (type == BookmarksItem::UnknownBookmark)
 	{
@@ -191,7 +147,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		const bool inTrash = isInTrash(index);
+		const bool isInTrash = NotesManager::getModel()->bookmarkFromIndex(index)->isInTrash();
 
 		if (type == BookmarksItem::UrlBookmark)
 		{
@@ -211,7 +167,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 			menu.addAction(copyLinkAction);
 		}
 
-		if (!inTrash)
+		if (!isInTrash)
 		{
 			menu.addSeparator();
 
@@ -225,7 +181,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 		{
 			menu.addSeparator();
 
-			if (inTrash)
+			if (isInTrash)
 			{
 				menu.addAction(tr("Restore Note"), this, SLOT(restoreNote()));
 			}
@@ -439,30 +395,6 @@ bool NotesContentsWidget::filterNotes(const QString &filter, QStandardItem *bran
 	m_ui->notesView->setExpanded(branch->index(), (found && !filter.isEmpty()));
 
 	return found;
-}
-
-bool NotesContentsWidget::isInTrash(const QModelIndex &index) const
-{
-	QModelIndex parent = index;
-
-	while (parent.isValid())
-	{
-		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
-
-		if (type == BookmarksItem::TrashBookmark)
-		{
-			return true;
-		}
-
-		if (type == BookmarksItem::RootBookmark)
-		{
-			break;
-		}
-
-		parent = parent.parent();
-	}
-
-	return false;
 }
 
 bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)

@@ -57,7 +57,6 @@ public slots:
 protected:
 	void changeEvent(QEvent *event);
 	BookmarksItem* findFolder(const QModelIndex &index);
-	bool isInTrash(const QModelIndex &index) const;
 
 protected slots:
 	void triggerAction();
@@ -67,7 +66,6 @@ protected slots:
 	void removeNote();
 	void restoreNote();
 	void openUrl(const QModelIndex &index = QModelIndex());
-	void emptyTrash();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
 	void updateText();
@@ -75,7 +73,6 @@ protected slots:
 
 private:
 	QHash<int, Action*> m_actions;
-	QHash<QStandardItem*, QPair<QModelIndex, int> > m_trash;
 	Ui::NotesContentsWidget *m_ui;
 };
 
