@@ -229,7 +229,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			sessionWindow.group = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
 			sessionWindow.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
 			sessionWindow.reloadTime = (sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
-			sessionWindow.pinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
+			sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
 
 			for (int k = 1; k <= history; ++k)
 			{
@@ -432,7 +432,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).reloadTime));
 			}
 
-			if (sessionEntry.windows.at(j).pinned)
+			if (sessionEntry.windows.at(j).isPinned)
 			{
 				stream << QLatin1String("pinned=true\n");
 			}

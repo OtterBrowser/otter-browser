@@ -402,13 +402,13 @@ void Menu::populateClosedWindowsMenu()
 
 	if (window)
 	{
-		const QList<SessionWindow> tabs = window->getWindowsManager()->getClosedWindows();
+		const QList<ClosedWindow> tabs = window->getWindowsManager()->getClosedWindows();
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			QAction *action = QMenu::addAction(backend->getIconForUrl(QUrl(tabs.at(i).getUrl())), Utils::elideText(tabs.at(i).getTitle(), this), this, SLOT(restoreClosedWindow()));
+			QAction *action = QMenu::addAction(backend->getIconForUrl(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow()));
 			action->setData(i + 1);
-			action->setStatusTip(tabs.at(i).getUrl());
+			action->setStatusTip(tabs.at(i).window.getUrl());
 		}
 	}
 }

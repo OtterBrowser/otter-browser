@@ -55,9 +55,9 @@ struct SessionWindow
 	int group;
 	int index;
 	int reloadTime;
-	bool pinned;
+	bool isPinned;
 
-	SessionWindow() : group(0), index(-1), reloadTime(-1), pinned(false) {}
+	SessionWindow() : group(0), index(-1), reloadTime(-1), isPinned(false) {}
 
 	QString getUrl() const
 	{

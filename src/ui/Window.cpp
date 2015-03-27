@@ -322,7 +322,7 @@ void Window::setSession(const SessionWindow &session)
 	m_session = session;
 
 	setSearchEngine(session.searchEngine);
-	setPinned(session.pinned);
+	setPinned(session.isPinned);
 
 	if (!SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
 	{
@@ -657,7 +657,7 @@ SessionWindow Window::getSession() const
 	session.history = history.entries;
 	session.group = 0;
 	session.index = history.index;
-	session.pinned = isPinned();
+	session.isPinned = isPinned();
 
 	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{

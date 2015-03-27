@@ -866,7 +866,11 @@ int TabBarWidget::getPinnedTabsAmount() const
 
 bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease)
+	if (event->type() == QEvent::MouseButtonPress)
+	{
+		return true;
+	}
+	else if (event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
 		QLabel *label = qobject_cast<QLabel*>(object);
@@ -878,6 +882,8 @@ bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 			if (window)
 			{
 				window->close();
+
+				return true;
 			}
 		}
 	}

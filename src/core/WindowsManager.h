@@ -52,6 +52,15 @@ enum OpenHint
 
 Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
+struct ClosedWindow
+{
+	SessionWindow window;
+	quint64 nextWindow;
+	quint64 previousWindow;
+
+	ClosedWindow() : nextWindow(0), previousWindow(0) {}
+};
+
 class BookmarksItem;
 class ContentsWidget;
 class MainWindow;
@@ -71,7 +80,7 @@ public:
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
-	QList<SessionWindow> getClosedWindows() const;
+	QList<ClosedWindow> getClosedWindows() const;
 	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
@@ -102,7 +111,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
-	void addWindow(Window *window, OpenHints hints = DefaultOpen);
+	void addWindow(Window *window, OpenHints hints = DefaultOpen, int index = -1);
 	void openWindow(ContentsWidget *widget, OpenHints hints = DefaultOpen);
 	void cloneWindow(int index);
 	void detachWindow(int index);
@@ -114,7 +123,7 @@ protected slots:
 
 private:
 	MainWindow *m_mainWindow;
-	QList<SessionWindow> m_closedWindows;
+	QList<ClosedWindow> m_closedWindows;
 	QList<QUrl> m_bookmarksToOpen;
 	bool m_isPrivate;
 	bool m_isRestored;

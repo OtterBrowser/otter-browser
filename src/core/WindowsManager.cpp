@@ -411,8 +411,38 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
+	const ClosedWindow closedWindow = m_closedWindows.at(index);
+	int windowIndex = -1;
+
+	if (closedWindow.previousWindow == 0)
+	{
+		windowIndex = 0;
+	}
+	else if (closedWindow.nextWindow == 0)
+	{
+		windowIndex = m_mainWindow->getTabBar()->count();
+	}
+	else
+	{
+		const int previousIndex = getWindowIndex(closedWindow.previousWindow);
+
+		if (previousIndex >= 0)
+		{
+			windowIndex = (previousIndex + 1);
+		}
+		else
+		{
+			const int nextIndex = getWindowIndex(closedWindow.nextWindow);
+
+			if (nextIndex >= 0)
+			{
+				windowIndex = qMax(0, (nextIndex - 1));
+			}
+		}
+	}
+
 	Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
-	window->setSession(m_closedWindows.at(index));
+	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
 
@@ -421,7 +451,7 @@ void WindowsManager::restore(int index)
 		emit closedWindowsAvailableChanged(false);
 	}
 
-	addWindow(window);
+	addWindow(window, DefaultOpen, windowIndex);
 }
 
 void WindowsManager::clearClosedWindows()
@@ -434,7 +464,7 @@ void WindowsManager::clearClosedWindows()
 	}
 }
 
-void WindowsManager::addWindow(Window *window, OpenHints hints)
+void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 {
 	if (!window)
 	{
@@ -448,7 +478,10 @@ void WindowsManager::addWindow(Window *window, OpenHints hints)
 
 	window->setControlsHidden(m_mainWindow->isFullScreen());
 
-	int index = ((!(hints & EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
+	if (index < 0)
+	{
+		index = ((!(hints & EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
+	}
 
 	if (!window->isPinned())
 	{
@@ -558,7 +591,7 @@ void WindowsManager::removeStoredUrl(const QString &url)
 {
 	for (int i = (m_closedWindows.count() - 1); i >= 0; --i)
 	{
-		if (url == m_closedWindows.at(i).getUrl())
+		if (url == m_closedWindows.at(i).window.getUrl())
 		{
 			m_closedWindows.removeAt(i);
 
@@ -587,14 +620,20 @@ void WindowsManager::handleWindowClose(Window *window)
 
 		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{
-			const SessionWindow information = window->getSession();
+			Window *nextWindow = getWindowByIndex(index + 1);
+			Window *previousWindow = ((index > 0) ? getWindowByIndex(index - 1) : NULL);
+
+			ClosedWindow closedWindow;
+			closedWindow.window = window->getSession();
+			closedWindow.nextWindow = (nextWindow ? nextWindow->getIdentifier() : 0);
+			closedWindow.previousWindow = (previousWindow ? previousWindow->getIdentifier() : 0);
 
 			if (window->getType() != QLatin1String("web"))
 			{
-				removeStoredUrl(information.getUrl());
+				removeStoredUrl(closedWindow.window.getUrl());
 			}
 
-			m_closedWindows.prepend(information);
+			m_closedWindows.prepend(closedWindow);
 
 			emit closedWindowsAvailableChanged(true);
 		}
@@ -833,7 +872,7 @@ SessionMainWindow WindowsManager::getSession() const
 	return session;
 }
 
-QList<SessionWindow> WindowsManager::getClosedWindows() const
+QList<ClosedWindow> WindowsManager::getClosedWindows() const
 {
 	return m_closedWindows;
 }
