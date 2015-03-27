@@ -88,4 +88,14 @@ BookmarksModel* NotesManager::getModel()
 	return m_model;
 }
 
+BookmarksItem* NotesManager::addNote(BookmarksItem::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
+{
+	if (!m_model)
+	{
+		getModel();
+	}
+
+	return m_model->addBookmark(type, 0, url, title, parent);
+}
+
 }

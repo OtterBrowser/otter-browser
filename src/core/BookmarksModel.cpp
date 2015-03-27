@@ -30,11 +30,9 @@
 namespace Otter
 {
 
-BookmarksItem::BookmarksItem(BookmarkType type, const QUrl &url, const QString &title) : QStandardItem()
+BookmarksItem::BookmarksItem(BookmarkType type) : QStandardItem()
 {
 	setData(type, BookmarksModel::TypeRole);
-	setData(url, BookmarksModel::UrlRole);
-	setData(title, BookmarksModel::TitleRole);
 
 	if (type == UrlBookmark || type == SeparatorBookmark)
 	{
@@ -63,6 +61,23 @@ BookmarksItem::~BookmarksItem()
 	}
 }
 
+void BookmarksItem::setData(const QVariant &value, int role)
+{
+	if (model())
+	{
+		model()->setData(index(), value, role);
+	}
+	else
+	{
+		QStandardItem::setData(value, role);
+	}
+}
+
+void BookmarksItem::setItemData(const QVariant &value, int role)
+{
+	QStandardItem::setData(value, role);
+}
+
 BookmarksModel* BookmarksItem::getModel() const
 {
 	return qobject_cast<BookmarksModel*>(model());
@@ -70,7 +85,9 @@ BookmarksModel* BookmarksItem::getModel() const
 
 QStandardItem* BookmarksItem::clone() const
 {
-	BookmarksItem *item = new BookmarksItem(static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()), data(BookmarksModel::UrlRole).toUrl(), data(BookmarksModel::TitleRole).toString());
+	BookmarksItem *item = new BookmarksItem(static_cast<BookmarkType>(data(BookmarksModel::TypeRole).toInt()));
+	item->setData(data(BookmarksModel::UrlRole), BookmarksModel::UrlRole);
+	item->setData(data(BookmarksModel::TitleRole), BookmarksModel::TitleRole);
 	item->setData(data(BookmarksModel::DescriptionRole), BookmarksModel::DescriptionRole);
 	item->setData(data(BookmarksModel::KeywordRole), BookmarksModel::KeywordRole);
 	item->setData(data(BookmarksModel::TimeAddedRole), BookmarksModel::TimeAddedRole);
@@ -116,20 +133,25 @@ QVariant BookmarksItem::data(int role) const
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
 	m_mode(mode)
 {
-	appendRow(new BookmarksItem(BookmarksItem::RootBookmark, QUrl(), tr("Bookmarks")));
-	appendRow(new BookmarksItem(BookmarksItem::TrashBookmark, QUrl(), tr("Trash")));
+	BookmarksItem *rootItem = new BookmarksItem(BookmarksItem::RootBookmark);
+	rootItem->setData(((mode == NotesMode) ? tr("Notes") : tr("Bookmarks")), BookmarksModel::TitleRole);
+
+	BookmarksItem *trashItem = new BookmarksItem(BookmarksItem::TrashBookmark);
+	trashItem->setData(tr("Trash"), BookmarksModel::TitleRole);
+
+	appendRow(rootItem);
+	appendRow(trashItem);
 	setItemPrototype(new BookmarksItem(BookmarksItem::UnknownBookmark));
 
 	QFile file(path);
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
-		Console::addMessage(tr("Failed to open bookmarks file: %1").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(tr("Failed to open bookmarks file (%1): %2").arg(path).arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
 
-	BookmarksItem *rootItem = getRootItem();
 	QXmlStreamReader reader(file.readAll());
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("xbel") && reader.attributes().value(QLatin1String("version")).toString() == QLatin1String("1.0"))
@@ -466,7 +488,19 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 
 BookmarksItem* BookmarksModel::addBookmark(BookmarksItem::BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent)
 {
-	BookmarksItem *bookmark = new BookmarksItem(type, url, title);
+	BookmarksItem *bookmark = new BookmarksItem(type);
+
+	if (parent)
+	{
+		parent->appendRow(bookmark);
+	}
+	else
+	{
+		getRootItem()->appendRow(bookmark);
+	}
+
+	setData(bookmark->index(), url, BookmarksModel::UrlRole);
+	setData(bookmark->index(), title, BookmarksModel::TitleRole);
 
 	if (type != BookmarksItem::SeparatorBookmark && type != BookmarksItem::TrashBookmark && type != BookmarksItem::UnknownBookmark)
 	{
@@ -478,15 +512,6 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarksItem::BookmarkType type, qui
 		bookmark->setData(identifier, BookmarksModel::IdentifierRole);
 
 		m_identifiers[identifier] = bookmark;
-	}
-
-	if (parent)
-	{
-		parent->appendRow(bookmark);
-	}
-	else
-	{
-		getRootItem()->appendRow(bookmark);
 	}
 
 	return bookmark;
@@ -783,10 +808,12 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 	{
 		const QString title = value.toString().split(QLatin1Char('\n'), QString::SkipEmptyParts).first().left(100);
 
-		setData(index, ((title == value.toString().trimmed()) ? title : title + QLatin1String("…")), TitleRole);
+		setData(index, ((title == value.toString().trimmed()) ? title : title + QStringLiteral("…")), TitleRole);
 	}
 
-	return QStandardItemModel::setData(index, value, role);
+	bookmark->setItemData(value, role);
+
+	return true;
 }
 
 bool BookmarksModel::hasBookmark(const QUrl &url) const

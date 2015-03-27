@@ -34,6 +34,7 @@
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
+#include "../modules/windows/notes/NotesContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
 
@@ -406,6 +407,10 @@ void Window::setUrl(const QUrl &url, bool typed)
 		else if (url.path() == QLatin1String("history"))
 		{
 			newWidget = new HistoryContentsWidget(this);
+		}
+		else if (url.path() == QLatin1String("notes"))
+		{
+			newWidget = new NotesContentsWidget(this);
 		}
 		else if (url.path() == QLatin1String("transfers"))
 		{

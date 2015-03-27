@@ -46,7 +46,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		m_updateTimer = 0;
 
 		QList<QUrl> urls;
-		urls << QUrl(QLatin1String("about:bookmarks")) << QUrl(QLatin1String("about:cache")) << QUrl(QLatin1String("about:config")) << QUrl(QLatin1String("about:cookies")) << QUrl(QLatin1String("about:history")) << QUrl(QLatin1String("about:transfers"));
+		urls << QUrl(QLatin1String("about:bookmarks")) << QUrl(QLatin1String("about:cache")) << QUrl(QLatin1String("about:config")) << QUrl(QLatin1String("about:cookies")) << QUrl(QLatin1String("about:history")) << QUrl(QLatin1String("about:notes")) << QUrl(QLatin1String("about:transfers"));
 		urls << BookmarksManager::getUrls();
 
 		beginResetModel();

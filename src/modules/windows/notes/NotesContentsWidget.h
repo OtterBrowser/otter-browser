@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKSCONTENTSWIDGET_H
-#define OTTER_BOOKMARKSCONTENTSWIDGET_H
+#ifndef OTTER_NOTESCONTENTSWIDGET_H
+#define OTTER_NOTESCONTENTSWIDGET_H
 
-#include "../../../core/BookmarksManager.h"
+#include "../../../core/NotesManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
@@ -30,18 +30,18 @@ namespace Otter
 
 namespace Ui
 {
-	class BookmarksContentsWidget;
+	class NotesContentsWidget;
 }
 
 class Window;
 
-class BookmarksContentsWidget : public ContentsWidget
+class NotesContentsWidget : public ContentsWidget
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarksContentsWidget(Window *window);
-	~BookmarksContentsWidget();
+	explicit NotesContentsWidget(Window *window);
+	~NotesContentsWidget();
 
 	void print(QPrinter *printer);
 	Action* getAction(int identifier);
@@ -61,22 +61,22 @@ protected:
 
 protected slots:
 	void triggerAction();
-	void addBookmark();
+	void addNote();
 	void addFolder();
 	void addSeparator();
-	void removeBookmark();
-	void restoreBookmark();
-	void openBookmark(const QModelIndex &index = QModelIndex());
-	void bookmarkProperties();
+	void removeNote();
+	void restoreNote();
+	void openUrl(const QModelIndex &index = QModelIndex());
 	void emptyTrash();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
-	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
+	void updateText();
+	bool filterNotes(const QString &filter, QStandardItem *branch = NULL);
 
 private:
 	QHash<int, Action*> m_actions;
 	QHash<QStandardItem*, QPair<QModelIndex, int> > m_trash;
-	Ui::BookmarksContentsWidget *m_ui;
+	Ui::NotesContentsWidget *m_ui;
 };
 
 }

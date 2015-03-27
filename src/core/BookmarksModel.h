@@ -45,14 +45,16 @@ public:
 
 	~BookmarksItem();
 
+	void setData(const QVariant &value, int role);
+	void setItemData(const QVariant &value, int role);
 	BookmarksModel* getModel() const;
 	QStandardItem* clone() const;
 	QVariant data(int role) const;
 
 protected:
-	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
+	explicit BookmarksItem(BookmarkType type);
 
-	friend class BookmarksModel;
+friend class BookmarksModel;
 };
 
 class BookmarksModel : public QStandardItemModel

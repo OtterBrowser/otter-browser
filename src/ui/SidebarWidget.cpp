@@ -29,6 +29,7 @@
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
+#include "../modules/windows/notes/NotesContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
 
@@ -190,7 +191,6 @@ void SidebarWidget::openPanel()
 
 void SidebarWidget::registerPanel(const QString &identifier)
 {
-	QString title;
 	QIcon icon;
 
 	if (identifier == QLatin1String("bookmarks"))
@@ -212,6 +212,10 @@ void SidebarWidget::registerPanel(const QString &identifier)
 	else if (identifier == QLatin1String("history"))
 	{
 		icon  = Utils::getIcon(QLatin1String("view-history"));
+	}
+	else if (identifier == QLatin1String("notes"))
+	{
+		icon  = Utils::getIcon(QLatin1String("notes"));
 	}
 	else if (identifier == QLatin1String("transfers"))
 	{
@@ -265,7 +269,7 @@ void SidebarWidget::updatePanelsMenu()
 	QMenu *menu = new QMenu(m_ui->panelsChooseButton);
 	const QStringList chosenPanels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
 	QStringList allPanels;
-	allPanels << QLatin1String("bookmarks") << QLatin1String("history") << QLatin1String("transfers") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config");
+	allPanels << QLatin1String("bookmarks") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config") << QLatin1String("history") << QLatin1String("notes") << QLatin1String("transfers");
 
 	for (int i = 0; i < allPanels.count(); ++i)
 	{
@@ -354,6 +358,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	{
 		widget = new HistoryContentsWidget(NULL);
 	}
+	else if (identifier == QLatin1String("notes"))
+	{
+		widget = new NotesContentsWidget(NULL);
+	}
 	else if (identifier == QLatin1String("transfers"))
 	{
 		widget = new TransfersContentsWidget(NULL);
@@ -427,16 +435,6 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 		return tr("Bookmarks");
 	}
 
-	if (identifier == QLatin1String("history"))
-	{
-		return tr("History");
-	}
-
-	if (identifier == QLatin1String("transfers"))
-	{
-		return tr("Transfers");
-	}
-
 	if (identifier == QLatin1String("cache"))
 	{
 		return tr("Cache");
@@ -452,6 +450,21 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 		return tr("Configuration");
 	}
 
+	if (identifier == QLatin1String("history"))
+	{
+		return tr("History");
+	}
+
+	if (identifier == QLatin1String("notes"))
+	{
+		return tr("Notes");
+	}
+
+	if (identifier == QLatin1String("transfers"))
+	{
+		return tr("Transfers");
+	}
+
 	if (identifier.startsWith(QLatin1String("web:")))
 	{
 		return identifier.mid(4);
@@ -462,7 +475,7 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 
 QSize SidebarWidget::sizeHint() const
 {
-	if (SettingsManager::getValue("Sidebar/CurrentPanel").toString().isEmpty())
+	if (SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString().isEmpty())
 	{
 		return m_ui->buttonsLayout->sizeHint();
 	}

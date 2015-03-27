@@ -35,6 +35,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static NotesManager* getInstance();
 	static BookmarksModel* getModel();
+	static BookmarksItem* addNote(BookmarksItem::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 
 protected:
 	explicit NotesManager(QObject *parent = NULL);

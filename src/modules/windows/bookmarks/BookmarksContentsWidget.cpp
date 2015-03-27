@@ -19,7 +19,6 @@
 
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/BookmarksManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
@@ -30,9 +29,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMenu>
-#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -172,14 +169,6 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	}
 }
 
-void BookmarksContentsWidget::copyBookmarkLink()
-{
-	if (static_cast<BookmarksItem::BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksItem::UrlBookmark)
-	{
-		QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::UrlRole).toString());
-	}
-}
-
 void BookmarksContentsWidget::bookmarkProperties()
 {
 	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex()));
@@ -284,7 +273,10 @@ void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::CopyLinkToClipboardAction:
-			copyBookmarkLink();
+			if (static_cast<BookmarksItem::BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksItem::UrlBookmark)
+			{
+				QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::UrlRole).toString());
+			}
 
 			break;
 		default:
