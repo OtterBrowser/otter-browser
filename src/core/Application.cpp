@@ -23,6 +23,7 @@
 #include "Console.h"
 #include "HistoryManager.h"
 #include "NetworkManagerFactory.h"
+#include "NotesManager.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "Transfer.h"
@@ -185,11 +186,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	NetworkManagerFactory::createInstance(this);
 
+	AddonsManager::createInstance(this);
+
 	BookmarksManager::createInstance(this);
 
 	HistoryManager::createInstance(this);
 
-	AddonsManager::createInstance(this);
+	NotesManager::createInstance(this);
 
 	SearchesManager::createInstance(this);
 

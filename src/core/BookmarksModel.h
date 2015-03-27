@@ -74,7 +74,13 @@ public:
 		VisitsRole = (Qt::UserRole + 6)
 	};
 
-	explicit BookmarksModel(const QString &path, QObject *parent = NULL);
+	enum FormatMode
+	{
+		BookmarksMode = 0,
+		NotesMode = 1
+	};
+
+	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = NULL);
 
 	BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
@@ -106,6 +112,7 @@ private:
 	QHash<QUrl, QList<BookmarksItem*> > m_urls;
 	QHash<QString, BookmarksItem*> m_keywords;
 	QMap<quint64, BookmarksItem*> m_identifiers;
+	FormatMode m_mode;
 
 friend class BookmarksItem;
 };

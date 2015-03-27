@@ -113,7 +113,8 @@ QVariant BookmarksItem::data(int role) const
 	return QStandardItem::data(role);
 }
 
-BookmarksModel::BookmarksModel(const QString &path, QObject *parent) : QStandardItemModel(parent)
+BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
+	m_mode(mode)
 {
 	appendRow(new BookmarksItem(BookmarksItem::RootBookmark, QUrl(), tr("Bookmarks")));
 	appendRow(new BookmarksItem(BookmarksItem::TrashBookmark, QUrl(), tr("Trash")));
@@ -381,7 +382,7 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 				writer->writeTextElement(QLatin1String("desc"), bookmark->data(DescriptionRole).toString());
 			}
 
-			if (!bookmark->data(KeywordRole).toString().isEmpty())
+			if (m_mode == BookmarksMode && !bookmark->data(KeywordRole).toString().isEmpty())
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
@@ -418,19 +419,22 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 				writer->writeAttribute(QLatin1String("modified"), bookmark->data(TimeModifiedRole).toDateTime().toString(Qt::ISODate));
 			}
 
-			if (bookmark->data(TimeVisitedRole).toDateTime().isValid())
+			if (m_mode != NotesMode)
 			{
-				writer->writeAttribute(QLatin1String("visited"), bookmark->data(TimeVisitedRole).toDateTime().toString(Qt::ISODate));
-			}
+				if (bookmark->data(TimeVisitedRole).toDateTime().isValid())
+				{
+					writer->writeAttribute(QLatin1String("visited"), bookmark->data(TimeVisitedRole).toDateTime().toString(Qt::ISODate));
+				}
 
-			writer->writeTextElement(QLatin1String("title"), bookmark->data(TitleRole).toString());
+				writer->writeTextElement(QLatin1String("title"), bookmark->data(TitleRole).toString());
+			}
 
 			if (!bookmark->data(DescriptionRole).toString().isEmpty())
 			{
 				writer->writeTextElement(QLatin1String("desc"), bookmark->data(DescriptionRole).toString());
 			}
 
-			if (!bookmark->data(KeywordRole).toString().isEmpty() || bookmark->data(VisitsRole).toInt() > 0)
+			if (m_mode == BookmarksMode && (!bookmark->data(KeywordRole).toString().isEmpty() || bookmark->data(VisitsRole).toInt() > 0))
 			{
 				writer->writeStartElement(QLatin1String("info"));
 				writer->writeStartElement(QLatin1String("metadata"));
@@ -774,6 +778,12 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 		{
 			m_keywords[newKeyword] = bookmark;
 		}
+	}
+	else if (m_mode == NotesMode && role == DescriptionRole)
+	{
+		const QString title = value.toString().split(QLatin1Char('\n'), QString::SkipEmptyParts).first().left(100);
+
+		setData(index, ((title == value.toString().trimmed()) ? title : title + QLatin1String("…")), TitleRole);
 	}
 
 	return QStandardItemModel::setData(index, value, role);
