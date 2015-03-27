@@ -19,7 +19,7 @@
 
 #include "BookmarksContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/BookmarksModel.h"
+#include "../../../core/BookmarksManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
@@ -86,8 +86,8 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark);
-	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
+	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
+	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -97,8 +97,8 @@ void BookmarksContentsWidget::addBookmark()
 
 void BookmarksContentsWidget::addFolder()
 {
-	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::FolderBookmark);
-	BookmarkPropertiesDialog dialog(bookmark, findFolder(m_ui->bookmarksView->currentIndex()), this);
+	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
+	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -108,7 +108,7 @@ void BookmarksContentsWidget::addFolder()
 
 void BookmarksContentsWidget::addSeparator()
 {
-	findFolder(m_ui->bookmarksView->currentIndex())->appendRow(new BookmarksItem(BookmarksItem::SeparatorBookmark));
+	BookmarksManager::addBookmark(BookmarksItem::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
 }
 
 void BookmarksContentsWidget::removeBookmark()
@@ -186,9 +186,7 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 	if (bookmark)
 	{
-		BookmarkPropertiesDialog dialog(bookmark, NULL, this);
-		dialog.setReadOnly(isInTrash(bookmark->index()));
-		dialog.exec();
+		BookmarkPropertiesDialog(bookmark, (isInTrash(bookmark->index()) ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
 
 		updateActions();
 	}
@@ -354,9 +352,9 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 	return action;
 }
 
-QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
+BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
-	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(index);
+	BookmarksItem *item = BookmarksManager::getModel()->bookmarkFromIndex(index);
 
 	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
 	{
@@ -365,7 +363,7 @@ QStandardItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 
 	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
 
-	return ((type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark) ? item : item->parent());
+	return ((type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark) ? item : dynamic_cast<BookmarksItem*>(item->parent()));
 }
 
 QString BookmarksContentsWidget::getTitle() const

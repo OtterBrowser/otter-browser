@@ -23,7 +23,6 @@
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SessionsManager.h"
 #include "../core/Utils.h"

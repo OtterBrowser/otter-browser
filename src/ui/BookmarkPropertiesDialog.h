@@ -41,10 +41,15 @@ class BookmarkPropertiesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QStandardItem *folder = NULL, QWidget *parent = NULL);
-	~BookmarkPropertiesDialog();
+	enum BookmarkMode
+	{
+		AddBookmarkMode = 0,
+		EditBookmarkMode = 1,
+		ViewBookmarkMode = 2
+	};
 
-	void setReadOnly(bool readOnly);
+	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode = EditBookmarkMode, QWidget *parent = NULL);
+	~BookmarkPropertiesDialog();
 
 protected:
 	void changeEvent(QEvent *event);

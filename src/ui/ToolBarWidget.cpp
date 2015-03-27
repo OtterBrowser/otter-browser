@@ -34,7 +34,6 @@
 #include "toolbars/StatusMessageWidget.h"
 #include "toolbars/ZoomWidget.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 

@@ -20,7 +20,7 @@
 
 #include "WindowsManager.h"
 #include "Application.h"
-#include "BookmarksModel.h"
+#include "BookmarksManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
 #include "../ui/ContentsWidget.h"

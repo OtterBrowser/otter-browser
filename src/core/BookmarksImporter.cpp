@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 #include "BookmarksImporter.h"
 #include "BookmarksManager.h"
-#include "BookmarksModel.h"
 
 namespace Otter
 {
@@ -41,9 +40,10 @@ void BookmarksImporter::goToParent()
 
 	if (m_currentFolder)
 	{
-		m_currentFolder = m_currentFolder->parent();
+		m_currentFolder = dynamic_cast<BookmarksItem*>(m_currentFolder->parent());
 	}
-	else
+
+	if (!m_currentFolder)
 	{
 		m_currentFolder = BookmarksManager::getModel()->getRootItem();
 	}
@@ -59,18 +59,18 @@ void BookmarksImporter::setAllowDuplicates(bool allow)
 	m_allowDuplicates = allow;
 }
 
-void BookmarksImporter::setCurrentFolder(QStandardItem *folder)
+void BookmarksImporter::setCurrentFolder(BookmarksItem *folder)
 {
 	m_currentFolder = folder;
 }
 
-void BookmarksImporter::setImportFolder(QStandardItem *folder)
+void BookmarksImporter::setImportFolder(BookmarksItem *folder)
 {
 	m_importFolder = folder;
 	m_currentFolder = folder;
 }
 
-QStandardItem *BookmarksImporter::getCurrentFolder()
+BookmarksItem* BookmarksImporter::getCurrentFolder() const
 {
 	return m_currentFolder;
 }

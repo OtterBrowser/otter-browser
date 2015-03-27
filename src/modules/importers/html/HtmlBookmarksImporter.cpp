@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "HtmlBookmarksImporter.h"
-#include "../../../core/BookmarksModel.h"
+#include "../../../core/BookmarksManager.h"
 
 #include <QtCore/QDir>
 //TODO QtWebKit should not be used directly
@@ -53,15 +53,13 @@ void HtmlBookmarksImporter::handleOptions()
 		return;
 	}
 
-	if (m_optionsWidget->removeExisting())
+	if (m_optionsWidget->hasToRemoveExisting())
 	{
 		removeAllBookmarks();
 
-		if (m_optionsWidget->importIntoSubfolder())
+		if (m_optionsWidget->isImportingIntoSubfolder())
 		{
-			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), m_optionsWidget->getSubfolderName());
-
-			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
+			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
 
 			setImportFolder(folder);
 		}
@@ -73,7 +71,7 @@ void HtmlBookmarksImporter::handleOptions()
 	else
 	{
 		setAllowDuplicates(m_optionsWidget->allowDuplicates());
-		setImportFolder(m_optionsWidget->targetFolder());
+		setImportFolder(m_optionsWidget->getTargetFolder());
 	}
 }
 
@@ -81,7 +79,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	if (element.tagName().toLower() == QLatin1String("h3"))
 	{
-		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), element.toPlainText());
+		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), element.toPlainText(), getCurrentFolder());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))
@@ -97,7 +95,6 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			bookmark->setData(time, BookmarksModel::TimeModifiedRole);
 		}
 
-		getCurrentFolder()->appendRow(bookmark);;
 		setCurrentFolder(bookmark);
 	}
 	else if (element.tagName().toLower() == QLatin1String("a"))
@@ -109,7 +106,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			return;
 		}
 
-		BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, url, element.toPlainText());
+		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, url, element.toPlainText(), getCurrentFolder());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))
@@ -136,12 +133,10 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 		{
 			bookmark->setData(QDateTime::fromTime_t(element.attribute(QLatin1String("LAST_VISITED")).toUInt()), BookmarksModel::TimeVisitedRole);
 		}
-
-		getCurrentFolder()->appendRow(bookmark);
 	}
 	else if (element.tagName().toLower() == QLatin1String("hr"))
 	{
-		getCurrentFolder()->appendRow(new BookmarksItem(BookmarksItem::SeparatorBookmark));
+		BookmarksManager::addBookmark(BookmarksItem::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
 	}
 
 	const QWebElementCollection descendants = element.findAll(QLatin1String("*"));

@@ -33,7 +33,6 @@
 #include "preferences/ShortcutsProfileDialog.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/PlatformIntegration.h"
 #include "../core/SettingsManager.h"

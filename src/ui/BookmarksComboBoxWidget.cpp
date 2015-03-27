@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #include "BookmarksComboBoxWidget.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QInputDialog>
@@ -47,15 +46,10 @@ void BookmarksComboBoxWidget::createFolder()
 {
 	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
 
-	if (title.isEmpty())
+	if (!title.isEmpty())
 	{
-		return;
+		setCurrentFolder(BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
 	}
-
-	BookmarksItem *item = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), title);
-
-	getCurrentFolder()->appendRow(item);
-	setCurrentFolder(item->index());
 }
 
 void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
@@ -97,16 +91,11 @@ void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
 	setRootModelIndex(QModelIndex());
 }
 
-QStandardItem* BookmarksComboBoxWidget::getCurrentFolder()
+BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
-	QStandardItem *item = BookmarksManager::getModel()->itemFromIndex(m_index);
+	BookmarksItem *item = BookmarksManager::getModel()->bookmarkFromIndex(m_index);
 
-	if (item)
-	{
-		return item;
-	}
-
-	return BookmarksManager::getModel()->getRootItem();
+	return (item ? item :BookmarksManager::getModel()->getRootItem());
 }
 
 bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)

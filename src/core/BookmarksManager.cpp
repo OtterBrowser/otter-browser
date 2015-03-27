@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "BookmarksManager.h"
-#include "BookmarksModel.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QDateTime>
@@ -70,11 +69,16 @@ void BookmarksManager::scheduleSave()
 
 void BookmarksManager::updateVisits(const QUrl &url)
 {
-	const QUrl adjustedUrl = BookmarksItem::adjustUrl(url);
-
-	if (BookmarksItem::hasBookmark(adjustedUrl))
+	if (!m_model)
 	{
-		const QList<BookmarksItem*> bookmarks = BookmarksItem::getBookmarks(adjustedUrl);
+		getModel();
+	}
+
+	const QUrl adjustedUrl = BookmarksModel::adjustUrl(url);
+
+	if (m_model->hasBookmark(adjustedUrl))
+	{
+		const QList<BookmarksItem*> bookmarks = m_model->getBookmarks(adjustedUrl);
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
@@ -84,16 +88,21 @@ void BookmarksManager::updateVisits(const QUrl &url)
 	}
 }
 
-void BookmarksManager::deleteBookmark(const QUrl &url)
+void BookmarksManager::removeBookmark(const QUrl &url)
 {
-	const QUrl adjustedUrl = BookmarksItem::adjustUrl(url);
+	if (!m_model)
+	{
+		getModel();
+	}
+
+	const QUrl adjustedUrl = BookmarksModel::adjustUrl(url);
 
 	if (!hasBookmark(adjustedUrl))
 	{
 		return;
 	}
 
-	const QList<QStandardItem*> items = m_model->findUrls(adjustedUrl);
+	const QList<BookmarksItem*> items = m_model->findUrls(adjustedUrl);
 
 	for (int i = 0; i < items.count(); ++i)
 	{
@@ -123,6 +132,16 @@ BookmarksModel* BookmarksManager::getModel()
 	return m_model;
 }
 
+BookmarksItem* BookmarksManager::addBookmark(BookmarksItem::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
+{
+	if (!m_model)
+	{
+		getModel();
+	}
+
+	return m_model->addBookmark(type, 0, url, title, parent);
+}
+
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 {
 	if (!m_model)
@@ -130,7 +149,7 @@ BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)
 		getModel();
 	}
 
-	return BookmarksItem::getBookmark(keyword);
+	return m_model->getBookmark(keyword);
 }
 
 BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
@@ -145,7 +164,7 @@ BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
 		return m_model->getRootItem();
 	}
 
-	return BookmarksItem::getBookmark(identifier);
+	return m_model->getBookmark(identifier);
 }
 
 QStringList BookmarksManager::getKeywords()
@@ -155,7 +174,7 @@ QStringList BookmarksManager::getKeywords()
 		getModel();
 	}
 
-	return BookmarksItem::getKeywords();
+	return m_model->getKeywords();
 }
 
 QList<QUrl> BookmarksManager::getUrls()
@@ -165,7 +184,7 @@ QList<QUrl> BookmarksManager::getUrls()
 		getModel();
 	}
 
-	return BookmarksItem::getUrls();
+	return m_model->getUrls();
 }
 
 bool BookmarksManager::hasBookmark(const QUrl &url)
@@ -175,7 +194,7 @@ bool BookmarksManager::hasBookmark(const QUrl &url)
 		getModel();
 	}
 
-	return BookmarksItem::hasUrl(url);
+	return m_model->hasUrl(url);
 }
 
 bool BookmarksManager::hasKeyword(const QString &keyword)
@@ -185,7 +204,7 @@ bool BookmarksManager::hasKeyword(const QString &keyword)
 		getModel();
 	}
 
-	return BookmarksItem::hasKeyword(keyword);
+	return m_model->hasKeyword(keyword);
 }
 
 }

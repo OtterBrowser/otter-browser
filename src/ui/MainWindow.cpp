@@ -39,7 +39,6 @@
 #include "../core/AddonsManager.h"
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
-#include "../core/BookmarksModel.h"
 #include "../core/HistoryManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
@@ -642,10 +641,10 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 		return;
 	}
 
-	BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
+	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
 	bookmark->setData(description, BookmarksModel::DescriptionRole);
 
-	BookmarkPropertiesDialog dialog(bookmark, NULL, this);
+	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{

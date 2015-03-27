@@ -26,7 +26,6 @@
 #include "../Window.h"
 #include "../../core/AddressCompletionModel.h"
 #include "../../core/BookmarksManager.h"
-#include "../../core/BookmarksModel.h"
 #include "../../core/InputInterpreter.h"
 #include "../../core/SearchesManager.h"
 #include "../../core/Utils.h"
@@ -526,12 +525,12 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (BookmarksManager::hasBookmark(url))
 				{
-					BookmarksManager::deleteBookmark(url);
+					BookmarksManager::removeBookmark(url);
 				}
 				else
 				{
-					BookmarksItem *bookmark = new BookmarksItem(BookmarksItem::UrlBookmark, 0, url.adjusted(QUrl::RemovePassword), m_window->getTitle());
-					BookmarkPropertiesDialog dialog(bookmark, NULL, this);
+					BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, url.adjusted(QUrl::RemovePassword), m_window->getTitle());
+					BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{

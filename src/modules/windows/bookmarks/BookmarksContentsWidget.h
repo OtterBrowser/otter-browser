@@ -56,7 +56,7 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	QStandardItem* findFolder(const QModelIndex &index);
+	BookmarksItem* findFolder(const QModelIndex &index);
 	bool isInTrash(const QModelIndex &index) const;
 
 protected slots:

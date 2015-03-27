@@ -21,13 +21,12 @@
 #ifndef OTTER_BOOKMARKSMANAGER_H
 #define OTTER_BOOKMARKSMANAGER_H
 
+#include "BookmarksModel.h"
+
 #include <QtCore/QObject>
 
 namespace Otter
 {
-
-class BookmarksItem;
-class BookmarksModel;
 
 class BookmarksManager : public QObject
 {
@@ -36,9 +35,10 @@ class BookmarksManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisits(const QUrl &url);
-	static void deleteBookmark(const QUrl &url);
+	static void removeBookmark(const QUrl &url);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
+	static BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static QStringList getKeywords();

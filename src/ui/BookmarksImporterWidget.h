@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +23,6 @@
 
 #include "../core/BookmarksManager.h"
 
-#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -38,14 +38,14 @@ class BookmarksImporterWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit BookmarksImporterWidget(QWidget *parent = 0);
+	explicit BookmarksImporterWidget(QWidget *parent = NULL);
 	~BookmarksImporterWidget();
 
-	QStandardItem* targetFolder();
-	QString getSubfolderName();
-	bool allowDuplicates();
-	bool importIntoSubfolder();
-	bool removeExisting();
+	BookmarksItem *getTargetFolder() const;
+	QString getSubfolderName() const;
+	bool allowDuplicates() const;
+	bool isImportingIntoSubfolder() const;
+	bool hasToRemoveExisting() const;
 
 protected slots:
 	void removeStateChanged(bool checked);

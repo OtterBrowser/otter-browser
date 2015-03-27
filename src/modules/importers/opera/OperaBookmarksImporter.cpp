@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "OperaBookmarksImporter.h"
-#include "../../../core/BookmarksModel.h"
+#include "../../../core/BookmarksManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
@@ -51,15 +51,13 @@ void OperaBookmarksImporter::handleOptions()
 		return;
 	}
 
-	if (m_optionsWidget->removeExisting())
+	if (m_optionsWidget->hasToRemoveExisting())
 	{
 		removeAllBookmarks();
 
-		if (m_optionsWidget->importIntoSubfolder())
+		if (m_optionsWidget->isImportingIntoSubfolder())
 		{
-			BookmarksItem *folder = new BookmarksItem(BookmarksItem::FolderBookmark, 0, QUrl(), m_optionsWidget->getSubfolderName());
-
-			BookmarksManager::getModel()->getRootItem()->appendRow(folder);
+			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName(), BookmarksManager::getModel()->getRootItem());
 
 			setImportFolder(folder);
 		}
@@ -71,7 +69,7 @@ void OperaBookmarksImporter::handleOptions()
 	else
 	{
 		setAllowDuplicates(m_optionsWidget->allowDuplicates());
-		setImportFolder(m_optionsWidget->targetFolder());
+		setImportFolder(m_optionsWidget->getTargetFolder());
 	}
 }
 
@@ -146,17 +144,17 @@ bool OperaBookmarksImporter::import()
 
 		if (line.startsWith(QLatin1String("#URL")))
 		{
-			bookmark = new BookmarksItem(BookmarksItem::UrlBookmark);
+			bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, QUrl(), QString(), getCurrentFolder());
 			type = UrlEntry;
 		}
 		else if (line.startsWith(QLatin1String("#FOLDER")))
 		{
-			bookmark = new BookmarksItem(BookmarksItem::FolderBookmark);
+			bookmark = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), QString(), getCurrentFolder());
 			type = FolderStartEntry;
 		}
 		else if (line.startsWith(QLatin1String("#SEPERATOR")))
 		{
-			bookmark = new BookmarksItem(BookmarksItem::SeparatorBookmark);
+			bookmark = BookmarksManager::addBookmark(BookmarksItem::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
 			type = SeparatorEntry;
 		}
 		else if (line == QLatin1String("-"))
@@ -207,8 +205,6 @@ bool OperaBookmarksImporter::import()
 		{
 			if (bookmark)
 			{
-				getCurrentFolder()->appendRow(bookmark);
-
 				if (type == FolderStartEntry)
 				{
 					setCurrentFolder(bookmark);

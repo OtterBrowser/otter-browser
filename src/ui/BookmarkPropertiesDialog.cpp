@@ -20,7 +20,7 @@
 
 #include "BookmarkPropertiesDialog.h"
 #include "BookmarksComboBoxWidget.h"
-#include "../core/BookmarksModel.h"
+#include "../core/BookmarksManager.h"
 #include "../core/Utils.h"
 
 #include "ui_BookmarkPropertiesDialog.h"
@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QStandardItem *folder, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode, QWidget *parent) : QDialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::BookmarkPropertiesDialog)
@@ -39,6 +39,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QSta
 	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->setupUi(this);
+	m_ui->folderComboBox->setCurrentFolder((bookmark->parent() ? bookmark->parent() : BookmarksManager::getModel()->getRootItem())->index());
 	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
 	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	m_ui->addressLineEdit->setVisible(type == BookmarksItem::UrlBookmark);
@@ -47,16 +48,6 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QSta
 	m_ui->keywordLineEdit->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
 	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? m_bookmark->data(BookmarksModel::TitleRole).toDateTime().toString() : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString() : tr("Unknown"));
-
-	if (!folder)
-	{
-		folder = bookmark->parent();
-	}
-
-	if (folder)
-	{
-		m_ui->folderComboBox->setCurrentFolder(folder->index());
-	}
 
 	if (type == BookmarksItem::UrlBookmark)
 	{
@@ -71,11 +62,11 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QSta
 		m_ui->lastVisitLabelWidget->hide();
 	}
 
-	if (bookmark->parent())
+	if (mode == EditBookmarkMode)
 	{
 		setWindowTitle(tr("Edit Bookmark"));
 	}
-	else
+	else if (mode == AddBookmarkMode)
 	{
 		setWindowTitle(tr("Add Bookmark"));
 
@@ -87,6 +78,18 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QSta
 		m_ui->addedLabelWidget->hide();
 		m_ui->modifiedLabel->hide();
 		m_ui->modifiedLabelWidget->hide();
+	}
+	else
+	{
+		setWindowTitle(tr("View Bookmark"));
+
+		m_ui->folderComboBox->setEnabled(false);
+		m_ui->newFolderButton->setEnabled(false);
+		m_ui->titleLineEdit->setEnabled(false);
+		m_ui->addressLineEdit->setEnabled(false);
+		m_ui->addressLabel->setEnabled(false);
+		m_ui->descriptionTextEdit->setEnabled(false);
+		m_ui->keywordLineEdit->setEnabled(false);
 	}
 
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
@@ -112,17 +115,6 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 		default:
 			break;
 	}
-}
-
-void BookmarkPropertiesDialog::setReadOnly(bool readOnly)
-{
-	m_ui->folderComboBox->setEnabled(!readOnly);
-	m_ui->newFolderButton->setEnabled(!readOnly);
-	m_ui->titleLineEdit->setEnabled(!readOnly);
-	m_ui->addressLineEdit->setEnabled(!readOnly);
-	m_ui->addressLabel->setEnabled(!readOnly);
-	m_ui->descriptionTextEdit->setEnabled(!readOnly);
-	m_ui->keywordLineEdit->setEnabled(!readOnly);
 }
 
 void BookmarkPropertiesDialog::saveBookmark()

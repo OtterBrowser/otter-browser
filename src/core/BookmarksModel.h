@@ -20,8 +20,6 @@
 #ifndef OTTER_BOOKMARKSMODEL_H
 #define OTTER_BOOKMARKSMODEL_H
 
-#include "BookmarksManager.h"
-
 #include <QtCore/QUrl>
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/QXmlStreamWriter>
@@ -29,6 +27,8 @@
 
 namespace Otter
 {
+
+class BookmarksModel;
 
 class BookmarksItem : public QStandardItem
 {
@@ -43,31 +43,16 @@ public:
 		SeparatorBookmark = 5
 	};
 
-	explicit BookmarksItem(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString());
 	~BookmarksItem();
 
-	void setData(const QVariant &value, int role);
+	BookmarksModel* getModel() const;
 	QStandardItem* clone() const;
 	QVariant data(int role) const;
 
 protected:
-	static BookmarksItem* getBookmark(const QString &keyword);
-	static BookmarksItem* getBookmark(quint64 identifier);
-	static QUrl adjustUrl(QUrl url);
-	static QStringList getKeywords();
-	static QList<BookmarksItem*> getBookmarks(const QUrl &url);
-	static QList<QUrl> getUrls();
-	static bool hasBookmark(const QUrl &url);
-	static bool hasKeyword(const QString &keyword);
-	static bool hasUrl(const QUrl &url);
+	explicit BookmarksItem(BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString());
 
-private:
-	static QHash<QUrl, QList<BookmarksItem*> > m_urls;
-	static QHash<QString, BookmarksItem*> m_keywords;
-	static QMap<quint64, BookmarksItem*> m_identifiers;
-
-	friend class BookmarksManager;
-	friend class BookmarkPropertiesDialog;
+	friend class BookmarksModel;
 };
 
 class BookmarksModel : public QStandardItemModel
@@ -91,18 +76,38 @@ public:
 
 	explicit BookmarksModel(const QString &path, QObject *parent = NULL);
 
+	BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
+	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
+	BookmarksItem* getBookmark(const QString &keyword) const;
+	BookmarksItem* getBookmark(quint64 identifier) const;
+	BookmarksItem* getRootItem() const;
+	BookmarksItem* getTrashItem() const;
+	BookmarksItem* getItem(const QString &path) const;
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
-	BookmarksItem* getRootItem();
-	BookmarksItem* getTrashItem();
-	BookmarksItem* getItem(const QString &path);
 	QStringList mimeTypes() const;
-	QList<QStandardItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL);
+	QStringList getKeywords() const;
+	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
+	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
+	QList<QUrl> getUrls() const;
+	static QUrl adjustUrl(QUrl url);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
-	bool save(const QString &path);
+	bool save(const QString &path) const;
+	bool setData(const QModelIndex &index, const QVariant &value, int role);
+	bool hasBookmark(const QUrl &url) const;
+	bool hasKeyword(const QString &keyword) const;
+	bool hasUrl(const QUrl &url) const;
 
 protected:
-	void readBookmark(QXmlStreamReader *reader, QStandardItem *parent);
-	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark);
+	void removeBookmark(BookmarksItem *bookmark);
+	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
+	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark) const;
+
+private:
+	QHash<QUrl, QList<BookmarksItem*> > m_urls;
+	QHash<QString, BookmarksItem*> m_keywords;
+	QMap<quint64, BookmarksItem*> m_identifiers;
+
+friend class BookmarksItem;
 };
 
 }

@@ -20,7 +20,7 @@
 #include "BookmarkWidget.h"
 #include "../MainWindow.h"
 #include "../Menu.h"
-#include "../../core/BookmarksModel.h"
+#include "../../core/BookmarksManager.h"
 #include "../../core/Utils.h"
 #include "../../core/WindowsManager.h"
 
