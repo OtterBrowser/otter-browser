@@ -242,7 +242,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 		return;
 	}
 
-	emit messageChanged(tr("Receiving data from %1…").arg(reply->url().host()));
+	emit messageChanged(tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
 
 	const qint64 difference = (bytesReceived - m_replies[reply].first);
 
@@ -281,7 +281,7 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 
 	if (reply)
 	{
-		emit messageChanged(tr("Completed request to %1").arg(reply->url().host()));
+		emit messageChanged(tr("Completed request to %1").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
 
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 	}
