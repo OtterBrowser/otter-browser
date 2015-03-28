@@ -40,6 +40,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOption>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -646,6 +647,7 @@ void TabBarWidget::updateButtons()
 		if (label)
 		{
 			const bool isPinned = getTabProperty(i, QLatin1String("isPinned"), false).toBool();
+			const bool wasPinned = label->property("isPinned").toBool();
 
 			if (!label->buddy())
 			{
@@ -657,25 +659,28 @@ void TabBarWidget::updateButtons()
 				}
 			}
 
-			if (isPinned && (!label->toolTip().isEmpty() || !label->pixmap()))
+			if (isPinned != wasPinned || !label->pixmap())
 			{
-				label->setPixmap(Utils::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
-				label->setToolTip(QString());
-			}
-			else if (!isPinned && label->toolTip().isEmpty())
-			{
-				QStyleOption option;
-				option.rect = QRect(0, 0, 16, 16);
+				label->setProperty("isPinned", isPinned);
 
-				QPixmap pixmap(16, 16);
-				pixmap.fill(Qt::transparent);
+				if (isPinned)
+				{
+					label->setPixmap(Utils::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
+				}
+				else
+				{
+					QStyleOption option;
+					option.rect = QRect(0, 0, 16, 16);
 
-				QPainter painter(&pixmap);
+					QPixmap pixmap(16, 16);
+					pixmap.fill(Qt::transparent);
 
-				style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
+					QPainter painter(&pixmap);
 
-				label->setPixmap(pixmap);
-				label->setToolTip(tr("Close Tab"));
+					style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
+
+					label->setPixmap(pixmap);
+				}
 			}
 
 			label->setVisible((!isNarrow || (i == currentIndex())) && (isVertical || !isPinned));
@@ -866,11 +871,32 @@ int TabBarWidget::getPinnedTabsAmount() const
 
 bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress)
+	if (event->type() == QEvent::Enter && !object->property("isPinned").toBool())
+	{
+		hidePreview();
+	}
+	else if (event->type() == QEvent::Leave)
+	{
+		m_previewTimer = startTimer(250);
+	}
+	else if (event->type() == QEvent::ToolTip)
+	{
+		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
+
+		if (helpEvent && !object->property("isPinned").toBool())
+		{
+			const QList<QKeySequence> shortcuts = ActionsManager::getAction(Action::CloseTabAction, this)->getShortcuts();
+
+			QToolTip::showText(helpEvent->globalPos(), tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+		}
+
+		return true;
+	}
+	else if (event->type() == QEvent::MouseButtonPress && !object->property("isPinned").toBool())
 	{
 		return true;
 	}
-	else if (event->type() == QEvent::MouseButtonRelease)
+	else if (event->type() == QEvent::MouseButtonRelease && !object->property("isPinned").toBool())
 	{
 		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
 		QLabel *label = qobject_cast<QLabel*>(object);
@@ -886,14 +912,6 @@ bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 		}
-	}
-	else if (event->type() == QEvent::Enter)
-	{
-		hidePreview();
-	}
-	else if (event->type() == QEvent::Leave)
-	{
-		m_previewTimer = startTimer(250);
 	}
 
 	return QTabBar::eventFilter(object, event);
