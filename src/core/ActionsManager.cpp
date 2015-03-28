@@ -215,7 +215,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 
 	toolBarDefinitions = loadToolBars(QLatin1String(":/other/toolBars.json"), true);
 
-	const QString customToolBarsPath = SessionsManager::getProfilePath() + QLatin1String("/toolBars.json");
+	const QString customToolBarsPath = SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"));
 
 	if (QFile::exists(customToolBarsPath))
 	{
@@ -555,8 +555,7 @@ void ActionsManager::loadShortcuts()
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini");
-		const QSettings profile((QFile::exists(path) ? path : QLatin1String(":/keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		const QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
 		const QStringList rawActions = profile.childGroups();
 
 		for (int j = 0; j < rawActions.count(); ++j)

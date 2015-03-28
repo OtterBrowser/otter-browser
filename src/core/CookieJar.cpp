@@ -41,7 +41,7 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 		return;
 	}
 
-	QFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")));
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -131,7 +131,7 @@ void CookieJar::scheduleSave()
 
 void CookieJar::save()
 {
-	QSaveFile file(SessionsManager::getProfilePath() + QLatin1String("/cookies.dat"));
+	QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{

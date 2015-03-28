@@ -44,7 +44,7 @@ void BookmarksManager::timerEvent(QTimerEvent *event)
 
 		if (m_model)
 		{
-			m_model->save(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"));
+			m_model->save(SessionsManager::getWritableDataPath("bookmarks.xbel"));
 		}
 	}
 }
@@ -119,7 +119,7 @@ BookmarksModel* BookmarksManager::getModel()
 {
 	if (!m_model && m_instance)
 	{
-		m_model = new BookmarksModel(SessionsManager::getProfilePath() + QLatin1String("/bookmarks.xbel"), BookmarksModel::BookmarksMode, m_instance);
+		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), BookmarksModel::BookmarksMode, m_instance);
 
 		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
 		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));

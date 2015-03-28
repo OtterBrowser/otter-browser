@@ -63,8 +63,7 @@ NotificationLevel Notification::getLevel() const
 Notification* Notification::createNotification(const QString &event, const QString &message, NotificationLevel level, QObject *parent )
 {
 	Notification *notification = new Notification(message, level, Application::getInstance());
-	const QString notificationsPath = (SessionsManager::getProfilePath() + QLatin1String("/notifications.ini"));
-	QSettings notificationSettings(QFile::exists(notificationsPath) ? notificationsPath : QLatin1String(":/schemas/notifications.ini"));
+	QSettings notificationSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	const QString playSound = notificationSettings.value(event + QLatin1String("/playSound"), QString()).toString();
 
 	if (!playSound.isEmpty())

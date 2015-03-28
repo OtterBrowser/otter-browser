@@ -65,8 +65,7 @@ void GesturesManager::loadProfiles()
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/gestures/") + gestureProfiles.at(i) + QLatin1String(".ini");
-		QSettings profile((QFile::exists(path) ? path : QLatin1String(":/gestures/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("gestures/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
 		const QStringList contexts = profile.childGroups();
 
 		for (int j = 0; j < contexts.count(); ++j)

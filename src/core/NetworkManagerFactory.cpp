@@ -178,8 +178,7 @@ void NetworkManagerFactory::clearCache(int period)
 
 void NetworkManagerFactory::loadUserAgents()
 {
-	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"));
-	const QSettings settings((QFile::exists(path) ? path : QLatin1String(":/other/userAgents.ini")), QSettings::IniFormat);
+	const QSettings settings(SessionsManager::getReadableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
 	const QStringList userAgentsOrder = settings.childGroups();
 	QMap<QString, UserAgentInformation> userAgents;
 

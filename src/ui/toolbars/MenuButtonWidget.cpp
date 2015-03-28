@@ -78,11 +78,10 @@ void MenuButtonWidget::updateMenu()
 {
 	disconnect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 
-	const QString menuButtonPath = (SessionsManager::getProfilePath() + QLatin1String("/menuButton.json"));
-	QFile menuBarFile(QFile::exists(menuButtonPath) ? menuButtonPath : QLatin1String(":/other/menuButton.json"));
-	menuBarFile.open(QFile::ReadOnly);
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("menuButton.json")));
+	file.open(QFile::ReadOnly);
 
-	m_menu->load(QJsonDocument::fromJson(menuBarFile.readAll()).object());
+	m_menu->load(QJsonDocument::fromJson(file.readAll()).object());
 }
 
 }

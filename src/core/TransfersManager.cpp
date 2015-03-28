@@ -101,7 +101,7 @@ void TransfersManager::save()
 		return;
 	}
 
-	QSettings history(SessionsManager::getProfilePath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
+	QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
 	history.clear();
 
 	const int limit = SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt();
@@ -310,7 +310,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 {
 	if (!m_initilized)
 	{
-		QSettings history(SessionsManager::getProfilePath() + QLatin1String("/transfers.ini"), QSettings::IniFormat);
+		QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
 		const QStringList entries = history.childGroups();
 
 		m_transfers.reserve(entries.count());

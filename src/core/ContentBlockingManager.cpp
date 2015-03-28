@@ -48,7 +48,7 @@ void ContentBlockingManager::createInstance(QObject *parent)
 
 void ContentBlockingManager::loadProfiles()
 {
-	const QString contentBlockingPath = SessionsManager::getProfilePath() + QLatin1String("/blocking/");
+	const QString contentBlockingPath = SessionsManager::getWritableDataPath(QLatin1String("blocking"));
 	const QDir directory(contentBlockingPath);
 
 	if (!directory.exists())

@@ -51,7 +51,7 @@ void NotesManager::timerEvent(QTimerEvent *event)
 
 		if (m_model)
 		{
-			m_model->save(SessionsManager::getProfilePath() + QLatin1String("/notes.xbel"));
+			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("notes.xbel")));
 		}
 	}
 }
@@ -75,7 +75,7 @@ BookmarksModel* NotesManager::getModel()
 {
 	if (!m_model && m_instance)
 	{
-		m_model = new BookmarksModel(SessionsManager::getProfilePath() + QLatin1String("/notes.xbel"), BookmarksModel::NotesMode, m_instance);
+		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("notes.xbel")), BookmarksModel::NotesMode, m_instance);
 
 		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
 		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));

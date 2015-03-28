@@ -152,12 +152,12 @@ void HistoryManager::clearHistory(int period)
 	if (period > 0 && !database.isValid())
 	{
 		database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
-		database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
+		database.setDatabaseName(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.sqlite")));
 		database.open();
 		database.exec(QStringLiteral("PRAGMA journal_mode = %1;").arg(SettingsManager::getValue(QLatin1String("Browser/SqliteJournalMode")).toString()));
 	}
 
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite");
+	const QString path = SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.sqlite"));
 
 	if (database.isValid())
 	{
@@ -193,7 +193,7 @@ void HistoryManager::optionChanged(const QString &option)
 		if (enabled && !m_isEnabled)
 		{
 			QSqlDatabase database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"), QLatin1String("browsingHistory"));
-			database.setDatabaseName(SessionsManager::getProfilePath() + QLatin1String("/browsingHistory.sqlite"));
+			database.setDatabaseName(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.sqlite")));
 			database.open();
 			database.exec(QStringLiteral("PRAGMA journal_mode = %1;").arg(SettingsManager::getValue(QLatin1String("Browser/SqliteJournalMode")).toString()));
 

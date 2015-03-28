@@ -82,8 +82,7 @@ void SearchesManager::loadSearchEngines()
 
 	for (int i = 0; i < searchEnginesOrder.count(); ++i)
 	{
-		const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml");
-		QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml"));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + searchEnginesOrder.at(i) + QLatin1String(".xml")));
 
 		if (!file.open(QIODevice::ReadOnly))
 		{
@@ -450,7 +449,7 @@ bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 		return false;
 	}
 
-	QFile file(SessionsManager::getProfilePath() + QLatin1String("/searches/") + engine.identifier + QLatin1String(".xml"));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + engine.identifier + QLatin1String(".xml")));
 
 	if (!file.open(QFile::WriteOnly))
 	{

@@ -715,8 +715,7 @@ void PreferencesDialog::readdSearchEngine(QAction *action)
 	}
 
 	const QString identifier = action->data().toString();
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
-	QFile file(QFile::exists(path) ? path : QLatin1String(":/searches/") + identifier + QLatin1String(".xml"));
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -815,7 +814,7 @@ void PreferencesDialog::removeSearchEngine()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/searches/") + identifier + QLatin1String(".xml");
+	const QString path = SessionsManager::getWritableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml"));
 
 	if (QFile::exists(path))
 	{
@@ -856,8 +855,8 @@ void PreferencesDialog::updateReaddSearchMenu()
 
 	QStringList availableIdentifiers;
 	QList<SearchInformation> availableSearchEngines;
-	QList<QFileInfo> allSearchEngines = QDir(SessionsManager::getProfilePath() + QLatin1String("/searches/")).entryInfoList(QDir::Files);
-	allSearchEngines.append(QDir(QLatin1String(":/searches/")).entryInfoList(QDir::Files));
+	QList<QFileInfo> allSearchEngines = QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files);
+	allSearchEngines.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allSearchEngines.count(); ++i)
 	{
@@ -1146,7 +1145,7 @@ void PreferencesDialog::removeKeyboardProfile()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + identifier + QLatin1String(".ini");
+	const QString path = SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini"));
 
 	if (QFile::exists(path))
 	{
@@ -1188,8 +1187,8 @@ void PreferencesDialog::updateReaddKeyboardProfileMenu()
 
 	QStringList availableIdentifiers;
 	QList<ShortcutsProfile> availableShortcutsProfiles;
-	QList<QFileInfo> allShortcutsProfiles = QDir(SessionsManager::getProfilePath() + QLatin1String("/keyboard/")).entryInfoList(QDir::Files);
-	allShortcutsProfiles.append(QDir(QLatin1String(":/keyboard/")).entryInfoList(QDir::Files));
+	QList<QFileInfo> allShortcutsProfiles = QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files);
+	allShortcutsProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allShortcutsProfiles.count(); ++i)
 	{
@@ -1336,7 +1335,7 @@ void PreferencesDialog::save()
 			}
 		}
 
-		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/searches/"));
+		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searches")));
 
 		QHash<QString, QPair<bool, SearchInformation> >::iterator searchEnginesIterator;
 
@@ -1435,7 +1434,7 @@ void PreferencesDialog::save()
 
 		if (m_userAgentsModified)
 		{
-			QSettings userAgents(SessionsManager::getProfilePath() + QLatin1String("/userAgents.ini"), QSettings::IniFormat);
+			QSettings userAgents(SessionsManager::getWritableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
 			userAgents.setIniCodec("UTF-8");
 			userAgents.clear();
 
@@ -1462,7 +1461,7 @@ void PreferencesDialog::save()
 			SettingsManager::setValue(QLatin1String("Security/Ciphers"), ciphers);
 		}
 
-		QDir().mkpath(SessionsManager::getProfilePath() + QLatin1String("/keyboard/"));
+		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
 		QHash<QString, ShortcutsProfile>::iterator shortcutsProfilesIterator;
 
@@ -1473,7 +1472,7 @@ void PreferencesDialog::save()
 				continue;
 			}
 
-			QFile file(SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + shortcutsProfilesIterator.key() + QLatin1String(".ini"));
+			QFile file(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + shortcutsProfilesIterator.key() + QLatin1String(".ini")));
 
 			if (!file.open(QIODevice::WriteOnly))
 			{
@@ -1568,9 +1567,7 @@ QString PreferencesDialog::createProfileIdentifier(ItemViewWidget *view, const Q
 
 ShortcutsProfile PreferencesDialog::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
 {
-	QString path = SessionsManager::getProfilePath() + QLatin1String("/keyboard/") + identifier + QLatin1String(".ini");
-	path = (QFile::exists(path) ? path : QLatin1String(":/keyboard/") + identifier + QLatin1String(".ini"));
-
+	const QString path = SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini"));
 	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly))

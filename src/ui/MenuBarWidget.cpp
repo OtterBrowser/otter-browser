@@ -41,8 +41,7 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	m_leftToolBar(NULL),
 	m_rightToolBar(NULL)
 {
-	const QString path = (SessionsManager::getProfilePath() + QLatin1String("/menuBar.json"));
-	QFile file(QFile::exists(path) ? path : QLatin1String(":/other/menuBar.json"));
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("menuBar.json")));
 	file.open(QFile::ReadOnly);
 
 	const QJsonArray definition = QJsonDocument::fromJson(file.readAll()).array();

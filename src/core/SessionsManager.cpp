@@ -164,9 +164,16 @@ QString SessionsManager::getCachePath()
 	return m_cachePath;
 }
 
-QString SessionsManager::getProfilePath()
+QString SessionsManager::getReadableDataPath(const QString &path, bool forceBundled)
 {
-	return m_profilePath;
+	const QString writablePath = getWritableDataPath(path);
+
+	return ((!forceBundled && QFile::exists(writablePath)) ? writablePath : QLatin1String(":/") + (path.contains(QLatin1Char('/')) ? QString() : QLatin1String("other/")) + QDir::separator() + path);
+}
+
+QString SessionsManager::getWritableDataPath(const QString &path)
+{
+	return m_profilePath + QDir::separator() + path;
 }
 
 QString SessionsManager::getSessionPath(const QString &path, bool bound)
