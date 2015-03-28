@@ -247,7 +247,7 @@ QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
 {
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(window->getIcon(), window->getTitle()));
-	items.append(new QStandardItem(window->getLastActivity().toString()));
+	items.append(new QStandardItem(QString::number(window->getLastActivity().toMSecsSinceEpoch())));
 	items[0]->setData(window->getIdentifier(), Qt::UserRole);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));

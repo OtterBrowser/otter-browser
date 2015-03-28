@@ -68,6 +68,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_toggleEdge(NULL),
 	m_sidebarWidget(NULL),
 	m_splitter(new QSplitter(this)),
+	m_tabSwitcherKey(0),
+	m_tabSwictherTimer(0),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -164,6 +166,33 @@ MainWindow::~MainWindow()
 	delete m_ui;
 }
 
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_tabSwictherTimer)
+	{
+		killTimer(m_tabSwictherTimer);
+
+		m_tabSwictherTimer = 0;
+
+		if (m_windowsManager->getWindowCount() > 1)
+		{
+			if (!m_tabSwitcher)
+			{
+				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+			}
+
+			m_tabSwitcher->raise();
+			m_tabSwitcher->resize(size());
+			m_tabSwitcher->show(false);
+			m_tabSwitcher->selectTab(m_tabSwitcherKey == Qt::Key_Tab);
+		}
+		else
+		{
+			m_windowsManager->triggerAction((m_tabSwitcherKey == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction);
+		}
+	}
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	if (SessionsManager::isLastWindow() && !Application::getInstance()->canClose())
@@ -198,21 +227,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Tab || event->key() == Qt::Key_Backtab)
 	{
-		if (m_windowsManager->getWindowCount() > 1)
+		if (m_tabSwictherTimer == 0 && m_windowsManager->getWindowCount() > 1)
 		{
-			if (!m_tabSwitcher)
-			{
-				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
-			}
-
-			m_tabSwitcher->raise();
-			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(false);
-			m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
+			m_tabSwitcherKey = event->key();
+			m_tabSwictherTimer = startTimer(200);
 		}
 		else
 		{
-			m_windowsManager->triggerAction(((event->key() == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction), parentWidget());
+			if (m_tabSwictherTimer > 0)
+			{
+				killTimer(m_tabSwictherTimer);
+
+				m_tabSwictherTimer = 0;
+			}
+
+			if (m_windowsManager->getWindowCount() > 1)
+			{
+				if (!m_tabSwitcher)
+				{
+					m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+				}
+
+				m_tabSwitcher->raise();
+				m_tabSwitcher->resize(size());
+				m_tabSwitcher->show(false);
+				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
+			}
+			else
+			{
+				m_windowsManager->triggerAction((event->key() == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction);
+			}
 		}
 
 		event->accept();
@@ -221,6 +265,37 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 	{
 		QMainWindow::keyPressEvent(event);
 	}
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Control && m_tabSwictherTimer > 0)
+	{
+		killTimer(m_tabSwictherTimer);
+
+		m_tabSwictherTimer = 0;
+
+		QMultiMap<qint64, quint64> map;
+
+		for (int i = 0; i < m_windowsManager->getWindowCount(); ++i)
+		{
+			Window *window = m_windowsManager->getWindowByIndex(i);
+
+			if (window)
+			{
+				map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
+			}
+		}
+
+		const QList<quint64> list = map.values();
+
+		if (list.count() > 1)
+		{
+			m_windowsManager->setActiveWindowByIdentifier((m_tabSwitcherKey == Qt::Key_Tab) ? list.at(list.count() - 2) : list.first());
+		}
+	}
+
+	QMainWindow::keyReleaseEvent(event);
 }
 
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)

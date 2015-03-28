@@ -67,8 +67,10 @@ public slots:
 	void triggerAction(int identifier, bool checked = false);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void closeEvent(QCloseEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void createSidebar();
 	void createToggleEdge();
@@ -98,6 +100,8 @@ private:
 	QSplitter *m_splitter;
 	QString m_currentBookmark;
 	Qt::WindowStates m_previousState;
+	int m_tabSwitcherKey;
+	int m_tabSwictherTimer;
 	Ui::MainWindow *m_ui;
 
 signals:
