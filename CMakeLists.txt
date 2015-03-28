@@ -149,6 +149,7 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp
+	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp
 	src/ui/ToolButtonWidget.cpp
 	src/ui/TrayIcon.cpp
@@ -220,6 +221,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SessionsManagerDialog.ui
 	src/ui/SidebarWidget.ui
 	src/ui/StartupDialog.ui
+	src/ui/ToolBarDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/preferences/AcceptLanguageDialog.ui

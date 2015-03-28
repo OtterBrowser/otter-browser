@@ -101,6 +101,7 @@ SOURCES += src/main.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TabSwitcherWidget.cpp \
     src/ui/TextLabelWidget.cpp \
+    src/ui/ToolBarDialog.cpp \
     src/ui/ToolBarWidget.cpp \
     src/ui/ToolButtonWidget.cpp \
     src/ui/TrayIcon.cpp \
@@ -221,6 +222,7 @@ HEADERS += src/core/Action.h \
     src/ui/TabBarWidget.h \
     src/ui/TabSwitcherWidget.h \
     src/ui/TextLabelWidget.h \
+    src/ui/ToolBarDialog.h \
     src/ui/ToolBarWidget.h \
     src/ui/ToolButtonWidget.h \
     src/ui/TrayIcon.h \
@@ -287,6 +289,7 @@ FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SidebarWidget.ui \
     src/ui/StartupDialog.ui \
+    src/ui/ToolBarDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/WebsitePreferencesDialog.ui \
     src/ui/preferences/AcceptLanguageDialog.ui \

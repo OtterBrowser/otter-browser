@@ -22,6 +22,7 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "TabBarWidget.h"
+#include "ToolBarDialog.h"
 #include "Window.h"
 #include "toolbars/ActionWidget.h"
 #include "toolbars/AddressWidget.h"
