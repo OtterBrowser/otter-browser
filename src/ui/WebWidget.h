@@ -31,6 +31,7 @@
 namespace Otter
 {
 
+class Menu;
 class WebBackend;
 
 class WebWidget : public QWidget
@@ -96,8 +97,6 @@ public:
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual Action* getAction(int identifier) = 0;
 	WebBackend* getBackend();
-	QMenu* getReloadTimeMenu();
-	QMenu* getQuickSearchMenu();
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
@@ -142,12 +141,17 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
+	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void setAlternateStyleSheets(const QStringList &styleSheets);
 	virtual void setOptions(const QVariantHash &options);
+	QMenu* getPasteNoteMenu();
+	QMenu* getReloadTimeMenu();
+	QMenu* getQuickSearchMenu();
 
 protected slots:
 	void triggerAction();
+	void pasteNote(QAction *action);
 	void reloadTimeMenuAboutToShow();
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
@@ -157,6 +161,7 @@ protected slots:
 
 private:
 	WebBackend *m_backend;
+	Menu *m_pasteNoteMenu;
 	QMenu *m_reloadTimeMenu;
 	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;

@@ -20,8 +20,10 @@
 
 #include "WebWidget.h"
 #include "ContentsWidget.h"
+#include "Menu.h"
 #include "ReloadTimeDialog.h"
 #include "../core/ActionsManager.h"
+#include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 
@@ -38,6 +40,7 @@ QMap<int, QPixmap> WebWidget::m_scrollCursors;
 
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
+	m_pasteNoteMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
 	m_scrollMode(NoScroll),
@@ -196,6 +199,19 @@ void WebWidget::triggerAction()
 	}
 }
 
+void WebWidget::pasteNote(QAction *action)
+{
+	if (action && action->data().isValid())
+	{
+		BookmarksItem *note = NotesManager::getModel()->bookmarkFromIndex(action->data().toModelIndex());
+
+		if (note)
+		{
+			pasteText(note->data(BookmarksModel::DescriptionRole).toString());
+		}
+	}
+}
+
 void WebWidget::reloadTimeMenuAboutToShow()
 {
 	switch (getOption(QLatin1String("Content/PageReloadTime")).toInt())
@@ -337,14 +353,17 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	{
 		if (flags & EditMenu)
 		{
+			menu.addAction(getAction(Action::PasteNoteAction));
+			menu.addSeparator();
 			menu.addAction(getAction(Action::UndoAction));
 			menu.addAction(getAction(Action::RedoAction));
 			menu.addSeparator();
 			menu.addAction(getAction(Action::CutAction));
 			menu.addAction(getAction(Action::CopyAction));
-			menu.addAction(getAction(Action::CopyToNoteAction));
 			menu.addAction(getAction(Action::PasteAction));
 			menu.addAction(getAction(Action::DeleteAction));
+			menu.addSeparator();
+			menu.addAction(getAction(Action::CopyToNoteAction));
 			menu.addSeparator();
 			menu.addAction(getAction(Action::SelectAllAction));
 			menu.addAction(getAction(Action::ClearAllAction));
@@ -559,6 +578,19 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 void WebWidget::setOptions(const QVariantHash &options)
 {
 	m_options = options;
+}
+
+QMenu* WebWidget::getPasteNoteMenu()
+{
+	if (!m_pasteNoteMenu)
+	{
+		m_pasteNoteMenu = new Menu(this);
+		m_pasteNoteMenu->setRole(Menu::NotesMenuRole);
+
+		connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
+	}
+
+	return m_pasteNoteMenu;
 }
 
 void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)

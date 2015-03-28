@@ -110,6 +110,7 @@ public:
 		CopyToNoteAction,
 		PasteAction,
 		PasteAndGoAction,
+		PasteNoteAction,
 		DeleteAction,
 		SelectAllAction,
 		ClearAllAction,

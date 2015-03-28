@@ -142,7 +142,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
 
 				Menu *bookmarksMenu = new Menu(m_ui->useBookmarkAsHomePageButton);
-				bookmarksMenu->setRole(BookmarkSelectorMenuRole);
+				bookmarksMenu->setRole(Menu::BookmarkSelectorMenuRole);
 				bookmarksMenu->menuAction()->setData(BookmarksManager::getModel()->getRootItem()->index());
 
 				m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);

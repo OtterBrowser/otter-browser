@@ -24,6 +24,7 @@
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/NotesManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
@@ -197,9 +198,10 @@ void Menu::setRole(MenuRole role)
 	{
 		case BookmarksMenuRole:
 		case BookmarkSelectorMenuRole:
+		case NotesMenuRole:
 			installEventFilter(this);
 
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateBookmarksMenu()));
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
 
 			break;
 
@@ -249,7 +251,7 @@ void Menu::setRole(MenuRole role)
 	}
 }
 
-void Menu::populateBookmarksMenu()
+void Menu::populateModelMenu()
 {
 	QMenu *menu = qobject_cast<QMenu*>(sender());
 
@@ -260,14 +262,14 @@ void Menu::populateBookmarksMenu()
 
 	QModelIndex index = menu->menuAction()->data().toModelIndex();
 
-	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3))
+	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3 && m_role == BookmarksMenuRole))
 	{
 		return;
 	}
 
 	if (!index.isValid())
 	{
-		index = BookmarksManager::getModel()->getRootItem()->index();
+		index = ((m_role == NotesMenuRole) ? NotesManager::getModel() : BookmarksManager::getModel())->getRootItem()->index();
 	}
 
 	const QAbstractItemModel *model = index.model();

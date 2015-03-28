@@ -138,6 +138,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"));
 	registerAction(Action::PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")));
 	registerAction(Action::PasteAndGoAction, QT_TRANSLATE_NOOP("actions", "Paste and Go"));
+	registerAction(Action::PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"));
 	registerAction(Action::DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));
 	registerAction(Action::SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")));
 	registerAction(Action::ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"));
@@ -173,7 +174,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	registerAction(Action::QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 	registerAction(Action::PopupsPolicyAction, QT_TRANSLATE_NOOP("actions", "Block pop-ups"));
 	registerAction(Action::ImagesPolicyAction, QT_TRANSLATE_NOOP("actions", "Load Images"));
-	registerAction(Action::CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies..."));
+	registerAction(Action::CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies"));
 	registerAction(Action::CookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Cookies Policy"));
 	registerAction(Action::ThirdPartyCookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Third-party Cookies Policy"));
 	registerAction(Action::PluginsPolicyAction, QT_TRANSLATE_NOOP("actions", "Plugins"));

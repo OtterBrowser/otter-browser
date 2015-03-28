@@ -123,6 +123,7 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
+	void pasteText(const QString &text);
 	void handleContextMenu(const QVariant &result);
 	void handleCreateSearch(const QVariant &result);
 	void handleHitTest(const QVariant &result);

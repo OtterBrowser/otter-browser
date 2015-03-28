@@ -97,6 +97,7 @@ protected:
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
+	void pasteText(const QString &text);
 	void handleHistory();
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);

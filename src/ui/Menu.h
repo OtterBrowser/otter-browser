@@ -26,18 +26,6 @@
 namespace Otter
 {
 
-enum MenuRole
-{
-	NoMenuRole = 0,
-	BookmarksMenuRole = 1,
-	BookmarkSelectorMenuRole = 2,
-	CharacterEncodingMenuRole = 3,
-	ClosedWindowsMenu = 4,
-	ImportExportMenuRole = 5,
-	SessionsMenuRole = 6,
-	UserAgentMenuRole = 7
-};
-
 class Action;
 class BookmarksItem;
 
@@ -46,6 +34,19 @@ class Menu : public QMenu
 	Q_OBJECT
 
 public:
+	enum MenuRole
+	{
+		NoMenuRole = 0,
+		BookmarksMenuRole = 1,
+		BookmarkSelectorMenuRole = 2,
+		NotesMenuRole = 3,
+		CharacterEncodingMenuRole = 5,
+		ClosedWindowsMenu = 6,
+		ImportExportMenuRole = 7,
+		SessionsMenuRole = 8,
+		UserAgentMenuRole = 9
+	};
+
 	explicit Menu(QWidget *parent = NULL);
 
 	void load(const QJsonObject &definition);
@@ -58,7 +59,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 
 protected slots:
-	void populateBookmarksMenu();
+	void populateModelMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
 	void populateSessionsMenu();

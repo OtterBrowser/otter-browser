@@ -51,6 +51,7 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtCore/QUuid>
 #include <QtGui/QClipboard>
@@ -563,6 +564,23 @@ void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::
 	emit requestedNewWindow(widget, NewTabOpen);
 }
 
+void QtWebKitWebWidget::pasteText(const QString &text)
+{
+	QMimeData *mimeData = new QMimeData();
+	const QStringList mimeTypes = QGuiApplication::clipboard()->mimeData()->formats();
+
+	for (int i = 0; i < mimeTypes.count(); ++i)
+	{
+		mimeData->setData(mimeTypes.at(i), QGuiApplication::clipboard()->mimeData()->data(mimeTypes.at(i)));
+	}
+
+	QGuiApplication::clipboard()->setText(text);
+
+	triggerAction(Action::PasteAction);
+
+	QGuiApplication::clipboard()->setMimeData(mimeData);
+}
+
 void QtWebKitWebWidget::notifyTitleChanged()
 {
 	emit titleChanged(getTitle());
@@ -721,6 +739,11 @@ void QtWebKitWebWidget::updateEditActions()
 	if (m_actions.contains(Action::PasteAndGoAction))
 	{
 		m_actions[Action::PasteAndGoAction]->setEnabled(!QApplication::clipboard()->text().isEmpty());
+	}
+
+	if (m_actions.contains(Action::PasteNoteAction))
+	{
+		m_actions[Action::PasteNoteAction]->setEnabled(m_page->action(QWebPage::Paste)->isEnabled());
 	}
 
 	if (m_actions.contains(Action::DeleteAction))
@@ -2034,6 +2057,12 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 		case Action::GoForwardAction:
 		case Action::FastForwardAction:
 			action->setEnabled(m_webView->history()->canGoForward());
+
+			break;
+		case Action::PasteNoteAction:
+			action->setMenu(getPasteNoteMenu());
+
+			updateEditActions();
 
 			break;
 		case Action::StopAction:
