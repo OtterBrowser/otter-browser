@@ -52,6 +52,10 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->notesView->viewport()->installEventFilter(this);
 	m_ui->notesView->viewport()->setMouseTracking(true);
 
+#if QT_VERSION >= 0x050300
+	m_ui->textEdit->setPlaceholderText(tr("Add note..."));
+#endif
+
 	connect(NotesManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));

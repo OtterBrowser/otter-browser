@@ -71,11 +71,7 @@
        <number>3</number>
       </property>
       <item>
-       <widget class="QPlainTextEdit" name="textEdit">
-        <property name="placeholderText">
-         <string>Add note...</string>
-        </property>
-       </widget>
+       <widget class="QPlainTextEdit" name="textEdit"/>
       </item>
       <item>
        <layout class="QVBoxLayout" name="actionsLayout" stretch="0,0,1">
