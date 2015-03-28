@@ -887,7 +887,7 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 	}
 	else if (m_mode == NotesMode && role == DescriptionRole)
 	{
-		const QString title = value.toString().split(QLatin1Char('\n'), QString::SkipEmptyParts).first().left(100);
+		const QString title = value.toString().section(QLatin1Char('\n'), 0, 0).left(100);
 
 		setData(index, ((title == value.toString().trimmed()) ? title : title + QStringLiteral("…")), TitleRole);
 	}

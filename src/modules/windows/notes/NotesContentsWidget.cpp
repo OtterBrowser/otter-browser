@@ -225,6 +225,7 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::PasteAction:
+			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
 				BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesView->currentIndex()));;
 				bookmark->setData(QGuiApplication::clipboard()->text(), BookmarksModel::DescriptionRole);
@@ -264,9 +265,14 @@ void NotesContentsWidget::updateActions()
 
 	connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
 
+	if (m_actions.contains(Action::PasteAction))
+	{
+		m_actions[Action::PasteAction]->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
+	}
+
 	if (m_actions.contains(Action::DeleteAction))
 	{
-		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		m_actions[Action::DeleteAction]->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 }
 
@@ -314,6 +320,12 @@ Action* NotesContentsWidget::getAction(int identifier)
 				if (identifier == Action::CopyLinkToClipboardAction)
 				{
 					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Copy address of source page"));
+				}
+				else if (identifier == Action::PasteAction)
+				{
+					action->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
+
+					connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(updateActions()));
 				}
 
 				connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
