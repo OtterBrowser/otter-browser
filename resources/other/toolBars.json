@@ -35,6 +35,7 @@
 	{
 		"identifier": "StatusBar",
 		"title": "Status Bar",
+		"iconSize": 20,
 		"actions":
 		[
 			"StatusMessageWidget",

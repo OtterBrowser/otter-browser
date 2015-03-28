@@ -51,6 +51,11 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
 
+	if (identifier == QLatin1String("StatusBar"))
+	{
+		setFixedHeight(ActionsManager::getToolBarDefinition(m_identifier).iconSize);
+	}
+
 	if (!identifier.isEmpty())
 	{
 		setObjectName(identifier);
@@ -58,7 +63,6 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 
 		if (m_mainWindow)
 		{
-
 			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
 			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
 		}

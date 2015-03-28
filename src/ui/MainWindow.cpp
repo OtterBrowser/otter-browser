@@ -88,7 +88,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	centralLayout->addWidget(m_splitter);
 
 	m_statusBar = new ToolBarWidget(QLatin1String("StatusBar"), NULL, centralWidget);
-	m_statusBar->setFixedHeight(20);
 
 	centralLayout->addWidget(m_statusBar);
 
