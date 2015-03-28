@@ -28,10 +28,27 @@
 namespace Otter
 {
 
-class BookmarksModel;
-
 class BookmarksItem : public QStandardItem
 {
+public:
+	~BookmarksItem();
+
+	void setData(const QVariant &value, int role);
+	void setItemData(const QVariant &value, int role);
+	QStandardItem* clone() const;
+	QVariant data(int role) const;
+	bool isInTrash() const;
+
+protected:
+	explicit BookmarksItem();
+
+friend class BookmarksModel;
+};
+
+class BookmarksModel : public QStandardItemModel
+{
+	Q_OBJECT
+
 public:
 	enum BookmarkType
 	{
@@ -43,26 +60,6 @@ public:
 		SeparatorBookmark = 5
 	};
 
-	~BookmarksItem();
-
-	void setData(const QVariant &value, int role);
-	void setItemData(const QVariant &value, int role);
-	BookmarksModel* getModel() const;
-	QStandardItem* clone() const;
-	QVariant data(int role) const;
-	bool isInTrash() const;
-
-protected:
-	explicit BookmarksItem(BookmarkType type);
-
-friend class BookmarksModel;
-};
-
-class BookmarksModel : public QStandardItemModel
-{
-	Q_OBJECT
-
-public:
 	enum BookmarkRole
 	{
 		TitleRole = Qt::DisplayRole,
@@ -87,7 +84,7 @@ public:
 
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
-	BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
+	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(const QString &keyword) const;
 	BookmarksItem* getBookmark(quint64 identifier) const;

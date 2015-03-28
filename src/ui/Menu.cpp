@@ -294,20 +294,20 @@ void Menu::populateBookmarksMenu()
 			continue;
 		}
 
-		const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt());
+		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt());
 
-		if (type == BookmarksItem::RootBookmark || type == BookmarksItem::FolderBookmark || type == BookmarksItem::UrlBookmark)
+		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
 			QAction *action = menu->addAction(childIndex.data(Qt::DecorationRole).value<QIcon>(), (childIndex.data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(childIndex.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
 			action->setData(childIndex);
 			action->setToolTip(childIndex.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(childIndex.data(BookmarksModel::UrlRole).toString());
 
-			if (type == BookmarksItem::UrlBookmark && m_role == BookmarksMenuRole)
+			if (type == BookmarksModel::UrlBookmark && m_role == BookmarksMenuRole)
 			{
 				connect(action, SIGNAL(triggered()), this, SLOT(openBookmark()));
 			}
-			else if (type == BookmarksItem::FolderBookmark)
+			else if (type == BookmarksModel::FolderBookmark)
 			{
 				if (model->rowCount(childIndex) > 0)
 				{

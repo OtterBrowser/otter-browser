@@ -601,7 +601,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case Action::CopyToNoteAction:
 			{
-				BookmarksItem *note = NotesManager::addNote(BookmarksItem::UrlBookmark, getUrl());
+				BookmarksItem *note = NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl());
 				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
 			}
 

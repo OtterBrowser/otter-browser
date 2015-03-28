@@ -36,20 +36,20 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, Book
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const BookmarksItem::BookmarkType type = static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder((bookmark->parent() ? bookmark->parent() : BookmarksManager::getModel()->getRootItem())->index());
 	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
 	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
-	m_ui->addressLineEdit->setVisible(type == BookmarksItem::UrlBookmark);
-	m_ui->addressLabel->setVisible(type == BookmarksItem::UrlBookmark);
+	m_ui->addressLineEdit->setVisible(type == BookmarksModel::UrlBookmark);
+	m_ui->addressLabel->setVisible(type == BookmarksModel::UrlBookmark);
 	m_ui->descriptionTextEdit->setPlainText(m_bookmark->data(BookmarksModel::DescriptionRole).toString());
 	m_ui->keywordLineEdit->setText(m_bookmark->data(BookmarksModel::KeywordRole).toString());
 	m_ui->addedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeAddedRole).isValid() ? m_bookmark->data(BookmarksModel::TitleRole).toDateTime().toString() : tr("Unknown"));
 	m_ui->modifiedLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeModifiedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeModifiedRole).toDateTime().toString() : tr("Unknown"));
 
-	if (type == BookmarksItem::UrlBookmark)
+	if (type == BookmarksModel::UrlBookmark)
 	{
 		m_ui->lastVisitLabelWidget->setText(m_bookmark->data(BookmarksModel::TimeVisitedRole).isValid() ? m_bookmark->data(BookmarksModel::TimeVisitedRole).toString() : tr("Unknown"));
 		m_ui->visitsLabelWidget->setText(QString::number(m_bookmark->data(BookmarksModel::VisitsRole).toInt()));

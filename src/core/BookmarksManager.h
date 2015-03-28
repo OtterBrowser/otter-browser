@@ -38,7 +38,7 @@ public:
 	static void removeBookmark(const QUrl &url);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addBookmark(BookmarksItem::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
+	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static QStringList getKeywords();

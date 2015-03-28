@@ -59,7 +59,7 @@ void HtmlBookmarksImporter::handleOptions()
 
 		if (m_optionsWidget->isImportingIntoSubfolder())
 		{
-			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
+			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
 
 			setImportFolder(folder);
 		}
@@ -79,7 +79,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	if (element.tagName().toLower() == QLatin1String("h3"))
 	{
-		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::FolderBookmark, QUrl(), element.toPlainText(), getCurrentFolder());
+		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), element.toPlainText(), getCurrentFolder());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))
@@ -106,7 +106,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			return;
 		}
 
-		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksItem::UrlBookmark, url, element.toPlainText(), getCurrentFolder());
+		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, url, element.toPlainText(), getCurrentFolder());
 		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
 
 		if (!BookmarksManager::hasKeyword(keyword))
@@ -136,7 +136,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 	}
 	else if (element.tagName().toLower() == QLatin1String("hr"))
 	{
-		BookmarksManager::addBookmark(BookmarksItem::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
+		BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
 	}
 
 	const QWebElementCollection descendants = element.findAll(QLatin1String("*"));

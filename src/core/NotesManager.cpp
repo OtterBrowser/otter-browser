@@ -88,7 +88,7 @@ BookmarksModel* NotesManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* NotesManager::addNote(BookmarksItem::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
+BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
 {
 	if (!m_model)
 	{

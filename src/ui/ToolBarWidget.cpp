@@ -198,7 +198,7 @@ void ToolBarWidget::updateBookmarks()
 
 		if (bookmark)
 		{
-			if (static_cast<BookmarksItem::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksItem::SeparatorBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::SeparatorBookmark)
 			{
 				addSeparator();
 			}
