@@ -106,6 +106,7 @@ void ActionWidget::setWindow(Window *window)
 		action = ActionsManager::getAction(m_identifier, this);
 	}
 
+	removeAction(defaultAction());
 	setDefaultAction(action);
 	setText(action->getText());
 }
