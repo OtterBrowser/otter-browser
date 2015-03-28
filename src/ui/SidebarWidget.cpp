@@ -62,7 +62,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	m_ui->panelLayout->addWidget(toolbar);
 
 	m_ui->panelsChooseButton->setPopupMode(QToolButton::InstantPopup);
-	m_ui->panelsChooseButton->setIcon(Utils::getIcon(QLatin1String("configure")));
+	m_ui->panelsChooseButton->setIcon(Utils::getIcon(QLatin1String("list-add")));
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
