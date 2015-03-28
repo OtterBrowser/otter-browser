@@ -23,7 +23,6 @@
 #include "../ToolButtonWidget.h"
 #include "../../core/Action.h"
 
-
 namespace Otter
 {
 
@@ -36,11 +35,18 @@ class ActionWidget : public ToolButtonWidget
 public:
 	explicit ActionWidget(int identifier, Window *window, QWidget *parent = NULL);
 
+	Window* getWindow() const;
+
 protected:
-	void enterEvent(QEvent *event);
+	void actionEvent(QActionEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	bool event(QEvent *event);
+
+protected slots:
+	void setWindow(Window *window);
 
 private:
+	Window *m_window;
 	int m_identifier;
 };
 

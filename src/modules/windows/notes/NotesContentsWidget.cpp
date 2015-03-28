@@ -307,7 +307,7 @@ Action* NotesContentsWidget::getAction(int identifier)
 		case Action::PasteAction:
 		case Action::DeleteAction:
 			{
-				Action *action = new Action(identifier, qobject_cast<Window*>(parentWidget()), this);
+				Action *action = new Action(identifier, this);
 
 				m_actions[identifier] = action;
 

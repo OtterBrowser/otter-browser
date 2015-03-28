@@ -20,51 +20,43 @@
 #include "ActionWidget.h"
 #include "../ContentsWidget.h"
 #include "../MainWindow.h"
+#include "../ToolBarWidget.h"
 #include "../Window.h"
 
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
 
 ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : ToolButtonWidget(parent),
+	m_window(window),
 	m_identifier(identifier)
 {
 	setAutoRaise(true);
+	setWindow(window);
 
-	if (window && Action::isLocal(identifier) && window->getContentsWidget()->getAction(identifier))
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (toolBar)
 	{
-		setDefaultAction(window->getContentsWidget()->getAction(identifier));
-	}
-	else
-	{
-		setDefaultAction(ActionsManager::getAction(identifier, this));
+		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
 }
 
-void ActionWidget::enterEvent(QEvent *event)
+void ActionWidget::actionEvent(QActionEvent *event)
 {
-	QToolButton::enterEvent(event);
+	QToolButton::actionEvent(event);
 
-	Action *action = qobject_cast<Action*>(defaultAction());
-
-	if (action)
+	if (event->type() == QEvent::ActionChanged || event->type() == QEvent::ActionAdded)
 	{
-		QString text = action->text();
+		Action *action = qobject_cast<Action*>(defaultAction());
 
-		if (text.contains(QLatin1Char('\t')))
+		if (action)
 		{
-			setToolTip(text.replace(QLatin1Char('\t'), QStringLiteral(" (")) + QLatin1Char(')'));
+			setText(action->getText());
 		}
-		else
-		{
-			setToolTip(text);
-		}
-
-		return;
 	}
-
-	setToolTip(QString());
 }
 
 void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -97,6 +89,50 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 
 	ToolButtonWidget::mouseReleaseEvent(event);
+}
+
+void ActionWidget::setWindow(Window *window)
+{
+	Action *action = NULL;
+
+	m_window = window;
+
+	if (window && Action::isLocal(m_identifier) && window->getContentsWidget()->getAction(m_identifier))
+	{
+		action = window->getContentsWidget()->getAction(m_identifier);
+	}
+	else
+	{
+		action = ActionsManager::getAction(m_identifier, this);
+	}
+
+	setDefaultAction(action);
+	setText(action->getText());
+}
+
+Window* ActionWidget::getWindow() const
+{
+	return m_window;
+}
+
+bool ActionWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::ToolTip)
+	{
+		Action *action = qobject_cast<Action*>(defaultAction());
+		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
+
+		if (helpEvent)
+		{
+			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(action ? action->getIdentifier() : m_identifier).shortcuts;
+
+			QToolTip::showText(helpEvent->globalPos(), text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+		}
+
+		return true;
+	}
+
+	return QToolButton::event(event);
 }
 
 }

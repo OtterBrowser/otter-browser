@@ -27,8 +27,7 @@
 namespace Otter
 {
 
-Action::Action(int identifier, Window *window, QObject *parent) : QAction(parent),
-	m_window(window),
+Action::Action(int identifier, QObject *parent) : QAction(parent),
 	m_identifier(identifier),
 	m_isOverridingText(false)
 {
@@ -49,6 +48,8 @@ void Action::setup(Action *action)
 
 		return;
 	}
+
+	m_identifier = action->getIdentifier();
 
 	setEnabled(action->isEnabled());
 	setText(action->text());
@@ -83,17 +84,17 @@ void Action::update(bool reset)
 	}
 }
 
-void Action::setWindow(Window *window)
-{
-	m_window = window;
-}
-
 void Action::setOverrideText(const QString &text)
 {
 	m_overrideText = text;
 	m_isOverridingText = true;
 
 	update();
+}
+
+QString Action::getText() const
+{
+	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).text).toUtf8().constData());
 }
 
 QList<QKeySequence> Action::getShortcuts() const

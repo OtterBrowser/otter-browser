@@ -25,8 +25,6 @@
 namespace Otter
 {
 
-class Window;
-
 class Action : public QAction
 {
 	Q_OBJECT
@@ -186,10 +184,10 @@ public:
 		OtherAction
 	};
 
-	explicit Action(int identifier, Window *window, QObject *parent = NULL);
+	explicit Action(int identifier, QObject *parent = NULL);
 
-	void setWindow(Window *window);
 	void setOverrideText(const QString &text);
+	QString getText() const;
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event);
@@ -202,7 +200,6 @@ protected:
 	void update(bool reset = false);
 
 private:
-	Window *m_window;
 	QString m_overrideText;
 	int m_identifier;
 	bool m_isOverridingText;

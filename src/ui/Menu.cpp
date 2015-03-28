@@ -660,7 +660,7 @@ void Menu::updateClosedWindowsMenu()
 
 Action* Menu::addAction(int identifier)
 {
-	Action *action = new Action(identifier, NULL, this);
+	Action *action = new Action(identifier, this);
 
 	QMenu::addAction(action);
 

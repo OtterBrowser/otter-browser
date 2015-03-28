@@ -33,14 +33,11 @@ public:
 	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
 
 protected:
-	void enterEvent(QEvent *event);
+	bool event(QEvent *event);
 
 protected slots:
 	void goToHistoryIndex(QAction *action);
 	void updateMenu();
-
-protected:
-	Window *m_window;
 };
 
 }

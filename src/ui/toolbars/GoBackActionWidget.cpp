@@ -23,13 +23,14 @@
 #include "../../core/WebBackend.h"
 #include "../../core/AddonsManager.h"
 
+#include <QtGui/QHelpEvent>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
 
-GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoBackAction, window, parent),
-	m_window(window)
+GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoBackAction, window, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);
@@ -38,47 +39,17 @@ GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : Action
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
-void GoBackActionWidget::enterEvent(QEvent *event)
-{
-	ActionWidget::enterEvent(event);
-
-	Action *action = qobject_cast<Action*>(defaultAction());
-
-	if (m_window && action)
-	{
-		QString text = action->text();
-		const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
-		const bool hasShortcut = text.contains(QLatin1Char('\t'));
-
-		if (history.entries.isEmpty() || history.index == 0)
-		{
-			setToolTip(hasShortcut ? text.replace(QLatin1Char('\t'), QStringLiteral(" (")) + QLatin1Char(')') : action->text());
-		}
-		else
-		{
-			QString title = history.entries.at(history.index - 1).title;
-			title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
-
-			setToolTip(hasShortcut ? tr("%1 (Back - %2)").arg(title).arg(action->getShortcuts().first().toString(QKeySequence::NativeText)) : tr("%1 (Back)").arg(title));
-		}
-
-		return;
-	}
-
-	setToolTip(tr("Back"));
-}
-
 void GoBackActionWidget::goToHistoryIndex(QAction *action)
 {
-	if (m_window && action && action->data().type() == QVariant::Int)
+	if (getWindow() && action && action->data().type() == QVariant::Int)
 	{
-		m_window->getContentsWidget()->goToHistoryIndex(action->data().toInt());
+		getWindow()->getContentsWidget()->goToHistoryIndex(action->data().toInt());
 	}
 }
 
 void GoBackActionWidget::updateMenu()
 {
-	if (!menu() || !m_window)
+	if (!menu() || !getWindow())
 	{
 		return;
 	}
@@ -86,7 +57,7 @@ void GoBackActionWidget::updateMenu()
 	menu()->clear();
 
 	WebBackend *backend = AddonsManager::getWebBackend();
-	const WindowHistoryInformation history = m_window->getContentsWidget()->getHistory();
+	const WindowHistoryInformation history = getWindow()->getContentsWidget()->getHistory();
 
 	for (int i = (history.index - 1); i >= 0; --i)
 	{
@@ -95,6 +66,39 @@ void GoBackActionWidget::updateMenu()
 		action->setData(i);
 		action->setStatusTip(history.entries.at(i).url);
 	}
+}
+
+bool GoBackActionWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::ToolTip)
+	{
+		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
+
+		if (helpEvent)
+		{
+			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(Action::GoBackAction).shortcuts;
+			QString toolTip = text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')'));
+
+			if (getWindow())
+			{
+				const WindowHistoryInformation history = getWindow()->getContentsWidget()->getHistory();
+
+				if (!history.entries.isEmpty() && history.index > 0)
+				{
+					QString title = history.entries.at(history.index - 1).title;
+					title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
+
+					toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+				}
+			}
+
+			QToolTip::showText(helpEvent->globalPos(), toolTip);
+		}
+
+		return true;
+	}
+
+	return ActionWidget::event(event);
 }
 
 }

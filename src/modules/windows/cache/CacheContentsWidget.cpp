@@ -575,7 +575,7 @@ Action* CacheContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, qobject_cast<Window*>(parentWidget()), this);
+	Action *action = new Action(identifier, this);
 
 	m_actions[identifier] = action;
 

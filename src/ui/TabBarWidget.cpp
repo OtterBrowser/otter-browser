@@ -116,13 +116,13 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_clickedTab >= 0)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
-		Action *cloneTabAction = new Action(Action::CloneTabAction, NULL, &menu);
+		Action *cloneTabAction = new Action(Action::CloneTabAction, &menu);
 		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 
-		Action *pinTabAction = new Action(Action::PinTabAction, NULL, &menu);
+		Action *pinTabAction = new Action(Action::PinTabAction, &menu);
 		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
 
-		Action *detachTabAction = new Action(Action::DetachTabAction, NULL, &menu);
+		Action *detachTabAction = new Action(Action::DetachTabAction, &menu);
 		detachTabAction->setEnabled(count() > 1);
 
 		menu.addAction(cloneTabAction);
@@ -133,7 +133,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			Action *closeTabAction = new Action(Action::CloseTabAction, NULL, &menu);
+			Action *closeTabAction = new Action(Action::CloseTabAction, &menu);
 			closeTabAction->setEnabled(false);
 
 			menu.addAction(closeTabAction);
@@ -144,7 +144,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
-		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, NULL, &menu);
+		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, &menu);
 		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
 		menu.addAction(closeOtherTabsAction);
@@ -885,7 +885,7 @@ bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (helpEvent && !object->property("isPinned").toBool())
 		{
-			const QList<QKeySequence> shortcuts = ActionsManager::getAction(Action::CloseTabAction, this)->getShortcuts();
+			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(Action::CloseTabAction).shortcuts;
 
 			QToolTip::showText(helpEvent->globalPos(), tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}
