@@ -37,11 +37,82 @@
 namespace Otter
 {
 
-Menu::Menu(QWidget *parent) : QMenu(parent),
+Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(NULL),
 	m_bookmark(NULL),
-	m_role(NoMenuRole)
+	m_role(role)
 {
+	switch (role)
+	{
+		case BookmarksMenuRole:
+		case BookmarkSelectorMenuRole:
+		case NotesMenuRole:
+			{
+				installEventFilter(this);
+
+				Menu *parentMenu = qobject_cast<Menu*>(parent);
+
+				if (!parentMenu || (parentMenu && parentMenu->getRole() != m_role))
+				{
+					if (m_role == NotesMenuRole)
+					{
+						connect(NotesManager::getInstance(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+					}
+					else
+					{
+						connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+					}
+				}
+
+				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
+			}
+
+			break;
+
+		case CharacterEncodingMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectCharacterEncoding(QAction*)));
+
+			break;
+		case ClosedWindowsMenu:
+			{
+				setIcon(Utils::getIcon(QLatin1String("user-trash")));
+
+				MainWindow *window = MainWindow::findMainWindow(parent);
+
+				if (window)
+				{
+					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !window->getWindowsManager()->getClosedWindows().isEmpty());
+
+					connect(window->getWindowsManager(), SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
+				}
+
+				connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindowsMenu()));
+				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateClosedWindowsMenu()));
+			}
+
+			break;
+		case ImportExportMenuRole:
+			QMenu::addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
+			QMenu::addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
+
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
+
+			break;
+		case SessionsMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
+
+			break;
+
+		case UserAgentMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectUserAgent(QAction*)));
+
+			break;
+		default:
+			break;
+	}
 }
 
 void Menu::changeEvent(QEvent *event)
@@ -137,8 +208,9 @@ void Menu::load(const QJsonObject &definition)
 	{
 		if (actions.at(i).isObject())
 		{
-			Menu *menu = new Menu(this);
-			menu->load(actions.at(i).toObject());
+			const QJsonObject object = actions.at(i).toObject();
+			Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
+			menu->load(object);
 
 			addMenu(menu);
 		}
@@ -161,94 +233,6 @@ void Menu::load(const QJsonObject &definition)
 			}
 		}
 	}
-
-	if (identifier == QLatin1String("BookmarksMenu"))
-	{
-		setRole(BookmarksMenuRole);
-
-		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(clearBookmarksMenu()));
-	}
-	else if (identifier == QLatin1String("CharacterEncodingMenu"))
-	{
-		setRole(CharacterEncodingMenuRole);
-	}
-	else if (identifier == QLatin1String("ClosedWindowsMenu"))
-	{
-		setRole(ClosedWindowsMenu);
-	}
-	else if (identifier == QLatin1String("ImportExportMenu"))
-	{
-		setRole(ImportExportMenuRole);
-	}
-	else if (identifier == QLatin1String("SessionsMenu"))
-	{
-		setRole(SessionsMenuRole);
-	}
-	else if (identifier == QLatin1String("UserAgentMenu"))
-	{
-		setRole(UserAgentMenuRole);
-	}
-}
-
-void Menu::setRole(MenuRole role)
-{
-	m_role = role;
-
-	switch (role)
-	{
-		case BookmarksMenuRole:
-		case BookmarkSelectorMenuRole:
-		case NotesMenuRole:
-			installEventFilter(this);
-
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
-
-			break;
-
-		case CharacterEncodingMenuRole:
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectCharacterEncoding(QAction*)));
-
-			break;
-		case ClosedWindowsMenu:
-			{
-				setIcon(Utils::getIcon(QLatin1String("user-trash")));
-
-				MainWindow *window = MainWindow::findMainWindow(parent());
-
-				if (window)
-				{
-					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !window->getWindowsManager()->getClosedWindows().isEmpty());
-
-					connect(window->getWindowsManager(), SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
-				}
-
-				connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindowsMenu()));
-				connect(this, SIGNAL(aboutToShow()), this, SLOT(populateClosedWindowsMenu()));
-			}
-
-			break;
-		case ImportExportMenuRole:
-			QMenu::addAction(tr("Import Opera Bookmarks"))->setData(QLatin1String("OperaBookmarks"));
-			QMenu::addAction(tr("Import HTML Bookmarks"))->setData(QLatin1String("HtmlBookmarks"));
-
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
-
-			break;
-		case SessionsMenuRole:
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
-
-			break;
-
-		case UserAgentMenuRole:
-			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectUserAgent(QAction*)));
-
-			break;
-		default:
-			break;
-	}
 }
 
 void Menu::populateModelMenu()
@@ -262,7 +246,7 @@ void Menu::populateModelMenu()
 
 	QModelIndex index = menu->menuAction()->data().toModelIndex();
 
-	if ((index.isValid() && !menu->actions().isEmpty()) || (!index.isValid() && menu->actions().count() != 3 && m_role == BookmarksMenuRole))
+	if (!menu->actions().isEmpty() && !(m_role == BookmarksMenuRole && !index.isValid() && menu->actions().count() == 3))
 	{
 		return;
 	}
@@ -313,10 +297,7 @@ void Menu::populateModelMenu()
 			{
 				if (model->rowCount(childIndex) > 0)
 				{
-					Menu *subMenu = new Menu(this);
-					subMenu->setRole(m_role);
-
-					action->setMenu(subMenu);
+					action->setMenu(new Menu(m_role, this));
 				}
 				else
 				{
@@ -523,9 +504,17 @@ void Menu::populateUserAgentMenu()
 	}
 }
 
-void Menu::clearBookmarksMenu()
+void Menu::clearModelMenu()
 {
-	if (actions().count() > 3)
+	if (m_role != BookmarksMenuRole)
+	{
+		for (int i = (actions().count() - 1); i >= 0; --i)
+		{
+			actions().at(i)->deleteLater();
+			removeAction(actions().at(i));
+		}
+	}
+	else if (actions().count() > 3)
 	{
 		for (int i = (actions().count() - 1); i > 2; --i)
 		{
@@ -533,6 +522,18 @@ void Menu::clearBookmarksMenu()
 			removeAction(actions().at(i));
 		}
 	}
+
+	if (m_role != BookmarksMenuRole && menuAction())
+	{
+		const QAbstractItemModel *model = menuAction()->data().toModelIndex().model();
+
+		if (model)
+		{
+			menuAction()->setEnabled(model->rowCount(menuAction()->data().toModelIndex()) > 0);
+		}
+	}
+
+	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateModelMenu()));
 }
 
 void Menu::clearClosedWindows()
@@ -664,6 +665,46 @@ Action* Menu::addAction(int identifier)
 	QMenu::addAction(action);
 
 	return action;
+}
+
+Menu::MenuRole Menu::getRole() const
+{
+	return m_role;
+}
+
+Menu::MenuRole Menu::getRole(const QString &identifier)
+{
+	if (identifier == QLatin1String("BookmarksMenu"))
+	{
+		return BookmarksMenuRole;
+	}
+
+	if (identifier == QLatin1String("CharacterEncodingMenu"))
+	{
+		return CharacterEncodingMenuRole;
+	}
+
+	if (identifier == QLatin1String("ClosedWindowsMenu"))
+	{
+		return ClosedWindowsMenu;
+	}
+
+	if (identifier == QLatin1String("ImportExportMenu"))
+	{
+		return ImportExportMenuRole;
+	}
+
+	if (identifier == QLatin1String("SessionsMenu"))
+	{
+		return SessionsMenuRole;
+	}
+
+	if (identifier == QLatin1String("UserAgentMenu"))
+	{
+		return UserAgentMenuRole;
+	}
+
+	return NoMenuRole;
 }
 
 }

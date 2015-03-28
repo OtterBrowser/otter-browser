@@ -47,11 +47,12 @@ public:
 		UserAgentMenuRole = 9
 	};
 
-	explicit Menu(QWidget *parent = NULL);
+	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
 
 	void load(const QJsonObject &definition);
-	void setRole(MenuRole role);
 	Action* addAction(int identifier);
+	MenuRole getRole() const;
+	static MenuRole getRole(const QString &identifier);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -64,7 +65,7 @@ protected slots:
 	void populateClosedWindowsMenu();
 	void populateSessionsMenu();
 	void populateUserAgentMenu();
-	void clearBookmarksMenu();
+	void clearModelMenu();
 	void clearClosedWindows();
 	void restoreClosedWindow();
 	void openBookmark();

@@ -743,7 +743,7 @@ void QtWebKitWebWidget::updateEditActions()
 
 	if (m_actions.contains(Action::PasteNoteAction))
 	{
-		m_actions[Action::PasteNoteAction]->setEnabled(m_page->action(QWebPage::Paste)->isEnabled());
+		m_actions[Action::PasteNoteAction]->setEnabled(m_page->action(QWebPage::Paste)->isEnabled() && NotesManager::getModel()->getRootItem()->hasChildren());
 	}
 
 	if (m_actions.contains(Action::DeleteAction))

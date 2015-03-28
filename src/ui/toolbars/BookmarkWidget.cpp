@@ -71,8 +71,7 @@ void BookmarkWidget::updateBookmark()
 
 		if (isFolder)
 		{
-			Menu *menu = new Menu(this);
-			menu->setRole(Menu::BookmarksMenuRole);
+			Menu *menu = new Menu(Menu::BookmarksMenuRole, this);
 			menu->menuAction()->setData(m_bookmark->index());
 
 			setPopupMode(QToolButton::InstantPopup);

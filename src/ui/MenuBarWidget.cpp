@@ -48,8 +48,9 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 
 	for (int i = 0; i < definition.count(); ++i)
 	{
-		Menu *menu = new Menu(this);
-		menu->load(definition.at(i).toObject());
+		const QJsonObject object = definition.at(i).toObject();
+		Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
+		menu->load(object);
 
 		addMenu(menu);
 	}

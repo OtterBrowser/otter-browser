@@ -584,8 +584,7 @@ QMenu* WebWidget::getPasteNoteMenu()
 {
 	if (!m_pasteNoteMenu)
 	{
-		m_pasteNoteMenu = new Menu(this);
-		m_pasteNoteMenu->setRole(Menu::NotesMenuRole);
+		m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
 
 		connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
 	}

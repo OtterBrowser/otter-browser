@@ -223,10 +223,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 	if (definition.action == QLatin1String("ClosedWindowsWidget"))
 	{
 		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), toolBar);
-		Menu *closedWindowsMenu = new Menu(toolBar);
-		closedWindowsMenu->setRole(Menu::ClosedWindowsMenu);
-
-		closedWindowsAction->setMenu(closedWindowsMenu);
+		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, toolBar));
 		closedWindowsAction->setEnabled(false);
 
 		QToolButton *closedWindowsMenuButton = new QToolButton(toolBar);
