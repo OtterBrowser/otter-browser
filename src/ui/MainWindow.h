@@ -40,6 +40,7 @@ namespace Ui
 class ActionsManager;
 class MdiWidget;
 class MenuBarWidget;
+class StatusBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
 class ToolBarWidget;
@@ -93,8 +94,8 @@ private:
 	MdiWidget *m_mdiWidget;
 	TabBarWidget *m_tabBar;
 	ToolBarWidget *m_tabBarToolBar;
-	ToolBarWidget *m_statusBar;
 	MenuBarWidget *m_menuBar;
+	StatusBarWidget *m_statusBar;
 	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
 	QSplitter *m_splitter;

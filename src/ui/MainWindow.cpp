@@ -29,6 +29,7 @@
 #include "PreferencesDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "StatusBarWidget.h"
 #include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
 #include "ToolBarWidget.h"
@@ -89,9 +90,9 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	centralLayout->setSpacing(0);
 	centralLayout->addWidget(m_splitter);
 
-	m_statusBar = new ToolBarWidget(QLatin1String("StatusBar"), NULL, centralWidget);
+	m_statusBar = new StatusBarWidget(this);
 
-	centralLayout->addWidget(m_statusBar);
+	setStatusBar(m_statusBar);
 
 	setCentralWidget(centralWidget);
 
