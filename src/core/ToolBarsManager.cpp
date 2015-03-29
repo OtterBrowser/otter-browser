@@ -31,7 +31,8 @@ namespace Otter
 ToolBarsManager* ToolBarsManager::m_instance = NULL;
 QHash<QString, ToolBarDefinition> ToolBarsManager::m_definitions;
 
-ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent)
+ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
+	m_saveTimer(0)
 {
 }
 
@@ -40,6 +41,157 @@ void ToolBarsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ToolBarsManager(parent);
+	}
+}
+
+void ToolBarsManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_saveTimer)
+	{
+		killTimer(m_saveTimer);
+
+		m_saveTimer = 0;
+
+		if (!m_definitions.isEmpty())
+		{
+			QJsonArray definitions;
+			QHash<QString, ToolBarDefinition>::iterator definitionsIterator;
+
+			for (definitionsIterator = m_definitions.begin(); definitionsIterator != m_definitions.end(); ++definitionsIterator)
+			{
+				if (definitionsIterator.value().isDefault)
+				{
+					continue;
+				}
+
+				QJsonObject definition;
+				definition.insert(QLatin1String("identifier"), QJsonValue(definitionsIterator.value().identifier));
+				definition.insert(QLatin1String("title"), QJsonValue(definitionsIterator.value().title));
+
+				if (!definitionsIterator.value().bookmarksPath.isEmpty())
+				{
+					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(definitionsIterator.value().bookmarksPath));
+				}
+
+				if (definitionsIterator.value().location != Qt::NoToolBarArea)
+				{
+					QString location;
+
+					switch (definitionsIterator.value().location)
+					{
+						case Qt::BottomToolBarArea:
+							location = QLatin1String("bottom");
+
+							break;
+						case Qt::LeftToolBarArea:
+							location = QLatin1String("left");
+
+							break;
+						case Qt::RightToolBarArea:
+							location = QLatin1String("right");
+
+							break;
+						default:
+							location = QLatin1String("top");
+
+							break;
+					}
+
+					definition.insert(QLatin1String("location"), QJsonValue(location));
+				}
+
+				QString buttonStyle;
+
+				switch (definitionsIterator.value().buttonStyle)
+				{
+					case Qt::ToolButtonFollowStyle:
+						buttonStyle = QLatin1String("auto");
+
+						break;
+					case Qt::ToolButtonTextOnly:
+						buttonStyle = QLatin1String("textOnly");
+
+						break;
+					case Qt::ToolButtonTextBesideIcon:
+						buttonStyle = QLatin1String("textBesideIcon");
+
+						break;
+					case Qt::ToolButtonTextUnderIcon:
+						buttonStyle = QLatin1String("textUnderIcon");
+
+						break;
+					default:
+						buttonStyle = QLatin1String("iconOnly");
+
+						break;
+				}
+
+				definition.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
+
+				if (definitionsIterator.value().iconSize > 0)
+				{
+					definition.insert(QLatin1String("iconSize"), QJsonValue(definitionsIterator.value().iconSize));
+				}
+
+				if (definitionsIterator.value().maximumButtonSize > 0)
+				{
+					definition.insert(QLatin1String("iconSize"), QJsonValue(definitionsIterator.value().maximumButtonSize));
+				}
+
+				if (!definitionsIterator.value().actions.isEmpty())
+				{
+					QJsonArray actions;
+
+					for (int i = 0; i < definitionsIterator.value().actions.count(); ++i)
+					{
+						if (definitionsIterator.value().actions.at(i).options.isEmpty())
+						{
+							actions.append(QJsonValue(definitionsIterator.value().actions.at(i).action));
+						}
+						else
+						{
+							QJsonObject action;
+							action.insert(QLatin1String("identifier"), QJsonValue(definitionsIterator.value().actions.at(i).action));
+
+							QJsonObject options;
+							QVariantMap::const_iterator optionsIterator;
+
+							for (optionsIterator = definitionsIterator.value().actions.at(i).options.begin(); optionsIterator != definitionsIterator.value().actions.at(i).options.end(); ++optionsIterator)
+							{
+								options.insert(optionsIterator.key(), QJsonValue::fromVariant(optionsIterator.value()));
+							}
+
+							action.insert(QLatin1String("options"), options);
+
+							actions.append(action);
+						}
+					}
+
+					definition.insert(QLatin1String("actions"), actions);
+				}
+
+				definitions.append(definition);
+			}
+
+			QJsonDocument document;
+			document.setArray(definitions);
+
+			QFile file(SessionsManager::getWritableDataPath(QLatin1String("toolBars.json")));
+
+			if (file.open(QFile::WriteOnly))
+			{
+				file.write(document.toJson(QJsonDocument::Indented));
+				file.close();
+			}
+		}
+	}
+}
+
+void ToolBarsManager::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(1000);
 	}
 }
 

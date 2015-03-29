@@ -58,7 +58,14 @@ public:
 	static ToolBarDefinition getToolBarDefinition(const QString &identifier);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	static QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
+
+protected slots:
+	void scheduleSave();
+
+private:
+	int m_saveTimer;
 
 private:
 	explicit ToolBarsManager(QObject *parent = NULL);
