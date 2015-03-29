@@ -54,7 +54,7 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 
 	if (identifier == QLatin1String("StatusBar"))
 	{
-		setFixedHeight(ActionsManager::getToolBarDefinition(m_identifier).iconSize);
+		setFixedHeight(ToolBarsManager::getToolBarDefinition(m_identifier).iconSize);
 	}
 
 	if (!identifier.isEmpty())
@@ -62,13 +62,9 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 		setObjectName(identifier);
 		setup();
 
-		if (m_mainWindow)
-		{
-			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
-			connect(m_mainWindow->getActionsManager(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
-		}
-
 		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
 	}
 
 	if (m_mainWindow && (parent == m_mainWindow || m_identifier.isEmpty()))
@@ -120,7 +116,7 @@ void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ToolBarWidget::setup()
 {
-	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(m_identifier);
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
 	clear();
 
@@ -186,7 +182,7 @@ void ToolBarWidget::notifyWindowChanged(qint64 identifier)
 
 void ToolBarWidget::updateBookmarks()
 {
-	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(m_identifier);
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
 	clear();
 
@@ -321,7 +317,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 
 int ToolBarWidget::getMaximumButtonSize() const
 {
-	return ActionsManager::getToolBarDefinition(m_identifier).maximumButtonSize;
+	return ToolBarsManager::getToolBarDefinition(m_identifier).maximumButtonSize;
 }
 
 }

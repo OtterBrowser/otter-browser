@@ -96,7 +96,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	setCentralWidget(centralWidget);
 
-	const QList<ToolBarDefinition> toolBarDefinitions = ActionsManager::getToolBarDefinitions();
+	const QList<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
@@ -127,8 +127,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	placeSidebars();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(QString)), this, SLOT(addToolBar(QString)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
-	connect(m_actionsManager, SIGNAL(toolBarAdded(QString)), this, SLOT(addToolBar(QString)));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
@@ -740,7 +740,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 
 void MainWindow::addToolBar(const QString &identifier)
 {
-	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(identifier);
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
 	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
 	toolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 

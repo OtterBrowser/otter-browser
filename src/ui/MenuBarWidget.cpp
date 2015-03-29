@@ -59,7 +59,7 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	{
 		setup();
 
-		connect(parent->getActionsManager(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
 	}
 }
 
@@ -82,7 +82,7 @@ void MenuBarWidget::resizeEvent(QResizeEvent *event)
 
 void MenuBarWidget::setup()
 {
-	const ToolBarDefinition definition = ActionsManager::getToolBarDefinition(QLatin1String("MenuBar"));
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(QLatin1String("MenuBar"));
 	QStringList actions;
 
 	for (int i = 0; i < definition.actions.count(); ++i)

@@ -31,27 +31,6 @@
 namespace Otter
 {
 
-struct ToolBarActionDefinition
-{
-	QString action;
-	QVariantMap options;
-};
-
-struct ToolBarDefinition
-{
-	QString identifier;
-	QString title;
-	QString bookmarksPath;
-	QList<ToolBarActionDefinition> actions;
-	Qt::ToolBarArea location;
-	Qt::ToolButtonStyle buttonStyle;
-	int iconSize;
-	int maximumButtonSize;
-	bool isDefault;
-
-	ToolBarDefinition() : location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), iconSize(-1), maximumButtonSize(-1), isDefault(false) {}
-};
-
 struct ActionDefinition
 {
 	QString text;
@@ -78,12 +57,10 @@ protected:
 	ActionsManagerHelper(QObject *parent);
 
 	void timerEvent(QTimerEvent *event);
-	QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault) const;
 	int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
 
 	int reloadShortcutsTimer;
-	QVector<ActionDefinition> actionDefinitions;
-	QHash<QString, ToolBarDefinition> toolBarDefinitions;
+	QVector<ActionDefinition> definitions;
 
 protected slots:
 	void optionChanged(const QString &option);
@@ -109,9 +86,7 @@ public:
 	static Action* getAction(int identifier, QObject *parent);
 	static QString getActionName(int identifier);
 	static QList<ActionDefinition> getActionDefinitions();
-	static QList<ToolBarDefinition> getToolBarDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
-	static ToolBarDefinition getToolBarDefinition(const QString &toolBar);
 	static int getActionIdentifier(const QString &name);
 
 protected:
@@ -132,11 +107,6 @@ private:
 	static ActionsManagerHelper *m_helper;
 	static Action *m_dummyAction;
 	static QMutex m_mutex;
-
-signals:
-	void toolBarAdded(const QString &identifier);
-	void toolBarModified(const QString &identifier);
-	void toolBarRemoved(const QString &identifier);
 };
 
 }

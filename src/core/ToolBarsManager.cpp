@@ -1,0 +1,223 @@
+/**************************************************************************
+* Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+**************************************************************************/
+
+#include "ToolBarsManager.h"
+#include "SessionsManager.h"
+
+#include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+
+namespace Otter
+{
+
+ToolBarsManager* ToolBarsManager::m_instance = NULL;
+QHash<QString, ToolBarDefinition> ToolBarsManager::m_definitions;
+
+ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent)
+{
+}
+
+void ToolBarsManager::createInstance(QObject *parent)
+{
+	if (!m_instance)
+	{
+		m_instance = new ToolBarsManager(parent);
+	}
+}
+
+ToolBarsManager* ToolBarsManager::getInstance()
+{
+	return m_instance;
+}
+
+ToolBarDefinition ToolBarsManager::getToolBarDefinition(const QString &identifier)
+{
+	if (m_definitions.isEmpty())
+	{
+		getToolBarDefinitions();
+	}
+
+	if (!m_definitions.contains(identifier))
+	{
+		ToolBarDefinition definition;
+		definition.identifier = identifier;
+
+		return definition;
+	}
+
+	return m_definitions[identifier];
+}
+
+QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &path, bool isDefault)
+{
+	QHash<QString, ToolBarDefinition> definitions;
+	QFile file(path);
+
+	if (!file.open(QFile::ReadOnly))
+	{
+		return definitions;
+	}
+
+	const QJsonArray toolBars = QJsonDocument::fromJson(file.readAll()).array();
+
+	for (int i = 0; i < toolBars.count(); ++i)
+	{
+		const QJsonObject toolBarObject = toolBars.at(i).toObject();
+		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
+		const QString location = toolBarObject.value(QLatin1String("location")).toString();
+		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
+		ToolBarDefinition toolBar;
+		toolBar.identifier = toolBarObject.value(QLatin1String("identifier")).toString();
+		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
+		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
+		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
+		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
+		toolBar.isDefault = isDefault;
+
+		if (location == QLatin1String("top"))
+		{
+			toolBar.location = Qt::TopToolBarArea;
+		}
+		else if (location == QLatin1String("bottom"))
+		{
+			toolBar.location = Qt::BottomToolBarArea;
+		}
+		else if (location == QLatin1String("left"))
+		{
+			toolBar.location = Qt::LeftToolBarArea;
+		}
+		else if (location == QLatin1String("right"))
+		{
+			toolBar.location = Qt::RightToolBarArea;
+		}
+
+		if (buttonStyle == QLatin1String("auto"))
+		{
+			toolBar.buttonStyle = Qt::ToolButtonFollowStyle;
+		}
+		else if (buttonStyle == QLatin1String("textOnly"))
+		{
+			toolBar.buttonStyle = Qt::ToolButtonTextOnly;
+		}
+		else if (buttonStyle == QLatin1String("textBesideIcon"))
+		{
+			toolBar.buttonStyle = Qt::ToolButtonTextBesideIcon;
+		}
+		else if (buttonStyle == QLatin1String("textUnderIcon"))
+		{
+			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
+		}
+
+		for (int j = 0; j < actions.count(); ++j)
+		{
+			ToolBarActionDefinition action;
+
+			if (actions.at(j).isObject())
+			{
+				const QJsonObject actionObject = actions.at(j).toObject();
+
+				action.action = actionObject.value(QLatin1String("identifier")).toString();
+				action.options = actionObject.value(QLatin1String("options")).toObject().toVariantMap();
+			}
+			else
+			{
+				action.action = actions.at(j).toString();
+			}
+
+			toolBar.actions.append(action);
+		}
+
+		definitions[toolBar.identifier] = toolBar;
+	}
+
+	return definitions;
+}
+
+QList<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
+{
+	if (m_definitions.isEmpty())
+	{
+		m_definitions = loadToolBars(QLatin1String(":/other/toolBars.json"), true);
+
+		const QString customToolBarsPath = SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"));
+
+		if (QFile::exists(customToolBarsPath))
+		{
+			const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath, false);
+			QHash<QString, ToolBarDefinition>::const_iterator iterator;
+
+			for (iterator = customToolBarDefinitions.constBegin(); iterator != customToolBarDefinitions.constEnd(); ++iterator)
+			{
+				m_definitions[iterator.key()] = iterator.value();
+			}
+		}
+
+		if (m_definitions.contains(QLatin1String("MenuBar")))
+		{
+			bool hasMenuBar = false;
+
+			for (int i = 0; i < m_definitions[QLatin1String("MenuBar")].actions.count(); ++i)
+			{
+				if (m_definitions[QLatin1String("MenuBar")].actions.at(i).action == QLatin1String("MenuBarWidget"))
+				{
+					hasMenuBar = true;
+
+					break;
+				}
+			}
+
+			if (!hasMenuBar)
+			{
+				ToolBarActionDefinition definition;
+				definition.action = QLatin1String("MenuBar");
+
+				m_definitions[QLatin1String("MenuBar")].actions.prepend(definition);
+			}
+		}
+
+		if (m_definitions.contains(QLatin1String("TabBar")))
+		{
+			bool hasTabBar = false;
+
+			for (int i = 0; i < m_definitions[QLatin1String("TabBar")].actions.count(); ++i)
+			{
+				if (m_definitions[QLatin1String("TabBar")].actions.at(i).action == QLatin1String("TabBarWidget"))
+				{
+					hasTabBar = true;
+
+					break;
+				}
+			}
+
+			if (!hasTabBar)
+			{
+				ToolBarActionDefinition definition;
+				definition.action = QLatin1String("TabBar");
+
+				m_definitions[QLatin1String("TabBar")].actions.prepend(definition);
+			}
+		}
+	}
+
+	return m_definitions.values();
+}
+
+}

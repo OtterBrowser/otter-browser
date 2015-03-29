@@ -26,6 +26,7 @@
 #include "NotesManager.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
+#include "ToolBarsManager.h"
 #include "Transfer.h"
 #include "TransfersManager.h"
 #include "./config.h"
@@ -195,6 +196,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	NotesManager::createInstance(this);
 
 	SearchesManager::createInstance(this);
+
+	ToolBarsManager::createInstance(this);
 
 	TransfersManager::createInstance(this);
 

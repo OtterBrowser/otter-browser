@@ -22,12 +22,13 @@
 
 #include <QtWidgets/QToolBar>
 
-#include "../core/ActionsManager.h"
+#include "../core/ToolBarsManager.h"
 
 namespace Otter
 {
 
 class MainWindow;
+class Window;
 
 class ToolBarWidget : public QToolBar
 {

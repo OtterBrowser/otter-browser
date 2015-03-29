@@ -26,10 +26,6 @@
 #include "../ui/MainWindow.h"
 #include "../ui/Window.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 
@@ -61,7 +57,7 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"));
 
-	actionDefinitions.reserve(Action::OtherAction);
+	definitions.reserve(Action::OtherAction);
 
 	registerAction(Action::NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")));
 	registerAction(Action::NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), Utils::getIcon(QLatin1String("tab-new-private")));
@@ -214,67 +210,6 @@ ActionsManagerHelper::ActionsManagerHelper(QObject *parent) : QObject(parent),
 
 	GesturesManager::createInstance(Application::getInstance());
 
-	toolBarDefinitions = loadToolBars(QLatin1String(":/other/toolBars.json"), true);
-
-	const QString customToolBarsPath = SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"));
-
-	if (QFile::exists(customToolBarsPath))
-	{
-		const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath, false);
-		QHash<QString, ToolBarDefinition>::const_iterator iterator;
-
-		for (iterator = customToolBarDefinitions.constBegin(); iterator != customToolBarDefinitions.constEnd(); ++iterator)
-		{
-			toolBarDefinitions[iterator.key()] = iterator.value();
-		}
-	}
-
-	if (toolBarDefinitions.contains(QLatin1String("MenuBar")))
-	{
-		bool hasMenuBar = false;
-
-		for (int i = 0; i < toolBarDefinitions[QLatin1String("MenuBar")].actions.count(); ++i)
-		{
-			if (toolBarDefinitions[QLatin1String("MenuBar")].actions.at(i).action == QLatin1String("MenuBarWidget"))
-			{
-				hasMenuBar = true;
-
-				break;
-			}
-		}
-
-		if (!hasMenuBar)
-		{
-			ToolBarActionDefinition definition;
-			definition.action = QLatin1String("MenuBar");
-
-			toolBarDefinitions[QLatin1String("MenuBar")].actions.prepend(definition);
-		}
-	}
-
-	if (toolBarDefinitions.contains(QLatin1String("TabBar")))
-	{
-		bool hasTabBar = false;
-
-		for (int i = 0; i < toolBarDefinitions[QLatin1String("TabBar")].actions.count(); ++i)
-		{
-			if (toolBarDefinitions[QLatin1String("TabBar")].actions.at(i).action == QLatin1String("TabBarWidget"))
-			{
-				hasTabBar = true;
-
-				break;
-			}
-		}
-
-		if (!hasTabBar)
-		{
-			ToolBarActionDefinition definition;
-			definition.action = QLatin1String("TabBar");
-
-			toolBarDefinitions[QLatin1String("TabBar")].actions.prepend(definition);
-		}
-	}
-
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -290,91 +225,6 @@ void ActionsManagerHelper::timerEvent(QTimerEvent *event)
 	}
 }
 
-QHash<QString, ToolBarDefinition> ActionsManagerHelper::loadToolBars(const QString &path, bool isDefault) const
-{
-	QHash<QString, ToolBarDefinition> definitions;
-	QFile file(path);
-
-	if (!file.open(QFile::ReadOnly))
-	{
-		return definitions;
-	}
-
-	const QJsonArray toolBars = QJsonDocument::fromJson(file.readAll()).array();
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		const QJsonObject toolBarObject = toolBars.at(i).toObject();
-		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
-		const QString location = toolBarObject.value(QLatin1String("location")).toString();
-		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
-		ToolBarDefinition toolBar;
-		toolBar.identifier = toolBarObject.value(QLatin1String("identifier")).toString();
-		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
-		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
-		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
-		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
-		toolBar.isDefault = isDefault;
-
-		if (location == QLatin1String("top"))
-		{
-			toolBar.location = Qt::TopToolBarArea;
-		}
-		else if (location == QLatin1String("bottom"))
-		{
-			toolBar.location = Qt::BottomToolBarArea;
-		}
-		else if (location == QLatin1String("left"))
-		{
-			toolBar.location = Qt::LeftToolBarArea;
-		}
-		else if (location == QLatin1String("right"))
-		{
-			toolBar.location = Qt::RightToolBarArea;
-		}
-
-		if (buttonStyle == QLatin1String("auto"))
-		{
-			toolBar.buttonStyle = Qt::ToolButtonFollowStyle;
-		}
-		else if (buttonStyle == QLatin1String("textOnly"))
-		{
-			toolBar.buttonStyle = Qt::ToolButtonTextOnly;
-		}
-		else if (buttonStyle == QLatin1String("textBesideIcon"))
-		{
-			toolBar.buttonStyle = Qt::ToolButtonTextBesideIcon;
-		}
-		else if (buttonStyle == QLatin1String("textUnderIcon"))
-		{
-			toolBar.buttonStyle = Qt::ToolButtonTextUnderIcon;
-		}
-
-		for (int j = 0; j < actions.count(); ++j)
-		{
-			ToolBarActionDefinition action;
-
-			if (actions.at(j).isObject())
-			{
-				const QJsonObject actionObject = actions.at(j).toObject();
-
-				action.action = actionObject.value(QLatin1String("identifier")).toString();
-				action.options = actionObject.value(QLatin1String("options")).toObject().toVariantMap();
-			}
-			else
-			{
-				action.action = actions.at(j).toString();
-			}
-
-			toolBar.actions.append(action);
-		}
-
-		definitions[toolBar.identifier] = toolBar;
-	}
-
-	return definitions;
-}
-
 int ActionsManagerHelper::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked)
 {
 	ActionDefinition action;
@@ -386,9 +236,9 @@ int ActionsManagerHelper::registerAction(int identifier, const QString &text, co
 	action.isCheckable = isCheckable;
 	action.isChecked = isChecked;
 
-	actionDefinitions.append(action);
+	definitions.append(action);
 
-	return (actionDefinitions.count() - 1);
+	return (definitions.count() - 1);
 }
 
 void ActionsManagerHelper::optionChanged(const QString &option)
@@ -408,7 +258,7 @@ ActionsManager::ActionsManager(MainWindow *parent) : QObject(parent),
 		initialize();
 	}
 
-	m_standardActions.fill(NULL, m_helper->actionDefinitions.count());
+	m_standardActions.fill(NULL, m_helper->definitions.count());
 
 	updateShortcuts();
 
@@ -442,7 +292,7 @@ void ActionsManager::actionTriggered()
 		{
 			if (m_actionShortcuts[i].second.contains(shortcut))
 			{
-				const ActionDefinition definition = m_helper->actionDefinitions.value(m_actionShortcuts[i].first);
+				const ActionDefinition definition = m_helper->definitions.value(m_actionShortcuts[i].first);
 
 				m_mutex.unlock();
 
@@ -506,14 +356,14 @@ void ActionsManager::updateShortcuts()
 
 	m_mutex.lock();
 
-	for (int i = 0; i < m_helper->actionDefinitions.count(); ++i)
+	for (int i = 0; i < m_helper->definitions.count(); ++i)
 	{
 		QVector<QShortcut*> shortcuts;
-		shortcuts.reserve(m_helper->actionDefinitions[i].shortcuts.count());
+		shortcuts.reserve(m_helper->definitions[i].shortcuts.count());
 
-		for (int j = 0; j < m_helper->actionDefinitions[i].shortcuts.count(); ++j)
+		for (int j = 0; j < m_helper->definitions[i].shortcuts.count(); ++j)
 		{
-			QShortcut *shortcut = new QShortcut(m_helper->actionDefinitions[i].shortcuts[j], m_mainWindow);
+			QShortcut *shortcut = new QShortcut(m_helper->definitions[i].shortcuts[j], m_mainWindow);
 
 			shortcuts.append(shortcut);
 
@@ -588,9 +438,9 @@ void ActionsManager::loadShortcuts()
 		}
 	}
 
-	for (int i = 0; i < m_helper->actionDefinitions.count(); ++i)
+	for (int i = 0; i < m_helper->definitions.count(); ++i)
 	{
-		m_helper->actionDefinitions[i].shortcuts = actionShortcuts.value(i);
+		m_helper->definitions[i].shortcuts = actionShortcuts.value(i);
 	}
 
 	m_mutex.unlock();
@@ -641,14 +491,14 @@ Action* ActionsManager::getAction(int identifier)
 		initialize();
 	}
 
-	if (identifier < 0 || identifier >= m_standardActions.count() || identifier >= m_helper->actionDefinitions.count())
+	if (identifier < 0 || identifier >= m_standardActions.count() || identifier >= m_helper->definitions.count())
 	{
 		return NULL;
 	}
 
 	if (!m_standardActions[identifier])
 	{
-		const ActionDefinition definition = m_helper->actionDefinitions[identifier];
+		const ActionDefinition definition = m_helper->definitions[identifier];
 		Action *action = new Action(identifier, m_mainWindow);
 
 		m_standardActions[identifier] = action;
@@ -701,17 +551,7 @@ QList<ActionDefinition> ActionsManager::getActionDefinitions()
 		initialize();
 	}
 
-	return m_helper->actionDefinitions.toList();
-}
-
-QList<ToolBarDefinition> ActionsManager::getToolBarDefinitions()
-{
-	if (!m_helper)
-	{
-		initialize();
-	}
-
-	return m_helper->toolBarDefinitions.values();
+	return m_helper->definitions.toList();
 }
 
 ActionDefinition ActionsManager::getActionDefinition(int identifier)
@@ -721,30 +561,12 @@ ActionDefinition ActionsManager::getActionDefinition(int identifier)
 		initialize();
 	}
 
-	if (identifier < 0 || identifier >= m_helper->actionDefinitions.count())
+	if (identifier < 0 || identifier >= m_helper->definitions.count())
 	{
 		return ActionDefinition();
 	}
 
-	return m_helper->actionDefinitions[identifier];
-}
-
-ToolBarDefinition ActionsManager::getToolBarDefinition(const QString &toolBar)
-{
-	if (!m_helper)
-	{
-		initialize();
-	}
-
-	if (!m_helper->toolBarDefinitions.contains(toolBar))
-	{
-		ToolBarDefinition definition;
-		definition.identifier = toolBar;
-
-		return definition;
-	}
-
-	return m_helper->toolBarDefinitions[toolBar];
+	return m_helper->definitions[identifier];
 }
 
 int ActionsManager::getActionIdentifier(const QString &name)

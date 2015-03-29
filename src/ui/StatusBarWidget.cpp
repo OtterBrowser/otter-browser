@@ -36,9 +36,11 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 {
 	m_toolBar->setParent(this);
 
-	setFixedHeight(ActionsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
+	setFixedHeight(ToolBarsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
 
 	QTimer::singleShot(100, this, SLOT(updateSize()));
+
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
 }
 
 void StatusBarWidget::paintEvent(QPaintEvent *event)
@@ -63,7 +65,7 @@ void StatusBarWidget::toolBarModified(const QString &identifier)
 {
 	if (identifier == QLatin1String("StatusBar"))
 	{
-		setFixedHeight(ActionsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
+		setFixedHeight(ToolBarsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
 	}
 }
 
@@ -72,7 +74,7 @@ void StatusBarWidget::updateSize()
 	QSizeGrip *sizeGrip = findChild<QSizeGrip*>();
 	const int offset = (sizeGrip ? sizeGrip->width() : 0);
 
-	m_toolBar->setFixedSize((width() - offset), ActionsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
+	m_toolBar->setFixedSize((width() - offset), ToolBarsManager::getToolBarDefinition(QLatin1String("StatusBar")).iconSize);
 	m_toolBar->move(((layoutDirection() == Qt::LeftToRight) ? 0 : offset), 0);
 }
 
