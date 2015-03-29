@@ -61,7 +61,6 @@ protected:
 	int findTransfer(Transfer *transfer) const;
 
 protected slots:
-	void triggerAction();
 	void addTransfer(Transfer *transfer);
 	void removeTransfer(Transfer *transfer);
 	void removeTransfer();

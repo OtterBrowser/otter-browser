@@ -59,7 +59,6 @@ protected:
 	BookmarksItem* findFolder(const QModelIndex &index);
 
 protected slots:
-	void triggerAction();
 	void addNote();
 	void addFolder();
 	void addSeparator();

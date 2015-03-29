@@ -104,16 +104,6 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void TransfersContentsWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void TransfersContentsWidget::addTransfer(Transfer *transfer)
 {
 	QList<QStandardItem*> items;

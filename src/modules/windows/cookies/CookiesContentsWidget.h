@@ -60,7 +60,6 @@ protected:
 	QNetworkCookie getCookie(const QModelIndex &index) const;
 
 protected slots:
-	void triggerAction();
 	void populateCookies();
 	void filterCookies(const QString &filter);
 	void addCookie(const QNetworkCookie &cookie);

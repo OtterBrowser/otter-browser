@@ -241,16 +241,6 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void NotesContentsWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void NotesContentsWidget::updateActions()
 {
 	const bool hasSelecion = !m_ui->notesView->selectionModel()->selectedIndexes().isEmpty();

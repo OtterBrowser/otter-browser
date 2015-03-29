@@ -71,6 +71,22 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void ContentsWidget::triggerAction(int identifier, bool checked)
+{
+	Q_UNUSED(identifier)
+	Q_UNUSED(checked)
+}
+
+void ContentsWidget::triggerAction()
+{
+	Action *action = qobject_cast<Action*>(sender());
+
+	if (action)
+	{
+		triggerAction(action->getIdentifier(), action->isChecked());
+	}
+}
+
 void ContentsWidget::close()
 {
 	for (int i = 0; i < m_dialogs.count(); ++i)
@@ -126,12 +142,6 @@ void ContentsWidget::hideDialog(ContentsDialog *dialog)
 void ContentsWidget::goToHistoryIndex(int index)
 {
 	Q_UNUSED(index)
-}
-
-void ContentsWidget::triggerAction(int identifier, bool checked)
-{
-	Q_UNUSED(identifier)
-	Q_UNUSED(checked)
 }
 
 void ContentsWidget::setHistory(const WindowHistoryInformation &history)

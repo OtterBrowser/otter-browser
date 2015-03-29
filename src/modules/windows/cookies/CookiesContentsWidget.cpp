@@ -299,16 +299,6 @@ void CookiesContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void CookiesContentsWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void CookiesContentsWidget::updateActions()
 {
 	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();

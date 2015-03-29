@@ -90,16 +90,6 @@ void CacheContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void CacheContentsWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void CacheContentsWidget::populateCache()
 {
 	NetworkCache *cache = NetworkManagerFactory::getCache();

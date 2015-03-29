@@ -240,16 +240,6 @@ void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void BookmarksContentsWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier());
-	}
-}
-
 void BookmarksContentsWidget::updateActions()
 {
 	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();

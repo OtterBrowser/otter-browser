@@ -78,6 +78,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
+	void triggerAction();
 	void close();
 
 private:

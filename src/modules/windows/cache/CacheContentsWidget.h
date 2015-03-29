@@ -61,7 +61,6 @@ protected:
 	QUrl getEntry(const QModelIndex &index) const;
 
 protected slots:
-	void triggerAction();
 	void populateCache();
 	void filterCache(const QString &filter);
 	void clearEntries();
