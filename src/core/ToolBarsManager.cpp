@@ -24,12 +24,14 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QVector>
 
 namespace Otter
 {
 
 ToolBarsManager* ToolBarsManager::m_instance = NULL;
-QHash<QString, ToolBarDefinition> ToolBarsManager::m_definitions;
+QMap<int, QString> ToolBarsManager::m_identifiers;
+QVector<ToolBarDefinition> ToolBarsManager::m_definitions;
 
 ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
@@ -55,29 +57,62 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 		if (!m_definitions.isEmpty())
 		{
 			QJsonArray definitions;
-			QHash<QString, ToolBarDefinition>::iterator definitionsIterator;
 
-			for (definitionsIterator = m_definitions.begin(); definitionsIterator != m_definitions.end(); ++definitionsIterator)
+			for (int i = 0; i < m_definitions.count(); ++i)
 			{
-				if (definitionsIterator.value().isDefault)
+				if (m_definitions[i].isDefault)
+				{
+					continue;
+				}
+
+				QString identifier;
+
+				if (m_identifiers.contains(m_definitions[i].identifier))
+				{
+					identifier = m_identifiers[m_definitions[i].identifier];
+				}
+				else
+				{
+					switch (m_definitions[i].identifier)
+					{
+						case MenuBar:
+							identifier = QLatin1String("MenuBar");
+
+							break;
+						case TabBar:
+							identifier = QLatin1String("TabBar");
+
+							break;
+						case NavigationBar:
+							identifier = QLatin1String("NavigationBar");
+
+							break;
+						case StatusBar:
+							identifier = QLatin1String("StatusBar");
+
+							break;
+					}
+				}
+
+				if (identifier.isEmpty())
 				{
 					continue;
 				}
 
 				QJsonObject definition;
-				definition.insert(QLatin1String("identifier"), QJsonValue(definitionsIterator.value().identifier));
-				definition.insert(QLatin1String("title"), QJsonValue(definitionsIterator.value().title));
+				definition.insert(QLatin1String("identifier"), QJsonValue(identifier));
+				definition.insert(QLatin1String("title"), QJsonValue(m_definitions[i].title));
 
-				if (!definitionsIterator.value().bookmarksPath.isEmpty())
+				if (!m_definitions[i].bookmarksPath.isEmpty())
 				{
-					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(definitionsIterator.value().bookmarksPath));
+					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
 				}
 
-				if (definitionsIterator.value().location != Qt::NoToolBarArea)
+				if (m_definitions[i].location != Qt::NoToolBarArea)
 				{
 					QString location;
 
-					switch (definitionsIterator.value().location)
+					switch (m_definitions[i].location)
 					{
 						case Qt::BottomToolBarArea:
 							location = QLatin1String("bottom");
@@ -102,7 +137,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 				QString buttonStyle;
 
-				switch (definitionsIterator.value().buttonStyle)
+				switch (m_definitions[i].buttonStyle)
 				{
 					case Qt::ToolButtonFollowStyle:
 						buttonStyle = QLatin1String("auto");
@@ -128,35 +163,35 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 				definition.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
 
-				if (definitionsIterator.value().iconSize > 0)
+				if (m_definitions[i].iconSize > 0)
 				{
-					definition.insert(QLatin1String("iconSize"), QJsonValue(definitionsIterator.value().iconSize));
+					definition.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].iconSize));
 				}
 
-				if (definitionsIterator.value().maximumButtonSize > 0)
+				if (m_definitions[i].maximumButtonSize > 0)
 				{
-					definition.insert(QLatin1String("iconSize"), QJsonValue(definitionsIterator.value().maximumButtonSize));
+					definition.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].maximumButtonSize));
 				}
 
-				if (!definitionsIterator.value().actions.isEmpty())
+				if (!m_definitions[i].actions.isEmpty())
 				{
 					QJsonArray actions;
 
-					for (int i = 0; i < definitionsIterator.value().actions.count(); ++i)
+					for (int j = 0; j < m_definitions[i].actions.count(); ++j)
 					{
-						if (definitionsIterator.value().actions.at(i).options.isEmpty())
+						if (m_definitions[i].actions.at(j).options.isEmpty())
 						{
-							actions.append(QJsonValue(definitionsIterator.value().actions.at(i).action));
+							actions.append(QJsonValue(m_definitions[i].actions.at(j).action));
 						}
 						else
 						{
 							QJsonObject action;
-							action.insert(QLatin1String("identifier"), QJsonValue(definitionsIterator.value().actions.at(i).action));
+							action.insert(QLatin1String("identifier"), QJsonValue(m_definitions[i].actions.at(j).action));
 
 							QJsonObject options;
 							QVariantMap::const_iterator optionsIterator;
 
-							for (optionsIterator = definitionsIterator.value().actions.at(i).options.begin(); optionsIterator != definitionsIterator.value().actions.at(i).options.end(); ++optionsIterator)
+							for (optionsIterator = m_definitions[i].actions.at(j).options.begin(); optionsIterator != m_definitions[i].actions.at(j).options.end(); ++optionsIterator)
 							{
 								options.insert(optionsIterator.key(), QJsonValue::fromVariant(optionsIterator.value()));
 							}
@@ -200,22 +235,19 @@ ToolBarsManager* ToolBarsManager::getInstance()
 	return m_instance;
 }
 
-ToolBarDefinition ToolBarsManager::getToolBarDefinition(const QString &identifier)
+ToolBarDefinition ToolBarsManager::getToolBarDefinition(int identifier)
 {
 	if (m_definitions.isEmpty())
 	{
 		getToolBarDefinitions();
 	}
 
-	if (!m_definitions.contains(identifier))
+	if (identifier >= 0 && identifier < m_definitions.count())
 	{
-		ToolBarDefinition definition;
-		definition.identifier = identifier;
-
-		return definition;
+		return m_definitions[identifier];
 	}
 
-	return m_definitions[identifier];
+	return ToolBarDefinition();
 }
 
 QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &path, bool isDefault)
@@ -234,10 +266,10 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 	{
 		const QJsonObject toolBarObject = toolBars.at(i).toObject();
 		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
+		const QString identifier = toolBarObject.value(QLatin1String("identifier")).toString();
 		const QString location = toolBarObject.value(QLatin1String("location")).toString();
 		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
 		ToolBarDefinition toolBar;
-		toolBar.identifier = toolBarObject.value(QLatin1String("identifier")).toString();
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
@@ -297,79 +329,111 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 			toolBar.actions.append(action);
 		}
 
-		definitions[toolBar.identifier] = toolBar;
+		definitions[identifier] = toolBar;
 	}
 
 	return definitions;
 }
 
-QList<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
+QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 {
 	if (m_definitions.isEmpty())
 	{
-		m_definitions = loadToolBars(QLatin1String(":/other/toolBars.json"), true);
+		const QHash<QString, ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+
+		m_definitions.reserve(4);
+		m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
+		m_definitions.append(defaultDefinitions[QLatin1String("TabBar")]);
+		m_definitions.append(defaultDefinitions[QLatin1String("NavigationBar")]);
+		m_definitions.append(defaultDefinitions[QLatin1String("StatusBar")]);
 
 		const QString customToolBarsPath = SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"));
 
 		if (QFile::exists(customToolBarsPath))
 		{
-			const QHash<QString, ToolBarDefinition> customToolBarDefinitions = loadToolBars(customToolBarsPath, false);
+			const QHash<QString, ToolBarDefinition> customDefinitions = loadToolBars(customToolBarsPath, false);
 			QHash<QString, ToolBarDefinition>::const_iterator iterator;
 
-			for (iterator = customToolBarDefinitions.constBegin(); iterator != customToolBarDefinitions.constEnd(); ++iterator)
+			for (iterator = customDefinitions.constBegin(); iterator != customDefinitions.constEnd(); ++iterator)
 			{
-				m_definitions[iterator.key()] = iterator.value();
+				int identifier = -1;
+
+				if (iterator.key() == QLatin1String("MenuBar"))
+				{
+					identifier = MenuBar;
+				}
+				else if (iterator.key() == QLatin1String("TabBar"))
+				{
+					identifier = TabBar;
+				}
+				else if (iterator.key() == QLatin1String("NavigationBar"))
+				{
+					identifier = NavigationBar;
+				}
+				else if (iterator.key() == QLatin1String("StatusBar"))
+				{
+					identifier = StatusBar;
+				}
+
+				if (identifier >= 0)
+				{
+					m_definitions[identifier] = iterator.value();
+				}
+				else
+				{
+					identifier = m_definitions.count();
+
+					m_identifiers[identifier] = iterator.key();
+
+					m_definitions.append(iterator.value());
+				}
+
+				m_definitions[identifier].identifier = identifier;
 			}
 		}
 
-		if (m_definitions.contains(QLatin1String("MenuBar")))
+		bool hasMenuBar = false;
+
+		for (int i = 0; i < m_definitions[MenuBar].actions.count(); ++i)
 		{
-			bool hasMenuBar = false;
-
-			for (int i = 0; i < m_definitions[QLatin1String("MenuBar")].actions.count(); ++i)
+			if (m_definitions[MenuBar].actions.at(i).action == QLatin1String("MenuBarWidget"))
 			{
-				if (m_definitions[QLatin1String("MenuBar")].actions.at(i).action == QLatin1String("MenuBarWidget"))
-				{
-					hasMenuBar = true;
+				hasMenuBar = true;
 
-					break;
-				}
-			}
-
-			if (!hasMenuBar)
-			{
-				ToolBarActionDefinition definition;
-				definition.action = QLatin1String("MenuBar");
-
-				m_definitions[QLatin1String("MenuBar")].actions.prepend(definition);
+				break;
 			}
 		}
 
-		if (m_definitions.contains(QLatin1String("TabBar")))
+		if (!hasMenuBar)
 		{
-			bool hasTabBar = false;
+			ToolBarActionDefinition definition;
+			definition.action = QLatin1String("MenuBarWidget");
 
-			for (int i = 0; i < m_definitions[QLatin1String("TabBar")].actions.count(); ++i)
+			m_definitions[MenuBar].actions.prepend(definition);
+		}
+
+		bool hasTabBar = false;
+
+		for (int i = 0; i < m_definitions[TabBar].actions.count(); ++i)
+		{
+			if (m_definitions[TabBar].actions.at(i).action == QLatin1String("TabBarWidget"))
 			{
-				if (m_definitions[QLatin1String("TabBar")].actions.at(i).action == QLatin1String("TabBarWidget"))
-				{
-					hasTabBar = true;
+				hasTabBar = true;
 
-					break;
-				}
+				break;
 			}
+		}
 
-			if (!hasTabBar)
-			{
-				ToolBarActionDefinition definition;
-				definition.action = QLatin1String("TabBar");
+		if (!hasTabBar)
+		{
+			ToolBarActionDefinition definition;
+			definition.action = QLatin1String("TabBarWidget");
 
-				m_definitions[QLatin1String("TabBar")].actions.prepend(definition);
-			}
+			m_definitions[TabBar].actions.prepend(definition);
 		}
 	}
 
-	return m_definitions.values();
+	return m_definitions;
 }
 
 }

@@ -35,9 +35,10 @@ class ToolBarWidget : public QToolBar
 	Q_OBJECT
 
 public:
-	explicit ToolBarWidget(const QString &identifier, Window *window, QWidget *parent);
+	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
 	static QWidget* createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar);
+	int getIdentifier() const;
 	int getMaximumButtonSize() const;
 
 public slots:
@@ -49,15 +50,15 @@ protected:
 	void setup();
 
 protected slots:
-	void toolBarModified(const QString &identifier);
-	void toolBarRemoved(const QString &identifier);
+	void toolBarModified(int identifier);
+	void toolBarRemoved(int identifier);
 	void notifyWindowChanged(qint64 identifier);
 	void updateBookmarks();
 
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
-	QString m_identifier;
+	int m_identifier;
 
 signals:
 	void areaChanged(Qt::ToolBarArea area);

@@ -34,17 +34,17 @@ struct ToolBarActionDefinition
 
 struct ToolBarDefinition
 {
-	QString identifier;
 	QString title;
 	QString bookmarksPath;
 	QList<ToolBarActionDefinition> actions;
 	Qt::ToolBarArea location;
 	Qt::ToolButtonStyle buttonStyle;
+	int identifier;
 	int iconSize;
 	int maximumButtonSize;
 	bool isDefault;
 
-	ToolBarDefinition() : location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), iconSize(-1), maximumButtonSize(-1), isDefault(false) {}
+	ToolBarDefinition() : location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), isDefault(false) {}
 };
 
 class ToolBarsManager : public QObject
@@ -52,10 +52,19 @@ class ToolBarsManager : public QObject
 	Q_OBJECT
 
 public:
+	enum ToolBarIdentifier
+	{
+		MenuBar = 0,
+		TabBar,
+		NavigationBar,
+		StatusBar,
+		OtherToolBar
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static ToolBarsManager* getInstance();
-	static QList<ToolBarDefinition> getToolBarDefinitions();
-	static ToolBarDefinition getToolBarDefinition(const QString &identifier);
+	static QVector<ToolBarDefinition> getToolBarDefinitions();
+	static ToolBarDefinition getToolBarDefinition(int identifier);
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -71,12 +80,13 @@ private:
 	explicit ToolBarsManager(QObject *parent = NULL);
 
 	static ToolBarsManager *m_instance;
-	static QHash<QString, ToolBarDefinition> m_definitions;
+	static QMap<int, QString> m_identifiers;
+	static QVector<ToolBarDefinition> m_definitions;
 
 signals:
-	void toolBarAdded(const QString &identifier);
-	void toolBarModified(const QString &identifier);
-	void toolBarRemoved(const QString &identifier);
+	void toolBarAdded(int identifier);
+	void toolBarModified(int identifier);
+	void toolBarRemoved(int identifier);
 };
 
 }

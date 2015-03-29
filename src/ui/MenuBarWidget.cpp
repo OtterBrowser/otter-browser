@@ -59,7 +59,7 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	{
 		setup();
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	}
 }
 
@@ -82,7 +82,7 @@ void MenuBarWidget::resizeEvent(QResizeEvent *event)
 
 void MenuBarWidget::setup()
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(QLatin1String("MenuBar"));
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
 	QStringList actions;
 
 	for (int i = 0; i < definition.actions.count(); ++i)
@@ -117,7 +117,7 @@ void MenuBarWidget::setup()
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
-		m_leftToolBar = new ToolBarWidget(QString(), m_mainWindow->getMdi()->getActiveWindow(), this);
+		m_leftToolBar = new ToolBarWidget(-1, m_mainWindow->getMdi()->getActiveWindow(), this);
 
 		setCornerWidget(m_leftToolBar, Qt::TopLeftCorner);
 	}
@@ -131,7 +131,7 @@ void MenuBarWidget::setup()
 
 	if (needsRightToolbar && !m_rightToolBar)
 	{
-		m_rightToolBar = new ToolBarWidget(QString(), m_mainWindow->getMdi()->getActiveWindow(), this);
+		m_rightToolBar = new ToolBarWidget(-1, m_mainWindow->getMdi()->getActiveWindow(), this);
 
 		setCornerWidget(m_rightToolBar, Qt::TopRightCorner);
 	}
@@ -163,9 +163,9 @@ void MenuBarWidget::setup()
 	QTimer::singleShot(100, this, SLOT(updateSize()));
 }
 
-void MenuBarWidget::toolBarModified(const QString &identifier)
+void MenuBarWidget::toolBarModified(int identifier)
 {
-	if (identifier == QLatin1String("MenuBar"))
+	if (identifier == ToolBarsManager::MenuBar)
 	{
 		setup();
 	}

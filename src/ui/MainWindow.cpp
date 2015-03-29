@@ -96,7 +96,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	setCentralWidget(centralWidget);
 
-	const QList<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
+	const QVector<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
@@ -127,7 +127,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	placeSidebars();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(QString)), this, SLOT(addToolBar(QString)));
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(addToolBar(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
@@ -147,11 +147,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	else if (SettingsManager::getValue(QLatin1String("Interface/MaximizeNewWindows")).toBool())
 	{
 		showMaximized();
-	}
-
-	if (!session.state.isEmpty())
-	{
-		restoreState(session.state);
 	}
 
 	const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
@@ -738,7 +733,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 	}
 }
 
-void MainWindow::addToolBar(const QString &identifier)
+void MainWindow::addToolBar(int identifier)
 {
 	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
 	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
@@ -746,7 +741,7 @@ void MainWindow::addToolBar(const QString &identifier)
 
 	QMainWindow::addToolBar(definition.location, toolBar);
 
-	if (identifier == QLatin1String("TabBar"))
+	if (identifier == ToolBarsManager::TabBar)
 	{
 		m_tabBarToolBar = toolBar;
 

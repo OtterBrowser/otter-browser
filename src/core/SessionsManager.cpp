@@ -415,7 +415,6 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
 		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), windows.at(i)->saveGeometry().toBase64(), true);
-		stream << Utils::formatConfigurationEntry(QLatin1String("state"), windows.at(i)->saveState().toBase64(), true);
 		stream << QLatin1String("groups=0\n");
 		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
 		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");

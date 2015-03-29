@@ -82,7 +82,7 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
-	void addToolBar(const QString &identifier);
+	void addToolBar(int identifier);
 	void splitterMoved();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);

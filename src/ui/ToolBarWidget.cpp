@@ -43,7 +43,7 @@
 namespace Otter
 {
 
-ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget *parent) : QToolBar(parent),
+ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
 	m_identifier(identifier)
@@ -52,22 +52,16 @@ ToolBarWidget::ToolBarWidget(const QString &identifier, Window *window, QWidget 
 	setAllowedAreas(Qt::AllToolBarAreas);
 	setFloatable(false);
 
-	if (identifier == QLatin1String("StatusBar"))
+	if (identifier >= 0)
 	{
-		setFixedHeight(ToolBarsManager::getToolBarDefinition(m_identifier).iconSize);
-	}
-
-	if (!identifier.isEmpty())
-	{
-		setObjectName(identifier);
 		setup();
 
 		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(QString)), this, SLOT(toolBarModified(QString)));
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(QString)), this, SLOT(toolBarRemoved(QString)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
 	}
 
-	if (m_mainWindow && (parent == m_mainWindow || m_identifier.isEmpty()))
+	if (m_mainWindow && (parent == m_mainWindow || m_identifier < 0))
 	{
 		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
 	}
@@ -77,7 +71,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
 
-	if (objectName() != QLatin1String("TabBar"))
+	if (m_identifier != ToolBarsManager::TabBar)
 	{
 		menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
 		menu.exec(event->globalPos());
@@ -108,7 +102,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton && objectName() == QLatin1String("TabBar"))
+	if (event->button() == Qt::LeftButton && m_identifier == ToolBarsManager::TabBar)
 	{
 		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
 	}
@@ -149,7 +143,7 @@ void ToolBarWidget::setup()
 	}
 }
 
-void ToolBarWidget::toolBarModified(const QString &identifier)
+void ToolBarWidget::toolBarModified(int identifier)
 {
 	if (identifier == m_identifier)
 	{
@@ -157,7 +151,7 @@ void ToolBarWidget::toolBarModified(const QString &identifier)
 	}
 }
 
-void ToolBarWidget::toolBarRemoved(const QString &identifier)
+void ToolBarWidget::toolBarRemoved(int identifier)
 {
 	if (identifier == m_identifier)
 	{
@@ -262,7 +256,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 
 	if (definition.action == QLatin1String("TabBarWidget"))
 	{
-		if (!toolBar || toolBar->objectName() != QLatin1String("TabBar"))
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::TabBar)
 		{
 			return NULL;
 		}
@@ -313,6 +307,11 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 	}
 
 	return NULL;
+}
+
+int ToolBarWidget::getIdentifier() const
+{
+	return m_identifier;
 }
 
 int ToolBarWidget::getMaximumButtonSize() const

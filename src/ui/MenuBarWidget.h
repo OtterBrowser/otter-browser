@@ -41,7 +41,7 @@ protected:
 	void setup();
 
 protected slots:
-	void toolBarModified(const QString &identifier);
+	void toolBarModified(int identifier);
 	void updateSize();
 
 private:
