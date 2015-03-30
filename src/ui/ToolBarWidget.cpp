@@ -119,10 +119,25 @@ void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ToolBarWidget::setup()
 {
+	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
 	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
 	setVisible(definition.visibility != AlwaysHiddenToolBar);
-	clear();
+
+	if (m_identifier == ToolBarsManager::TabBar)
+	{
+		for (int i = (actions().count() - 1); i >= 0; --i)
+		{
+			if (widgetForAction(actions().at(i)) != tabBar)
+			{
+				removeAction(actions().at(i));
+			}
+		}
+	}
+	else
+	{
+		clear();
+	}
 
 	setToolButtonStyle(definition.buttonStyle);
 
@@ -148,7 +163,14 @@ void ToolBarWidget::setup()
 		}
 		else
 		{
-			addWidget(createWidget(definition.actions.at(i), m_window, this));
+			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.actions.at(i).action == QLatin1String("TabBarWidget"))
+			{
+				addWidget(tabBar);
+			}
+			else
+			{
+				addWidget(createWidget(definition.actions.at(i), m_window, this));
+			}
 		}
 	}
 }
@@ -230,6 +252,11 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 		return spacer;
 	}
 
+	if (definition.action == QLatin1String("AddressWidget"))
+	{
+		return new AddressWidget(window, toolBar);
+	}
+
 	if (definition.action == QLatin1String("ClosedWindowsWidget"))
 	{
 		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), toolBar);
@@ -247,11 +274,6 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 	if (definition.action == QLatin1String("MenuButtonWidget"))
 	{
 		return new MenuButtonWidget(toolBar);
-	}
-
-	if (definition.action == QLatin1String("AddressWidget"))
-	{
-		return new AddressWidget(window, toolBar);
 	}
 
 	if (definition.action == QLatin1String("PanelChooserWidget"))
@@ -336,7 +358,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBar()));
 	resetAction->setData(identifier);
-	resetAction->setData(definition.canReset);
+	resetAction->setEnabled(definition.canReset);
 
 	if (!actions.isEmpty())
 	{

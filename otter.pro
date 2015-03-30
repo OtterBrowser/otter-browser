@@ -70,6 +70,7 @@ SOURCES += src/main.cpp \
     src/ui/AddressDelegate.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
+    src/ui/BookmarksBarDialog.cpp \
     src/ui/BookmarksComboBoxWidget.cpp \
     src/ui/BookmarksImporterWidget.cpp \
     src/ui/ClearHistoryDialog.cpp \
@@ -193,6 +194,7 @@ HEADERS += src/core/Action.h \
     src/ui/AddressDelegate.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
+    src/ui/BookmarksBarDialog.h \
     src/ui/BookmarksComboBoxWidget.h \
     src/ui/BookmarksImporterWidget.h \
     src/ui/ClearHistoryDialog.h \
@@ -278,6 +280,7 @@ win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
 FORMS += src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
+    src/ui/BookmarksBarDialog.ui \
     src/ui/BookmarksImporterWidget.ui \
     src/ui/ClearHistoryDialog.ui \
     src/ui/ConsoleWidget.ui \

@@ -36,7 +36,8 @@ public:
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);
 	QStandardItemModel* getModel();
-	QModelIndex getIndex(int row, int column) const;
+	QStandardItem* getItem(int row, int column = 0) const;
+	QModelIndex getIndex(int row, int column = 0) const;
 	int getCurrentRow() const;
 	int getRowCount() const;
 	int getColumnCount() const;

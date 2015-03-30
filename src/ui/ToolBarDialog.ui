@@ -7,189 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>500</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit Toolbar</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="layoutHeader">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Layout</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="2">
-      <layout class="QVBoxLayout" name="currentEntriesLayout">
-       <item>
-        <widget class="Otter::ItemViewWidget" name="currentEntriesItemView"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="addLauncherButton">
-         <property name="text">
-          <string>Add</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="editLauncherButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Edit..</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="currentEntriesLabel">
-       <property name="text">
-        <string>Current entries:</string>
-       </property>
-       <property name="buddy">
-        <cstring>currentEntriesItemView</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <layout class="QGridLayout" name="buttonsLayout">
-       <item row="2" column="0">
-        <widget class="QToolButton" name="removeButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Remove</string>
-         </property>
-         <property name="shortcut">
-          <string>Del</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QToolButton" name="addButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Add</string>
-         </property>
-         <property name="shortcut">
-          <string>Return</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <spacer name="centerSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="2">
-        <widget class="QToolButton" name="moveDownButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Move Down</string>
-         </property>
-         <property name="shortcut">
-          <string>Down</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QToolButton" name="moveUpButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Move Up</string>
-         </property>
-         <property name="shortcut">
-          <string>Up</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <spacer name="upSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="2">
-        <spacer name="downSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="availableEntriesLabel">
-       <property name="text">
-        <string>Available entries:</string>
-       </property>
-       <property name="buddy">
-        <cstring>availableEntriesItemView</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLineEdit" name="currentEntriesFilterLineEdit">
-       <property name="placeholderText">
-        <string>Filter...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLineEdit" name="availableEntriesFilterLineEdit">
-       <property name="placeholderText">
-        <string>Filter...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QTreeView" name="availableEntriesItemView"/>
-     </item>
-    </layout>
-   </item>
    <item>
     <widget class="QLabel" name="optionsHeader">
      <property name="font">
@@ -205,7 +29,7 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="visibilityLabel">
        <property name="text">
         <string>Visibility:</string>
@@ -215,10 +39,26 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="visibilityComboBox"/>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="visibilityComboBox">
+       <item>
+        <property name="text">
+         <string>Always visible</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Always hidden</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Visible only when needed</string>
+        </property>
+       </item>
+      </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="buttonStyleLabel">
        <property name="text">
         <string>Button style:</string>
@@ -228,10 +68,36 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="buttonStyleComboBox"/>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="buttonStyleComboBox">
+       <item>
+        <property name="text">
+         <string>Follow style</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Only icon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Only text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Text beside icon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Text under icon</string>
+        </property>
+       </item>
+      </widget>
      </item>
-     <item row="2" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="iconSizeLabel">
        <property name="text">
         <string>Icon size:</string>
@@ -241,7 +107,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="4" column="1">
       <widget class="QSpinBox" name="iconSizeSpinBox">
        <property name="specialValueText">
         <string>Auto</string>
@@ -257,18 +123,18 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="maximumSizeLbel">
+     <item row="5" column="0">
+      <widget class="QLabel" name="maximumButtonSizeLbel">
        <property name="text">
         <string>Maximum size of item:</string>
        </property>
        <property name="buddy">
-        <cstring>maximumSizeSpinBox</cstring>
+        <cstring>maximumButtonSizeSpinBox</cstring>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="maximumSizeSpinBox">
+     <item row="5" column="1">
+      <widget class="QSpinBox" name="maximumButtonSizeSpinBox">
        <property name="specialValueText">
         <string>No limit</string>
        </property>
@@ -280,7 +146,244 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="titleLineEdit">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="titleLabel">
+       <property name="text">
+        <string>Name:</string>
+       </property>
+       <property name="buddy">
+        <cstring>titleLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="arrangementWidget" native="true">
+     <layout class="QVBoxLayout" name="actionsLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="actionsHeader">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Actions</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="2">
+         <layout class="QVBoxLayout" name="currentEntriesLayout">
+          <item>
+           <widget class="Otter::ItemViewWidget" name="currentEntriesItemView">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <attribute name="headerVisible">
+             <bool>false</bool>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addEntryButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="editEntryButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Edit..</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="currentEntriesLabel">
+          <property name="text">
+           <string>Current entries:</string>
+          </property>
+          <property name="buddy">
+           <cstring>currentEntriesItemView</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QGridLayout" name="buttonsLayout">
+          <item row="2" column="0">
+           <widget class="QToolButton" name="removeButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string notr="true">Remove</string>
+            </property>
+            <property name="shortcut">
+             <string>Del</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QToolButton" name="addButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string notr="true">Add</string>
+            </property>
+            <property name="shortcut">
+             <string>Return</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <spacer name="centerSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="2">
+           <widget class="QToolButton" name="moveDownButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string notr="true">Move Down</string>
+            </property>
+            <property name="shortcut">
+             <string>Down</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QToolButton" name="moveUpButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string notr="true">Move Up</string>
+            </property>
+            <property name="shortcut">
+             <string>Up</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="upSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="2">
+           <spacer name="downSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="availableEntriesLabel">
+          <property name="text">
+           <string>Available entries:</string>
+          </property>
+          <property name="buddy">
+           <cstring>availableEntriesItemView</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLineEdit" name="availableEntriesFilterLineEdit">
+          <property name="placeholderText">
+           <string>Filter...</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="currentEntriesFilterLineEdit">
+          <property name="placeholderText">
+           <string>Filter...</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="Otter::ItemViewWidget" name="availableEntriesItemView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <attribute name="headerVisible">
+           <bool>false</bool>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -288,7 +391,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::RestoreDefaults</set>
      </property>
     </widget>
    </item>
@@ -302,20 +405,21 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>currentEntriesFilterLineEdit</tabstop>
-  <tabstop>availableEntriesItemView</tabstop>
-  <tabstop>removeButton</tabstop>
-  <tabstop>moveUpButton</tabstop>
-  <tabstop>addButton</tabstop>
-  <tabstop>moveDownButton</tabstop>
-  <tabstop>availableEntriesFilterLineEdit</tabstop>
-  <tabstop>currentEntriesItemView</tabstop>
-  <tabstop>addLauncherButton</tabstop>
-  <tabstop>editLauncherButton</tabstop>
+  <tabstop>titleLineEdit</tabstop>
   <tabstop>visibilityComboBox</tabstop>
   <tabstop>buttonStyleComboBox</tabstop>
   <tabstop>iconSizeSpinBox</tabstop>
-  <tabstop>maximumSizeSpinBox</tabstop>
+  <tabstop>maximumButtonSizeSpinBox</tabstop>
+  <tabstop>availableEntriesFilterLineEdit</tabstop>
+  <tabstop>availableEntriesItemView</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>moveDownButton</tabstop>
+  <tabstop>removeButton</tabstop>
+  <tabstop>moveUpButton</tabstop>
+  <tabstop>currentEntriesFilterLineEdit</tabstop>
+  <tabstop>currentEntriesItemView</tabstop>
+  <tabstop>addEntryButton</tabstop>
+  <tabstop>editEntryButton</tabstop>
  </tabstops>
  <resources/>
  <connections>

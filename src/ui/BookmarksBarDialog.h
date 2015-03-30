@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,36 +17,36 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKSCOMBOBOXWIDGET_H
-#define OTTER_BOOKMARKSCOMBOBOXWIDGET_H
+#ifndef OTTER_BOOKMARKSBARDIALOG_H
+#define OTTER_BOOKMARKSBARDIALOG_H
 
-#include <QtGui/QStandardItem>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QTreeView>
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
-class BookmarksItem;
+namespace Ui
+{
+	class BookmarksBarDialog;
+}
 
-class BookmarksComboBoxWidget : public QComboBox
+struct ToolBarDefinition;
+
+class BookmarksBarDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarksComboBoxWidget(QWidget *parent = NULL);
+	explicit BookmarksBarDialog(QWidget *parent = NULL);
+	~BookmarksBarDialog();
 
-	void setCurrentFolder(const QModelIndex &index);
-	BookmarksItem* getCurrentFolder();
-	bool eventFilter(QObject *object, QEvent *event);
+	ToolBarDefinition getDefinition() const;
 
-protected slots:
-	void createFolder();
-	void updateBranch(QStandardItem *branch = NULL);
+protected:
+	void changeEvent(QEvent *event);
 
 private:
-	QTreeView *m_view;
-	QModelIndex m_index;
+	Ui::BookmarksBarDialog *m_ui;
 };
 
 }

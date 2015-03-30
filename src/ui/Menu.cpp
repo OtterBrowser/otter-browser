@@ -381,7 +381,9 @@ void Menu::populateCharacterEncodingMenu()
 void Menu::populateClosedWindowsMenu()
 {
 	clear();
+
 	QMenu::addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clearClosedWindows()))->setData(0);
+
 	addSeparator();
 
 	const QStringList windows = SessionsManager::getClosedWindows();
@@ -420,8 +422,10 @@ void Menu::populateSessionsMenu()
 	}
 
 	clear();
+
 	QMenu::addAction(ActionsManager::getAction(Action::SaveSessionAction, parent()));
 	QMenu::addAction(ActionsManager::getAction(Action::SessionsAction, parent()));
+
 	addSeparator();
 
 	m_actionGroup = new QActionGroup(this);
@@ -466,7 +470,7 @@ void Menu::populateToolBarsMenu()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title);;
+		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title);;
 		toolBarAction->setData(definitions.at(i).identifier);
 		toolBarAction->setCheckable(true);
 		toolBarAction->setChecked(definitions.at(i).visibility != AlwaysHiddenToolBar);

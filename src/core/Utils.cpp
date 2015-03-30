@@ -63,7 +63,7 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 			identifier = base.toLower();
 		}
 
-		identifier.remove(QRegularExpression(QLatin1String("[^a-z0-9\\-_]")));
+		identifier.remove(QRegularExpression(QLatin1String("[^A-Za-z0-9\\-_]")));
 	}
 
 	if (identifier.isEmpty())

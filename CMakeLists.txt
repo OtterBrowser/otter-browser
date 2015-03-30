@@ -118,6 +118,7 @@ set(otter_src
 	src/ui/AddressDelegate.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
+	src/ui/BookmarksBarDialog.cpp
 	src/ui/BookmarksComboBoxWidget.cpp
 	src/ui/BookmarksImporterWidget.cpp
 	src/ui/ClearHistoryDialog.cpp
@@ -208,6 +209,7 @@ qt5_add_resources(otter_res
 qt5_wrap_ui(otter_ui
 	src/ui/AuthenticationDialog.ui
 	src/ui/BookmarkPropertiesDialog.ui
+	src/ui/BookmarksBarDialog.ui
 	src/ui/BookmarksImporterWidget.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui

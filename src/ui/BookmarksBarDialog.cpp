@@ -17,46 +17,48 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TOOLBARDIALOG_H
-#define OTTER_TOOLBARDIALOG_H
-
-#include <QtWidgets/QDialog>
-#include <QtGui/QStandardItemModel>
-
+#include "BookmarksBarDialog.h"
+#include "../core/BookmarksModel.h"
 #include "../core/ToolBarsManager.h"
+
+#include "ui_BookmarksBarDialog.h"
 
 namespace Otter
 {
 
-namespace Ui
+BookmarksBarDialog::BookmarksBarDialog(QWidget *parent) : QDialog(parent),
+	m_ui(new Ui::BookmarksBarDialog)
 {
-	class ToolBarDialog;
+	m_ui->setupUi(this);
 }
 
-class ToolBarDialog : public QDialog
+BookmarksBarDialog::~BookmarksBarDialog()
 {
-	Q_OBJECT
-
-public:
-	explicit ToolBarDialog(int identifier = -1, QWidget *parent = NULL);
-	~ToolBarDialog();
-
-	ToolBarDefinition getDefinition();
-
-protected:
-	void changeEvent(QEvent *event);
-	QStandardItem* createEntry(const QString &identifier);
-
-protected slots:
-	void addEntry();
-	void restoreDefaults();
-	void updateActions();
-
-private:
-	ToolBarDefinition m_definition;
-	Ui::ToolBarDialog *m_ui;
-};
-
+	delete m_ui;
 }
 
-#endif
+void BookmarksBarDialog::changeEvent(QEvent *event)
+{
+	QDialog::changeEvent(event);
+
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			m_ui->retranslateUi(this);
+
+			break;
+		default:
+			break;
+	}
+}
+
+ToolBarDefinition BookmarksBarDialog::getDefinition() const
+{
+	ToolBarDefinition definition;
+	definition.title = m_ui->titleLineEdit->text();
+	definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
+
+	return definition;
+}
+
+}

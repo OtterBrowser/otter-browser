@@ -237,6 +237,11 @@ QStandardItemModel* ItemViewWidget::getModel()
 	return m_model;
 }
 
+QStandardItem* ItemViewWidget::getItem(int row, int column) const
+{
+	return(m_model ? m_model->item(row, column) : NULL);
+}
+
 QModelIndex ItemViewWidget::getIndex(int row, int column) const
 {
 	return (m_model ? m_model->index(row, column) : QModelIndex());

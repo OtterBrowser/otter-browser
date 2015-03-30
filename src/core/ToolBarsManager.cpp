@@ -20,12 +20,16 @@
 #include "ToolBarsManager.h"
 #include "SessionsManager.h"
 #include "Utils.h"
+#include "../ui/BookmarksComboBoxWidget.h"
+#include "../ui/BookmarksBarDialog.h"
+#include "../ui/ToolBarDialog.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QVector>
+#include <QtWidgets/QAction>
 
 namespace Otter
 {
@@ -261,32 +265,71 @@ void ToolBarsManager::optionChanged(const QString &key, const QVariant &value)
 
 void ToolBarsManager::addToolBar()
 {
+	ToolBarDialog dialog;
 
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		setToolBar(dialog.getDefinition());
+	}
 }
 
 void ToolBarsManager::addBookmarksBar()
 {
+	BookmarksBarDialog dialog;
 
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		setToolBar(dialog.getDefinition());
+	}
 }
 
 void ToolBarsManager::configureToolBar(int identifier)
 {
+	QAction *action = qobject_cast<QAction*>(sender());
 
+	if (action && identifier < 0)
+	{
+		identifier = action->data().toInt();
+	}
+
+	if (identifier >= 0 && identifier < (m_definitions.count() - 1))
+	{
+		ToolBarDialog dialog(identifier);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			setToolBar(dialog.getDefinition());
+		}
+	}
 }
 
 void ToolBarsManager::resetToolBar(int identifier)
 {
+	QAction *action = qobject_cast<QAction*>(sender());
 
+	if (action && identifier < 0)
+	{
+		identifier = action->data().toInt();
+	}
+
+//TODO
 }
 
 void ToolBarsManager::removeToolBar(int identifier)
 {
+	QAction *action = qobject_cast<QAction*>(sender());
 
+	if (action && identifier < 0)
+	{
+		identifier = action->data().toInt();
+	}
+
+//TODO
 }
 
 void ToolBarsManager::resetToolBars()
 {
-
+//TODO
 }
 
 void ToolBarsManager::setToolBar(ToolBarDefinition definition)
@@ -303,6 +346,9 @@ void ToolBarsManager::setToolBar(ToolBarDefinition definition)
 		m_identifiers[identifier] = Utils::createIdentifier(QLatin1String("CustomBar"), toolBars, false);
 
 		m_definitions.append(definition);
+
+		m_definitions[identifier].identifier = identifier;
+		m_definitions[identifier].location = Qt::TopToolBarArea;
 
 		emit m_instance->toolBarAdded(identifier);
 	}
