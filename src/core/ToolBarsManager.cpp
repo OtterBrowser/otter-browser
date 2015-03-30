@@ -313,7 +313,35 @@ void ToolBarsManager::resetToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-//TODO
+	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(NULL, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
+	{
+		const QHash<QString, ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+		ToolBarDefinition definition;
+
+		if (identifier == MenuBar)
+		{
+			definition = defaultDefinitions[QLatin1String("MenuBar")];
+		}
+
+		if (identifier == TabBar)
+		{
+			definition = defaultDefinitions[QLatin1String("TabBar")];
+		}
+
+		if (identifier == NavigationBar)
+		{
+			definition = defaultDefinitions[QLatin1String("NavigationBar")];
+		}
+
+		if (identifier == StatusBar)
+		{
+			definition = defaultDefinitions[QLatin1String("StatusBar")];
+		}
+
+		definition.identifier = identifier;
+
+		setToolBar(definition);
+	}
 }
 
 void ToolBarsManager::removeToolBar(int identifier)
@@ -365,6 +393,8 @@ void ToolBarsManager::resetToolBars()
 	{
 		emit toolBarModified(i);
 	}
+
+	m_instance->scheduleSave();
 }
 
 void ToolBarsManager::setToolBar(ToolBarDefinition definition)
@@ -426,7 +456,10 @@ ToolBarDefinition ToolBarsManager::getToolBarDefinition(int identifier)
 
 	if (identifier >= 0 && identifier < m_definitions.count())
 	{
-		return m_definitions[identifier];
+		ToolBarDefinition definition = m_definitions[identifier];
+		definition.identifier = identifier;
+
+		return definition;
 	}
 
 	return ToolBarDefinition();
