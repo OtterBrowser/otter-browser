@@ -339,7 +339,32 @@ void ToolBarsManager::removeToolBar(int identifier)
 
 void ToolBarsManager::resetToolBars()
 {
-//TODO
+	if (QMessageBox::question(NULL, tr("Reset Toolbars"), tr("Do you really want to reset all toolbars to default configuration?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+	{
+		return;
+	}
+
+	const QList<int> customToolBars = m_identifiers.keys();
+
+	for (int i = 0; i < customToolBars.count(); ++i)
+	{
+		emit toolBarRemoved(customToolBars.at(i));
+	}
+
+	m_definitions.clear();
+	m_identifiers.clear();
+
+	const QHash<QString, ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+
+	m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
+	m_definitions.append(defaultDefinitions[QLatin1String("TabBar")]);
+	m_definitions.append(defaultDefinitions[QLatin1String("NavigationBar")]);
+	m_definitions.append(defaultDefinitions[QLatin1String("StatusBar")]);
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		emit toolBarModified(i);
+	}
 }
 
 void ToolBarsManager::setToolBar(ToolBarDefinition definition)
