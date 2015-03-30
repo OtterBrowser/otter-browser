@@ -32,22 +32,22 @@ namespace Otter
 {
 
 NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QDialog(parent),
-	m_closeLabel(new QLabel(this)),
-	m_notification(notification)
+	m_notification(notification),
+	m_closeLabel(new QLabel(this))
 {
 	QString notificationLevel = tr("Information");
 
-	if (notification->getLevel() == NotificationLevel::WarningNotificationLevel)
+	if (notification->getLevel() == WarningNotificationLevel)
 	{
 		notificationLevel = tr("Warning");
 	}
-	else if (notification->getLevel() == NotificationLevel::ErrorNotificationLevel)
+	else if (notification->getLevel() == ErrorNotificationLevel)
 	{
 		notificationLevel = tr("Error");
 	}
 
 	QLabel *headerLabel = new QLabel(this);
-	headerLabel->setStyleSheet(QLatin1String("QLabel{padding-left:5px;padding-top:8px;font-size:15px;font-weight:bold;}"));
+	headerLabel->setStyleSheet(QLatin1String("QLabel {padding-left:5px;padding-top:8px;font-size:15px;font-weight:bold;}"));
 	headerLabel->setText(notificationLevel);
 
 	m_closeLabel->setToolTip(tr("Close"));
