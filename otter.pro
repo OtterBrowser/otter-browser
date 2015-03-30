@@ -115,6 +115,7 @@ SOURCES += src/main.cpp \
     src/ui/Window.cpp \
     src/ui/preferences/AcceptLanguageDialog.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
+    src/ui/preferences/ContentBlockingIntervalDelegate.cpp \
     src/ui/preferences/JavaScriptPreferencesDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
@@ -240,6 +241,7 @@ HEADERS += src/core/Action.h \
     src/ui/Window.h \
     src/ui/preferences/AcceptLanguageDialog.h \
     src/ui/preferences/ContentBlockingDialog.h \
+    src/ui/preferences/ContentBlockingIntervalDelegate.h \
     src/ui/preferences/JavaScriptPreferencesDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
     src/ui/preferences/SearchKeywordDelegate.h \

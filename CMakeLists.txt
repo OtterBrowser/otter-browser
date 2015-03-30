@@ -163,6 +163,7 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
+	src/ui/preferences/ContentBlockingIntervalDelegate.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp

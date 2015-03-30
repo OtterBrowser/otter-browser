@@ -30,20 +30,11 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QVBoxLayout" name="filtersLayout">
+      <layout class="QVBoxLayout" name="profliesLayout">
        <item>
-        <widget class="Otter::ItemViewWidget" name="filtersViewWidget">
-         <property name="dragEnabled">
-          <bool>true</bool>
-         </property>
-         <property name="dragDropOverwriteMode">
-          <bool>false</bool>
-         </property>
-         <property name="dragDropMode">
-          <enum>QAbstractItemView::InternalMove</enum>
-         </property>
-         <property name="defaultDropAction">
-          <enum>Qt::MoveAction</enum>
+        <widget class="Otter::ItemViewWidget" name="profliesViewWidget">
+         <property name="editTriggers">
+          <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>

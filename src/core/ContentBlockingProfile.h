@@ -36,14 +36,7 @@ struct ContentBlockingInformation
 	QString name;
 	QString title;
 	QString path;
-	QDateTime lastUpdate;
 	QUrl updateUrl;
-	int daysToExpire;
-	bool updateRequested;
-	bool isEmpty;
-	bool isLoaded;
-
-	ContentBlockingInformation() : daysToExpire(4), updateRequested(false), isEmpty(true), isLoaded(false) {}
 };
 
 class ContentBlockingProfile : public QObject
@@ -120,6 +113,9 @@ private:
 	QStringList m_requestSubdomainList;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
+	bool m_updateRequested;
+	bool m_isEmpty;
+	bool m_wasLoaded;
 
 	static NetworkManager *m_networkManager;
 

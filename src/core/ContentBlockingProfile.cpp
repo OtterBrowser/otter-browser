@@ -22,10 +22,12 @@
 #include "ContentBlockingProfile.h"
 #include "Console.h"
 #include "ContentBlockingManager.h"
+#include "SessionsManager.h"
 
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
@@ -37,7 +39,10 @@ NetworkManager* ContentBlockingProfile::m_networkManager = NULL;
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
 	m_root(NULL),
-	m_networkReply(NULL)
+	m_networkReply(NULL),
+	m_updateRequested(false),
+	m_isEmpty(true),
+	m_wasLoaded(false)
 {
 	m_information.name = QFileInfo(path).baseName();
 	m_information.title = tr("(Unknown)");
@@ -74,7 +79,7 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 		if (!line.startsWith(QLatin1Char('!')))
 		{
-			m_information.isEmpty = false;
+			m_isEmpty = false;
 
 			break;
 		}
@@ -82,13 +87,6 @@ void ContentBlockingProfile::load(bool onlyHeader)
 		if (line.startsWith(QLatin1String("! Title: ")))
 		{
 			m_information.title = line.remove(QLatin1String("! Title: "));
-
-			continue;
-		}
-
-		if (line.startsWith(QLatin1String("! Expires: ")))
-		{
-			m_information.daysToExpire = line.remove(QLatin1String("! Expires: ")).split(QLatin1Char(' ')).at(0).toInt();
 
 			continue;
 		}
@@ -101,20 +99,17 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 			continue;
 		}
-
-		if (line.startsWith(QLatin1String("!Lastupdate:")))
-		{
-			m_information.lastUpdate = QLocale(QLatin1String("UnitedStates")).toDateTime(line.remove(QLatin1String("!Lastupdate:")).remove(QLatin1String("UTC")), QLatin1String("ddMMMyyyyhh:mm"));
-			m_information.lastUpdate.setTimeSpec(Qt::UTC);
-		}
 	}
 
 	file.close();
 
-	if (!m_information.updateRequested && (m_information.lastUpdate.isValid() && m_information.lastUpdate.daysTo(QDateTime::currentDateTimeUtc()) > m_information.daysToExpire))
+	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+	const QDateTime lastUpdate = QDateTime::fromString(profilesSettings.value(m_information.name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate);
+	const int updateInterval = profilesSettings.value(m_information.name + QLatin1String("/updateInterval")).toInt();
+
+	if (!m_updateRequested && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
 	{
-		// TODO - enable after update interval implementation
-		//downloadUpdate();
+		downloadUpdate();
 	}
 
 	if (!onlyHeader)
@@ -431,14 +426,14 @@ void ContentBlockingProfile::deleteNode(Node *node)
 
 void ContentBlockingProfile::downloadUpdate()
 {
-	if (m_information.updateRequested)
+	if (m_updateRequested)
 	{
 		return;
 	}
 
 	if (!m_information.updateUrl.isValid())
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Content blocking URL for %1 update is not valid. \n%2").arg(m_information.name).arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Content blocking URL for %1 update is not valid.\n%2").arg(m_information.name).arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		return;
 	}
@@ -454,7 +449,7 @@ void ContentBlockingProfile::downloadUpdate()
 
 	m_networkReply = m_networkManager->get(request);
 
-	m_information.updateRequested = true;
+	m_updateRequested = true;
 }
 
 void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
@@ -501,19 +496,21 @@ void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 		return;
 	}
 
+	QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+	profilesSettings.setValue(m_information.name + QLatin1String("/lastUpdate"), QDateTime::currentDateTime().toString(Qt::ISODate));
+
 	file.write(downloadedDataHeader);
-	file.write(QString("! URL: %1\n").arg(m_information.updateUrl.toString()).toUtf8());
+	file.write(QStringLiteral("! URL: %1\n").arg(m_information.updateUrl.toString()).toUtf8());
 	file.write(downloadedDataChecksum);
-	file.write(QString("! Last update: " + QLocale(QLatin1String("UnitedStates")).toString(QDateTime::currentDateTimeUtc(), QLatin1String("dd MMM yyyy hh:mm")) + " UTC\n").toUtf8());
 	file.write(downloadedData);
 	file.close();
 
 	if (file.error() != QFile::NoError)
 	{
-		// TODO
+// TODO
 	}
 
-	if (m_information.isLoaded)
+	if (m_wasLoaded)
 	{
 		if (m_root)
 		{
@@ -525,12 +522,12 @@ void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
 		m_styleSheetBlackList.clear();
 	}
 
-	load(!m_information.isLoaded);
+	load(!m_wasLoaded);
 }
 
 QString ContentBlockingProfile::getStyleSheet()
 {
-	if (!m_information.isLoaded)
+	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
@@ -545,7 +542,7 @@ ContentBlockingInformation ContentBlockingProfile::getInformation() const
 
 QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
 {
-	if (!m_information.isLoaded)
+	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
@@ -555,7 +552,7 @@ QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
 
 QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 {
-	if (!m_information.isLoaded)
+	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
@@ -565,14 +562,14 @@ QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 
 bool ContentBlockingProfile::loadRules()
 {
-	if (m_information.isEmpty)
+	if (m_isEmpty)
 	{
 		downloadUpdate();
 
 		return false;
 	}
 
-	m_information.isLoaded = true;
+	m_wasLoaded = true;
 
 	if (m_domainExpression.pattern().isEmpty())
 	{
@@ -702,7 +699,7 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QNe
 
 bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
 {
-	if (!m_information.isLoaded)
+	if (!m_wasLoaded)
 	{
 		if (!loadRules())
 		{
