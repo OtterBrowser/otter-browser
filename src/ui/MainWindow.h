@@ -62,10 +62,10 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void triggerAction(int identifier, bool checked = false);
 	void openUrl(const QString &text = QString());
 	void storeWindowState();
 	void restoreWindowState();
-	void triggerAction(int identifier, bool checked = false);
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -83,6 +83,7 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
 	void addToolBar(int identifier);
+	void toolBarModified(int identifier);
 	void splitterMoved();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);

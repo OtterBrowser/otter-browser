@@ -115,6 +115,26 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
 				}
 
+				QString visibility;
+
+				switch (m_definitions[i].visibility)
+				{
+					case AlwaysHiddenToolBar:
+						visibility = QLatin1String("hidden");
+
+						break;
+					case AutoVisibilityToolBar:
+						visibility = QLatin1String("auto");
+
+						break;
+					default:
+						visibility = QLatin1String("visible");
+
+						break;
+				}
+
+				definition.insert(QLatin1String("visibility"), QJsonValue(visibility));
+
 				if (m_definitions[i].location != Qt::NoToolBarArea)
 				{
 					QString location;
@@ -273,7 +293,7 @@ void ToolBarsManager::setToolBar(ToolBarDefinition definition)
 {
 	int identifier = definition.identifier;
 
-	if (identifier < 0 || !identifier < (m_definitions.count() - 1))
+	if (identifier < 0 || identifier >= m_definitions.count())
 	{
 		QStringList toolBars = m_identifiers.values();
 		toolBars << QLatin1String("MenuBar") << QLatin1String("TabBar") << QLatin1String("NavigationBar") << QLatin1String("StatusBar");
@@ -283,11 +303,17 @@ void ToolBarsManager::setToolBar(ToolBarDefinition definition)
 		m_identifiers[identifier] = Utils::createIdentifier(QLatin1String("CustomBar"), toolBars, false);
 
 		m_definitions.append(definition);
+
+		emit m_instance->toolBarAdded(identifier);
 	}
 	else
 	{
-		m_definitions[definition.identifier] = definition;
+		m_definitions[identifier] = definition;
+
+		emit m_instance->toolBarModified(identifier);
 	}
+
+	m_instance->scheduleSave();
 }
 
 void ToolBarsManager::scheduleSave()
@@ -301,6 +327,8 @@ void ToolBarsManager::scheduleSave()
 void ToolBarsManager::setToolBarsLocked(bool locked)
 {
 	SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), locked);
+
+	emit m_instance->toolBarsLockedChanged(locked);
 }
 
 ToolBarsManager* ToolBarsManager::getInstance()
@@ -340,6 +368,7 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 		const QJsonObject toolBarObject = toolBars.at(i).toObject();
 		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
 		const QString identifier = toolBarObject.value(QLatin1String("identifier")).toString();
+		const QString visibility = toolBarObject.value(QLatin1String("visibility")).toString();
 		const QString location = toolBarObject.value(QLatin1String("location")).toString();
 		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
 		ToolBarDefinition toolBar;
@@ -352,6 +381,15 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 		if (isDefault)
 		{
 			toolBar.title = QCoreApplication::translate("actions", toolBar.title.toUtf8());
+		}
+
+		if (visibility == QLatin1String("hidden"))
+		{
+			toolBar.visibility = AlwaysHiddenToolBar;
+		}
+		else if (visibility == QLatin1String("auto"))
+		{
+			toolBar.visibility = AutoVisibilityToolBar;
 		}
 
 		if (location == QLatin1String("top"))

@@ -702,7 +702,7 @@ void Menu::setToolBarVisibility(bool visible)
 		ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(action->data().toInt());
 		definition.visibility = (visible ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
 
-		ToolBarsManager::getInstance()->setToolBar(definition);
+		ToolBarsManager::setToolBar(definition);
 	}
 }
 

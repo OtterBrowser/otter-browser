@@ -121,6 +121,7 @@ void ToolBarWidget::setup()
 {
 	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
+	setVisible(definition.visibility != AlwaysHiddenToolBar);
 	clear();
 
 	setToolButtonStyle(definition.buttonStyle);

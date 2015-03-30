@@ -91,10 +91,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	centralLayout->setSpacing(0);
 	centralLayout->addWidget(m_splitter);
 
-	m_statusBar = new StatusBarWidget(this);
-
-	setStatusBar(m_statusBar);
-
 	setCentralWidget(centralWidget);
 
 	const QVector<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
@@ -110,7 +106,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	SessionsManager::registerWindow(this);
 
 	m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
-	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
+	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
 	m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
 	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	m_actionsManager->getAction(Action::ExitAction)->setMenuRole(QAction::QuitRole);
@@ -118,17 +114,25 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_actionsManager->getAction(Action::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
 	m_actionsManager->getAction(Action::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
-	if (SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool())
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar)
 	{
 		m_menuBar = new MenuBarWidget(this);
 
 		setMenuBar(m_menuBar);
 	}
 
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != AlwaysHiddenToolBar)
+	{
+		m_statusBar = new StatusBarWidget(this);
+
+		setStatusBar(m_statusBar);
+	}
+
 	placeSidebars();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(addToolBar(int)));
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
@@ -315,10 +319,6 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	else if (option == QLatin1String("Interface/LockToolBars"))
 	{
 		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
-	}
-	else if (option == QLatin1String("Interface/ShowMenuBar"))
-	{
-		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Sidebar/CurrentPanel"))
 	{
@@ -547,21 +547,12 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ShowMenuBarAction:
-			if (checked && !m_menuBar)
 			{
-				m_menuBar = new MenuBarWidget(this);
+				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
+				definition.visibility = (checked ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
 
-				setMenuBar(m_menuBar);
+				ToolBarsManager::setToolBar(definition);
 			}
-			else if (!checked && m_menuBar)
-			{
-				m_menuBar->deleteLater();
-				m_menuBar = NULL;
-
-				setMenuBar(NULL);
-			}
-
-			SettingsManager::setValue(QLatin1String("Interface/ShowMenuBar"), checked);
 
 			break;
 		case Action::ShowTabBarAction:
@@ -591,7 +582,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::LockToolBarsAction:
-			SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), checked);
+			ToolBarsManager::setToolBarsLocked(checked);
 
 			break;
 		case Action::ContentBlockingAction:
@@ -724,7 +715,6 @@ void MainWindow::addToolBar(int identifier)
 {
 	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
 	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
-	toolBar->setMovable(!SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
 
 	QMainWindow::addToolBar(definition.location, toolBar);
 
@@ -733,6 +723,48 @@ void MainWindow::addToolBar(int identifier)
 		m_tabBarToolBar = toolBar;
 
 		m_tabBar = toolBar->findChild<TabBarWidget*>();
+	}
+}
+
+void MainWindow::toolBarModified(int identifier)
+{
+	if (identifier == ToolBarsManager::MenuBar)
+	{
+		const bool showMenuBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
+
+		if (m_menuBar && !showMenuBar)
+		{
+			m_menuBar->deleteLater();
+			m_menuBar = NULL;
+
+			setMenuBar(NULL);
+		}
+		else if (!m_menuBar && showMenuBar)
+		{
+			m_menuBar = new MenuBarWidget(this);
+
+			setMenuBar(m_menuBar);
+		}
+
+		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(showMenuBar);
+	}
+	else if (identifier == ToolBarsManager::StatusBar)
+	{
+		const bool showStatusBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != AlwaysHiddenToolBar);
+
+		if (m_statusBar && !showStatusBar)
+		{
+			m_statusBar->deleteLater();
+			m_statusBar = NULL;
+
+			setStatusBar(NULL);
+		}
+		else if (!m_statusBar && showStatusBar)
+		{
+			m_statusBar = new StatusBarWidget(this);
+
+			setStatusBar(m_statusBar);
+		}
 	}
 }
 

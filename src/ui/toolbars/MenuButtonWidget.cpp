@@ -37,7 +37,7 @@ MenuButtonWidget::MenuButtonWidget(QWidget *parent) : ToolButtonWidget(parent),
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	optionChanged(QLatin1String("Interface/ShowMenuBar"), SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")));
+	toolBarModified(ToolBarsManager::MenuBar);
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
@@ -46,15 +46,15 @@ MenuButtonWidget::MenuButtonWidget(QWidget *parent) : ToolButtonWidget(parent),
 		disconnect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 }
 
-void MenuButtonWidget::optionChanged(const QString &option, const QVariant &value)
+void MenuButtonWidget::toolBarModified(int identifier)
 {
-	if (option == QLatin1String("Interface/ShowMenuBar"))
+	if (identifier == ToolBarsManager::MenuBar)
 	{
-		if (value.toBool())
+		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility == AlwaysVisibleToolBar)
 		{
 			QToolButton::setMaximumSize(0, 0);
 		}
