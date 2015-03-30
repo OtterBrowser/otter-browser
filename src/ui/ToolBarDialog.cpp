@@ -169,7 +169,7 @@ void ToolBarDialog::restoreDefaults()
 void ToolBarDialog::updateActions()
 {
 	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
-	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid());
+	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
 }
 
 void ToolBarDialog::changeEvent(QEvent *event)

@@ -151,6 +151,16 @@ void MenuBarWidget::setup()
 		setCornerWidget(NULL, Qt::TopRightCorner);
 	}
 
+	if (m_leftToolBar)
+	{
+		m_leftToolBar->clear();
+	}
+
+	if (m_rightToolBar)
+	{
+		m_rightToolBar->clear();
+	}
+
 	for (int i = 0; i < definition.actions.count(); ++i)
 	{
 		if (i != position)
