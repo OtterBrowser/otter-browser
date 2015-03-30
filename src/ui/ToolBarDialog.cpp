@@ -41,7 +41,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("go-down")));
 	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
 	m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)->setEnabled(m_definition.canReset);
-	m_ui->titleLineEdit->setText(m_definition.title);
+	m_ui->titleLineEdit->setText(m_definition.title.isEmpty() ? tr("Custom Toolbar") : m_definition.title);
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
 	m_ui->maximumButtonSizeSpinBox->setValue(qMax(0, m_definition.maximumButtonSize));
 

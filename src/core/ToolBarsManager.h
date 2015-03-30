@@ -50,11 +50,12 @@ struct ToolBarDefinition
 	int identifier;
 	int iconSize;
 	int maximumButtonSize;
+	int row;
 	bool canReset;
 	bool isDefault;
 	bool wasRemoved;
 
-	ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), canReset(false), isDefault(false), wasRemoved(false) {}
+	ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
 };
 
 class ToolBarsManager : public QObject

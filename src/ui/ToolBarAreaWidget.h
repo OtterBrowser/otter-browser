@@ -17,54 +17,37 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TOOLBARWIDGET_H
-#define OTTER_TOOLBARWIDGET_H
+#ifndef OTTER_TOOLBARAREAWIDGET_H
+#define OTTER_TOOLBARAREAWIDGET_H
 
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QToolBar>
-
-#include "../core/ToolBarsManager.h"
+#include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
 class MainWindow;
-class Window;
+class ToolBarWidget;
 
-class ToolBarWidget : public QToolBar
+class ToolBarAreaWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
+	explicit ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent);
 
-	static QWidget* createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar);
-	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = NULL);
 	Qt::ToolBarArea getArea() const;
-	int getIdentifier() const;
-	int getMaximumButtonSize() const;
-
-protected:
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
-	void setup();
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
-	void toolBarModified(int identifier);
-	void toolBarRemoved(int identifier);
-	void notifyWindowChanged(qint64 identifier);
-	void updateBookmarks();
-	void setToolBarLocked(bool locked);
+	void controlsHiddenChanged(bool hidden);
+	void toolBarAdded(int identifier);
 
 private:
 	MainWindow *m_mainWindow;
-	Window *m_window;
-	int m_identifier;
-
-signals:
-	void areaChanged(Qt::ToolBarArea area);
-	void windowChanged(Window *window);
-	void maximumButtonSizeChanged(int size);
+	ToolBarWidget *m_tabBarToolBar;
+	QBoxLayout *m_layout;
+	Qt::ToolBarArea m_area;
 };
 
 }

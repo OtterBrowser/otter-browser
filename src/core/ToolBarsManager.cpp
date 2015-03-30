@@ -205,6 +205,8 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 					definition.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].maximumButtonSize));
 				}
 
+				definition.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
+
 				if (!m_definitions[i].actions.isEmpty())
 				{
 					QJsonArray actions;
@@ -411,7 +413,6 @@ void ToolBarsManager::setToolBar(ToolBarDefinition definition)
 		m_identifiers[identifier] = Utils::createIdentifier(QLatin1String("CustomBar"), toolBars, false);
 
 		m_definitions.append(definition);
-
 		m_definitions[identifier].identifier = identifier;
 		m_definitions[identifier].location = Qt::TopToolBarArea;
 
@@ -490,6 +491,7 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
+		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
 		toolBar.isDefault = isDefault;
 
 		if (isDefault)

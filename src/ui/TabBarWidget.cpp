@@ -83,6 +83,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 
 	if (toolBar)
 	{
+		setArea(toolBar->getArea());
+
 		connect(toolBar, SIGNAL(topLevelChanged(bool)), this, SLOT(setIsMoved(bool)));
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}

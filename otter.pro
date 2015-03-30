@@ -104,6 +104,7 @@ SOURCES += src/main.cpp \
     src/ui/TabBarWidget.cpp \
     src/ui/TabSwitcherWidget.cpp \
     src/ui/TextLabelWidget.cpp \
+    src/ui/ToolBarAreaWidget.cpp \
     src/ui/ToolBarDialog.cpp \
     src/ui/ToolBarWidget.cpp \
     src/ui/ToolButtonWidget.cpp \
@@ -228,6 +229,7 @@ HEADERS += src/core/Action.h \
     src/ui/TabBarWidget.h \
     src/ui/TabSwitcherWidget.h \
     src/ui/TextLabelWidget.h \
+    src/ui/ToolBarAreaWidget.h \
     src/ui/ToolBarDialog.h \
     src/ui/ToolBarWidget.h \
     src/ui/ToolButtonWidget.h \

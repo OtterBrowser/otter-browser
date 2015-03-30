@@ -43,6 +43,7 @@ class MenuBarWidget;
 class StatusBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
+class ToolBarAreaWidget;
 class ToolBarWidget;
 class WindowsManager;
 
@@ -77,12 +78,12 @@ protected:
 	void createToggleEdge();
 	void placeSidebars();
 	void updateSidebars();
+	void setTabBar(TabBarWidget *tabBar);
 	bool event(QEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
-	void addToolBar(int identifier);
 	void toolBarModified(int identifier);
 	void splitterMoved();
 	void transferStarted();
@@ -94,7 +95,6 @@ private:
 	TabSwitcherWidget *m_tabSwitcher;
 	MdiWidget *m_mdiWidget;
 	TabBarWidget *m_tabBar;
-	ToolBarWidget *m_tabBarToolBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
 	ActionWidget *m_toggleEdge;
@@ -110,6 +110,8 @@ signals:
 	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	void controlsHiddenChanged(bool hidden);
 	void statusMessageChanged(const QString &message);
+
+friend class ToolBarAreaWidget;
 };
 
 }

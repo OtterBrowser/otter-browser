@@ -33,6 +33,7 @@
 #include "StatusBarWidget.h"
 #include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
+#include "ToolBarAreaWidget.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
@@ -64,7 +65,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_tabSwitcher(NULL),
 	m_mdiWidget(new MdiWidget(this)),
 	m_tabBar(NULL),
-	m_tabBarToolBar(NULL),
 	m_statusBar(NULL),
 	m_menuBar(NULL),
 	m_toggleEdge(NULL),
@@ -83,25 +83,26 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
 	m_splitter->setChildrenCollapsible(false);
+	m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_splitter->addWidget(m_mdiWidget);
 
-	QWidget *centralWidget = new QWidget(this);
-	QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
-	centralLayout->setContentsMargins(0, 0, 0, 0);
-	centralLayout->setSpacing(0);
-	centralLayout->addWidget(m_splitter);
+	QWidget *verticalWidget = new QWidget(this);
+	QWidget *horizontalWidget = new QWidget(verticalWidget);
+	QHBoxLayout *horizontalLayout = new QHBoxLayout(horizontalWidget);
+	horizontalLayout->setContentsMargins(0, 0, 0, 0);
+	horizontalLayout->setSpacing(0);
+	horizontalLayout->addWidget(new ToolBarAreaWidget(Qt::LeftToolBarArea, this));
+	horizontalLayout->addWidget(m_splitter);
+	horizontalLayout->addWidget(new ToolBarAreaWidget(Qt::RightToolBarArea, this));
 
-	setCentralWidget(centralWidget);
+	QVBoxLayout *verticalLayout = new QVBoxLayout(verticalWidget);
+	verticalLayout->setContentsMargins(0, 0, 0, 0);
+	verticalLayout->setSpacing(0);
+	verticalLayout->addWidget(new ToolBarAreaWidget(Qt::TopToolBarArea, this));
+	verticalLayout->addWidget(horizontalWidget);
+	verticalLayout->addWidget(new ToolBarAreaWidget(Qt::BottomToolBarArea, this));
 
-	const QVector<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
-
-	for (int i = 0; i < toolBarDefinitions.count(); ++i)
-	{
-		if (toolBarDefinitions.at(i).location != Qt::NoToolBarArea)
-		{
-			addToolBar(toolBarDefinitions.at(i).identifier);
-		}
-	}
+	setCentralWidget(verticalWidget);
 
 	SessionsManager::registerWindow(this);
 
@@ -131,7 +132,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	placeSidebars();
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(addToolBar(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
@@ -152,13 +152,6 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	else if (SettingsManager::getValue(QLatin1String("Interface/MaximizeNewWindows")).toBool())
 	{
 		showMaximized();
-	}
-
-	const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		toolBars.at(i)->notifyAreaChanged();
 	}
 }
 
@@ -556,7 +549,12 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case Action::ShowTabBarAction:
-			m_tabBarToolBar->setVisible(checked);
+			{
+				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar);
+				definition.visibility = (checked ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+
+				ToolBarsManager::setToolBar(definition);
+			}
 
 			break;
 		case Action::ShowSidebarAction:
@@ -708,21 +706,6 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		delete bookmark;
-	}
-}
-
-void MainWindow::addToolBar(int identifier)
-{
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
-	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
-
-	QMainWindow::addToolBar(definition.location, toolBar);
-
-	if (identifier == ToolBarsManager::TabBar)
-	{
-		m_tabBarToolBar = toolBar;
-
-		m_tabBar = toolBar->findChild<TabBarWidget*>();
 	}
 }
 
@@ -885,6 +868,11 @@ void MainWindow::updateWindowTitle(const QString &title)
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
+void MainWindow::setTabBar(TabBarWidget *tabBar)
+{
+	m_tabBar = tabBar;
+}
+
 MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
 	MainWindow *window = NULL;
@@ -953,21 +941,9 @@ bool MainWindow::event(QEvent *event)
 
 				if (stateChangeEvent && windowState().testFlag(Qt::WindowFullScreen) != stateChangeEvent->oldState().testFlag(Qt::WindowFullScreen))
 				{
-					const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
-					const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
-
 					if (isFullScreen())
 					{
 						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
-
-						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
-						{
-							m_tabBarToolBar->setMaximumWidth(1);
-						}
-						else
-						{
-							m_tabBarToolBar->setMaximumHeight(1);
-						}
 
 						if (m_statusBar)
 						{
@@ -980,28 +956,10 @@ bool MainWindow::event(QEvent *event)
 						}
 
 						m_mdiWidget->installEventFilter(this);
-						m_tabBarToolBar->installEventFilter(this);
-
-						for (int i = 0; i < toolBars.count(); ++i)
-						{
-							if (toolBars.at(i) != m_tabBarToolBar)
-							{
-								toolBars.at(i)->hide();
-							}
-						}
 					}
 					else
 					{
 						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
-
-						if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
-						{
-							m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
-						}
-						else
-						{
-							m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-						}
 
 						if (m_statusBar)
 						{
@@ -1014,15 +972,6 @@ bool MainWindow::event(QEvent *event)
 						}
 
 						m_mdiWidget->removeEventFilter(this);
-						m_tabBarToolBar->removeEventFilter(this);
-
-						for (int i = 0; i < toolBars.count(); ++i)
-						{
-							if (toolBars.at(i) != m_tabBarToolBar)
-							{
-								toolBars.at(i)->show();
-							}
-						}
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
@@ -1074,34 +1023,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
 			triggerAction(Action::FullScreenAction);
-		}
-	}
-
-	if (object == m_tabBarToolBar && event->type() == QEvent::Enter)
-	{
-		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
-
-		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
-		{
-			m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
-		}
-		else
-		{
-			m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-		}
-	}
-
-	if (object == m_tabBarToolBar && event->type() == QEvent::Leave)
-	{
-		const Qt::ToolBarArea area = toolBarArea(m_tabBarToolBar);
-
-		if (area == Qt::LeftToolBarArea || area == Qt::RightToolBarArea)
-		{
-			m_tabBarToolBar->setMaximumWidth(1);
-		}
-		else
-		{
-			m_tabBarToolBar->setMaximumHeight(1);
 		}
 	}
 

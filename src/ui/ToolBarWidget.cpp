@@ -22,6 +22,7 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "TabBarWidget.h"
+#include "ToolBarAreaWidget.h"
 #include "Window.h"
 #include "toolbars/ActionWidget.h"
 #include "toolbars/AddressWidget.h"
@@ -48,7 +49,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_identifier(identifier)
 {
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
-	setAllowedAreas(Qt::AllToolBarAreas);
+	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
 
 	if (identifier >= 0)
@@ -56,13 +57,14 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 		setup();
 
-		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
 
-	if (m_mainWindow && (parent == m_mainWindow || m_identifier < 0))
+	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parent);
+
+	if (m_mainWindow && (toolBarArea || m_identifier < 0))
 	{
 		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
 	}
@@ -188,14 +190,6 @@ void ToolBarWidget::toolBarRemoved(int identifier)
 	if (identifier == m_identifier)
 	{
 		deleteLater();
-	}
-}
-
-void ToolBarWidget::notifyAreaChanged()
-{
-	if (m_mainWindow)
-	{
-		emit areaChanged(m_mainWindow->toolBarArea(this));
 	}
 }
 
@@ -380,6 +374,18 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu))->setText(tr("Toolbars"));
 
 	return menu;
+}
+
+Qt::ToolBarArea ToolBarWidget::getArea() const
+{
+	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+
+	if (toolBarArea)
+	{
+		return toolBarArea->getArea();
+	}
+
+	return Qt::NoToolBarArea;
 }
 
 int ToolBarWidget::getIdentifier() const
