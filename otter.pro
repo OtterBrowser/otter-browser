@@ -86,6 +86,7 @@ SOURCES += src/main.cpp \
     src/ui/MdiWidget.cpp \
     src/ui/Menu.cpp \
     src/ui/MenuBarWidget.cpp \
+    src/ui/NotificationDialog.cpp \
     src/ui/OpenAddressDialog.cpp \
     src/ui/OpenBookmarkDialog.cpp \
     src/ui/OptionDelegate.cpp \
@@ -212,6 +213,7 @@ HEADERS += src/core/Action.h \
     src/ui/MdiWidget.h \
     src/ui/Menu.h \
     src/ui/MenuBarWidget.h \
+    src/ui/NotificationDialog.h \
     src/ui/OpenAddressDialog.h \
     src/ui/OpenBookmarkDialog.h \
     src/ui/OptionDelegate.h \

@@ -70,10 +70,12 @@ public:
 
 	void runApplication(const QString &command, const QString &fileName = QString()) const;
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
-	bool isDefaultBrowser() const;
+	bool canShowNotifications() const;
 	bool canSetAsDefaultBrowser() const;
+	bool isDefaultBrowser() const;
 
 public slots:
+	void showNotification(Notification *notification);
 	bool setAsDefaultBrowser();
 
 protected:

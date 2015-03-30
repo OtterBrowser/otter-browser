@@ -1,6 +1,5 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,42 +17,39 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TRAYICON_H
-#define OTTER_TRAYICON_H
+#ifndef OTTER_NOTIFICATIONDIALOG_H
+#define OTTER_NOTIFICATIONDIALOG_H
 
-#include <QtWidgets/QAction>
-#include <QtWidgets/QSystemTrayIcon>
+#include <QtCore/QPropertyAnimation>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QLabel>
 
 namespace Otter
 {
 
-class Application;
 class Notification;
 
-class TrayIcon : public QObject
+class NotificationDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit TrayIcon(Application *parent);
+	explicit NotificationDialog(Notification *notification, QWidget *parent = NULL);
 
-	void showMessage(Notification *notification);
+	bool eventFilter(QObject *object, QEvent *event);
 
-public slots:
-	void hide();
+protected:
+	void closeEvent(QCloseEvent *event);
+	void resizeEvent(QResizeEvent *event);
 
 protected slots:
-	void timerEvent(QTimerEvent *event);
-	void activated(QSystemTrayIcon::ActivationReason reason);
-	void triggerAction(QAction *action);
-	void updateMenu();
-	void messageClicked();
-	void messageIgnored();
+	void aboutToClose();
+	void clean();
 
 private:
-	QSystemTrayIcon *m_trayIcon;
 	Notification *m_notification;
-	int m_autoHideTimer;
+	QLabel *m_closeLabel;
+	QPropertyAnimation *m_animation;
 };
 
 }

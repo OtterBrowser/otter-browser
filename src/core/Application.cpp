@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -58,6 +59,7 @@ Application* Application::m_instance = NULL;
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_platformIntegration(NULL),
+	m_trayIcon(NULL),
 	m_qtTranslator(NULL),
 	m_applicationTranslator(NULL),
 	m_localServer(NULL),
@@ -206,7 +208,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool())
 	{
-		new TrayIcon(this);
+		m_trayIcon = new TrayIcon(this);
 	}
 
 #ifdef Q_OS_WIN
@@ -481,6 +483,11 @@ MainWindow* Application::getWindow()
 PlatformIntegration* Application::getPlatformIntegration()
 {
 	return m_platformIntegration;
+}
+
+TrayIcon* Application::getTrayIcon()
+{
+	return m_trayIcon;
 }
 
 QString Application::getFullVersion() const

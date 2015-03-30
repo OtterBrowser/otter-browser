@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,6 +33,7 @@ namespace Otter
 
 class MainWindow;
 class PlatformIntegration;
+class TrayIcon;
 
 class Application : public QApplication
 {
@@ -47,6 +49,7 @@ public:
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	MainWindow* getWindow();
+	TrayIcon* getTrayIcon();
 	PlatformIntegration* getPlatformIntegration();
 	QString getFullVersion() const;
 	QString getLocalePath() const;
@@ -66,6 +69,7 @@ protected slots:
 
 private:
 	PlatformIntegration *m_platformIntegration;
+	TrayIcon *m_trayIcon;
 	QTranslator *m_qtTranslator;
 	QTranslator *m_applicationTranslator;
 	QLocalServer *m_localServer;

@@ -134,6 +134,7 @@ set(otter_src
 	src/ui/MdiWidget.cpp
 	src/ui/Menu.cpp
 	src/ui/MenuBarWidget.cpp
+	src/ui/NotificationDialog.cpp
 	src/ui/OpenAddressDialog.cpp
 	src/ui/OpenBookmarkDialog.cpp
 	src/ui/OptionDelegate.cpp

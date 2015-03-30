@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,9 +20,12 @@
 #include "WindowsPlatformIntegration.h"
 #include "../../../core/Application.h"
 #include "../../../core/Console.h"
+#include "../../../core/Notification.h"
 #include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/NotificationDialog.h"
+#include "../../../ui/TrayIcon.h"
 
 #include <Windows.h>
 
@@ -50,11 +53,11 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
 	{
 		connect(Application::getInstance(), SIGNAL(windowRemoved(MainWindow*)), this, SLOT(removeWindow(MainWindow*)));
-		connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this , SLOT(updateTaskbarButtons()));
-		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this , SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTaskbarButtons()));
+		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTaskbarButtons()));
 	}
 }
 
@@ -118,6 +121,21 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 			m_taskbarButtons[window]->deleteLater();
 			m_taskbarButtons.remove(window);
 		}
+	}
+}
+
+void WindowsPlatformIntegration::showNotification(Notification *notification)
+{
+	TrayIcon *trayIcon = Application::getInstance()->getTrayIcon();
+
+	if (trayIcon && QSystemTrayIcon::supportsMessages())
+	{
+		trayIcon->showMessage(notification);
+	}
+	else
+	{
+		NotificationDialog *dialog = new NotificationDialog(notification);
+		dialog->show();
 	}
 }
 
@@ -358,6 +376,11 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	return applications;
 }
 
+bool WindowsPlatformIntegration::canShowNotifications() const
+{
+	return true;
+}
+
 bool WindowsPlatformIntegration::setAsDefaultBrowser()
 {
 	if (!isBrowserRegistered() && !registerToSystem())
@@ -463,11 +486,6 @@ bool WindowsPlatformIntegration::registerToSystem()
 	return true;
 }
 
-bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
-{
-	return (isBrowserRegistered() ? true : m_applicationRegistration.isWritable());
-}
-
 bool WindowsPlatformIntegration::isBrowserRegistered() const
 {
 	if (m_applicationRegistration.value(m_registrationIdentifier).isNull() || !m_propertiesRegistration.value(QLatin1String("/shell/open/command/."), QString()).toString().contains(m_applicationFilePath))
@@ -476,6 +494,11 @@ bool WindowsPlatformIntegration::isBrowserRegistered() const
 	}
 
 	return true;
+}
+
+bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
+{
+	return (isBrowserRegistered() ? true : m_applicationRegistration.isWritable());
 }
 
 bool WindowsPlatformIntegration::isDefaultBrowser() const
