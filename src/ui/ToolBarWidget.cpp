@@ -353,7 +353,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 	QMenu *menu = new QMenu(parent);
 	menu->setTitle(tr("Customize"));
 
-	QMenu *toolBarMenu = menu->addMenu(definition.title);
+	QMenu *toolBarMenu = menu->addMenu(definition.title.isEmpty() ? tr("(Untitled)") : definition.title);
 	toolBarMenu->addAction(tr("Configure..."), ToolBarsManager::getInstance(), SLOT(configureToolBar()))->setData(identifier);
 
 	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBar()));

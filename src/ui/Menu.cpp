@@ -470,7 +470,7 @@ void Menu::populateToolBarsMenu()
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title);;
+		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title);
 		toolBarAction->setData(definitions.at(i).identifier);
 		toolBarAction->setCheckable(true);
 		toolBarAction->setChecked(definitions.at(i).visibility != AlwaysHiddenToolBar);

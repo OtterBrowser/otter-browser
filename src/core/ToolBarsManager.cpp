@@ -30,6 +30,7 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QVector>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -71,7 +72,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			for (int i = 0; i < m_definitions.count(); ++i)
 			{
-				if (m_definitions[i].isDefault)
+				if ((m_definitions[i].isDefault && !m_definitions[i].canReset) || m_definitions[i].wasRemoved)
 				{
 					continue;
 				}
@@ -324,7 +325,16 @@ void ToolBarsManager::removeToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-//TODO
+	if (identifier >= 0 && identifier < (m_definitions.count() - 1) && identifier >= OtherToolBar && QMessageBox::question(NULL, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
+	{
+		m_definitions[identifier].wasRemoved = true;
+		m_definitions[identifier].title = QString();
+		m_definitions[identifier].actions.clear();
+
+		m_instance->scheduleSave();
+
+		emit m_instance->toolBarRemoved(identifier);
+	}
 }
 
 void ToolBarsManager::resetToolBars()
@@ -547,8 +557,9 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 					identifier = m_definitions.count();
 
 					m_identifiers[identifier] = iterator.key();
-
+\
 					m_definitions.append(iterator.value());
+					m_definitions[identifier].identifier = identifier;
 				}
 
 				m_definitions[identifier].identifier = identifier;
@@ -596,7 +607,18 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 		}
 	}
 
-	return m_definitions;
+	QVector<ToolBarDefinition> definitions;
+	definitions.reserve(m_definitions.count());
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		if (!m_definitions.at(i).wasRemoved)
+		{
+			definitions.append(m_definitions.at(i));
+		}
+	}
+
+	return definitions;
 }
 
 bool ToolBarsManager::areToolBarsLocked()

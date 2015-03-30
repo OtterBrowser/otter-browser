@@ -89,6 +89,8 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	{
 		m_ui->optionsHeader->hide();
 		m_ui->arrangementWidget->hide();
+
+		adjustSize();
 	}
 
 	QStandardItemModel *availableEntriesModel = new QStandardItemModel(this);
