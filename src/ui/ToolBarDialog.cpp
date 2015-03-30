@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-ToolBarDialog::ToolBarDialog(const QString &identifier, QWidget *parent) : QDialog(parent),
+ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	m_identifier(identifier),
 	m_ui(new Ui::ToolBarDialog)
 {

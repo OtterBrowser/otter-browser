@@ -23,6 +23,7 @@
 #include "ClearHistoryDialog.h"
 #include "LocaleDialog.h"
 #include "MdiWidget.h"
+#include "Menu.h"
 #include "MenuBarWidget.h"
 #include "OpenAddressDialog.h"
 #include "OpenBookmarkDialog.h"
@@ -111,7 +112,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
 	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/ShowMenuBar")).toBool());
 	m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
-	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool());
+	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	m_actionsManager->getAction(Action::ExitAction)->setMenuRole(QAction::QuitRole);
 	m_actionsManager->getAction(Action::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
 	m_actionsManager->getAction(Action::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
@@ -301,13 +302,7 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 		return;
 	}
 
-	QMenu menu(this);
-	menu.addAction(m_actionsManager->getAction(Action::ShowMenuBarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowTabBarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowSidebarAction));
-	menu.addAction(m_actionsManager->getAction(Action::ShowErrorConsoleAction));
-	menu.addSeparator();
-	menu.addAction(m_actionsManager->getAction(Action::LockToolBarsAction));
+	Menu menu(Menu::ToolBarsMenuRole, this);
 	menu.exec(event->globalPos());
 }
 
@@ -319,14 +314,6 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Interface/LockToolBars"))
 	{
-		const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
-		const bool areToolBarsMovable = !value.toBool();
-
-		for (int i = 0; i < toolBars.count(); ++i)
-		{
-			toolBars.at(i)->setMovable(areToolBarsMovable);
-		}
-
 		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Interface/ShowMenuBar"))

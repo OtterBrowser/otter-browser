@@ -30,6 +30,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QTimer>
+#include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOptionMenuItem>
 
@@ -78,6 +79,13 @@ void MenuBarWidget::resizeEvent(QResizeEvent *event)
 	QMenuBar::resizeEvent(event);
 
 	updateSize();
+}
+
+void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu *menu = ToolBarWidget::createCustomizationMenu(ToolBarsManager::MenuBar);
+	menu->exec(event->globalPos());
+	menu->deleteLater();
 }
 
 void MenuBarWidget::setup()

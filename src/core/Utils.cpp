@@ -50,13 +50,20 @@ void runApplication(const QString &command, const QString &fileName)
 	QDesktopServices::openUrl(QUrl(fileName));
 }
 
-QString createIdentifier(const QString &base, const QStringList &exclude)
+QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase)
 {
 	QString identifier;
 
 	if (!base.isEmpty())
 	{
-		identifier = base.toLower().remove(QRegularExpression(QLatin1String("[^a-z0-9\\-_]")));
+		identifier = base;
+
+		if (toLowerCase)
+		{
+			identifier = base.toLower();
+		}
+
+		identifier.remove(QRegularExpression(QLatin1String("[^a-z0-9\\-_]")));
 	}
 
 	if (identifier.isEmpty())

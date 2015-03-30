@@ -38,6 +38,7 @@ public:
 protected:
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 
 protected slots:
 	void toolBarModified(int identifier);

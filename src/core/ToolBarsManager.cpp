@@ -19,6 +19,7 @@
 
 #include "ToolBarsManager.h"
 #include "SessionsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
@@ -32,10 +33,15 @@ namespace Otter
 ToolBarsManager* ToolBarsManager::m_instance = NULL;
 QMap<int, QString> ToolBarsManager::m_identifiers;
 QVector<ToolBarDefinition> ToolBarsManager::m_definitions;
+bool ToolBarsManager::m_areToolBarsLocked = false;
 
 ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Menu Bar"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tab Bar"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Navigation Bar"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"));
 }
 
 void ToolBarsManager::createInstance(QObject *parent)
@@ -43,6 +49,7 @@ void ToolBarsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ToolBarsManager(parent);
+		m_areToolBarsLocked = SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
 	}
 }
 
@@ -222,12 +229,78 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 	}
 }
 
+void ToolBarsManager::optionChanged(const QString &key, const QVariant &value)
+{
+	if (key == QLatin1String("Interface/LockToolBars"))
+	{
+		m_areToolBarsLocked = value.toBool();
+
+		emit toolBarsLockedChanged(m_areToolBarsLocked);
+	}
+}
+
+void ToolBarsManager::addToolBar()
+{
+
+}
+
+void ToolBarsManager::addBookmarksBar()
+{
+
+}
+
+void ToolBarsManager::configureToolBar(int identifier)
+{
+
+}
+
+void ToolBarsManager::resetToolBar(int identifier)
+{
+
+}
+
+void ToolBarsManager::removeToolBar(int identifier)
+{
+
+}
+
+void ToolBarsManager::resetToolBars()
+{
+
+}
+
+void ToolBarsManager::setToolBar(ToolBarDefinition definition)
+{
+	int identifier = definition.identifier;
+
+	if (identifier < 0 || !identifier < (m_definitions.count() - 1))
+	{
+		QStringList toolBars = m_identifiers.values();
+		toolBars << QLatin1String("MenuBar") << QLatin1String("TabBar") << QLatin1String("NavigationBar") << QLatin1String("StatusBar");
+
+		identifier = m_definitions.count();
+
+		m_identifiers[identifier] = Utils::createIdentifier(QLatin1String("CustomBar"), toolBars, false);
+
+		m_definitions.append(definition);
+	}
+	else
+	{
+		m_definitions[definition.identifier] = definition;
+	}
+}
+
 void ToolBarsManager::scheduleSave()
 {
 	if (m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}
+}
+
+void ToolBarsManager::setToolBarsLocked(bool locked)
+{
+	SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), locked);
 }
 
 ToolBarsManager* ToolBarsManager::getInstance()
@@ -275,6 +348,11 @@ QHash<QString, ToolBarDefinition> ToolBarsManager::loadToolBars(const QString &p
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
 		toolBar.isDefault = isDefault;
+
+		if (isDefault)
+		{
+			toolBar.title = QCoreApplication::translate("actions", toolBar.title.toUtf8());
+		}
 
 		if (location == QLatin1String("top"))
 		{
@@ -378,6 +456,7 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 				if (identifier >= 0)
 				{
 					m_definitions[identifier] = iterator.value();
+					m_definitions[identifier].canReset = true;
 				}
 				else
 				{
@@ -434,6 +513,11 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 	}
 
 	return m_definitions;
+}
+
+bool ToolBarsManager::areToolBarsLocked()
+{
+	return m_areToolBarsLocked;
 }
 
 }

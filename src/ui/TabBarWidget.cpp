@@ -158,17 +158,32 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	menu.addSeparator();
 
-	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
-	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
+	QAction *cycleAction = new QAction(tr("Switch tabs using the mouse wheel"), this);
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
 
-	customizeMenu->addSeparator();
-	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
-
 	connect(cycleAction, SIGNAL(toggled(bool)), this, SLOT(setCycle(bool)));
 
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+	if (toolBar)
+	{
+		QList<QAction*> actions;
+		actions.append(cycleAction);
+
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::TabBar, actions, &menu));
+	}
+	else
+	{
+		QMenu *customizationMenu = menu.addMenu(tr("Customize"));
+		customizationMenu->addAction(cycleAction);
+		customizationMenu->addSeparator();
+		customizationMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+	}
+
 	menu.exec(event->globalPos());
+
+	cycleAction->deleteLater();
 
 	m_clickedTab = -1;
 

@@ -20,6 +20,7 @@
 #ifndef OTTER_TOOLBARWIDGET_H
 #define OTTER_TOOLBARWIDGET_H
 
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QToolBar>
 
 #include "../core/ToolBarsManager.h"
@@ -38,6 +39,7 @@ public:
 	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
 	static QWidget* createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar);
+	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = NULL);
 	int getIdentifier() const;
 	int getMaximumButtonSize() const;
 
@@ -54,6 +56,7 @@ protected slots:
 	void toolBarRemoved(int identifier);
 	void notifyWindowChanged(qint64 identifier);
 	void updateBookmarks();
+	void setToolBarLocked(bool locked);
 
 private:
 	MainWindow *m_mainWindow;

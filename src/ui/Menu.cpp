@@ -26,6 +26,7 @@
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
 #include "../core/SessionsManager.h"
+#include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
 
@@ -105,6 +106,10 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 
+		case ToolBarsMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateToolBarsMenu()));
+
+			break;
 		case UserAgentMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectUserAgent(QAction*)));
@@ -453,6 +458,36 @@ void Menu::populateSessionsMenu()
 	}
 }
 
+void Menu::populateToolBarsMenu()
+{
+	clear();
+
+	const QVector<ToolBarDefinition> definitions = ToolBarsManager::getToolBarDefinitions();
+
+	for (int i = 0; i < definitions.count(); ++i)
+	{
+		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title);;
+		toolBarAction->setData(definitions.at(i).identifier);
+		toolBarAction->setCheckable(true);
+		toolBarAction->setChecked(definitions.at(i).visibility != AlwaysHiddenToolBar);
+
+		connect(toolBarAction, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
+	}
+
+	addAction(Action::ShowSidebarAction, true);
+	addAction(Action::ShowErrorConsoleAction, true);
+	addSeparator();
+
+	QMenu *menu = addMenu(tr("Add New"));
+	menu->addAction(tr("Add Toolbar"), ToolBarsManager::getInstance(), SLOT(addToolBar()));
+	menu->addAction(tr("Add Bookmarks Bar..."), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
+
+	addSeparator();
+	addAction(Action::LockToolBarsAction, true);
+	addSeparator();
+	QMenu::addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBars()));
+}
+
 void Menu::populateUserAgentMenu()
 {
 	if (m_actionGroup)
@@ -658,9 +693,22 @@ void Menu::updateClosedWindowsMenu()
 	setEnabled((window && window->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
 }
 
-Action* Menu::addAction(int identifier)
+void Menu::setToolBarVisibility(bool visible)
 {
-	Action *action = new Action(identifier, this);
+	QAction *action = qobject_cast<QAction*>(sender());
+
+	if (action)
+	{
+		ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(action->data().toInt());
+		definition.visibility = (visible ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+
+		ToolBarsManager::getInstance()->setToolBar(definition);
+	}
+}
+
+Action* Menu::addAction(int identifier, bool isGlobal)
+{
+	Action *action = (isGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
 
 	QMenu::addAction(action);
 
@@ -697,6 +745,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("SessionsMenu"))
 	{
 		return SessionsMenuRole;
+	}
+
+	if (identifier == QLatin1String("ToolBarsMenu"))
+	{
+		return ToolBarsMenuRole;
 	}
 
 	if (identifier == QLatin1String("UserAgentMenu"))

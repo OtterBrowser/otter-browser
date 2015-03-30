@@ -44,13 +44,14 @@ public:
 		ClosedWindowsMenu = 6,
 		ImportExportMenuRole = 7,
 		SessionsMenuRole = 8,
-		UserAgentMenuRole = 9
+		ToolBarsMenuRole = 9,
+		UserAgentMenuRole = 10
 	};
 
 	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
 
 	void load(const QJsonObject &definition);
-	Action* addAction(int identifier);
+	Action* addAction(int identifier, bool isGlobal = false);
 	MenuRole getRole() const;
 	static MenuRole getRole(const QString &identifier);
 
@@ -64,6 +65,7 @@ protected slots:
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
 	void populateSessionsMenu();
+	void populateToolBarsMenu();
 	void populateUserAgentMenu();
 	void clearModelMenu();
 	void clearClosedWindows();
@@ -74,6 +76,7 @@ protected slots:
 	void selectCharacterEncoding(QAction *action);
 	void selectUserAgent(QAction *action);
 	void updateClosedWindowsMenu();
+	void setToolBarVisibility(bool visible);
 
 private:
 	QActionGroup *m_actionGroup;

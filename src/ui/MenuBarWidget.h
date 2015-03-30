@@ -38,6 +38,7 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void setup();
 
 protected slots:

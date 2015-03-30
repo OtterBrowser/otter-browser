@@ -7,13 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>400</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit Toolbar</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="layoutHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Layout</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="3" column="2">
@@ -44,6 +57,9 @@
       <widget class="QLabel" name="currentEntriesLabel">
        <property name="text">
         <string>Current entries:</string>
+       </property>
+       <property name="buddy">
+        <cstring>currentEntriesItemView</cstring>
        </property>
       </widget>
      </item>
@@ -83,6 +99,12 @@
          <property name="sizeType">
           <enum>QSizePolicy::Minimum</enum>
          </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
         </spacer>
        </item>
        <item row="3" column="2">
@@ -116,12 +138,24 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
         </spacer>
        </item>
        <item row="4" column="2">
         <spacer name="downSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
         </spacer>
        </item>
@@ -131,6 +165,9 @@
       <widget class="QLabel" name="availableEntriesLabel">
        <property name="text">
         <string>Available entries:</string>
+       </property>
+       <property name="buddy">
+        <cstring>availableEntriesItemView</cstring>
        </property>
       </widget>
      </item>
@@ -154,6 +191,98 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="optionsHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Options</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="visibilityLabel">
+       <property name="text">
+        <string>Visibility:</string>
+       </property>
+       <property name="buddy">
+        <cstring>visibilityComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="visibilityComboBox"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="buttonStyleLabel">
+       <property name="text">
+        <string>Button style:</string>
+       </property>
+       <property name="buddy">
+        <cstring>buttonStyleComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="buttonStyleComboBox"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="iconSizeLabel">
+       <property name="text">
+        <string>Icon size:</string>
+       </property>
+       <property name="buddy">
+        <cstring>iconSizeSpinBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="iconSizeSpinBox">
+       <property name="specialValueText">
+        <string>Auto</string>
+       </property>
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>1024</number>
+       </property>
+       <property name="singleStep">
+        <number>22</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="maximumSizeLbel">
+       <property name="text">
+        <string>Maximum size of item:</string>
+       </property>
+       <property name="buddy">
+        <cstring>maximumSizeSpinBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="maximumSizeSpinBox">
+       <property name="specialValueText">
+        <string>No limit</string>
+       </property>
+       <property name="suffix">
+        <string> px</string>
+       </property>
+       <property name="maximum">
+        <number>2048</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -172,6 +301,22 @@
    <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>currentEntriesFilterLineEdit</tabstop>
+  <tabstop>availableEntriesItemView</tabstop>
+  <tabstop>removeButton</tabstop>
+  <tabstop>moveUpButton</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>moveDownButton</tabstop>
+  <tabstop>availableEntriesFilterLineEdit</tabstop>
+  <tabstop>currentEntriesItemView</tabstop>
+  <tabstop>addLauncherButton</tabstop>
+  <tabstop>editLauncherButton</tabstop>
+  <tabstop>visibilityComboBox</tabstop>
+  <tabstop>buttonStyleComboBox</tabstop>
+  <tabstop>iconSizeSpinBox</tabstop>
+  <tabstop>maximumSizeSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -181,8 +326,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>490</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -197,8 +342,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>490</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

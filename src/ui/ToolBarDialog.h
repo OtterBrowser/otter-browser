@@ -35,14 +35,14 @@ class ToolBarDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ToolBarDialog(const QString &identifier, QWidget *parent = NULL);
+	explicit ToolBarDialog(int identifier, QWidget *parent = NULL);
 	~ToolBarDialog();
 
 protected:
 	void changeEvent(QEvent *event);
 
 private:
-	QString m_identifier;
+	int m_identifier;
 	Ui::ToolBarDialog *m_ui;
 };
 

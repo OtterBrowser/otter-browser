@@ -26,6 +26,13 @@
 namespace Otter
 {
 
+enum ToolBarVisibility
+{
+	AlwaysVisibleToolBar = 0,
+	AutoVisibilityToolBar = 1,
+	AlwaysHiddenToolBar = 2
+};
+
 struct ToolBarActionDefinition
 {
 	QString action;
@@ -37,14 +44,16 @@ struct ToolBarDefinition
 	QString title;
 	QString bookmarksPath;
 	QList<ToolBarActionDefinition> actions;
+	ToolBarVisibility visibility;
 	Qt::ToolBarArea location;
 	Qt::ToolButtonStyle buttonStyle;
 	int identifier;
 	int iconSize;
 	int maximumButtonSize;
+	bool canReset;
 	bool isDefault;
 
-	ToolBarDefinition() : location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), isDefault(false) {}
+	ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), canReset(false), isDefault(false) {}
 };
 
 class ToolBarsManager : public QObject
@@ -65,12 +74,24 @@ public:
 	static ToolBarsManager* getInstance();
 	static QVector<ToolBarDefinition> getToolBarDefinitions();
 	static ToolBarDefinition getToolBarDefinition(int identifier);
+	static bool areToolBarsLocked();
+
+public slots:
+	void addToolBar();
+	void addBookmarksBar();
+	void configureToolBar(int identifier = -1);
+	void resetToolBar(int identifier = -1);
+	void removeToolBar(int identifier = -1);
+	void resetToolBars();
+	void setToolBar(ToolBarDefinition definition);
+	void setToolBarsLocked(bool locked);
 
 protected:
 	void timerEvent(QTimerEvent *event);
 	static QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:
+	void optionChanged(const QString &key, const QVariant &value);
 	void scheduleSave();
 
 private:
@@ -82,11 +103,13 @@ private:
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
 	static QVector<ToolBarDefinition> m_definitions;
+	static bool m_areToolBarsLocked;
 
 signals:
 	void toolBarAdded(int identifier);
 	void toolBarModified(int identifier);
 	void toolBarRemoved(int identifier);
+	void toolBarsLockedChanged(bool locked);
 };
 
 }

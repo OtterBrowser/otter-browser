@@ -22,7 +22,6 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "TabBarWidget.h"
-#include "ToolBarDialog.h"
 #include "Window.h"
 #include "toolbars/ActionWidget.h"
 #include "toolbars/AddressWidget.h"
@@ -54,11 +53,13 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	if (identifier >= 0)
 	{
+		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 		setup();
 
 		connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(notifyAreaChanged()));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
 
 	if (m_mainWindow && (parent == m_mainWindow || m_identifier < 0))
@@ -69,35 +70,43 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	QMenu menu(this);
-
-	if (m_identifier != ToolBarsManager::TabBar)
+	if (m_identifier < 0)
 	{
-		menu.addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
-		menu.exec(event->globalPos());
+		event->ignore();
 
 		return;
 	}
 
-	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
-	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
-	menu.addSeparator();
+	if (m_identifier != ToolBarsManager::TabBar)
+	{
+		QMenu *menu = createCustomizationMenu(m_identifier);
+		menu->exec(event->globalPos());
+		menu->deleteLater();
 
-	QMenu *customizeMenu = menu.addMenu(tr("Customize"));
-	QAction *cycleAction = customizeMenu->addAction(tr("Switch tabs using the mouse wheel"));
+		return;
+	}
+
+	QList<QAction*> actions;
+	QAction *cycleAction = new QAction(tr("Switch tabs using the mouse wheel"), this);
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
 	cycleAction->setEnabled(m_mainWindow->getTabBar());
 
-	customizeMenu->addSeparator();
-	customizeMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+	actions.append(cycleAction);
 
 	if (m_mainWindow->getTabBar())
 	{
 		connect(cycleAction, SIGNAL(toggled(bool)), m_mainWindow->getTabBar(), SLOT(setCycle(bool)));
 	}
 
+	QMenu menu(this);
+	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
+	menu.addSeparator();
+	menu.addMenu(createCustomizationMenu(m_identifier, actions, &menu));
 	menu.exec(event->globalPos());
+
+	cycleAction->deleteLater();
 }
 
 void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -205,6 +214,11 @@ void ToolBarWidget::updateBookmarks()
 	}
 }
 
+void ToolBarWidget::setToolBarLocked(bool locked)
+{
+	setMovable(!locked);
+}
+
 QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar)
 {
 	if (definition.action == QLatin1String("spacer"))
@@ -307,6 +321,42 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 	}
 
 	return NULL;
+}
+
+QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)
+{
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
+
+	QMenu *menu = new QMenu(parent);
+	menu->setTitle(tr("Customize"));
+
+	QMenu *toolBarMenu = menu->addMenu(definition.title);
+	toolBarMenu->addAction(tr("Configure..."), ToolBarsManager::getInstance(), SLOT(configureToolBar()))->setData(identifier);
+
+	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBar()));
+	resetAction->setData(identifier);
+	resetAction->setData(definition.canReset);
+
+	if (!actions.isEmpty())
+	{
+		toolBarMenu->addSeparator();
+		toolBarMenu->addActions(actions);
+
+		for (int i = 0; i < actions.count(); ++i)
+		{
+			actions.at(i)->setParent(toolBarMenu);
+		}
+	}
+
+	toolBarMenu->addSeparator();
+
+	QAction *removeAction = toolBarMenu->addAction(Utils::getIcon(QLatin1String("list-remove")), tr("Remove..."), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
+	removeAction->setData(identifier);
+	removeAction->setEnabled(!definition.isDefault);
+
+	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu))->setText(tr("Toolbars"));
+
+	return menu;
 }
 
 int ToolBarWidget::getIdentifier() const
