@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,7 +20,7 @@
 #include "WindowsPlatformIntegration.h"
 #include "../../../core/Application.h"
 #include "../../../core/Console.h"
-#include "../../../core/Notification.h"
+#include "../../../core/NotificationsManager.h"
 #include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/MainWindow.h"
