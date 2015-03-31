@@ -74,6 +74,9 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
+	void startToolBarDragging();
+	void endToolBarDragging();
+	void moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area);
 	void createSidebar();
 	void createToggleEdge();
 	void placeSidebars();
@@ -94,6 +97,10 @@ private:
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
 	MdiWidget *m_mdiWidget;
+	ToolBarAreaWidget *m_topToolBarArea;
+	ToolBarAreaWidget *m_bottomToolBarArea;
+	ToolBarAreaWidget *m_leftToolBarArea;
+	ToolBarAreaWidget *m_rightToolBarArea;
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;

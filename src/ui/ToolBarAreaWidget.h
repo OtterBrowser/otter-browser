@@ -27,23 +27,7 @@ namespace Otter
 {
 
 class MainWindow;
-class ToolBarAreaWidget;
 class ToolBarWidget;
-
-class ToolBarDropAreaWidget : public QWidget
-{
-public:
-	void paintEvent(QPaintEvent *event);
-	QSize sizeHint() const;
-
-protected:
-	explicit ToolBarDropAreaWidget(ToolBarAreaWidget *parent);
-
-private:
-	ToolBarAreaWidget *m_area;
-
-friend class ToolBarAreaWidget;
-};
 
 class ToolBarAreaWidget : public QWidget
 {
@@ -55,15 +39,31 @@ public:
 	Qt::ToolBarArea getArea() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
+protected:
+	void paintEvent(QPaintEvent *event);
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dragMoveEvent(QDragMoveEvent *event);
+	void dragLeaveEvent(QDragLeaveEvent *event);
+	void dropEvent(QDropEvent *event);
+	void startToolBarDragging();
+	void endToolBarDragging();
+	void updateDropRow(const QPoint &position);
+	void insertToolBar(ToolBarWidget *toolBar);
+
 protected slots:
 	void controlsHiddenChanged(bool hidden);
 	void toolBarAdded(int identifier);
+	void toolBarModified(int identifier);
 
 private:
 	MainWindow *m_mainWindow;
 	ToolBarWidget *m_tabBarToolBar;
 	QBoxLayout *m_layout;
 	Qt::ToolBarArea m_area;
+	int m_dropRow;
+
+friend class MainWindow;
+friend class ToolBarWidget;
 };
 
 }

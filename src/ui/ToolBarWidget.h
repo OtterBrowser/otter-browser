@@ -29,7 +29,26 @@ namespace Otter
 {
 
 class MainWindow;
+class ToolBarWidget;
 class Window;
+
+class ToolBarDragAreaWidget : public QWidget
+{
+public:
+	void paintEvent(QPaintEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+
+protected:
+	explicit ToolBarDragAreaWidget(ToolBarWidget *parent);
+
+private:
+	ToolBarWidget *m_toolBar;
+	QPoint m_dragStartPosition;
+
+friend class ToolBarWidget;
+};
 
 class ToolBarWidget : public QToolBar
 {
@@ -47,6 +66,8 @@ public:
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
+	void startToolBarDragging();
+	void endToolBarDragging();
 	void setup();
 	QWidget* createWidget(const ToolBarActionDefinition &definition);
 
@@ -60,12 +81,15 @@ protected slots:
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
+	ToolBarDragAreaWidget *m_dragArea;
 	int m_identifier;
 
 signals:
 	void areaChanged(Qt::ToolBarArea area);
 	void windowChanged(Window *window);
 	void maximumButtonSizeChanged(int size);
+
+friend class ToolBarDragAreaWidget;
 };
 
 }

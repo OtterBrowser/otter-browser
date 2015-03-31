@@ -38,14 +38,86 @@
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
+#include <QtCore/QMimeData>
+#include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 
 namespace Otter
 {
 
+ToolBarDragAreaWidget::ToolBarDragAreaWidget(ToolBarWidget *parent) : QWidget(parent),
+	m_toolBar(parent)
+{
+	setToolTip(tr("Drag to move toolbar"));
+	setCursor(QCursor(Qt::SizeAllCursor));
+
+	if (m_toolBar->orientation() == Qt::Horizontal)
+	{
+		setFixedWidth(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
+	}
+	else
+	{
+		setFixedHeight(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
+	}
+}
+
+void ToolBarDragAreaWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	QPainter painter(this);
+	QStyleOption option;
+	option.palette = palette();
+	option.rect = QRect(QPoint(0, 0), size());
+
+	if (m_toolBar->orientation() == Qt::Horizontal)
+	{
+		option.state = QStyle::State_Horizontal;
+	}
+
+	style()->drawPrimitive(QStyle::PE_IndicatorToolBarHandle, &option, &painter, this);
+}
+
+void ToolBarDragAreaWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+
+	if (event->button() == Qt::LeftButton)
+	{
+		m_dragStartPosition = event->pos();
+	}
+}
+
+void ToolBarDragAreaWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (!event->buttons().testFlag(Qt::LeftButton) || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance() || !m_toolBar->isMovable())
+	{
+		return;
+	}
+
+	m_toolBar->startToolBarDragging();
+
+	QMimeData *mimeData = new QMimeData();
+	mimeData->setData(QLatin1String("x-toolbar-identifier"), QString::number(m_toolBar->getIdentifier()).toUtf8());
+
+	QDrag *drag = new QDrag(this);
+	drag->setMimeData(mimeData);
+	drag->exec(Qt::CopyAction | Qt::MoveAction);
+}
+
+void ToolBarDragAreaWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QWidget::mouseReleaseEvent(event);
+
+	m_toolBar->endToolBarDragging();
+}
+
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
+	m_dragArea(NULL),
 	m_identifier(identifier)
 {
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
@@ -119,9 +191,33 @@ void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
+void ToolBarWidget::startToolBarDragging()
+{
+	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+
+	if (toolBarArea)
+	{
+		toolBarArea->startToolBarDragging();
+	}
+}
+
+void ToolBarWidget::endToolBarDragging()
+{
+	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+
+	if (toolBarArea)
+	{
+		toolBarArea->endToolBarDragging();
+	}
+}
+
 void ToolBarWidget::setup()
 {
-	setDefinition(ToolBarsManager::getToolBarDefinition(m_identifier));
+	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
+
+	setDefinition(definition);
+
+	emit areaChanged(definition.location);
 }
 
 void ToolBarWidget::toolBarModified(int identifier)
@@ -153,11 +249,20 @@ void ToolBarWidget::updateBookmarks()
 
 	clear();
 
+	m_dragArea = NULL;
+
 	BookmarksItem *item = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
 	if (!item)
 	{
 		return;
+	}
+
+	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
+	{
+		m_dragArea = new ToolBarDragAreaWidget(this);
+
+		addWidget(m_dragArea);
 	}
 
 	for (int i = 0; i < item->rowCount(); ++i)
@@ -181,6 +286,18 @@ void ToolBarWidget::updateBookmarks()
 void ToolBarWidget::setToolBarLocked(bool locked)
 {
 	setMovable(!locked);
+
+	if (locked && m_dragArea)
+	{
+		m_dragArea->deleteLater();
+		m_dragArea = NULL;
+	}
+	else if (!locked && !m_dragArea && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
+	{
+		m_dragArea = new ToolBarDragAreaWidget(this);
+
+		insertWidget(((actions().count() > 0) ? actions().at(0) : NULL), m_dragArea);
+	}
 }
 
 void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
@@ -188,6 +305,9 @@ void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
 	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
 
 	setVisible(definition.visibility != AlwaysHiddenToolBar);
+	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
+
+	m_dragArea = NULL;
 
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
@@ -218,6 +338,13 @@ void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
 		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
 
 		return;
+	}
+
+	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
+	{
+		m_dragArea = new ToolBarDragAreaWidget(this);
+
+		addWidget(m_dragArea);
 	}
 
 	for (int i = 0; i < definition.actions.count(); ++i)

@@ -64,6 +64,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
 	m_mdiWidget(new MdiWidget(this)),
+	m_topToolBarArea(NULL),
+	m_bottomToolBarArea(NULL),
+	m_leftToolBarArea(NULL),
+	m_rightToolBarArea(NULL),
 	m_tabBar(NULL),
 	m_menuBar(NULL),
 	m_statusBar(NULL),
@@ -81,6 +85,10 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	SessionsManager::setActiveWindow(this);
 
 	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_topToolBarArea = new ToolBarAreaWidget(Qt::TopToolBarArea, this);
+	m_bottomToolBarArea = new ToolBarAreaWidget(Qt::BottomToolBarArea, this);
+	m_leftToolBarArea = new ToolBarAreaWidget(Qt::LeftToolBarArea, this);
+	m_rightToolBarArea = new ToolBarAreaWidget(Qt::RightToolBarArea, this);
 
 	m_splitter->setChildrenCollapsible(false);
 	m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -91,16 +99,16 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	QHBoxLayout *horizontalLayout = new QHBoxLayout(horizontalWidget);
 	horizontalLayout->setContentsMargins(0, 0, 0, 0);
 	horizontalLayout->setSpacing(0);
-	horizontalLayout->addWidget(new ToolBarAreaWidget(Qt::LeftToolBarArea, this));
+	horizontalLayout->addWidget(m_leftToolBarArea);
 	horizontalLayout->addWidget(m_splitter);
-	horizontalLayout->addWidget(new ToolBarAreaWidget(Qt::RightToolBarArea, this));
+	horizontalLayout->addWidget(m_rightToolBarArea);
 
 	QVBoxLayout *verticalLayout = new QVBoxLayout(verticalWidget);
 	verticalLayout->setContentsMargins(0, 0, 0, 0);
 	verticalLayout->setSpacing(0);
-	verticalLayout->addWidget(new ToolBarAreaWidget(Qt::TopToolBarArea, this));
+	verticalLayout->addWidget(m_topToolBarArea);
 	verticalLayout->addWidget(horizontalWidget);
-	verticalLayout->addWidget(new ToolBarAreaWidget(Qt::BottomToolBarArea, this));
+	verticalLayout->addWidget(m_bottomToolBarArea);
 
 	setCentralWidget(verticalWidget);
 
@@ -337,6 +345,45 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
 
 		placeSidebars();
+	}
+}
+
+void MainWindow::startToolBarDragging()
+{
+	m_topToolBarArea->setContentsMargins(0, 4, 0, 4);
+	m_bottomToolBarArea->setContentsMargins(0, 4, 0, 4);
+	m_leftToolBarArea->setContentsMargins(4, 0, 4, 0);
+	m_rightToolBarArea->setContentsMargins(4, 0, 4, 0);
+}
+
+void MainWindow::endToolBarDragging()
+{
+	m_topToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_bottomToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_leftToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_rightToolBarArea->setContentsMargins(0, 0, 0, 0);
+}
+
+void MainWindow::moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area)
+{
+	switch (area)
+	{
+		case Qt::BottomToolBarArea:
+			m_bottomToolBarArea->insertToolBar(toolBar);
+
+			break;
+		case Qt::LeftToolBarArea:
+			m_leftToolBarArea->insertToolBar(toolBar);
+
+			break;
+		case Qt::RightToolBarArea:
+			m_rightToolBarArea->insertToolBar(toolBar);
+
+			break;
+		default:
+			m_topToolBarArea->insertToolBar(toolBar);
+
+			break;
 	}
 }
 
