@@ -23,8 +23,56 @@
 #include "ToolBarWidget.h"
 #include "../core/ToolBarsManager.h"
 
+#include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QStyle>
+#include <QtWidgets/QStyleOption>
+
 namespace Otter
 {
+
+ToolBarDropAreaWidget::ToolBarDropAreaWidget(ToolBarAreaWidget *parent) : QWidget(parent),
+	m_area(parent)
+{
+}
+
+void ToolBarDropAreaWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	const bool isHorizontal = (m_area->getArea() == Qt::TopToolBarArea || m_area->getArea() == Qt::BottomToolBarArea);
+	int lineWidth = (isHorizontal ? (height() / 4) : (width() / 4));
+	int lineOffset = (isHorizontal ? (height() / 2) : (width() / 2));
+	QPainter painter(this);
+	painter.setPen(QPen(palette().text(), lineWidth, Qt::DotLine));
+
+	if (isHorizontal)
+	{
+		painter.drawLine(0, lineOffset, width(), lineOffset);
+	}
+	else
+	{
+		painter.drawLine(lineOffset, 0, lineOffset, height());
+	}
+
+	painter.setPen(QPen(palette().text(), (lineWidth * 3), Qt::SolidLine, Qt::RoundCap));
+
+	if (isHorizontal)
+	{
+		painter.drawPoint(0, lineOffset);
+		painter.drawPoint(width(), lineOffset);
+	}
+	else
+	{
+		painter.drawPoint(lineOffset, 0);
+		painter.drawPoint(lineOffset, height());
+	}
+}
+
+QSize ToolBarDropAreaWidget::sizeHint() const
+{
+	return QSize(10, 10).expandedTo(QApplication::globalStrut());
+}
 
 ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) : QWidget(parent),
 	m_mainWindow(parent),

@@ -27,7 +27,23 @@ namespace Otter
 {
 
 class MainWindow;
+class ToolBarAreaWidget;
 class ToolBarWidget;
+
+class ToolBarDropAreaWidget : public QWidget
+{
+public:
+	void paintEvent(QPaintEvent *event);
+	QSize sizeHint() const;
+
+protected:
+	explicit ToolBarDropAreaWidget(ToolBarAreaWidget *parent);
+
+private:
+	ToolBarAreaWidget *m_area;
+
+friend class ToolBarAreaWidget;
+};
 
 class ToolBarAreaWidget : public QWidget
 {
