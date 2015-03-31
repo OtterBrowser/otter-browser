@@ -55,7 +55,7 @@ SOURCES += src/main.cpp \
     src/core/NetworkCache.cpp \
     src/core/NetworkProxyFactory.cpp \
     src/core/NotesManager.cpp \
-    src/core/Notification.cpp \
+    src/core/NotificationsManager.cpp \
     src/core/PlatformIntegration.cpp \
     src/core/SearchesManager.cpp \
     src/core/SearchSuggester.cpp \
@@ -182,7 +182,7 @@ HEADERS += src/core/Action.h \
     src/core/NetworkManagerFactory.h \
     src/core/NetworkProxyFactory.h \
     src/core/NotesManager.h \
-    src/core/Notification.h \
+    src/core/NotificationsManager.h \
     src/core/PlatformIntegration.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \

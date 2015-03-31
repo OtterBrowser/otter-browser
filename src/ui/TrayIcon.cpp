@@ -23,7 +23,7 @@
 #include "Menu.h"
 #include "../core/ActionsManager.h"
 #include "../core/Application.h"
-#include "../core/Notification.h"
+#include "../core/NotificationsManager.h"
 
 #include <QtCore/QTimer>
 

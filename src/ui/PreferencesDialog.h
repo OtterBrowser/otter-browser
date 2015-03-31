@@ -67,6 +67,9 @@ protected slots:
 	void editSearchEngine();
 	void removeSearchEngine();
 	void updateSearchActions();
+	void playNotificationSound();
+	void updateNotificationsActions();
+	void updateNotificationsOptions();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
 	void addCipher(QAction *action);
@@ -77,7 +80,7 @@ protected slots:
 	void editKeyboardProfile();
 	void cloneKeyboardProfile();
 	void removeKeyboardProfile();
-	void updateKeyboardProfleActions();
+	void updateKeyboardProfileActions();
 	void updateJavaScriptOptions();
 	void openConfigurationManager();
 	void markModified();

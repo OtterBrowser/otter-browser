@@ -25,6 +25,7 @@
 #include "HistoryManager.h"
 #include "NetworkManagerFactory.h"
 #include "NotesManager.h"
+#include "NotificationsManager.h"
 #include "PlatformIntegration.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
@@ -198,6 +199,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	HistoryManager::createInstance(this);
 
 	NotesManager::createInstance(this);
+
+	NotificationsManager::createInstance(this);
 
 	SearchesManager::createInstance(this);
 

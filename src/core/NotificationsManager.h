@@ -17,24 +17,33 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_NOTIFICATION_H
-#define OTTER_NOTIFICATION_H
+#ifndef OTTER_NOTIFICATIONSMANAGER_H
+#define OTTER_NOTIFICATIONSMANAGER_H
 
 #include <QtCore/QObject>
 
 namespace Otter
 {
 
+struct EventDefinition
+{
+	QString title;
+	QString description;
+	QString playSound;
+	int identifier;
+	bool showAlert;
+	bool showNotification;
+
+	EventDefinition() : identifier(-1), showAlert(false), showNotification(false) {}
+};
+
+class NotificationsManager;
+
 class Notification : public QObject
 {
 	Q_OBJECT
 
 public:
-	enum NotificationEvents
-	{
-		TransferCompletedNotification = 0
-	};
-
 	enum NotificationLevel
 	{
 		InformationNotificationLevel = 0,
@@ -44,7 +53,6 @@ public:
 
 	void markClicked();
 	void markIgnored();
-	static Notification* createNotification(int event, const QString &message, NotificationLevel level = InformationNotificationLevel, QObject *parent = NULL);
 	QString getMessage() const;
 	NotificationLevel getLevel() const;
 
@@ -59,6 +67,35 @@ private:
 signals:
 	void clicked();
 	void ignored();
+
+friend class NotificationsManager;
+};
+
+class NotificationsManager : public QObject
+{
+	Q_OBJECT
+	Q_ENUMS(EventIdentifier)
+
+public:
+	enum EventIdentifier
+	{
+		TransferCompletedEvent = 0
+	};
+
+	static void createInstance(QObject *parent = NULL);
+	static NotificationsManager* getInstance();
+	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationNotificationLevel, QObject *parent = NULL);
+	static QString getEventName(int identifier);
+	static EventDefinition getEventDefinition(int identifier);
+	static QVector<EventDefinition> getEventDefinitions();
+
+protected:
+	explicit NotificationsManager(QObject *parent = NULL);
+
+private:
+	static NotificationsManager *m_instance;
+	static QMap<int, QString> m_identifiers;
+	static QVector<EventDefinition> m_definitions;
 };
 
 }

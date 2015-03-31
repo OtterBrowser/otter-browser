@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "NotificationDialog.h"
-#include "../core/Notification.h"
+#include "../core/NotificationsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 

@@ -1285,6 +1285,11 @@
          </property>
          <item>
           <property name="text">
+           <string>Notifications</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Address Field</string>
           </property>
          </item>
@@ -1320,6 +1325,121 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
+         <widget class="QWidget" name="notificationsPage">
+          <layout class="QVBoxLayout" name="notificationsLayout">
+           <item>
+            <widget class="QLabel" name="notificationsEventsHeader">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Events</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Otter::ItemViewWidget" name="notificationsItemView">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <attribute name="headerDefaultSectionSize">
+              <number>200</number>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="notificationOptionsWidget" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <layout class="QVBoxLayout" name="notificationOptionsLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QHBoxLayout" name="notificationsPlaySoundLayout">
+                <item>
+                 <widget class="QLabel" name="notificationsPlaySoundLabel">
+                  <property name="text">
+                   <string>Play sound:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="notificationsPlaySoundButton"/>
+                </item>
+                <item>
+                 <widget class="Otter::FilePathWidget" name="notificationsPlaySoundFilePathWidget" native="true"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="notificationsShowNotificationCheckBox">
+                <property name="text">
+                 <string>Show notification</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="notificationsShowAlertCheckBox">
+                <property name="text">
+                 <string>Mark taskbar entry</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="notificationsOptionsHeader">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Options</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="preferNativeNotificationsCheckBox">
+             <property name="text">
+              <string>Prefer native notifications</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="notificationsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>153</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="addressFieldPage">
           <layout class="QVBoxLayout" name="addressFieldLayout" stretch="0,0,1">
            <item>

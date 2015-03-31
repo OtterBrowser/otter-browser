@@ -34,6 +34,7 @@
 #include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/NotificationsManager.h"
 #include "../core/PlatformIntegration.h"
 #include "../core/SettingsManager.h"
 #include "../core/SearchesManager.h"
@@ -44,6 +45,8 @@
 #include "ui_PreferencesDialog.h"
 
 #include <QtCore/QSettings>
+#include <QtCore/QTimer>
+#include <QtMultimedia/QSoundEffect>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QSslCipher>
 #include <QtWidgets/QCompleter>
@@ -337,6 +340,34 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 		default:
 			{
+				m_ui->notificationsPlaySoundButton->setIcon(Utils::getIcon(QLatin1String("media-playback-start")));
+
+				QStringList notificationsLabels;
+				notificationsLabels << tr("Name") << tr("Description");
+
+				QStandardItemModel *notificationsModel = new QStandardItemModel(this);
+				notificationsModel->setHorizontalHeaderLabels(notificationsLabels);
+
+				const QVector<EventDefinition> events = NotificationsManager::getEventDefinitions();
+
+				for (int i = 0; i < events.count(); ++i)
+				{
+					QList<QStandardItem*> items;
+					items.append(new QStandardItem(QCoreApplication::translate("notifications", events.at(i).title.toUtf8())));
+					items[0]->setData(events.at(i).identifier, Qt::UserRole);
+					items[0]->setData(events.at(i).playSound, (Qt::UserRole + 1));
+					items[0]->setData(events.at(i).showAlert, (Qt::UserRole + 2));
+					items[0]->setData(events.at(i).showNotification, (Qt::UserRole + 3));
+					items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+					items.append(new QStandardItem(QCoreApplication::translate("notifications", events.at(i).description.toUtf8())));
+					items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+					notificationsModel->appendRow(items);
+				}
+
+				m_ui->notificationsItemView->setModel(notificationsModel);
+				m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
+
 				m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 
 				m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
@@ -451,8 +482,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->actionShortcutsMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 				m_ui->actionShortcutsMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
-				QStandardItemModel *model = new QStandardItemModel(this);
-
+				QStandardItemModel *shortcutsProfilesModel = new QStandardItemModel(this);
 				const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 
 				for (int i = 0; i < shortcutsProfiles.count(); ++i)
@@ -471,10 +501,10 @@ void PreferencesDialog::currentTabChanged(int tab)
 					item->setData(profile.identifier, Qt::UserRole);
 					item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-					model->appendRow(item);
+					shortcutsProfilesModel->appendRow(item);
 				}
 
-				m_ui->actionShortcutsViewWidget->setModel(model);
+				m_ui->actionShortcutsViewWidget->setModel(shortcutsProfilesModel);
 				m_ui->actionShortcutsViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 				QMenu *addKeyboardProfileMenu = new QMenu(m_ui->actionShortcutsAddButton);
@@ -487,6 +517,8 @@ void PreferencesDialog::currentTabChanged(int tab)
 
 				updateReaddKeyboardProfileMenu();
 
+				connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+				connect(m_ui->notificationsPlaySoundButton, SIGNAL(clicked()), this, SLOT(playNotificationSound()));
 				connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
 				connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
 				connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
@@ -501,7 +533,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
-				connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfleActions()));
+				connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
 				connect(m_ui->actionShortcutsViewWidget, SIGNAL(modified()), this, SLOT(markModified()));
 				connect(m_ui->actionShortcutsAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
 				connect(m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
@@ -844,6 +876,58 @@ void PreferencesDialog::updateSearchActions()
 	m_ui->removeSearchButton->setEnabled(isSelected);
 }
 
+void PreferencesDialog::playNotificationSound()
+{
+	QSoundEffect *effect = new QSoundEffect(this);
+	effect->setSource(QUrl::fromLocalFile(m_ui->notificationsPlaySoundFilePathWidget->getPath()));
+	effect->setLoopCount(1);
+	effect->setVolume(0.5);
+
+	if (effect->status() == QSoundEffect::Error)
+	{
+		effect->deleteLater();
+	}
+	else
+	{
+		QTimer::singleShot(10000, effect, SLOT(deleteLater()));
+
+		effect->play();
+	}
+}
+
+void PreferencesDialog::updateNotificationsActions()
+{
+	disconnect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateNotificationsOptions()));
+	disconnect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+
+	const QModelIndex index = m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow());
+
+	m_ui->notificationOptionsWidget->setEnabled(index.isValid());
+	m_ui->notificationsPlaySoundFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
+	m_ui->notificationsPlaySoundFilePathWidget->setFilter(tr("WAV files (*.wav)"));
+	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(Qt::UserRole + 2).toBool());
+	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(Qt::UserRole + 3).toBool());
+
+	connect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateNotificationsOptions()));
+	connect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+	connect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
+}
+
+void PreferencesDialog::updateNotificationsOptions()
+{
+	const QModelIndex index = m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow());
+
+	if (index.isValid())
+	{
+		m_ui->notificationsItemView->setData(index, m_ui->notificationsPlaySoundFilePathWidget->getPath(), (Qt::UserRole + 1));
+		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), (Qt::UserRole + 2));
+		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), (Qt::UserRole + 3));
+
+		markModified();
+	}
+}
+
 void PreferencesDialog::updateReaddSearchMenu()
 {
 	if (!m_ui->addSearchButton->menu())
@@ -1166,7 +1250,7 @@ void PreferencesDialog::removeKeyboardProfile()
 	}
 }
 
-void PreferencesDialog::updateKeyboardProfleActions()
+void PreferencesDialog::updateKeyboardProfileActions()
 {
 	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
 	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
@@ -1362,6 +1446,29 @@ void PreferencesDialog::save()
 
 	if (m_loadedTabs[4])
 	{
+		QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
+		notificationsSettings.setIniCodec("UTF-8");
+		notificationsSettings.clear();
+
+		for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)
+		{
+			const QModelIndex index = m_ui->notificationsItemView->getIndex(i, 0);
+			const QString eventName = NotificationsManager::getEventName(index.data(Qt::UserRole).toInt());
+
+			if (eventName.isEmpty())
+			{
+				continue;
+			}
+
+			notificationsSettings.beginGroup(eventName);
+			notificationsSettings.setValue(QLatin1String("playSound"), index.data(Qt::UserRole + 1).toString());
+			notificationsSettings.setValue(QLatin1String("showAlert"), index.data(Qt::UserRole + 2).toBool());
+			notificationsSettings.setValue(QLatin1String("showNotification"), index.data(Qt::UserRole + 3).toBool());
+			notificationsSettings.endGroup();
+		}
+
+		SettingsManager::setValue(QLatin1String("Interface/UseNativeNotifications"), m_ui->preferNativeNotificationsCheckBox->isChecked());
+
 		SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
 
 		SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
