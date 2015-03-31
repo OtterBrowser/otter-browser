@@ -466,7 +466,14 @@ void Window::setControlsHidden(bool hidden)
 
 	if (m_navigationBar)
 	{
-		m_navigationBar->setVisible(!m_areControlsHidden);
+		if (hidden)
+		{
+			m_navigationBar->hide();
+		}
+		else if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).visibility != AlwaysHiddenToolBar)
+		{
+			m_navigationBar->show();
+		}
 	}
 }
 
@@ -499,7 +506,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	if (m_contentsWidget->getType() == QLatin1String("web") && !m_navigationBar)
 	{
 		m_navigationBar = new ToolBarWidget(ToolBarsManager::NavigationBar, this, this);
-		m_navigationBar->setVisible(!m_areControlsHidden);
+		m_navigationBar->setVisible(!m_areControlsHidden && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).visibility != AlwaysHiddenToolBar);
 
 		layout()->addWidget(m_navigationBar);
 	}

@@ -420,6 +420,11 @@ void ToolBarsManager::setToolBar(ToolBarDefinition definition)
 	}
 	else
 	{
+		if (identifier < OtherToolBar)
+		{
+			definition.canReset = true;
+		}
+
 		m_definitions[identifier] = definition;
 
 		emit m_instance->toolBarModified(identifier);
@@ -617,14 +622,17 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 					identifier = m_definitions.count();
 
 					m_identifiers[identifier] = iterator.key();
-\
+
 					m_definitions.append(iterator.value());
 					m_definitions[identifier].identifier = identifier;
 				}
-
-				m_definitions[identifier].identifier = identifier;
 			}
 		}
+
+		m_definitions[MenuBar].identifier = MenuBar;
+		m_definitions[TabBar].identifier = TabBar;
+		m_definitions[NavigationBar].identifier = NavigationBar;
+		m_definitions[StatusBar].identifier = StatusBar;
 
 		bool hasMenuBar = false;
 
