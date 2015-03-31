@@ -202,7 +202,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 				if (m_definitions[i].maximumButtonSize > 0)
 				{
-					definition.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].maximumButtonSize));
+					definition.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions[i].maximumButtonSize));
 				}
 
 				definition.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
