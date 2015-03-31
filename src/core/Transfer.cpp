@@ -24,6 +24,7 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
+#include "Utils.h"
 #include "WebBackend.h"
 #include "../ui/MainWindow.h"
 
@@ -464,6 +465,11 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 	stop();
 
 	m_state = ErrorState;
+}
+
+void Transfer::openTarget()
+{
+	Utils::runApplication(QString(), getTarget());
 }
 
 void Transfer::stop()

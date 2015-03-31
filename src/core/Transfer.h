@@ -63,6 +63,7 @@ public:
 	virtual TransferState getState() const;
 
 public slots:
+	void openTarget();
 	virtual void stop();
 	virtual bool resume();
 	virtual bool restart();

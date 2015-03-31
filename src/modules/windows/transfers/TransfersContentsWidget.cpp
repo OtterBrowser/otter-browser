@@ -289,7 +289,7 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 
 	if (transfer)
 	{
-		Utils::runApplication(QString(), transfer->getTarget());
+		transfer->openTarget();
 	}
 }
 

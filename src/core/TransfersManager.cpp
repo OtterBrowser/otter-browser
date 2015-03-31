@@ -146,7 +146,7 @@ void TransfersManager::transferFinished()
 
 	if (transfer)
 	{
-		Notification::createNotification(Notification::TransferCompletedNotification, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationNotificationLevel, this);
+		Notification *notification = Notification::createNotification(Notification::TransferCompletedNotification, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationNotificationLevel, this);
 
 		emit transferFinished(transfer);
 
@@ -154,6 +154,8 @@ void TransfersManager::transferFinished()
 		{
 			scheduleSave();
 		}
+
+		connect(notification, SIGNAL(clicked()), transfer, SLOT(openTarget()));
 	}
 }
 
