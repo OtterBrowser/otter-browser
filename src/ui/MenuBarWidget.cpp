@@ -151,32 +151,41 @@ void MenuBarWidget::setup()
 		setCornerWidget(NULL, Qt::TopRightCorner);
 	}
 
-	if (m_leftToolBar)
-	{
-		m_leftToolBar->clear();
-	}
+	ToolBarDefinition leftDefinition(definition);
+	leftDefinition.actions.clear();
 
-	if (m_rightToolBar)
-	{
-		m_rightToolBar->clear();
-	}
+	ToolBarDefinition rightDefinition(definition);
+	rightDefinition.actions.clear();
 
 	for (int i = 0; i < definition.actions.count(); ++i)
 	{
 		if (i != position)
 		{
-			ToolBarWidget *toolBar = ((i < position) ? m_leftToolBar : m_rightToolBar);
-
-			if (definition.actions.at(i).action == QLatin1String("separator"))
+			if (i < position)
 			{
-				toolBar->addSeparator();
+				leftDefinition.actions.append(definition.actions.at(i));
 			}
 			else
 			{
-				toolBar->addWidget(ToolBarWidget::createWidget(definition.actions.at(i), NULL, toolBar));
+				rightDefinition.actions.append(definition.actions.at(i));
 			}
 		}
 	}
+
+	if (m_leftToolBar)
+	{
+		m_leftToolBar->setDefinition(leftDefinition);
+	}
+
+	if (m_rightToolBar)
+	{
+		m_rightToolBar->setDefinition(rightDefinition);
+	}
+
+	const int menuBarHeight = actionGeometry(this->actions().at(0)).height();
+	const int toolBarHeight = ((m_leftToolBar || m_rightToolBar) ? (definition.iconSize + 12) : 0);
+
+	setFixedHeight((toolBarHeight > 0 && toolBarHeight > menuBarHeight) ? toolBarHeight : menuBarHeight);
 
 	QTimer::singleShot(100, this, SLOT(updateSize()));
 }

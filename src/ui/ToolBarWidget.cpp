@@ -121,60 +121,7 @@ void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ToolBarWidget::setup()
 {
-	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
-
-	setVisible(definition.visibility != AlwaysHiddenToolBar);
-
-	if (m_identifier == ToolBarsManager::TabBar)
-	{
-		for (int i = (actions().count() - 1); i >= 0; --i)
-		{
-			if (widgetForAction(actions().at(i)) != tabBar)
-			{
-				removeAction(actions().at(i));
-			}
-		}
-	}
-	else
-	{
-		clear();
-	}
-
-	setToolButtonStyle(definition.buttonStyle);
-
-	if (definition.iconSize > 0)
-	{
-		setIconSize(QSize(definition.iconSize, definition.iconSize));
-	}
-
-	if (!definition.bookmarksPath.isEmpty())
-	{
-		updateBookmarks();
-
-		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
-
-		return;
-	}
-
-	for (int i = 0; i < definition.actions.count(); ++i)
-	{
-		if (definition.actions.at(i).action == QLatin1String("separator"))
-		{
-			addSeparator();
-		}
-		else
-		{
-			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.actions.at(i).action == QLatin1String("TabBarWidget"))
-			{
-				addWidget(tabBar);
-			}
-			else
-			{
-				addWidget(createWidget(definition.actions.at(i), m_window, this));
-			}
-		}
-	}
+	setDefinition(ToolBarsManager::getToolBarDefinition(m_identifier));
 }
 
 void ToolBarWidget::toolBarModified(int identifier)
@@ -236,11 +183,73 @@ void ToolBarWidget::setToolBarLocked(bool locked)
 	setMovable(!locked);
 }
 
-QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar)
+void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
+{
+	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
+
+	setVisible(definition.visibility != AlwaysHiddenToolBar);
+
+	if (m_identifier == ToolBarsManager::TabBar)
+	{
+		for (int i = (actions().count() - 1); i >= 0; --i)
+		{
+			if (widgetForAction(actions().at(i)) != tabBar)
+			{
+				removeAction(actions().at(i));
+			}
+		}
+	}
+	else
+	{
+		clear();
+	}
+
+	setToolButtonStyle(definition.buttonStyle);
+
+	if (definition.iconSize > 0)
+	{
+		setIconSize(QSize(definition.iconSize, definition.iconSize));
+	}
+
+	if (!definition.bookmarksPath.isEmpty())
+	{
+		updateBookmarks();
+
+		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
+
+		return;
+	}
+
+	for (int i = 0; i < definition.actions.count(); ++i)
+	{
+		if (definition.actions.at(i).action == QLatin1String("separator"))
+		{
+			addSeparator();
+		}
+		else
+		{
+			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.actions.at(i).action == QLatin1String("TabBarWidget"))
+			{
+				addWidget(tabBar);
+			}
+			else
+			{
+				QWidget *widget = createWidget(definition.actions.at(i));
+
+				if (widget)
+				{
+					addWidget(widget);
+				}
+			}
+		}
+	}
+}
+
+QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
-		QWidget *spacer = new QWidget(toolBar);
+		QWidget *spacer = new QWidget(this);
 		spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
 		return spacer;
@@ -248,16 +257,16 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 
 	if (definition.action == QLatin1String("AddressWidget"))
 	{
-		return new AddressWidget(window, toolBar);
+		return new AddressWidget(m_window, this);
 	}
 
 	if (definition.action == QLatin1String("ClosedWindowsWidget"))
 	{
-		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), toolBar);
-		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, toolBar));
+		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this);
+		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, this));
 		closedWindowsAction->setEnabled(false);
 
-		QToolButton *closedWindowsMenuButton = new QToolButton(toolBar);
+		QToolButton *closedWindowsMenuButton = new QToolButton(this);
 		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
 		closedWindowsMenuButton->setAutoRaise(true);
 		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
@@ -267,44 +276,42 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 
 	if (definition.action == QLatin1String("MenuButtonWidget"))
 	{
-		return new MenuButtonWidget(toolBar);
+		return new MenuButtonWidget(this);
 	}
 
 	if (definition.action == QLatin1String("PanelChooserWidget"))
 	{
-		return new PanelChooserWidget(toolBar);
+		return new PanelChooserWidget(this);
 	}
 
 	if (definition.action == QLatin1String("SearchWidget"))
 	{
-		return new SearchWidget(window, toolBar);
+		return new SearchWidget(m_window, this);
 	}
 
 	if (definition.action == QLatin1String("StatusMessageWidget"))
 	{
-		return new StatusMessageWidget(toolBar);
+		return new StatusMessageWidget(this);
 	}
 
 	if (definition.action == QLatin1String("TabBarWidget"))
 	{
-		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::TabBar)
+		if (m_identifier != ToolBarsManager::TabBar)
 		{
 			return NULL;
 		}
 
-		MainWindow *mainWindow = MainWindow::findMainWindow(toolBar);
-
-		if (!mainWindow || mainWindow->getTabBar())
+		if (!m_mainWindow || m_mainWindow->getTabBar())
 		{
 			return NULL;
 		}
 
-		return new TabBarWidget(toolBar);
+		return new TabBarWidget(this);
 	}
 
 	if (definition.action == QLatin1String("ZoomWidget"))
 	{
-		return new ZoomWidget(toolBar);
+		return new ZoomWidget(this);
 	}
 
 	if (definition.action.startsWith(QLatin1String("bookmarks:")))
@@ -313,7 +320,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 
 		if (bookmark)
 		{
-			return new BookmarkWidget(bookmark, toolBar);
+			return new BookmarkWidget(bookmark, this);
 		}
 	}
 
@@ -325,15 +332,15 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition, 
 		{
 			if (identifier == Action::GoBackAction)
 			{
-				return new GoBackActionWidget(window, toolBar);
+				return new GoBackActionWidget(m_window, this);
 			}
 
 			if (identifier == Action::GoForwardAction)
 			{
-				return new GoForwardActionWidget(window, toolBar);
+				return new GoForwardActionWidget(m_window, this);
 			}
 
-			return new ActionWidget(identifier, window, toolBar);
+			return new ActionWidget(identifier, m_window, this);
 		}
 	}
 

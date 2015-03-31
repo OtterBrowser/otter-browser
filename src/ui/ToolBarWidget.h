@@ -38,8 +38,8 @@ class ToolBarWidget : public QToolBar
 public:
 	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
-	static QWidget* createWidget(const ToolBarActionDefinition &definition, Window *window, ToolBarWidget *toolBar);
 	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = NULL);
+	void setDefinition(const ToolBarDefinition &definition);
 	Qt::ToolBarArea getArea() const;
 	int getIdentifier() const;
 	int getMaximumButtonSize() const;
@@ -48,6 +48,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void setup();
+	QWidget* createWidget(const ToolBarActionDefinition &definition);
 
 protected slots:
 	void toolBarModified(int identifier);

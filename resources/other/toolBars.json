@@ -2,6 +2,7 @@
 	{
 		"identifier": "MenuBar",
 		"title": "Menu Bar",
+		"iconSize": 20,
 		"actions":
 		[
  			"MenuBarWidget"
