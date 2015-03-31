@@ -127,7 +127,7 @@ void TrayIcon::showMessage(Notification *notification)
 
 	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage(), QSystemTrayIcon::MessageIcon(m_notification->getLevel() + 1));
 
-	m_autoHideTimer = startTimer(20000);
+	m_autoHideTimer = startTimer(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt() * 1000);
 }
 
 void TrayIcon::messageClicked()

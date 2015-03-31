@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,9 +30,10 @@
 namespace Otter
 {
 
-Notification::Notification(const QString &message, NotificationLevel level, QObject *parent) : QObject(parent),
+Notification::Notification(const QString &message, NotificationLevel level, int event, QObject *parent) : QObject(parent),
 	m_message(message),
-	m_level(level)
+	m_level(level),
+	m_event(event)
 {
 }
 
@@ -55,16 +56,23 @@ QString Notification::getMessage() const
 	return m_message;
 }
 
-NotificationLevel Notification::getLevel() const
+Notification::NotificationLevel Notification::getLevel() const
 {
 	return m_level;
 }
 
-Notification* Notification::createNotification(const QString &event, const QString &message, NotificationLevel level, QObject *parent )
+Notification* Notification::createNotification(int event, const QString &message, NotificationLevel level, QObject *parent)
 {
-	Notification *notification = new Notification(message, level, Application::getInstance());
+	QString eventName;
+
+	if (event == TransferCompletedNotification)
+	{
+		eventName = QLatin1String("TransferCompleted");
+	}
+
+	Notification *notification = new Notification(message, level, event, Application::getInstance());
 	QSettings notificationSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
-	const QString playSound = notificationSettings.value(event + QLatin1String("/playSound"), QString()).toString();
+	const QString playSound = notificationSettings.value(eventName + QLatin1String("/playSound"), QString()).toString();
 
 	if (!playSound.isEmpty())
 	{
@@ -75,19 +83,14 @@ Notification* Notification::createNotification(const QString &event, const QStri
 		effect.play();
 	}
 
-	if (notificationSettings.value(event + QLatin1String("/showAlert"), false).toBool())
+	if (notificationSettings.value(eventName + QLatin1String("/showAlert"), false).toBool())
 	{
 		Application::getInstance()->alert(MainWindow::findMainWindow(parent));
 	}
 
-	if (notificationSettings.value(event + QLatin1String("/showNativeNotification"), false).toBool())
+	if (notificationSettings.value(eventName + QLatin1String("/showNotification"), false).toBool())
 	{
-		PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
-
-		if (integration && integration->canShowNotifications())
-		{
-			integration->showNotification(notification);
-		}
+		Application::getInstance()->showNotification(notification);
 	}
 
 	return notification;

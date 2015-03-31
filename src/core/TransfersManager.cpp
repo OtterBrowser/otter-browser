@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "TransfersManager.h"
+#include "Notification.h"
 #include "SessionsManager.h"
 #include "Transfer.h"
 #include "../ui/MainWindow.h"
@@ -145,6 +146,8 @@ void TransfersManager::transferFinished()
 
 	if (transfer)
 	{
+		Notification::createNotification(Notification::TransferCompletedNotification, tr("Transfer completed:\n%1").arg(QFileInfo(transfer->getTarget()).fileName()), Notification::InformationNotificationLevel, this);
+
 		emit transferFinished(transfer);
 
 		if (!m_privateTransfers.contains(transfer))

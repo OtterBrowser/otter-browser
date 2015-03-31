@@ -25,6 +25,7 @@
 #include "HistoryManager.h"
 #include "NetworkManagerFactory.h"
 #include "NotesManager.h"
+#include "PlatformIntegration.h"
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
@@ -35,6 +36,7 @@
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
 #endif
 #include "../ui/MainWindow.h"
+#include "../ui/NotificationDialog.h"
 #include "../ui/TrayIcon.h"
 
 #include <QtCore/QBuffer>
@@ -243,6 +245,19 @@ void Application::removeWindow(MainWindow *window)
 	window->deleteLater();
 
 	emit windowRemoved(window);
+}
+
+void Application::showNotification(Notification *notification)
+{
+	if (SettingsManager::getValue(QLatin1String("Interface/UseNativeNotification")).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	{
+		m_platformIntegration->showNotification(notification);
+	}
+	else
+	{
+		NotificationDialog *dialog = new NotificationDialog(notification);
+		dialog->show();
+	}
 }
 
 void Application::newConnection()

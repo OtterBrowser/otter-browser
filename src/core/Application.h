@@ -32,6 +32,7 @@ namespace Otter
 {
 
 class MainWindow;
+class Notification;
 class PlatformIntegration;
 class TrayIcon;
 
@@ -44,6 +45,7 @@ public:
 	~Application();
 
 	void removeWindow(MainWindow* window);
+	void showNotification(Notification *notification);
 	void setLocale(const QString &locale);
 	QCommandLineParser* createCommandLineParser() const;
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());

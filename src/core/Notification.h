@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,30 +25,36 @@
 namespace Otter
 {
 
-enum NotificationLevel
-{
-	InformationNotificationLevel = 0,
-	WarningNotificationLevel = 1,
-	ErrorNotificationLevel = 2
-};
-
 class Notification : public QObject
 {
 	Q_OBJECT
 
 public:
+	enum NotificationEvents
+	{
+		TransferCompletedNotification = 0
+	};
+
+	enum NotificationLevel
+	{
+		InformationNotificationLevel = 0,
+		WarningNotificationLevel = 1,
+		ErrorNotificationLevel = 2
+	};
+
 	void markClicked();
 	void markIgnored();
-	static Notification* createNotification(const QString &event, const QString &message, NotificationLevel level = InformationNotificationLevel, QObject *parent = NULL);
+	static Notification* createNotification(int event, const QString &message, NotificationLevel level = InformationNotificationLevel, QObject *parent = NULL);
 	QString getMessage() const;
 	NotificationLevel getLevel() const;
 
 protected:
-	explicit Notification(const QString &message, NotificationLevel level, QObject *parent);
+	explicit Notification(const QString &message, NotificationLevel level, int event, QObject *parent);
 
 private:
 	QString m_message;
 	NotificationLevel m_level;
+	int m_event;
 
 signals:
 	void clicked();
