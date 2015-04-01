@@ -28,6 +28,7 @@
 namespace Otter
 {
 
+class BookmarksItem;
 class MainWindow;
 class ToolBarWidget;
 class Window;
@@ -74,14 +75,18 @@ protected:
 protected slots:
 	void toolBarModified(int identifier);
 	void toolBarRemoved(int identifier);
+	void bookmarkAdded(BookmarksItem *bookmark);
+	void bookmarkRemoved(BookmarksItem *bookmark);
+	void bookmarkTrashed(BookmarksItem *bookmark);
+	void loadBookmarks();
 	void notifyWindowChanged(qint64 identifier);
-	void updateBookmarks();
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
 
 private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
+	BookmarksItem *m_bookmark;
 	ToolBarDragAreaWidget *m_dragArea;
 	int m_identifier;
 

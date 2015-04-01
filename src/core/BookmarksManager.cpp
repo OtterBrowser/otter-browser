@@ -63,8 +63,6 @@ void BookmarksManager::scheduleSave()
 	{
 		m_saveTimer = startTimer(1000);
 	}
-
-	emit modelModified();
 }
 
 void BookmarksManager::updateVisits(const QUrl &url)
@@ -121,12 +119,7 @@ BookmarksModel* BookmarksManager::getModel()
 	{
 		m_model = new BookmarksModel(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")), BookmarksModel::BookmarksMode, m_instance);
 
-		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), m_instance, SLOT(scheduleSave()));
-		connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
-		connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), m_instance, SLOT(scheduleSave()));
-		connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), m_instance, SLOT(scheduleSave()));
-
-		emit m_instance->modelModified();
+		connect(m_model, SIGNAL(modelModified()), m_instance, SLOT(scheduleSave()));
 	}
 
 	return m_model;

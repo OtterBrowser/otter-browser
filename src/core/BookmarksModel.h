@@ -120,6 +120,14 @@ private:
 	QMap<quint64, BookmarksItem*> m_identifiers;
 	FormatMode m_mode;
 
+signals:
+	void bookmarkAdded(BookmarksItem *bookmark);
+	void bookmarkModified(BookmarksItem *bookmark);
+	void bookmarkTrashed(BookmarksItem *bookmark);
+	void bookmarkRestored(BookmarksItem *bookmark);
+	void bookmarkRemoved(BookmarksItem *bookmark);
+	void modelModified();
+
 friend class BookmarksItem;
 };
 

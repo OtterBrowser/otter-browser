@@ -76,7 +76,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent
 	}
 
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
-	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 }
 
 void AddressWidget::paintEvent(QPaintEvent *event)

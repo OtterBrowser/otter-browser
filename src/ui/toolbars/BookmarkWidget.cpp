@@ -33,17 +33,19 @@ namespace Otter
 BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : ToolButtonWidget(parent),
 	m_bookmark(bookmark)
 {
-	updateBookmark();
+	updateBookmark(m_bookmark);
 
-	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(removeBookmark(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(updateBookmark(BookmarksItem*)));
 }
 
 BookmarkWidget::BookmarkWidget(const QString &path, QWidget *parent) : ToolButtonWidget(parent),
 	m_bookmark(BookmarksManager::getModel()->getItem(path))
 {
-	updateBookmark();
+	updateBookmark(m_bookmark);
 
-	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(removeBookmark(BookmarksItem*)));
+	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(updateBookmark(BookmarksItem*)));
 }
 
 void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -61,9 +63,19 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
-void BookmarkWidget::updateBookmark()
+void BookmarkWidget::removeBookmark(BookmarksItem *bookmark)
 {
-	if (m_bookmark)
+	if (m_bookmark && m_bookmark == bookmark)
+	{
+		m_bookmark = NULL;
+
+		deleteLater();
+	}
+}
+
+void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
+{
+	if (m_bookmark && m_bookmark == bookmark)
 	{
 		const QString title = (m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
 		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt());

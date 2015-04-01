@@ -33,7 +33,7 @@ AddressCompletionModel::AddressCompletionModel(QObject *parent) : QAbstractListM
 {
 	m_updateTimer = startTimer(250);
 
-	connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateCompletion()));
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateCompletion()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 

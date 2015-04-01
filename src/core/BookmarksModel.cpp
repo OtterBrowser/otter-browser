@@ -187,6 +187,11 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 			}
 		}
 	}
+
+	connect(this, SIGNAL(itemChanged(QStandardItem*)), this, SIGNAL(modelModified()));
+	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(modelModified()));
+	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelModified()));
+	connect(this, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(modelModified()));
 }
 
 void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
@@ -212,6 +217,9 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 
 			trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 			trashItem->setEnabled(true);
+
+			emit bookmarkModified(bookmark);
+			emit bookmarkTrashed(bookmark);
 		}
 	}
 }
@@ -244,6 +252,9 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 	BookmarksItem *trashItem = getTrashItem();
 
 	trashItem->setEnabled(trashItem->rowCount() > 0);
+
+	emit bookmarkModified(bookmark);
+	emit bookmarkRestored(bookmark);
 }
 
 void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
@@ -274,6 +285,8 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 	{
 		m_keywords.remove(bookmark->data(KeywordRole).toString());
 	}
+
+	emit bookmarkRemoved(bookmark);
 }
 
 void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
@@ -595,6 +608,8 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 		m_identifiers[identifier] = bookmark;
 	}
 
+	emit bookmarkAdded(bookmark);
+
 	return bookmark;
 }
 
@@ -893,6 +908,23 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 	}
 
 	bookmark->setItemData(value, role);
+
+	switch (role)
+	{
+		case TitleRole:
+		case UrlRole:
+		case DescriptionRole:
+		case IdentifierRole:
+		case TypeRole:
+		case KeywordRole:
+		case TimeAddedRole:
+		case TimeModifiedRole:
+		case TimeVisitedRole:
+		case VisitsRole:
+			emit bookmarkModified(bookmark);
+
+			break;
+	}
 
 	return true;
 }

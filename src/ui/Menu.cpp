@@ -57,11 +57,11 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 				{
 					if (m_role == NotesMenuRole)
 					{
-						connect(NotesManager::getInstance(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+						connect(NotesManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
 					}
 					else
 					{
-						connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
+						connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(clearModelMenu()));
 					}
 				}
 

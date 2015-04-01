@@ -59,9 +59,6 @@ private:
 
 	static BookmarksManager *m_instance;
 	static BookmarksModel *m_model;
-
-signals:
-	void modelModified();
 };
 
 }

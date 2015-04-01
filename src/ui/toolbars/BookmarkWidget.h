@@ -39,7 +39,8 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 
 protected slots:
-	void updateBookmark();
+	void removeBookmark(BookmarksItem *bookmark);
+	void updateBookmark(BookmarksItem *bookmark);
 
 private:
 	BookmarksItem *m_bookmark;

@@ -117,6 +117,7 @@ void ToolBarDragAreaWidget::mouseReleaseEvent(QMouseEvent *event)
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
+	m_bookmark(NULL),
 	m_dragArea(NULL),
 	m_identifier(identifier)
 {
@@ -236,27 +237,41 @@ void ToolBarWidget::toolBarRemoved(int identifier)
 	}
 }
 
-void ToolBarWidget::notifyWindowChanged(qint64 identifier)
+void ToolBarWidget::bookmarkAdded(BookmarksItem *bookmark)
 {
-	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
-
-	emit windowChanged(m_window);
+	if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
 }
 
-void ToolBarWidget::updateBookmarks()
+void ToolBarWidget::bookmarkRemoved(BookmarksItem *bookmark)
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
+	if (bookmark == m_bookmark)
+	{
+		m_bookmark = NULL;
 
+		loadBookmarks();
+	}
+	else if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
+void ToolBarWidget::bookmarkTrashed(BookmarksItem *bookmark)
+{
+	if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
+void ToolBarWidget::loadBookmarks()
+{
 	clear();
 
 	m_dragArea = NULL;
-
-	BookmarksItem *item = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
-
-	if (!item)
-	{
-		return;
-	}
 
 	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
 	{
@@ -265,9 +280,14 @@ void ToolBarWidget::updateBookmarks()
 		addWidget(m_dragArea);
 	}
 
-	for (int i = 0; i < item->rowCount(); ++i)
+	if (!m_bookmark)
 	{
-		BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(item->child(i));
+		return;
+	}
+
+	for (int i = 0; i < m_bookmark->rowCount(); ++i)
+	{
+		BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(m_bookmark->child(i));
 
 		if (bookmark)
 		{
@@ -281,6 +301,13 @@ void ToolBarWidget::updateBookmarks()
 			}
 		}
 	}
+}
+
+void ToolBarWidget::notifyWindowChanged(qint64 identifier)
+{
+	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
+
+	emit windowChanged(m_window);
 }
 
 void ToolBarWidget::updateVisibility()
@@ -341,9 +368,14 @@ void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
 
 	if (!definition.bookmarksPath.isEmpty())
 	{
-		updateBookmarks();
+		m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
-		connect(BookmarksManager::getInstance(), SIGNAL(modelModified()), this, SLOT(updateBookmarks()));
+		loadBookmarks();
+
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(bookmarkAdded(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(bookmarkRemoved(BookmarksItem*)));
 
 		return;
 	}
