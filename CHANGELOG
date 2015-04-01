@@ -1,6 +1,13 @@
-0.9.05 (2015-??-??):
+0.9.05 (2015-04-01):
 - experimental backend for QtWebEngine (Blink), disabled by default;
-- added interface to deny or grant permission to use geolocation etc. (set of available permissions depends on what is supported by backend).
+- added interface for configuring toolbars;
+- added support for bookmark bars;
+- added Ctrl+Tab tab switcher;
+- added support for taking notes;
+- added interface to deny or grant permission to use geolocation etc. (set of available permissions depends on what is supported by backend);
+- restore tab position when restoring closed tab;
+- tabs are now drawn horizontally in vertical toolbars;
+- many other fixes and improvements.
 
 0.9.04 (2015-01-01):
 - added support for mouse gestures;

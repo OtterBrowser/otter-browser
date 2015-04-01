@@ -1,26 +1,21 @@
 Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
 
-0.9.05 - beta 5 (2015-03-01):
-- user scripts
+0.9.06 - beta 6 (2015-??-??):
 - address field suggestions / drop down history
-- UI for customizing toolbars
-- customizable context menu
-- improved taskbar integration for Windows
-- exposing MDI features
-- additional panels for sidebar (page information, notes etc.)
-
-0.9.06 - beta 6 (2015-05-01):
 - start page
 - passwords manager
 - helper for mouse gestures
 - feeds reader (as module)
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
+- exposing MDI features
+- customizable context menu
 
-1.0.01 - first stable release (2015-06-01):
+1.0.01 - first stable release (2015-??-??):
 - fine-tune UI (sizes, margins and other details)
 
 Later:
+- user scripts
 - spell checking
 - shared contacts database
 - mail client (as module)
