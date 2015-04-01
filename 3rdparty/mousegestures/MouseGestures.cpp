@@ -80,6 +80,14 @@ Recognizer::Recognizer(int minimumMovement, double minimumMatch)
 	d->minimumMatch = minimumMatch;
 }
 
+Recognizer::Recognizer(const Recognizer &other)
+{
+	d = new Private();
+	d->gestures = other.d->gestures;
+	d->minimumMovement2 = other.d->minimumMovement2;
+	d->minimumMatch = other.d->minimumMatch;
+}
+
 Recognizer::~Recognizer()
 {
 	delete d;

@@ -69,7 +69,8 @@ class Recognizer
 {
 
 public:
-	Recognizer(int minimumMovement = 5, double minimumMatch = 0.9);
+	explicit Recognizer(int minimumMovement = 5, double minimumMatch = 0.9);
+	Recognizer(const Recognizer &other);
 	~Recognizer();
 
 	void startGesture(int x, int y);
