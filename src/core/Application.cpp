@@ -373,7 +373,7 @@ void Application::clearHistory()
 			TransfersManager::clearTransfers();
 		}
 
-		if (clearSettings.contains(QLatin1String("cache")))
+		if (clearSettings.contains(QLatin1String("caches")))
 		{
 			NetworkManagerFactory::clearCache();
 		}
