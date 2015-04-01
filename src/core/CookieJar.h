@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,21 +29,21 @@ namespace Otter
 class CookieJar : public QNetworkCookieJar
 {
 	Q_OBJECT
-	Q_ENUMS(KeepCookiesPolicy ThirdPartyCookiesAcceptPolicy)
 
 public:
-	enum KeepCookiesPolicy
+	enum CookiesPolicy
 	{
-		UntilExpireKeepCookies = 0,
-		UntilExitKeepCookies = 1,
-		AskIfKeepCookies = 2
+		IgnoreCookies = 0,
+		ReadOnlyCookies = 1,
+		AcceptAllCookies = 2,
+		AcceptExistingCookies = 3
 	};
 
-	enum ThirdPartyCookiesAcceptPolicy
+	enum KeepMode
 	{
-		NeverAcceptCookies = 0,
-		AlwaysAcceptCookies = 1,
-		AcceptExistingCookies = 2
+		KeepUntilExpiresMode = 0,
+		KeepUntilExitMode = 1,
+		AskIfKeepMode = 2
 	};
 
 	explicit CookieJar(bool isPrivate, QObject *parent = NULL);
@@ -52,8 +52,6 @@ public:
 	CookieJar* clone(QObject *parent = NULL);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;
-	KeepCookiesPolicy getKeepCookiesPolicy() const;
-	ThirdPartyCookiesAcceptPolicy getThirdPartyCookiesAcceptPolicy() const;
 	bool insertCookie(const QNetworkCookie &cookie);
 	bool deleteCookie(const QNetworkCookie &cookie);
 	bool updateCookie(const QNetworkCookie &cookie);
@@ -67,10 +65,10 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 
 private:
-	KeepCookiesPolicy m_keepCookiesPolicy;
-	ThirdPartyCookiesAcceptPolicy m_thirdPartyCookiesAcceptPolicy;
+	CookiesPolicy m_generalCookiesPolicy;
+	CookiesPolicy m_thirdPartyCookiesPolicy;
+	KeepMode m_storagePolicy;
 	int m_saveTimer;
-	bool m_enableCookies;
 	bool m_isPrivate;
 
 signals:

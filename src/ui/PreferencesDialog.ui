@@ -876,6 +876,19 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="cookiesPolicyLabel">
+                   <property name="text">
+                    <string>Accept cookies:</string>
+                   </property>
+                   <property name="buddy">
+                    <cstring>cookiesPolicyComboBox</cstring>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="cookiesPolicyComboBox"/>
+                 </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="keepCookiesUntilLabel">
                    <property name="enabled">
@@ -912,72 +925,23 @@
                   </widget>
                  </item>
                  <item row="2" column="0">
-                  <widget class="QLabel" name="thirdPartyCookiesLabel">
+                  <widget class="QLabel" name="thirdPartyCookiesPolicyLabel">
                    <property name="text">
                     <string>Accept third-party cookies:</string>
                    </property>
                    <property name="buddy">
-                    <cstring>thirdPartyCookiesComboBox</cstring>
+                    <cstring>thirdPartyCookiesPolicyComboBox</cstring>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <layout class="QHBoxLayout" name="thirdPartyCookiesLayout">
-                   <item>
-                    <widget class="QComboBox" name="thirdPartyCookiesComboBox">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="thirdPartyCookiesExceptionsButton">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Exceptions...</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="cookiesPolicyLabel">
-                   <property name="enabled">
-                    <bool>false</bool>
+                  <widget class="QComboBox" name="thirdPartyCookiesPolicyComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="text">
-                    <string>Policy:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>cookiesPolicyComboBox</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="cookiesPolicyComboBox">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Accept all</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Allow to only read existing</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Allow to modify existing</string>
-                    </property>
-                   </item>
                   </widget>
                  </item>
                 </layout>

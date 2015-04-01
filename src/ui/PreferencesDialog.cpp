@@ -257,15 +257,23 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
 				m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
 				m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool());
-				m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
+				m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")).toString() != QLatin1String("ignore"));
 				m_ui->cookiesWidget->setEnabled(m_ui->enableCookiesCheckBox->isChecked());
-				m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
-				m_ui->thirdPartyCookiesComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
-				m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+				m_ui->cookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+				m_ui->cookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
+				m_ui->cookiesPolicyComboBox->addItem(tr("Only read existing"), QLatin1String("readOnly"));
+				m_ui->cookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
-				const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
+				const int cookiesPolicyIndex = m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")).toString());
 
-				m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
+				m_ui->cookiesPolicyComboBox->setCurrentIndex((cookiesPolicyIndex < 0) ? 0 : cookiesPolicyIndex);
+				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
+				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+
+				const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
+
+				m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
 				m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
 				m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
 
@@ -1391,8 +1399,8 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
-		SettingsManager::setValue(QLatin1String("Browser/EnableCookies"), m_ui->enableCookiesCheckBox->isChecked());
-		SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesComboBox->currentData().toString());
+		SettingsManager::setValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")));
+		SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
 		SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
 	}
 

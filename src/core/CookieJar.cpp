@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@ namespace Otter
 {
 
 CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent),
-	m_keepCookiesPolicy(UntilExpireKeepCookies),
-	m_thirdPartyCookiesAcceptPolicy(AlwaysAcceptCookies),
+	m_generalCookiesPolicy(AcceptAllCookies),
+	m_thirdPartyCookiesPolicy(AcceptAllCookies),
+	m_storagePolicy(KeepUntilExpiresMode),
 	m_saveTimer(0),
-	m_enableCookies(true),
 	m_isPrivate(isPrivate)
 {
 	if (isPrivate)
@@ -73,7 +73,7 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 		}
 	}
 
-	optionChanged(QLatin1String("Browser/EnableCookies"), SettingsManager::getValue(QLatin1String("Browser/EnableCookies")));
+	optionChanged(QLatin1String("Network/CookiesPolicy"), SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")));
 	setAllCookies(allCookies);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
@@ -95,13 +95,28 @@ void CookieJar::timerEvent(QTimerEvent *event)
 
 void CookieJar::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/PrivateMode"))
+	if (option == QLatin1String("Browser/PrivateMode") && value.toBool())
 	{
-		m_enableCookies = (!value.toBool() && SettingsManager::getValue(QLatin1String("Browser/EnableCookies")).toBool());
+		m_generalCookiesPolicy = IgnoreCookies;
 	}
-	else if (option == QLatin1String("Browser/EnableCookies"))
+	else if (option == QLatin1String("Network/CookiesPolicy"))
 	{
-		m_enableCookies = (value.toBool() && !SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
+		if (SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || value.toString() == QLatin1String("ignore"))
+		{
+			m_generalCookiesPolicy = IgnoreCookies;
+		}
+		else if (value.toString() == QLatin1String("readOnly"))
+		{
+			m_generalCookiesPolicy = ReadOnlyCookies;
+		}
+		else if (value.toString() == QLatin1String("acceptExisting"))
+		{
+			m_generalCookiesPolicy = AcceptExistingCookies;
+		}
+		else
+		{
+			m_generalCookiesPolicy = AcceptAllCookies;
+		}
 	}
 }
 
@@ -163,7 +178,7 @@ CookieJar* CookieJar::clone(QObject *parent)
 
 QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 {
-	if (!m_enableCookies)
+	if (m_generalCookiesPolicy == IgnoreCookies)
 	{
 		return QList<QNetworkCookie>();
 	}
@@ -192,19 +207,9 @@ QList<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 	return allCookies();
 }
 
-CookieJar::KeepCookiesPolicy CookieJar::getKeepCookiesPolicy() const
-{
-	return m_keepCookiesPolicy;
-}
-
-CookieJar::ThirdPartyCookiesAcceptPolicy CookieJar::getThirdPartyCookiesAcceptPolicy() const
-{
-	return m_thirdPartyCookiesAcceptPolicy;
-}
-
 bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 {
-	if (!m_enableCookies)
+	if (m_generalCookiesPolicy != AcceptAllCookies)
 	{
 		return false;
 	}
@@ -223,6 +228,11 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
+	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
+	{
+		return false;
+	}
+
 	const bool result = QNetworkCookieJar::deleteCookie(cookie);
 
 	if (result)
@@ -237,7 +247,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 {
-	if (!m_enableCookies)
+	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
 	{
 		return false;
 	}
