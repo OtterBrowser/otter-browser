@@ -173,7 +173,10 @@ void NetworkManagerFactory::clearCookies(int period)
 
 void NetworkManagerFactory::clearCache(int period)
 {
-	m_cache->clearCache(period);
+	if (m_cache)
+	{
+		m_cache->clearCache(period);
+	}
 }
 
 void NetworkManagerFactory::loadUserAgents()

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 
 #include <QtCore/QTimer>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -254,9 +255,41 @@ void CookiesContentsWidget::removeDomainCookies()
 		}
 	}
 
-	for (int i = 0; i < cookies.count(); ++i)
+	if (cookies.isEmpty())
 	{
-		cookieJar->deleteCookie(cookies.at(i));
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("You are about to delete %n cookies.", "", cookies.count()));
+	messageBox.setInformativeText(tr("Do you want to continue?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Yes);
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		for (int i = 0; i < cookies.count(); ++i)
+		{
+			cookieJar->deleteCookie(cookies.at(i));
+		}
+	}
+}
+
+void CookiesContentsWidget::removeAllCookies()
+{
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("You are about to delete all cookies."));
+	messageBox.setInformativeText(tr("Do you want to continue?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Yes);
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		NetworkManagerFactory::getCookieJar()->clearCookies();
 	}
 }
 
@@ -272,10 +305,11 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 			menu.addAction(tr("Remove Cookie"), this, SLOT(removeCookies()));
 		}
 
-		menu.addAction(tr("Remove All Cookies from This Domain"), this, SLOT(removeDomainCookies()));
-		menu.addSeparator();
+		menu.addAction(tr("Remove All Cookies from This Domain..."), this, SLOT(removeDomainCookies()));
 	}
 
+	menu.addAction(tr("Remove All Cookies..."), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesView->model()->rowCount() > 0);
+	menu.addSeparator();
 	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
 	menu.exec(m_ui->cookiesView->mapToGlobal(point));
 }
