@@ -8,7 +8,7 @@
   <summary>Web browser controlled by the user, not vice-versa</summary>
   <description>
     <p>
-      Otter Browser, project aiming to recreate classic Opera (12.x) UI using Qt5.
+      Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5.
     </p>
   </description>
   <screenshots>
