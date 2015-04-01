@@ -245,6 +245,14 @@ void ToolBarWidget::bookmarkAdded(BookmarksItem *bookmark)
 	}
 }
 
+void ToolBarWidget::bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+{
+	if (bookmark->parent() == m_bookmark || previousParent == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
 void ToolBarWidget::bookmarkRemoved(BookmarksItem *bookmark)
 {
 	if (bookmark == m_bookmark)
@@ -373,6 +381,7 @@ void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
 		loadBookmarks();
 
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(bookmarkAdded(BookmarksItem*)));
+		connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(bookmarkMoved(BookmarksItem*,BookmarksItem*)));
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
 		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(bookmarkRemoved(BookmarksItem*)));

@@ -76,6 +76,7 @@ protected slots:
 	void toolBarModified(int identifier);
 	void toolBarRemoved(int identifier);
 	void bookmarkAdded(BookmarksItem *bookmark);
+	void bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void bookmarkRemoved(BookmarksItem *bookmark);
 	void bookmarkTrashed(BookmarksItem *bookmark);
 	void loadBookmarks();
