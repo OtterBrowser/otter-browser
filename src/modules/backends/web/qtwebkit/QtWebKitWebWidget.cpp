@@ -1059,25 +1059,6 @@ void QtWebKitWebWidget::clearSelection()
 	}
 }
 
-void QtWebKitWebWidget::showDialog(ContentsDialog *dialog)
-{
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-
-	if (parent)
-	{
-		parent->showDialog(dialog);
-	}
-}
-
-void QtWebKitWebWidget::hideDialog(ContentsDialog *dialog)
-{
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-
-	if (parent)
-	{
-		parent->hideDialog(dialog);
-	}
-}
 
 void QtWebKitWebWidget::goToHistoryIndex(int index)
 {

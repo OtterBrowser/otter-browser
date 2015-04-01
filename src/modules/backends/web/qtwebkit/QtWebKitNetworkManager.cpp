@@ -24,6 +24,7 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
+#include "../../../../core/CookieJarProxy.h"
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
@@ -44,6 +45,7 @@ WebBackend* QtWebKitNetworkManager::m_backend = NULL;
 
 QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget *widget) : NetworkManager(isPrivate, widget),
 	m_widget(widget),
+	m_cookieJar(new CookieJarProxy(getCookieJar(), widget)),
 	m_baseReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -55,6 +57,8 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_canSendReferrer(true)
 {
+	setCookieJar(m_cookieJar);
+
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 }
 
@@ -308,13 +312,13 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
 	m_userAgent = m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
 
-	const QString policyValue = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString();
+	const QString doNotTrackPolicyValue = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString();
 
-	if (policyValue == QLatin1String("allow"))
+	if (doNotTrackPolicyValue == QLatin1String("allow"))
 	{
 		m_doNotTrackPolicy = NetworkManagerFactory::AllowToTrackPolicy;
 	}
-	else if (policyValue == QLatin1String("doNotAllow"))
+	else if (doNotTrackPolicyValue == QLatin1String("doNotAllow"))
 	{
 		m_doNotTrackPolicy = NetworkManagerFactory::DoNotAllowToTrackPolicy;
 	}
@@ -324,6 +328,52 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 	}
 
 	m_canSendReferrer = SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool();
+
+	const QString generalCookiesPolicyValue = SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), url).toString();
+	CookieJar::CookiesPolicy generalCookiesPolicy = CookieJar::AcceptAllCookies;
+
+	if (generalCookiesPolicyValue == QLatin1String("ignore"))
+	{
+		generalCookiesPolicy = CookieJar::IgnoreCookies;
+	}
+	else if (generalCookiesPolicyValue == QLatin1String("readOnly"))
+	{
+		generalCookiesPolicy = CookieJar::ReadOnlyCookies;
+	}
+	else if (generalCookiesPolicyValue == QLatin1String("acceptExisting"))
+	{
+		generalCookiesPolicy = CookieJar::AcceptExistingCookies;
+	}
+
+	const QString thirdPartyCookiesPolicyValue = SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString();
+	CookieJar::CookiesPolicy thirdPartyCookiesPolicy = CookieJar::AcceptAllCookies;
+
+	if (thirdPartyCookiesPolicyValue == QLatin1String("ignore"))
+	{
+		thirdPartyCookiesPolicy = CookieJar::IgnoreCookies;
+	}
+	else if (thirdPartyCookiesPolicyValue == QLatin1String("readOnly"))
+	{
+		thirdPartyCookiesPolicy = CookieJar::ReadOnlyCookies;
+	}
+	else if (thirdPartyCookiesPolicyValue == QLatin1String("acceptExisting"))
+	{
+		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
+	}
+
+	const QString keepModeValue = SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), url).toString();
+	CookieJar::KeepMode keepMode = CookieJar::KeepUntilExpiresMode;
+
+	if (keepModeValue == QLatin1String("keepUntilExit"))
+	{
+		keepMode = CookieJar::KeepUntilExitMode;
+	}
+	else if (keepModeValue == QLatin1String("ask"))
+	{
+		keepMode = CookieJar::AskIfKeepMode;
+	}
+
+	m_cookieJar->setup(generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 }
 
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
@@ -334,6 +384,8 @@ void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
 void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 {
 	m_widget = widget;
+
+	m_cookieJar->setWidget(widget);
 }
 
 QtWebKitNetworkManager* QtWebKitNetworkManager::clone()

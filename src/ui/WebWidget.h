@@ -31,6 +31,7 @@
 namespace Otter
 {
 
+class ContentsDialog;
 class Menu;
 class WebBackend;
 
@@ -94,6 +95,8 @@ public:
 
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
+	void showDialog(ContentsDialog *dialog);
+	void hideDialog(ContentsDialog *dialog);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual Action* getAction(int identifier) = 0;
 	WebBackend* getBackend();

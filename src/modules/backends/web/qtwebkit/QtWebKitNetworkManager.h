@@ -28,6 +28,7 @@
 namespace Otter
 {
 
+class CookieJarProxy;
 class QtWebKitWebWidget;
 class WebBackend;
 
@@ -60,6 +61,7 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_widget;
+	CookieJarProxy *m_cookieJar;
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;

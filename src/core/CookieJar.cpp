@@ -32,7 +32,7 @@ namespace Otter
 CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent),
 	m_generalCookiesPolicy(AcceptAllCookies),
 	m_thirdPartyCookiesPolicy(AcceptAllCookies),
-	m_storagePolicy(KeepUntilExpiresMode),
+	m_keepMode(KeepUntilExpiresMode),
 	m_saveTimer(0),
 	m_isPrivate(isPrivate)
 {
@@ -186,6 +186,11 @@ QList<QNetworkCookie> CookieJar::cookiesForUrl(const QUrl &url) const
 	return QNetworkCookieJar::cookiesForUrl(url);
 }
 
+QList<QNetworkCookie> CookieJar::getCookiesForUrl(const QUrl &url) const
+{
+	return QNetworkCookieJar::cookiesForUrl(url);
+}
+
 QList<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 {
 	if (!domain.isEmpty())
@@ -252,6 +257,46 @@ bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 		return false;
 	}
 
+	const bool result = QNetworkCookieJar::updateCookie(cookie);
+
+	if (result)
+	{
+		scheduleSave();
+	}
+
+	return result;
+}
+
+bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
+{
+	const bool result = QNetworkCookieJar::insertCookie(cookie);
+
+	if (result)
+	{
+		scheduleSave();
+
+		emit cookieAdded(cookie);
+	}
+
+	return result;
+}
+
+bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
+{
+	const bool result = QNetworkCookieJar::deleteCookie(cookie);
+
+	if (result)
+	{
+		scheduleSave();
+
+		emit cookieRemoved(cookie);
+	}
+
+	return result;
+}
+
+bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
+{
 	const bool result = QNetworkCookieJar::updateCookie(cookie);
 
 	if (result)

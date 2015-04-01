@@ -163,6 +163,22 @@ void WebWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
+void WebWidget::triggerAction()
+{
+	Action *action = qobject_cast<Action*>(sender());
+
+	if (action)
+	{
+		triggerAction(action->getIdentifier(), (action->isCheckable() && action->isChecked()));
+	}
+}
+
+void WebWidget::search(const QString &query, const QString &engine)
+{
+	Q_UNUSED(query)
+	Q_UNUSED(engine)
+}
+
 void WebWidget::startReloadTimer()
 {
 	const int reloadTime = getOption(QLatin1String("Content/PageReloadTime")).toInt();
@@ -175,27 +191,6 @@ void WebWidget::startReloadTimer()
 		{
 			m_reloadTimer = startTimer(reloadTime * 1000);
 		}
-	}
-}
-
-void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
-{
-	m_alternateStyleSheets = styleSheets;
-}
-
-void WebWidget::search(const QString &query, const QString &engine)
-{
-	Q_UNUSED(query)
-	Q_UNUSED(engine)
-}
-
-void WebWidget::triggerAction()
-{
-	Action *action = qobject_cast<Action*>(sender());
-
-	if (action)
-	{
-		triggerAction(action->getIdentifier(), (action->isCheckable() && action->isChecked()));
 	}
 }
 
@@ -296,6 +291,26 @@ void WebWidget::quickSearchMenuAboutToShow()
 void WebWidget::clearOptions()
 {
 	m_options.clear();
+}
+
+void WebWidget::showDialog(ContentsDialog *dialog)
+{
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->showDialog(dialog);
+	}
+}
+
+void WebWidget::hideDialog(ContentsDialog *dialog)
+{
+	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+
+	if (parent)
+	{
+		parent->hideDialog(dialog);
+	}
 }
 
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
@@ -476,6 +491,11 @@ void WebWidget::updateQuickSearch()
 	{
 		m_quickSearchMenu->clear();
 	}
+}
+
+void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
+{
+	m_alternateStyleSheets = styleSheets;
 }
 
 void WebWidget::setStatusMessage(const QString &message, bool override)

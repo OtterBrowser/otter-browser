@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, bool isUpdate, QWidget *parent) : QDialog(parent),
+AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieOperation operation, QWidget *parent) : QDialog(parent),
 	m_result(IgnoreCookie),
 	m_ui(new Ui::AcceptCookieDialog)
 {
@@ -39,7 +39,20 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, bool isUpda
 	}
 
 	m_ui->setupUi(this);
-	m_ui->messageLabel->setText(isUpdate ? tr("Website %s requested to update existing cookie.").arg(domain) : tr("Website %s requested to add new cookie.").arg(domain));
+
+	if (operation == InsertCookie)
+	{
+		m_ui->messageLabel->setText(tr("Website %1 requested to add new cookie.").arg(domain));
+	}
+	else if (operation == UpdateCookie)
+	{
+		m_ui->messageLabel->setText(tr("Website %1 requested to update existing cookie.").arg(domain));
+	}
+	else
+	{
+		m_ui->messageLabel->setText(tr("Website %1 requested to remove existing cookie.").arg(domain));
+	}
+
 	m_ui->domainValueLabelWidget->setText(cookie.domain());
 	m_ui->nameValueLabelWidget->setText(QString(cookie.name()));
 	m_ui->valueValueLabelWidget->setText(QString(cookie.value()));
@@ -47,7 +60,12 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, bool isUpda
 	m_ui->secureValueLabel->setText(cookie.isSecure() ? tr("Yes") : tr("No"));
 	m_ui->httpOnlyValueLabel->setText(cookie.isHttpOnly() ? tr("Yes") : tr("No"));
 	m_ui->buttonBox->addButton(tr("Accept"), QDialogButtonBox::AcceptRole);
-	m_ui->buttonBox->addButton(tr("Accept For This Session Only"), QDialogButtonBox::AcceptRole)->setObjectName(QLatin1String("sessionOnly"));
+
+	if (operation != RemoveCookie && !cookie.isSessionCookie())
+	{
+		m_ui->buttonBox->addButton(tr("Accept For This Session Only"), QDialogButtonBox::AcceptRole)->setObjectName(QLatin1String("sessionOnly"));
+	}
+
 	m_ui->buttonBox->addButton(tr("Discard"), QDialogButtonBox::RejectRole);
 
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));

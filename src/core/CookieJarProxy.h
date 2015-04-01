@@ -17,54 +17,38 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_ACCEPTCOOKIEDIALOG_H
-#define OTTER_ACCEPTCOOKIEDIALOG_H
+#ifndef OTTER_COOKIEJARPROXY_H
+#define OTTER_COOKIEJARPROXY_H
 
-#include <QtNetwork/QNetworkCookie>
-#include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QDialog>
+#include "CookieJar.h"
 
 namespace Otter
 {
 
-namespace Ui
-{
-	class AcceptCookieDialog;
-}
+class WebWidget;
 
-class AcceptCookieDialog : public QDialog
+class CookieJarProxy : public QNetworkCookieJar
 {
 	Q_OBJECT
 
 public:
-	enum AcceptCookieResult
-	{
-		AcceptCookie,
-		AcceptAsSessionCookie,
-		IgnoreCookie
-	};
+	explicit CookieJarProxy(CookieJar *cookieJar, WebWidget *widget);
 
-	enum CookieOperation
-	{
-		InsertCookie,
-		UpdateCookie,
-		RemoveCookie
-	};
-
-	explicit AcceptCookieDialog(const QNetworkCookie &cookie, CookieOperation operation, QWidget *parent = NULL);
-	~AcceptCookieDialog();
-
-	AcceptCookieResult getResult() const;
-
-protected:
-	void changeEvent(QEvent *event);
-
-protected slots:
-	void buttonClicked(QAbstractButton *button);
+	void setup(CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode);
+	void setWidget(WebWidget *widget);
+	CookieJarProxy* clone(WebWidget *parent = NULL);
+	CookieJar* getCookieJar();
+	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
+	bool insertCookie(const QNetworkCookie &cookie);
+	bool deleteCookie(const QNetworkCookie &cookie);
+	bool updateCookie(const QNetworkCookie &cookie);
 
 private:
-	AcceptCookieResult m_result;
-	Ui::AcceptCookieDialog *m_ui;
+	WebWidget *m_widget;
+	CookieJar *m_cookieJar;
+	CookieJar::CookiesPolicy m_generalCookiesPolicy;
+	CookieJar::CookiesPolicy m_thirdPartyCookiesPolicy;
+	CookieJar::KeepMode m_keepMode;
 };
 
 }

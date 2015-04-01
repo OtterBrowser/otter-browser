@@ -43,6 +43,7 @@ SOURCES += src/main.cpp \
     src/core/ContentBlockingProfile.cpp \
     src/core/Console.cpp \
     src/core/CookieJar.cpp \
+    src/core/CookieJarProxy.cpp \
     src/core/FileSystemCompleterModel.cpp \
     src/core/GesturesManager.cpp \
     src/core/HistoryManager.cpp \
@@ -171,6 +172,7 @@ HEADERS += src/core/Action.h \
     src/core/ContentBlockingProfile.h \
     src/core/Console.h \
     src/core/CookieJar.h \
+    src/core/CookieJarProxy.h \
     src/core/FileSystemCompleterModel.h \
     src/core/GesturesManager.h \
     src/core/HistoryManager.h \
@@ -286,7 +288,7 @@ HEADERS += src/core/Action.h \
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
-FORMS +=     src/ui/AcceptCookieDialog.ui \
+FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
     src/ui/BookmarksBarDialog.ui \

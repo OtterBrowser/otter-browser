@@ -267,6 +267,13 @@ void PreferencesDialog::currentTabChanged(int tab)
 				const int cookiesPolicyIndex = m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")).toString());
 
 				m_ui->cookiesPolicyComboBox->setCurrentIndex((cookiesPolicyIndex < 0) ? 0 : cookiesPolicyIndex);
+				m_ui->keepCookiesModeComboBox->addItem(tr("Expires"), QLatin1String("keepUntilExpires"));
+				m_ui->keepCookiesModeComboBox->addItem(tr("Current session is closed"), QLatin1String("keepUntilExit"));
+				m_ui->keepCookiesModeComboBox->addItem(tr("Always ask"), QLatin1String("ask"));
+
+				const int cookiesKeepModeIndex = m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode")).toString());
+
+				m_ui->keepCookiesModeComboBox->setCurrentIndex((cookiesKeepModeIndex < 0) ? 0 : cookiesKeepModeIndex);
 				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
 				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 				m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
@@ -1400,6 +1407,7 @@ void PreferencesDialog::save()
 		SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
 		SettingsManager::setValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")));
+		SettingsManager::setValue(QLatin1String("Network/CookiesKeepMode"), m_ui->keepCookiesModeComboBox->currentData().toString());
 		SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
 		SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
 	}
