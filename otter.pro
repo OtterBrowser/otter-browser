@@ -67,6 +67,7 @@ SOURCES += src/main.cpp \
     src/core/Utils.cpp \
     src/core/WebBackend.cpp \
     src/core/WindowsManager.cpp \
+    src/ui/AcceptCookieDialog.cpp \
     src/ui/AddressDelegate.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
@@ -194,6 +195,7 @@ HEADERS += src/core/Action.h \
     src/core/Utils.h \
     src/core/WebBackend.h \
     src/core/WindowsManager.h \
+    src/ui/AcceptCookieDialog.h \
     src/ui/AddressDelegate.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
@@ -284,7 +286,8 @@ HEADERS += src/core/Action.h \
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
-FORMS += src/ui/AuthenticationDialog.ui \
+FORMS +=     src/ui/AcceptCookieDialog.ui \
+    src/ui/AuthenticationDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
     src/ui/BookmarksBarDialog.ui \
     src/ui/BookmarksImporterWidget.ui \

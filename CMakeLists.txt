@@ -115,6 +115,7 @@ set(otter_src
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
 	src/core/WindowsManager.cpp
+	src/ui/AcceptCookieDialog.cpp
 	src/ui/AddressDelegate.cpp
 	src/ui/AuthenticationDialog.cpp
 	src/ui/BookmarkPropertiesDialog.cpp
@@ -210,6 +211,7 @@ qt5_add_resources(otter_res
 )
 
 qt5_wrap_ui(otter_ui
+	src/ui/AcceptCookieDialog.ui
 	src/ui/AuthenticationDialog.ui
 	src/ui/BookmarkPropertiesDialog.ui
 	src/ui/BookmarksBarDialog.ui
