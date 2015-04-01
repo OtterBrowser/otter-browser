@@ -40,6 +40,11 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 {
 	m_ui->setupUi(this);
 
+	if (!window)
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));

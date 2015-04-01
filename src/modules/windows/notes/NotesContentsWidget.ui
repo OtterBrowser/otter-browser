@@ -61,8 +61,8 @@
        <bool>false</bool>
       </attribute>
      </widget>
-     <widget class="QWidget" name="noteWidget" native="true">
-      <layout class="QHBoxLayout" name="paneLayout">
+     <widget class="QWidget" name="detailsWidget" native="true">
+      <layout class="QHBoxLayout" name="detailsLayout">
        <property name="spacing">
         <number>0</number>
        </property>

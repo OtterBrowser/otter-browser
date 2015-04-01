@@ -51,6 +51,11 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->viewport()->installEventFilter(this);
 	m_ui->bookmarksView->viewport()->setMouseTracking(true);
 
+	if (!window)
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	connect(BookmarksManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));

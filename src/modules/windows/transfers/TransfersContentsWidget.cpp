@@ -72,6 +72,11 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 		addTransfer(transfers.at(i));
 	}
 
+	if (!window)
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(addTransfer(Transfer*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(removeTransfer(Transfer*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfer(Transfer*)));

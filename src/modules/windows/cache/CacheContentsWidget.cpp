@@ -47,6 +47,11 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->previewLabel->hide();
 	m_ui->cacheView->viewport()->installEventFilter(this);
 
+	if (!window)
+	{
+		m_ui->detailsWidget->hide();
+	}
+
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCache(QString)));

@@ -56,6 +56,11 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->textEdit->setPlaceholderText(tr("Add note..."));
 #endif
 
+	if (!window)
+	{
+		m_ui->actionsWidget->hide();
+	}
+
 	connect(NotesManager::getModel(), SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));

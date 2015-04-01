@@ -57,7 +57,7 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="detailsLayout">
       <property name="leftMargin">
        <number>3</number>
       </property>
