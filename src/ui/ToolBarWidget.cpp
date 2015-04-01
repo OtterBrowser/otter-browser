@@ -283,6 +283,14 @@ void ToolBarWidget::updateBookmarks()
 	}
 }
 
+void ToolBarWidget::updateVisibility()
+{
+	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).visibility == AutoVisibilityToolBar && m_mainWindow->getTabBar())
+	{
+		setVisible(m_mainWindow->getTabBar()->count() > 1);
+	}
+}
+
 void ToolBarWidget::setToolBarLocked(bool locked)
 {
 	setMovable(!locked);
@@ -433,7 +441,13 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 			return NULL;
 		}
 
-		return new TabBarWidget(this);
+		TabBarWidget *tabBar = new TabBarWidget(this);
+
+		connect(tabBar, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
+
+		updateVisibility();
+
+		return tabBar;
 	}
 
 	if (definition.action == QLatin1String("ZoomWidget"))

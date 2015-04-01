@@ -340,6 +340,8 @@ void TabBarWidget::tabInserted(int index)
 	}
 
 	updateTabs();
+
+	emit tabsAmountChanged(count());
 }
 
 void TabBarWidget::tabRemoved(int index)
@@ -354,6 +356,8 @@ void TabBarWidget::tabRemoved(int index)
 	{
 		QTimer::singleShot(100, this, SLOT(updateTabs()));
 	}
+
+	emit tabsAmountChanged(count());
 }
 
 void TabBarWidget::tabHovered(int index)

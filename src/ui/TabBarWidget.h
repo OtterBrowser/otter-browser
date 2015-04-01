@@ -103,6 +103,7 @@ signals:
 	void requestedPin(int index, bool pin);
 	void requestedClose(int index);
 	void requestedCloseOther(int index);
+	void tabsAmountChanged(int amount);
 };
 
 }

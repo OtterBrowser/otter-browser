@@ -76,6 +76,7 @@ protected slots:
 	void toolBarRemoved(int identifier);
 	void notifyWindowChanged(qint64 identifier);
 	void updateBookmarks();
+	void updateVisibility();
 	void setToolBarLocked(bool locked);
 
 private:
