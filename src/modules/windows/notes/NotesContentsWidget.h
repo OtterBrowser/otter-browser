@@ -66,7 +66,7 @@ protected slots:
 	void restoreNote();
 	void openUrl(const QModelIndex &index = QModelIndex());
 	void showContextMenu(const QPoint &point);
-	void updateActions();
+	void updateActions(bool updateText = true);
 	void updateText();
 	bool filterNotes(const QString &filter, QStandardItem *branch = NULL);
 

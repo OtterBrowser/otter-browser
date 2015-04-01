@@ -241,7 +241,7 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void NotesContentsWidget::updateActions()
+void NotesContentsWidget::updateActions(bool updateText)
 {
 	const bool hasSelecion = !m_ui->notesView->selectionModel()->selectedIndexes().isEmpty();
 	const QModelIndex index = (m_ui->notesView->selectionModel()->hasSelection() ? m_ui->notesView->selectionModel()->currentIndex() : QModelIndex());
@@ -249,11 +249,14 @@ void NotesContentsWidget::updateActions()
 
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
-	disconnect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
+	if (updateText)
+	{
+		disconnect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
 
-	m_ui->textEdit->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
+		m_ui->textEdit->setPlainText(index.data(BookmarksModel::DescriptionRole).toString());
 
-	connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
+		connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
+	}
 
 	if (m_actions.contains(Action::PasteAction))
 	{
@@ -276,10 +279,16 @@ void NotesContentsWidget::updateText()
 	}
 	else
 	{
+		disconnect(m_ui->notesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+
 		BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(index));
 		bookmark->setData(m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
 
 		m_ui->notesView->setCurrentIndex(bookmark->index());
+
+		updateActions(false);
+
+		connect(m_ui->notesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	}
 }
 
