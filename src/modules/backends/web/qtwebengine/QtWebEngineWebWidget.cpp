@@ -19,7 +19,6 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
-#include "../../../windows/web/ImagePropertiesDialog.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -33,6 +32,7 @@
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
+#include "../../../../ui/ImagePropertiesDialog.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 

@@ -1,5 +1,6 @@
 0.9.05 (2015-04-01):
 - experimental backend for QtWebEngine (Blink), disabled by default;
+- added advanced options for cookies;
 - added interface for configuring toolbars;
 - added support for bookmark bars;
 - added Ctrl+Tab tab switcher;

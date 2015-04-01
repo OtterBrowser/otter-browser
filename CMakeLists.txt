@@ -128,6 +128,7 @@ set(otter_src
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp
 	src/ui/FilePathWidget.cpp
+	src/ui/ImagePropertiesDialog.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/ItemViewWidget.cpp
@@ -198,7 +199,6 @@ set(otter_src
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/transfers/ProgressBarDelegate.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
-	src/modules/windows/web/ImagePropertiesDialog.cpp
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
@@ -219,6 +219,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/BookmarksImporterWidget.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui
+	src/ui/ImagePropertiesDialog.ui
 	src/ui/ImportDialog.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
@@ -245,7 +246,6 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/history/HistoryContentsWidget.ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
-	src/modules/windows/web/ImagePropertiesDialog.ui
 	src/modules/windows/web/PermissionBarWidget.ui
 	src/modules/windows/web/SearchBarWidget.ui
 )

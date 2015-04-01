@@ -82,6 +82,7 @@ SOURCES += src/main.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/FilePathWidget.cpp \
+    src/ui/ImagePropertiesDialog.cpp \
     src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/ItemViewWidget.cpp \
@@ -152,7 +153,6 @@ SOURCES += src/main.cpp \
     src/modules/windows/notes/NotesContentsWidget.cpp \
     src/modules/windows/transfers/ProgressBarDelegate.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
-    src/modules/windows/web/ImagePropertiesDialog.cpp \
     src/modules/windows/web/PermissionBarWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/SearchBarWidget.cpp \
@@ -211,6 +211,7 @@ HEADERS += src/core/Action.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \
     src/ui/FilePathWidget.h \
+    src/ui/ImagePropertiesDialog.h \
     src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
     src/ui/ItemViewWidget.h \
@@ -281,7 +282,6 @@ HEADERS += src/core/Action.h \
     src/modules/windows/notes/NotesContentsWidget.h \
     src/modules/windows/transfers/ProgressBarDelegate.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
-    src/modules/windows/web/ImagePropertiesDialog.h \
     src/modules/windows/web/PermissionBarWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/SearchBarWidget.h \
@@ -297,6 +297,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/BookmarksImporterWidget.ui \
     src/ui/ClearHistoryDialog.ui \
     src/ui/ConsoleWidget.ui \
+    src/ui/ImagePropertiesDialog.ui \
     src/ui/ImportDialog.ui \
     src/ui/LocaleDialog.ui \
     src/ui/MainWindow.ui \
@@ -323,7 +324,6 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/modules/windows/history/HistoryContentsWidget.ui \
     src/modules/windows/notes/NotesContentsWidget.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
-    src/modules/windows/web/ImagePropertiesDialog.ui \
     src/modules/windows/web/PermissionBarWidget.ui \
     src/modules/windows/web/SearchBarWidget.ui
 
