@@ -612,7 +612,7 @@ void WindowsManager::removeStoredUrl(const QString &url)
 
 void WindowsManager::handleWindowClose(Window *window)
 {
-	const int index = getWindowIndex(window->getIdentifier());
+	const int index = (window ? getWindowIndex(window->getIdentifier()) : -1);
 
 	if (index < 0)
 	{

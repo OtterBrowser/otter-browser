@@ -270,7 +270,10 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 
 void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 {
-	m_replies.remove(reply);
+	if (reply)
+	{
+		m_replies.remove(reply);
+	}
 
 	if (m_replies.isEmpty())
 	{
