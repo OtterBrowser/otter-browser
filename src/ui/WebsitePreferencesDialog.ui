@@ -211,58 +211,10 @@
        <string>Privacy</string>
       </attribute>
       <layout class="QGridLayout" name="privacyLayout">
-       <item row="2" column="2">
-        <widget class="QComboBox" name="doNotTrackComboBox">
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="rememberBrowsingHistoryCheckBox">
-         <property name="text">
-          <string>Remember browsing history</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="doNotTrackOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QComboBox" name="thirdPartyCookiesComboBox"/>
-       </item>
-       <item row="5" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="thirdPartyCookiesOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="privacyOverrideLabel">
-         <property name="text">
-          <string>Override</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QCheckBox" name="acceptCookiesCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Accept cookies</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <layout class="QHBoxLayout" name="thirdPartyLayout">
+       <item row="7" column="1">
+        <layout class="QHBoxLayout" name="keepCookiesModeLayout">
          <item>
-          <spacer name="thirdPartySpacer">
+          <spacer name="keepCookiesModeSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -278,12 +230,98 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="thirdPartyCookiesLabel">
+          <widget class="QLabel" name="keepCookiesModeLabel">
            <property name="text">
-            <string>Accept third-party cookies:</string>
+            <string>Keep until:</string>
            </property>
            <property name="buddy">
-            <cstring>thirdPartyCookiesComboBox</cstring>
+            <cstring>keepCookiesModeComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="doNotTrackOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="cookiesPolicyOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QComboBox" name="thirdPartyCookiesPolicyComboBox"/>
+       </item>
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="rememberBrowsingHistoryOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QComboBox" name="doNotTrackComboBox">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="rememberBrowsingHistoryCheckBox">
+         <property name="text">
+          <string>Remember browsing history</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="keepCookiesModeOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="privacyOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="enableCookiesCheckBox">
+         <property name="text">
+          <string>Enable cookies</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <layout class="QHBoxLayout" name="cookiesPolicyLayout">
+         <item>
+          <spacer name="cookiesPolicySpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="cookiesPolicyLabel">
+           <property name="text">
+            <string>Accept cookies:</string>
            </property>
           </widget>
          </item>
@@ -299,102 +337,14 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="rememberBrowsingHistoryOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="acceptCookiesOverrideCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
+        <widget class="QCheckBox" name="enableCookiesOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="6" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="keepCookiesUntilOverrideCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <layout class="QHBoxLayout" name="keepCookiesUntilLayout">
-         <item>
-          <spacer name="keepCookiesUntilSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="keepCookiesUntilLabel">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Keep until:</string>
-           </property>
-           <property name="buddy">
-            <cstring>keepCookiesUntilComboBox</cstring>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="6" column="2">
-        <widget class="QComboBox" name="keepCookiesUntilComboBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Expires</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Current session is closed</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Always ask</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="8" column="2">
-        <spacer name="privacyHorizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="7" column="0" colspan="3">
+       <item row="9" column="0" colspan="3">
         <layout class="QHBoxLayout" name="cookiesTableLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="cookiesTableWidget">
@@ -460,6 +410,62 @@
           </layout>
          </item>
         </layout>
+       </item>
+       <item row="8" column="1">
+        <layout class="QHBoxLayout" name="thirdPartyCookiesPolicyLayout">
+         <item>
+          <spacer name="thirdPartyCookiesPolicySpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="thirdPartyCookiesPolicyLabel">
+           <property name="text">
+            <string>Accept third-party cookies:</string>
+           </property>
+           <property name="buddy">
+            <cstring>thirdPartyCookiesPolicyComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="2">
+        <spacer name="privacyHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="thirdPartyCookiesPolicyOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="keepCookiesModeComboBox"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="cookiesPolicyComboBox"/>
        </item>
       </layout>
      </widget>

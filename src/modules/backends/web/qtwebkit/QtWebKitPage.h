@@ -31,7 +31,6 @@ namespace Otter
 
 class QtWebKitNetworkManager;
 class QtWebKitWebWidget;
-class WebBackend;
 class WebWidget;
 
 class QtWebKitPage : public QWebPage
@@ -67,7 +66,6 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_widget;
-	WebBackend *m_backend;
 	QtWebKitNetworkManager *m_networkManager;
 	bool m_ignoreJavaScriptPopups;
 

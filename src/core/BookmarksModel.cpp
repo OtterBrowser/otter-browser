@@ -446,7 +446,7 @@ void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *paren
 	}
 	else if (reader->name() == QLatin1String("separator"))
 	{
-		bookmark = addBookmark(SeparatorBookmark, 0, QUrl(), QString(), parent);
+		addBookmark(SeparatorBookmark, 0, QUrl(), QString(), parent);
 
 		reader->readNext();
 	}

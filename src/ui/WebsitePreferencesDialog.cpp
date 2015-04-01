@@ -38,6 +38,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	textCodecs << 106 << 1015 << 1017 << 4 << 5 << 6 << 7 << 8 << 82 << 10 << 85 << 12 << 13 << 109 << 110 << 112 << 2250 << 2251 << 2252 << 2253 << 2254 << 2255 << 2256 << 2257 << 2258 << 18 << 39 << 17 << 38 << 2026;
 
 	m_ui->setupUi(this);
+	m_ui->enableCookiesCheckBox->setChecked(true);
+
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyOverrideCheckBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyLabel, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesPolicyComboBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeOverrideCheckBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeLabel, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->keepCookiesModeComboBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyOverrideCheckBox, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyLabel, SLOT(setEnabled(bool)));
+	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesPolicyComboBox, SLOT(setEnabled(bool)));
+
 	m_ui->websiteLineEdit->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
 	m_ui->encodingComboBox->addItem(tr("Auto Detect"));
@@ -66,9 +78,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Do not inform websites about my preference"), QLatin1String("skip"));
 
-	m_ui->thirdPartyCookiesComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
-	m_ui->thirdPartyCookiesComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
-	m_ui->thirdPartyCookiesComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+	m_ui->cookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+	m_ui->cookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
+	m_ui->cookiesPolicyComboBox->addItem(tr("Only read existing"), QLatin1String("readOnly"));
+	m_ui->cookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
+
+	m_ui->keepCookiesModeComboBox->addItem(tr("Expires"), QLatin1String("keepUntilExpires"));
+	m_ui->keepCookiesModeComboBox->addItem(tr("Current session is closed"), QLatin1String("keepUntilExit"));
+	m_ui->keepCookiesModeComboBox->addItem(tr("Always ask"), QLatin1String("ask"));
+
+	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
+	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
+	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	QStringList cookiesLabels;
 	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
@@ -109,7 +130,10 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/UserStyleSheet")));
 	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/DoNotTrackPolicy")));
 	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("History/RememberBrowsing")));
-	m_ui->thirdPartyCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/ThirdPartyCookiesPolicy")));
+	m_ui->enableCookiesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/CookiesPolicy")));
+	m_ui->cookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/CookiesPolicy")));
+	m_ui->keepCookiesModeOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/CookiesKeepMode")));
+	m_ui->thirdPartyCookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/ThirdPartyCookiesPolicy")));
 	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJavaScript")));
 	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanAccessClipboard")));
@@ -143,9 +167,6 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	}
 
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged()), this, SLOT(valueChanged()));
-	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesOverrideCheckBox, SLOT(setDisabled(bool)));
-	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesLabel, SLOT(setDisabled(bool)));
-	connect(m_ui->acceptCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->thirdPartyCookiesComboBox, SLOT(setDisabled(bool)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -184,7 +205,9 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? m_ui->userStyleSheetFilePathWidget->getPath() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? m_ui->doNotTrackComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? m_ui->rememberBrowsingHistoryCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesComboBox->currentData().toString() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesOverrideCheckBox->isChecked() ? (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")) : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/CookiesKeepMode"), (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? m_ui->keepCookiesModeComboBox->currentData().toString() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->canShowStatusMessagesCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? m_ui->canAccessClipboardCheckBox->isChecked() : QVariant()), url);
@@ -245,11 +268,19 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->acceptCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableCookies"), (m_ui->acceptCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toString() != QLatin1String("ignore"));
 
-	const int thirdPartyCookiesIndex = m_ui->thirdPartyCookiesComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int cookiesPolicyIndex = m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), (m_ui->cookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 
-	m_ui->thirdPartyCookiesComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
+	m_ui->cookiesPolicyComboBox->setCurrentIndex((cookiesPolicyIndex < 0) ? 0 : cookiesPolicyIndex);
+
+	const int cookiesKeepModeIndex = m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->keepCookiesModeComboBox->setCurrentIndex((cookiesKeepModeIndex < 0) ? 0 : cookiesKeepModeIndex);
+
+	const int thirdPartyCookiesPolicyIndex = m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesPolicyIndex < 0) ? 0 : thirdPartyCookiesPolicyIndex);
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
