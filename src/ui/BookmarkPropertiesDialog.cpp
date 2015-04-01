@@ -140,9 +140,9 @@ void BookmarkPropertiesDialog::saveBookmark()
 		m_bookmark->setData(m_ui->descriptionTextEdit->toPlainText(), BookmarksModel::DescriptionRole);
 		m_bookmark->setData(keyword, BookmarksModel::KeywordRole);
 
-		if (!m_bookmark->parent())
+		if (m_bookmark->parent() != m_ui->folderComboBox->getCurrentFolder())
 		{
-			m_ui->folderComboBox->getCurrentFolder()->appendRow(m_bookmark);
+			BookmarksManager::getModel()->moveBookmark(m_bookmark, m_ui->folderComboBox->getCurrentFolder());
 		}
 	}
 

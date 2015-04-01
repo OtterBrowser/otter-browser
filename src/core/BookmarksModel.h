@@ -98,6 +98,7 @@ public:
 	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
 	QList<QUrl> getUrls() const;
 	static QUrl adjustUrl(QUrl url);
+	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role);
@@ -123,6 +124,7 @@ private:
 signals:
 	void bookmarkAdded(BookmarksItem *bookmark);
 	void bookmarkModified(BookmarksItem *bookmark);
+	void bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent, int previousRow);
 	void bookmarkTrashed(BookmarksItem *bookmark);
 	void bookmarkRestored(BookmarksItem *bookmark);
 	void bookmarkRemoved(BookmarksItem *bookmark);

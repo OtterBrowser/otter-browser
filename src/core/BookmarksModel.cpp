@@ -779,6 +779,39 @@ QList<QUrl> BookmarksModel::getUrls() const
 	return m_urls.keys();
 }
 
+bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow)
+{
+	if (!bookmark || !newParent)
+	{
+		return false;
+	}
+
+	BookmarksItem *previousParent = dynamic_cast<BookmarksItem*>(bookmark->parent());
+	const int previousRow = bookmark->row();
+
+	if (newRow < 0)
+	{
+		newParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
+
+		emit bookmarkMoved(bookmark, previousParent, previousRow);
+
+		return true;
+	}
+
+	int targetRow = newRow;
+
+	if (bookmark->parent() == newParent && bookmark->row() < newRow)
+	{
+		--targetRow;
+	}
+
+	newParent->insertRow(targetRow, bookmark->parent()->takeRow(bookmark->row()));
+
+	emit bookmarkMoved(bookmark, previousParent, previousRow);
+
+	return true;
+}
+
 bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
 	const BookmarkType type = static_cast<BookmarkType>(parent.data(TypeRole).toInt());
@@ -789,31 +822,7 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 		if (index.isValid())
 		{
-			QStandardItem *source = itemFromIndex(index);
-			QStandardItem *target = itemFromIndex(parent);
-
-			if (source && target)
-			{
-				if (row < 0)
-				{
-					target->appendRow(source->parent()->takeRow(source->row()));
-
-					return true;
-				}
-
-				int targetRow = row;
-
-				if (source->parent() == target && source->row() < row)
-				{
-					--targetRow;
-				}
-
-				target->insertRow(targetRow, source->parent()->takeRow(source->row()));
-
-				return true;
-			}
-
-			return false;
+			return moveBookmark(bookmarkFromIndex(index), bookmarkFromIndex(parent), row);
 		}
 
 		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
