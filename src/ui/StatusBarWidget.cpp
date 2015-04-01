@@ -25,7 +25,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
-#include <QtWidgets/QSizeGrip>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
 
@@ -37,10 +37,12 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 {
 	m_toolBar->setParent(this);
 
+	optionChanged(QLatin1String("Interface/ShowSizeGrip"), SettingsManager::getValue(QLatin1String("Interface/ShowSizeGrip")));
 	setFixedHeight(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
 
 	QTimer::singleShot(100, this, SLOT(updateSize()));
 
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 }
 
@@ -69,6 +71,15 @@ void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu->deleteLater();
 }
 
+void StatusBarWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Interface/ShowSizeGrip"))
+	{
+		setSizeGripEnabled(value.toBool());
+		updateSize();
+	}
+}
+
 void StatusBarWidget::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::StatusBar)
@@ -79,8 +90,15 @@ void StatusBarWidget::toolBarModified(int identifier)
 
 void StatusBarWidget::updateSize()
 {
-	QSizeGrip *sizeGrip = findChild<QSizeGrip*>();
-	const int offset = (sizeGrip ? sizeGrip->width() : 0);
+	int offset = 0;
+
+	if (isSizeGripEnabled())
+	{
+		QStyleOption option;
+		option.init(this);
+
+		offset = (style()->sizeFromContents(QStyle::CT_SizeGrip, &option, QSize(13, 13), this).expandedTo(QApplication::globalStrut())).height();
+	}
 
 	m_toolBar->setFixedSize((width() - offset), ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
 	m_toolBar->move(((layoutDirection() == Qt::LeftToRight) ? 0 : offset), 0);
