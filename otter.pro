@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+message("otter.pro is deprecated, use CMake instead.")
+
 !greaterThan(QT_MAJOR_VERSION, 4) | !greaterThan(QT_MINOR_VERSION, 1) {
     error("Qt 5.2.0 or newer is required.")
 }
