@@ -55,6 +55,7 @@ public:
 	};
 
 	static void createInstance(QObject *parent = NULL);
+	static void initialize();
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static void loadUserAgents();
@@ -72,8 +73,6 @@ public:
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
-
-	static void initialize();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

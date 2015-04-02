@@ -105,7 +105,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	}
 	else
 	{
-		m_networkManager = new QtWebKitNetworkManager(isPrivate, this);
+		m_networkManager = new QtWebKitNetworkManager(isPrivate, NULL, this);
 	}
 
 	m_page = new QtWebKitPage(m_networkManager, this);
@@ -1975,7 +1975,7 @@ QString QtWebKitWebWidget::getPluginToken() const
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone(), NULL);
 	widget->setOptions(getOptions());
 
 	if (cloneHistory)

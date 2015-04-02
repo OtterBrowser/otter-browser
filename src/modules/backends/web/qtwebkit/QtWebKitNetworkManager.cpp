@@ -26,6 +26,7 @@
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/CookieJarProxy.h"
 #include "../../../../core/LocalListingNetworkReply.h"
+#include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Utils.h"
@@ -43,9 +44,10 @@ namespace Otter
 
 WebBackend* QtWebKitNetworkManager::m_backend = NULL;
 
-QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget *widget) : NetworkManager(isPrivate, widget),
-	m_widget(widget),
-	m_cookieJar(new CookieJarProxy(getCookieJar(), widget)),
+QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *cookieJarProxy, QtWebKitWebWidget *parent) : QNetworkAccessManager(parent),
+	m_widget(parent),
+	m_cookieJar(NULL),
+	m_cookieJarProxy(cookieJarProxy),
 	m_baseReply(NULL),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
@@ -57,7 +59,34 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_canSendReferrer(true)
 {
-	setCookieJar(m_cookieJar);
+	NetworkManagerFactory::initialize();
+
+	if (!isPrivate)
+	{
+		m_cookieJar = NetworkManagerFactory::getCookieJar();
+		m_cookieJar->setParent(QCoreApplication::instance());
+
+		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
+
+		setCache(cache);
+
+		cache->setParent(QCoreApplication::instance());
+	}
+	else
+	{
+		m_cookieJar = new CookieJar(true, this);
+	}
+
+	if (m_cookieJarProxy)
+	{
+		m_cookieJarProxy->setParent(this);
+	}
+	else
+	{
+		m_cookieJarProxy = new CookieJarProxy(m_cookieJar, parent);
+	}
+
+	setCookieJar(m_cookieJarProxy);
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
 }
@@ -376,7 +405,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		keepMode = CookieJar::AskIfKeepMode;
 	}
 
-	m_cookieJar->setup(generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+	m_cookieJarProxy->setup(generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 }
 
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
@@ -388,15 +417,12 @@ void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 {
 	m_widget = widget;
 
-	m_cookieJar->setWidget(widget);
+	m_cookieJarProxy->setWidget(widget);
 }
 
 QtWebKitNetworkManager* QtWebKitNetworkManager::clone()
 {
-	QtWebKitNetworkManager *manager = new QtWebKitNetworkManager((cache() == NULL), NULL);
-	manager->setCookieJar(getCookieJar()->clone(manager));
-
-	return manager;
+	return new QtWebKitNetworkManager((cache() == NULL), m_cookieJarProxy->clone(NULL), NULL);
 }
 
 QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
@@ -470,6 +496,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	}
 
 	return reply;
+}
+
+CookieJar* QtWebKitNetworkManager::getCookieJar()
+{
+	return m_cookieJar;
 }
 
 QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const

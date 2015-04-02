@@ -32,13 +32,14 @@ class CookieJarProxy;
 class QtWebKitWebWidget;
 class WebBackend;
 
-class QtWebKitNetworkManager : public NetworkManager
+class QtWebKitNetworkManager : public QNetworkAccessManager
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebKitNetworkManager(bool isPrivate, QtWebKitWebWidget *widget);
+	explicit QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *cookieJarProxy, QtWebKitWebWidget *parent);
 
+	CookieJar* getCookieJar();
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 
@@ -61,7 +62,8 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_widget;
-	CookieJarProxy *m_cookieJar;
+	CookieJar *m_cookieJar;
+	CookieJarProxy *m_cookieJarProxy;
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;
