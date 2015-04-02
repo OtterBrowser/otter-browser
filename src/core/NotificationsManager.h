@@ -46,9 +46,9 @@ class Notification : public QObject
 public:
 	enum NotificationLevel
 	{
-		InformationNotificationLevel = 0,
-		WarningNotificationLevel = 1,
-		ErrorNotificationLevel = 2
+		InformationLevel = 0,
+		WarningLevel = 1,
+		ErrorLevel = 2
 	};
 
 	void markClicked();
@@ -84,7 +84,7 @@ public:
 
 	static void createInstance(QObject *parent = NULL);
 	static NotificationsManager* getInstance();
-	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationNotificationLevel, QObject *parent = NULL);
+	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationLevel, QObject *parent = NULL);
 	static QString getEventName(int identifier);
 	static EventDefinition getEventDefinition(int identifier);
 	static QVector<EventDefinition> getEventDefinitions();
