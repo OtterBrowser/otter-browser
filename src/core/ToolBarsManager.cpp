@@ -589,42 +589,46 @@ QVector<ToolBarDefinition> ToolBarsManager::getToolBarDefinitions()
 		if (QFile::exists(customToolBarsPath))
 		{
 			const QHash<QString, ToolBarDefinition> customDefinitions = loadToolBars(customToolBarsPath, false);
-			QHash<QString, ToolBarDefinition>::const_iterator iterator;
 
-			for (iterator = customDefinitions.constBegin(); iterator != customDefinitions.constEnd(); ++iterator)
+			if (!customDefinitions.isEmpty())
 			{
-				int identifier = -1;
+				QHash<QString, ToolBarDefinition>::const_iterator iterator;
 
-				if (iterator.key() == QLatin1String("MenuBar"))
+				for (iterator = customDefinitions.constBegin(); iterator != customDefinitions.constEnd(); ++iterator)
 				{
-					identifier = MenuBar;
-				}
-				else if (iterator.key() == QLatin1String("TabBar"))
-				{
-					identifier = TabBar;
-				}
-				else if (iterator.key() == QLatin1String("NavigationBar"))
-				{
-					identifier = NavigationBar;
-				}
-				else if (iterator.key() == QLatin1String("StatusBar"))
-				{
-					identifier = StatusBar;
-				}
+					int identifier = -1;
 
-				if (identifier >= 0)
-				{
-					m_definitions[identifier] = iterator.value();
-					m_definitions[identifier].canReset = true;
-				}
-				else
-				{
-					identifier = m_definitions.count();
+					if (iterator.key() == QLatin1String("MenuBar"))
+					{
+						identifier = MenuBar;
+					}
+					else if (iterator.key() == QLatin1String("TabBar"))
+					{
+						identifier = TabBar;
+					}
+					else if (iterator.key() == QLatin1String("NavigationBar"))
+					{
+						identifier = NavigationBar;
+					}
+					else if (iterator.key() == QLatin1String("StatusBar"))
+					{
+						identifier = StatusBar;
+					}
 
-					m_identifiers[identifier] = iterator.key();
+					if (identifier >= 0)
+					{
+						m_definitions[identifier] = iterator.value();
+						m_definitions[identifier].canReset = true;
+					}
+					else
+					{
+						identifier = m_definitions.count();
 
-					m_definitions.append(iterator.value());
-					m_definitions[identifier].identifier = identifier;
+						m_identifiers[identifier] = iterator.key();
+
+						m_definitions.append(iterator.value());
+						m_definitions[identifier].identifier = identifier;
+					}
 				}
 			}
 		}
