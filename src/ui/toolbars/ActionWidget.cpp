@@ -33,7 +33,6 @@ ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : To
 	m_window(window),
 	m_identifier(identifier)
 {
-	setAutoRaise(true);
 	setWindow(window);
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
@@ -61,7 +60,7 @@ void ActionWidget::actionEvent(QActionEvent *event)
 
 void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_identifier == Action::NewTabAction || m_identifier == Action::NewTabPrivateAction)
+	if ((m_identifier == Action::NewTabAction || m_identifier == Action::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
 		MainWindow *window = MainWindow::findMainWindow(this);
 
@@ -133,7 +132,7 @@ bool ActionWidget::event(QEvent *event)
 		return true;
 	}
 
-	return QToolButton::event(event);
+	return ToolButtonWidget::event(event);
 }
 
 }

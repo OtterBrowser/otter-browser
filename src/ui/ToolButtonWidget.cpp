@@ -20,6 +20,7 @@
 #include "ToolButtonWidget.h"
 #include "ToolBarWidget.h"
 
+#include <QtCore/QEvent>
 #include <QtWidgets/QStyleOptionToolButton>
 #include <QtWidgets/QStylePainter>
 
@@ -28,6 +29,8 @@ namespace Otter
 
 ToolButtonWidget::ToolButtonWidget(QWidget *parent) : QToolButton(parent)
 {
+	setAutoRaise(true);
+
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
 	if (toolBar)
@@ -65,6 +68,16 @@ void ToolButtonWidget::setMaximumButtonSize(int size)
 	{
 		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 	}
+}
+
+bool ToolButtonWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::ContextMenu)
+	{
+		return false;
+	}
+
+	return QToolButton::event(event);
 }
 
 }

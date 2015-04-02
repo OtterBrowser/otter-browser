@@ -32,6 +32,8 @@ class ToolButtonWidget : public QToolButton
 public:
 	explicit ToolButtonWidget(QWidget *parent = NULL);
 
+	bool event(QEvent *event);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 

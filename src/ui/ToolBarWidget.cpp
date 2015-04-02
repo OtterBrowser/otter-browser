@@ -442,7 +442,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, this));
 		closedWindowsAction->setEnabled(false);
 
-		QToolButton *closedWindowsMenuButton = new QToolButton(this);
+		ToolButtonWidget *closedWindowsMenuButton = new ToolButtonWidget(this);
 		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
 		closedWindowsMenuButton->setAutoRaise(true);
 		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
