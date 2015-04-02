@@ -781,7 +781,7 @@ void WindowsManager::setActiveWindowByIdentifier(quint64 identifier)
 
 void WindowsManager::setTitle(const QString &title)
 {
-	const QString text = (title.isEmpty() ? tr("Empty") : title);
+	QString text = (title.isEmpty() ? tr("Empty") : title);
 	Window *window = qobject_cast<Window*>(sender());
 
 	if (!window)
@@ -791,12 +791,12 @@ void WindowsManager::setTitle(const QString &title)
 
 	const int index = getWindowIndex(window->getIdentifier());
 
-	m_mainWindow->getTabBar()->setTabText(index, text);
-
 	if (index == m_mainWindow->getTabBar()->currentIndex())
 	{
 		emit windowTitleChanged(text);
 	}
+
+	m_mainWindow->getTabBar()->setTabText(index, text.replace(QLatin1Char('&'), QLatin1String("&&")));
 }
 
 void WindowsManager::setStatusMessage(const QString &message)
@@ -970,14 +970,14 @@ bool WindowsManager::event(QEvent *event)
 
 			if (window)
 			{
-				const QString text = (window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
-
-				m_mainWindow->getTabBar()->setTabText(i, text);
+				QString text = (window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
 
 				if (i == m_mainWindow->getTabBar()->currentIndex())
 				{
 					emit windowTitleChanged(text);
 				}
+
+				m_mainWindow->getTabBar()->setTabText(i, text.replace(QLatin1Char('&'), QLatin1String("&&")));
 			}
 		}
 	}
