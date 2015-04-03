@@ -161,9 +161,6 @@ private:
 	bool m_isLoading;
 	bool m_isTyped;
 
-signals:
-	void aboutToReload();
-
 friend class QtWebKitNetworkManager;
 friend class QtWebKitPluginFactory;
 friend class QtWebKitWebBackend;

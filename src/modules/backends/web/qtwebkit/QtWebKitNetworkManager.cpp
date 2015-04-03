@@ -118,8 +118,6 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 }
 
 void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
@@ -149,8 +147,6 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 }
 
 void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
@@ -207,8 +203,6 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 
 	if (dialog.isAccepted())
 	{

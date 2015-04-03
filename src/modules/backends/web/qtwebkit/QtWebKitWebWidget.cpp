@@ -529,8 +529,6 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 
 	eventLoop.exec();
 
-	hideDialog(&dialog);
-
 	if (dialog.getCheckBoxState())
 	{
 		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
@@ -1302,8 +1300,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 					eventLoop.exec();
-
-					parent->hideDialog(&dialog);
 				}
 			}
 

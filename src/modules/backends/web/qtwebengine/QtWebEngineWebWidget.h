@@ -107,8 +107,6 @@ public:
 public slots:
 	void clearOptions();
 	void clearSelection();
-	void showDialog(ContentsDialog *dialog);
-	void hideDialog(ContentsDialog *dialog);
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
@@ -177,7 +175,6 @@ private:
 	bool m_isTyped;
 
 signals:
-	void aboutToReload();
 	void hitTestResultReady();
 	void unlockEventLoop();
 

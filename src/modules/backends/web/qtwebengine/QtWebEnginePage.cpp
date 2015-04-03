@@ -111,8 +111,6 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 	eventLoop.exec();
 
-	m_widget->hideDialog(&dialog);
-
 	if (dialog.getCheckBoxState())
 	{
 		m_ignoreJavaScriptPopups = true;
@@ -184,8 +182,6 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 
 	eventLoop.exec();
 
-	m_widget->hideDialog(&dialog);
-
 	if (dialog.getCheckBoxState())
 	{
 		m_ignoreJavaScriptPopups = true;
@@ -227,8 +223,6 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 
 	if (dialog.isAccepted())
 	{

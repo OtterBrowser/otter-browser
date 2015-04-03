@@ -187,8 +187,6 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 
 	eventLoop.exec();
 
-	m_widget->hideDialog(&dialog);
-
 	if (dialog.getCheckBoxState())
 	{
 		m_ignoreJavaScriptPopups = true;
@@ -280,8 +278,6 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 			eventLoop.exec();
 
-			m_widget->hideDialog(&dialog);
-
 			cancel = !dialog.isAccepted();
 			warn = !dialog.getCheckBoxState();
 		}
@@ -338,8 +334,6 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 
 	eventLoop.exec();
 
-	m_widget->hideDialog(&dialog);
-
 	if (dialog.getCheckBoxState())
 	{
 		m_ignoreJavaScriptPopups = true;
@@ -381,8 +375,6 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 
 	if (dialog.isAccepted())
 	{
@@ -478,8 +470,6 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
-
-		m_widget->hideDialog(&dialog);
 
 		return dialog.isAccepted();
 	}

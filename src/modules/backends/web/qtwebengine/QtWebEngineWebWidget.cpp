@@ -209,26 +209,6 @@ void QtWebEngineWebWidget::clearSelection()
 	m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
 }
 
-void QtWebEngineWebWidget::showDialog(ContentsDialog *dialog)
-{
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-
-	if (parent)
-	{
-		parent->showDialog(dialog);
-	}
-}
-
-void QtWebEngineWebWidget::hideDialog(ContentsDialog *dialog)
-{
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-
-	if (parent)
-	{
-		parent->hideDialog(dialog);
-	}
-}
-
 void QtWebEngineWebWidget::goToHistoryIndex(int index)
 {
 	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
@@ -475,8 +455,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 					eventLoop.exec();
-
-					parent->hideDialog(&dialog);
 				}
 			}
 			else
@@ -747,8 +725,6 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	hideDialog(&dialog);
 }
 
 void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy)
@@ -771,8 +747,6 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	hideDialog(&dialog);
 }
 
 void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
@@ -918,8 +892,6 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
-
-		parent->hideDialog(&dialog);
 	}
 }
 
@@ -1011,8 +983,6 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	hideDialog(&dialog);
 
 	if (dialog.getCheckBoxState())
 	{

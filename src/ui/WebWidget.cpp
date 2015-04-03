@@ -303,16 +303,6 @@ void WebWidget::showDialog(ContentsDialog *dialog)
 	}
 }
 
-void WebWidget::hideDialog(ContentsDialog *dialog)
-{
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-
-	if (parent)
-	{
-		parent->hideDialog(dialog);
-	}
-}
-
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
 	QMenu menu;

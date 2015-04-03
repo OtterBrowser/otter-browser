@@ -88,8 +88,6 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 
 		eventLoop.exec();
 
-		m_widget->hideDialog(&dialog);
-
 		if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
 		{
 			QNetworkCookie mutableCookie(cookie);
@@ -133,8 +131,6 @@ bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
 
 	eventLoop.exec();
 
-	m_widget->hideDialog(&dialog);
-
 	if (cookieDialog->getResult() == AcceptCookieDialog::IgnoreCookie)
 	{
 		return false;
@@ -161,8 +157,6 @@ bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 	eventLoop.exec();
-
-	m_widget->hideDialog(&dialog);
 
 	if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
 	{

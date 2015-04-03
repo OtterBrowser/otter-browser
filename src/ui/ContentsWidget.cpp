@@ -98,6 +98,26 @@ void ContentsWidget::close()
 	}
 }
 
+void ContentsWidget::cleanupDialog()
+{
+	ContentsDialog *dialog = qobject_cast<ContentsDialog*>(sender());
+
+	if (dialog)
+	{
+		m_dialogs.removeAll(dialog);
+
+		dialog->hide();
+		dialog->deleteLater();
+	}
+
+	if (m_dialogs.isEmpty() && m_layer)
+	{
+		m_layer->hide();
+		m_layer->deleteLater();
+		m_layer = NULL;
+	}
+}
+
 void ContentsWidget::showDialog(ContentsDialog *dialog)
 {
 	if (!dialog)
@@ -120,23 +140,13 @@ void ContentsWidget::showDialog(ContentsDialog *dialog)
 		m_layer->raise();
 	}
 
+	connect(dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), this, SLOT(cleanupDialog()));
+
 	dialog->setParent(m_layer);
 	dialog->show();
 	dialog->raise();
 	dialog->setFocus();
 	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
-}
-
-void ContentsWidget::hideDialog(ContentsDialog *dialog)
-{
-	m_dialogs.removeAll(dialog);
-
-	if (m_dialogs.isEmpty() && m_layer)
-	{
-		m_layer->hide();
-		m_layer->deleteLater();
-		m_layer = NULL;
-	}
 }
 
 void ContentsWidget::goToHistoryIndex(int index)

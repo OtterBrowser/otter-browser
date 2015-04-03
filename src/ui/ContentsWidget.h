@@ -66,9 +66,8 @@ public:
 public slots:
 	virtual void triggerAction(int identifier, bool checked = false);
 	virtual void print(QPrinter *printer) = 0;
-	void showDialog(ContentsDialog *dialog);
-	void hideDialog(ContentsDialog *dialog);
 	virtual void goToHistoryIndex(int index);
+	void showDialog(ContentsDialog *dialog);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool typed = true);
@@ -80,10 +79,11 @@ protected:
 protected slots:
 	void triggerAction();
 	void close();
+	void cleanupDialog();
 
 private:
-	QList<QPointer<ContentsDialog> > m_dialogs;
 	QWidget *m_layer;
+	QList<QPointer<ContentsDialog> > m_dialogs;
 
 signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);

@@ -96,7 +96,6 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog);
-	void hideDialog(ContentsDialog *dialog);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
 	virtual Action* getAction(int identifier) = 0;
 	WebBackend* getBackend();
@@ -181,6 +180,7 @@ private:
 	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
+	void aboutToReload();
 	void requestedCloseWindow();
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title, QString description);
