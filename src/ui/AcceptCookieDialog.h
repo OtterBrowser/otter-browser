@@ -20,7 +20,8 @@
 #ifndef OTTER_ACCEPTCOOKIEDIALOG_H
 #define OTTER_ACCEPTCOOKIEDIALOG_H
 
-#include <QtNetwork/QNetworkCookie>
+#include "../core/CookieJar.h"
+
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QDialog>
 
@@ -44,17 +45,8 @@ public:
 		IgnoreCookie
 	};
 
-	enum CookieOperation
-	{
-		InsertCookie,
-		UpdateCookie,
-		RemoveCookie
-	};
-
-	explicit AcceptCookieDialog(const QNetworkCookie &cookie, CookieOperation operation, QWidget *parent = NULL);
+	explicit AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent = NULL);
 	~AcceptCookieDialog();
-
-	AcceptCookieResult getResult() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -63,7 +55,9 @@ protected slots:
 	void buttonClicked(QAbstractButton *button);
 
 private:
-	AcceptCookieResult m_result;
+	CookieJar *m_cookieJar;
+	QNetworkCookie m_cookie;
+	CookieJar::CookieOperation m_operation;
 	Ui::AcceptCookieDialog *m_ui;
 };
 

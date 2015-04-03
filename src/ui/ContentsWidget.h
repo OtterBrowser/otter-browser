@@ -73,6 +73,7 @@ public slots:
 	virtual void setUrl(const QUrl &url, bool typed = true);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void showEvent(QShowEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
@@ -84,6 +85,7 @@ protected slots:
 private:
 	QWidget *m_layer;
 	QList<QPointer<ContentsDialog> > m_dialogs;
+	int m_layerTimer;
 
 signals:
 	void requestedOpenUrl(QUrl url, OpenHints hints);

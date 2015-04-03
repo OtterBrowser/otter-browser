@@ -24,11 +24,29 @@ namespace Otter
 {
 
 ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
-	m_layer(NULL)
+	m_layer(NULL),
+	m_layerTimer(0)
 {
 	if (window)
 	{
 		connect(window, SIGNAL(aboutToClose()), this, SLOT(close()));
+	}
+}
+
+void ContentsWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_layerTimer)
+	{
+		killTimer(m_layerTimer);
+
+		m_layerTimer = 0;
+
+		if (m_layer)
+		{
+			m_layer->hide();
+			m_layer->deleteLater();
+			m_layer = NULL;
+		}
 	}
 }
 
@@ -112,9 +130,7 @@ void ContentsWidget::cleanupDialog()
 
 	if (m_dialogs.isEmpty() && m_layer)
 	{
-		m_layer->hide();
-		m_layer->deleteLater();
-		m_layer = NULL;
+		m_layerTimer = startTimer(100);
 	}
 }
 
@@ -123,6 +139,13 @@ void ContentsWidget::showDialog(ContentsDialog *dialog)
 	if (!dialog)
 	{
 		return;
+	}
+
+	if (m_layerTimer != 0)
+	{
+		killTimer(m_layerTimer);
+
+		m_layerTimer = 0;
 	}
 
 	m_dialogs.append(dialog);

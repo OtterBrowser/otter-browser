@@ -23,6 +23,8 @@
 #include "../ui/ContentsDialog.h"
 #include "../ui/WebWidget.h"
 
+#include <QtCore/QTimer>
+
 namespace Otter
 {
 
@@ -31,7 +33,8 @@ CookieJarProxy::CookieJarProxy(CookieJar *cookieJar, WebWidget *widget) : QNetwo
 	m_cookieJar(cookieJar),
 	m_generalCookiesPolicy(CookieJar::AcceptAllCookies),
 	m_thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies),
-	m_keepMode(CookieJar::KeepUntilExpiresMode)
+	m_keepMode(CookieJar::KeepUntilExpiresMode),
+	m_isDialogVisible(false)
 {
 }
 
@@ -76,28 +79,17 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::InsertCookie, m_widget);
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+		m_operations.enqueue(qMakePair(CookieJar::InsertCookie, cookie));
 
-		connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
-		connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-		m_widget->showDialog(&dialog);
-
-		if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
+		if (m_operations.count() == 1)
 		{
-			QNetworkCookie mutableCookie(cookie);
-			mutableCookie.setExpirationDate(QDateTime());
-
-			return m_cookieJar->forceInsertCookie(mutableCookie);
+			QTimer::singleShot(250, this, SLOT(showDialog()));
 		}
 
-		if (cookieDialog->getResult() == AcceptCookieDialog::IgnoreCookie)
-		{
-			return false;
-		}
+		return false;
 	}
-	else if (m_keepMode == CookieJar::KeepUntilExitMode)
+
+	if (m_keepMode == CookieJar::KeepUntilExitMode)
 	{
 		QNetworkCookie mutableCookie(cookie);
 		mutableCookie.setExpirationDate(QDateTime());
@@ -108,29 +100,6 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 	return m_cookieJar->forceInsertCookie(cookie);
 }
 
-bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
-{
-	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
-	{
-		return false;
-	}
-
-	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::InsertCookie, m_widget);
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
-
-	connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-	m_widget->showDialog(&dialog);
-
-	if (cookieDialog->getResult() == AcceptCookieDialog::IgnoreCookie)
-	{
-		return false;
-	}
-
-	return m_cookieJar->forceDeleteCookie(cookie);
-}
-
 bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 {
 	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
@@ -138,15 +107,19 @@ bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 		return false;
 	}
 
-	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::UpdateCookie, m_widget);
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+	if (m_keepMode == CookieJar::AskIfKeepMode)
+	{
+		m_operations.enqueue(qMakePair(CookieJar::UpdateCookie, cookie));
 
-	connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+		if (m_operations.count() == 1)
+		{
+			QTimer::singleShot(250, this, SLOT(showDialog()));
+		}
 
-	m_widget->showDialog(&dialog);
+		return false;
+	}
 
-	if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
+	if (m_keepMode == CookieJar::KeepUntilExitMode)
 	{
 		QNetworkCookie mutableCookie(cookie);
 		mutableCookie.setExpirationDate(QDateTime());
@@ -154,12 +127,99 @@ bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 		return m_cookieJar->forceUpdateCookie(mutableCookie);
 	}
 
-	if (cookieDialog->getResult() == AcceptCookieDialog::IgnoreCookie)
+	return m_cookieJar->forceUpdateCookie(cookie);
+}
+
+bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
+{
+	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
 	{
 		return false;
 	}
 
-	return m_cookieJar->forceUpdateCookie(cookie);
+	if (m_keepMode == CookieJar::AskIfKeepMode)
+	{
+		m_operations.enqueue(qMakePair(CookieJar::RemoveCookie, cookie));
+
+		if (m_operations.count() == 1)
+		{
+			QTimer::singleShot(250, this, SLOT(showDialog()));
+		}
+
+		return false;
+	}
+
+	return m_cookieJar->forceDeleteCookie(cookie);
+}
+
+bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url)
+{
+	if (m_generalCookiesPolicy != CookieJar::AcceptAllCookies)
+	{
+		return false;
+	}
+
+	bool added = false;
+
+	for (int i = 0; i < cookieList.count(); ++i)
+	{
+		QNetworkCookie cookie = cookieList.at(i);
+		cookie.normalize(url);
+
+		if (validateCookie(cookie, url))
+		{
+			if (m_keepMode == CookieJar::AskIfKeepMode)
+			{
+				m_operations.enqueue(qMakePair(CookieJar::InsertCookie, cookie));
+			}
+			else
+			{
+				if (m_keepMode == CookieJar::KeepUntilExitMode)
+				{
+					cookie.setExpirationDate(QDateTime());
+				}
+
+				m_cookieJar->forceInsertCookie(cookie);
+
+				added = true;
+			}
+		}
+	}
+
+	if (m_operations.count() > 0)
+	{
+		QTimer::singleShot(250, this, SLOT(showDialog()));
+	}
+
+	return added;
+}
+
+void CookieJarProxy::dialogClosed()
+{
+	m_isDialogVisible = false;
+
+	showDialog();
+}
+
+void CookieJarProxy::showDialog()
+{
+	if (m_operations.isEmpty() || m_isDialogVisible)
+	{
+		return;
+	}
+
+	m_isDialogVisible = true;
+
+	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation = m_operations.dequeue();
+
+	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+
+	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
+	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+
+	m_widget->showDialog(&dialog);
 }
 
 }

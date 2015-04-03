@@ -46,6 +46,13 @@ public:
 		AskIfKeepMode = 2
 	};
 
+	enum CookieOperation
+	{
+		InsertCookie = 0,
+		UpdateCookie = 1,
+		RemoveCookie = 2
+	};
+
 	explicit CookieJar(bool isPrivate, QObject *parent = NULL);
 
 	void clearCookies(int period = 0);
@@ -54,11 +61,11 @@ public:
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;
 	bool insertCookie(const QNetworkCookie &cookie);
-	bool deleteCookie(const QNetworkCookie &cookie);
 	bool updateCookie(const QNetworkCookie &cookie);
+	bool deleteCookie(const QNetworkCookie &cookie);
 	bool forceInsertCookie(const QNetworkCookie &cookie);
-	bool forceDeleteCookie(const QNetworkCookie &cookie);
 	bool forceUpdateCookie(const QNetworkCookie &cookie);
+	bool forceDeleteCookie(const QNetworkCookie &cookie);
 
 protected:
 	void timerEvent(QTimerEvent *event);

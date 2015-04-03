@@ -90,6 +90,8 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		m_searchBarWidget->hide();
 	}
+
+	ContentsWidget::timerEvent(event);
 }
 
 void WebContentsWidget::focusInEvent(QFocusEvent *event)

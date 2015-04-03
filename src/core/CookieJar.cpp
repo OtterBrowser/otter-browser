@@ -231,6 +231,23 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
+bool CookieJar::updateCookie(const QNetworkCookie &cookie)
+{
+	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
+	{
+		return false;
+	}
+
+	const bool result = QNetworkCookieJar::updateCookie(cookie);
+
+	if (result)
+	{
+		scheduleSave();
+	}
+
+	return result;
+}
+
 bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
 	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
@@ -250,23 +267,6 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
-bool CookieJar::updateCookie(const QNetworkCookie &cookie)
-{
-	if (m_generalCookiesPolicy == IgnoreCookies || m_generalCookiesPolicy == ReadOnlyCookies)
-	{
-		return false;
-	}
-
-	const bool result = QNetworkCookieJar::updateCookie(cookie);
-
-	if (result)
-	{
-		scheduleSave();
-	}
-
-	return result;
-}
-
 bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 {
 	const bool result = QNetworkCookieJar::insertCookie(cookie);
@@ -281,6 +281,18 @@ bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
+bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
+{
+	const bool result = QNetworkCookieJar::updateCookie(cookie);
+
+	if (result)
+	{
+		scheduleSave();
+	}
+
+	return result;
+}
+
 bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 {
 	const bool result = QNetworkCookieJar::deleteCookie(cookie);
@@ -290,18 +302,6 @@ bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 		scheduleSave();
 
 		emit cookieRemoved(cookie);
-	}
-
-	return result;
-}
-
-bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
-{
-	const bool result = QNetworkCookieJar::updateCookie(cookie);
-
-	if (result)
-	{
-		scheduleSave();
 	}
 
 	return result;

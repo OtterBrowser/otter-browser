@@ -22,6 +22,9 @@
 
 #include "CookieJar.h"
 
+#include <QtCore/QMutex>
+#include <QtCore/QQueue>
+
 namespace Otter
 {
 
@@ -40,15 +43,23 @@ public:
 	CookieJar* getCookieJar();
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	bool insertCookie(const QNetworkCookie &cookie);
-	bool deleteCookie(const QNetworkCookie &cookie);
 	bool updateCookie(const QNetworkCookie &cookie);
+	bool deleteCookie(const QNetworkCookie &cookie);
+	bool setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url);
+
+protected slots:
+	void dialogClosed();
+	void showDialog();
 
 private:
 	WebWidget *m_widget;
 	CookieJar *m_cookieJar;
+	QMutex m_mutex;
+	QQueue<QPair<CookieJar::CookieOperation, QNetworkCookie> > m_operations;
 	CookieJar::CookiesPolicy m_generalCookiesPolicy;
 	CookieJar::CookiesPolicy m_thirdPartyCookiesPolicy;
 	CookieJar::KeepMode m_keepMode;
+	bool m_isDialogVisible;
 };
 
 }

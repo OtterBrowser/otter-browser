@@ -27,8 +27,10 @@
 namespace Otter
 {
 
-AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieOperation operation, QWidget *parent) : QDialog(parent),
-	m_result(IgnoreCookie),
+AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent) : QDialog(parent),
+	m_cookieJar(cookieJar),
+	m_cookie(cookie),
+	m_operation(operation),
 	m_ui(new Ui::AcceptCookieDialog)
 {
 	QString domain = cookie.domain();
@@ -40,11 +42,11 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieOpera
 
 	m_ui->setupUi(this);
 
-	if (operation == InsertCookie)
+	if (operation == CookieJar::InsertCookie)
 	{
 		m_ui->messageLabel->setText(tr("Website %1 requested to add new cookie.").arg(domain));
 	}
-	else if (operation == UpdateCookie)
+	else if (operation == CookieJar::UpdateCookie)
 	{
 		m_ui->messageLabel->setText(tr("Website %1 requested to update existing cookie.").arg(domain));
 	}
@@ -61,7 +63,7 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieOpera
 	m_ui->httpOnlyValueLabel->setText(cookie.isHttpOnly() ? tr("Yes") : tr("No"));
 	m_ui->buttonBox->addButton(tr("Accept"), QDialogButtonBox::AcceptRole);
 
-	if (operation != RemoveCookie && !cookie.isSessionCookie())
+	if (operation != CookieJar::RemoveCookie && !cookie.isSessionCookie())
 	{
 		m_ui->buttonBox->addButton(tr("Accept For This Session Only"), QDialogButtonBox::AcceptRole)->setObjectName(QLatin1String("sessionOnly"));
 	}
@@ -94,22 +96,40 @@ void AcceptCookieDialog::changeEvent(QEvent *event)
 void AcceptCookieDialog::buttonClicked(QAbstractButton *button)
 {
 	const QDialogButtonBox::ButtonRole role = m_ui->buttonBox->buttonRole(button);
+	const AcceptCookieResult result = ((role == QDialogButtonBox::AcceptRole) ? ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie) : IgnoreCookie);
 
-	if (role == QDialogButtonBox::AcceptRole)
+	if (m_operation == CookieJar::InsertCookie)
 	{
-		m_result = ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie);
+		if (result == AcceptCookieDialog::AcceptAsSessionCookie)
+		{
+			m_cookie.setExpirationDate(QDateTime());
+
+			m_cookieJar->forceInsertCookie(m_cookie);
+		}
+		else if (result == AcceptCookieDialog::AcceptCookie)
+		{
+			m_cookieJar->forceInsertCookie(m_cookie);
+		}
 	}
-	else
+	else if (m_operation == CookieJar::UpdateCookie)
 	{
-		m_result = IgnoreCookie;
+		if (result == AcceptCookieDialog::AcceptAsSessionCookie)
+		{
+			m_cookie.setExpirationDate(QDateTime());
+
+			m_cookieJar->forceUpdateCookie(m_cookie);
+		}
+		else if (result == AcceptCookieDialog::AcceptCookie)
+		{
+			m_cookieJar->forceUpdateCookie(m_cookie);
+		}
+	}
+	else if (m_operation == CookieJar::InsertCookie && result != AcceptCookieDialog::IgnoreCookie)
+	{
+		m_cookieJar->forceDeleteCookie(m_cookie);
 	}
 
 	accept();
-}
-
-AcceptCookieDialog::AcceptCookieResult AcceptCookieDialog::getResult() const
-{
-	return m_result;
 }
 
 }
