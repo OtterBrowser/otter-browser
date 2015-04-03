@@ -89,6 +89,9 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	setCookieJar(m_cookieJarProxy);
 
 	connect(this, SIGNAL(finished(QNetworkReply*)), SLOT(requestFinished(QNetworkReply*)));
+	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
+	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
+	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
 }
 
 void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
@@ -108,16 +111,9 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 }
 
 void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
@@ -137,16 +133,9 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 }
 
 void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
@@ -194,15 +183,9 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		dialog.setCheckBox(tr("Do not show this message again"), false);
 	}
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.isAccepted())
 	{

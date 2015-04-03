@@ -40,9 +40,9 @@ protected:
 	virtual QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
 
 protected slots:
-	virtual void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
-	virtual void handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
-	virtual void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
+	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
+	void handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
+	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 
 private:
 	CookieJar *m_cookieJar;

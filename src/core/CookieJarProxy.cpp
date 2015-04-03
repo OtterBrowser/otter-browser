@@ -78,15 +78,11 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 	{
 		AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::InsertCookie, m_widget);
 		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
-		QEventLoop eventLoop;
+
+		connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
+		connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 		m_widget->showDialog(&dialog);
-
-		connect(cookieDialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
 
 		if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
 		{
@@ -121,15 +117,11 @@ bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
 
 	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::InsertCookie, m_widget);
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
-	QEventLoop eventLoop;
+
+	connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(cookieDialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (cookieDialog->getResult() == AcceptCookieDialog::IgnoreCookie)
 	{
@@ -148,15 +140,11 @@ bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 
 	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(cookie, AcceptCookieDialog::UpdateCookie, m_widget);
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
-	QEventLoop eventLoop;
+
+	connect(cookieDialog, SIGNAL(finished(int)), cookieDialog, SLOT(close()));
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(cookieDialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (cookieDialog->getResult() == AcceptCookieDialog::AcceptAsSessionCookie)
 	{

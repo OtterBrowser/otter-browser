@@ -177,15 +177,9 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.getCheckBoxState())
 	{
@@ -268,15 +262,9 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_widget);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
-			QEventLoop eventLoop;
+			connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 			m_widget->showDialog(&dialog);
-
-			connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-			connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-			connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-			eventLoop.exec();
 
 			cancel = !dialog.isAccepted();
 			warn = !dialog.getCheckBoxState();
@@ -324,15 +312,9 @@ bool QtWebKitPage::javaScriptConfirm(QWebFrame *frame, const QString &message)
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.getCheckBoxState())
 	{
@@ -366,15 +348,9 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.isAccepted())
 	{
@@ -461,15 +437,10 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 	if (m_widget)
 	{
 		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("The script on this page appears to have a problem."), tr("Do you want to stop the script?"), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
-		QEventLoop eventLoop;
+
+		connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 		m_widget->showDialog(&dialog);
-
-		connect(&dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
-		connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
 
 		return dialog.isAccepted();
 	}

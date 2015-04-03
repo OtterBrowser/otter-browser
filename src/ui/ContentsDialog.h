@@ -36,13 +36,13 @@ public:
 	explicit ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent);
 
 	void adjustSize();
-	void close(QDialogButtonBox::StandardButton button = QDialogButtonBox::NoButton);
 	void setCheckBox(const QString &text, bool state);
 	bool getCheckBoxState() const;
 	bool isAccepted() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
+	void closeEvent(QCloseEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
@@ -61,7 +61,7 @@ private:
 signals:
 	void accepted();
 	void rejected();
-	void closed(bool accepted, QDialogButtonBox::StandardButton button);
+	void finished();
 };
 
 }

@@ -447,14 +447,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				if (parent)
 				{
 					ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
-					QEventLoop eventLoop;
 
-					parent->showDialog(&dialog);
+					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
-					connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-					eventLoop.exec();
+					showDialog(&dialog);
 				}
 			}
 			else
@@ -715,16 +711,9 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-	QEventLoop eventLoop;
+	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 }
 
 void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy)
@@ -737,16 +726,9 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
-
-	QEventLoop eventLoop;
+	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 }
 
 void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
@@ -877,22 +859,14 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 		properties[QLatin1String("height")] = result.toList()[1].toInt();
 	}
 
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
 	ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
 	imagePropertiesDialog->setButtonsVisible(false);
 
-	if (parent)
-	{
-		ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
-		QEventLoop eventLoop;
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
 
-		parent->showDialog(&dialog);
+	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
-		connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-		eventLoop.exec();
-	}
+	showDialog(&dialog);
 }
 
 void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature)
@@ -974,15 +948,9 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
-	QEventLoop eventLoop;
+	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.getCheckBoxState())
 	{

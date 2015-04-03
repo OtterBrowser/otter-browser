@@ -140,13 +140,20 @@ void ContentsWidget::showDialog(ContentsDialog *dialog)
 		m_layer->raise();
 	}
 
-	connect(dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), this, SLOT(cleanupDialog()));
+	connect(dialog, SIGNAL(finished()), this, SLOT(cleanupDialog()));
 
 	dialog->setParent(m_layer);
 	dialog->show();
 	dialog->raise();
 	dialog->setFocus();
 	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
+
+	QEventLoop eventLoop;
+
+	connect(dialog, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
 }
 
 void ContentsWidget::goToHistoryIndex(int index)

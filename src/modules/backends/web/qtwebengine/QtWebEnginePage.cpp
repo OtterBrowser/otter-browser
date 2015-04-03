@@ -101,15 +101,9 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.getCheckBoxState())
 	{
@@ -172,15 +166,9 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.getCheckBoxState())
 	{
@@ -214,15 +202,9 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), widget, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
-	QEventLoop eventLoop;
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	m_widget->showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(m_widget, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
 
 	if (dialog.isAccepted())
 	{

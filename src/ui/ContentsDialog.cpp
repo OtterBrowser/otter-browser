@@ -137,6 +137,22 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	installEventFilter(this);
 }
 
+void ContentsDialog::closeEvent(QCloseEvent *event)
+{
+	if (m_isAccepted)
+	{
+		emit accepted();
+	}
+	else
+	{
+		emit rejected();
+	}
+
+	emit finished();
+
+	event->accept();
+}
+
 void ContentsDialog::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
@@ -169,28 +185,19 @@ void ContentsDialog::clicked(QAbstractButton *button)
 {
 	if (m_buttonBox)
 	{
-		close(m_buttonBox->standardButton(button));
-	}
-	else
-	{
-		close();
-	}
-}
+		switch (m_buttonBox->standardButton(button))
+		{
+			case QDialogButtonBox::Ok:
+			case QDialogButtonBox::Apply:
+			case QDialogButtonBox::Yes:
+			case QDialogButtonBox::YesToAll:
+				m_isAccepted = true;
 
-void ContentsDialog::close(QDialogButtonBox::StandardButton button)
-{
-	m_isAccepted = (button != QDialogButtonBox::NoButton && button != QDialogButtonBox::Cancel && button != QDialogButtonBox::No && button != QDialogButtonBox::Close && button != QDialogButtonBox::Abort && button != QDialogButtonBox::Discard);
-
-	emit closed(m_isAccepted, button);
-
-	if (m_isAccepted)
-	{
-		emit accepted();
+				break;
+		}
 	}
-	else
-	{
-		emit rejected();
-	}
+
+	close();
 }
 
 void ContentsDialog::setCheckBox(const QString &text, bool state)
@@ -257,11 +264,15 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 
 		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
-			close(QDialogButtonBox::Ok);
+			m_isAccepted = true;
+
+			close();
 		}
 		else if (keyEvent->key() == Qt::Key_Escape)
 		{
-			close(QDialogButtonBox::Cancel);
+			m_isAccepted = false;
+
+			close();
 		}
 	}
 

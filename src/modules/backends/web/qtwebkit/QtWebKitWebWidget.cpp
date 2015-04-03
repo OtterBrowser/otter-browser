@@ -519,15 +519,7 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
-	QEventLoop eventLoop;
-
-	showDialog(&dialog);
-
-	connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-	eventLoop.exec();
+	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	if (dialog.getCheckBoxState())
 	{
@@ -1292,14 +1284,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 				if (parent)
 				{
 					ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Close), imagePropertiesDialog, this);
-					QEventLoop eventLoop;
 
-					parent->showDialog(&dialog);
+					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
-					connect(&dialog, SIGNAL(closed(bool,QDialogButtonBox::StandardButton)), &eventLoop, SLOT(quit()));
-					connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
-
-					eventLoop.exec();
+					showDialog(&dialog);
 				}
 			}
 
