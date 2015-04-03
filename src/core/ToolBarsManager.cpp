@@ -295,7 +295,7 @@ void ToolBarsManager::configureToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-	if (identifier >= 0 && identifier < (m_definitions.count() - 1))
+	if (identifier >= 0 && identifier < m_definitions.count())
 	{
 		ToolBarDialog dialog(identifier);
 
@@ -355,7 +355,7 @@ void ToolBarsManager::removeToolBar(int identifier)
 		identifier = action->data().toInt();
 	}
 
-	if (identifier >= 0 && identifier < (m_definitions.count() - 1) && identifier >= OtherToolBar && QMessageBox::question(NULL, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
+	if (identifier >= 0 && identifier < m_definitions.count() && identifier >= OtherToolBar && QMessageBox::question(NULL, tr("Remove Toolbar"), tr("Do you really want to remove this toolbar?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
 	{
 		m_definitions[identifier].wasRemoved = true;
 		m_definitions[identifier].title = QString();
