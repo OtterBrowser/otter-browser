@@ -22,13 +22,14 @@
 
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
 
 namespace Otter
 {
 
-class ContentsDialog : public QWidget
+class ContentsDialog : public QFrame
 {
 	Q_OBJECT
 
@@ -49,8 +50,7 @@ protected slots:
 	void clicked(QAbstractButton *button);
 
 private:
-	QLabel *m_iconLabel;
-	QLabel *m_titleLabel;
+	QWidget *m_headerWidget;
 	QLabel *m_closeLabel;
 	QScrollArea *m_scrollArea;
 	QCheckBox *m_checkBox;

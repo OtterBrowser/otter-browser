@@ -27,60 +27,72 @@
 namespace Otter
 {
 
-ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent) : QWidget(parent),
-	m_iconLabel(new QLabel(this)),
-	m_titleLabel(new QLabel(title, this)),
-	m_closeLabel(new QLabel(this)),
+ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent) : QFrame(parent),
+	m_headerWidget(new QWidget(this)),
+	m_closeLabel(new QLabel(m_headerWidget)),
 	m_scrollArea(NULL),
 	m_checkBox(NULL),
 	m_buttonBox(NULL),
 	m_isAccepted(false)
 {
+	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
+	mainLayout->addWidget(m_headerWidget);
+
+	setObjectName(QLatin1String("contentsDialog"));
+	setStyleSheet(QStringLiteral("#contentsDialog {border:1px solid #CCC;border-radius:4px;background:%1;}").arg(palette().color(QPalette::Window).name()));
+
+	m_headerWidget->setAutoFillBackground(true);
+	m_headerWidget->setObjectName(QLatin1String("headerWidget"));
+	m_headerWidget->setStyleSheet(QStringLiteral("#headerWidget {border-bottom:1px solid #CCC;border-top-left-radius:4px;border-top-right-radius:4px;background:%1;}").arg(palette().color(QPalette::Window).darker(50).name()));
+
+	QBoxLayout *headerLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_headerWidget);
+	headerLayout->setContentsMargins(0, 0, 0, 0);
+	headerLayout->setSpacing(0);
+
+	m_headerWidget->setLayout(headerLayout);
+	m_headerWidget->installEventFilter(this);
+
+	QLabel *iconLabel = new QLabel(m_headerWidget);
+	iconLabel->setToolTip(title);
+	iconLabel->setPixmap(icon.pixmap(16, 16));
+	iconLabel->setMargin(5);
+
 	QFont font = this->font();
 	font.setBold(true);
 
-	QPalette palette = this->palette();
-	palette.setColor(QPalette::Window, palette.color(QPalette::Window).darker(50));
-
-	m_iconLabel->setToolTip(title);
-	m_iconLabel->setPixmap(icon.pixmap(16, 16));
-	m_iconLabel->setAutoFillBackground(true);
-	m_iconLabel->setPalette(palette);
-	m_iconLabel->setMargin(5);
-	m_iconLabel->installEventFilter(this);
-
-	m_titleLabel->setToolTip(title);
-	m_titleLabel->setFont(font);
-	m_titleLabel->setPalette(palette);
-	m_titleLabel->setAutoFillBackground(true);
-	m_titleLabel->setMargin(5);
-	m_titleLabel->installEventFilter(this);
+	QLabel *titleLabel = new QLabel(title, m_headerWidget);
+	titleLabel->setToolTip(title);
+	titleLabel->setFont(font);
 
 	m_closeLabel->setToolTip(tr("Close"));
 	m_closeLabel->setPixmap(Utils::getIcon(QLatin1String("window-close")).pixmap(16, 16));
-	m_closeLabel->setAutoFillBackground(true);
-	m_closeLabel->setPalette(palette);
 	m_closeLabel->setMargin(5);
 	m_closeLabel->installEventFilter(this);
 
-	QBoxLayout *titleLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-	titleLayout->setContentsMargins(0, 0, 0, 0);
-	titleLayout->setSpacing(0);
-	titleLayout->addWidget(m_iconLabel);
-	titleLayout->addWidget(m_titleLabel, 1);
-	titleLayout->addWidget(m_closeLabel);
+	headerLayout->addWidget(iconLabel);
+	headerLayout->addWidget(titleLabel, 1);
+	headerLayout->addWidget(m_closeLabel);
 
-	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
-	mainLayout->setContentsMargins(3, 3, 3, 3);
-	mainLayout->addLayout(titleLayout);
+	QBoxLayout *contentsLayout = new QBoxLayout(QBoxLayout::TopToBottom);
+
+	if (!payload || buttons != QDialogButtonBox::NoButton)
+	{
+		contentsLayout->setContentsMargins(9, 9, 9, 9);
+		contentsLayout->setSpacing(6);
+	}
+
+	mainLayout->addWidget(m_headerWidget);
+	mainLayout->addLayout(contentsLayout);
 
 	if (!text.isEmpty())
 	{
-		QLabel *label = new QLabel(text, this);
-		label->setTextFormat(Qt::PlainText);
-		label->setTextInteractionFlags(Qt::TextBrowserInteraction);
+		QLabel *textLabel = new QLabel(text, this);
+		textLabel->setTextFormat(Qt::PlainText);
+		textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
-		mainLayout->addWidget(label);
+		contentsLayout->addWidget(textLabel);
 	}
 
 	if (payload || !details.isEmpty())
@@ -108,6 +120,8 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		if (payload)
 		{
 			payload->setParent(this);
+			payload->setAutoFillBackground(false);
+			payload->setStyleSheet(QLatin1String("border-radius:4px;"));
 			payload->installEventFilter(this);
 
 			scrollLayout->addWidget(payload);
@@ -116,20 +130,19 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		scrollWidget->setLayout(scrollLayout);
 		scrollWidget->adjustSize();
 
-		mainLayout->addWidget(m_scrollArea);
+		contentsLayout->addWidget(m_scrollArea);
 	}
 
 	if (buttons != QDialogButtonBox::NoButton)
 	{
 		m_buttonBox = new QDialogButtonBox(buttons, Qt::Horizontal, this);
 
-		mainLayout->addWidget(m_buttonBox);
+		contentsLayout->addWidget(m_buttonBox);
 
 		connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 	}
 
 	adjustSize();
-	setAutoFillBackground(true);
 	setFocusPolicy(Qt::StrongFocus);
 	setWindowFlags(Qt::Widget);
 	setWindowTitle(title);
@@ -236,7 +249,7 @@ bool ContentsDialog::isAccepted() const
 
 bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_titleLabel || object == m_iconLabel)
+	if (object == m_headerWidget)
 	{
 		if (event->type() == QEvent::MouseButtonPress)
 		{

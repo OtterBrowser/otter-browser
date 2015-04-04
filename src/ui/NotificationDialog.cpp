@@ -40,7 +40,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 {
 	QFrame *notificationFrame = new QFrame(this);
 	notificationFrame->setObjectName(QLatin1String("notificationFrame"));
-	notificationFrame->setStyleSheet(QLatin1String("#notificationFrame {padding:5px;border:1px solid #CCC;border-radius:10;background:#F0F0f0;}"));
+	notificationFrame->setStyleSheet(QLatin1String("#notificationFrame {padding:5px;border:1px solid #CCC;border-radius:10px;background:#F0F0f0;}"));
 	notificationFrame->setCursor(QCursor(Qt::PointingHandCursor));
 	notificationFrame->installEventFilter(this);
 
