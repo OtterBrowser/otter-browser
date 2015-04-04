@@ -120,8 +120,8 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		if (payload)
 		{
 			payload->setParent(this);
-			payload->setAutoFillBackground(false);
-			payload->setStyleSheet(QLatin1String("border-radius:4px;"));
+			payload->setObjectName(QLatin1String("payloadWidget"));
+			payload->setStyleSheet(QLatin1String("#payloadWidget {border-radius:4px;}"));
 			payload->installEventFilter(this);
 
 			scrollLayout->addWidget(payload);
