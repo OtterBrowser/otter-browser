@@ -109,6 +109,39 @@ QVariant BookmarksItem::data(int role) const
 	return QStandardItem::data(role);
 }
 
+QList<QUrl> BookmarksItem::getUrls() const
+{
+	QList<QUrl> urls;
+
+	if (static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+	{
+		urls.append(data(BookmarksModel::UrlRole).toUrl());
+	}
+
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(child(i, 0));
+
+		if (!bookmark)
+		{
+			continue;
+		}
+
+		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
+
+		if (type == BookmarksModel::FolderBookmark)
+		{
+			urls.append(bookmark->getUrls());
+		}
+		else if (type == BookmarksModel::UrlBookmark)
+		{
+			urls.append(bookmark->data(BookmarksModel::UrlRole).toUrl());
+		}
+	}
+
+	return urls;
+}
+
 bool BookmarksItem::isInTrash() const
 {
 	QModelIndex parent = index().parent();

@@ -37,6 +37,7 @@ public:
 	void setItemData(const QVariant &value, int role);
 	QStandardItem* clone() const;
 	QVariant data(int role) const;
+	QList<QUrl> getUrls() const;
 	bool isInTrash() const;
 
 protected:

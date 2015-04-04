@@ -107,7 +107,6 @@ public slots:
 
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
-	void gatherBookmarks(QStandardItem *branch);
 	bool event(QEvent *event);
 
 protected slots:
@@ -124,7 +123,6 @@ protected slots:
 private:
 	MainWindow *m_mainWindow;
 	QList<ClosedWindow> m_closedWindows;
-	QList<QUrl> m_bookmarksToOpen;
 	bool m_isPrivate;
 	bool m_isRestored;
 

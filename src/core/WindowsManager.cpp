@@ -201,13 +201,14 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		case BookmarksModel::RootBookmark:
 		case BookmarksModel::FolderBookmark:
 			{
-				gatherBookmarks(bookmark);
+				const QList<QUrl> urls = bookmark->getUrls();
+				bool canOpen = true;
 
-				if (m_bookmarksToOpen.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
+				if (urls.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
 				{
 					QMessageBox messageBox;
 					messageBox.setWindowTitle(tr("Question"));
-					messageBox.setText(tr("You are about to open %n bookmarks.", "", m_bookmarksToOpen.count()));
+					messageBox.setText(tr("You are about to open %n bookmarks.", "", urls.count()));
 					messageBox.setInformativeText(tr("Do you want to continue?"));
 					messageBox.setIcon(QMessageBox::Question);
 					messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
@@ -216,25 +217,23 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 					if (messageBox.exec() == QMessageBox::Cancel)
 					{
-						m_bookmarksToOpen.clear();
+						canOpen = false;
 					}
 
 					SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
 				}
 
-				if (m_bookmarksToOpen.isEmpty())
+				if (!canOpen)
 				{
 					return;
 				}
 
-				open(m_bookmarksToOpen.at(0), hints);
+				open(urls.at(0), hints);
 
-				for (int i = 1; i < m_bookmarksToOpen.count(); ++i)
+				for (int i = 1; i < urls.count(); ++i)
 				{
-					open(m_bookmarksToOpen.at(i), ((hints == DefaultOpen || (hints & CurrentTabOpen)) ? NewTabOpen : hints));
+					open(urls.at(i), ((hints == DefaultOpen || (hints & CurrentTabOpen)) ? NewTabOpen : hints));
 				}
-
-				m_bookmarksToOpen.clear();
 			}
 
 			break;
@@ -250,35 +249,6 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 	addWindow(window, hints);
 
 	window->setUrl(url, false);
-}
-
-void WindowsManager::gatherBookmarks(QStandardItem *branch)
-{
-	if (!branch)
-	{
-		return;
-	}
-
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		QStandardItem *item = branch->child(i, 0);
-
-		if (!item)
-		{
-			continue;
-		}
-
-		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
-
-		if (type == BookmarksModel::FolderBookmark)
-		{
-			gatherBookmarks(item);
-		}
-		else if (type == BookmarksModel::UrlBookmark)
-		{
-			m_bookmarksToOpen.append(item->data(BookmarksModel::UrlRole).toUrl());
-		}
-	}
 }
 
 void WindowsManager::search(const QString &query, const QString &engine, OpenHints hints)
