@@ -253,6 +253,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 
 			emit bookmarkModified(bookmark);
 			emit bookmarkTrashed(bookmark);
+			emit modelModified();
 		}
 	}
 }
@@ -288,6 +289,7 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 
 	emit bookmarkModified(bookmark);
 	emit bookmarkRestored(bookmark);
+	emit modelModified();
 }
 
 void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
@@ -320,6 +322,7 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 	}
 
 	emit bookmarkRemoved(bookmark);
+	emit modelModified();
 }
 
 void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
@@ -605,6 +608,8 @@ void BookmarksModel::emptyTrash()
 	trashItem->setEnabled(false);
 
 	m_trash.clear();
+
+	emit modelModified();
 }
 
 BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent)
@@ -642,6 +647,7 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 	}
 
 	emit bookmarkAdded(bookmark);
+	emit modelModified();
 
 	return bookmark;
 }
@@ -827,6 +833,7 @@ bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newPar
 		newParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 
 		emit bookmarkMoved(bookmark, previousParent, previousRow);
+		emit modelModified();
 
 		return true;
 	}
@@ -841,6 +848,7 @@ bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newPar
 	newParent->insertRow(targetRow, bookmark->parent()->takeRow(bookmark->row()));
 
 	emit bookmarkMoved(bookmark, previousParent, previousRow);
+	emit modelModified();
 
 	return true;
 }
@@ -964,6 +972,7 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 		case TimeVisitedRole:
 		case VisitsRole:
 			emit bookmarkModified(bookmark);
+			emit modelModified();
 
 			break;
 	}
