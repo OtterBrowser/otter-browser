@@ -109,7 +109,6 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 
 	SessionMainWindow session = window->getWindowsManager()->getSession();
 	session.geometry = window->saveGeometry();
-	session.state = window->saveState();
 
 	if (!session.windows.isEmpty())
 	{
@@ -224,8 +223,6 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		const int tabs = sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt();
 		SessionMainWindow sessionEntry;
 		sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(i), 1).toString().toLatin1());
-		sessionEntry.state = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/state").arg(i), 1).toString().toLatin1());
-		sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(i), 1).toInt() - 1);
 
 		for (int j = 1; j <= tabs; ++j)
 		{

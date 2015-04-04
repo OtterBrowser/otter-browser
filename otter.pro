@@ -62,6 +62,7 @@ SOURCES += src/main.cpp \
     src/core/PlatformIntegration.cpp \
     src/core/SearchesManager.cpp \
     src/core/SearchSuggester.cpp \
+    src/core/SessionModel.cpp \
     src/core/SessionsManager.cpp \
     src/core/SettingsManager.cpp \
     src/core/ToolBarsManager.cpp \
@@ -191,6 +192,7 @@ HEADERS += src/core/Action.h \
     src/core/PlatformIntegration.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \
+    src/core/SessionModel.h \
     src/core/SessionsManager.h \
     src/core/SettingsManager.h \
     src/core/ToolBarsManager.h \

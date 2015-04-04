@@ -82,7 +82,6 @@ void StartupDialog::setSession(int index)
 	{
 		QStandardItem *windowItem = new QStandardItem(tr("Window %1").arg(i + 1));
 		windowItem->setData(session.windows.at(i).geometry, Qt::UserRole);
-		windowItem->setData(session.windows.at(i).state, (Qt::UserRole + 1));
 
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
@@ -133,7 +132,6 @@ SessionInformation StartupDialog::getSession() const
 			SessionMainWindow window;
 			window.index = (index + 1);
 			window.geometry = windowItem->data(Qt::UserRole).toByteArray();
-			window.state = windowItem->data(Qt::UserRole + 1).toByteArray();
 
 			for (int j = 0; j < windowItem->rowCount(); ++j)
 			{
