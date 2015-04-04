@@ -194,6 +194,8 @@ void ContentsDialog::clicked(QAbstractButton *button)
 				m_isAccepted = true;
 
 				break;
+			default:
+				break;
 		}
 	}
 
