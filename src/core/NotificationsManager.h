@@ -89,7 +89,7 @@ public:
 	static QString getEventName(int identifier);
 	static EventDefinition getEventDefinition(int identifier);
 	static QVector<EventDefinition> getEventDefinitions();
-	static int registerEvent(const QString &text, const QString &description = QString());
+	static int registerEvent(const QString &title, const QString &description = QString());
 
 protected:
 	explicit NotificationsManager(QObject *parent = NULL);

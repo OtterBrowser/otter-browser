@@ -172,9 +172,9 @@ QVector<EventDefinition> NotificationsManager::getEventDefinitions()
 	return m_definitions;
 }
 
-int NotificationsManager::registerEvent(const QString &text, const QString &description)
+int NotificationsManager::registerEvent(const QString &title, const QString &description)
 {
-	const identifier = m_definitions.count();
+	const int identifier = m_definitions.count();
 
 	EventDefinition definition;
 	definition.title = title;
