@@ -79,7 +79,8 @@ class NotificationsManager : public QObject
 public:
 	enum EventIdentifier
 	{
-		TransferCompletedEvent = 0
+		TransferCompletedEvent = 0,
+		UpdateAvailableEvent = 1
 	};
 
 	static void createInstance(QObject *parent = NULL);
@@ -88,6 +89,7 @@ public:
 	static QString getEventName(int identifier);
 	static EventDefinition getEventDefinition(int identifier);
 	static QVector<EventDefinition> getEventDefinitions();
+	static int registerEvent(const QString &text, const QString &description = QString());
 
 protected:
 	explicit NotificationsManager(QObject *parent = NULL);

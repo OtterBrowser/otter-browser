@@ -69,12 +69,8 @@ Notification::NotificationLevel Notification::getLevel() const
 
 NotificationsManager::NotificationsManager(QObject *parent) : QObject(parent)
 {
-	EventDefinition definition;
-	definition.title = QT_TRANSLATE_NOOP("notifications", "Transfer Completed");
-	definition.description = QT_TRANSLATE_NOOP("notifications", "File transfer was completed");
-	definition.identifier = TransferCompletedEvent;
-
-	m_definitions.append(definition);
+	registerEvent(QT_TRANSLATE_NOOP("notifications", "Transfer Completed"), QT_TRANSLATE_NOOP("notifications", "File transfer was completed"));
+	registerEvent(QT_TRANSLATE_NOOP("notifications", "Update Available"), QT_TRANSLATE_NOOP("notifications", "Update is available to be downloaded"));
 }
 
 void NotificationsManager::createInstance(QObject *parent)
@@ -174,6 +170,20 @@ QVector<EventDefinition> NotificationsManager::getEventDefinitions()
 	}
 
 	return m_definitions;
+}
+
+int NotificationsManager::registerEvent(const QString &text, const QString &description)
+{
+	const identifier = m_definitions.count();
+
+	EventDefinition definition;
+	definition.title = title;
+	definition.description = description;
+	definition.identifier = identifier;
+
+	m_definitions.append(definition);
+
+	return identifier;
 }
 
 }
