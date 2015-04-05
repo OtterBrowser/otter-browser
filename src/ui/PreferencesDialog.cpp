@@ -1643,8 +1643,6 @@ void PreferencesDialog::save()
 
 		SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
 
-		ActionsManager::loadShortcuts();
-
 		SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
 
 		if (!m_javaScriptOptions.isEmpty())

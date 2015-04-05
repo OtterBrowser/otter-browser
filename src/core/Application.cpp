@@ -19,9 +19,11 @@
 **************************************************************************/
 
 #include "Application.h"
+#include "ActionsManager.h"
 #include "AddonsManager.h"
 #include "BookmarksManager.h"
 #include "Console.h"
+#include "GesturesManager.h"
 #include "HistoryManager.h"
 #include "NetworkManagerFactory.h"
 #include "NotesManager.h"
@@ -192,9 +194,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	NetworkManagerFactory::createInstance(this);
 
+	ActionsManager::createInstance(this);
+
 	AddonsManager::createInstance(this);
 
 	BookmarksManager::createInstance(this);
+
+	GesturesManager::createInstance(this);
 
 	HistoryManager::createInstance(this);
 
@@ -317,7 +323,7 @@ void Application::newConnection()
 	{
 		if (parser->positionalArguments().isEmpty())
 		{
-			window->triggerAction(Action::NewTabAction);
+			window->triggerAction(ActionsManager::NewTabAction);
 		}
 		else
 		{

@@ -89,7 +89,7 @@ void CacheContentsWidget::triggerAction(int identifier, bool checked)
 {
 	Q_UNUSED(checked)
 
-	if (identifier == Action::DeleteAction)
+	if (identifier == ActionsManager::DeleteAction)
 	{
 		removeDomainEntriesOrEntry();
 	}
@@ -392,7 +392,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 		menu.addSeparator();
 	}
 
-	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->cacheView->mapToGlobal(point));
 }
 
@@ -516,9 +516,9 @@ void CacheContentsWidget::updateActions()
 		}
 	}
 
-	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != getAction(ActionsManager::DeleteAction)->isEnabled())
 	{
-		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 }
 
@@ -565,7 +565,7 @@ Action* CacheContentsWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	if (identifier != Action::DeleteAction)
+	if (identifier != ActionsManager::DeleteAction)
 	{
 		return NULL;
 	}

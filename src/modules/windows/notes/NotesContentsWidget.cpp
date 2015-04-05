@@ -140,7 +140,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 
 	if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::TrashBookmark)
 	{
-		menu.addAction(getAction(Action::PasteAction));
+		menu.addAction(getAction(ActionsManager::PasteAction));
 		menu.addSeparator();
 	}
 
@@ -160,9 +160,9 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 
 		if (type == BookmarksModel::UrlBookmark)
 		{
-			menu.addAction(getAction(Action::CutAction));
-			menu.addAction(getAction(Action::CopyAction));
-			menu.addAction(getAction(Action::PasteAction));
+			menu.addAction(getAction(ActionsManager::CutAction));
+			menu.addAction(getAction(ActionsManager::CopyAction));
+			menu.addAction(getAction(ActionsManager::PasteAction));
 			menu.addSeparator();
 		}
 
@@ -170,7 +170,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 
 		if (type != BookmarksModel::RootBookmark)
 		{
-			Action *copyLinkAction = getAction(Action::CopyLinkToClipboardAction);
+			Action *copyLinkAction = getAction(ActionsManager::CopyLinkToClipboardAction);
 			copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark && index.data(BookmarksModel::UrlRole).toUrl().isValid());
 
 			menu.addAction(copyLinkAction);
@@ -196,7 +196,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 			}
 			else
 			{
-				menu.addAction(getAction(Action::DeleteAction));
+				menu.addAction(getAction(ActionsManager::DeleteAction));
 			}
 		}
 	}
@@ -210,26 +210,26 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
-		case Action::CopyLinkToClipboardAction:
+		case ActionsManager::CopyLinkToClipboardAction:
 			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
 				QGuiApplication::clipboard()->setText(m_ui->notesView->currentIndex().data(BookmarksModel::UrlRole).toString());
 			}
 
 			break;
-		case Action::CutAction:
-			triggerAction(Action::CopyAction);
-			triggerAction(Action::DeleteAction);
+		case ActionsManager::CutAction:
+			triggerAction(ActionsManager::CopyAction);
+			triggerAction(ActionsManager::DeleteAction);
 
 			break;
-		case Action::CopyAction:
+		case ActionsManager::CopyAction:
 			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
 				QGuiApplication::clipboard()->setText(m_ui->notesView->currentIndex().data(BookmarksModel::DescriptionRole).toString());
 			}
 
 			break;
-		case Action::PasteAction:
+		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
 				BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesView->currentIndex()));;
@@ -237,7 +237,7 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::DeleteAction:
+		case ActionsManager::DeleteAction:
 			removeNote();
 
 			break;
@@ -263,14 +263,14 @@ void NotesContentsWidget::updateActions(bool updateText)
 		connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
 	}
 
-	if (m_actions.contains(Action::PasteAction))
+	if (m_actions.contains(ActionsManager::PasteAction))
 	{
-		m_actions[Action::PasteAction]->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
+		m_actions[ActionsManager::PasteAction]->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
 	}
 
-	if (m_actions.contains(Action::DeleteAction))
+	if (m_actions.contains(ActionsManager::DeleteAction))
 	{
-		m_actions[Action::DeleteAction]->setEnabled(m_ui->deleteButton->isEnabled());
+		m_actions[ActionsManager::DeleteAction]->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 }
 
@@ -311,21 +311,21 @@ Action* NotesContentsWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
-		case Action::CopyLinkToClipboardAction:
-		case Action::CutAction:
-		case Action::CopyAction:
-		case Action::PasteAction:
-		case Action::DeleteAction:
+		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::CutAction:
+		case ActionsManager::CopyAction:
+		case ActionsManager::PasteAction:
+		case ActionsManager::DeleteAction:
 			{
 				Action *action = new Action(identifier, this);
 
 				m_actions[identifier] = action;
 
-				if (identifier == Action::CopyLinkToClipboardAction)
+				if (identifier == ActionsManager::CopyLinkToClipboardAction)
 				{
 					action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Copy address of source page"));
 				}
-				else if (identifier == Action::PasteAction)
+				else if (identifier == ActionsManager::PasteAction)
 				{
 					action->setEnabled(!QGuiApplication::clipboard()->text().isEmpty());
 

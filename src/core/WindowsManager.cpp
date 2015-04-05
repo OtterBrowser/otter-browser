@@ -49,19 +49,19 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
-		case Action::NewTabAction:
+		case ActionsManager::NewTabAction:
 			open(QUrl(), NewTabOpen);
 
 			break;
-		case Action::NewTabPrivateAction:
+		case ActionsManager::NewTabPrivateAction:
 			open(QUrl(), NewPrivateTabOpen);
 
 			break;
-		case Action::CloneTabAction:
+		case ActionsManager::CloneTabAction:
 			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
-		case Action::PinTabAction:
+		case ActionsManager::PinTabAction:
 			{
 				const int index = m_mainWindow->getTabBar()->currentIndex();
 
@@ -69,23 +69,23 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::DetachTabAction:
+		case ActionsManager::DetachTabAction:
 			if (m_mainWindow->getTabBar()->count() > 1)
 			{
 				detachWindow(m_mainWindow->getTabBar()->currentIndex());
 			}
 
 			break;
-		case Action::CloseTabAction:
+		case ActionsManager::CloseTabAction:
 			close(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
-		case Action::CloseOtherTabsAction:
+		case ActionsManager::CloseOtherTabsAction:
 			closeOther(m_mainWindow->getTabBar()->currentIndex());
 
 			break;
-		case Action::ClosePrivateTabsAction:
-			m_mainWindow->getActionsManager()->getAction(Action::ClosePrivateTabsAction)->setEnabled(false);
+		case ActionsManager::ClosePrivateTabsAction:
+			m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(false);
 
 			for (int i = (m_mainWindow->getTabBar()->count() - 1); i > 0; --i)
 			{
@@ -96,33 +96,33 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ReopenTabAction:
+		case ActionsManager::ReopenTabAction:
 			restore();
 
 			break;
-		case Action::ReloadAllAction:
+		case ActionsManager::ReloadAllAction:
 			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 			{
-				getWindowByIndex(i)->triggerAction(Action::ReloadAction);
+				getWindowByIndex(i)->triggerAction(ActionsManager::ReloadAction);
 			}
 
 			break;
-		case Action::ActivateTabOnLeftAction:
+		case ActionsManager::ActivateTabOnLeftAction:
 			m_mainWindow->getTabBar()->activateTabOnLeft();
 
 			break;
-		case Action::ActivateTabOnRightAction:
+		case ActionsManager::ActivateTabOnRightAction:
 			m_mainWindow->getTabBar()->activateTabOnRight();
 
 			break;
 		default:
-			if (identifier == Action::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
+			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
 				window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
 
 				addWindow(window, NewTabOpen);
 
-				window->triggerAction(Action::PasteAndGoAction);
+				window->triggerAction(ActionsManager::PasteAndGoAction);
 			}
 			else if (window)
 			{
@@ -347,7 +347,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 		}
 		else
 		{
-			m_mainWindow->getActionsManager()->setCurrentWindow(NULL);
+			m_mainWindow->setCurrentWindow(NULL);
 		}
 	}
 	else
@@ -443,7 +443,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 
 	if (window->isPrivate())
 	{
-		m_mainWindow->getActionsManager()->getAction(Action::ClosePrivateTabsAction)->setEnabled(true);
+		m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
 	}
 
 	window->setControlsHidden(m_mainWindow->isFullScreen());
@@ -466,9 +466,9 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 	m_mainWindow->getTabBar()->addTab(index, window);
 	m_mainWindow->getMdi()->addWindow(window);
 
-	if (!m_mainWindow->getActionsManager()->getAction(Action::CloseTabAction)->isEnabled())
+	if (!m_mainWindow->getAction(ActionsManager::CloseTabAction)->isEnabled())
 	{
-		m_mainWindow->getActionsManager()->getAction(Action::CloseTabAction)->setEnabled(true);
+		m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(true);
 	}
 
 	if (!(hints & BackgroundOpen))
@@ -546,7 +546,7 @@ void WindowsManager::detachWindow(int index)
 
 		m_mainWindow->getTabBar()->removeTab(index);
 
-		Action *closePrivateTabsAction = m_mainWindow->getActionsManager()->getAction(Action::ClosePrivateTabsAction);
+		Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
 
 		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
 		{
@@ -620,7 +620,7 @@ void WindowsManager::handleWindowClose(Window *window)
 	{
 		if (lastTabClosingAction == QLatin1String("closeWindow"))
 		{
-			m_mainWindow->getActionsManager()->triggerAction(Action::CloseWindowAction);
+			m_mainWindow->triggerAction(ActionsManager::CloseWindowAction);
 
 			return;
 		}
@@ -638,8 +638,8 @@ void WindowsManager::handleWindowClose(Window *window)
 		}
 		else
 		{
-			m_mainWindow->getActionsManager()->getAction(Action::CloseTabAction)->setEnabled(false);;
-			m_mainWindow->getActionsManager()->setCurrentWindow(NULL);
+			m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(false);;
+			m_mainWindow->setCurrentWindow(NULL);
 
 			emit windowTitleChanged(QString());
 		}
@@ -647,7 +647,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	m_mainWindow->getTabBar()->removeTab(index);
 
-	Action *closePrivateTabsAction = m_mainWindow->getActionsManager()->getAction(Action::ClosePrivateTabsAction);
+	Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
 
 	if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
 	{
@@ -709,7 +709,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 
 	window = getWindowByIndex(index);
 
-	m_mainWindow->getActionsManager()->setCurrentWindow(window);
+	m_mainWindow->setCurrentWindow(window);
 
 	if (window)
 	{
@@ -729,7 +729,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		connect(window, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	}
 
-	m_mainWindow->getActionsManager()->getAction(Action::CloneTabAction)->setEnabled(window && window->canClone());
+	m_mainWindow->getAction(ActionsManager::CloneTabAction)->setEnabled(window && window->canClone());
 
 	emit currentWindowChanged(window ? window->getIdentifier() : -1);
 }

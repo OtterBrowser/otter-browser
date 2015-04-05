@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "BookmarkPropertiesDialog.h"
 #include "ClearHistoryDialog.h"
+#include "ContentsWidget.h"
 #include "LocaleDialog.h"
 #include "MdiWidget.h"
 #include "Menu.h"
@@ -60,7 +61,6 @@ namespace Otter
 {
 
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
-	m_actionsManager(NULL),
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
 	m_mdiWidget(new MdiWidget(this)),
@@ -74,13 +74,16 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_toggleEdge(NULL),
 	m_sidebarWidget(NULL),
 	m_splitter(new QSplitter(this)),
+	m_currentWindow(NULL),
 	m_tabSwitcherKey(0),
 	m_tabSwictherTimer(0),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
 
-	m_actionsManager = new ActionsManager(this);
+	m_standardActions.fill(NULL, ActionsManager::getActionDefinitions().count());
+
+	updateShortcuts();
 
 	SessionsManager::setActiveWindow(this);
 
@@ -114,14 +117,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::registerWindow(this);
 
-	m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
-	m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
-	m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
-	m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
-	m_actionsManager->getAction(Action::ExitAction)->setMenuRole(QAction::QuitRole);
-	m_actionsManager->getAction(Action::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
-	m_actionsManager->getAction(Action::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
-	m_actionsManager->getAction(Action::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
+	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
+	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
+	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
+	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
+	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
+	getAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
+	getAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
+	getAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
 	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar)
 	{
@@ -139,13 +142,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	placeSidebars();
 
+	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
-	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), m_actionsManager->getAction(Action::ShowErrorConsoleAction), SLOT(setChecked(bool)));
+	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
 	m_windowsManager->restore(session);
 
@@ -190,7 +194,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			m_windowsManager->triggerAction((m_tabSwitcherKey == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction);
+			m_windowsManager->triggerAction((m_tabSwitcherKey == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
 		}
 	}
 }
@@ -257,7 +261,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 			}
 			else
 			{
-				m_windowsManager->triggerAction((event->key() == Qt::Key_Tab) ? Action::ActivateTabOnRightAction : Action::ActivateTabOnLeftAction);
+				m_windowsManager->triggerAction((event->key() == Qt::Key_Tab) ? ActionsManager::ActivateTabOnRightAction : ActionsManager::ActivateTabOnLeftAction);
 			}
 		}
 
@@ -315,11 +319,11 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Network/WorkOffline"))
 	{
-		m_actionsManager->getAction(Action::WorkOfflineAction)->setChecked(value.toBool());
+		getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Interface/LockToolBars"))
 	{
-		m_actionsManager->getAction(Action::LockToolBarsAction)->setChecked(value.toBool());
+		getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
 	}
 	else if (option == QLatin1String("Sidebar/CurrentPanel"))
 	{
@@ -342,7 +346,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Sidebar/Visible"))
 	{
-		m_actionsManager->getAction(Action::ShowSidebarAction)->setChecked(value.toBool());
+		getAction(ActionsManager::ShowSidebarAction)->setChecked(value.toBool());
 
 		placeSidebars();
 	}
@@ -404,7 +408,7 @@ void MainWindow::createToggleEdge()
 		return;
 	}
 
-	m_toggleEdge = new ActionWidget(Action::ShowSidebarAction, NULL, this);
+	m_toggleEdge = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, this);
 	m_toggleEdge->setFixedWidth(6);
 	m_toggleEdge->setText(QString());
 }
@@ -413,7 +417,7 @@ void MainWindow::openUrl(const QString &text)
 {
 	if (text.isEmpty())
 	{
-		m_windowsManager->triggerAction(Action::NewTabAction);
+		m_windowsManager->triggerAction(ActionsManager::NewTabAction);
 
 		return;
 	}
@@ -451,15 +455,15 @@ void MainWindow::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
 	{
-		case Action::NewWindowAction:
+		case ActionsManager::NewWindowAction:
 			emit requestedNewWindow(false, false, QUrl());
 
 			break;
-		case Action::NewWindowPrivateAction:
+		case ActionsManager::NewWindowPrivateAction:
 			emit requestedNewWindow(true, false, QUrl());
 
 			break;
-		case Action::OpenAction:
+		case ActionsManager::OpenAction:
 			{
 				const QUrl url = QFileDialog::getOpenFileUrl(this, tr("Open File"));
 
@@ -470,7 +474,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ClosePrivateTabsPanicAction:
+		case ActionsManager::ClosePrivateTabsPanicAction:
 			if (SessionsManager::isPrivate())
 			{
 				Application::getInstance()->close();
@@ -487,31 +491,31 @@ void MainWindow::triggerAction(int identifier, bool checked)
 					}
 					else
 					{
-						windows[i]->getWindowsManager()->triggerAction(Action::ClosePrivateTabsAction);
+						windows[i]->getWindowsManager()->triggerAction(ActionsManager::ClosePrivateTabsAction);
 					}
 				}
 			}
 
 			break;
-		case Action::CloseWindowAction:
+		case ActionsManager::CloseWindowAction:
 			close();
 
 			break;
-		case Action::SessionsAction:
+		case ActionsManager::SessionsAction:
 			{
 				SessionsManagerDialog dialog(this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::SaveSessionAction:
+		case ActionsManager::SaveSessionAction:
 			{
 				SaveSessionDialog dialog(this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::GoToPageAction:
+		case ActionsManager::GoToPageAction:
 			{
 				OpenAddressDialog dialog(this);
 
@@ -523,7 +527,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::GoToHomePageAction:
+		case ActionsManager::GoToHomePageAction:
 			{
 				const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
 
@@ -534,7 +538,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::BookmarksAction:
+		case ActionsManager::BookmarksAction:
 			{
 				const QUrl url(QLatin1String("about:bookmarks"));
 
@@ -545,11 +549,11 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::AddBookmarkAction:
+		case ActionsManager::AddBookmarkAction:
 			addBookmark(QUrl(), QString(), QString(), true);
 
 			break;
-		case Action::QuickBookmarkAccessAction:
+		case ActionsManager::QuickBookmarkAccessAction:
 			{
 				OpenBookmarkDialog dialog(this);
 
@@ -559,11 +563,11 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::WorkOfflineAction:
+		case ActionsManager::WorkOfflineAction:
 			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), checked);
 
 			break;
-		case Action::FullScreenAction:
+		case ActionsManager::FullScreenAction:
 			if (isFullScreen())
 			{
 				restoreWindowState();
@@ -575,7 +579,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ShowTabSwitcherAction:
+		case ActionsManager::ShowTabSwitcherAction:
 			if (!m_tabSwitcher)
 			{
 				m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
@@ -586,7 +590,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			m_tabSwitcher->show(true);
 
 			break;
-		case Action::ShowMenuBarAction:
+		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
 				definition.visibility = (checked ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
@@ -595,7 +599,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ShowTabBarAction:
+		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar);
 				definition.visibility = (checked ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
@@ -604,7 +608,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ShowSidebarAction:
+		case ActionsManager::ShowSidebarAction:
 			createSidebar();
 
 			m_sidebarWidget->setVisible(checked);
@@ -612,32 +616,32 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), checked);
 
 			break;
-		case Action::OpenPanelAction:
+		case ActionsManager::OpenPanelAction:
 			createSidebar();
 
 			m_sidebarWidget->openPanel();
 
 			break;
-		case Action::ClosePanelAction:
+		case ActionsManager::ClosePanelAction:
 			SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), QString());
 
 			break;
-		case Action::ShowErrorConsoleAction:
+		case ActionsManager::ShowErrorConsoleAction:
 			m_ui->consoleDockWidget->setVisible(checked);
 
 			break;
-		case Action::LockToolBarsAction:
+		case ActionsManager::LockToolBarsAction:
 			ToolBarsManager::setToolBarsLocked(checked);
 
 			break;
-		case Action::ContentBlockingAction:
+		case ActionsManager::ContentBlockingAction:
 			{
 				ContentBlockingDialog dialog(this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::HistoryAction:
+		case ActionsManager::HistoryAction:
 			{
 				const QUrl url(QLatin1String("about:history"));
 
@@ -648,14 +652,14 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ClearHistoryAction:
+		case ActionsManager::ClearHistoryAction:
 			{
 				ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ManualClearOptions")).toStringList(), false, this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::NotesAction:
+		case ActionsManager::NotesAction:
 			{
 				const QUrl url(QLatin1String("about:notes"));
 
@@ -666,7 +670,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::TransfersAction:
+		case ActionsManager::TransfersAction:
 			{
 				const QUrl url(QLatin1String("about:transfers"));
 
@@ -677,7 +681,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::CookiesAction:
+		case ActionsManager::CookiesAction:
 			{
 				const QUrl url(QLatin1String("about:cookies"));
 
@@ -688,21 +692,21 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::PreferencesAction:
+		case ActionsManager::PreferencesAction:
 			{
 				PreferencesDialog dialog(QLatin1String("general"), this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::SwitchApplicationLanguageAction:
+		case ActionsManager::SwitchApplicationLanguageAction:
 			{
 				LocaleDialog dialog(this);
 				dialog.exec();
 			}
 
 			break;
-		case Action::AboutApplicationAction:
+		case ActionsManager::AboutApplicationAction:
 			{
 				WebBackend *backend = AddonsManager::getWebBackend();
 				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
@@ -721,11 +725,11 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::AboutQtAction:
+		case ActionsManager::AboutQtAction:
 			Application::getInstance()->aboutQt();
 
 			break;
-		case Action::ExitAction:
+		case ActionsManager::ExitAction:
 			Application::getInstance()->close();
 
 			break;
@@ -733,6 +737,60 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			m_windowsManager->triggerAction(identifier, checked);
 
 			break;
+	}
+}
+
+void MainWindow::triggerAction()
+{
+	QShortcut *shortcut = qobject_cast<QShortcut*>(sender());
+
+	if (shortcut)
+	{
+		for (int i = 0; i < m_actionShortcuts.count(); ++i)
+		{
+			if (m_actionShortcuts[i].second.contains(shortcut))
+			{
+				const ActionDefinition definition = ActionsManager::getActionDefinition(m_actionShortcuts[i].first);
+
+				if (definition.identifier >= 0)
+				{
+					if (definition.isCheckable)
+					{
+						Action *action = getAction(m_actionShortcuts[i].first);
+
+						if (action)
+						{
+							action->toggle();
+						}
+					}
+					else
+					{
+						triggerAction(m_actionShortcuts[i].first);
+					}
+				}
+
+				return;
+			}
+		}
+
+		return;
+	}
+
+	Action *action = qobject_cast<Action*>(sender());
+
+	if (action)
+	{
+		triggerAction(action->getIdentifier());
+	}
+}
+
+void MainWindow::triggerAction(bool checked)
+{
+	Action *action = qobject_cast<Action*>(sender());
+
+	if (action)
+	{
+		triggerAction(action->getIdentifier(), checked);
 	}
 }
 
@@ -776,7 +834,7 @@ void MainWindow::toolBarModified(int identifier)
 			setMenuBar(m_menuBar);
 		}
 
-		m_actionsManager->getAction(Action::ShowMenuBarAction)->setChecked(showMenuBar);
+		getAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
 	}
 	else if (identifier == ToolBarsManager::StatusBar)
 	{
@@ -804,7 +862,7 @@ void MainWindow::transferStarted()
 
 	if (action == QLatin1String("openTab"))
 	{
-		triggerAction(Action::TransfersAction);
+		triggerAction(ActionsManager::TransfersAction);
 	}
 	else if (action == QLatin1String("openBackgroundTab"))
 	{
@@ -915,6 +973,64 @@ void MainWindow::updateWindowTitle(const QString &title)
 	setWindowTitle(title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
 }
 
+void MainWindow::updateShortcuts()
+{
+	for (int i = 0; i < m_actionShortcuts.count(); ++i)
+	{
+		qDeleteAll(m_actionShortcuts[i].second);
+	}
+
+	m_actionShortcuts.clear();
+
+	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+
+	for (int i = 0; i < definitions.count(); ++i)
+	{
+		QVector<QShortcut*> shortcuts;
+		shortcuts.reserve(definitions[i].shortcuts.count());
+
+		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
+		{
+			QShortcut *shortcut = new QShortcut(definitions[i].shortcuts[j], this);
+
+			shortcuts.append(shortcut);
+
+			connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
+		}
+
+		m_actionShortcuts.append(qMakePair(i, shortcuts));
+	}
+}
+
+void MainWindow::setCurrentWindow(Window *window)
+{
+	Window *previousWindow = m_currentWindow;
+
+	m_currentWindow = window;
+
+	for (int i = 0; i < m_standardActions.count(); ++i)
+	{
+		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
+		{
+			const int identifier = m_standardActions[i]->getIdentifier();
+			Action *previousAction = ((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
+			Action *currentAction = (window ? window->getContentsWidget()->getAction(identifier) : NULL);
+
+			if (previousAction)
+			{
+				disconnect(previousAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+			}
+
+			m_standardActions[i]->setup(currentAction);
+
+			if (currentAction)
+			{
+				connect(currentAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+			}
+		}
+	}
+}
+
 void MainWindow::setTabBar(TabBarWidget *tabBar)
 {
 	m_tabBar = tabBar;
@@ -950,6 +1066,35 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 	return window;
 }
 
+Action* MainWindow::getAction(int identifier)
+{
+	if (identifier < 0 || identifier >= m_standardActions.count())
+	{
+		return NULL;
+	}
+
+	if (!m_standardActions[identifier])
+	{
+		const ActionDefinition definition = ActionsManager::getActionDefinition(identifier);
+		Action *action = new Action(identifier, this);
+
+		m_standardActions[identifier] = action;
+
+		addAction(action);
+
+		if (definition.isCheckable)
+		{
+			connect(action, SIGNAL(toggled(bool)), this, SLOT(triggerAction(bool)));
+		}
+		else
+		{
+			connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+		}
+	}
+
+	return m_standardActions.value(identifier, NULL);
+}
+
 MdiWidget* MainWindow::getMdi()
 {
 	return m_mdiWidget;
@@ -958,11 +1103,6 @@ MdiWidget* MainWindow::getMdi()
 TabBarWidget* MainWindow::getTabBar()
 {
 	return m_tabBar;
-}
-
-ActionsManager* MainWindow::getActionsManager()
-{
-	return m_actionsManager;
 }
 
 WindowsManager* MainWindow::getWindowsManager()
@@ -990,7 +1130,7 @@ bool MainWindow::event(QEvent *event)
 				{
 					if (isFullScreen())
 					{
-						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+						getAction(ActionsManager::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
 
 						if (m_statusBar)
 						{
@@ -1006,7 +1146,7 @@ bool MainWindow::event(QEvent *event)
 					}
 					else
 					{
-						m_actionsManager->getAction(Action::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+						getAction(ActionsManager::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
 
 						if (m_statusBar)
 						{
@@ -1069,7 +1209,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
-			triggerAction(Action::FullScreenAction);
+			triggerAction(ActionsManager::FullScreenAction);
 		}
 	}
 

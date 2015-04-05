@@ -21,12 +21,7 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
-#include "Action.h"
-
-#include <QtCore/QMutex>
-#include <QtCore/QPointer>
 #include <QtWidgets/QAction>
-#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
@@ -45,22 +40,206 @@ struct ActionDefinition
 	ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
 };
 
-class ActionsManager;
-class MainWindow;
-class Window;
-
-class ActionsManagerHelper : public QObject
+class Action : public QAction
 {
 	Q_OBJECT
 
+public:
+	explicit Action(int identifier, QObject *parent = NULL);
+
+	void setOverrideText(const QString &text);
+	QString getText() const;
+	QList<QKeySequence> getShortcuts() const;
+	int getIdentifier() const;
+	bool event(QEvent *event);
+	static bool isLocal(int identifier);
+
+public slots:
+	void setup(Action *action = NULL);
+
 protected:
-	ActionsManagerHelper(QObject *parent);
+	void update(bool reset = false);
+
+private:
+	QString m_overrideText;
+	int m_identifier;
+	bool m_isOverridingText;
+};
+
+class ActionsManager : public QObject
+{
+	Q_OBJECT
+	Q_ENUMS(ActionIdentifier)
+
+public:
+	enum ActionIdentifier
+	{
+		NewTabAction = 0,
+		NewTabPrivateAction,
+		NewWindowAction,
+		NewWindowPrivateAction,
+		OpenAction,
+		SaveAction,
+		CloneTabAction,
+		PinTabAction,
+		DetachTabAction,
+		CloseTabAction,
+		CloseOtherTabsAction,
+		ClosePrivateTabsAction,
+		ClosePrivateTabsPanicAction,
+		ReopenTabAction,
+		CloseWindowAction,
+		SessionsAction,
+		SaveSessionAction,
+		OpenLinkAction,
+		OpenLinkInCurrentTabAction,
+		OpenLinkInNewTabAction,
+		OpenLinkInNewTabBackgroundAction,
+		OpenLinkInNewWindowAction,
+		OpenLinkInNewWindowBackgroundAction,
+		OpenLinkInNewPrivateTabAction,
+		OpenLinkInNewPrivateTabBackgroundAction,
+		OpenLinkInNewPrivateWindowAction,
+		OpenLinkInNewPrivateWindowBackgroundAction,
+		CopyLinkToClipboardAction,
+		BookmarkLinkAction,
+		SaveLinkToDiskAction,
+		SaveLinkToDownloadsAction,
+		OpenSelectionAsLinkAction,
+		OpenFrameInCurrentTabAction,
+		OpenFrameInNewTabAction,
+		OpenFrameInNewTabBackgroundAction,
+		CopyFrameLinkToClipboardAction,
+		ReloadFrameAction,
+		ViewFrameSourceAction,
+		OpenImageInNewTabAction,
+		SaveImageToDiskAction,
+		CopyImageToClipboardAction,
+		CopyImageUrlToClipboardAction,
+		ReloadImageAction,
+		ImagePropertiesAction,
+		SaveMediaToDiskAction,
+		CopyMediaUrlToClipboardAction,
+		MediaControlsAction,
+		MediaLoopAction,
+		MediaPlayPauseAction,
+		MediaMuteAction,
+		GoAction,
+		GoBackAction,
+		GoForwardAction,
+		GoToPageAction,
+		GoToHomePageAction,
+		GoToParentDirectoryAction,
+		RewindAction,
+		FastForwardAction,
+		StopAction,
+		StopScheduledReloadAction,
+		ReloadAction,
+		ReloadOrStopAction,
+		ReloadAndBypassCacheAction,
+		ReloadAllAction,
+		ScheduleReloadAction,
+		ContextMenuAction,
+		UndoAction,
+		RedoAction,
+		CutAction,
+		CopyAction,
+		CopyPlainTextAction,
+		CopyAddressAction,
+		CopyToNoteAction,
+		PasteAction,
+		PasteAndGoAction,
+		PasteNoteAction,
+		DeleteAction,
+		SelectAllAction,
+		ClearAllAction,
+		CheckSpellingAction,
+		FindAction,
+		FindNextAction,
+		FindPreviousAction,
+		QuickFindAction,
+		SearchAction,
+		SearchMenuAction,
+		CreateSearchAction,
+		ZoomInAction,
+		ZoomOutAction,
+		ZoomOriginalAction,
+		ScrollToStartAction,
+		ScrollToEndAction,
+		ScrollPageUpAction,
+		ScrollPageDownAction,
+		ScrollPageLeftAction,
+		ScrollPageRightAction,
+		StartDragScrollAction,
+		StartMoveScrollAction,
+		EndScrollAction,
+		PrintAction,
+		PrintPreviewAction,
+		ActivateAddressFieldAction,
+		ActivateSearchFieldAction,
+		ActivateContentAction,
+		ActivateTabOnLeftAction,
+		ActivateTabOnRightAction,
+		BookmarksAction,
+		AddBookmarkAction,
+		QuickBookmarkAccessAction,
+		PopupsPolicyAction,
+		ImagesPolicyAction,
+		CookiesAction,
+		CookiesPolicyAction,
+		ThirdPartyCookiesPolicyAction,
+		PluginsPolicyAction,
+		LoadPluginsAction,
+		EnableJavaScriptAction,
+		EnableJavaAction,
+		EnableReferrerAction,
+		ProxyMenuAction,
+		EnableProxyAction,
+		ViewSourceAction,
+		ValidateAction,
+		InspectPageAction,
+		InspectElementAction,
+		WorkOfflineAction,
+		FullScreenAction,
+		ShowTabSwitcherAction,
+		ShowMenuBarAction,
+		ShowTabBarAction,
+		ShowSidebarAction,
+		ShowErrorConsoleAction,
+		LockToolBarsAction,
+		OpenPanelAction,
+		ClosePanelAction,
+		ContentBlockingAction,
+		HistoryAction,
+		ClearHistoryAction,
+		NotesAction,
+		TransfersAction,
+		PreferencesAction,
+		WebsitePreferencesAction,
+		QuickPreferencesAction,
+		ResetQuickPreferencesAction,
+		SwitchApplicationLanguageAction,
+		AboutApplicationAction,
+		AboutQtAction,
+		ExitAction,
+		OtherAction
+	};
+
+	static void createInstance(QObject *parent);
+	static void loadProfiles();
+	static void triggerAction(int identifier, QObject *parent, bool checked = false);
+	static ActionsManager* getInstance();
+	static Action* getAction(int identifier, QObject *parent);
+	static QString getActionName(int identifier);
+	static QVector<ActionDefinition> getActionDefinitions();
+	static ActionDefinition getActionDefinition(int identifier);
+	static int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
+	static int getActionIdentifier(const QString &name);
+
+protected:
+	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event);
-	int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
-
-	int reloadShortcutsTimer;
-	QVector<ActionDefinition> definitions;
 
 protected slots:
 	void optionChanged(const QString &option);
@@ -68,45 +247,11 @@ protected slots:
 signals:
 	void shortcutsChanged();
 
-friend class ActionsManager;
-};
-
-class ActionsManager : public QObject
-{
-	Q_OBJECT
-
-public:
-	explicit ActionsManager(MainWindow *parent = NULL);
-
-	void triggerAction(int identifier, bool checked = false);
-	static void triggerAction(int identifier, QObject *parent, bool checked = false);
-	static void loadShortcuts();
-	void setCurrentWindow(Window *window);
-	Action* getAction(int identifier);
-	static Action* getAction(int identifier, QObject *parent);
-	static QString getActionName(int identifier);
-	static QList<ActionDefinition> getActionDefinitions();
-	static ActionDefinition getActionDefinition(int identifier);
-	static int getActionIdentifier(const QString &name);
-
-protected:
-	static void initialize();
-	static ActionsManager* findManager(QObject *parent);
-
-protected slots:
-	void actionTriggered();
-	void actionTriggered(bool checked);
-	void updateShortcuts();
-
 private:
-	MainWindow *m_mainWindow;
-	QPointer<Window> m_window;
-	QVector<Action*> m_standardActions;
-	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
+	int m_reloadTimer;
 
-	static ActionsManagerHelper *m_helper;
-	static Action *m_dummyAction;
-	static QMutex m_mutex;
+	static ActionsManager *m_instance;
+	static QVector<ActionDefinition> m_definitions;
 };
 
 }

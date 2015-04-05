@@ -196,7 +196,7 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
 	if (action == InspectElement && m_widget)
 	{
-		m_widget->triggerAction(Action::InspectPageAction, true);
+		m_widget->triggerAction(ActionsManager::InspectPageAction, true);
 	}
 
 	QWebPage::triggerAction(action, checked);

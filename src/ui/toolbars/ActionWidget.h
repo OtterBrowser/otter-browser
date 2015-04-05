@@ -21,7 +21,7 @@
 #define OTTER_ACTIONWIDGET_H
 
 #include "../ToolButtonWidget.h"
-#include "../../core/Action.h"
+#include "../../core/ActionsManager.h"
 
 namespace Otter
 {

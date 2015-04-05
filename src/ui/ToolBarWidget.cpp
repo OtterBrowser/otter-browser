@@ -175,8 +175,8 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
-	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
 	menu.addSeparator();
 	menu.addMenu(createCustomizationMenu(m_identifier, actions, &menu));
 	menu.exec(event->globalPos());
@@ -188,7 +188,7 @@ void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton && m_identifier == ToolBarsManager::TabBar)
 	{
-		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? Action::NewTabPrivateAction : Action::NewTabAction), this);
+		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? ActionsManager::NewTabPrivateAction : ActionsManager::NewTabAction), this);
 	}
 }
 
@@ -512,12 +512,12 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 
 		if (identifier >= 0)
 		{
-			if (identifier == Action::GoBackAction)
+			if (identifier == ActionsManager::GoBackAction)
 			{
 				return new GoBackActionWidget(m_window, this);
 			}
 
-			if (identifier == Action::GoForwardAction)
+			if (identifier == ActionsManager::GoForwardAction)
 			{
 				return new GoForwardActionWidget(m_window, this);
 			}

@@ -60,7 +60,7 @@ void ActionWidget::actionEvent(QActionEvent *event)
 
 void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if ((m_identifier == Action::NewTabAction || m_identifier == Action::NewTabPrivateAction) && event->button() != Qt::RightButton)
+	if ((m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
 		MainWindow *window = MainWindow::findMainWindow(this);
 
@@ -68,7 +68,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		{
 			OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), NewTabOpen);
 
-			if (m_identifier == Action::NewTabPrivateAction)
+			if (m_identifier == ActionsManager::NewTabPrivateAction)
 			{
 				hints |= PrivateOpen;
 			}

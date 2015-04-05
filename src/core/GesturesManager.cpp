@@ -184,7 +184,7 @@ bool GesturesManager::endGesture(QObject *object, QMouseEvent *event)
 
 				if (window)
 				{
-					window->getActionsManager()->triggerAction(m_gestures[m_context][i].action);
+					window->triggerAction(m_gestures[m_context][i].action);
 				}
 
 				return true;

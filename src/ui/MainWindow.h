@@ -26,6 +26,7 @@
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
+#include <QtWidgets/QShortcut>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QSplitter>
 
@@ -56,9 +57,9 @@ public:
 	~MainWindow();
 
 	static MainWindow* findMainWindow(QObject *parent);
+	Action* getAction(int identifier);
 	MdiWidget* getMdi();
 	TabBarWidget* getTabBar();
-	ActionsManager* getActionsManager();
 	WindowsManager* getWindowsManager();
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -86,14 +87,17 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void triggerAction();
+	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
 	void toolBarModified(int identifier);
 	void splitterMoved();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);
+	void updateShortcuts();
+	void setCurrentWindow(Window *window);
 
 private:
-	ActionsManager *m_actionsManager;
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
 	MdiWidget *m_mdiWidget;
@@ -107,7 +111,10 @@ private:
 	ActionWidget *m_toggleEdge;
 	SidebarWidget *m_sidebarWidget;
 	QSplitter *m_splitter;
+	Window *m_currentWindow;
 	QString m_currentBookmark;
+	QVector<Action*> m_standardActions;
+	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	Qt::WindowStates m_previousState;
 	int m_tabSwitcherKey;
 	int m_tabSwictherTimer;
@@ -119,6 +126,7 @@ signals:
 	void statusMessageChanged(const QString &message);
 
 friend class ToolBarAreaWidget;
+friend class WindowsManager;
 };
 
 }

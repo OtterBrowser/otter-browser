@@ -36,24 +36,24 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHa
 	m_ui->setupUi(this);
 
 	QStandardItemModel *model = new QStandardItemModel(this);
-	const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
+	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
 	QStringList labels;
 	labels << tr("Action");
 
-	for (int i = 0; i < actions.count(); ++i)
+	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem* item = new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description));
-		item->setData(actions.at(i).identifier, Qt::UserRole);
-		item->setToolTip(ActionsManager::getActionName(actions.at(i).identifier));
+		QStandardItem* item = new QStandardItem(definitions.at(i).icon, (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description));
+		item->setData(definitions.at(i).identifier, Qt::UserRole);
+		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		if (profiles[profile].shortcuts.contains(actions.at(i).identifier))
+		if (profiles[profile].shortcuts.contains(definitions.at(i).identifier))
 		{
 			QStringList shortcuts;
 
-			for (int j = 0; j < profiles[profile].shortcuts[actions.at(i).identifier].count(); ++j)
+			for (int j = 0; j < profiles[profile].shortcuts[definitions.at(i).identifier].count(); ++j)
 			{
-				shortcuts.append(profiles[profile].shortcuts[actions.at(i).identifier].at(j).toString());
+				shortcuts.append(profiles[profile].shortcuts[definitions.at(i).identifier].at(j).toString());
 			}
 
 			item->setData(shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));

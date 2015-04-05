@@ -37,15 +37,15 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	Menu *menu = new Menu();
 	menu->addAction(-1)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
 	menu->addSeparator();
-	menu->addAction(Action::NewTabAction);
-	menu->addAction(Action::NewTabPrivateAction);
+	menu->addAction(ActionsManager::NewTabAction);
+	menu->addAction(ActionsManager::NewTabPrivateAction);
 	menu->addSeparator();
-	menu->addAction(Action::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
-	menu->addAction(Action::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
-	menu->addAction(Action::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
-	menu->addAction(Action::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+	menu->addAction(ActionsManager::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+	menu->addAction(ActionsManager::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+	menu->addAction(ActionsManager::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+	menu->addAction(ActionsManager::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
 	menu->addSeparator();
-	menu->addAction(Action::ExitAction);
+	menu->addAction(ActionsManager::ExitAction);
 
 	m_trayIcon->setIcon(parent->windowIcon());
 	m_trayIcon->setContextMenu(menu);
@@ -102,7 +102,7 @@ void TrayIcon::triggerAction(QAction *action)
 
 		if (window)
 		{
-			window->getActionsManager()->triggerAction(actionObject->getIdentifier());
+			window->triggerAction(actionObject->getIdentifier());
 		}
 	}
 }

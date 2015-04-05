@@ -101,22 +101,22 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::triggerAction(int identifier, bool checked)
 {
-	if (identifier == Action::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
+	if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
 	{
 		m_searchWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
 	}
 	else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 	{
-		if (identifier == Action::ActivateAddressFieldAction)
+		if (identifier == ActionsManager::ActivateAddressFieldAction)
 		{
 			m_addressWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
 		}
-		else if (identifier == Action::ActivateSearchFieldAction)
+		else if (identifier == ActionsManager::ActivateSearchFieldAction)
 		{
 			m_addressWidgets.at(0)->setText(QLatin1String("? "));
 			m_addressWidgets.at(0)->setFocus(Qt::OtherFocusReason);
 		}
-		else if (identifier == Action::PasteAndGoAction)
+		else if (identifier == ActionsManager::PasteAndGoAction)
 		{
 			if (!QApplication::clipboard()->text().isEmpty())
 			{
@@ -125,18 +125,18 @@ void Window::triggerAction(int identifier, bool checked)
 
 			return;
 		}
-		else if (identifier == Action::GoAction)
+		else if (identifier == ActionsManager::GoAction)
 		{
 			m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->text());
 
 			return;
 		}
 	}
-	else if (identifier == Action::ActivateAddressFieldAction || identifier == Action::ActivateSearchFieldAction)
+	else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 	{
 		OpenAddressDialog dialog(this);
 
-		if (identifier == Action::ActivateSearchFieldAction)
+		if (identifier == ActionsManager::ActivateSearchFieldAction)
 		{
 			dialog.setText(QLatin1String("? "));
 		}
@@ -148,7 +148,7 @@ void Window::triggerAction(int identifier, bool checked)
 		dialog.exec();
 	}
 
-	if (identifier == Action::GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
+	if (identifier == ActionsManager::GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
 	{
 		const QUrl url = getContentsWidget()->getUrl();
 
@@ -161,7 +161,7 @@ void Window::triggerAction(int identifier, bool checked)
 			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String("."))));
 		}
 	}
-	else if (identifier == Action::PrintAction)
+	else if (identifier == ActionsManager::PrintAction)
 	{
 		QPrinter printer;
 		QPrintDialog printDialog(&printer, this);
@@ -174,7 +174,7 @@ void Window::triggerAction(int identifier, bool checked)
 
 		getContentsWidget()->print(&printer);
 	}
-	else if (identifier == Action::PrintPreviewAction)
+	else if (identifier == ActionsManager::PrintPreviewAction)
 	{
 		QPrintPreviewDialog printPreviewDialog(this);
 		printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);

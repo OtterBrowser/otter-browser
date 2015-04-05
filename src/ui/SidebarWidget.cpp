@@ -51,13 +51,13 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	QToolBar *toolbar = new QToolBar(this);
 	toolbar->setIconSize(QSize(16, 16));
 	toolbar->addWidget(new PanelChooserWidget(this));
-	toolbar->addAction(ActionsManager::getAction(Action::OpenPanelAction, this));
+	toolbar->addAction(ActionsManager::getAction(ActionsManager::OpenPanelAction, this));
 
 	QWidget *spacer = new QWidget(toolbar);
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	toolbar->addWidget(spacer);
-	toolbar->addAction(ActionsManager::getAction(Action::ClosePanelAction, this));
+	toolbar->addAction(ActionsManager::getAction(ActionsManager::ClosePanelAction, this));
 
 	m_ui->panelLayout->addWidget(toolbar);
 
@@ -261,7 +261,7 @@ void SidebarWidget::setButtonsEdge(Qt::Edge edge)
 		}
 	}
 
-	ActionsManager::getAction(Action::OpenPanelAction, this)->setIcon(Utils::getIcon((edge == Qt::RightEdge) ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
+	ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(Utils::getIcon((edge == Qt::RightEdge) ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
 }
 
 void SidebarWidget::updatePanelsMenu()

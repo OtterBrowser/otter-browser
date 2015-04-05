@@ -186,7 +186,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 			{
 				if (menu->actions().at(i)->text().endsWith(shortcut))
 				{
-					menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(Action::PasteAndGoAction, this));
+					menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
 
 					found = true;
 
@@ -197,7 +197,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (!found)
 		{
-			menu->insertAction(menu->actions().at(6), ActionsManager::getAction(Action::PasteAndGoAction, this));
+			menu->insertAction(menu->actions().at(6), ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
 		}
 	}
 
@@ -314,11 +314,11 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 	{
 		if (value.toBool())
 		{
-			connect(m_window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+			connect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 		else
 		{
-			disconnect(m_window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+			disconnect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 
 		updateLoadPlugins();
@@ -376,7 +376,7 @@ void AddressWidget::updateBookmark()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(Action::LoadPluginsAction) && m_window->getContentsWidget()->getAction(Action::LoadPluginsAction)->isEnabled());
+	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
@@ -472,9 +472,9 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
-		if (m_window->getContentsWidget()->getAction(Action::LoadPluginsAction))
+		if (m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
 		{
-			disconnect(m_window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+			disconnect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 	}
 
@@ -495,9 +495,9 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
 		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
-		if (window->getContentsWidget()->getAction(Action::LoadPluginsAction))
+		if (window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
 		{
-			connect(window->getContentsWidget()->getAction(Action::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
+			connect(window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 	}
 
@@ -553,7 +553,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
-			m_window->getContentsWidget()->triggerAction(Action::LoadPluginsAction);
+			m_window->getContentsWidget()->triggerAction(ActionsManager::LoadPluginsAction);
 
 			event->accept();
 

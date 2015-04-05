@@ -310,7 +310,7 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 
 	menu.addAction(tr("Remove All Cookies..."), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesView->model()->rowCount() > 0);
 	menu.addSeparator();
-	menu.addAction(ActionsManager::getAction(Action::ClearHistoryAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->cookiesView->mapToGlobal(point));
 }
 
@@ -325,11 +325,11 @@ void CookiesContentsWidget::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
-		case Action::SelectAllAction:
+		case ActionsManager::SelectAllAction:
 			m_ui->cookiesView->selectAll();
 
 			break;
-		case Action::DeleteAction:
+		case ActionsManager::DeleteAction:
 			removeCookies();
 
 			break;
@@ -344,9 +344,9 @@ void CookiesContentsWidget::updateActions()
 
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
-	if (m_ui->deleteButton->isEnabled() != getAction(Action::DeleteAction)->isEnabled())
+	if (m_ui->deleteButton->isEnabled() != getAction(ActionsManager::DeleteAction)->isEnabled())
 	{
-		getAction(Action::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
+		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 
 	m_ui->domainLineEdit->setText(QString());
@@ -411,7 +411,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	if (identifier != Action::DeleteAction && identifier != Action::SelectAllAction)
+	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
 		return NULL;
 	}

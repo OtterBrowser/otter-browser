@@ -423,8 +423,8 @@ void Menu::populateSessionsMenu()
 
 	clear();
 
-	QMenu::addAction(ActionsManager::getAction(Action::SaveSessionAction, parent()));
-	QMenu::addAction(ActionsManager::getAction(Action::SessionsAction, parent()));
+	QMenu::addAction(ActionsManager::getAction(ActionsManager::SaveSessionAction, parent()));
+	QMenu::addAction(ActionsManager::getAction(ActionsManager::SessionsAction, parent()));
 
 	addSeparator();
 
@@ -478,8 +478,8 @@ void Menu::populateToolBarsMenu()
 		connect(toolBarAction, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
 	}
 
-	addAction(Action::ShowSidebarAction, true);
-	addAction(Action::ShowErrorConsoleAction, true);
+	addAction(ActionsManager::ShowSidebarAction, true);
+	addAction(ActionsManager::ShowErrorConsoleAction, true);
 	addSeparator();
 
 	QMenu *menu = addMenu(tr("Add New"));
@@ -487,7 +487,7 @@ void Menu::populateToolBarsMenu()
 	menu->addAction(tr("Add Bookmarks Bar..."), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
 
 	addSeparator();
-	addAction(Action::LockToolBarsAction, true);
+	addAction(ActionsManager::LockToolBarsAction, true);
 	addSeparator();
 	QMenu::addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBars()));
 }

@@ -440,8 +440,8 @@ void TransfersContentsWidget::updateActions()
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
 	m_ui->redownloadButton->setEnabled(transfer);
 
-	getAction(Action::CopyAction)->setEnabled(transfer);
-	getAction(Action::DeleteAction)->setEnabled(transfer);
+	getAction(ActionsManager::CopyAction)->setEnabled(transfer);
+	getAction(ActionsManager::DeleteAction)->setEnabled(transfer);
 
 	if (transfer)
 	{
@@ -472,7 +472,7 @@ void TransfersContentsWidget::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
-		case Action::CopyAction:
+		case ActionsManager::CopyAction:
 			if (m_ui->transfersView->hasFocus() && m_ui->transfersView->currentIndex().isValid())
 			{
 				copyTransferInformation();
@@ -493,11 +493,11 @@ void TransfersContentsWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::DeleteAction:
+		case ActionsManager::DeleteAction:
 			removeTransfer();
 
 			break;
-		case Action::ActivateAddressFieldAction:
+		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->downloadLineEdit->setFocus();
 			m_ui->downloadLineEdit->selectAll();
 
@@ -524,7 +524,7 @@ Action* TransfersContentsWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	if (identifier != Action::CopyAction && identifier != Action::DeleteAction)
+	if (identifier != ActionsManager::CopyAction && identifier != ActionsManager::DeleteAction)
 	{
 		return NULL;
 	}

@@ -119,9 +119,9 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 	{
 		if (m_webWidget->isLoading())
 		{
-			triggerAction(Action::StopAction);
+			triggerAction(ActionsManager::StopAction);
 
-			ActionsManager::triggerAction(Action::ActivateAddressFieldAction, this);
+			ActionsManager::triggerAction(ActionsManager::ActivateAddressFieldAction, this);
 
 			event->accept();
 		}
@@ -145,7 +145,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 
 			if (window && window->isFullScreen())
 			{
-				window->triggerAction(Action::FullScreenAction);
+				window->triggerAction(ActionsManager::FullScreenAction);
 			}
 		}
 	}
@@ -190,12 +190,12 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
 	{
-		case Action::FindAction:
-		case Action::QuickFindAction:
-		case Action::FindNextAction:
-		case Action::FindPreviousAction:
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::FindNextAction:
+		case ActionsManager::FindPreviousAction:
 			{
-				if (identifier == Action::FindAction || identifier == Action::QuickFindAction)
+				if (identifier == ActionsManager::FindAction || identifier == ActionsManager::QuickFindAction)
 				{
 					if (!m_searchBarWidget)
 					{
@@ -215,7 +215,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 
 					if (!m_searchBarWidget->isVisible())
 					{
-						if (identifier == Action::QuickFindAction)
+						if (identifier == ActionsManager::QuickFindAction)
 						{
 							killTimer(m_quickFindTimer);
 
@@ -236,7 +236,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 				{
 					WebWidget::FindFlags flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
 
-					if (identifier == Action::FindPreviousAction)
+					if (identifier == ActionsManager::FindPreviousAction)
 					{
 						flags |= WebWidget::BackwardFind;
 					}
@@ -246,7 +246,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::QuickPreferencesAction:
+		case ActionsManager::QuickPreferencesAction:
 			{
 				if (m_isTabPreferencesMenuVisible)
 				{
@@ -304,7 +304,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 				menu.addSeparator();
 				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
 				menu.addSeparator();
-				menu.addAction(ActionsManager::getAction(Action::WebsitePreferencesAction, parent()));
+				menu.addAction(ActionsManager::getAction(ActionsManager::WebsitePreferencesAction, parent()));
 
 				QAction *triggeredAction = menu.exec(QCursor::pos());
 
@@ -324,15 +324,15 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case Action::ZoomInAction:
+		case ActionsManager::ZoomInAction:
 			setZoom(qMin((getZoom() + 10), 10000));
 
 			break;
-		case Action::ZoomOutAction:
+		case ActionsManager::ZoomOutAction:
 			setZoom(qMax((getZoom() - 10), 10));
 
 			break;
-		case Action::ZoomOriginalAction:
+		case ActionsManager::ZoomOriginalAction:
 			setZoom(100);
 
 			break;

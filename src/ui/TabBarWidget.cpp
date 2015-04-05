@@ -112,19 +112,19 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	hidePreview();
 
 	QMenu menu(this);
-	menu.addAction(ActionsManager::getAction(Action::NewTabAction, this));
-	menu.addAction(ActionsManager::getAction(Action::NewTabPrivateAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
 
 	if (m_clickedTab >= 0)
 	{
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
-		Action *cloneTabAction = new Action(Action::CloneTabAction, &menu);
+		Action *cloneTabAction = new Action(ActionsManager::CloneTabAction, &menu);
 		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
 
-		Action *pinTabAction = new Action(Action::PinTabAction, &menu);
+		Action *pinTabAction = new Action(ActionsManager::PinTabAction, &menu);
 		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
 
-		Action *detachTabAction = new Action(Action::DetachTabAction, &menu);
+		Action *detachTabAction = new Action(ActionsManager::DetachTabAction, &menu);
 		detachTabAction->setEnabled(count() > 1);
 
 		menu.addAction(cloneTabAction);
@@ -135,22 +135,22 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		if (isPinned)
 		{
-			Action *closeTabAction = new Action(Action::CloseTabAction, &menu);
+			Action *closeTabAction = new Action(ActionsManager::CloseTabAction, &menu);
 			closeTabAction->setEnabled(false);
 
 			menu.addAction(closeTabAction);
 		}
 		else
 		{
-			menu.addAction(ActionsManager::getAction(Action::CloseTabAction, this));
+			menu.addAction(ActionsManager::getAction(ActionsManager::CloseTabAction, this));
 		}
 
 		const int amount = (count() - getPinnedTabsAmount());
-		Action *closeOtherTabsAction = new Action(Action::CloseOtherTabsAction, &menu);
+		Action *closeOtherTabsAction = new Action(ActionsManager::CloseOtherTabsAction, &menu);
 		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
 
 		menu.addAction(closeOtherTabsAction);
-		menu.addAction(ActionsManager::getAction(Action::ClosePrivateTabsAction, this));
+		menu.addAction(ActionsManager::getAction(ActionsManager::ClosePrivateTabsAction, this));
 
 		connect(cloneTabAction, SIGNAL(triggered()), this, SLOT(cloneTab()));
 		connect(pinTabAction, SIGNAL(triggered()), this, SLOT(pinTab()));
@@ -180,7 +180,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		QMenu *customizationMenu = menu.addMenu(tr("Customize"));
 		customizationMenu->addAction(cycleAction);
 		customizationMenu->addSeparator();
-		customizationMenu->addAction(ActionsManager::getAction(Action::LockToolBarsAction, this));
+		customizationMenu->addAction(ActionsManager::getAction(ActionsManager::LockToolBarsAction, this));
 	}
 
 	menu.exec(event->globalPos());
@@ -217,7 +217,7 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 
 		if (tab < 0)
 		{
-			ActionsManager::triggerAction(Action::NewTabAction, this);
+			ActionsManager::triggerAction(ActionsManager::NewTabAction, this);
 		}
 		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 		{
@@ -906,7 +906,7 @@ bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (helpEvent && !object->property("isPinned").toBool())
 		{
-			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(Action::CloseTabAction).shortcuts;
+			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts;
 
 			QToolTip::showText(helpEvent->globalPos(), tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}

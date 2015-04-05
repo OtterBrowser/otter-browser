@@ -114,12 +114,12 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 		availableEntriesModel->appendRow(createEntry(widgets.at(i)));
 	}
 
-	const QList<ActionDefinition> actions = ActionsManager::getActionDefinitions();
+	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
 
-	for (int i = 0; i < actions.count(); ++i)
+	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem* item = new QStandardItem(actions.at(i).icon, (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description));
-		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
+		QStandardItem* item = new QStandardItem(definitions.at(i).icon, (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description));
+		item->setData(ActionsManager::getActionName(definitions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		availableEntriesModel->appendRow(item);

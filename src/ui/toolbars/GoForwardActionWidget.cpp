@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : ActionWidget(Action::GoForwardAction, window, parent)
+GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : ActionWidget(ActionsManager::GoForwardAction, window, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);
@@ -76,7 +76,7 @@ bool GoForwardActionWidget::event(QEvent *event)
 
 		if (helpEvent)
 		{
-			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(Action::GoForwardAction).shortcuts;
+			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(ActionsManager::GoForwardAction).shortcuts;
 			QString toolTip = text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')'));
 
 			if (getWindow())
