@@ -12,6 +12,8 @@ message("otter.pro is deprecated, use CMake instead.")
 
 QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
+greaterThan(QT_MINOR_VERSION, 2): quick quickwidgets
+
 win32: QT += winextras
 win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
 win32: INCLUDEPATH += .\
@@ -159,6 +161,8 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     3rdparty/mousegestures/MouseGestures.cpp
 
+greaterThan(QT_MINOR_VERSION, 2): SOURCES += src/modules/windows/web/StartPageWidget.cpp
+
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 
 HEADERS += src/core/ActionsManager.h \
@@ -287,6 +291,8 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/SearchBarWidget.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
+
+greaterThan(QT_MINOR_VERSION, 2): SOURCES += src/modules/windows/web/StartPageWidget.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 

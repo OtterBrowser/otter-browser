@@ -21,13 +21,16 @@
 #include "PermissionBarWidget.h"
 #include "ProgressBarWidget.h"
 #include "SearchBarWidget.h"
+#if QT_VERSION >= 0x050300
+#include "StartPageWidget.h"
+#endif
 #include "../../../core/AddonsManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/MainWindow.h"
 
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
@@ -35,11 +38,15 @@ namespace Otter
 QString WebContentsWidget::m_sharedQuickFindQuery = NULL;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
+	m_layout(new QVBoxLayout(this)),
 	m_webWidget(widget),
+	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
 	m_quickFindTimer(0),
-	m_isTabPreferencesMenuVisible(false)
+	m_startPageTimer(0),
+	m_isTabPreferencesMenuVisible(false),
+	m_showStartPage(SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool())
 {
 	if (m_webWidget)
 	{
@@ -48,17 +55,22 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	else
 	{
 		m_webWidget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
+
+#if QT_VERSION >= 0x050300
+		if (window)
+		{
+			m_startPageTimer = startTimer(50);
+		}
+#endif
 	}
 
+	m_layout->setContentsMargins(0, 0, 0, 0);
+	m_layout->setSpacing(0);
+	m_layout->addWidget(m_webWidget);
+
+	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(QLatin1String("workaround"));
-
-	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->addWidget(m_webWidget);
-	layout->setContentsMargins(0, 0, 0, 0);
-	layout->setSpacing(0);
-
-	setLayout(layout);
 
 	if (window)
 	{
@@ -74,6 +86,9 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
+#if QT_VERSION >= 0x050300
+	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
+#endif
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
@@ -89,6 +104,14 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 		m_quickFindTimer = 0;
 
 		m_searchBarWidget->hide();
+	}
+	else if (event->timerId() == m_startPageTimer)
+	{
+		killTimer(m_startPageTimer);
+
+		m_startPageTimer = 0;
+
+		handleUrlChange(m_webWidget->getRequestedUrl());
 	}
 
 	ContentsWidget::timerEvent(event);
@@ -169,6 +192,10 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
 		}
 	}
+	else if (option == QLatin1String("StartPage/EnableStartPage"))
+	{
+		m_showStartPage = value.toBool();
+	}
 }
 
 void WebContentsWidget::search(const QString &search, const QString &query)
@@ -202,7 +229,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 						m_searchBarWidget = new SearchBarWidget(this);
 						m_searchBarWidget->hide();
 
-						qobject_cast<QVBoxLayout*>(layout())->insertWidget(0, m_searchBarWidget);
+						m_layout->insertWidget(0, m_searchBarWidget);
 
 						connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
 						connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
@@ -372,6 +399,43 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	}
 }
 
+void WebContentsWidget::handleUrlChange(const QUrl &url)
+{
+#if QT_VERSION >= 0x050300
+	Window *window = qobject_cast<Window*>(parentWidget());
+
+	if (!window)
+	{
+		return;
+	}
+
+	const bool showStartPage = ((url == QUrl(QLatin1String("about:start"))) || (Utils::isUrlEmpty(url) && m_showStartPage));
+
+	if (showStartPage && !m_startPageWidget)
+	{
+		m_layout->removeWidget(m_webWidget);
+
+		m_webWidget->hide();
+
+		m_startPageWidget = new StartPageWidget(window, this);
+
+		m_layout->addWidget(m_startPageWidget);
+	}
+	else if (!showStartPage && m_startPageWidget)
+	{
+		m_startPageWidget->hide();
+
+		m_layout->addWidget(m_webWidget);
+		m_layout->removeWidget(m_startPageWidget);
+
+		m_webWidget->show();
+
+		m_startPageWidget->deleteLater();
+		m_startPageWidget = NULL;
+	}
+#endif
+}
+
 void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url, bool cancel)
 {
 	if (cancel)
@@ -380,7 +444,7 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 		{
 			if (m_permissionBarWidgets.at(i)->getOption() == option && m_permissionBarWidgets.at(i)->getUrl() == url)
 			{
-				layout()->removeWidget(m_permissionBarWidgets.at(i));
+				m_layout->removeWidget(m_permissionBarWidgets.at(i));
 
 				m_permissionBarWidgets.at(i)->deleteLater();
 
@@ -402,7 +466,7 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 
 		PermissionBarWidget *widget = new PermissionBarWidget(option, url, this);
 
-		qobject_cast<QVBoxLayout*>(layout())->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
+		m_layout->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
 
 		widget->show();
 
@@ -422,7 +486,7 @@ void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies po
 
 		m_permissionBarWidgets.removeAll(widget);
 
-		layout()->removeWidget(widget);
+		m_layout->removeWidget(widget);
 
 		widget->deleteLater();
 	}

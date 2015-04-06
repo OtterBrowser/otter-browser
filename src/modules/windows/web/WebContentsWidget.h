@@ -23,12 +23,15 @@
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/WebWidget.h"
 
+#include <QtWidgets/QVBoxLayout>
+
 namespace Otter
 {
 
 class PermissionBarWidget;
 class ProgressBarWidget;
 class SearchBarWidget;
+class StartPageWidget;
 class WebWidget;
 
 class WebContentsWidget : public ContentsWidget
@@ -75,6 +78,7 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void handleUrlChange(const QUrl &url);
 	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, OpenHints hints);
@@ -83,13 +87,17 @@ protected slots:
 	void setLoading(bool loading);
 
 private:
+	QVBoxLayout *m_layout;
 	WebWidget *m_webWidget;
+	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
 	QString m_quickFindQuery;
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
 	int m_quickFindTimer;
+	int m_startPageTimer;
 	bool m_isTabPreferencesMenuVisible;
+	bool m_showStartPage;
 
 	static QString m_sharedQuickFindQuery;
 };
