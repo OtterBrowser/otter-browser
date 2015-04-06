@@ -12,7 +12,7 @@ message("otter.pro is deprecated, use CMake instead.")
 
 QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
-greaterThan(QT_MINOR_VERSION, 2): quick quickwidgets
+greaterThan(QT_MINOR_VERSION, 2): QT += quick quickwidgets
 
 win32: QT += winextras
 win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
