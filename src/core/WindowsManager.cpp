@@ -471,7 +471,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 		m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(true);
 	}
 
-	if (!(hints & BackgroundOpen))
+	if (!(hints & BackgroundOpen) || m_mainWindow->getTabBar()->count() < 2)
 	{
 		m_mainWindow->getTabBar()->setCurrentIndex(index);
 
