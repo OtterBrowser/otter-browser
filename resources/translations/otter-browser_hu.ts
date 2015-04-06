@@ -4,84 +4,84 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Süti elfogadása</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domain:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="42"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Név:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="49"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Érték:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>Lejárat ideje:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
         <source>Is secure:</source>
-        <translation type="unfinished"/>
+        <translation>Biztonságos:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HTTP only:</source>
-        <translation type="unfinished"/>
+        <translation>Csak HTTP:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>A/z %1 weboldal új sütit szeretne tárolni.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>A/z %1 weboldal frissíteni szeretne egy sütit.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>A/z %1 weboldal sütit szeretne eltávolítani.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
         <source>This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Csak most</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Igen</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nem</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>Elfogad</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Csak most fogadja el</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>Elutasít</translation>
     </message>
 </context>
 <context>
@@ -1020,23 +1020,23 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="264"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="283"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Kérdés</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="265"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Most akar letörölni %n darab sütit.</numerusform><numerusform>Most akar letörölni %n darab sütit.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="266"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="285"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Biztos, hogy folytatja?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="284"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Az összes sütit törölni fogja.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
@@ -1046,12 +1046,12 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain...</source>
-        <translation type="unfinished"/>
+        <translation>A domain összes sütijének törlése...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Süti eltávolítása...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="430"/>
@@ -1807,12 +1807,12 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ment és bezár</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
@@ -1913,7 +1913,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="170"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Új ablakot nyisson meg új fül helyett</translation>
+        <translation>Új ablakok helyett füleket nyisson meg</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="177"/>
@@ -2144,12 +2144,12 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="882"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Sütik elfogadása:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="895"/>
         <source>Keep until:</source>
-        <translation>Tartsa meg:</translation>
+        <translation>Sütik megtartása:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="908"/>
@@ -2243,7 +2243,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1230"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Értesítők</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1235"/>
@@ -2273,32 +2273,32 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1281"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>Események</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1321"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>Hang lejátszása</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Értesítők mutatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Tálca bejegyzés megjelölése</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Legyenek natív értesítők</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2575,7 +2575,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="264"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Csak olvassa a mostaniakat</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="265"/>
@@ -2624,7 +2624,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="361"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Leírás</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="393"/>
@@ -2686,7 +2686,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>WAV fájlok (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1240"/>
@@ -3672,7 +3672,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Fogja meg az eszköztár mozgatásához</translation>
     </message>
 </context>
 <context>
@@ -3948,7 +3948,8 @@ Folyamat: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="149"/>
         <source>Transfer completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres letöltés:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="261"/>
@@ -4227,12 +4228,12 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Sütik engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="324"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Sütik elfogadása:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
@@ -4452,7 +4453,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Csak olvassa a mostaniakat</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -5625,12 +5626,12 @@ Hiba: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="81"/>
         <source>Transfer Completed</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres letöltés</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="82"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres letöltés</translation>
     </message>
 </context>
 </TS>

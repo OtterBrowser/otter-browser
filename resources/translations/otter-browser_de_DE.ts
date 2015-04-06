@@ -39,17 +39,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Webseite %1 hat das Hinzufügen eines neuen Cookies angefordert.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Webseite %1 hat das Aktualisieren eines vorhandenen Cookies angefordert.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Webseite %1 hat das Entfernen eines vorhandenen Cookies angefordert.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
@@ -3672,7 +3672,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Werkzeugleiste zum Verschieben ziehen</translation>
     </message>
 </context>
 <context>

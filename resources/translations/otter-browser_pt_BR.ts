@@ -4,84 +4,85 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Aceitar Cookie</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Domínio:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="42"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="49"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Valor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>Data de expiração:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
         <source>Is secure:</source>
-        <translation type="unfinished"/>
+        <translation>É seguro:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HTTP only:</source>
-        <translation type="unfinished"/>
+        <translation>É só HTTP:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>O site da web %1 pediu pra adicionar novo cookie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>O site da web %1 pediu pra atualizar o cookie existente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>O site da web %1 pediu pra remover o cookie existente.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
         <source>This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>
+Só Esta Sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Sim</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Não</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>Aceitar</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Aceitar Só Por Esta Sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>Descartar</translation>
     </message>
 </context>
 <context>
@@ -372,17 +373,17 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Editar Barras de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Pasta:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="35"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome:</translation>
     </message>
 </context>
 <context>
@@ -915,7 +916,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervalo das Atualizações</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
@@ -928,18 +929,18 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <source>%n day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n dia(s)</numerusform><numerusform>%n dia(s)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="63"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Nunca</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="62"/>
         <source> day(s)</source>
-        <translation type="unfinished"/>
+        <translation>dia(s)</translation>
     </message>
 </context>
 <context>
@@ -1020,23 +1021,23 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="264"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="283"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pergunta</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="265"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você está pra apagar %n cookies.</numerusform><numerusform>Você está pra apagar %n cookies.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="266"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="285"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Você quer continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="284"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Você está pra apagar todos os cookies.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
@@ -1046,12 +1047,12 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain...</source>
-        <translation type="unfinished"/>
+        <translation>Remover Todos os Cookies Deste Domínio...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Remover Todos os Cookies...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="430"/>
@@ -1565,22 +1566,22 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="485"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Novo</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="486"/>
         <source>Add Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Barras de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="487"/>
         <source>Add Bookmarks Bar...</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Barra dos Favoritos...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="492"/>
         <source>Reset to Defaults...</source>
-        <translation type="unfinished"/>
+        <translation>Resetar para os Padrões...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="511"/>
@@ -1727,7 +1728,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/NotificationDialog.cpp" line="73"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Fechar</translation>
     </message>
 </context>
 <context>
@@ -2144,7 +2145,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="882"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Aceitar cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="895"/>
@@ -2243,7 +2244,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1230"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Notificações</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1235"/>
@@ -2273,32 +2274,32 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1281"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>Eventos</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1321"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>Reproduzir som:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar notificação</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Marcar a entrada da barra de tarefas</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Opções</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Preferir notificações nativas</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2575,7 +2576,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="264"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Só ler os existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="265"/>
@@ -2624,7 +2625,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="361"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Descrição</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="393"/>
@@ -2686,7 +2687,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>Arquivos WAV (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1240"/>
@@ -3454,93 +3455,93 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="26"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Opções</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="35"/>
         <source>Visibility:</source>
-        <translation type="unfinished"/>
+        <translation>Visibilidade:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="46"/>
         <source>Always visible</source>
-        <translation type="unfinished"/>
+        <translation>Sempre visível</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="51"/>
         <source>Always hidden</source>
-        <translation type="unfinished"/>
+        <translation>Sempre escondido</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="56"/>
         <source>Visible only when needed</source>
-        <translation type="unfinished"/>
+        <translation>Visível só quando necessário</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="64"/>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Estilo do botão:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="75"/>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Seguir o estilo</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="80"/>
         <source>Only icon</source>
-        <translation type="unfinished"/>
+        <translation>Só o ícone</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="85"/>
         <source>Only text</source>
-        <translation type="unfinished"/>
+        <translation>Só o texto</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="90"/>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Texto ao lado do ícone</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="95"/>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Texto debaixo do ícone</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="103"/>
         <source>Icon size:</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho do ícone:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="113"/>
         <source>Auto</source>
-        <translation type="unfinished"/>
+        <translation>Auto</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="142"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="129"/>
         <source>Maximum size of item:</source>
-        <translation type="unfinished"/>
+        <translation>Tamanho máximo do item:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="139"/>
         <source>No limit</source>
-        <translation type="unfinished"/>
+        <translation>Sem limite</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nome:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="195"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>Ações</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="219"/>
@@ -3591,80 +3592,80 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="44"/>
         <source>Custom Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Personalizar Barras de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="97"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="198"/>
         <source>--- separator ---</source>
-        <translation type="unfinished"/>
+        <translation>--- separador ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="103"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="202"/>
         <source>--- spacer ---</source>
-        <translation type="unfinished"/>
+        <translation>--- espaçador ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="206"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Campo do Endereço</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="210"/>
         <source>List of Closed Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Lista de Janelas e Abas Fechadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="214"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra do Menu</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="218"/>
         <source>Menu Button</source>
-        <translation type="unfinished"/>
+        <translation>Botão do Menu</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="222"/>
         <source>Sidebar Panel Chooser</source>
-        <translation type="unfinished"/>
+        <translation>Escolhedor do Painel da Barra Lateral</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="226"/>
         <source>Search Field</source>
-        <translation type="unfinished"/>
+        <translation>Campo de Busca</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="230"/>
         <source>Status Message Field</source>
-        <translation type="unfinished"/>
+        <translation>Campo da Mensagem de Status</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="234"/>
         <source>Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra das Abas</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="238"/>
         <source>Zoom Slider</source>
-        <translation type="unfinished"/>
+        <translation>Deslizadro de Zoom</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="246"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sem Título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="251"/>
         <source>Invalid Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Favorito Inválido</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Entrada Inválida</translation>
     </message>
 </context>
 <context>
@@ -3672,7 +3673,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Arraste pra mover a barra de ferramentas</translation>
     </message>
 </context>
 <context>
@@ -3695,27 +3696,27 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="539"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sem Título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="540"/>
         <source>Configure...</source>
-        <translation type="unfinished"/>
+        <translation>Configurar...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="542"/>
         <source>Reset to Defaults...</source>
-        <translation type="unfinished"/>
+        <translation>Resetar para os Padrões...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="559"/>
         <source>Remove...</source>
-        <translation type="unfinished"/>
+        <translation>Remover...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Barras de Ferramentas</translation>
     </message>
 </context>
 <context>
@@ -3723,32 +3724,32 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="318"/>
         <source>Reset Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Resetar a Barra de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="318"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente quer resetar esta barra de ferramentas para a configuração padrão?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="358"/>
         <source>Remove Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Remover a Barra de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="358"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente quer remover esta barra de ferramentas?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="372"/>
         <source>Reset Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Resetar a Barra de Ferramentas</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="372"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente quer resetar todas as barras de ferramentas para a configuração padrão?</translation>
     </message>
 </context>
 <context>
@@ -3948,7 +3949,8 @@ Progresso: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="149"/>
         <source>Transfer completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Transferência completada:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="261"/>
@@ -4227,12 +4229,12 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Ativar Cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="324"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Aceitar cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
@@ -4452,7 +4454,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Só ler os existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -5437,22 +5439,22 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra do Menu</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra das Abas</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Navigation Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra de Navegação</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Status Bar</source>
-        <translation type="unfinished"/>
+        <translation>Barra de Status</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="660"/>
@@ -5625,12 +5627,12 @@ Erro: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="81"/>
         <source>Transfer Completed</source>
-        <translation type="unfinished"/>
+        <translation>Transferência Completada</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="82"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>A transferência de arquivo foi completada</translation>
     </message>
 </context>
 </TS>

@@ -4,84 +4,84 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Přijmout koláček</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Doména:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="42"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Název:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="49"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Hodnota:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>Datum vypršení:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
         <source>Is secure:</source>
-        <translation type="unfinished"/>
+        <translation>Bezpečný:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HTTP only:</source>
-        <translation type="unfinished"/>
+        <translation>Pouze HTTP:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Stránka %1 požádala o přidání nového koláčku.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Stránka %1 požádala o aktualizaci stávajícího koláčku.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Stránka %1 požádala o odstranění stávajícího koláčku.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
         <source>This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Pouze toto sezení</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ano</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>Přijmout</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Přijmout pouze pro toto sezení</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>Odmítnout</translation>
     </message>
 </context>
 <context>
@@ -1020,23 +1020,23 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="264"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="283"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Otázka</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="265"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Chystáte se smazat %n koláček</numerusform><numerusform>Chystáte se smazat %n koláčky</numerusform><numerusform>Chystáte se smazat %n koláčků</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="266"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="285"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="284"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Chystáte se smazat všechny koláčky</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
@@ -1046,12 +1046,12 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain...</source>
-        <translation type="unfinished"/>
+        <translation>Odstranit všechny koláčky z této domény...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Odstranit všechny koláčky...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="430"/>
@@ -2144,7 +2144,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="882"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Přijmout koláčky:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="895"/>
@@ -2243,7 +2243,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1230"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Oznámení</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1235"/>
@@ -2273,32 +2273,32 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1281"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>Události</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1321"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>Přehrát zvuk:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Ukázat oznámení</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Označit záznam v pruhu s úkoly</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Volby</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Upřednostňovat nativní oznámení</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2575,7 +2575,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="264"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Číst pouze existující</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="265"/>
@@ -2624,7 +2624,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="361"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="393"/>
@@ -2686,7 +2686,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>Soubory WAV (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1240"/>
@@ -3672,7 +3672,7 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Táhnout pro přesunutí nástrojového panelu</translation>
     </message>
 </context>
 <context>
@@ -3948,7 +3948,8 @@ Postup: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="149"/>
         <source>Transfer completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Přesun dokončen:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="261"/>
@@ -4227,12 +4228,12 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Povolit koláčky</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="324"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Přijmout koláčky:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
@@ -4452,7 +4453,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Číst pouze existující</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -5625,12 +5626,12 @@ Chyba: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="81"/>
         <source>Transfer Completed</source>
-        <translation type="unfinished"/>
+        <translation>Přesun dokončen</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="82"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>Přesun souboru byl dokončen</translation>
     </message>
 </context>
 </TS>

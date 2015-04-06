@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Akceptuj ciasteczko</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation>Wygasa:</translation>
+        <translation>Data wygaśnięcia:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
@@ -39,22 +39,22 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>Strona %1 chce dodać nowe ciasteczko.</translation>
+        <translation>Witryna %1 chce dodać nowe ciasteczko.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>Strona %1  chce zaktualizować istniejące ciasteczko.</translation>
+        <translation>Witryna %1  chce zaktualizować istniejące ciasteczko.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>Strona %1 chce usunąć istniejące ciasteczko.</translation>
+        <translation>Witryna %1 chce usunąć istniejące ciasteczko.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
         <source>This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Po tej sesji</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
@@ -76,7 +76,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation>Akceptuj tylko w tej sesji</translation>
+        <translation>Akceptuj tylko dla tej sesji</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
@@ -321,7 +321,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="84"/>
         <source>View Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Wyświetl zakładkę</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="133"/>
@@ -1740,7 +1740,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Wprowadź adres strony WWW lub wybierz z listy:&quot;</translation>
+        <translation>Wprowadź adres strony WWW lub wybierz z listy:</translation>
     </message>
 </context>
 <context>
@@ -1958,7 +1958,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="249"/>
         <source>Preferred Webpage Language:</source>
-        <translation>Preferowany język stron WWW</translation>
+        <translation>Preferowany język stron WWW:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="274"/>
@@ -2283,12 +2283,12 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Wyświetlaj powiadomienia</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Oznacz pozycję na pasku zadań</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
@@ -2298,7 +2298,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Preferuj powiadomienia natywne (systemowe)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2570,12 +2570,12 @@ Czy chcesz kontynuować?</translation>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="263"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="278"/>
         <source>Only existing</source>
-        <translation>Tylko, jeśli istnieją</translation>
+        <translation>Tylko istniejące</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="264"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Tylko czytaj istniejące</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="265"/>
@@ -3484,7 +3484,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="75"/>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Przejmij domyślny styl</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="80"/>
@@ -3514,7 +3514,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="113"/>
         <source>Auto</source>
-        <translation>Automatyczny</translation>
+        <translation>Automatycznie</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
@@ -3555,7 +3555,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="238"/>
         <source>Current entries:</source>
-        <translation type="unfinished"/>
+        <translation>Bieżące pozycje:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
@@ -3580,7 +3580,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="346"/>
         <source>Available entries:</source>
-        <translation type="unfinished"/>
+        <translation>Dostępne pozycje:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="356"/>
@@ -3603,7 +3603,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
         <location filename="../../src/ui/ToolBarDialog.cpp" line="103"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="202"/>
         <source>--- spacer ---</source>
-        <translation>--- separator dynamiczny ---</translation>
+        <translation>--- odstęp ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="206"/>
@@ -3658,13 +3658,13 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="251"/>
         <source>Invalid Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Niepoprawna zakładka</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa pozycja</translation>
     </message>
 </context>
 <context>
@@ -3672,7 +3672,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Przeciągnij, aby przesunąć pasek narzędzi</translation>
     </message>
 </context>
 <context>
@@ -3948,7 +3948,7 @@ Postęp: %5&lt;/div&gt;</translation>
         <location filename="../../src/core/TransfersManager.cpp" line="149"/>
         <source>Transfer completed:
 %1</source>
-        <translation>Transfer zakończony:
+        <translation>Pobieranie ukończone:
 %1</translation>
     </message>
     <message>
@@ -4453,7 +4453,7 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Tylko czytaj istniejące</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -5503,7 +5503,7 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="326"/>
         <source>Copy address of source page</source>
-        <translation>Kopiuj adres strony</translation>
+        <translation>Kopiuj adres strony źródłowej</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
@@ -5626,12 +5626,12 @@ Błąd: %2</translation>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="81"/>
         <source>Transfer Completed</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie ukończone</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="82"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie pliku zostało ukończone</translation>
     </message>
 </context>
 </TS>

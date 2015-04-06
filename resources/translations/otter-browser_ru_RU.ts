@@ -4,84 +4,84 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Прием cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Domain:</source>
-        <translation type="unfinished"/>
+        <translation>Домен:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="42"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Имя:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="49"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Значение:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation type="unfinished"/>
+        <translation>Дата истечения:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
         <source>Is secure:</source>
-        <translation type="unfinished"/>
+        <translation>Защищенное:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HTTP only:</source>
-        <translation type="unfinished"/>
+        <translation>Только на HTTP:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="45"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Веб-сайт %1 запрашивает добавление нового cookie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="49"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Веб-сайт %1 запрашивает обновление имеюшегося cookie</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="53"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Веб-сайт %1 запрашивает удаление имеющегося cookie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="59"/>
         <source>This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Только на сессию</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="60"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>Принять</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Принять только для этой сессии</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>Отвергнуть</translation>
     </message>
 </context>
 <context>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="390"/>
         <source>Click to load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>Щелкните для загрузки всех плагинов на странице</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="571"/>
@@ -207,7 +207,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/Application.cpp" line="549"/>
         <location filename="../../src/core/Application.cpp" line="598"/>
         <source>Do not show this message again</source>
-        <translation>Не показывать это сообщение снова</translation>
+        <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="551"/>
@@ -321,7 +321,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="84"/>
         <source>View Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Просмотр закладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="133"/>
@@ -339,32 +339,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="80"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без имени)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="97"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Имя: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="101"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Адрес: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="106"/>
         <source>Description: %1</source>
-        <translation type="unfinished"/>
+        <translation>Описание: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="111"/>
         <source>Created: %1</source>
-        <translation type="unfinished"/>
+        <translation>Создана: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="116"/>
         <source>Visited: %1</source>
-        <translation type="unfinished"/>
+        <translation>Посещалась: %1</translation>
     </message>
 </context>
 <context>
@@ -372,17 +372,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Редактирование панели</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Папка:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="35"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Имя:</translation>
     </message>
 </context>
 <context>
@@ -551,7 +551,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="141"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Заметки</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="141"/>
@@ -566,22 +566,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="158"/>
         <source>Failed to open bookmarks file (%1): %2</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть файл закладок (%1): %2</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
         <source>Failed to parse bookmarks file. No bookmarks were loaded.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось проверить файл закладок. Закладки не загружены.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="184"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить файл закладок правильно, код ошибки ОшибкаQXmlStreamReader: %1</translation>
     </message>
 </context>
 <context>
@@ -800,17 +800,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="241"/>
         <source>Copy Option Name</source>
-        <translation type="unfinished"/>
+        <translation>Копировать имя настройки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="242"/>
         <source>Copy Option Value</source>
-        <translation type="unfinished"/>
+        <translation>Копироать значение настройки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="244"/>
         <source>Restore Default Value</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить значение по умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="251"/>
@@ -885,7 +885,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>Profiles (AdBlock Plus compatible)</source>
-        <translation type="unfinished"/>
+        <translation>Профили (совместимые с AdBlock Plus)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="60"/>
@@ -910,17 +910,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Интервал обновления</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Last Update</source>
-        <translation>Последнее Обновление</translation>
+        <translation>Последнее обновление</translation>
     </message>
 </context>
 <context>
@@ -928,18 +928,18 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <source>%n day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n дней</numerusform><numerusform>%n дней</numerusform><numerusform>%n дней</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="63"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Никогда</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="62"/>
         <source> day(s)</source>
-        <translation type="unfinished"/>
+        <translation> дней</translation>
     </message>
 </context>
 <context>
@@ -1020,23 +1020,23 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="264"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="283"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="265"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Вы хотите удалить %n cookies.</numerusform><numerusform>Вы хотите удалить %n cookies.</numerusform><numerusform>Вы хотите удалить %n cookies.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="266"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="285"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="284"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Вы хотите удалить все cookies.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
@@ -1046,12 +1046,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain...</source>
-        <translation type="unfinished"/>
+        <translation>Удаление всех cookies этого домена</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Удаление всех cookies...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="430"/>
@@ -1305,7 +1305,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="110"/>
         <source>%1 x %2 pixels</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 пикс.</translation>
     </message>
 </context>
 <context>
@@ -1362,12 +1362,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="66"/>
         <source>Allow to disable context menu</source>
-        <translation>Отключить контекстное меню</translation>
+        <translation>Разрешить отключать контекстное меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="73"/>
         <source>Allow to open windows</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить откоывать окна</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="82"/>
@@ -1564,22 +1564,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="485"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="486"/>
         <source>Add Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Создать панель</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="487"/>
         <source>Add Bookmarks Bar...</source>
-        <translation type="unfinished"/>
+        <translation>Создать панель закладок...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="492"/>
         <source>Reset to Defaults...</source>
-        <translation type="unfinished"/>
+        <translation>Сбросить на умолчания...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="511"/>
@@ -1589,7 +1589,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="533"/>
         <source>Custom</source>
-        <translation>По-умолчанию</translation>
+        <translation>Заданное</translation>
     </message>
 </context>
 <context>
@@ -1647,78 +1647,78 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Найти...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="100"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="107"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="44"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="153"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
         <source>Add Folder</source>
-        <translation type="unfinished"/>
+        <translation>Создать папку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="183"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
         <source>Add Note</source>
-        <translation type="unfinished"/>
+        <translation>Добавить заметку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>Добавить разделитель</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
         <source>Add note...</source>
-        <translation type="unfinished"/>
+        <translation>Добавление заметки...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Выбор имени папки</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Введите имя папки:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Очистить корзину</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Добавить закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="169"/>
         <source>Open source page</source>
-        <translation type="unfinished"/>
+        <translation>Открыть исходную страницу</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="195"/>
         <source>Restore Note</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить заметку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="360"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Менеджер заметок</translation>
     </message>
 </context>
 <context>
@@ -1726,7 +1726,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/NotificationDialog.cpp" line="73"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -1811,37 +1811,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants access to your location.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет определить ваше местоположение.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
         <source>%1 wants to show notifications.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет отобразить предупреждения.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your microphone.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет получить доступ к микрофону.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
         <source>%1 wants to access your camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет получить доступ к веб-камере.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет получить доступ к микрофону и веб-камере.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>Invalid permission request from %1.</source>
-        <translation type="unfinished"/>
+        <translation>Неверный запрос разрешений с %1.</translation>
     </message>
 </context>
 <context>
@@ -1882,7 +1882,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="99"/>
         <source>Use Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Из закладок</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="106"/>
@@ -2143,7 +2143,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="882"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Принимать cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="895"/>
@@ -2242,7 +2242,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1230"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Предупреждения</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1235"/>
@@ -2272,32 +2272,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1281"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>События</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1321"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>Звуковой сигнал</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Показ предупреждений</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Отметить пункт в панели задач</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Предпочитать системные предупреждения</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2447,7 +2447,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2005"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Горячие клавиши</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2064"/>
@@ -2574,7 +2574,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="264"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Только читать существующие</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="265"/>
@@ -2612,18 +2612,18 @@ Do you want to continue?</source>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="333"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="526"/>
         <source>New...</source>
-        <translation type="unfinished"/>
+        <translation>Создать...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="334"/>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="527"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>Чтение</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="361"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Описание</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="393"/>
@@ -2685,7 +2685,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="923"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>файлы WAV (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="1240"/>
@@ -2748,22 +2748,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="169"/>
         <source>Do not show this message again</source>
-        <translation>Не показывать это сообщение снова</translation>
+        <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="249"/>
         <source>Receiving data from %1…</source>
-        <translation type="unfinished"/>
+        <translation>Получение данных с %1...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="288"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>Запрос к %1 завершен</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="451"/>
         <source>Sending request to %1…</source>
-        <translation type="unfinished"/>
+        <translation>Отправка запроса на %1...</translation>
     </message>
 </context>
 <context>
@@ -2793,19 +2793,19 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="270"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>Вы уверены, что вы хотите отправить данные формы снова?</translation>
+        <translation>Вы уверены, что вы хотите отправить данные формы заново?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="270"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="293"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что вы хотите отправить данные заново?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="271"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="297"/>
         <source>Do not show this message again</source>
-        <translation>Не показывать это сообщение снова</translation>
+        <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="407"/>
@@ -2825,7 +2825,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="471"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation type="unfinished"/>
+        <translation>Скрипт на этой странице вызвал проблему.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="471"/>
@@ -2879,7 +2879,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="465"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Предпросмотр печати</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="519"/>
@@ -2894,7 +2894,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="520"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="648"/>
@@ -3040,12 +3040,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>Выделить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="105"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Чувствительно к регистру</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="118"/>
@@ -3083,7 +3083,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="94"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Кодирование:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="113"/>
@@ -3167,7 +3167,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="288"/>
         <source>Search using %1</source>
-        <translation type="unfinished"/>
+        <translation>Найти, используя %1</translation>
     </message>
 </context>
 <context>
@@ -3337,12 +3337,12 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/SidebarWidget.cpp" line="144"/>
         <location filename="../../src/ui/SidebarWidget.cpp" line="307"/>
         <source>Add web panel</source>
-        <translation type="unfinished"/>
+        <translation>Создание веб-панели</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="144"/>
         <source>Input address of web page to show in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Введите адрес веб-страницы для отображения в панели:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="435"/>
@@ -3372,7 +3372,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="460"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Заметки</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="465"/>
@@ -3425,12 +3425,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Switch tabs using the mouse wheel</source>
-        <translation type="unfinished"/>
+        <translation>Переключать вкладки колесиком мыши</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="180"/>
         <source>Customize</source>
-        <translation type="unfinished"/>
+        <translation>Настроить</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="467"/>
@@ -3440,7 +3440,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="911"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть вкладку</translation>
     </message>
 </context>
 <context>
@@ -3448,222 +3448,222 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Редактирование панели</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="26"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="35"/>
         <source>Visibility:</source>
-        <translation type="unfinished"/>
+        <translation>Видимость:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="46"/>
         <source>Always visible</source>
-        <translation type="unfinished"/>
+        <translation>Всегда видима</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="51"/>
         <source>Always hidden</source>
-        <translation type="unfinished"/>
+        <translation>Всегда скрыта</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="56"/>
         <source>Visible only when needed</source>
-        <translation type="unfinished"/>
+        <translation>Видна при необходимости</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="64"/>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Стиль кнопок</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="75"/>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Следовать стилю</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="80"/>
         <source>Only icon</source>
-        <translation type="unfinished"/>
+        <translation>Только значки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="85"/>
         <source>Only text</source>
-        <translation type="unfinished"/>
+        <translation>Только текст</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="90"/>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Текст рядом со значком</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="95"/>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Текст под значком</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="103"/>
         <source>Icon size:</source>
-        <translation type="unfinished"/>
+        <translation>Размер значка:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="113"/>
         <source>Auto</source>
-        <translation type="unfinished"/>
+        <translation>Авто</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="142"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation> пикс</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="129"/>
         <source>Maximum size of item:</source>
-        <translation type="unfinished"/>
+        <translation>Максимальный размер:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="139"/>
         <source>No limit</source>
-        <translation type="unfinished"/>
+        <translation>Неограниченно</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Имя:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="195"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>Действия</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="219"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="229"/>
         <source>Edit..</source>
-        <translation type="unfinished"/>
+        <translation>Изменить...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="238"/>
         <source>Current entries:</source>
-        <translation type="unfinished"/>
+        <translation>Текущие пункты:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="256"/>
         <source>Del</source>
-        <translation type="unfinished"/>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="269"/>
         <source>Return</source>
-        <translation type="unfinished"/>
+        <translation>Return</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="298"/>
         <source>Down</source>
-        <translation type="unfinished"/>
+        <translation>Down</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="311"/>
         <source>Up</source>
-        <translation type="unfinished"/>
+        <translation>Up</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="346"/>
         <source>Available entries:</source>
-        <translation type="unfinished"/>
+        <translation>Доступные пункты:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="356"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="366"/>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Фильтр...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="44"/>
         <source>Custom Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Новая панель</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="97"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="198"/>
         <source>--- separator ---</source>
-        <translation type="unfinished"/>
+        <translation>--- разделитель ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="103"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="202"/>
         <source>--- spacer ---</source>
-        <translation type="unfinished"/>
+        <translation>--- пробел ---</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="206"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Поле адреса</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="210"/>
         <source>List of Closed Windows and Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Список закрытых окон и вкладок</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="214"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="218"/>
         <source>Menu Button</source>
-        <translation type="unfinished"/>
+        <translation>Кнопка меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="222"/>
         <source>Sidebar Panel Chooser</source>
-        <translation type="unfinished"/>
+        <translation>Боковая панель</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="226"/>
         <source>Search Field</source>
-        <translation type="unfinished"/>
+        <translation>Поле поиска</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="230"/>
         <source>Status Message Field</source>
-        <translation type="unfinished"/>
+        <translation>Строка состояния</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="234"/>
         <source>Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель вкладок</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="238"/>
         <source>Zoom Slider</source>
-        <translation type="unfinished"/>
+        <translation>Движок масштаба</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="246"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="251"/>
         <source>Invalid Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Неверная закладка</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Invalid Entry</source>
-        <translation type="unfinished"/>
+        <translation>Неверное вхождение</translation>
     </message>
 </context>
 <context>
@@ -3671,7 +3671,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
         <source>Drag to move toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Перетаскивание панели</translation>
     </message>
 </context>
 <context>
@@ -3679,42 +3679,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="165"/>
         <source>Switch tabs using the mouse wheel</source>
-        <translation type="unfinished"/>
+        <translation>Переключать вкладки, используя колесико мыши</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="441"/>
         <source>Closed Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Закрытые вкладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="537"/>
         <source>Customize</source>
-        <translation type="unfinished"/>
+        <translation>Настроить</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="539"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="540"/>
         <source>Configure...</source>
-        <translation type="unfinished"/>
+        <translation>Настройка...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="542"/>
         <source>Reset to Defaults...</source>
-        <translation type="unfinished"/>
+        <translation>Сбросить на умолчания</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="559"/>
         <source>Remove...</source>
-        <translation type="unfinished"/>
+        <translation>Удаление...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Панели</translation>
     </message>
 </context>
 <context>
@@ -3722,32 +3722,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="318"/>
         <source>Reset Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Сброс панели</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="318"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Вы действительно хотите сбросить эту панель в первоначальное состояние?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="358"/>
         <source>Remove Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Удаление панели</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="358"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation type="unfinished"/>
+        <translation>Вы действительно хотите удалить эту панель?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="372"/>
         <source>Reset Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Сброс панелей</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="372"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Вы действительно хотите сбросить все панели к первоначальному состоянию?</translation>
     </message>
 </context>
 <context>
@@ -3755,19 +3755,20 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="235"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>файл</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="265"/>
         <location filename="../../src/core/Transfer.cpp" line="293"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="265"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
-        <translation type="unfinished"/>
+        <translation>Файл с этим именем уже существует.
+Вы хотите перезаписать его?</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="293"/>
@@ -3775,7 +3776,10 @@ Do you want to overwite it?</source>
 Do you want to overwrite it?
 
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Файл с таким же именем уже существует.
+Вы хотите перезаписать его?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -3943,12 +3947,13 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/core/TransfersManager.cpp" line="149"/>
         <source>Transfer completed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка завершена:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="261"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 файлов (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="264"/>
@@ -4222,12 +4227,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="324"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Принимать cookies</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
@@ -4287,17 +4292,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="589"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить запрещать контекстное меню</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="603"/>
         <source>Allow to open windows</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить открывать окна</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="633"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить закрывать окна:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
@@ -4407,7 +4412,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="73"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Спрашивать</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="74"/>
@@ -4447,7 +4452,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Только чтение существующих</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -4457,7 +4462,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Current session is closed</source>
-        <translation>Закрытия текущего сеанса</translation>
+        <translation>До закрытия текущего сеанса</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
@@ -4505,7 +4510,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/Window.cpp" line="181"/>
         <source>Print Preview</source>
-        <translation>Предварительный просмотр</translation>
+        <translation>Предпросмотр печати</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="345"/>
@@ -4533,7 +4538,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="211"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Вы хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="215"/>
@@ -4564,14 +4569,16 @@ Select another one.</source>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="235"/>
         <source>There is no valid suffix for given MIME type
  %1</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимое расширение для данного MIME-типа
+ %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="297"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="347"/>
         <source>Failed to load a valid application path for MIME type %1:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить приложение для MIME-типа %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4711,12 +4718,12 @@ Select another one.</source>
         <location filename="../../src/core/ActionsManager.cpp" line="69"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Pin Tab</source>
-        <translation>Зафиксировать вкладку</translation>
+        <translation>Закрепить вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="70"/>
         <source>Detach Tab</source>
-        <translation>Как самостоятельное окно</translation>
+        <translation>Открыть вкладку как окно</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="71"/>
@@ -4731,17 +4738,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Close All Private Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть все приватные вкладки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="73"/>
         <source>Close All Private Tabs in Current Window</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть все приватные вкладки в текущем окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="74"/>
         <source>Close Private Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть приватные вкладки и окна</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="75"/>
@@ -4799,22 +4806,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="85"/>
         <source>Open in New Private Tab</source>
-        <translation type="unfinished"/>
+        <translation>ОТкрыть в новой приватной вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="86"/>
         <source>Open in New Private Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>ОТкрыть в фоновой приватной вкладке</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="87"/>
         <source>Open in New Private Window</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в новом приватном окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="88"/>
         <source>Open in New Private Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Открыть в фоновом приватном окне</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="89"/>
@@ -4971,7 +4978,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="117"/>
         <source>Go to Parent Directory</source>
-        <translation>Перейти в родительский каталог</translation>
+        <translation>Перейти в родительскую папку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="118"/>
@@ -5006,7 +5013,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="125"/>
         <source>Reload All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Обновить все вкладки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="126"/>
@@ -5016,7 +5023,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="127"/>
         <source>Show Context Menu</source>
-        <translation type="unfinished"/>
+        <translation>Показать контекстное меню</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="128"/>
@@ -5051,7 +5058,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="134"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>Копировать в Заметки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="135"/>
@@ -5066,7 +5073,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="137"/>
         <source>Insert Note</source>
-        <translation type="unfinished"/>
+        <translation>Вставить из Заметок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
@@ -5157,7 +5164,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="155"/>
         <source>Page Down</source>
-        <translation>Следующая страница </translation>
+        <translation>Стр. вниз</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="156"/>
@@ -5172,17 +5179,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="158"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Войти в режим Drag Scroll</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="159"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Войти в режим Move Scroll</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="160"/>
         <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Выйти из режима Scroll</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="161"/>
@@ -5222,7 +5229,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="168"/>
         <source>Manage Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Управление закладками</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="169"/>
@@ -5248,17 +5255,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="173"/>
         <source>Cookies</source>
-        <translation type="unfinished"/>
+        <translation>Cookies</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="174"/>
         <source>Cookies Policy</source>
-        <translation>Политика для куки</translation>
+        <translation>Политика для cookies</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="175"/>
         <source>Third-party Cookies Policy</source>
-        <translation>Политика для сторонних куки</translation>
+        <translation>Политика для сторонних cookies</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="176"/>
@@ -5293,7 +5300,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="182"/>
         <source>Enable Proxy</source>
-        <translation>Разрешить Прокси</translation>
+        <translation>Разрешить прокси</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="184"/>
@@ -5323,7 +5330,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="189"/>
         <source>Show Tab Switcher</source>
-        <translation type="unfinished"/>
+        <translation>Показывать переключатель вкладок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="190"/>
@@ -5333,7 +5340,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="191"/>
         <source>Show Tabbar</source>
-        <translation type="unfinished"/>
+        <translation>Показывать панель вкладок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="192"/>
@@ -5343,7 +5350,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="193"/>
         <source>Show Error Console</source>
-        <translation type="unfinished"/>
+        <translation>Показывать консоль ошибок</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="194"/>
@@ -5353,12 +5360,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="195"/>
         <source>Open Panel as Tab</source>
-        <translation type="unfinished"/>
+        <translation>Открывать панель как вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="196"/>
         <source>Close Panel</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть панель</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="197"/>
@@ -5379,7 +5386,7 @@ Select another one.</source>
         <location filename="../../src/core/ActionsManager.cpp" line="200"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Заметки</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="201"/>
@@ -5430,27 +5437,27 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель меню</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель вкладок</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Navigation Bar</source>
-        <translation type="unfinished"/>
+        <translation>Панель навигации</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Status Bar</source>
-        <translation type="unfinished"/>
+        <translation>Строка состояния</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="660"/>
         <source>Edit Bookmark...</source>
-        <translation>Править Закладку</translation>
+        <translation>Править закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="847"/>
@@ -5470,12 +5477,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="954"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation>Копировать Видео ссылку в буфер обмена</translation>
+        <translation>Копировать ссылку на видео</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="954"/>
         <source>Copy Audio Link to Clipboard</source>
-        <translation>Копировать Аудио ссылку в буфер обмена</translation>
+        <translation>Копировать ссылку на аудио</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="972"/>
@@ -5490,17 +5497,17 @@ Select another one.</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="288"/>
         <source>Remove Bookmark</source>
-        <translation>Удалить Закладку</translation>
+        <translation>Удалить закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="326"/>
         <source>Copy address of source page</source>
-        <translation type="unfinished"/>
+        <translation>Копировать адрес страницы</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Unpin Tab</source>
-        <translation>Снять фиксацию вкладки</translation>
+        <translation>ОТкрепить вкладку</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
@@ -5538,7 +5545,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="454"/>
         <source>Forces session chooser dialog</source>
-        <translation type="unfinished"/>
+        <translation>Открыть диалог выбора сеанса</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="455"/>
@@ -5548,34 +5555,36 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="60"/>
         <source>Failed to load adblock file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить файл AdBlock</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="69"/>
         <source>Loaded adblock file is not valid: %1</source>
-        <translation type="unfinished"/>
+        <translation>Загруженный файл AdBlock неверен: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="436"/>
         <source>Content blocking URL for %1 update is not valid.
 %2</source>
-        <translation type="unfinished"/>
+        <translation>URL %1 для обновления блокировки контента неверен.
+%2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="468"/>
         <source>Unable to download update for content blocking: %1.
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно загрузить обновление для блокировки контента: %1.
+Ошибка: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="484"/>
         <source>Content blocking file checksum mismatch: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неверная контрольная суума для файла блокировки контента: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="494"/>
         <source>Unable to write downloaded content blocking file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно записать загруженный файл блокировки контента: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
@@ -5598,7 +5607,7 @@ Error: %2</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="414"/>
         <source>Blocked content: %1</source>
-        <translation type="unfinished"/>
+        <translation>Заблокированный контент: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="426"/>
@@ -5616,12 +5625,12 @@ Error: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="81"/>
         <source>Transfer Completed</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка завершена</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="82"/>
         <source>File transfer was completed</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка файла была завершена</translation>
     </message>
 </context>
 </TS>

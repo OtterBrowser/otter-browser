@@ -76,12 +76,12 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="66"/>
         <source>Accept For This Session Only</source>
-        <translation type="unfinished"/>
+        <translation>Accepta doar pentru aceasta sesiune</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="69"/>
         <source>Discard</source>
-        <translation type="unfinished"/>
+        <translation>Aruncați</translation>
     </message>
 </context>
 <context>
@@ -89,59 +89,59 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation type="unfinished"/>
+        <translation>Limba preferată pentru pagina web</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation type="unfinished"/>
+        <translation>Pentru a adăuga o limbă vă rugăm să alegeți una din listă, sau introduceți codul ei.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="85"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="110"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în sus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="136"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în jos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="40"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nume</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="40"/>
         <source>Code</source>
-        <translation type="unfinished"/>
+        <translation>Cod</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="70"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="121"/>
         <source>Any other</source>
-        <translation type="unfinished"/>
+        <translation>Orice altă</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="71"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="125"/>
         <source>System language (%1 - %2)</source>
-        <translation type="unfinished"/>
+        <translation>Limba sistemului (%1 - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="133"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Personalizat</translation>
     </message>
 </context>
 <context>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="67"/>
         <source>Enter address or search...</source>
-        <translation type="unfinished"/>
+        <translation>Introduceți adresa, sau cautați...</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="374"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="390"/>
         <source>Click to load all plugins on the page</source>
-        <translation type="unfinished"/>
+        <translation>Click pentru a încărca toate plugin-urile pe pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="571"/>
@@ -190,35 +190,35 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
         <location filename="../../src/core/Application.cpp" line="543"/>
         <location filename="../../src/core/Application.cpp" line="592"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Întrebare</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="544"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Tentativa de renunțare în timp ce %n fișier este încă în curs de descărcare.</numerusform><numerusform>Tentativa de renunțare în timp ce %n fișiere sunt încă în curs de descărcare.</numerusform><numerusform>Tentativa de renunțare în timp ce %n fișiere sunt încă în curs de descărcare.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="545"/>
         <location filename="../../src/core/Application.cpp" line="594"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Doriţi să continuaţi?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="549"/>
         <location filename="../../src/core/Application.cpp" line="598"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Nu se mai afișează acest mesaj</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="551"/>
         <location filename="../../src/core/Application.cpp" line="600"/>
         <source>Hide</source>
-        <translation type="unfinished"/>
+        <translation>Ascunde</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="593"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Sunteţi pe calse să părăsiţi sesiunea curentă Otter Browser</translation>
     </message>
 </context>
 <context>
@@ -321,7 +321,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="84"/>
         <source>View Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Vizualizează semnul de carte</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="133"/>
@@ -344,27 +344,27 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="97"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Titlu: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="101"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresă: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="106"/>
         <source>Description: %1</source>
-        <translation type="unfinished"/>
+        <translation>Descriere: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="111"/>
         <source>Created: %1</source>
-        <translation type="unfinished"/>
+        <translation>Create: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="116"/>
         <source>Visited: %1</source>
-        <translation type="unfinished"/>
+        <translation>Vizitate: %1</translation>
     </message>
 </context>
 <context>
@@ -372,17 +372,17 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Editează bara de unelte</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation type="unfinished"/>
+        <translation>Dosar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="35"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nume:</translation>
     </message>
 </context>
 <context>
@@ -551,7 +551,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="141"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Note</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="141"/>
@@ -566,22 +566,22 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="158"/>
         <source>Failed to open bookmarks file (%1): %2</source>
-        <translation type="unfinished"/>
+        <translation>Eşuare la  deschiderea fişierului cu semne de carte (%1): %2</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eroare</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
         <source>Failed to parse bookmarks file. No bookmarks were loaded.</source>
-        <translation type="unfinished"/>
+        <translation>Interpretarea fișierului cu semne de carte a eșuat. Nici un semn nu a fost încărcat.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="184"/>
         <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation type="unfinished"/>
+        <translation>Încarcarea fișierului cu semne de carte a eșuat. Codul de eroare al QXmlStreamReader: %1</translation>
     </message>
 </context>
 <context>
@@ -800,17 +800,17 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="241"/>
         <source>Copy Option Name</source>
-        <translation type="unfinished"/>
+        <translation>Copiază numele optiunii</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="242"/>
         <source>Copy Option Value</source>
-        <translation type="unfinished"/>
+        <translation>Copiază valoarea optiunii</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="244"/>
         <source>Restore Default Value</source>
-        <translation type="unfinished"/>
+        <translation>Restabiliţi Valoarea Implicită</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="251"/>
@@ -872,7 +872,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="223"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Copiază</translation>
     </message>
 </context>
 <context>
@@ -885,7 +885,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
         <source>Profiles (AdBlock Plus compatible)</source>
-        <translation type="unfinished"/>
+        <translation>Profile (AdBlock Plus compatibil)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="60"/>
@@ -910,17 +910,17 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titlu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervalul de actualizare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Ultima actualizare</translation>
     </message>
 </context>
 <context>
@@ -928,18 +928,18 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <source>%n day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n zi</numerusform><numerusform>%n zile</numerusform><numerusform>%n zi(le)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="63"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Niciodată</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="62"/>
         <source> day(s)</source>
-        <translation type="unfinished"/>
+        <translation>zi(le)</translation>
     </message>
 </context>
 <context>
@@ -947,7 +947,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="48"/>
         <source>(Unknown)</source>
-        <translation type="unfinished"/>
+        <translation>(Necunoscut)</translation>
     </message>
 </context>
 <context>
@@ -1020,23 +1020,23 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="264"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="283"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Întrebare</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="265"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sunțe pe cale să ștergeți %n cookie.</numerusform><numerusform>Sunțe pe cale să ștergeți %n cookie-uri.</numerusform><numerusform>Sunțe pe cale să ștergeți %n cookie-uri.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="266"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="285"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Doriţi să continuaţi?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="284"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Sunțe pe cale să ștergeți toate cookie-urile.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
@@ -1046,12 +1046,12 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain...</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate cookie-urile din acest domeniu...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies...</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate cookie-urile</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="430"/>
@@ -1224,7 +1224,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm; *.html)</source>
-        <translation type="unfinished"/>
+        <translation>Fișiere HTML (*.htm; *.html)</translation>
     </message>
 </context>
 <context>
@@ -1269,7 +1269,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="38"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Necunoscut</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="65"/>
@@ -1305,7 +1305,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/web/ImagePropertiesDialog.cpp" line="110"/>
         <source>%1 x %2 pixels</source>
-        <translation type="unfinished"/>
+        <translation>%1 x %2 pixeli</translation>
     </message>
 </context>
 <context>
@@ -1337,57 +1337,57 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="14"/>
         <source>JavaScript Options</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni de JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="29"/>
         <source>Allow moving and resizing of windows</source>
-        <translation type="unfinished"/>
+        <translation>Permite mișcare și redimensionarea ferestrelor</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="42"/>
         <source>Allow changing of status field</source>
-        <translation type="unfinished"/>
+        <translation>Permite modificarea câmpului de status</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="52"/>
         <source>Allow script to hide address bar</source>
-        <translation type="unfinished"/>
+        <translation>Permite scriptului sa ascunda bara de adrese</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="59"/>
         <source>Allow access to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Permite access la Clipboard</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="66"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Permite dezactivarea meniului contextual</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="73"/>
         <source>Allow to open windows</source>
-        <translation type="unfinished"/>
+        <translation>Permite deschiderea de ferestre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="82"/>
         <source>Allow to close windows:</source>
-        <translation type="unfinished"/>
+        <translation>Permite închiderea de ferestre:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="35"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Cere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="36"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Mereu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Niciodată</translation>
     </message>
 </context>
 <context>
@@ -1461,7 +1461,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="708"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Browser-ul web controlat de către utilizator, nu invers.</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Browser-ul web controlat de către utilizator, nu vice-versa.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="709"/>
@@ -1496,42 +1496,42 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importă Marcajele din Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Importă Marcaje HTML</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="184"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Deschide</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="185"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Deschide în tab nou</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Deschide în tab nou în fundal</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="188"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Deschide în fereastră nouă</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="189"/>
         <source>Open in New Background Window</source>
-        <translation type="unfinished"/>
+        <translation>Deschide în fereastră nouă în fundal</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="273"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Deschide Toate</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="292"/>
@@ -1545,52 +1545,52 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="330"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Auto-detectare </translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="385"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Goleşte</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="395"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Fereastra - %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="456"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n tab)</numerusform><numerusform>%1 (%n taburi)</numerusform><numerusform>%1 (%n tab(uri))</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="485"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare nouă</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="486"/>
         <source>Add Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă bară de unelte</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="487"/>
         <source>Add Bookmarks Bar...</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă bară pentru semnele de carte...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="492"/>
         <source>Reset to Defaults...</source>
-        <translation type="unfinished"/>
+        <translation>Restabiliţi valorile implicite</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="511"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Implicit</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="533"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>În mod personalizat</translation>
     </message>
 </context>
 <context>
@@ -1598,7 +1598,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/toolbars/MenuButtonWidget.cpp" line="36"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Meniu</translation>
     </message>
 </context>
 <context>
@@ -1627,7 +1627,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="253"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>În mod personalizat</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="268"/>
@@ -1648,78 +1648,78 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="100"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="107"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="44"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="153"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
         <source>Add Folder</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare Dosar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="183"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
         <source>Add Note</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare Notă</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
         <source>Add Separator</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă separator</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
         <source>Add note...</source>
-        <translation type="unfinished"/>
+        <translation>Adăuga...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
         <source>Select Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Alege numele folder-ului</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
         <source>Enter folder name:</source>
-        <translation type="unfinished"/>
+        <translation>Introduceți numele folderului:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Goleşte Gunoiul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
         <source>Add Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă semn de carte</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="169"/>
         <source>Open source page</source>
-        <translation type="unfinished"/>
+        <translation>Deschide sursa paginii...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="195"/>
         <source>Restore Note</source>
-        <translation type="unfinished"/>
+        <translation>Restaurare Nota</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="360"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Manager de note</translation>
     </message>
 </context>
 <context>
@@ -1727,7 +1727,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/NotificationDialog.cpp" line="73"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Închide</translation>
     </message>
 </context>
 <context>
@@ -1735,12 +1735,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
         <source>Go to Page</source>
-        <translation type="unfinished"/>
+        <translation>Mergeți la pagina</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation type="unfinished"/>
+        <translation>Introduceți o adresă web sau alege una din listă:</translation>
     </message>
 </context>
 <context>
@@ -1771,7 +1771,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="103"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Fișierele cu semne de carte ale Opera (bookmarks.adr)</translation>
     </message>
 </context>
 <context>
@@ -1792,57 +1792,57 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="49"/>
         <source>Allow this time</source>
-        <translation type="unfinished"/>
+        <translation>Permite de această dată</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="54"/>
         <source>Always allow</source>
-        <translation type="unfinished"/>
+        <translation>Permite întotdeauna</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="59"/>
         <source>Always deny</source>
-        <translation type="unfinished"/>
+        <translation>Refuză întotdeauna</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Anulează</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants access to your location.</source>
-        <translation type="unfinished"/>
+        <translation>%1 dorește access la infromatia despre locația dumneavoastră.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
         <source>%1 wants to show notifications.</source>
-        <translation type="unfinished"/>
+        <translation>%1 dorește să afișeze notificări.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your microphone.</source>
-        <translation type="unfinished"/>
+        <translation>%1 dorește să acceseze microfonul.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
         <source>%1 wants to access your camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 dorește să acceseze camera.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation type="unfinished"/>
+        <translation>%1 dorește să acceseze microfonul și camera.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>Invalid permission request from %1.</source>
-        <translation type="unfinished"/>
+        <translation>Solicitare de permisiune invalidă de la %1.</translation>
     </message>
 </context>
 <context>
@@ -1883,7 +1883,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="99"/>
         <source>Use Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Foloseşte semn de carte</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="106"/>
@@ -1913,7 +1913,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="170"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>În schimb,deschide ferestre noi într-un nou tabel</translation>
+        <translation>În schimb, deschide ferestre noi într-un nou tab</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="177"/>
@@ -1958,7 +1958,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="249"/>
         <source>Preferred Webpage Language:</source>
-        <translation type="unfinished"/>
+        <translation>Limba preferată pentru pagina web:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="274"/>
@@ -1970,12 +1970,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="291"/>
         <source>System Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Valorile implicite ale sistemului</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="303"/>
         <source>Set as a default browser</source>
-        <translation type="unfinished"/>
+        <translation>Setați ca browser implicit</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="346"/>
@@ -2139,12 +2139,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="837"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Activează cookie-uri</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="882"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Accepta cookie-uri:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="895"/>
@@ -2243,7 +2243,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1230"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Notificări</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1235"/>
@@ -2268,12 +2268,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1260"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Altele</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1281"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>Evenimente</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1321"/>
@@ -2283,22 +2283,22 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1336"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Afişează notificare</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1343"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă identitate în bara de activități</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1359"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1366"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Prefer notificari native</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1396"/>
@@ -2318,47 +2318,47 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1425"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>Sugerează rezultatele căutării</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1464"/>
         <source>Enable images</source>
-        <translation type="unfinished"/>
+        <translation>Activează imagini</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1473"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Activeaza JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1480"/>
         <source>JavaScript Options...</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni JavaScript...</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1489"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>Activează Java</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1498"/>
         <source>Plugins:</source>
-        <translation type="unfinished"/>
+        <translation>Pluginuri:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1512"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Foaia de stiluri a utilizatorului:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1554"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Trimite informații de recomandare</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1563"/>
         <source>User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Agent Utilizator:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1591"/>
@@ -2368,27 +2368,27 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1600"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>Mod:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1614"/>
         <source>No proxy</source>
-        <translation type="unfinished"/>
+        <translation>Fără proxy</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1619"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurările sistem</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1624"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurări manuale</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1629"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Configurări automate (PAC)</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1731"/>
@@ -2403,67 +2403,67 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1745"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Servere</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1752"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1759"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1766"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1780"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1794"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Toate</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1832"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Calea către fișierul PAC:</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1849"/>
         <source>Use system authentication</source>
-        <translation type="unfinished"/>
+        <translation>Folosește autenticarea de la sistem</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="1879"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Cifru SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2005"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Comenzi rapide de la tastatură</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2064"/>
         <source>Clone</source>
-        <translation type="unfinished"/>
+        <translation>Clonează</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2170"/>
         <source>Show tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Arată pictograma din systray</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="2188"/>
         <source>All Settings</source>
-        <translation type="unfinished"/>
+        <translation>Toate Setările</translation>
     </message>
     <message>
         <location filename="../../src/ui/PreferencesDialog.cpp" line="137"/>
@@ -3035,7 +3035,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="59"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Caută anteriorul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
@@ -5063,37 +5063,37 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="138"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="139"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Selectați Tot</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="140"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Șterge Tot</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="141"/>
         <source>Check Spelling</source>
-        <translation type="unfinished"/>
+        <translation>Verificare ortografică</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="142"/>
         <source>Find...</source>
-        <translation type="unfinished"/>
+        <translation>Gaseşte...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="143"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Caută urmatorul</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="144"/>
         <source>Find Previous</source>
-        <translation type="unfinished"/>
+        <translation>Caută anteriorul</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="145"/>
