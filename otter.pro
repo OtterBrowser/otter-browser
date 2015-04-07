@@ -292,7 +292,7 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
 
-greaterThan(QT_MINOR_VERSION, 2): SOURCES += src/modules/windows/web/StartPageWidget.h
+greaterThan(QT_MINOR_VERSION, 2): HEADERS += src/modules/windows/web/StartPageWidget.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 

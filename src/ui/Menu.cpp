@@ -484,12 +484,12 @@ void Menu::populateToolBarsMenu()
 
 	QMenu *menu = addMenu(tr("Add New"));
 	menu->addAction(tr("Add Toolbar"), ToolBarsManager::getInstance(), SLOT(addToolBar()));
-	menu->addAction(tr("Add Bookmarks Bar..."), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
+	menu->addAction(tr("Add Bookmarks Bar…"), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
 
 	addSeparator();
 	addAction(ActionsManager::LockToolBarsAction, true);
 	addSeparator();
-	QMenu::addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBars()));
+	QMenu::addAction(tr("Reset to Defaults…"), ToolBarsManager::getInstance(), SLOT(resetToolBars()));
 }
 
 void Menu::populateUserAgentMenu()

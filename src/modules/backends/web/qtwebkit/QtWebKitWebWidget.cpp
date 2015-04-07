@@ -647,7 +647,7 @@ void QtWebKitWebWidget::updatePageActions(const QUrl &url)
 {
 	if (m_actions.contains(ActionsManager::AddBookmarkAction))
 	{
-		m_actions[ActionsManager::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark...") : QT_TRANSLATE_NOOP("actions", "Add Bookmark..."));
+		m_actions[ActionsManager::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
 	}
 
 	if (m_actions.contains(ActionsManager::WebsitePreferencesAction))
@@ -834,7 +834,7 @@ void QtWebKitWebWidget::updateLinkActions()
 
 	if (m_actions.contains(ActionsManager::BookmarkLinkAction))
 	{
-		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark...") : QT_TRANSLATE_NOOP("actions", "Bookmark Link..."));
+		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
 		m_actions[ActionsManager::BookmarkLinkAction]->setEnabled(isLink);
 	}
 
@@ -935,7 +935,7 @@ void QtWebKitWebWidget::updateMediaActions()
 
 	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
 	{
-		m_actions[ActionsManager::SaveMediaToDiskAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Save Video...") : QT_TRANSLATE_NOOP("actions", "Save Audio..."));
+		m_actions[ActionsManager::SaveMediaToDiskAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Save Video…") : QT_TRANSLATE_NOOP("actions", "Save Audio…"));
 		m_actions[ActionsManager::SaveMediaToDiskAction]->setEnabled(isMedia);
 	}
 

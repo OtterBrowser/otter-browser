@@ -32,7 +32,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_completer(NULL),
 	m_selectFile(true)
 {
-	QPushButton *button = new QPushButton(tr("Browse..."), this);
+	QPushButton *button = new QPushButton(tr("Browse…"), this);
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->addWidget(m_lineEdit);
 	layout->addWidget(button);

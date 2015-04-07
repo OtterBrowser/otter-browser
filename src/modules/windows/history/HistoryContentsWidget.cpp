@@ -383,7 +383,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(NewWindowOpen);
 		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(NewBackgroundWindowOpen);
 		menu.addSeparator();
-		menu.addAction(tr("Add to Bookmarks..."), this, SLOT(bookmarkEntry()));
+		menu.addAction(tr("Add to Bookmarks…"), this, SLOT(bookmarkEntry()));
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
 		menu.addSeparator();
 		menu.addAction(tr("Remove Entry"), this, SLOT(removeEntry()));

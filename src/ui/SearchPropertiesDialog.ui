@@ -36,7 +36,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Change Icon...</string>
+          <string>Change Icon…</string>
          </property>
          <property name="icon">
           <iconset resource="../../resources/resources.qrc">

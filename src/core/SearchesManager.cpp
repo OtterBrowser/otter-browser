@@ -167,7 +167,7 @@ void SearchesManager::updateSearchEnginesModel()
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), tr("Manage Search Engines..."));
+		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), tr("Manage Search Engines…"));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
 		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
 

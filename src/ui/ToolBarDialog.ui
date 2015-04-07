@@ -226,7 +226,7 @@
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Edit...</string>
+             <string>Edit…</string>
             </property>
            </widget>
           </item>
@@ -353,7 +353,7 @@
         <item row="2" column="0">
          <widget class="QLineEdit" name="availableEntriesFilterLineEdit">
           <property name="placeholderText">
-           <string>Filter...</string>
+           <string>Filter…</string>
           </property>
           <property name="clearButtonEnabled">
            <bool>true</bool>
@@ -363,7 +363,7 @@
         <item row="2" column="2">
          <widget class="QLineEdit" name="currentEntriesFilterLineEdit">
           <property name="placeholderText">
-           <string>Filter...</string>
+           <string>Filter…</string>
           </property>
           <property name="clearButtonEnabled">
            <bool>true</bool>

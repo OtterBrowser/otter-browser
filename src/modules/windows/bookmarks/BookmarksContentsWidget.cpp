@@ -216,7 +216,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			}
 
 			menu.addSeparator();
-			menu.addAction(tr("Properties..."), this, SLOT(bookmarkProperties()));
+			menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
 		}
 	}
 

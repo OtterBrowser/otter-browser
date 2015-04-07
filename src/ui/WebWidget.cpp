@@ -702,7 +702,7 @@ QMenu* WebWidget::getReloadTimeMenu()
 		m_reloadTimeMenu->addAction(tr("2 Hours"))->setData(7200);
 		m_reloadTimeMenu->addAction(tr("6 Hours"))->setData(21600);
 		m_reloadTimeMenu->addAction(tr("Never"))->setData(0);
-		m_reloadTimeMenu->addAction(tr("Custom..."))->setData(-2);
+		m_reloadTimeMenu->addAction(tr("Custom…"))->setData(-2);
 		m_reloadTimeMenu->addSeparator();
 		m_reloadTimeMenu->addAction(tr("Page Default"))->setData(-1);
 

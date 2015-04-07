@@ -26,7 +26,7 @@
    <item>
     <widget class="QLineEdit" name="filterLineEdit">
      <property name="placeholderText">
-      <string>Search...</string>
+      <string>Search…</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>true</bool>

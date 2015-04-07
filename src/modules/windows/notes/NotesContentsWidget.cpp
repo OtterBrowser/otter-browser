@@ -53,7 +53,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->notesView->viewport()->setMouseTracking(true);
 
 #if QT_VERSION >= 0x050300
-	m_ui->textEdit->setPlaceholderText(tr("Add note..."));
+	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
 #endif
 
 	if (!window)

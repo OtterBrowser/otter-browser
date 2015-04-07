@@ -305,10 +305,10 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 			menu.addAction(tr("Remove Cookie"), this, SLOT(removeCookies()));
 		}
 
-		menu.addAction(tr("Remove All Cookies from This Domain..."), this, SLOT(removeDomainCookies()));
+		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
 	}
 
-	menu.addAction(tr("Remove All Cookies..."), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesView->model()->rowCount() > 0);
+	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesView->model()->rowCount() > 0);
 	menu.addSeparator();
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
 	menu.exec(m_ui->cookiesView->mapToGlobal(point));

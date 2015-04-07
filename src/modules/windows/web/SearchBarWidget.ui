@@ -32,7 +32,7 @@
       </sizepolicy>
      </property>
      <property name="placeholderText">
-      <string>Find...</string>
+      <string>Find…</string>
      </property>
     </widget>
    </item>

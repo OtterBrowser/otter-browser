@@ -144,7 +144,7 @@
         </sizepolicy>
        </property>
        <property name="placeholderText">
-        <string>Filter...</string>
+        <string>Filter…</string>
        </property>
       </widget>
      </item>

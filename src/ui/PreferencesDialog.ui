@@ -271,7 +271,7 @@
            <item>
             <widget class="QPushButton" name="acceptLanguageButton">
              <property name="text">
-              <string>Edit...</string>
+              <string>Edit…</string>
              </property>
             </widget>
            </item>
@@ -823,7 +823,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Template...</string>
+                 <string>Template…</string>
                 </property>
                </widget>
               </item>
@@ -952,7 +952,7 @@
               <item>
                <widget class="QPushButton" name="clearHistoryButton">
                 <property name="text">
-                 <string>Settings...</string>
+                 <string>Settings…</string>
                 </property>
                </widget>
               </item>
@@ -1007,7 +1007,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Manage...</string>
+            <string>Manage…</string>
            </property>
           </widget>
          </item>
@@ -1044,7 +1044,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Change...</string>
+            <string>Change…</string>
            </property>
           </widget>
          </item>
@@ -1077,7 +1077,7 @@
            <item>
             <widget class="QLineEdit" name="searchFilterLineEdit">
              <property name="placeholderText">
-              <string>Search...</string>
+              <string>Search…</string>
              </property>
              <property name="clearButtonEnabled">
               <bool>true</bool>
@@ -1129,7 +1129,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Edit...</string>
+              <string>Edit…</string>
              </property>
             </widget>
            </item>
@@ -1477,7 +1477,7 @@
              <item>
               <widget class="QPushButton" name="javaScriptOptionsButton">
                <property name="text">
-                <string>JavaScript Options...</string>
+                <string>JavaScript Options…</string>
                </property>
               </widget>
              </item>
@@ -1573,7 +1573,7 @@
              <item>
               <widget class="QPushButton" name="userAgentButton">
                <property name="text">
-                <string>Manage...</string>
+                <string>Manage…</string>
                </property>
               </widget>
              </item>
@@ -2051,7 +2051,7 @@
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>Edit...</string>
+                  <string>Edit…</string>
                  </property>
                 </widget>
                </item>

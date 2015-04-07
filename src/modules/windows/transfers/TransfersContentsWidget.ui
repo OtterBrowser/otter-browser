@@ -28,7 +28,7 @@
      <item>
       <widget class="QLineEdit" name="downloadLineEdit">
        <property name="placeholderText">
-        <string>Quick Download...</string>
+        <string>Quick Download…</string>
        </property>
       </widget>
      </item>

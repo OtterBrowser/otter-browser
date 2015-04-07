@@ -64,7 +64,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent
 	{
 		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
-		setPlaceholderText(tr("Enter address or search..."));
+		setPlaceholderText(tr("Enter address or search…"));
 		setMouseTracking(true);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));

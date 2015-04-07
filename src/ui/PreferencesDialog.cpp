@@ -330,7 +330,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 
 				QMenu *addSearchMenu = new QMenu(m_ui->addSearchButton);
-				addSearchMenu->addAction(tr("New..."));
+				addSearchMenu->addAction(tr("New…"));
 				addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 				m_ui->addSearchButton->setMenu(addSearchMenu);
@@ -523,7 +523,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 				m_ui->actionShortcutsViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 				QMenu *addKeyboardProfileMenu = new QMenu(m_ui->actionShortcutsAddButton);
-				addKeyboardProfileMenu->addAction(tr("New..."));
+				addKeyboardProfileMenu->addAction(tr("New…"));
 				addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->actionShortcutsAddButton));
 
 				m_ui->actionShortcutsAddButton->setMenu(addKeyboardProfileMenu);

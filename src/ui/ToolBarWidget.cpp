@@ -537,9 +537,9 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 	menu->setTitle(tr("Customize"));
 
 	QMenu *toolBarMenu = menu->addMenu(definition.title.isEmpty() ? tr("(Untitled)") : definition.title);
-	toolBarMenu->addAction(tr("Configure..."), ToolBarsManager::getInstance(), SLOT(configureToolBar()))->setData(identifier);
+	toolBarMenu->addAction(tr("Configure…"), ToolBarsManager::getInstance(), SLOT(configureToolBar()))->setData(identifier);
 
-	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults..."), ToolBarsManager::getInstance(), SLOT(resetToolBar()));
+	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults…"), ToolBarsManager::getInstance(), SLOT(resetToolBar()));
 	resetAction->setData(identifier);
 	resetAction->setEnabled(definition.canReset);
 
@@ -556,7 +556,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 	toolBarMenu->addSeparator();
 
-	QAction *removeAction = toolBarMenu->addAction(Utils::getIcon(QLatin1String("list-remove")), tr("Remove..."), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
+	QAction *removeAction = toolBarMenu->addAction(Utils::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
 	removeAction->setData(identifier);
 	removeAction->setEnabled(!definition.isDefault);
 
