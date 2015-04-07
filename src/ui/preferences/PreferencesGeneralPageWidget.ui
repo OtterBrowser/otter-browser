@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Otter::PreferencesGeneralPageWidget</class>
+ <widget class="QWidget" name="Otter::PreferencesGeneralPageWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>535</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="startupHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Startup</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="startupLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="startupLabel">
+       <property name="text">
+        <string>Startup behavior:</string>
+       </property>
+       <property name="buddy">
+        <cstring>startupBehaviorComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="startupBehaviorComboBox"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="homePageLabel">
+       <property name="text">
+        <string>Home page:</string>
+       </property>
+       <property name="buddy">
+        <cstring>homePageLineEdit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="homePageLineEdit"/>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="homePageLayout" stretch="1,0,0,0">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="useCurrentAsHomePageButton">
+         <property name="text">
+          <string>Use Current Page</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="useBookmarkAsHomePageButton">
+         <property name="text">
+          <string>Use Bookmark</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="restoreHomePageButton">
+         <property name="text">
+          <string>Restore to Default</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="downloadsHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Downloads</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="downloadsLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="downloadsLabel">
+       <property name="text">
+        <string>Save files to:</string>
+       </property>
+       <property name="buddy">
+        <cstring>downloadsFilePathWidget</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="Otter::FilePathWidget" name="downloadsFilePathWidget" native="true"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="alwaysAskCheckBox">
+     <property name="text">
+      <string>Always ask me where to save files</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="tabsHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Tabs</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="tabsInsteadOfWindowsCheckBox">
+     <property name="text">
+      <string>Open new windows in a new tab instead</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="delayTabsLoadingCheckBox">
+     <property name="text">
+      <string>Delay loading of tabs until selected</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="reuseCurrentTabCheckBox">
+     <property name="text">
+      <string>Reuse current tab</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="openNextToActiveheckBox">
+     <property name="text">
+      <string>Open new tab next to active</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="tabsLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="closingTabLabel">
+       <property name="text">
+        <string>When closing tab:</string>
+       </property>
+       <property name="buddy">
+        <cstring>closingTabComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="closingTabComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Activate the last active tab</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Activate the next tab</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Activate the first tab opened from current tab</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="languageHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Language</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="languageLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="acceptLanguageLabel">
+       <property name="text">
+        <string>Preferred Webpage Language:</string>
+       </property>
+       <property name="buddy">
+        <cstring>acceptLanguageButton</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="acceptLanguageButtonLayout">
+       <item>
+        <spacer name="acceptLanguageSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="acceptLanguageButton">
+         <property name="text">
+          <string>Edit…</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="systemDefaultsHeader">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>System Defaults</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="systemDefaultsLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <item>
+      <widget class="QPushButton" name="setDefaultButton">
+       <property name="text">
+        <string>Set as a default browser</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="systemDefaultLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="setDefaultSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="spacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

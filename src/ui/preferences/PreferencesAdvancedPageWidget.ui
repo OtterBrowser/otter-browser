@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Otter::PreferencesAdvancedPageWidget</class>
+ <widget class="QWidget" name="Otter::PreferencesAdvancedPageWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QListWidget" name="advancedListWidget">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <item>
+      <property name="text">
+       <string>Notifications</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Address Field</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Content</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Network</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Security</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Keyboard</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Other</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="advancedStackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="notificationsPage">
+      <layout class="QVBoxLayout" name="notificationsLayout">
+       <item>
+        <widget class="QLabel" name="notificationsEventsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Events</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Otter::ItemViewWidget" name="notificationsItemView">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="notificationOptionsWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="notificationOptionsLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="notificationsPlaySoundLayout">
+            <item>
+             <widget class="QLabel" name="notificationsPlaySoundLabel">
+              <property name="text">
+               <string>Play sound:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="notificationsPlaySoundButton"/>
+            </item>
+            <item>
+             <widget class="Otter::FilePathWidget" name="notificationsPlaySoundFilePathWidget" native="true"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="notificationsShowNotificationCheckBox">
+            <property name="text">
+             <string>Show notification</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="notificationsShowAlertCheckBox">
+            <property name="text">
+             <string>Mark taskbar entry</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="notificationsOptionsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Options</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="preferNativeNotificationsCheckBox">
+         <property name="text">
+          <string>Prefer native notifications</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="notificationsSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>153</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="addressFieldPage">
+      <layout class="QVBoxLayout" name="addressFieldLayout" stretch="0,0,1">
+       <item>
+        <widget class="QLabel" name="suggestionsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Suggestions</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="suggestionsLayout">
+         <item>
+          <widget class="QCheckBox" name="suggestBookmarksCheckBox">
+           <property name="text">
+            <string>Suggest bookmarks</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="suggestHistoryCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Suggest history</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="suggestSearchCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Suggest search results</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="suggestionsSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="contentPage">
+      <layout class="QVBoxLayout" name="contentPageLayout">
+       <item>
+        <widget class="QLabel" name="contentGeneralHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>General</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="enableImagesCheckBox">
+         <property name="text">
+          <string>Enable images</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="javaScriptOptionslLayout" stretch="1,0">
+         <item>
+          <widget class="QCheckBox" name="enableJavaScriptCheckBox">
+           <property name="text">
+            <string>Enable JavaScript</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="javaScriptOptionsButton">
+           <property name="text">
+            <string>JavaScript Options…</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="enableJavaCheckBox">
+         <property name="text">
+          <string>Enable Java</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="pluginsLayout">
+         <item>
+          <widget class="QLabel" name="pluginsLabel">
+           <property name="text">
+            <string>Plugins:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="pluginsComboBox"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="userStyleSheetLayout">
+         <item>
+          <widget class="QLabel" name="userStyleSheetWidget">
+           <property name="text">
+            <string>User style sheet:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Otter::FilePathWidget" name="userStyleSheetFilePathWidget" native="true"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="advancedContentSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="networkPage">
+      <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,1">
+       <item>
+        <widget class="QLabel" name="advancedGeneralHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>General</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="sendReferrerCheckBox">
+         <property name="text">
+          <string>Send referrer information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="userAgentLayout">
+         <item>
+          <widget class="QLabel" name="userAgentLabel">
+           <property name="text">
+            <string>User Agent:</string>
+           </property>
+           <property name="buddy">
+            <cstring>userAgentComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="userAgentComboBox"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="userAgentButton">
+           <property name="text">
+            <string>Manage…</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="proxyHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Proxy</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="proxyModeLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="proxyModeLabel">
+           <property name="text">
+            <string>Mode:</string>
+           </property>
+           <property name="buddy">
+            <cstring>proxyModeComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="proxyModeComboBox">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>No proxy</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>System configuration</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Manual configuration</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Automatic configuration (PAC)</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="proxyConfigurationLayout">
+         <item>
+          <spacer name="proxyConfigurationSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="proxyConfigurationModesLayout">
+           <item>
+            <widget class="QWidget" name="manualProxyConfigurationWidget" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <layout class="QGridLayout" name="manualProxyConfigurationLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="httpProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QSpinBox" name="httpProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QSpinBox" name="httpsProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="httpsProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QSpinBox" name="socksProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QSpinBox" name="ftpProxyPortSpinBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="proxyPortLabel">
+                <property name="text">
+                 <string>Port</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="proxyProtocolabel">
+                <property name="text">
+                 <string>Protocol</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="proxyServerLabel">
+                <property name="text">
+                 <string>Servers</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="ftpProxyCheckBox">
+                <property name="text">
+                 <string>FTP</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="socksProxyCheckBox">
+                <property name="text">
+                 <string>SOCKS5</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="httpProxyCheckBox">
+                <property name="text">
+                 <string>HTTP</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="socksProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="httpsProxyCheckBox">
+                <property name="text">
+                 <string>HTTPS</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="ftpProxyServersLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="allProxyCheckBox">
+                <property name="text">
+                 <string>All</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="allProxyServersLineEdit"/>
+              </item>
+              <item row="1" column="2">
+               <widget class="QSpinBox" name="allProxyPortSpinBox">
+                <property name="maximum">
+                 <number>65535</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="automaticProxyConfigurationWidget" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="automaticProxyConfigurationLabel">
+                <property name="text">
+                 <string>Path to PAC file:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Otter::FilePathWidget" name="automaticProxyConfigurationFilePathWidget" native="true"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="proxySystemAuthentication">
+         <property name="text">
+          <string>Use system authentication</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="networkPageSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="securityPage">
+      <layout class="QVBoxLayout" name="securityLayout">
+       <item>
+        <widget class="QLabel" name="ciphersHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>SSL ciphers</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="ciphersLayout">
+         <item>
+          <widget class="Otter::ItemViewWidget" name="ciphersViewWidget">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::InternalMove</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::MoveAction</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="ciphersButtonsLayout" stretch="0,0,0,0">
+           <item>
+            <widget class="QPushButton" name="ciphersAddButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ciphersRemoveButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="ciphersSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="ciphersMoveButtonsLayout">
+             <item>
+              <widget class="QToolButton" name="ciphersMoveUpButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Up</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="ciphersMoveButtonsSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QToolButton" name="ciphersMoveDownButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Down</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="keyboardPage">
+      <layout class="QVBoxLayout" name="keyboardLayout">
+       <item>
+        <widget class="QLabel" name="actionShortcutsHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Keyboard Shortcuts</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="actionShortcutsLayout">
+         <item>
+          <widget class="Otter::ItemViewWidget" name="actionShortcutsViewWidget">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::InternalMove</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::MoveAction</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,1,0">
+           <item>
+            <widget class="QPushButton" name="actionShortcutsAddButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="actionShortcutsEditButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Edit…</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="actionShortcutsCloneButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Clone</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="actionShortcutsRemoveButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="actionShortcutsSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="actionShortcutsMoveButtonsLayout">
+             <item>
+              <widget class="QToolButton" name="actionShortcutsMoveUpButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Up</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="actionShortcutsMoveButtonsSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QToolButton" name="actionShortcutsMoveDownButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Move Down</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="otherPage">
+      <widget class="QLabel" name="otherGeneralHeader">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>442</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>General</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="otherGeneralVerticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>441</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="otherGeneralVerticalLayout">
+        <item>
+         <widget class="QCheckBox" name="enableTrayIconCheckBox">
+          <property name="text">
+           <string>Show tray icon</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

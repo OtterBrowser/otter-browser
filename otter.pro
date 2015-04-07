@@ -126,6 +126,11 @@ SOURCES += src/main.cpp \
     src/ui/preferences/ContentBlockingIntervalDelegate.cpp \
     src/ui/preferences/JavaScriptPreferencesDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
+    src/ui/preferences/PreferencesAdvancedPageWidget.cpp \
+    src/ui/preferences/PreferencesContentPageWidget.cpp \
+    src/ui/preferences/PreferencesGeneralPageWidget.cpp \
+    src/ui/preferences/PreferencesPrivacyPageWidget.cpp \
+    src/ui/preferences/PreferencesSearchPageWidget.cpp \
     src/ui/preferences/SearchKeywordDelegate.cpp \
     src/ui/preferences/ShortcutsProfileDialog.cpp \
     src/ui/toolbars/ActionWidget.cpp \
@@ -257,6 +262,11 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/preferences/ContentBlockingIntervalDelegate.h \
     src/ui/preferences/JavaScriptPreferencesDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
+    src/ui/preferences/PreferencesAdvancedPageWidget.h \
+    src/ui/preferences/PreferencesContentPageWidget.h \
+    src/ui/preferences/PreferencesGeneralPageWidget.h \
+    src/ui/preferences/PreferencesPrivacyPageWidget.h \
+    src/ui/preferences/PreferencesSearchPageWidget.h \
     src/ui/preferences/SearchKeywordDelegate.h \
     src/ui/preferences/ShortcutsProfileDialog.h \
     src/ui/toolbars/ActionWidget.h \
@@ -322,6 +332,11 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/preferences/AcceptLanguageDialog.ui \
     src/ui/preferences/ContentBlockingDialog.ui \
     src/ui/preferences/JavaScriptPreferencesDialog.ui \
+    src/ui/preferences/PreferencesAdvancedPageWidget.ui \
+    src/ui/preferences/PreferencesContentPageWidget.ui \
+    src/ui/preferences/PreferencesGeneralPageWidget.ui \
+    src/ui/preferences/PreferencesPrivacyPageWidget.ui \
+    src/ui/preferences/PreferencesSearchPageWidget.ui \
     src/ui/preferences/ShortcutsProfileDialog.ui \
     src/modules/windows/bookmarks/BookmarksContentsWidget.ui \
     src/modules/windows/cache/CacheContentsWidget.ui \

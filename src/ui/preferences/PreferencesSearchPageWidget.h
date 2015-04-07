@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,42 +17,49 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESDIALOG_H
-#define OTTER_PREFERENCESDIALOG_H
+#ifndef OTTER_PREFERENCESSEARCHPAGEWIDGET_H
+#define OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 
-#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesDialog;
+	class PreferencesSearchPageWidget;
 }
 
-class PreferencesDialog : public QDialog
+struct SearchInformation;
+
+class PreferencesSearchPageWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
-	~PreferencesDialog();
+	explicit PreferencesSearchPageWidget(QWidget *parent = NULL);
+	~PreferencesSearchPageWidget();
 
 protected:
 	void changeEvent(QEvent *event);
+	void updateReaddSearchMenu();
 
 protected slots:
-	void currentTabChanged(int tab);
-	void openConfigurationManager();
-	void markModified();
+	void addSearchEngine();
+	void readdSearchEngine(QAction *action);
+	void editSearchEngine();
+	void removeSearchEngine();
+	void updateSearchActions();
 	void save();
 
 private:
-	QVector<bool> m_loadedTabs;
-	Ui::PreferencesDialog *m_ui;
+	QString m_defaultSearchEngine;
+	QStringList m_filesToRemove;
+	QHash<QString, QPair<bool, SearchInformation> > m_searchEngines;
+	Ui::PreferencesSearchPageWidget *m_ui;
 
 signals:
-	void requestedSave();
+	void settingsModified();
 };
 
 }

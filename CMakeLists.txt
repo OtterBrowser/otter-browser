@@ -170,6 +170,11 @@ set(otter_src
 	src/ui/preferences/ContentBlockingIntervalDelegate.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
+	src/ui/preferences/PreferencesAdvancedPageWidget.cpp
+	src/ui/preferences/PreferencesContentPageWidget.cpp
+	src/ui/preferences/PreferencesGeneralPageWidget.cpp
+	src/ui/preferences/PreferencesPrivacyPageWidget.cpp
+	src/ui/preferences/PreferencesSearchPageWidget.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/ui/preferences/ShortcutsProfileDialog.cpp
 	src/ui/toolbars/ActionWidget.cpp
@@ -238,6 +243,11 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/AcceptLanguageDialog.ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
+	src/ui/preferences/PreferencesAdvancedPageWidget.ui
+	src/ui/preferences/PreferencesContentPageWidget.ui
+	src/ui/preferences/PreferencesGeneralPageWidget.ui
+	src/ui/preferences/PreferencesPrivacyPageWidget.ui
+	src/ui/preferences/PreferencesSearchPageWidget.ui
 	src/ui/preferences/ShortcutsProfileDialog.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui

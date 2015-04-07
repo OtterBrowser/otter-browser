@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "AcceptLanguageDialog.h"
-#include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_AcceptLanguageDialog.h"
@@ -31,7 +30,7 @@
 namespace Otter
 {
 
-AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
+AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::AcceptLanguageDialog)
 {
 	m_ui->setupUi(this);
@@ -45,7 +44,7 @@ AcceptLanguageDialog::AcceptLanguageDialog(QWidget *parent) : QDialog(parent),
 	m_ui->languagesViewWidget->setModel(m_model);
 	m_ui->languagesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 
-	QStringList chosenLanguages = SettingsManager::getValue("Network/AcceptLanguage").toString().split(QLatin1Char(','), QString::SkipEmptyParts);
+	QStringList chosenLanguages = languages.split(QLatin1Char(','), QString::SkipEmptyParts);
 
 	for (int i = 0; i < chosenLanguages.count(); ++i)
 	{
@@ -155,7 +154,7 @@ void AcceptLanguageDialog::updateActions()
 	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->languagesViewWidget->getRowCount());
 }
 
-QString AcceptLanguageDialog::getLanguageList()
+QString AcceptLanguageDialog::getLanguages()
 {
 	QString result;
 	double step = 0.1;

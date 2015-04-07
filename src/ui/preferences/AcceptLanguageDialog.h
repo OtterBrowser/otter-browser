@@ -37,10 +37,10 @@ class AcceptLanguageDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit AcceptLanguageDialog(QWidget *parent = 0);
+	explicit AcceptLanguageDialog(const QString &languages, QWidget *parent = NULL);
 	~AcceptLanguageDialog();
 
-	QString getLanguageList();
+	QString getLanguages();
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:

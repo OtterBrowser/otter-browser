@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,42 +17,42 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESDIALOG_H
-#define OTTER_PREFERENCESDIALOG_H
+#ifndef OTTER_PREFERENCESCONTENTPAGEWIDGET_H
+#define OTTER_PREFERENCESCONTENTPAGEWIDGET_H
 
-#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesDialog;
+	class PreferencesContentPageWidget;
 }
 
-class PreferencesDialog : public QDialog
+class PreferencesContentPageWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
-	~PreferencesDialog();
+	explicit PreferencesContentPageWidget(QWidget *parent = NULL);
+	~PreferencesContentPageWidget();
 
 protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void currentTabChanged(int tab);
-	void openConfigurationManager();
-	void markModified();
+	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+	void fontChanged(QWidget *editor);
+	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+	void colorChanged(QWidget *editor);
 	void save();
 
 private:
-	QVector<bool> m_loadedTabs;
-	Ui::PreferencesDialog *m_ui;
+	Ui::PreferencesContentPageWidget *m_ui;
 
 signals:
-	void requestedSave();
+	void settingsModified();
 };
 
 }

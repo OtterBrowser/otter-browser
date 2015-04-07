@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,42 +19,43 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESDIALOG_H
-#define OTTER_PREFERENCESDIALOG_H
+#ifndef OTTER_PREFERENCESGENERALPAGEWIDGET_H
+#define OTTER_PREFERENCESGENERALPAGEWIDGET_H
 
-#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesDialog;
+	class PreferencesGeneralPageWidget;
 }
 
-class PreferencesDialog : public QDialog
+class PreferencesGeneralPageWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
-	~PreferencesDialog();
+	explicit PreferencesGeneralPageWidget(QWidget *parent = NULL);
+	~PreferencesGeneralPageWidget();
 
 protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void currentTabChanged(int tab);
-	void openConfigurationManager();
-	void markModified();
+	void useCurrentAsHomePage();
+	void useBookmarkAsHomePage(QAction *action);
+	void restoreHomePage();
+	void setupAcceptLanguage();
 	void save();
 
 private:
-	QVector<bool> m_loadedTabs;
-	Ui::PreferencesDialog *m_ui;
+	QString m_acceptLanguage;
+	Ui::PreferencesGeneralPageWidget *m_ui;
 
 signals:
-	void requestedSave();
+	void settingsModified();
 };
 
 }
