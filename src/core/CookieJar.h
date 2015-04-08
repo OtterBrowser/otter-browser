@@ -66,6 +66,8 @@ public:
 	bool forceInsertCookie(const QNetworkCookie &cookie);
 	bool forceUpdateCookie(const QNetworkCookie &cookie);
 	bool forceDeleteCookie(const QNetworkCookie &cookie);
+	bool hasCookie(const QNetworkCookie &cookie) const;
+	static bool isDomainTheSame(const QUrl &first, const QUrl &second);
 
 protected:
 	void timerEvent(QTimerEvent *event);

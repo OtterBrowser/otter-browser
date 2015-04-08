@@ -45,6 +45,34 @@ void CookieJarProxy::setup(CookieJar::CookiesPolicy generalCookiesPolicy, Cookie
 	m_keepMode = keepMode;
 }
 
+void CookieJarProxy::dialogClosed()
+{
+	m_isDialogVisible = false;
+
+	showDialog();
+}
+
+void CookieJarProxy::showDialog()
+{
+	if (m_operations.isEmpty() || m_isDialogVisible)
+	{
+		return;
+	}
+
+	m_isDialogVisible = true;
+
+	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation = m_operations.dequeue();
+
+	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+
+	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
+	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));
+	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+
+	m_widget->showDialog(&dialog);
+}
+
 void CookieJarProxy::setWidget(WebWidget *widget)
 {
 	m_widget = widget;
@@ -72,14 +100,14 @@ QList<QNetworkCookie> CookieJarProxy::cookiesForUrl(const QUrl &url) const
 
 bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 {
-	if (m_generalCookiesPolicy != CookieJar::AcceptAllCookies)
+	if (!canModifyCookie(cookie))
 	{
 		return false;
 	}
 
 	if (m_keepMode == CookieJar::AskIfKeepMode)
 	{
-		m_operations.enqueue(qMakePair(CookieJar::InsertCookie, cookie));
+		m_operations.enqueue(qMakePair((m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie));
 
 		if (m_operations.count() == 1)
 		{
@@ -102,37 +130,12 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 
 bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
 {
-	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
-	{
-		return false;
-	}
-
-	if (m_keepMode == CookieJar::AskIfKeepMode)
-	{
-		m_operations.enqueue(qMakePair(CookieJar::UpdateCookie, cookie));
-
-		if (m_operations.count() == 1)
-		{
-			QTimer::singleShot(250, this, SLOT(showDialog()));
-		}
-
-		return false;
-	}
-
-	if (m_keepMode == CookieJar::KeepUntilExitMode)
-	{
-		QNetworkCookie mutableCookie(cookie);
-		mutableCookie.setExpirationDate(QDateTime());
-
-		return m_cookieJar->forceUpdateCookie(mutableCookie);
-	}
-
-	return m_cookieJar->forceUpdateCookie(cookie);
+	return insertCookie(cookie);
 }
 
 bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
 {
-	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
+	if (!canModifyCookie(cookie))
 	{
 		return false;
 	}
@@ -152,9 +155,39 @@ bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
 	return m_cookieJar->forceDeleteCookie(cookie);
 }
 
+bool CookieJarProxy::canModifyCookie(const QNetworkCookie &cookie) const
+{
+	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
+	{
+		return false;
+	}
+
+	if (m_thirdPartyCookiesPolicy != CookieJar::AcceptAllCookies)
+	{
+		QUrl thirdPartyUrl;
+		thirdPartyUrl.setScheme(QLatin1String("http"));
+		thirdPartyUrl.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+
+		if (!CookieJar::isDomainTheSame(m_widget->getUrl(), thirdPartyUrl))
+		{
+			if (m_thirdPartyCookiesPolicy == CookieJar::IgnoreCookies)
+			{
+				return false;
+			}
+
+			if (m_thirdPartyCookiesPolicy == CookieJar::AcceptExistingCookies && !m_cookieJar->hasCookie(cookie))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url)
 {
-	if (m_generalCookiesPolicy != CookieJar::AcceptAllCookies)
+	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
 	{
 		return false;
 	}
@@ -166,11 +199,11 @@ bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, 
 		QNetworkCookie cookie = cookieList.at(i);
 		cookie.normalize(url);
 
-		if (validateCookie(cookie, url))
+		if (validateCookie(cookie, url) && canModifyCookie(cookie))
 		{
 			if (m_keepMode == CookieJar::AskIfKeepMode)
 			{
-				m_operations.enqueue(qMakePair(CookieJar::InsertCookie, cookie));
+				m_operations.enqueue(qMakePair((m_cookieJar->hasCookie(cookie) ? CookieJar::UpdateCookie : CookieJar::InsertCookie), cookie));
 			}
 			else
 			{
@@ -192,34 +225,6 @@ bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, 
 	}
 
 	return added;
-}
-
-void CookieJarProxy::dialogClosed()
-{
-	m_isDialogVisible = false;
-
-	showDialog();
-}
-
-void CookieJarProxy::showDialog()
-{
-	if (m_operations.isEmpty() || m_isDialogVisible)
-	{
-		return;
-	}
-
-	m_isDialogVisible = true;
-
-	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation = m_operations.dequeue();
-
-	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget);
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
-
-	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
-	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));
-	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-	m_widget->showDialog(&dialog);
 }
 
 }

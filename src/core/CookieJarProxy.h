@@ -47,6 +47,9 @@ public:
 	bool deleteCookie(const QNetworkCookie &cookie);
 	bool setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url);
 
+protected:
+	bool canModifyCookie(const QNetworkCookie &cookie) const;
+
 protected slots:
 	void dialogClosed();
 	void showDialog();

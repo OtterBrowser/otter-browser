@@ -307,4 +307,48 @@ bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 	return result;
 }
 
+bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
+{
+	QUrl url;
+	url.setScheme(cookie.isSecure() ? QLatin1String("https") : QLatin1String("http"));
+	url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	url.setPath(cookie.path());
+
+	const QList<QNetworkCookie> cookies = getCookiesForUrl(url);
+
+	for (int i = 0; i < cookies.count(); ++i)
+	{
+		if (cookies.at(i).domain() == cookie.domain() && cookies.at(i).name() == cookie.name())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CookieJar::isDomainTheSame(const QUrl &first, const QUrl &second)
+{
+	const QString firstTld = first.topLevelDomain();
+	const QString secondTld = second.topLevelDomain();
+
+	if (firstTld != secondTld)
+	{
+		return false;
+	}
+
+	QString firstDomain = QLatin1Char('.') + first.host().toLower();
+	firstDomain.remove((firstDomain.length() - firstTld.length()), firstTld.length());
+
+	QString secondDomain = QLatin1Char('.') + second.host().toLower();
+	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
+
+	if (firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 }

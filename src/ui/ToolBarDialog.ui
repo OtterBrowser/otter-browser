@@ -253,7 +253,7 @@
              <string notr="true">Remove</string>
             </property>
             <property name="shortcut">
-             <string>Del</string>
+             <string notr="true">Del</string>
             </property>
            </widget>
           </item>
@@ -266,7 +266,7 @@
              <string notr="true">Add</string>
             </property>
             <property name="shortcut">
-             <string>Return</string>
+             <string notr="true">Return</string>
             </property>
            </widget>
           </item>
@@ -295,7 +295,7 @@
              <string notr="true">Move Down</string>
             </property>
             <property name="shortcut">
-             <string>Down</string>
+             <string notr="true">Down</string>
             </property>
            </widget>
           </item>
@@ -308,7 +308,7 @@
              <string notr="true">Move Up</string>
             </property>
             <property name="shortcut">
-             <string>Up</string>
+             <string notr="true">Up</string>
             </property>
            </widget>
           </item>
