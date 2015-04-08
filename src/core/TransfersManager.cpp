@@ -23,6 +23,7 @@
 #include "Transfer.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -254,7 +255,13 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 	{
 		if (path.isEmpty())
 		{
-			const QString suffix = QFileInfo(fileName).completeSuffix();
+			QString suffix = QMimeDatabase().suffixForFileName(fileName);
+
+			if (suffix.isEmpty())
+			{
+				suffix = QFileInfo(fileName).suffix();
+			}
+
 			QStringList filters;
 
 			if (!suffix.isEmpty())
