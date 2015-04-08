@@ -59,6 +59,8 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void copyToNote();
+	void deleteText();
 	void removeIcon();
 	void updateBookmark();
 	void updateLoadPlugins();

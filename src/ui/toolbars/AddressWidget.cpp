@@ -27,6 +27,7 @@
 #include "../../core/AddressCompletionModel.h"
 #include "../../core/BookmarksManager.h"
 #include "../../core/InputInterpreter.h"
+#include "../../core/NotesManager.h"
 #include "../../core/SearchesManager.h"
 #include "../../core/Utils.h"
 
@@ -173,36 +174,35 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	QMenu *menu = createStandardContextMenu();
+	QMenu menu(this);
+	menu.addAction(tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(isUndoAvailable());
+	menu.addAction(tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(isRedoAvailable());
+	menu.addSeparator();
+	menu.addAction(tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(hasSelectedText());
+	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+	menu.addAction(tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
 	if (!m_simpleMode)
 	{
-		const QString shortcut = QKeySequence(QKeySequence::Paste).toString(QKeySequence::NativeText);
-		bool found = false;
-
-		if (!shortcut.isEmpty())
-		{
-			for (int i = 0; i < menu->actions().count(); ++i)
-			{
-				if (menu->actions().at(i)->text().endsWith(shortcut))
-				{
-					menu->insertAction(menu->actions().at(i + 1), ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
-
-					found = true;
-
-					break;
-				}
-			}
-		}
-
-		if (!found)
-		{
-			menu->insertAction(menu->actions().at(6), ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
-		}
+		menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
 	}
 
-	menu->exec(event->globalPos());
-	menu->deleteLater();
+	menu.addAction(tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
+	menu.addSeparator();
+	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!text().isEmpty());
+	menu.addSeparator();
+	menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!text().isEmpty());
+	menu.addAction(tr("Select All"), this, SLOT(selectAll()))->setEnabled(!text().isEmpty());
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+	if (toolBar)
+	{
+		menu.addSeparator();
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu));
+	}
+
+	menu.exec(event->globalPos());
 }
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
@@ -323,6 +323,21 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 		updateLoadPlugins();
 	}
+}
+
+void AddressWidget::copyToNote()
+{
+	const QString note(hasSelectedText() ? selectedText() : text());
+
+	if (!note.isEmpty())
+	{
+		NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl(), note);
+	}
+}
+
+void AddressWidget::deleteText()
+{
+	del();
 }
 
 void AddressWidget::removeIcon()
