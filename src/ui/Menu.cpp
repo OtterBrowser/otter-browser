@@ -200,7 +200,10 @@ void Menu::load(const QJsonObject &definition)
 {
 	const QString identifier = definition.value(QLatin1String("identifier")).toString();
 
-	clear();
+	if (m_role == NoMenuRole)
+	{
+		clear();
+	}
 
 	m_title = definition.value(QLatin1String("title")).toString();
 
