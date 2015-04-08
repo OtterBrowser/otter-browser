@@ -52,6 +52,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
@@ -61,6 +62,9 @@ protected slots:
 	void currentIndexChanged(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
+	void copyToNote();
+	void deleteText();
+	void pasteAndGo();
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
 

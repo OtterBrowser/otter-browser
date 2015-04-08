@@ -23,6 +23,7 @@
 #include "../SearchDelegate.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
+#include "../../core/NotesManager.h"
 #include "../../core/SearchesManager.h"
 #include "../../core/SearchSuggester.h"
 #include "../../core/SessionsManager.h"
@@ -30,9 +31,10 @@
 #include "../../core/Utils.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QGuiApplication>
+#include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QLineEdit>
 
@@ -189,6 +191,34 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 	}
 }
 
+void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+	menu.addAction(tr("Undo"), lineEdit(), SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(lineEdit()->isUndoAvailable());
+	menu.addAction(tr("Redo"), lineEdit(), SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(lineEdit()->isRedoAvailable());
+	menu.addSeparator();
+	menu.addAction(tr("Cut"), lineEdit(), SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addAction(tr("Copy"), lineEdit(), SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addAction(tr("Paste"), lineEdit(), SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+	menu.addAction(tr("Paste and Go"), this, SLOT(pasteAndGo()))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+	menu.addAction(tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addSeparator();
+	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addSeparator();
+	menu.addAction(tr("Clear All"), lineEdit(), SLOT(clear()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addAction(tr("Select All"), lineEdit(), SLOT(selectAll()))->setEnabled(!lineEdit()->text().isEmpty());
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+	if (toolBar)
+	{
+		menu.addSeparator();
+		menu.addMenu(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu));
+	}
+
+	menu.exec(event->globalPos());
+}
+
 void SearchWidget::mousePressEvent(QMouseEvent *event)
 {
 	m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
@@ -343,6 +373,28 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
 	}
+}
+
+void SearchWidget::copyToNote()
+{
+	const QString note(lineEdit()->hasSelectedText() ? lineEdit()->selectedText() : lineEdit()->text());
+
+	if (!note.isEmpty())
+	{
+		NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), note);
+	}
+}
+
+void SearchWidget::deleteText()
+{
+	lineEdit()->del();
+}
+
+void SearchWidget::pasteAndGo()
+{
+	lineEdit()->paste();
+
+	sendRequest();
 }
 
 void SearchWidget::storeCurrentSearchEngine()
