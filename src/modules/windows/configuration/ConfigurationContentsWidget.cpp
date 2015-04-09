@@ -146,6 +146,23 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 	}
 }
 
+void ConfigurationContentsWidget::triggerAction(int identifier, bool checked)
+{
+	Q_UNUSED(checked)
+
+	switch (identifier)
+	{
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::ActivateAddressFieldAction:
+			m_ui->filterLineEdit->setFocus();
+
+			break;
+		default:
+			break;
+	}
+}
+
 void ConfigurationContentsWidget::print(QPrinter *printer)
 {
 	m_ui->configurationView->render(printer);

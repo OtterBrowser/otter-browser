@@ -240,6 +240,12 @@ void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::ActivateAddressFieldAction:
+			m_ui->filterLineEdit->setFocus();
+
+			break;
 		default:
 			break;
 	}

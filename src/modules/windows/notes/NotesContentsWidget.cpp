@@ -241,6 +241,12 @@ void NotesContentsWidget::triggerAction(int identifier, bool checked)
 			removeNote();
 
 			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::ActivateAddressFieldAction:
+			m_ui->filterLineEdit->setFocus();
+
+			break;
 		default:
 			break;
 	}

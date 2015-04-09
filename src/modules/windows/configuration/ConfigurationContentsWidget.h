@@ -48,6 +48,9 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 
+public slots:
+	void triggerAction(int identifier, bool checked = false);
+
 protected:
 	void changeEvent(QEvent *event);
 

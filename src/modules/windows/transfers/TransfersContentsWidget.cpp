@@ -497,6 +497,8 @@ void TransfersContentsWidget::triggerAction(int identifier, bool checked)
 			removeTransfer();
 
 			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
 		case ActionsManager::ActivateAddressFieldAction:
 			m_ui->downloadLineEdit->setFocus();
 			m_ui->downloadLineEdit->selectAll();

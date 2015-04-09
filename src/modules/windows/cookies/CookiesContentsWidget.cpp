@@ -333,6 +333,12 @@ void CookiesContentsWidget::triggerAction(int identifier, bool checked)
 			removeCookies();
 
 			break;
+		case ActionsManager::FindAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::ActivateAddressFieldAction:
+			m_ui->filterLineEdit->setFocus();
+
+			break;
 		default:
 			break;
 	}
