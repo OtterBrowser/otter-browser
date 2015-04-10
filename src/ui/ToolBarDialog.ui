@@ -198,6 +198,9 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <item row="3" column="2">
          <layout class="QVBoxLayout" name="currentEntriesLayout">
           <item>
