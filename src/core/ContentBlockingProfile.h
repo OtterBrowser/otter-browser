@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2010-2014 David Rosca <nowrep@gmail.com>
+* Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 
