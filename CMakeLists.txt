@@ -71,9 +71,9 @@ endif (MSVC)
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.4)" OFF)
 
 if (${EnableQtwebengine})
-	find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
+	find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
 else (${EnableQtwebengine})
-	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 endif (${EnableQtwebengine})
 
 set(otter_src
@@ -196,6 +196,7 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
+	src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -312,7 +313,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+qt5_use_modules(otter-browser Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")

@@ -37,6 +37,8 @@
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
+#elif defined(Q_OS_UNIX)
+#include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
@@ -224,6 +226,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
+#elif defined(Q_OS_UNIX)
+	m_platformIntegration = new FreeDesktopOrgPlatformIntegration(this);
 #endif
 
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
@@ -258,7 +262,7 @@ void Application::removeWindow(MainWindow *window)
 
 void Application::showNotification(Notification *notification)
 {
-	if (SettingsManager::getValue(QLatin1String("Interface/UseNativeNotification")).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	if (SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
 	{
 		m_platformIntegration->showNotification(notification);
 	}

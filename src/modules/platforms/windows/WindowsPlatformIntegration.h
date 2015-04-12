@@ -20,7 +20,6 @@
 #ifndef OTTER_WINDOWSPLATFORMINTEGRATION_H
 #define OTTER_WINDOWSPLATFORMINTEGRATION_H
 
-#include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtCore/QObject>
