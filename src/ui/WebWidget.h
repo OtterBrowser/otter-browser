@@ -31,6 +31,13 @@
 namespace Otter
 {
 
+struct FeedUrl
+{
+	QString title;
+	QString mimeType;
+	QUrl url;
+};
+
 class ContentsDialog;
 class Menu;
 class WebBackend;
@@ -111,9 +118,10 @@ public:
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	QStringList getAlternateStyleSheets() const;
+	virtual QList<FeedUrl> getFeeds() const;
 	QVariantHash getOptions() const;
-	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	virtual QVariantHash getStatistics() const = 0;
+	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
 	ScrollMode getScrollMode() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;

@@ -2164,16 +2164,6 @@ QString QtWebKitWebWidget::getSelectedText() const
 	return m_webView->selectedText();
 }
 
-QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
-{
-	return m_networkManager->getHeaders();
-}
-
-QVariantHash QtWebKitWebWidget::getStatistics() const
-{
-	return m_networkManager->getStatistics();
-}
-
 QUrl QtWebKitWebWidget::getUrl() const
 {
 	const QUrl url = m_webView->url();
@@ -2325,12 +2315,55 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
+QList<FeedUrl> QtWebKitWebWidget::getFeeds()
+{
+	const QWebElementCollection elements = m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]"));
+	QList<FeedUrl> feeds;
+	QSet<QUrl> urls;
+
+	for (int i = 0; i < elements.count(); ++i)
+	{
+		QUrl url(elements.at(i).attribute(QLatin1String("href")));
+
+		if (url.isRelative())
+		{
+			url = getUrl().resolved(url);
+		}
+
+		if (urls.contains(url))
+		{
+			continue;
+		}
+
+		urls.insert(url);
+
+		FeedUrl feed;
+		feed.title = elements.at(i).attribute(QLatin1String("title"));
+		feed.mimeType = elements.at(i).attribute(QLatin1String("type"));
+		feed.url = url;
+
+		feeds.append(feed);
+	}
+
+	return feeds;
+}
+
+QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
+{
+	return m_networkManager->getHeaders();
+}
+
+QVariantHash QtWebKitWebWidget::getStatistics() const
+{
+	return m_networkManager->getStatistics();
+}
+
 int QtWebKitWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
 }
 
-QVector<int> QtWebKitWebWidget::getContentBlockingProfiles()
+QVector<int> QtWebKitWebWidget::getContentBlockingProfiles() const
 {
 	return m_contentBlockingProfiles;
 }

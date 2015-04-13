@@ -58,7 +58,8 @@ public:
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
-	QVector<int> getContentBlockingProfiles();
+	QList<FeedUrl> getFeeds();
+	QVector<int> getContentBlockingProfiles() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	int getZoom() const;
