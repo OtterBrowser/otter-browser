@@ -46,6 +46,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QLineEdit(parent
 	m_window(NULL),
 	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
 	m_bookmarkLabel(NULL),
+	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
 	m_simpleMode(false)
@@ -325,6 +326,14 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
+void AddressWidget::openFeed(QAction *action)
+{
+	if (action && m_window)
+	{
+		m_window->setUrl(action->data().toUrl());
+	}
+}
+
 void AddressWidget::copyToNote()
 {
 	const QString note(hasSelectedText() ? selectedText() : text());
@@ -389,6 +398,34 @@ void AddressWidget::updateBookmark()
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
 
+void AddressWidget::updateFeeds()
+{
+	const QList<FeedUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<FeedUrl>());
+
+	if (!feeds.isEmpty() && !m_feedsLabel)
+	{
+		m_feedsLabel = new QLabel(this);
+		m_feedsLabel->show();
+		m_feedsLabel->setObjectName(QLatin1String("Feeds"));
+		m_feedsLabel->setAutoFillBackground(false);
+		m_feedsLabel->setFixedSize(16, 16);
+		m_feedsLabel->setPixmap(Utils::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
+		m_feedsLabel->setCursor(Qt::ArrowCursor);
+		m_feedsLabel->setToolTip(tr("Feed List"));
+		m_feedsLabel->setFocusPolicy(Qt::NoFocus);
+		m_feedsLabel->installEventFilter(this);
+
+		updateIcons();
+	}
+	else if (feeds.isEmpty() && m_feedsLabel)
+	{
+		m_feedsLabel->deleteLater();
+		m_feedsLabel = NULL;
+
+		updateIcons();
+	}
+}
+
 void AddressWidget::updateLoadPlugins()
 {
 	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
@@ -435,16 +472,23 @@ void AddressWidget::updateIcons()
 
 	if (m_bookmarkLabel)
 	{
-		m_bookmarkLabel->move((width() - 22), ((height() - m_bookmarkLabel->height()) / 2));
-
 		margins.setRight(margins.right() + 22);
+
+		m_bookmarkLabel->move((width() - margins.right()), ((height() - m_bookmarkLabel->height()) / 2));
+	}
+
+	if (m_feedsLabel)
+	{
+		margins.setRight(margins.right() + 22);
+
+		m_feedsLabel->move((width() - margins.right()), ((height() - m_feedsLabel->height()) / 2));
 	}
 
 	if (m_loadPluginsLabel)
 	{
-		m_loadPluginsLabel->move((width() - 22 - (m_bookmarkLabel ? 22 : 0)), ((height() - m_loadPluginsLabel->height()) / 2));
-
 		margins.setRight(margins.right() + 22);
+
+		m_loadPluginsLabel->move((width() - margins.right()), ((height() - m_loadPluginsLabel->height()) / 2));
 	}
 
 	setTextMargins(margins);
@@ -466,6 +510,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 void AddressWidget::setUrl(const QUrl &url)
 {
 	updateBookmark();
+	updateFeeds();
 
 	if (!hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
@@ -483,6 +528,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
 		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		disconnect(m_window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
 		disconnect(m_window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
@@ -507,6 +553,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
 		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
 		connect(window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
 		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
@@ -554,6 +601,38 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				}
 
 				updateBookmark();
+			}
+
+			event->accept();
+
+			return true;
+		}
+	}
+
+	if (object == m_feedsLabel && m_feedsLabel && m_window && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+		{
+			const QList<FeedUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<FeedUrl>());
+
+			if (feeds.count() == 1 && m_window)
+			{
+				m_window->setUrl(feeds.at(0).url);
+			}
+			else if (feeds.count() > 1)
+			{
+				QMenu menu;
+
+				for (int i = 0; i < feeds.count(); ++i)
+				{
+					menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(feeds.at(i).url);
+				}
+
+				connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(openFeed(QAction*)));
+
+				menu.exec(mouseEvent->globalPos());
 			}
 
 			event->accept();

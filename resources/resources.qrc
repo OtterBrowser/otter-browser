@@ -29,6 +29,7 @@
         <file>files/start.html</file>
         <file>gestures/default.ini</file>
         <file>icons/application-exit.png</file>
+		<file>icons/application-rss+xml.png</file>
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-left.png</file>
         <file>icons/arrow-right.png</file>

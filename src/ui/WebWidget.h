@@ -31,13 +31,6 @@
 namespace Otter
 {
 
-struct FeedUrl
-{
-	QString title;
-	QString mimeType;
-	QUrl url;
-};
-
 class ContentsDialog;
 class Menu;
 class WebBackend;

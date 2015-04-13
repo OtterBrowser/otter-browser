@@ -2315,7 +2315,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
-QList<FeedUrl> QtWebKitWebWidget::getFeeds()
+QList<FeedUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements = m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]"));
 	QList<FeedUrl> feeds;

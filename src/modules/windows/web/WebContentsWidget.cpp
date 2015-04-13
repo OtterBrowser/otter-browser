@@ -632,6 +632,11 @@ WindowHistoryInformation WebContentsWidget::getHistory() const
 	return m_webWidget->getHistory();
 }
 
+QList<FeedUrl> WebContentsWidget::getFeeds() const
+{
+	return m_webWidget->getFeeds();
+}
+
 int WebContentsWidget::getZoom() const
 {
 	return m_webWidget->getZoom();

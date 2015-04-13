@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ public:
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const;
 	virtual WindowHistoryInformation getHistory() const;
+	virtual QList<FeedUrl> getFeeds() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
 	virtual bool canZoom() const;

@@ -55,6 +55,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
+	QList<FeedUrl> getFeeds() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;

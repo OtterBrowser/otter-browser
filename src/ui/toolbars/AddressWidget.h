@@ -59,10 +59,12 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void openFeed(QAction *action);
 	void copyToNote();
 	void deleteText();
 	void removeIcon();
 	void updateBookmark();
+	void updateFeeds();
 	void updateLoadPlugins();
 	void updateIcons();
 	void setCompletion(const QString &text);
@@ -72,6 +74,7 @@ private:
 	Window *m_window;
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
+	QLabel *m_feedsLabel;
 	QLabel *m_loadPluginsLabel;
 	QLabel *m_urlIconLabel;
 	QRect m_securityBadgeRectangle;

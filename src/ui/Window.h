@@ -40,6 +40,13 @@ enum WindowLoadingState
 	LoadedState = 2
 };
 
+struct FeedUrl
+{
+	QString title;
+	QString mimeType;
+	QUrl url;
+};
+
 class AddressWidget;
 class ContentsWidget;
 class SearchWidget;
