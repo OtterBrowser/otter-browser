@@ -23,6 +23,7 @@
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/NotificationDialog.h"
 #include "../../../ui/TrayIcon.h"
