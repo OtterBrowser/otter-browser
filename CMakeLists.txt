@@ -70,11 +70,11 @@ endif (MSVC)
 
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.4)" OFF)
 
-if (${EnableQtwebengine})
+if (EnableQtwebengine)
 	find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
-else (${EnableQtwebengine})
+else (EnableQtwebengine)
 	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
-endif (${EnableQtwebengine})
+endif (EnableQtwebengine)
 
 set(otter_src
 	src/main.cpp
@@ -264,11 +264,11 @@ qt5_wrap_ui(otter_ui
 if (Qt5_VERSION_MINOR GREATER 2)
 	set(otter_src
 		${otter_src}
-		 src/modules/windows/web/StartPageWidget.cpp
+		src/modules/windows/web/StartPageWidget.cpp
 	)
 endif (Qt5_VERSION_MINOR GREATER 2)
 
-if (${EnableQtwebengine})
+if (EnableQtwebengine)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
 	set(otter_src
@@ -281,9 +281,9 @@ if (${EnableQtwebengine})
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
 	)
-endif (${EnableQtwebengine})
+endif (EnableQtwebengine)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
 	set(otter_src
@@ -291,7 +291,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 		otter-browser.rc
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 	)
-endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+endif (WIN32)
 
 add_executable(otter-browser
 	${otter_ui}
@@ -299,19 +299,19 @@ add_executable(otter-browser
 	${otter_src}
 )
 
-if (${EnableQtwebengine})
+if (EnableQtwebengine)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
-endif (${EnableQtwebengine})
+endif (EnableQtwebengine)
 
 if (Qt5_VERSION_MINOR GREATER 2)
 	qt5_use_modules(otter-browser Quick QuickWidgets)
 endif (Qt5_VERSION_MINOR GREATER 2)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)
 
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
-endif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+endif (WIN32)
 
 qt5_use_modules(otter-browser Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 
