@@ -555,7 +555,13 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 		connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
 		connect(window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+
+		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		{
+			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		}
 
 		if (window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
 		{
