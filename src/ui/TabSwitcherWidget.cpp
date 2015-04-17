@@ -37,7 +37,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_tabsView(new QListView(m_frame)),
 	m_previewLabel(new QLabel(m_frame)),
 	m_loadingMovie(NULL),
-	m_triggeredByAction(false)
+	m_reason(KeyboardReason)
 {
 	QHBoxLayout *mainLayout = new QHBoxLayout(this);
 	mainLayout->addWidget(m_frame, 0, Qt::AlignCenter);
@@ -132,7 +132,7 @@ void TabSwitcherWidget::keyPressEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Control && !m_triggeredByAction)
+	if (event->key() == Qt::Key_Control && m_reason == KeyboardReason)
 	{
 		accept();
 
@@ -192,9 +192,9 @@ void TabSwitcherWidget::tabRemoved(qint64 identifier)
 	}
 }
 
-void TabSwitcherWidget::show(bool triggeredByAction)
+void TabSwitcherWidget::show(SwitcherReason reason)
 {
-	m_triggeredByAction = triggeredByAction;
+	m_reason = reason;
 
 	QWidget::show();
 }
@@ -254,6 +254,11 @@ QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 
 	return items;
+}
+
+TabSwitcherWidget::SwitcherReason TabSwitcherWidget::getReason() const
+{
+	return m_reason;
 }
 
 int TabSwitcherWidget::findRow(qint64 identifier) const

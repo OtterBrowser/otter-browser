@@ -32,6 +32,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtGui/QDesktopServices>
+#include <QtGui/QWheelEvent>
 #include <QtNetwork/QNetworkReply>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
@@ -363,6 +364,21 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	}
 
 	return dialog.isAccepted();
+}
+
+bool QtWebKitPage::event(QEvent *event)
+{
+	if (event->type() == QEvent::Wheel)
+	{
+		QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+		if (wheelEvent->buttons() == Qt::RightButton)
+		{
+			return false;
+		}
+	}
+
+	return QWebPage::event(event);
 }
 
 bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::ExtensionOption *option, QWebPage::ExtensionReturn *output)

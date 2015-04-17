@@ -189,7 +189,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 			m_tabSwitcher->raise();
 			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(false);
+			m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
 			m_tabSwitcher->selectTab(m_tabSwitcherKey == Qt::Key_Tab);
 		}
 		else
@@ -256,7 +256,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 				m_tabSwitcher->raise();
 				m_tabSwitcher->resize(size());
-				m_tabSwitcher->show(false);
+				m_tabSwitcher->show(TabSwitcherWidget::KeyboardReason);
 				m_tabSwitcher->selectTab(event->key() == Qt::Key_Tab);
 			}
 			else
@@ -313,6 +313,36 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 
 	Menu menu(Menu::ToolBarsMenuRole, this);
 	menu.exec(event->globalPos());
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::RightButton && m_tabSwitcher && m_tabSwitcher->getReason() == TabSwitcherWidget::WheelReason)
+	{
+		m_tabSwitcher->accept();
+	}
+
+	QMainWindow::mouseReleaseEvent(event);
+}
+
+void MainWindow::wheelEvent(QWheelEvent *event)
+{
+	if (event->buttons() == Qt::RightButton)
+	{
+		if (!m_tabSwitcher)
+		{
+			m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
+		}
+
+		m_tabSwitcher->raise();
+		m_tabSwitcher->resize(size());
+		m_tabSwitcher->show(TabSwitcherWidget::WheelReason);
+		m_tabSwitcher->selectTab(event->delta() < 0);
+	}
+	else
+	{
+		QMainWindow::wheelEvent(event);
+	}
 }
 
 void MainWindow::optionChanged(const QString &option, const QVariant &value)
@@ -587,7 +617,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			m_tabSwitcher->raise();
 			m_tabSwitcher->resize(size());
-			m_tabSwitcher->show(true);
+			m_tabSwitcher->show(TabSwitcherWidget::ActionReason);
 
 			break;
 		case ActionsManager::ShowMenuBarAction:

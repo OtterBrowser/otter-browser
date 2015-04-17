@@ -2054,13 +2054,15 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 						if (m_ignoreContextMenuNextTime)
 						{
 							m_ignoreContextMenuNextTime = false;
-						}
-						else
-						{
-							m_clickPosition = mouseEvent->pos();
 
-							showContextMenu(mouseEvent->pos());
+							event->ignore();
+
+							return false;
 						}
+
+						m_clickPosition = mouseEvent->pos();
+
+						showContextMenu(mouseEvent->pos());
 					}
 				}
 
@@ -2096,6 +2098,15 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			else
 			{
 				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+				if (wheelEvent->buttons() == Qt::RightButton)
+				{
+					m_ignoreContextMenuNextTime = true;
+
+					event->ignore();
+
+					return false;
+				}
 
 				if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
 				{

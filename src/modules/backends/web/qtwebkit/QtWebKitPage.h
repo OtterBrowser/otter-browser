@@ -41,6 +41,7 @@ public:
 	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 
 	void triggerAction(WebAction action, bool checked = false);
+	bool event(QEvent *event);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;

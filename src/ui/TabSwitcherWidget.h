@@ -36,11 +36,19 @@ class TabSwitcherWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum SwitcherReason
+	{
+		ActionReason = 0,
+		KeyboardReason = 1,
+		WheelReason = 2
+	};
+
 	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = NULL);
 
-	void show(bool triggeredByAction);
+	void show(SwitcherReason reason);
 	void accept();
 	void selectTab(bool next);
+	SwitcherReason getReason() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
@@ -65,7 +73,7 @@ private:
 	QListView *m_tabsView;
 	QLabel *m_previewLabel;
 	QMovie *m_loadingMovie;
-	bool m_triggeredByAction;
+	SwitcherReason m_reason;
 };
 
 }
