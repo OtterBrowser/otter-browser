@@ -208,6 +208,15 @@
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
             </property>
+            <property name="dragEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="dragDropMode">
+             <enum>QAbstractItemView::DragDrop</enum>
+            </property>
+            <property name="defaultDropAction">
+             <enum>Qt::MoveAction</enum>
+            </property>
             <attribute name="headerVisible">
              <bool>false</bool>
             </attribute>
@@ -377,6 +386,18 @@
          <widget class="Otter::ItemViewWidget" name="availableEntriesItemView">
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="showDropIndicator" stdset="0">
+           <bool>false</bool>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragOnly</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::CopyAction</enum>
           </property>
           <attribute name="headerVisible">
            <bool>false</bool>

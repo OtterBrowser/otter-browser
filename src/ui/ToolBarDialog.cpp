@@ -94,17 +94,8 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	}
 
 	QStandardItemModel *availableEntriesModel = new QStandardItemModel(this);
-	QStandardItem* separatorItem = new QStandardItem(tr("--- separator ---"));
-	separatorItem->setData(QLatin1String("separator"), Qt::UserRole);
-	separatorItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-	availableEntriesModel->appendRow(separatorItem);
-
-	QStandardItem* spacerItem = new QStandardItem(tr("--- spacer ---"));
-	spacerItem->setData(QLatin1String("spacer"), Qt::UserRole);
-	spacerItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-	availableEntriesModel->appendRow(spacerItem);
+	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
+	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
 	QStringList widgets;
 	widgets << QLatin1String("ClosedWindowsWidget") << QLatin1String("AddressWidget") << QLatin1String("MenuButtonWidget") << QLatin1String("PanelChooserWidget") << QLatin1String("SearchWidget") << QLatin1String("StatusMessageWidget") << QLatin1String("ZoomWidget");
@@ -126,6 +117,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	}
 
 	m_ui->availableEntriesItemView->setModel(availableEntriesModel);
+	m_ui->availableEntriesItemView->viewport()->setAcceptDrops(false);
 
 	QStandardItemModel *currentEntriesModel = new QStandardItemModel(this);
 
@@ -159,19 +151,6 @@ ToolBarDialog::~ToolBarDialog()
 	delete m_ui;
 }
 
-void ToolBarDialog::restoreDefaults()
-{
-	ToolBarsManager::getInstance()->resetToolBar(m_definition.identifier);
-
-	reject();
-}
-
-void ToolBarDialog::updateActions()
-{
-	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
-	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
-}
-
 void ToolBarDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
@@ -187,11 +166,24 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	}
 }
 
+void ToolBarDialog::restoreDefaults()
+{
+	ToolBarsManager::getInstance()->resetToolBar(m_definition.identifier);
+
+	reject();
+}
+
+void ToolBarDialog::updateActions()
+{
+	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
+	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
+}
+
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 {
 	QStandardItem *item = new QStandardItem();
 	item->setData(identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	if (identifier == QLatin1String("separator"))
 	{
@@ -277,11 +269,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 
 void ToolBarDialog::addEntry()
 {
-	QStandardItem *item = m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow());
+	QStandardItem *sourceItem = m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow());
 
-	if (item)
+	if (sourceItem)
 	{
-		m_ui->currentEntriesItemView->insertRow(item->clone());
+		m_ui->currentEntriesItemView->insertRow(sourceItem->clone());
 	}
 }
 
