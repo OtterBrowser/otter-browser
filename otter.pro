@@ -353,8 +353,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
 RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 
-TRANSLATIONS += resources/translations/otter-browser_ca_ES.ts \
-    resources/translations/otter-browser_cs_CZ.ts \
+TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_da.ts \
     resources/translations/otter-browser_de_DE.ts \
     resources/translations/otter-browser_el.ts \
@@ -367,6 +366,7 @@ TRANSLATIONS += resources/translations/otter-browser_ca_ES.ts \
     resources/translations/otter-browser_fi.ts \
     resources/translations/otter-browser_fr_CA.ts \
     resources/translations/otter-browser_fr_FR.ts \
+    resources/translations/otter-browser_hr_HR.ts \
     resources/translations/otter-browser_hu.ts \
     resources/translations/otter-browser_id_ID.ts \
     resources/translations/otter-browser_it_IT.ts \
