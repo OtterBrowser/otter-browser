@@ -149,52 +149,52 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="69"/>
         <source>Enter address or search…</source>
-        <translation type="unfinished"/>
+        <translation>輸入位置或搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="179"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>復原</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="180"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="182"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>剪下</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="183"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>複製</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="184"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>貼上</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="191"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>刪除</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="193"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>複製到筆記</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="195"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>清除所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="196"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>選取所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="398"/>
@@ -209,7 +209,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="414"/>
         <source>Feed List</source>
-        <translation type="unfinished"/>
+        <translation>Feed 列表</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="442"/>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="636"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（未命名）</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="671"/>
@@ -458,7 +458,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -555,7 +555,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="219"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>屬性…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="320"/>
@@ -644,7 +644,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
@@ -835,7 +835,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
@@ -922,7 +922,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>過濾…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="223"/>
@@ -1018,7 +1018,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
@@ -1101,12 +1101,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>移除從這個域名而來的所有 Cookies…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies…</source>
-        <translation type="unfinished"/>
+        <translation>移除所有 Cookies…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="436"/>
@@ -1119,7 +1119,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="35"/>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>瀏覽…</translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="64"/>
@@ -1137,22 +1137,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="151"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="155"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="159"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>資訊</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="171"/>
         <source>Notification</source>
-        <translation type="unfinished"/>
+        <translation>通知</translation>
     </message>
 </context>
 <context>
@@ -1178,7 +1178,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
@@ -1264,7 +1264,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
         <source>Add to Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>加入到書籤…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
@@ -1653,12 +1653,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="490"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>新增書籤列…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="495"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>重設為預設值…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="514"/>
@@ -1726,7 +1726,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜尋…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="100"/>
@@ -1762,7 +1762,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
         <source>Add note…</source>
-        <translation type="unfinished"/>
+        <translation>新增筆記…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
@@ -1928,87 +1928,87 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="27"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>通知</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="32"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>位址欄</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="37"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>內容</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="42"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>網路</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="47"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>安全</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="52"/>
         <source>Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>鍵盤</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="57"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>其他</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="78"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>活動</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="118"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>播放聲音：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>顯示通知</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>標示工作列項目</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="163"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>偏好原生的通知</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="193"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>建議</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="202"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>建議書籤</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="212"/>
         <source>Suggest history</source>
-        <translation type="unfinished"/>
+        <translation>建議歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="222"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>建議搜尋結果</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
@@ -2020,207 +2020,207 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="261"/>
         <source>Enable images</source>
-        <translation type="unfinished"/>
+        <translation>啟用圖片</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>啟用 JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="277"/>
         <source>JavaScript Options…</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript 選項…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>啟用 Java</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="295"/>
         <source>Plugins:</source>
-        <translation type="unfinished"/>
+        <translation>外掛程式：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>使用者樣式表：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>傳送 referrer 資訊</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="360"/>
         <source>User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>使用者代理：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="373"/>
         <source>Manage…</source>
-        <translation type="unfinished"/>
+        <translation>管理…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="388"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>代理伺服器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>模式：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="411"/>
         <source>No proxy</source>
-        <translation type="unfinished"/>
+        <translation>無代理伺服器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="416"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>系統設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="421"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>手動設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>自動設定(PAC)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="528"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>埠</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="535"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>協定</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="542"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>伺服器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="556"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="563"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="577"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="591"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="629"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>到 PAC 檔案的路徑：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="646"/>
         <source>Use system authentication</source>
-        <translation type="unfinished"/>
+        <translation>使用系統認證</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="676"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>SSL 密鑰</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="841"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="728"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="753"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="896"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>向上移動</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="922"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>向下移動</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="802"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>鍵盤快捷鍵</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="851"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>編輯…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="861"/>
         <source>Clone</source>
-        <translation type="unfinished"/>
+        <translation>Clone</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="967"/>
         <source>Show tray icon</source>
-        <translation type="unfinished"/>
+        <translation>顯示系統匣圖示</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名稱</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="87"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>已啟用</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="88"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>一經要求</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>已停用</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="355"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>預設</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="107"/>
@@ -2234,37 +2234,37 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="652"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="832"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（未命名）</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="220"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>新建…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="221"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>重新加入</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="306"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>WAV 檔案 (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>問題</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
         <source>Do you really want to remove this profile?</source>
-        <translation type="unfinished"/>
+        <translation>您真的想要移除這個設定檔嗎？</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="588"/>
         <source>Delete profile permanently</source>
-        <translation type="unfinished"/>
+        <translation>永久刪除設定檔</translation>
     </message>
 </context>
 <context>
@@ -2272,160 +2272,160 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="23"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>阻擋</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
         <source>Pop-ups:</source>
-        <translation type="unfinished"/>
+        <translation>彈出式視窗：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="52"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>阻擋所有彈出式視窗</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Open all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>開啟所有彈出式視窗</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="62"/>
         <source>Open all pop-ups in background</source>
-        <translation type="unfinished"/>
+        <translation>在背景分頁中開啟彈出式視窗</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>縮放</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="90"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>預設縮放：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="100"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="118"/>
         <source>Zoom text only</source>
-        <translation type="unfinished"/>
+        <translation>只縮放文字</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="131"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="172"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>風格</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="182"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="321"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>預覽</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="192"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>預設比例字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="202"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="228"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>像素</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="218"/>
         <source>Default fixed-width font size:</source>
-        <translation type="unfinished"/>
+        <translation>預設固定寬度字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="244"/>
         <source>Minimum font size:</source>
-        <translation type="unfinished"/>
+        <translation>最小字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="254"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="278"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>顏色</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="316"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>類型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Standard font</source>
-        <translation type="unfinished"/>
+        <translation>標準字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Fixed-width font</source>
-        <translation type="unfinished"/>
+        <translation>固定寬度字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Serif font</source>
-        <translation type="unfinished"/>
+        <translation>襯線字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Sans-serif font</source>
-        <translation type="unfinished"/>
+        <translation>無襯線字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Cursive font</source>
-        <translation type="unfinished"/>
+        <translation>手寫字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Fantasy font</source>
-        <translation type="unfinished"/>
+        <translation>華麗字型</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="59"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation type="unfinished"/>
+        <translation>The quick brown fox jumps over the lazy dog</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Background Color</source>
-        <translation type="unfinished"/>
+        <translation>背景顏色</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>文字顏色</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>連結顏色</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Visited Link Color</source>
-        <translation type="unfinished"/>
+        <translation>已拜訪連結顏色</translation>
     </message>
 </context>
 <context>
@@ -2471,142 +2471,142 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="23"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>啟動</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="35"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>啟動行為：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="48"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>首頁：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="76"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>使用目前頁面</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="83"/>
         <source>Use Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>使用書籤</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="90"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>回復為預設</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="107"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>下載</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="119"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>儲存檔案到：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="134"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>總是詢問我要儲存檔案到何處</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="147"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>以新分頁取代新視窗</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>在選擇前不要載入分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>重新使用目前分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>在前景分頁的旁邊開啟新分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>當關閉分頁時：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>啟用上一個活躍分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="203"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>啟用下一個分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>啟用從目前分頁開啟的第一個分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>語言</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred Webpage Language:</source>
-        <translation type="unfinished"/>
+        <translation>偏好的網頁語言：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>編輯…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
         <source>System Defaults</source>
-        <translation type="unfinished"/>
+        <translation>系統預設</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation type="unfinished"/>
+        <translation>設定為預設瀏覽器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="42"/>
         <source>Continue previous session</source>
-        <translation type="unfinished"/>
+        <translation>繼續前一個工作階段</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="43"/>
         <source>Show startup dialog</source>
-        <translation type="unfinished"/>
+        <translation>顯示啟動對話框</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>顯示首頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>顯示空白頁面</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="73"/>
         <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation type="unfinished"/>
+        <translation>以管理員權限執行 Otter 瀏覽器以將其設定為預設瀏覽器。</translation>
     </message>
 </context>
 <context>
@@ -2614,42 +2614,42 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="23"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>追蹤</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="32"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>不要追蹤：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="57"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="64"/>
         <source>Private mode</source>
-        <translation type="unfinished"/>
+        <translation>隱私模式</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="107"/>
         <source>Remember browsing history</source>
-        <translation type="unfinished"/>
+        <translation>記住瀏覽器歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="114"/>
         <source>Remember downloads history</source>
-        <translation type="unfinished"/>
+        <translation>記住下載歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="124"/>
         <source>Remember search history</source>
-        <translation type="unfinished"/>
+        <translation>記住搜尋歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation type="unfinished"/>
+        <translation>記住表單歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>

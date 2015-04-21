@@ -149,52 +149,52 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="69"/>
         <source>Enter address or search…</source>
-        <translation type="unfinished"/>
+        <translation>Introduceți adresa sau căutați...</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="179"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Anulează</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="180"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Refaceți </translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="182"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Taie</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="183"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Copiază</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="184"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Lipeşte</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="191"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="193"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>Copiază în notă</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="195"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Șterge Tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="196"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Selectați Tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="398"/>
@@ -209,7 +209,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="414"/>
         <source>Feed List</source>
-        <translation type="unfinished"/>
+        <translation>Listă de Feed</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="442"/>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="636"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Fără titlu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="671"/>
@@ -458,7 +458,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -555,7 +555,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="219"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Proprietăţi...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="320"/>
@@ -644,7 +644,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
@@ -835,7 +835,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
@@ -922,7 +922,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="147"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>Filtru...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="223"/>
@@ -1018,7 +1018,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="99"/>
@@ -1101,12 +1101,12 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate cookie-urile din acest domeniu...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="311"/>
         <source>Remove All Cookies…</source>
-        <translation type="unfinished"/>
+        <translation>Şterge toate cookie-urile...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="436"/>
@@ -1119,7 +1119,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="35"/>
         <source>Browse…</source>
-        <translation type="unfinished"/>
+        <translation>Răsfoire... </translation>
     </message>
     <message>
         <location filename="../../src/ui/FilePathWidget.cpp" line="64"/>
@@ -1137,22 +1137,22 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="151"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eroare</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="155"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Avertisment</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="159"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Informație</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="171"/>
         <source>Notification</source>
-        <translation type="unfinished"/>
+        <translation>Notificare</translation>
     </message>
 </context>
 <context>
@@ -1178,7 +1178,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
@@ -1264,7 +1264,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
         <source>Add to Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă la semnele de carte...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
@@ -1653,12 +1653,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="490"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă bară pentru semnele de carte...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="495"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Restabiliţi valorile implicite...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="514"/>
@@ -1726,7 +1726,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="100"/>
@@ -1762,7 +1762,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
         <source>Add note…</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare Notă...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
@@ -1928,299 +1928,299 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="27"/>
         <source>Notifications</source>
-        <translation type="unfinished"/>
+        <translation>Notificări</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="32"/>
         <source>Address Field</source>
-        <translation type="unfinished"/>
+        <translation>Câmpul pentru adresă</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="37"/>
         <source>Content</source>
-        <translation type="unfinished"/>
+        <translation>Conţinut</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="42"/>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Reţea</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="47"/>
         <source>Security</source>
-        <translation type="unfinished"/>
+        <translation>Securitate </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="52"/>
         <source>Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>Tastatură</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="57"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Altele</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="78"/>
         <source>Events</source>
-        <translation type="unfinished"/>
+        <translation>Evenimente</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="118"/>
         <source>Play sound:</source>
-        <translation type="unfinished"/>
+        <translation>Redare sunet:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
         <source>Show notification</source>
-        <translation type="unfinished"/>
+        <translation>Afişează notificare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă identitate în bara de activități</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="163"/>
         <source>Prefer native notifications</source>
-        <translation type="unfinished"/>
+        <translation>Prefer notificari native</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="193"/>
         <source>Suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Sugestii</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="202"/>
         <source>Suggest bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Sugerează din semnele de carte</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="212"/>
         <source>Suggest history</source>
-        <translation type="unfinished"/>
+        <translation>Sugerează din istoric</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="222"/>
         <source>Suggest search results</source>
-        <translation type="unfinished"/>
+        <translation>Sugerează rezultatele căutării</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Generale</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="261"/>
         <source>Enable images</source>
-        <translation type="unfinished"/>
+        <translation>Activează imagini</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
         <source>Enable JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>Activeaza JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="277"/>
         <source>JavaScript Options…</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni de JavaScript...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>Enable Java</source>
-        <translation type="unfinished"/>
+        <translation>Activează Java</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="295"/>
         <source>Plugins:</source>
-        <translation type="unfinished"/>
+        <translation>Pluginuri:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Foaia de stiluri a utilizatorului:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Trimite informații de recomandare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="360"/>
         <source>User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>Agent Utilizator:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="373"/>
         <source>Manage…</source>
-        <translation type="unfinished"/>
+        <translation>Gestionează...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="388"/>
         <source>Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
         <source>Mode:</source>
-        <translation type="unfinished"/>
+        <translation>Mod:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="411"/>
         <source>No proxy</source>
-        <translation type="unfinished"/>
+        <translation>Fără proxy</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="416"/>
         <source>System configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurările sistem</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="421"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"/>
+        <translation>Configurări manuale</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
         <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
+        <translation>Configurări automate (PAC)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="528"/>
         <source>Port</source>
-        <translation type="unfinished"/>
+        <translation>Port</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="535"/>
         <source>Protocol</source>
-        <translation type="unfinished"/>
+        <translation>Protocol</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="542"/>
         <source>Servers</source>
-        <translation type="unfinished"/>
+        <translation>Servere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
         <source>FTP</source>
-        <translation type="unfinished"/>
+        <translation>FTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="556"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"/>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="563"/>
         <source>HTTP</source>
-        <translation type="unfinished"/>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="577"/>
         <source>HTTPS</source>
-        <translation type="unfinished"/>
+        <translation>HTTPS</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="591"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Toate</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="629"/>
         <source>Path to PAC file:</source>
-        <translation type="unfinished"/>
+        <translation>Calea către fișierul PAC:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="646"/>
         <source>Use system authentication</source>
-        <translation type="unfinished"/>
+        <translation>Folosește autenticarea de la sistem</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="676"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Cifru SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="841"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="728"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="753"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="896"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în sus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="922"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în jos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="802"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Comenzi rapide de la tastatură</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="851"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Editează...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="861"/>
         <source>Clone</source>
-        <translation type="unfinished"/>
+        <translation>Clonează</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="967"/>
         <source>Show tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Arată pictograma din bara sistem</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nume</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Descriere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="87"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Activat</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="88"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>La cerere</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Dezactivat</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="355"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>În mod implicit </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="107"/>
@@ -2234,37 +2234,37 @@ Doriţi să continuaţi? </translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="652"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="832"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Fără titlu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="220"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nou...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="221"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>Re adaugă</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="306"/>
         <source>WAV files (*.wav)</source>
-        <translation type="unfinished"/>
+        <translation>Fisier Wav (*.wav)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Întrebare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
         <source>Do you really want to remove this profile?</source>
-        <translation type="unfinished"/>
+        <translation>Într-adevăr doriţi să ştergeţi acest profil?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="588"/>
         <source>Delete profile permanently</source>
-        <translation type="unfinished"/>
+        <translation>Ștergeți profilul permanent</translation>
     </message>
 </context>
 <context>
@@ -2272,160 +2272,160 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="23"/>
         <source>Blocking</source>
-        <translation type="unfinished"/>
+        <translation>Blocare </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
         <source>Pop-ups:</source>
-        <translation type="unfinished"/>
+        <translation>Pop-up-uri: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="52"/>
         <source>Block all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Blochează toate  pop-up-urile</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Open all pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Deschide toate pop-up-urile</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="62"/>
         <source>Open all pop-ups in background</source>
-        <translation type="unfinished"/>
+        <translation>Deschide toate pop-up-urile în fundal</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Zoom </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="90"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"/>
+        <translation>Zoom Implicit:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="100"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="118"/>
         <source>Zoom text only</source>
-        <translation type="unfinished"/>
+        <translation>Text zoom exclusiv</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="131"/>
         <source>Fonts</source>
-        <translation type="unfinished"/>
+        <translation>Fonturi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="172"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
         <source>Font</source>
-        <translation type="unfinished"/>
+        <translation>Font</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="182"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="321"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Previzualizează</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="192"/>
         <source>Default proportional font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensiunea implicită de font proporțional: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="202"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="228"/>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source> px</source>
-        <translation type="unfinished"/>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="218"/>
         <source>Default fixed-width font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensiunea implicită ale font-urilor de lăţime fixă:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="244"/>
         <source>Minimum font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensiunea minimă a fontului: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="254"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nici unul </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="278"/>
         <source>Colors</source>
-        <translation type="unfinished"/>
+        <translation>Culori</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="316"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Categorie</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Standard font</source>
-        <translation type="unfinished"/>
+        <translation>Font implicit</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Fixed-width font</source>
-        <translation type="unfinished"/>
+        <translation>Font de lăţime fixă</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Serif font</source>
-        <translation type="unfinished"/>
+        <translation>Serif font</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Sans-serif font</source>
-        <translation type="unfinished"/>
+        <translation>Sans-serif font</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Cursive font</source>
-        <translation type="unfinished"/>
+        <translation>Cursive font</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
         <source>Fantasy font</source>
-        <translation type="unfinished"/>
+        <translation>Fantasy font</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="59"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation type="unfinished"/>
+        <translation>Vulpea roşcată rapidă sare peste câinele leneş</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Background Color</source>
-        <translation type="unfinished"/>
+        <translation>Culoarea de fundal</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Text Color</source>
-        <translation type="unfinished"/>
+        <translation>Culoarea textului</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Culoarea link-ului</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
         <source>Visited Link Color</source>
-        <translation type="unfinished"/>
+        <translation>Culoarea link-ului vizitat</translation>
     </message>
 </context>
 <context>
@@ -2471,142 +2471,142 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="23"/>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Startup </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="35"/>
         <source>Startup behavior:</source>
-        <translation type="unfinished"/>
+        <translation>Comportamentul la pornire: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="48"/>
         <source>Home page:</source>
-        <translation type="unfinished"/>
+        <translation>Pagina de porninre:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="76"/>
         <source>Use Current Page</source>
-        <translation type="unfinished"/>
+        <translation>Utilizaţi pagina curentă </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="83"/>
         <source>Use Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Foloseşte semn de carte</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="90"/>
         <source>Restore to Default</source>
-        <translation type="unfinished"/>
+        <translation>Restabiliţi Setările Implicite</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="107"/>
         <source>Downloads</source>
-        <translation type="unfinished"/>
+        <translation>Descărcări</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="119"/>
         <source>Save files to:</source>
-        <translation type="unfinished"/>
+        <translation>Salvaţi fişierele în:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="134"/>
         <source>Always ask me where to save files</source>
-        <translation type="unfinished"/>
+        <translation>Întotdeauna întreabă unde vor fi salvate fişierele</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="147"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Taburi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
         <source>Open new windows in a new tab instead</source>
-        <translation type="unfinished"/>
+        <translation>În schimb,deschide ferestre noi într-un nou tabel</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Delay loading of tabs until selected</source>
-        <translation type="unfinished"/>
+        <translation>Amână încărcarea taburilor până când sunt selectate</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>Reutilizează tab-ul activ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Deschide un tab nou alături de cel activ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Când se închide tab-ul:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Activează ultimul tab activ </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="203"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Activează tab-ul următor </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Activază primul tab deschis din tab-ul curentă </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Limbă </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred Webpage Language:</source>
-        <translation type="unfinished"/>
+        <translation>Limba preferată pentru pagina web:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Editează...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
         <source>System Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Valorile implicite ale sistemului</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation type="unfinished"/>
+        <translation>Setați ca browser implicit</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="42"/>
         <source>Continue previous session</source>
-        <translation type="unfinished"/>
+        <translation>Continua sesiunea anterioară </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="43"/>
         <source>Show startup dialog</source>
-        <translation type="unfinished"/>
+        <translation>Afișează dialogul de pornire </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show home page</source>
-        <translation type="unfinished"/>
+        <translation>Arată pagina de start </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show empty page</source>
-        <translation type="unfinished"/>
+        <translation>Arată pagina goală</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="73"/>
         <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation type="unfinished"/>
+        <translation>Pornește Otter Browser cu drepturi de administrator pentru a-l seta ca un browser implicit.</translation>
     </message>
 </context>
 <context>
@@ -2614,155 +2614,155 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="23"/>
         <source>Tracking</source>
-        <translation type="unfinished"/>
+        <translation>Urmărire </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="32"/>
         <source>Do Not Track:</source>
-        <translation type="unfinished"/>
+        <translation>Nu urmări: </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="57"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Istoric</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="64"/>
         <source>Private mode</source>
-        <translation type="unfinished"/>
+        <translation>Mod privat</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="107"/>
         <source>Remember browsing history</source>
-        <translation type="unfinished"/>
+        <translation>Memorează cronologia de navigare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="114"/>
         <source>Remember downloads history</source>
-        <translation type="unfinished"/>
+        <translation>Memorează cronologia descărcări</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="124"/>
         <source>Remember search history</source>
-        <translation type="unfinished"/>
+        <translation>Memorează cronologia căutări </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation type="unfinished"/>
+        <translation>Memorează cronologia formalitaţi </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
         <source>Template…</source>
-        <translation type="unfinished"/>
+        <translation>Șablon... </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="170"/>
         <source>Enable cookies</source>
-        <translation type="unfinished"/>
+        <translation>Activează cookie-uri</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="215"/>
         <source>Accept cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Accepta cookie-uri:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="228"/>
         <source>Keep until:</source>
-        <translation type="unfinished"/>
+        <translation>Păstrează până:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Accepta cookie-urile terților:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="268"/>
         <source>Clear history when application closes</source>
-        <translation type="unfinished"/>
+        <translation>Curăţă cronologia când se închide aplicaţia</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="288"/>
         <source>Settings…</source>
-        <translation type="unfinished"/>
+        <translation>Setări... </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="308"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Parole</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="320"/>
         <source>Remember passwords</source>
-        <translation type="unfinished"/>
+        <translation>Memorează parole</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="343"/>
         <source>Manage…</source>
-        <translation type="unfinished"/>
+        <translation>Gestionează...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="357"/>
         <source>Use a master password</source>
-        <translation type="unfinished"/>
+        <translation>Utilizați o parolă principală</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="380"/>
         <source>Change…</source>
-        <translation type="unfinished"/>
+        <translation>Schimbare...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="36"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation type="unfinished"/>
+        <translation>Informează site-urile care nu vreau să fiu urmărit</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="37"/>
         <source>Inform websites that I allow tracking</source>
-        <translation type="unfinished"/>
+        <translation>Informează site-urile că permit urmărirea</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="38"/>
         <source>Do not inform websites about my preference</source>
-        <translation type="unfinished"/>
+        <translation>Nu informa site-urile despre preferinţa mea</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="49"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="64"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Mereu </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="50"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="65"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Numai existente </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="51"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Citește numai cele existente </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="52"/>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="66"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Niciodată </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="57"/>
         <source>Expires</source>
-        <translation type="unfinished"/>
+        <translation>Expiră</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="58"/>
         <source>Current session is closed</source>
-        <translation type="unfinished"/>
+        <translation>Sesiunea este închisă </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="59"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Întreabă întotdeauna </translation>
     </message>
 </context>
 <context>
@@ -2770,82 +2770,82 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="21"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Căutare...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="63"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Adăugare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="73"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Editeare...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="83"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="108"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în sus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="134"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Mutare în jos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="147"/>
         <source>Enable search suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Activează sugestii de căutare </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="47"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nume</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="47"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Cuvânt Cheie:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="83"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nou...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="84"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>Re adaugă</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="151"/>
         <source>New Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Motor de căutare nou</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="285"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Întrebare</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="286"/>
         <source>Do you really want to remove this search engine?</source>
-        <translation type="unfinished"/>
+        <translation>Într-adevăr doriţi să ştergeţi acest motor de cautare?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="295"/>
         <source>Delete search engine permanently</source>
-        <translation type="unfinished"/>
+        <translation>Ștergeți motorul de cautare permanent</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="365"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Fără titlu)</translation>
     </message>
 </context>
 <context>
@@ -2853,7 +2853,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="61"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Document: %p%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="121"/>
@@ -2864,7 +2864,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="188"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Elemente: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="189"/>
@@ -2883,37 +2883,37 @@ Doriţi să continuaţi? </translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="106"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="128"/>
         <source>Waiting for authentication…</source>
-        <translation type="unfinished"/>
+        <translation>Se așteaptă autentificare...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="179"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Așteaptare</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="179"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>S-au întâmpinat erori SSL, doriţi să continuaţi?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="183"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Nu se mai afișează acest mesaj </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="255"/>
         <source>Receiving data from %1…</source>
-        <translation type="unfinished"/>
+        <translation>Primirea datelor de la %1...</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>Cerere finalizată la %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="457"/>
         <source>Sending request to %1…</source>
-        <translation type="unfinished"/>
+        <translation>Cerere trimisă la %1...</translation>
     </message>
 </context>
 <context>
@@ -2923,64 +2923,64 @@ Doriţi să continuaţi? </translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="313"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="179"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="314"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="350"/>
         <source>Disable JavaScript popups</source>
-        <translation type="unfinished"/>
+        <translation>Activeaza popup-urile de la JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="276"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Întrebare</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="277"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation type="unfinished"/>
+        <translation>Sunteți sigur că doriți să trimiteți din nou datele din formular?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="278"/>
         <source>Do you want to resend data?</source>
-        <translation type="unfinished"/>
+        <translation>Doriţi să retrimiteţi datele?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="264"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="282"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Nu se mai afișează acest mesaj </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="391"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Deschide fişier</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="413"/>
         <source>Error %1</source>
-        <translation type="unfinished"/>
+        <translation>Eroare %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="443"/>
         <source>%1 error #%2: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1 eroare #%2: %3</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation type="unfinished"/>
+        <translation>Scriptul de pe această pagină pare să aibă o problemă.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
         <source>Do you want to stop the script?</source>
-        <translation type="unfinished"/>
+        <translation>Doriţi să opriţi scriptul?</translation>
     </message>
 </context>
 <context>
@@ -2988,7 +2988,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="32"/>
         <source>Click to load content (%1) handled by plugin from: %2</source>
-        <translation type="unfinished"/>
+        <translation>Click pentru a încărca continut (%1) gestionat de plugin de la: % 2</translation>
     </message>
 </context>
 <context>
@@ -2996,12 +2996,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="141"/>
         <source>WebKit Backend</source>
-        <translation type="unfinished"/>
+        <translation>Motorul web WebKit</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="146"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Motorul web utilizează modulul QtWebKit</translation>
     </message>
 </context>
 <context>
@@ -3009,42 +3009,42 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="314"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eroare</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="314"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>Deschiderea fişierului pentru scriere, eşuată.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="334"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>fişier</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="345"/>
         <source>Failed to save image %0: %1</source>
-        <translation type="unfinished"/>
+        <translation>Salvarea imaginii %0: %1 a eşuat</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="465"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Previzualizează tipărirea</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="519"/>
         <source>JavaScript</source>
-        <translation type="unfinished"/>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="519"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation type="unfinished"/>
+        <translation>Pagina de web vrea să închidă acest tab, doriţi să permiteţi închiderea?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="520"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Nu se mai afișează acest mesaj </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
@@ -3064,12 +3064,12 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
         <source>Redo: %1</source>
-        <translation type="unfinished"/>
+        <translation>Refaceți: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="762"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nu a fost găsit nici un motor de căutare</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="895"/>
@@ -3079,17 +3079,17 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="895"/>
         <source>Open Image (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Deschide Imaginea (%1)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1619"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Închide</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2143"/>
         <source>Blank Page</source>
-        <translation type="unfinished"/>
+        <translation>Pagină goală</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2156"/>
@@ -3099,7 +3099,7 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2470"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Titlu: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2470"/>
@@ -3112,17 +3112,17 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="14"/>
         <source>Automatic Page Reload</source>
-        <translation type="unfinished"/>
+        <translation>Reîncarcă pagina automat</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="29"/>
         <source>minutes</source>
-        <translation type="unfinished"/>
+        <translation>minute</translation>
     </message>
     <message>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>secunde</translation>
     </message>
 </context>
 <context>
@@ -3130,22 +3130,22 @@ Doriţi să continuaţi? </translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="14"/>
         <source>Save Session</source>
-        <translation type="unfinished"/>
+        <translation>Salvează sesiunea</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation type="unfinished"/>
+        <translation>Titlul Sesiunii:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
         <source>Session identifier:</source>
-        <translation type="unfinished"/>
+        <translation>Identificatorul sesiunii:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
         <source>Store only current window</source>
-        <translation type="unfinished"/>
+        <translation>Păstra numai fereastra curentă</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
@@ -3156,7 +3156,8 @@ Doriţi să continuaţi? </translation>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="73"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Sesiunea cu identificatorul specificat există deja.
+Vrei să o suprascrieți?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="86"/>
@@ -3174,12 +3175,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find…</source>
-        <translation type="unfinished"/>
+        <translation>Gaseşte...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
         <source>Find Next</source>
-        <translation type="unfinished"/>
+        <translation>Găseşte Urmatorul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="59"/>
@@ -3189,17 +3190,17 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="86"/>
         <source>Highlight</source>
-        <translation type="unfinished"/>
+        <translation>Evidențiere</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="105"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Respectă majuscule</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="118"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Închide</translation>
     </message>
 </context>
 <context>
@@ -3212,7 +3213,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="39"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Schimbare Pictogramă...</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="58"/>
@@ -3222,22 +3223,22 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="68"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Descriere:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="81"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Cuvânt Cheie:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="94"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Codificare:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="113"/>
         <source>Set as Default Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Setează ca Motor de căutare implicit</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="124"/>
@@ -3260,25 +3261,25 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="160"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="268"/>
         <source>POST Method</source>
-        <translation type="unfinished"/>
+        <translation>Metoda POST</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="201"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="309"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Codare a datelor (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="212"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="320"/>
         <source>application/x-www-form-urlencoded</source>
-        <translation type="unfinished"/>
+        <translation>application/x-www-form-urlencoded</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="217"/>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="325"/>
         <source>multipart/form-data</source>
-        <translation type="unfinished"/>
+        <translation>multipart/form-data</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="229"/>
@@ -3288,27 +3289,27 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="98"/>
         <source>Select Icon</source>
-        <translation type="unfinished"/>
+        <translation>Alege pictogramă</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="98"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Imagini (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="146"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Substituenți</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="147"/>
         <source>Search Terms</source>
-        <translation type="unfinished"/>
+        <translation>Termeni de căutare</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="148"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Limbă </translation>
     </message>
 </context>
 <context>
@@ -3326,47 +3327,47 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Taie</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Copiază</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Lipire</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Lipiţi si Navigaţi</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>Copiază în notă</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Șterge Tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Selectați Tot</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="318"/>
         <source>Search using %1</source>
-        <translation type="unfinished"/>
+        <translation>Caută cu %1</translation>
     </message>
 </context>
 <context>
