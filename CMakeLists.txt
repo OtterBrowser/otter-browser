@@ -196,7 +196,6 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
-	src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -291,6 +290,11 @@ if (WIN32)
 		otter-browser.rc
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 	)
+elseif (UNIX)
+	set(otter_src
+		${otter_src}
+		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
+	)
 endif (WIN32)
 
 add_executable(otter-browser
@@ -311,9 +315,11 @@ if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)
 
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
+elseif (UNIX)
+	qt5_use_modules(otter-browser DBus)
 endif (WIN32)
 
-qt5_use_modules(otter-browser Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
