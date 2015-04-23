@@ -28,20 +28,17 @@
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
 
-#include <QtCore/QEventLoop>
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtGui/QDesktopServices>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
-#include <QtNetwork/QNetworkReply>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 #include <QtWebKit/QWebElement>
-#include <QtWebKit/QWebHistory>
 #include <QtWebKitWidgets/QWebFrame>
 
 namespace Otter

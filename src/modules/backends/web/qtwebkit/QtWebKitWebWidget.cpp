@@ -49,22 +49,18 @@
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QDataStream>
-#include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtCore/QUuid>
 #include <QtGui/QClipboard>
 #include <QtGui/QImageWriter>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QMovie>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKit/QtWebKitVersion>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolTip>
