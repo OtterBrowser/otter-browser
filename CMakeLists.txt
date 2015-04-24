@@ -68,10 +68,10 @@ if (MSVC)
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:\"mainCRTStartup\"")
 endif (MSVC)
 
-option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.4)" OFF)
+option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
 
 if (EnableQtwebengine)
-	find_package(Qt5 5.4.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
+	find_package(Qt5 5.5.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
 else (EnableQtwebengine)
 	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
 endif (EnableQtwebengine)

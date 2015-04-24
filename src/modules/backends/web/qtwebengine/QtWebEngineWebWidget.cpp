@@ -24,11 +24,13 @@
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/InputInterpreter.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
@@ -44,6 +46,7 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
 #include <QtWebEngineWidgets/QWebEngineHistory>
+#include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QToolTip>
@@ -1387,6 +1390,8 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
+
+	m_webView->page()->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(QLatin1String("Network/UserAgent"), url).toString()).value));
 }
 
 void QtWebEngineWebWidget::showContextMenu(const QPoint &position)
