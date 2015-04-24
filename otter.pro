@@ -10,7 +10,7 @@ message("otter.pro is deprecated, use CMake instead.")
     error("Qt 5.2.0 or newer is required.")
 }
 
-QT += core dbus gui multimedia network printsupport script sql webkitwidgets widgets
+QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
 greaterThan(QT_MINOR_VERSION, 2): QT += quick quickwidgets
 
@@ -18,6 +18,7 @@ win32: QT += winextras
 win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
 win32: INCLUDEPATH += .\
 unix: INCLUDEPATH += ./
+unix: QT += dbus
 
 OTTER_VERSION_MAIN = 0.9.06
 OTTER_VERSION_CONTEXT = -dev
@@ -152,7 +153,6 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
     src/modules/importers/html/HtmlBookmarksImporter.cpp \
     src/modules/importers/opera/OperaBookmarksImporter.cpp \
-    src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp \
     src/modules/windows/bookmarks/BookmarksContentsWidget.cpp \
     src/modules/windows/cache/CacheContentsWidget.cpp \
     src/modules/windows/configuration/ConfigurationContentsWidget.cpp \
@@ -170,6 +170,7 @@ SOURCES += src/main.cpp \
 greaterThan(QT_MINOR_VERSION, 2): SOURCES += src/modules/windows/web/StartPageWidget.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
+unix: SOURCES += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
 
 HEADERS += src/core/ActionsManager.h \
     src/core/Addon.h \
@@ -289,7 +290,6 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
     src/modules/importers/html/HtmlBookmarksImporter.h \
     src/modules/importers/opera/OperaBookmarksImporter.h \
-    src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h \
     src/modules/windows/bookmarks/BookmarksContentsWidget.h \
     src/modules/windows/cache/CacheContentsWidget.h \
     src/modules/windows/configuration/ConfigurationContentsWidget.h \
@@ -307,6 +307,7 @@ HEADERS += src/core/ActionsManager.h \
 greaterThan(QT_MINOR_VERSION, 2): HEADERS += src/modules/windows/web/StartPageWidget.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
+unix: HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h
 
 FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/AuthenticationDialog.ui \
