@@ -120,6 +120,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
 	connect(m_webView->page(), SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_webView->page(), SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
+	connect(m_webView->page()->profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
@@ -193,6 +194,14 @@ void QtWebEngineWebWidget::pageLoadFinished()
 	startReloadTimer();
 
 	emit loadingChanged(false);
+}
+
+void QtWebEngineWebWidget::downloadFile(QWebEngineDownloadItem *item)
+{
+	TransfersManager::startTransfer(item->url(), QString(), false, isPrivate());
+
+	item->cancel();
+	item->deleteLater();
 }
 
 void QtWebEngineWebWidget::linkHovered(const QString &link)

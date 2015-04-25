@@ -22,6 +22,7 @@
 
 #include "../../../../ui/WebWidget.h"
 
+#include <QtWebEngineWidgets/QWebEngineDownloadItem>
 #include <QtWebEngineWidgets/QWebEngineView>
 
 namespace Otter
@@ -137,6 +138,7 @@ protected:
 protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
+	void downloadFile(QWebEngineDownloadItem *item);
 	void linkHovered(const QString &link);
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
