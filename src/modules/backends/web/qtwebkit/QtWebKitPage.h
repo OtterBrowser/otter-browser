@@ -57,7 +57,7 @@ protected:
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 	QWebPage* createWindow(WebWindowType type);
 	QString getDefaultUserAgent() const;
-	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, NavigationType type);
+	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type);
 	bool javaScriptConfirm(QWebFrame *frame, const QString &message);
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
 

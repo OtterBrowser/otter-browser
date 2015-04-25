@@ -231,7 +231,7 @@ QString QtWebKitPage::getDefaultUserAgent() const
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
 {
-	if (request.url().scheme() == QLatin1String("javascript") && frame)
+	if (frame && request.url().scheme() == QLatin1String("javascript"))
 	{
 		frame->evaluateJavaScript(request.url().path());
 

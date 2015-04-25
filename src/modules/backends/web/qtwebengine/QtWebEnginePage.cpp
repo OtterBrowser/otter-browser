@@ -26,8 +26,10 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
+#include <QtGui/QDesktopServices>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMessageBox>
 
 template<typename Arg, typename R, typename C>
 
@@ -56,6 +58,7 @@ namespace Otter
 
 QtWebEnginePage::QtWebEnginePage(QtWebEngineWebWidget *parent) : QWebEnginePage(parent),
 	m_widget(parent),
+	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_ignoreJavaScriptPopups(false)
 {
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
@@ -149,6 +152,70 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 	}
 
 	return QWebEnginePage::createWindow(type);
+}
+
+bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)
+{
+	if (isMainFrame && url.scheme() == QLatin1String("javascript"))
+	{
+		runJavaScript(url.path());
+
+		return false;
+	}
+
+	if (url.scheme() == QLatin1String("mailto"))
+	{
+		QDesktopServices::openUrl(url);
+
+		return false;
+	}
+
+	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
+	{
+		bool cancel = false;
+		bool warn = true;
+
+		if (m_widget)
+		{
+			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_widget);
+			dialog.setCheckBox(tr("Do not show this message again"), false);
+
+			connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+
+			m_widget->showDialog(&dialog);
+
+			cancel = !dialog.isAccepted();
+			warn = !dialog.getCheckBoxState();
+		}
+		else
+		{
+			QMessageBox dialog;
+			dialog.setWindowTitle(tr("Question"));
+			dialog.setText(tr("Are you sure that you want to send form data again?"));
+			dialog.setInformativeText(tr("Do you want to resend data?"));
+			dialog.setIcon(QMessageBox::Question);
+			dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+			dialog.setDefaultButton(QMessageBox::Cancel);
+			dialog.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+			cancel = (dialog.exec() == QMessageBox::Cancel);
+			warn = !dialog.checkBox()->isChecked();
+		}
+
+		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), warn);
+
+		if (cancel)
+		{
+			return false;
+		}
+	}
+
+	if (isMainFrame && type != QWebEnginePage::NavigationTypeReload)
+	{
+		m_previousNavigationType = type;
+	}
+
+	return true;
 }
 
 bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
