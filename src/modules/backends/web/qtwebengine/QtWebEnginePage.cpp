@@ -24,9 +24,11 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
+#include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
@@ -61,6 +63,16 @@ QtWebEnginePage::QtWebEnginePage(QtWebEngineWebWidget *parent) : QWebEnginePage(
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_ignoreJavaScriptPopups(false)
 {
+	const QString cachePath = SessionsManager::getCachePath();
+
+	if (!cachePath.isEmpty())
+	{
+		QDir().mkpath(cachePath);
+
+		profile()->setCachePath(cachePath);
+		profile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
+	}
+
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 }
 
