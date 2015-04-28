@@ -1004,10 +1004,6 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 	{
 		option = QLatin1String("Browser/EnableGeolocation");
 	}
-	else if (feature == QWebEnginePage::Notifications)
-	{
-		option = QLatin1String("Browser/EnableNotifications");
-	}
 	else if (feature == QWebEnginePage::MediaAudioCapture)
 	{
 		option = QLatin1String("Browser/EnableMediaCaptureAudio");
@@ -1019,6 +1015,14 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 	else if (feature == QWebEnginePage::MediaAudioVideoCapture)
 	{
 		option = QLatin1String("Browser/EnableMediaCaptureAudioVideo");
+	}
+	else if (feature == QWebEnginePage::Notifications)
+	{
+		option = QLatin1String("Browser/EnableNotifications");
+	}
+	else if (feature == QWebEnginePage::MouseLock)
+	{
+		option = QLatin1String("Browser/EnablePointerLock");
 	}
 
 	if (!option.isEmpty())
@@ -1507,10 +1511,6 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 	{
 		feature = QWebEnginePage::Geolocation;
 	}
-	else if (key == QLatin1String("Browser/EnableNotifications"))
-	{
-		feature = QWebEnginePage::Notifications;
-	}
 	else if (key == QLatin1String("Browser/EnableMediaCaptureAudio"))
 	{
 		feature = QWebEnginePage::MediaAudioCapture;
@@ -1522,6 +1522,14 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 	else if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
 	{
 		feature = QWebEnginePage::MediaAudioVideoCapture;
+	}
+	else if (key == QLatin1String("Browser/EnableNotifications"))
+	{
+		feature = QWebEnginePage::Notifications;
+	}
+	else if (key == QLatin1String("Browser/EnablePointerLock"))
+	{
+		feature = QWebEnginePage::MouseLock;
 	}
 	else
 	{
