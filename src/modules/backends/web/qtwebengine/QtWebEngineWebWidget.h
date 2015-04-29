@@ -132,6 +132,7 @@ protected:
 	void handleScrollToAnchor(const QVariant &result);
 	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);
+	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
 

@@ -1445,6 +1445,15 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 	}
 }
 
+void QtWebEngineWebWidget::setHistory(QDataStream &stream)
+{
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+
+	setRequestedUrl(m_webView->page()->history()->currentItem().url(), false, true);
+	updateOptions(m_webView->page()->history()->currentItem().url());
+}
+
 void QtWebEngineWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
@@ -1541,10 +1550,18 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 
 WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory)
 {
-	Q_UNUSED(cloneHistory)
-
 	QtWebEngineWebWidget *widget = new QtWebEngineWebWidget(isPrivate(), getBackend());
 	widget->setOptions(getOptions());
+
+	if (cloneHistory)
+	{
+		QByteArray data;
+		QDataStream stream(&data, QIODevice::ReadWrite);
+		stream << *(m_webView->page()->history());
+
+		widget->setHistory(stream);
+	}
+
 	widget->setZoom(getZoom());
 
 	return widget;
