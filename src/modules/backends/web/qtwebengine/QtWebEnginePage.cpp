@@ -65,10 +65,16 @@ QtWebEnginePage::QtWebEnginePage(QtWebEngineWebWidget *parent) : QWebEnginePage(
 {
 	const QString cachePath = SessionsManager::getCachePath();
 
-	if (!cachePath.isEmpty())
+	if (cachePath.isEmpty())
+	{
+		profile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
+	}
+	else
 	{
 		QDir().mkpath(cachePath);
 
+		profile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+		profile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
 		profile()->setCachePath(cachePath);
 		profile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
 	}
