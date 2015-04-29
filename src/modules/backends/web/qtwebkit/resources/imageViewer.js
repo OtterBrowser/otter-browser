@@ -6,9 +6,9 @@
 	var dragInterval = 50;
 	var ignore = false;
 
-	if (originalImage && !originalImage.classList.contains('hidden'))
+	if (originalImage && !originalImage.classList.contains('imageViewer'))
 	{
-		originalImage.classList.add('hidden');
+		originalImage.classList.add('imageViewer');
 
 		var image = originalImage.cloneNode(true);
 		image.removeAttribute('width');
@@ -32,9 +32,13 @@
 				document.documentElement.classList.remove('zoomedIn');
 				document.documentElement.classList.remove('zoomedOut');
 			}
+			else if (ignore && (imageSize[0] > documentSize[0] || imageSize[1] > documentSize[1]))
+			{
+				document.documentElement.classList.add('zoomedOut');
+			}
 			else if (!ignore)
 			{
-				if (document.documentElement.classList.contains('zoomedOut'))
+				if (document.documentElement.classList.contains('zoomedOut') || (image.classList.contains('loaded') && document.documentElement.classList.length === 0))
 				{
 					var imageComputedSize = [image.clientWidth, image.clientHeight];
 
@@ -61,7 +65,7 @@
 		image.addEventListener('load', function()
 		{
 			image.click();
-			image.classList.remove('hidden');
+			image.classList.add('loaded');
 		});
 
 		this.addEventListener('resize', function()
