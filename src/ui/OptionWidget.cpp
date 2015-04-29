@@ -66,8 +66,8 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	{
 		m_widget = m_spinBox = new QSpinBox(this);
 
-		m_spinBox->setMinimum(-99999);
-		m_spinBox->setMaximum(99999);
+		m_spinBox->setMinimum(-999999999);
+		m_spinBox->setMaximum(999999999);
 		m_spinBox->setValue(currentValue.toInt());
 		m_spinBox->selectAll();
 
