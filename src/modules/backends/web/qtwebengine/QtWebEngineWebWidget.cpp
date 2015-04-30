@@ -1439,10 +1439,38 @@ void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 {
-	if (history.index >= 0 && history.index < history.entries.count())
+	if (history.entries.count() == 0)
 	{
-		setUrl(history.entries[history.index].url, false);
+		m_webView->page()->history()->clear();
+
+		updateNavigationActions();
+		updateOptions(QUrl());
+		updatePageActions(QUrl());
+
+		return;
 	}
+
+	QByteArray data;
+	QDataStream stream(&data, QIODevice::ReadWrite);
+	stream << int(3) << history.entries.count() << history.index;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		stream << QUrl(history.entries.at(i).url) << history.entries.at(i).title << QByteArray() << qint32(0) << false << QUrl() << qint32(0) << QUrl(history.entries.at(i).url) << false << qint64(QDateTime::currentDateTime().toTime_t()) << int(200);
+	}
+
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+
+	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
+
+	const QUrl url = m_webView->page()->history()->itemAt(history.index).url();
+
+	setRequestedUrl(url, false, true);
+	updateOptions(url);
+	updatePageActions(url);
+
+	m_webView->reload();
 }
 
 void QtWebEngineWebWidget::setHistory(QDataStream &stream)
