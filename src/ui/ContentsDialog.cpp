@@ -21,13 +21,13 @@
 #include "../core/Utils.h"
 
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QScrollBar>
 
 namespace Otter
 {
 
 ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent) : QFrame(parent),
+	m_contentsLayout(new QBoxLayout(QBoxLayout::TopToBottom)),
 	m_headerWidget(new QWidget(this)),
 	m_closeLabel(new QLabel(m_headerWidget)),
 	m_scrollArea(NULL),
@@ -75,16 +75,14 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	headerLayout->addWidget(titleLabel, 1);
 	headerLayout->addWidget(m_closeLabel);
 
-	QBoxLayout *contentsLayout = new QBoxLayout(QBoxLayout::TopToBottom);
-
 	if (!payload || buttons != QDialogButtonBox::NoButton)
 	{
-		contentsLayout->setContentsMargins(9, 9, 9, 9);
-		contentsLayout->setSpacing(6);
+		m_contentsLayout->setContentsMargins(9, 9, 9, 9);
+		m_contentsLayout->setSpacing(6);
 	}
 
 	mainLayout->addWidget(m_headerWidget);
-	mainLayout->addLayout(contentsLayout);
+	mainLayout->addLayout(m_contentsLayout);
 
 	if (!text.isEmpty())
 	{
@@ -92,7 +90,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		textLabel->setTextFormat(Qt::PlainText);
 		textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
-		contentsLayout->addWidget(textLabel);
+		m_contentsLayout->addWidget(textLabel);
 	}
 
 	if (payload || !details.isEmpty())
@@ -130,14 +128,14 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		scrollWidget->setLayout(scrollLayout);
 		scrollWidget->adjustSize();
 
-		contentsLayout->addWidget(m_scrollArea);
+		m_contentsLayout->addWidget(m_scrollArea);
 	}
 
 	if (buttons != QDialogButtonBox::NoButton)
 	{
 		m_buttonBox = new QDialogButtonBox(buttons, Qt::Horizontal, this);
 
-		contentsLayout->addWidget(m_buttonBox);
+		m_contentsLayout->addWidget(m_buttonBox);
 
 		connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 	}
@@ -219,16 +217,9 @@ void ContentsDialog::setCheckBox(const QString &text, bool state)
 {
 	if (!m_checkBox)
 	{
-		QBoxLayout *mainLayout = static_cast<QBoxLayout*>(layout());
-
-		if (!mainLayout)
-		{
-			return;
-		}
-
 		m_checkBox = new QCheckBox(this);
 
-		mainLayout->insertWidget((mainLayout->count() - 1), m_checkBox);
+		m_contentsLayout->insertWidget((m_contentsLayout->count() - 1), m_checkBox);
 	}
 
 	m_checkBox->setText(text);

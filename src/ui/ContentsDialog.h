@@ -20,6 +20,7 @@
 #ifndef OTTER_CONTENTSDIALOG_H
 #define OTTER_CONTENTSDIALOG_H
 
+#include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFrame>
@@ -50,6 +51,7 @@ protected slots:
 	void clicked(QAbstractButton *button);
 
 private:
+	QBoxLayout *m_contentsLayout;
 	QWidget *m_headerWidget;
 	QLabel *m_closeLabel;
 	QScrollArea *m_scrollArea;
