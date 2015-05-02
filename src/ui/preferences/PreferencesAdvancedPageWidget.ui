@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>475</width>
+    <height>442</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -804,9 +804,9 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="actionShortcutsLayout">
+        <layout class="QHBoxLayout" name="keyboardProfilesLayout">
          <item>
-          <widget class="Otter::ItemViewWidget" name="actionShortcutsViewWidget">
+          <widget class="Otter::ItemViewWidget" name="keyboardViewWidget">
            <property name="dragEnabled">
             <bool>true</bool>
            </property>
@@ -834,16 +834,16 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="actionShortcutsButtonsLayout" stretch="0,0,0,0,1,0">
+          <layout class="QVBoxLayout" name="keyboardButtonsLayout" stretch="0,0,0,0,1,0">
            <item>
-            <widget class="QPushButton" name="actionShortcutsAddButton">
+            <widget class="QPushButton" name="keyboardAddButton">
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="actionShortcutsEditButton">
+            <widget class="QPushButton" name="keyboardEditButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -853,7 +853,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="actionShortcutsCloneButton">
+            <widget class="QPushButton" name="keyboardCloneButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -863,7 +863,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="actionShortcutsRemoveButton">
+            <widget class="QPushButton" name="keyboardRemoveButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -873,7 +873,7 @@
             </widget>
            </item>
            <item>
-            <spacer name="actionShortcutsSpacer">
+            <spacer name="keyboardSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -886,9 +886,9 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="actionShortcutsMoveButtonsLayout">
+            <layout class="QHBoxLayout" name="keyboardMoveButtonsLayout">
              <item>
-              <widget class="QToolButton" name="actionShortcutsMoveUpButton">
+              <widget class="QToolButton" name="keyboardMoveUpButton">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -898,7 +898,7 @@
               </widget>
              </item>
              <item>
-              <spacer name="actionShortcutsMoveButtonsSpacer">
+              <spacer name="keyboardMoveButtonsSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -914,7 +914,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QToolButton" name="actionShortcutsMoveDownButton">
+              <widget class="QToolButton" name="keyboardMoveDownButton">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -928,6 +928,16 @@
           </layout>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="keyboardEnableSingleKeyShortcutsCheckBox">
+         <property name="text">
+          <string>Enable single key shortcuts</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

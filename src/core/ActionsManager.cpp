@@ -434,7 +434,7 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 void ActionsManager::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder") && m_reloadTimer == 0)
+	if ((option == QLatin1String("Browser/KeyboardShortcutsProfilesOrder") || option == QLatin1String("Browser/EnableSingleKeyShortcuts")) && m_reloadTimer == 0)
 	{
 		m_reloadTimer = startTimer(250);
 	}
@@ -445,6 +445,7 @@ void ActionsManager::loadProfiles()
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QVector<QKeySequence> allShortcuts;
 	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
+	const bool enableSingleKeyShortcuts = SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool();
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
@@ -466,7 +467,7 @@ void ActionsManager::loadProfiles()
 			{
 				const QKeySequence shortcut(rawShortcuts.at(k));
 
-				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut))
+				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut) && (enableSingleKeyShortcuts || shortcut.count() > 1))
 				{
 					shortcuts.append(shortcut);
 					allShortcuts.append(shortcut);

@@ -188,8 +188,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
-	m_ui->actionShortcutsMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->actionShortcutsMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->keyboardMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
+	m_ui->keyboardMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *shortcutsProfilesModel = new QStandardItemModel(this);
 	const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
@@ -213,14 +213,15 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		shortcutsProfilesModel->appendRow(item);
 	}
 
-	m_ui->actionShortcutsViewWidget->setModel(shortcutsProfilesModel);
-	m_ui->actionShortcutsViewWidget->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->keyboardViewWidget->setModel(shortcutsProfilesModel);
+	m_ui->keyboardViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
-	QMenu *addKeyboardProfileMenu = new QMenu(m_ui->actionShortcutsAddButton);
+	QMenu *addKeyboardProfileMenu = new QMenu(m_ui->keyboardAddButton);
 	addKeyboardProfileMenu->addAction(tr("New…"));
-	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->actionShortcutsAddButton));
+	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
-	m_ui->actionShortcutsAddButton->setMenu(addKeyboardProfileMenu);
+	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
+	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool());
 
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
@@ -241,17 +242,17 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), this, SLOT(removeCipher()));
 	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
-	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->actionShortcutsMoveDownButton, SLOT(setEnabled(bool)));
-	connect(m_ui->actionShortcutsViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->actionShortcutsMoveUpButton, SLOT(setEnabled(bool)));
-	connect(m_ui->actionShortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
-	connect(m_ui->actionShortcutsViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->actionShortcutsAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
-	connect(m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
-	connect(m_ui->actionShortcutsEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
-	connect(m_ui->actionShortcutsCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
-	connect(m_ui->actionShortcutsRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
-	connect(m_ui->actionShortcutsMoveDownButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveDownRow()));
-	connect(m_ui->actionShortcutsMoveUpButton, SIGNAL(clicked()), m_ui->actionShortcutsViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->keyboardMoveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->keyboardMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->keyboardViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
+	connect(m_ui->keyboardViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
+	connect(m_ui->keyboardAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
+	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
+	connect(m_ui->keyboardEditButton, SIGNAL(clicked()), this, SLOT(editKeyboardProfile()));
+	connect(m_ui->keyboardCloneButton, SIGNAL(clicked()), this, SLOT(cloneKeyboardProfile()));
+	connect(m_ui->keyboardRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
+	connect(m_ui->keyboardMoveDownButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->keyboardMoveUpButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveUpRow()));
 }
 
 PreferencesAdvancedPageWidget::~PreferencesAdvancedPageWidget()
@@ -460,7 +461,7 @@ void PreferencesAdvancedPageWidget::updateCiphersActions()
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
 {
-	const QString identifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget);
+	const QString identifier = createProfileIdentifier(m_ui->keyboardViewWidget);
 
 	if (identifier.isEmpty())
 	{
@@ -476,7 +477,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->actionShortcutsViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow(item);
 
 	emit settingsModified();
 }
@@ -503,7 +504,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	item->setData(profile.identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->actionShortcutsViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow(item);
 
 	updateReaddKeyboardProfileMenu();
 
@@ -512,7 +513,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 
 void PreferencesAdvancedPageWidget::editKeyboardProfile()
 {
-	const QModelIndex index = m_ui->actionShortcutsViewWidget->currentIndex();
+	const QModelIndex index = m_ui->keyboardViewWidget->currentIndex();
 	const QString identifier = index.data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
@@ -529,22 +530,22 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 
 	m_shortcutsProfiles[identifier] = dialog.getProfile();
 
-	m_ui->actionShortcutsViewWidget->setData(index, (m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title), Qt::DisplayRole);
-	m_ui->actionShortcutsViewWidget->setData(index, m_shortcutsProfiles[identifier].description, Qt::ToolTipRole);
+	m_ui->keyboardViewWidget->setData(index, (m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title), Qt::DisplayRole);
+	m_ui->keyboardViewWidget->setData(index, m_shortcutsProfiles[identifier].description, Qt::ToolTipRole);
 
 	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 {
-	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	const QString newIdentifier = createProfileIdentifier(m_ui->actionShortcutsViewWidget, identifier);
+	const QString newIdentifier = createProfileIdentifier(m_ui->keyboardViewWidget, identifier);
 
 	if (newIdentifier.isEmpty())
 	{
@@ -560,14 +561,14 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-	m_ui->actionShortcutsViewWidget->insertRow(item);
+	m_ui->keyboardViewWidget->insertRow(item);
 
 	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 {
-	const QString identifier = m_ui->actionShortcutsViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
 
 	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
 	{
@@ -597,7 +598,7 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 
 		m_shortcutsProfiles.remove(identifier);
 
-		m_ui->actionShortcutsViewWidget->removeRow();
+		m_ui->keyboardViewWidget->removeRow();
 
 		updateReaddKeyboardProfileMenu();
 
@@ -607,17 +608,17 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 
 void PreferencesAdvancedPageWidget::updateKeyboardProfileActions()
 {
-	const int currentRow = m_ui->actionShortcutsViewWidget->getCurrentRow();
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->actionShortcutsViewWidget->getRowCount());
+	const int currentRow = m_ui->keyboardViewWidget->getCurrentRow();
+	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->keyboardViewWidget->getRowCount());
 
-	m_ui->actionShortcutsEditButton->setEnabled(isSelected);
-	m_ui->actionShortcutsCloneButton->setEnabled(isSelected);
-	m_ui->actionShortcutsRemoveButton->setEnabled(isSelected);
+	m_ui->keyboardEditButton->setEnabled(isSelected);
+	m_ui->keyboardCloneButton->setEnabled(isSelected);
+	m_ui->keyboardRemoveButton->setEnabled(isSelected);
 }
 
 void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 {
-	if (!m_ui->actionShortcutsAddButton->menu())
+	if (!m_ui->keyboardAddButton->menu())
 	{
 		return;
 	}
@@ -644,12 +645,12 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 		}
 	}
 
-	m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->clear();
-	m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableShortcutsProfiles.isEmpty());
+	m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->clear();
+	m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableShortcutsProfiles.isEmpty());
 
 	for (int i = 0; i < availableShortcutsProfiles.count(); ++i)
 	{
-		m_ui->actionShortcutsAddButton->menu()->actions().at(1)->menu()->addAction((availableShortcutsProfiles.at(i).title.isEmpty() ? tr("(Untitled)") : availableShortcutsProfiles.at(i).title))->setData(availableShortcutsProfiles.at(i).identifier);
+		m_ui->keyboardAddButton->menu()->actions().at(1)->menu()->addAction((availableShortcutsProfiles.at(i).title.isEmpty() ? tr("(Untitled)") : availableShortcutsProfiles.at(i).title))->setData(availableShortcutsProfiles.at(i).identifier);
 	}
 }
 
@@ -858,9 +859,9 @@ void PreferencesAdvancedPageWidget::save()
 
 	QStringList shortcutsProfiles;
 
-	for (int i = 0; i < m_ui->actionShortcutsViewWidget->getRowCount(); ++i)
+	for (int i = 0; i < m_ui->keyboardViewWidget->getRowCount(); ++i)
 	{
-		const QString identifier = m_ui->actionShortcutsViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
+		const QString identifier = m_ui->keyboardViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
 
 		if (!identifier.isEmpty())
 		{
@@ -869,6 +870,7 @@ void PreferencesAdvancedPageWidget::save()
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
+	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
 
