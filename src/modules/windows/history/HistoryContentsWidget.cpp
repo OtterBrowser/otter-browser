@@ -110,6 +110,8 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 
 void HistoryContentsWidget::triggerAction(int identifier, bool checked)
 {
+	Q_UNUSED(checked)
+
 	switch (identifier)
 	{
 		case ActionsManager::FindAction:
