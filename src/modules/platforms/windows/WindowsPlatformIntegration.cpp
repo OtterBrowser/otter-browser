@@ -233,7 +233,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 	if (suffix.isEmpty())
 	{
-		Console::addMessage(tr("There is no valid suffix for given MIME type\n %1").arg(mimeType.name()), OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(tr("No valid suffix for given MIME type: %1").arg(mimeType.name()), OtherMessageCategory, ErrorMessageLevel);
 
 		return QList<ApplicationInformation>();
 	}
@@ -295,7 +295,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 		if (information.command.isEmpty())
 		{
-			Console::addMessage(tr("Failed to load a valid application path for MIME type %1:\n%2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
+			Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
 
 			continue;
 		}
@@ -345,7 +345,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 				}
 				else
 				{
-					Console::addMessage(tr("Failed to load a valid application path for MIME type %1:\n%2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
+					Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), OtherMessageCategory, ErrorMessageLevel);
 
 					continue;
 				}
@@ -479,7 +479,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 	if (m_applicationRegistration.status() != QSettings::NoError || capabilities.status() != QSettings::NoError)
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to register application to system registry: %0, %1").arg(m_applicationRegistration.status(), capabilities.status()), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to register application to system registry: %1, %2").arg(m_applicationRegistration.status(), capabilities.status()), Otter::OtherMessageCategory, ErrorMessageLevel);
 
 		return false;
 	}

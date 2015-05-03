@@ -61,7 +61,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
 		{
-			Console::addMessage(tr("Failed to setup proxy auto-config (PAC)"), NetworkMessageCategory, ErrorMessageLevel, path);
+			Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), NetworkMessageCategory, ErrorMessageLevel, path);
 
 			m_proxyMode = SystemProxy;
 		}

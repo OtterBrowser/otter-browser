@@ -188,7 +188,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 	{
-		Console::addMessage(tr("Failed to open bookmarks file (%1): %2").arg(path).arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(((mode == NotesMode) ? tr("Failed to open notes file: %1") : tr("Failed to open bookmarks file: %1")).arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
 
 		return;
 	}
@@ -212,9 +212,9 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 			{
 				clear();
 
-				QMessageBox::warning(NULL, tr("Error"), tr("Failed to parse bookmarks file. No bookmarks were loaded."), QMessageBox::Close);
+				Console::addMessage(((m_mode == NotesMode) ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
 
-				Console::addMessage(tr("Failed to load bookmarks file properly, QXmlStreamReader error code: %1").arg(reader.error()), OtherMessageCategory, ErrorMessageLevel);
+				QMessageBox::warning(NULL, tr("Error"), ((m_mode == NotesMode) ? tr("Failed to load notes file.") : tr("Failed to load bookmarks file.")), QMessageBox::Close);
 
 				return;
 			}
