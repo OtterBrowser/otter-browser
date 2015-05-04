@@ -620,23 +620,38 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="191"/>
-        <source>Failed to open bookmarks file (%1): %2</source>
-        <translation>Impossibile aprire il file dei segnalibri (%1): %2</translation>
+        <source>Failed to open notes file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksModel.cpp" line="191"/>
+        <source>Failed to open bookmarks file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
+        <source>Failed to load notes file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
+        <source>Failed to load bookmarks file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="215"/>
-        <source>Failed to parse bookmarks file. No bookmarks were loaded.</source>
-        <translation>Impossibile analizzare il file dei segnalibri. Nessun segnalibro è stato caricato.</translation>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
+        <source>Failed to load notes file.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
-        <source>Failed to load bookmarks file properly, QXmlStreamReader error code: %1</source>
-        <translation>Il file dei segnalibri non è stato caricato con successo. QXmlStreamReader error %1</translation>
+        <source>Failed to load bookmarks file.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1231,58 +1246,58 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="240"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="242"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="276"/>
         <source>(Untitled)</source>
         <translation>(Senza titolo) </translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="396"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="395"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="397"/>
         <source>Open in New Tab</source>
         <translation>Apri in nuova scheda </translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="396"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="398"/>
         <source>Open in New Background Tab</source>
         <translation>Apri in una nuova scheda in secondo piano </translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
         <source>Open in New Window</source>
         <translation>Apri in una nuova fineastra </translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
         <source>Open in New Background Window</source>
         <translation>Apri in una nuova finestra in secondo piano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="403"/>
         <source>Add to Bookmarks…</source>
         <translation>Aggiungi ai preferiti…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
         <source>Copy Link to Clipboard</source>
         <translation>Copia link negli appunti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="406"/>
         <source>Remove Entry</source>
         <translation>Elimina</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Rimuovi tutte le voci da questo sito </translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="438"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="440"/>
         <source>History</source>
         <translation>Storico</translation>
     </message>
@@ -1717,8 +1732,8 @@ Si desidera continuare?</translation>
     <name>Otter::NetworkProxyFactory</name>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
-        <source>Failed to setup proxy auto-config (PAC)</source>
-        <translation>Impossibile impostare la configurazione automatica proxy (PAC) </translation>
+        <source>Failed to load proxy auto-config (PAC): %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1899,26 +1914,31 @@ Si desidera continuare?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
-        <source>%1 wants to show notifications.</source>
-        <translation>%1 vuole visualizzare le notifiche</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your microphone.</source>
         <translation>%1 vuole utilizzare il microfono</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your camera.</source>
         <translation>%1 vuole utilizzare la webcam</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
         <source>%1 wants to access your microphone and camera.</source>
         <translation>%1 vuole utilizzare microfono e webcam</translation>
     </message>
     <message>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
+        <source>%1 wants to show notifications.</source>
+        <translation>%1 vuole visualizzare le notifiche</translation>
+    </message>
+    <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
+        <source>%1 wants to lock mouse pointer.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
         <source>Invalid permission request from %1.</source>
         <translation type="unfinished"/>
     </message>
@@ -2013,7 +2033,7 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="961"/>
         <source>General</source>
         <translation>Generale</translation>
     </message>
@@ -2187,7 +2207,12 @@ Si desidera continuare?</translation>
         <translation>Duplica</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="967"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
+        <source>Enable single key shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
         <source>Show tray icon</source>
         <translation>Visualizza nella tray</translation>
     </message>
@@ -2218,21 +2243,21 @@ Si desidera continuare?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="355"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="356"/>
         <source>Default</source>
         <translation>Predefinito</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="107"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="208"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="361"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="471"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="475"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="501"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="532"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="558"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="652"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="832"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="362"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="472"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="476"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="502"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="533"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="653"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="833"/>
         <source>(Untitled)</source>
         <translation>(Senza titolo)</translation>
     </message>
@@ -2247,22 +2272,22 @@ Si desidera continuare?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="307"/>
         <source>WAV files (*.wav)</source>
         <translation>File WAV (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
         <source>Question</source>
         <translation>Domanda </translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="580"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Vuoi davvero eliminare questo profilo? </translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="588"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="589"/>
         <source>Delete profile permanently</source>
         <translation>Cancella il profilo definitivamente</translation>
     </message>
@@ -2919,66 +2944,66 @@ Si desidera continuare?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="178"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="313"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="175"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="310"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="346"/>
         <source>JavaScript</source>
         <translation>Javascript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="179"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="314"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="350"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="176"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="311"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="347"/>
         <source>Disable JavaScript popups</source>
         <translation>Disabilita i popup in Javascript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="276"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="260"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="452"/>
         <source>Question</source>
         <translation>Domanda</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="277"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="260"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Sei sicuro di voler reinviare i dati del modulo?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="263"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="278"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="260"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="275"/>
         <source>Do you want to resend data?</source>
         <translation>Si desidera inviare nuovamente i dati? </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="264"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="282"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="261"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="279"/>
         <source>Do not show this message again</source>
         <translation>Non mostrare nuovamente questo messaggio</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="391"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="388"/>
         <source>Open File</source>
         <translation>Apri File</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="413"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="410"/>
         <source>Error %1</source>
         <translation>Errore %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="443"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="440"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 errore #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="452"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Lo script in questa pagina sembra avere problemi </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="452"/>
         <source>Do you want to stop the script?</source>
         <translation>Si desidera interrompere lo script? </translation>
     </message>
@@ -3007,102 +3032,102 @@ Si desidera continuare?</translation>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="314"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="310"/>
         <source>Error</source>
         <translation>Errore </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="314"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="310"/>
         <source>Failed to open file for writing.</source>
         <translation>Impossibile aprire il file in scrittura. </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="330"/>
         <source>file</source>
         <translation>file</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="345"/>
-        <source>Failed to save image %0: %1</source>
-        <translation>Impossibile salvare l&apos;immagine %0: %1</translation>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="341"/>
+        <source>Failed to save image: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="465"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="461"/>
         <source>Print Preview</source>
         <translation>Anteprima di stampa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="519"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="515"/>
         <source>JavaScript</source>
         <translation>Javascript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="519"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="515"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>La pagina web vuole chiudere questa scheda, vuoi proseguire?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="520"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="516"/>
         <source>Do not show this message again</source>
         <translation>Non mostrare più questo messaggio</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="634"/>
         <source>Undo</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="634"/>
         <source>Undo: %1</source>
         <translation>Annulla: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="639"/>
         <source>Redo</source>
         <translation>Ripeti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="639"/>
         <source>Redo: %1</source>
         <translation>Ripeti: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="762"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="758"/>
         <source>No search engines defined</source>
         <translation>Nessun motore di ricerca definito</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="895"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="891"/>
         <source>Open Image (Untitled)</source>
         <translation>Apri immagine (Senza titolo) </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="895"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="891"/>
         <source>Open Image (%1)</source>
         <translation>Apri immagine (%1) </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1619"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1615"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2143"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2139"/>
         <source>Blank Page</source>
         <translation>Pagina vuota </translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2156"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2152"/>
         <source>(Untitled)</source>
         <translation>(Senza titolo)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2470"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2466"/>
         <source>Title: %1</source>
         <translation>Titolo: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2470"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="2466"/>
         <source>Address: %1</source>
         <translation>Indirizzo: %1 </translation>
     </message>
@@ -4681,22 +4706,22 @@ Select another one.</source>
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="168"/>
+        <location filename="../../src/ui/Window.cpp" line="169"/>
         <source>Print Page</source>
         <translation>Stampa pagina </translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="181"/>
+        <location filename="../../src/ui/Window.cpp" line="182"/>
         <source>Print Preview</source>
         <translation>Anteprima di stampa</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="345"/>
+        <location filename="../../src/ui/Window.cpp" line="348"/>
         <source>Select User Agent</source>
         <translation>Seleziona User Agent</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="345"/>
+        <location filename="../../src/ui/Window.cpp" line="348"/>
         <source>Enter User Agent:</source>
         <translation>Inserisci User Agente</translation>
     </message>
@@ -4745,18 +4770,14 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="236"/>
-        <source>There is no valid suffix for given MIME type
- %1</source>
-        <translation>Non c&apos;è un suffisso valido per il MIME dato:
-%1</translation>
+        <source>No valid suffix for given MIME type: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="298"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="348"/>
-        <source>Failed to load a valid application path for MIME type %1:
-%2</source>
-        <translation>Impossibile avviare un&apos;applicazione valida per il MIME %1:
-%2</translation>
+        <source>Failed to load a valid application path for MIME type %1: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5008,7 +5029,7 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="837"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="833"/>
         <source>Bookmark Link…</source>
         <translation>Indirizzo Segnalibro…</translation>
     </message>
@@ -5067,7 +5088,7 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="895"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="891"/>
         <source>Open Image</source>
         <translation>Apri immagine</translation>
     </message>
@@ -5118,13 +5139,13 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="962"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="958"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="969"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="965"/>
         <source>Mute</source>
         <translation>Disattiva audio </translation>
     </message>
@@ -5295,7 +5316,7 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="345"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="761"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="757"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
@@ -5411,7 +5432,7 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="650"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="646"/>
         <source>Add Bookmark…</source>
         <translation>Aggiungi segnalibro…</translation>
     </message>
@@ -5633,42 +5654,42 @@ Select another one.</source>
         <translation>Barra di Stato</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="650"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="646"/>
         <source>Edit Bookmark…</source>
         <translation>Modifica segnalibro…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="837"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="833"/>
         <source>Edit Link Bookmark…</source>
         <translation>Modifica il link del segnalibro…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="938"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="934"/>
         <source>Save Video…</source>
         <translation>Salva video…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="938"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="934"/>
         <source>Save Audio…</source>
         <translation>Salva Audio…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="944"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="940"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Copia il link del video negli Appunti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="944"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="940"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Copia il link Audio negli Appunti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="962"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="958"/>
         <source>Pause</source>
         <translation>Pausa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="969"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="965"/>
         <source>Unmute</source>
         <translation>Attiva l&apos;audio</translation>
     </message>
@@ -5732,44 +5753,39 @@ Select another one.</source>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="60"/>
-        <source>Failed to load adblock file: %1</source>
-        <translation>Impossibile caricare il file adblock: %1</translation>
+        <source>Failed to open content blocking profile file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="69"/>
-        <source>Loaded adblock file is not valid: %1</source>
-        <translation>Il file adblock caricato non è valido: %1</translation>
+        <source>Failed to load content blocking profile file: invalid header</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="436"/>
-        <source>Content blocking URL for %1 update is not valid.
-%2</source>
-        <translation>La URL del blocco dei contenuti per l&apos;aggionamento %1 non è valida.
-%2</translation>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="438"/>
+        <source>Failed to update content blocking profile, update URL is empty</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="468"/>
-        <source>Unable to download update for content blocking: %1.
-Error: %2</source>
-        <translation>Impossiible scaricare l&apos;aggiornamento del blocco dei contenuti: %1
-Errore: %2</translation>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="442"/>
+        <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="484"/>
-        <source>Content blocking file checksum mismatch: %1</source>
-        <translation>Il checksum del file del blocco dei contenuti non corrisponde: %1</translation>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="475"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="501"/>
+        <source>Failed to update content blocking profile: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="494"/>
-        <source>Unable to write downloaded content blocking file: %1</source>
-        <translation>Impossibile scaricare il file del blocco dei contenuti :  %1</translation>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="491"/>
+        <source>Failed to update content blocking profile: checksum mismatch</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
-        <source>Failed to parse entry of proxy auto-config (PAC):
-%1</source>
-        <translation>Impossibile analizzare la voce di configurazione automatica proxy (PAC):
-%1</translation>
+        <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="76"/>
@@ -5778,14 +5794,14 @@ Errore: %2</translation>
         <translation>(Senza titolo)</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="116"/>
+        <location filename="../../src/main.cpp" line="107"/>
         <source>Default</source>
         <translation>Predefinito </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="420"/>
-        <source>Blocked content: %1</source>
-        <translation>Contenuti bloccati: %1</translation>
+        <source>Blocked request</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="427"/>
@@ -5794,8 +5810,8 @@ Errore: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="482"/>
-        <source>Failed to register application to system registry: %0, %1</source>
-        <translation>Impossibile registrare applicazione nel registro di sistema: %0, %1</translation>
+        <source>Failed to register application to system registry: %1, %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
