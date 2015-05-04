@@ -89,6 +89,7 @@ public:
 	WindowLoadingState getLoadingState() const;
 	quint64 getIdentifier() const;
 	bool canClone() const;
+	bool isAboutToClose() const;
 	bool isPinned() const;
 	bool isPrivate() const;
 
@@ -124,6 +125,7 @@ private:
 	QList<QPointer<SearchWidget> > m_searchWidgets;
 	quint64 m_identifier;
 	bool m_areControlsHidden;
+	bool m_isAboutToClose;
 	bool m_isPinned;
 	bool m_isPrivate;
 

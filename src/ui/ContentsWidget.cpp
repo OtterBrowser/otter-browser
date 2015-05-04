@@ -128,7 +128,7 @@ void ContentsWidget::cleanupDialog()
 		dialog->deleteLater();
 	}
 
-	if (m_dialogs.isEmpty() && m_layer)
+	if (m_dialogs.isEmpty() && m_layer && m_layerTimer == 0)
 	{
 		m_layerTimer = startTimer(100);
 	}
@@ -138,6 +138,15 @@ void ContentsWidget::showDialog(ContentsDialog *dialog)
 {
 	if (!dialog)
 	{
+		return;
+	}
+
+	Window *window = qobject_cast<Window*>(parent());
+
+	if (window && window->isAboutToClose())
+	{
+		dialog->deleteLater();
+
 		return;
 	}
 

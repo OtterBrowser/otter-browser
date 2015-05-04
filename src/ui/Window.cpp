@@ -58,6 +58,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	m_contentsWidget(NULL),
 	m_identifier(++m_identifierCounter),
 	m_areControlsHidden(false),
+	m_isAboutToClose(false),
 	m_isPinned(false),
 	m_isPrivate(isPrivate)
 {
@@ -233,6 +234,8 @@ void Window::detachSearchWidget(SearchWidget *widget)
 
 void Window::close()
 {
+	m_isAboutToClose = true;
+
 	emit aboutToClose();
 
 	QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
@@ -707,6 +710,11 @@ quint64 Window::getIdentifier() const
 bool Window::canClone() const
 {
 	return (m_contentsWidget ? m_contentsWidget->canClone() : false);
+}
+
+bool Window::isAboutToClose() const
+{
+	return m_isAboutToClose;
 }
 
 bool Window::isPinned() const
