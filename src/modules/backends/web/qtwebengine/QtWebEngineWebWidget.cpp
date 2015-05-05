@@ -87,7 +87,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_isLoading(false),
 	m_isTyped(false)
 {
-	m_webView->setPage(new QtWebEnginePage(this));
+	m_webView->setPage(new QtWebEnginePage(isPrivate, this));
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->installEventFilter(this);
 
@@ -1880,7 +1880,7 @@ bool QtWebEngineWebWidget::isLoading() const
 
 bool QtWebEngineWebWidget::isPrivate() const
 {
-	return false;
+	return m_webView->page()->profile()->isOffTheRecord();
 }
 
 bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)

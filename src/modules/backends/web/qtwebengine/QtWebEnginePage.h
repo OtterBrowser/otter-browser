@@ -36,7 +36,7 @@ class QtWebEnginePage : public QWebEnginePage
 	Q_OBJECT
 
 public:
-	explicit QtWebEnginePage(QtWebEngineWebWidget *parent);
+	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
 protected:
 	void javaScriptAlert(const QUrl &url, const QString &message);

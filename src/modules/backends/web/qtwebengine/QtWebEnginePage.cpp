@@ -58,25 +58,28 @@ InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFunction)(Arg))
 namespace Otter
 {
 
-QtWebEnginePage::QtWebEnginePage(QtWebEngineWebWidget *parent) : QWebEnginePage(parent),
+QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) : QWebEnginePage((isPrivate ? new QWebEngineProfile(parent) : QWebEngineProfile::defaultProfile()), parent),
 	m_widget(parent),
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_ignoreJavaScriptPopups(false)
 {
-	const QString cachePath = SessionsManager::getCachePath();
-
-	if (cachePath.isEmpty())
+	if (!isPrivate)
 	{
-		profile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
-	}
-	else
-	{
-		QDir().mkpath(cachePath);
+		const QString cachePath = SessionsManager::getCachePath();
 
-		profile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
-		profile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
-		profile()->setCachePath(cachePath);
-		profile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
+		if (cachePath.isEmpty())
+		{
+			profile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
+		}
+		else
+		{
+			QDir().mkpath(cachePath);
+
+			profile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+			profile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
+			profile()->setCachePath(cachePath);
+			profile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
+		}
 	}
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
