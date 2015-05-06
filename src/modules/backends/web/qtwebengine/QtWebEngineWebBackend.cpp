@@ -24,6 +24,8 @@
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
+#include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 
 namespace Otter
@@ -63,6 +65,22 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 	if (!m_isInitialized)
 	{
 		m_isInitialized = true;
+
+		const QString cachePath = SessionsManager::getCachePath();
+
+		if (cachePath.isEmpty())
+		{
+			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
+		}
+		else
+		{
+			QDir().mkpath(cachePath);
+
+			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+			QWebEngineProfile::defaultProfile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
+			QWebEngineProfile::defaultProfile()->setCachePath(cachePath);
+			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
+		}
 
 		optionChanged(QLatin1String("Browser/"));
 

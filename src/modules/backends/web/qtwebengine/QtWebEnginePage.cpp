@@ -24,7 +24,6 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
-#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
@@ -63,25 +62,6 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_ignoreJavaScriptPopups(false)
 {
-	if (!isPrivate)
-	{
-		const QString cachePath = SessionsManager::getCachePath();
-
-		if (cachePath.isEmpty())
-		{
-			profile()->setHttpCacheType(QWebEngineProfile::MemoryHttpCache);
-		}
-		else
-		{
-			QDir().mkpath(cachePath);
-
-			profile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
-			profile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
-			profile()->setCachePath(cachePath);
-			profile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
-		}
-	}
-
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 }
 
