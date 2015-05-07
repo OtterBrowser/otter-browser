@@ -174,11 +174,11 @@ QString AcceptLanguageDialog::getLanguages()
 		{
 			if (result.isEmpty())
 			{
-				result += m_model->item(i)->data().toString();
+				result += m_model->item(i)->data(Qt::UserRole).toString();
 			}
 			else
 			{
-				result += QStringLiteral(",%1;q=%2").arg(m_model->item(i)->data().toString()).arg(qMax(1 - (i * step), 0.001));
+				result += QStringLiteral(",%1;q=%2").arg(m_model->item(i)->data(Qt::UserRole).toString()).arg(qMax(1 - (i * step), 0.001));
 			}
 		}
 	}
