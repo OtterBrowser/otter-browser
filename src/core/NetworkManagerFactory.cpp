@@ -266,7 +266,7 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 		UserAgentInformation userAgent;
 		userAgent.identifier = QLatin1String("default");
 		userAgent.title = tr("Default");
-		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} (KHTML, like Gecko) {applicationVersion}");
+		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} {applicationVersion}");
 
 		return userAgent;
 	}

@@ -25,15 +25,31 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QRegularExpression>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 
 namespace Otter
 {
 
+QString QtWebEngineWebBackend::m_engineVersion;
+QMap<QString, QString> QtWebEngineWebBackend::m_userAgentComponents;
+QMap<QString, QString> QtWebEngineWebBackend::m_userAgents;
+
 QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
+	const QString userAgent = QWebEngineProfile::defaultProfile()->httpUserAgent();
+	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
+	QRegularExpression engineExpression(QLatin1String("Chrome/([\\d\\.]+)"));
+
+	m_userAgentComponents[QLatin1String("platform")] = platformExpression.match(userAgent).captured(1);
+	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/537.36 (KHTML, like Gecko) Chrome/") + engineExpression.match(userAgent).captured(1);
+	m_userAgentComponents[QLatin1String("applicationVersion")] = QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion();
+
+	m_engineVersion = engineExpression.match(userAgent).captured(1);
+
+	QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 }
 
 void QtWebEngineWebBackend::optionChanged(const QString &option)
@@ -107,12 +123,34 @@ QString QtWebEngineWebBackend::getVersion() const
 
 QString QtWebEngineWebBackend::getEngineVersion() const
 {
-	return QLatin1String("37.0");
+	return m_engineVersion;
 }
 
 QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 {
-	return pattern;
+	if (!pattern.isEmpty())
+	{
+		if (m_userAgents.contains(pattern))
+		{
+			return (m_userAgents[pattern].isEmpty() ? pattern : m_userAgents[pattern]);
+		}
+
+		QString userAgent = pattern;
+		QMap<QString, QString>::iterator iterator;
+
+		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
+		{
+			userAgent = userAgent.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+		}
+
+		m_userAgents[pattern] = ((pattern == userAgent) ? QString() : userAgent);
+
+		return userAgent;
+	}
+
+	const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
+
+	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }
 
 QUrl QtWebEngineWebBackend::getHomePage() const

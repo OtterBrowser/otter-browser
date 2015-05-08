@@ -28,6 +28,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QRegularExpression>
 #include <QtWebKit/QWebHistoryInterface>
 #include <QtWebKit/QWebSettings>
 
@@ -41,23 +42,10 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
 	QtWebKitPage *page = new QtWebKitPage();
-	const QList<QString> userAgentSplited = page->getDefaultUserAgent().split(QLatin1Char(' '));
+	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
 
-	for (int i = 1; i < userAgentSplited.count(); ++i)
-	{
-		m_userAgentComponents[QLatin1String("platform")] += userAgentSplited.at(i);
-
-		if (userAgentSplited.at(i).endsWith(QLatin1Char(')')))
-		{
-			break;
-		}
-		else
-		{
-			m_userAgentComponents[QLatin1String("platform")] += QLatin1Char(' ');
-		}
-	}
-
-	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion();
+	m_userAgentComponents[QLatin1String("platform")] = platformExpression.match(page->getDefaultUserAgent()).captured(1);
+	m_userAgentComponents[QLatin1String("engineVersion")] = QLatin1String("AppleWebKit/") + qWebKitVersion() + QLatin1String(" (KHTML, like Gecko)");
 	m_userAgentComponents[QLatin1String("applicationVersion")] = QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion();
 
 	page->deleteLater();
