@@ -91,7 +91,6 @@ SOURCES += src/main.cpp \
     src/ui/ItemViewWidget.cpp \
     src/ui/LocaleDialog.cpp \
     src/ui/MainWindow.cpp \
-    src/ui/MdiWidget.cpp \
     src/ui/Menu.cpp \
     src/ui/MenuBarWidget.cpp \
     src/ui/NotificationDialog.cpp \
@@ -122,6 +121,7 @@ SOURCES += src/main.cpp \
     src/ui/WebsitePreferencesDialog.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
+    src/ui/WorkspaceWidget.cpp \
     src/ui/preferences/AcceptLanguageDialog.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
     src/ui/preferences/ContentBlockingIntervalDelegate.cpp \
@@ -228,7 +228,6 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ItemViewWidget.h \
     src/ui/LocaleDialog.h \
     src/ui/MainWindow.h \
-    src/ui/MdiWidget.h \
     src/ui/Menu.h \
     src/ui/MenuBarWidget.h \
     src/ui/NotificationDialog.h \
@@ -259,6 +258,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/WebsitePreferencesDialog.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
+    src/ui/WorkspaceWidget.h \
     src/ui/preferences/AcceptLanguageDialog.h \
     src/ui/preferences/ContentBlockingDialog.h \
     src/ui/preferences/ContentBlockingIntervalDelegate.h \

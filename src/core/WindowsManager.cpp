@@ -25,7 +25,7 @@
 #include "Utils.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
-#include "../ui/MdiWidget.h"
+#include "../ui/WorkspaceWidget.h"
 #include "../ui/TabBarWidget.h"
 
 #include <QtGui/QStatusTipEvent>
@@ -45,7 +45,7 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 
 void WindowsManager::triggerAction(int identifier, bool checked)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	switch (identifier)
 	{
@@ -118,7 +118,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 		default:
 			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
-				window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
+				window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
 
 				addWindow(window, NewTabOpen);
 
@@ -133,7 +133,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (hints == NewTabOpen && !url.isEmpty() && window && Utils::isUrlEmpty(window->getUrl()))
 	{
@@ -185,7 +185,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		return;
 	}
 
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
@@ -244,7 +244,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 {
-	Window *window = new Window((hints & PrivateOpen), NULL, m_mainWindow->getMdi());
+	Window *window = new Window((hints & PrivateOpen), NULL, m_mainWindow->getWorkspace());
 
 	addWindow(window, hints);
 
@@ -253,7 +253,7 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 
 void WindowsManager::search(const QString &query, const QString &engine, OpenHints hints)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (hints == NewTabOpen && window && Utils::isUrlEmpty(window->getUrl()))
 	{
@@ -274,7 +274,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 
 	if (window && window->canClone())
 	{
-		window = window->clone(false, m_mainWindow->getMdi());
+		window = window->clone(false, m_mainWindow->getWorkspace());
 
 		addWindow(window, hints);
 	}
@@ -282,7 +282,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 	{
 		open(QUrl(), hints);
 
-		window = m_mainWindow->getMdi()->getActiveWindow();
+		window = m_mainWindow->getWorkspace()->getActiveWindow();
 	}
 
 	if (window)
@@ -354,7 +354,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
+			Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
 			window->setSession(session.windows.at(i));
 
 			addWindow(window);
@@ -411,7 +411,7 @@ void WindowsManager::restore(int index)
 		}
 	}
 
-	Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getMdi());
+	Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
 	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
@@ -464,7 +464,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 	}
 
 	m_mainWindow->getTabBar()->addTab(index, window);
-	m_mainWindow->getMdi()->addWindow(window);
+	m_mainWindow->getWorkspace()->addWindow(window);
 
 	if (!m_mainWindow->getAction(ActionsManager::CloseTabAction)->isEnabled())
 	{
@@ -512,7 +512,7 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 	}
 	else
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_mainWindow->getMdi()), hints);
+		addWindow(new Window(widget->isPrivate(), widget, m_mainWindow->getWorkspace()), hints);
 	}
 }
 
@@ -522,7 +522,7 @@ void WindowsManager::cloneWindow(int index)
 
 	if (window && window->canClone())
 	{
-		addWindow(window->clone(true, m_mainWindow->getMdi()));
+		addWindow(window->clone(true, m_mainWindow->getWorkspace()));
 	}
 }
 
@@ -664,7 +664,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 void WindowsManager::setOption(const QString &key, const QVariant &value)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (window)
 	{
@@ -674,7 +674,7 @@ void WindowsManager::setOption(const QString &key, const QVariant &value)
 
 void WindowsManager::setZoom(int zoom)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (window)
 	{
@@ -696,7 +696,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		return;
 	}
 
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	if (window)
 	{
@@ -713,7 +713,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 
 	if (window)
 	{
-		m_mainWindow->getMdi()->setActiveWindow(window);
+		m_mainWindow->getWorkspace()->setActiveWindow(window);
 
 		window->setFocus();
 		window->markActive();
@@ -778,7 +778,7 @@ void WindowsManager::setStatusMessage(const QString &message)
 
 Action* WindowsManager::getAction(int identifier)
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getContentsWidget()->getAction(identifier) : NULL);
 }
@@ -805,21 +805,21 @@ Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
 
 QVariant WindowsManager::getOption(const QString &key) const
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getOption(key) : QVariant());
 }
 
 QString WindowsManager::getTitle() const
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getUrl() : QUrl());
 }
@@ -925,7 +925,7 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 
 int WindowsManager::getZoom() const
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getContentsWidget()->getZoom() : 100);
 }
@@ -957,7 +957,7 @@ bool WindowsManager::event(QEvent *event)
 
 bool WindowsManager::canZoom() const
 {
-	Window *window = m_mainWindow->getMdi()->getActiveWindow();
+	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
 	return (window ? window->getContentsWidget()->canZoom() : false);
 }

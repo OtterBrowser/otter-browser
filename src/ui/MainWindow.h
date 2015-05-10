@@ -39,7 +39,7 @@ namespace Ui
 }
 
 class ActionsManager;
-class MdiWidget;
+class WorkspaceWidget;
 class MenuBarWidget;
 class StatusBarWidget;
 class TabBarWidget;
@@ -58,7 +58,7 @@ public:
 
 	static MainWindow* findMainWindow(QObject *parent);
 	Action* getAction(int identifier);
-	MdiWidget* getMdi();
+	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
 	bool eventFilter(QObject *object, QEvent *event);
@@ -102,7 +102,7 @@ protected slots:
 private:
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
-	MdiWidget *m_mdiWidget;
+	WorkspaceWidget *m_mdiWidget;
 	ToolBarAreaWidget *m_topToolBarArea;
 	ToolBarAreaWidget *m_bottomToolBarArea;
 	ToolBarAreaWidget *m_leftToolBarArea;

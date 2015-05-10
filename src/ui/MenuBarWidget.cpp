@@ -19,7 +19,7 @@
 
 #include "MenuBarWidget.h"
 #include "MainWindow.h"
-#include "MdiWidget.h"
+#include "WorkspaceWidget.h"
 #include "Menu.h"
 #include "ToolBarWidget.h"
 #include "../core/ActionsManager.h"
@@ -125,7 +125,7 @@ void MenuBarWidget::setup()
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
-		m_leftToolBar = new ToolBarWidget(-1, m_mainWindow->getMdi()->getActiveWindow(), this);
+		m_leftToolBar = new ToolBarWidget(-1, m_mainWindow->getWorkspace()->getActiveWindow(), this);
 
 		setCornerWidget(m_leftToolBar, Qt::TopLeftCorner);
 	}
@@ -139,7 +139,7 @@ void MenuBarWidget::setup()
 
 	if (needsRightToolbar && !m_rightToolBar)
 	{
-		m_rightToolBar = new ToolBarWidget(-1, m_mainWindow->getMdi()->getActiveWindow(), this);
+		m_rightToolBar = new ToolBarWidget(-1, m_mainWindow->getWorkspace()->getActiveWindow(), this);
 
 		setCornerWidget(m_rightToolBar, Qt::TopRightCorner);
 	}

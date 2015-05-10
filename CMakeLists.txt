@@ -134,7 +134,6 @@ set(otter_src
 	src/ui/ItemViewWidget.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
-	src/ui/MdiWidget.cpp
 	src/ui/Menu.cpp
 	src/ui/MenuBarWidget.cpp
 	src/ui/NotificationDialog.cpp
@@ -165,6 +164,7 @@ set(otter_src
 	src/ui/WebsitePreferencesDialog.cpp
 	src/ui/WebWidget.cpp
 	src/ui/Window.cpp
+	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
 	src/ui/preferences/ContentBlockingIntervalDelegate.cpp

@@ -23,7 +23,7 @@
 #include "ClearHistoryDialog.h"
 #include "ContentsWidget.h"
 #include "LocaleDialog.h"
-#include "MdiWidget.h"
+#include "WorkspaceWidget.h"
 #include "Menu.h"
 #include "MenuBarWidget.h"
 #include "OpenAddressDialog.h"
@@ -63,7 +63,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
-	m_mdiWidget(new MdiWidget(this)),
+	m_mdiWidget(new WorkspaceWidget(this)),
 	m_topToolBarArea(NULL),
 	m_bottomToolBarArea(NULL),
 	m_leftToolBarArea(NULL),
@@ -1125,7 +1125,7 @@ Action* MainWindow::getAction(int identifier)
 	return m_standardActions.value(identifier, NULL);
 }
 
-MdiWidget* MainWindow::getMdi()
+WorkspaceWidget* MainWindow::getWorkspace()
 {
 	return m_mdiWidget;
 }
