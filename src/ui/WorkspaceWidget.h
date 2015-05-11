@@ -28,6 +28,16 @@ namespace Otter
 
 class Window;
 
+class MdiWidget : public QMdiArea
+{
+	Q_OBJECT
+
+public:
+	explicit MdiWidget(QWidget *parent);
+
+	bool eventFilter(QObject *object, QEvent *event);
+};
+
 class WorkspaceWidget : public QWidget
 {
 	Q_OBJECT
@@ -47,7 +57,7 @@ protected slots:
 	void activeSubWindowChanged(QMdiSubWindow *subWindow);
 
 private:
-	QMdiArea *m_mdiArea;
+	MdiWidget *m_mdi;
 	QPointer<Window> m_activeWindow;
 };
 

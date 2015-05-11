@@ -29,20 +29,34 @@
 namespace Otter
 {
 
+MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
+{
+}
+
+bool MdiWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
+	{
+		 return QAbstractScrollArea::eventFilter(object, event);
+	}
+
+	return QMdiArea::eventFilter(object, event);
+}
+
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
-	m_mdiArea(),
+	m_mdi(NULL),
 	m_activeWindow(NULL)
 {
 	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
 	{
-		m_mdiArea = new QMdiArea(this);
+		m_mdi = new MdiWidget(this);
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->setSpacing(0);
-		layout->addWidget(m_mdiArea);
+		layout->addWidget(m_mdi);
 
-		connect(m_mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 	}
 }
 
@@ -50,7 +64,7 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
-	if (m_activeWindow && !m_mdiArea)
+	if (m_activeWindow && !m_mdi)
 	{
 		m_activeWindow->resize(size());
 	}
@@ -60,9 +74,9 @@ void WorkspaceWidget::addWindow(Window *window)
 {
 	if (window)
 	{
-		if (m_mdiArea)
+		if (m_mdi)
 		{
-			QMdiSubWindow *subWindow = m_mdiArea->addSubWindow(window, Qt::SubWindow);
+			QMdiSubWindow *subWindow = m_mdi->addSubWindow(window, Qt::SubWindow);
 			subWindow->setSystemMenu(NULL);
 			subWindow->installEventFilter(this);
 
@@ -94,11 +108,11 @@ void WorkspaceWidget::setActiveWindow(Window *window)
 {
 	if (window != m_activeWindow)
 	{
-		if (m_mdiArea)
+		if (m_mdi)
 		{
 			if (window->parentWidget())
 			{
-				m_mdiArea->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
+				m_mdi->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
 			}
 		}
 		else
