@@ -42,6 +42,9 @@ public:
 protected:
 	void resizeEvent(QResizeEvent *event);
 
+protected slots:
+	void activeSubWindowChanged(QMdiSubWindow *subWindow);
+
 private:
 	QMdiArea *m_mdiArea;
 	QPointer<Window> m_activeWindow;

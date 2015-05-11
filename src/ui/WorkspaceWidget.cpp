@@ -18,8 +18,10 @@
 **************************************************************************/
 
 #include "WorkspaceWidget.h"
+#include "MainWindow.h"
 #include "Window.h"
 #include "../core/SettingsManager.h"
+#include "../core/WindowsManager.h"
 
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QVBoxLayout>
@@ -39,6 +41,8 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->setSpacing(0);
 		layout->addWidget(m_mdiArea);
+
+		connect(m_mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 	}
 }
 
@@ -66,6 +70,19 @@ void WorkspaceWidget::addWindow(Window *window)
 			window->hide();
 			window->setParent(this);
 			window->move(0, 0);
+		}
+	}
+}
+
+void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
+{
+	if (subWindow)
+	{
+		Window *window = qobject_cast<Window*>(subWindow->widget());
+
+		if (window)
+		{
+			MainWindow::findMainWindow(this)->getWindowsManager()->setActiveWindowByIdentifier(window->getIdentifier());
 		}
 	}
 }
