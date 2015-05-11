@@ -66,7 +66,7 @@ public:
 
 		HitTestResult() : flags(NoFlagsTest) {}
 
-		HitTestResult(const QVariant &result)
+		explicit HitTestResult(const QVariant &result)
 		{
 			const QVariantMap map = result.toMap();
 			const QVariantMap geometryMap = map.value(QLatin1String("geometry")).toMap();
