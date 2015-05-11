@@ -19,20 +19,34 @@
 
 #include "WorkspaceWidget.h"
 #include "Window.h"
+#include "../core/SettingsManager.h"
+
+#include <QtWidgets/QMdiSubWindow>
+#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
 
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
+	m_mdiArea(),
 	m_activeWindow(NULL)
 {
+	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
+	{
+		m_mdiArea = new QMdiArea(this);
+
+		QVBoxLayout *layout = new QVBoxLayout(this);
+		layout->setContentsMargins(0, 0, 0, 0);
+		layout->setSpacing(0);
+		layout->addWidget(m_mdiArea);
+	}
 }
 
 void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
-	if (m_activeWindow)
+	if (m_activeWindow && !m_mdiArea)
 	{
 		m_activeWindow->resize(size());
 	}
@@ -42,9 +56,17 @@ void WorkspaceWidget::addWindow(Window *window)
 {
 	if (window)
 	{
-		window->hide();
-		window->setParent(this);
-		window->move(0, 0);
+		if (m_mdiArea)
+		{
+			QMdiSubWindow *subWindow = m_mdiArea->addSubWindow(window, Qt::SubWindow);
+			subWindow->setSystemMenu(NULL);
+		}
+		else
+		{
+			window->hide();
+			window->setParent(this);
+			window->move(0, 0);
+		}
 	}
 }
 
@@ -52,15 +74,25 @@ void WorkspaceWidget::setActiveWindow(Window *window)
 {
 	if (window != m_activeWindow)
 	{
-		if (window)
+		if (m_mdiArea)
 		{
-			window->resize(size());
-			window->show();
+			if (window->parentWidget())
+			{
+				m_mdiArea->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(window->parentWidget()));
+			}
 		}
-
-		if (m_activeWindow)
+		else
 		{
-			m_activeWindow->hide();
+			if (window)
+			{
+				window->resize(size());
+				window->show();
+			}
+
+			if (m_activeWindow)
+			{
+				m_activeWindow->hide();
+			}
 		}
 
 		m_activeWindow = window;

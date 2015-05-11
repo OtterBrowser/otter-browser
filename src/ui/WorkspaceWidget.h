@@ -43,6 +43,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 private:
+	QMdiArea *m_mdiArea;
 	QPointer<Window> m_activeWindow;
 };
 

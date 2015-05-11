@@ -697,6 +697,11 @@ SessionWindow Window::getSession() const
 	return session;
 }
 
+QSize Window::sizeHint() const
+{
+	return QSize(800, 600);
+}
+
 WindowLoadingState Window::getLoadingState() const
 {
 	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
