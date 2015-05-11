@@ -77,6 +77,7 @@ void WorkspaceWidget::addWindow(Window *window)
 		if (m_mdi)
 		{
 			QMdiSubWindow *subWindow = m_mdi->addSubWindow(window, Qt::SubWindow);
+			subWindow->showNormal();
 			subWindow->setSystemMenu(NULL);
 			subWindow->installEventFilter(this);
 
