@@ -38,6 +38,7 @@ public:
 	void addWindow(Window *window);
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow();
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
 	void resizeEvent(QResizeEvent *event);

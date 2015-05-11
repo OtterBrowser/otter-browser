@@ -64,6 +64,9 @@ void WorkspaceWidget::addWindow(Window *window)
 		{
 			QMdiSubWindow *subWindow = m_mdiArea->addSubWindow(window, Qt::SubWindow);
 			subWindow->setSystemMenu(NULL);
+			subWindow->installEventFilter(this);
+
+			connect(window, SIGNAL(destroyed()), subWindow, SLOT(deleteLater()));
 		}
 		else
 		{
@@ -119,6 +122,30 @@ void WorkspaceWidget::setActiveWindow(Window *window)
 Window* WorkspaceWidget::getActiveWindow()
 {
 	return m_activeWindow.data();
+}
+
+bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::Close)
+	{
+		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
+
+		if (subWindow)
+		{
+			Window *window = qobject_cast<Window*>(subWindow->widget());
+
+			if (window)
+			{
+				window->close();
+			}
+
+			event->ignore();
+
+			return true;
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }
