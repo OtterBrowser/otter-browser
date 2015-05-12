@@ -74,6 +74,9 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 
 		setContentsWidget(widget);
 	}
+
+	connect(this, SIGNAL(titleChanged(QString)), this, SLOT(setWindowTitle(QString)));
+	connect(this, SIGNAL(iconChanged(QIcon)), this, SLOT(handleIconChanged(QIcon)));
 }
 
 void Window::showEvent(QShowEvent *event)
@@ -280,6 +283,14 @@ void Window::search(const QString &query, const QString &engine)
 void Window::markActive()
 {
 	m_lastActivity = QDateTime::currentDateTime();
+}
+
+void Window::handleIconChanged(const QIcon &icon)
+{
+	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
+	{
+		parentWidget()->setWindowIcon(icon);
+	}
 }
 
 void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
@@ -569,21 +580,22 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		}
 	}
 
-	emit canZoomChanged(m_contentsWidget->canZoom());
+	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
+	emit canZoomChanged(m_contentsWidget->canZoom());
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
-	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SLOT(notifyLoadingStateChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
+	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SLOT(notifyLoadingStateChanged(bool)));
+	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
 }
 
 Window* Window::clone(bool cloneHistory, QWidget *parent)

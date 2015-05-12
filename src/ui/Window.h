@@ -111,6 +111,7 @@ protected:
 	void setContentsWidget(ContentsWidget *widget);
 
 protected slots:
+	void handleIconChanged(const QIcon &icon);
 	void handleOpenUrlRequest(const QUrl &url, OpenHints hints);
 	void handleSearchRequest(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
 	void notifyLoadingStateChanged(bool loading);
