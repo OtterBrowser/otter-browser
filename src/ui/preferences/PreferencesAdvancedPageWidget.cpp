@@ -660,6 +660,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
+		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"));
 		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"));
 		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"));
 		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"));
@@ -876,6 +877,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
+		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")));
 		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")));
 		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")));

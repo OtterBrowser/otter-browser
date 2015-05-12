@@ -323,6 +323,20 @@ void Window::handleSearchRequest(const QString &query, const QString &engine, Op
 	}
 }
 
+void Window::handleGeometryChangeRequest(const QRect &geometry)
+{
+	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
+	{
+		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+
+		if (subWindow)
+		{
+			subWindow->resize((geometry.size() * ((qreal) getContentsWidget()->getZoom() / 100)) + (subWindow->geometry().size() - m_contentsWidget->size()));
+			subWindow->move(geometry.topLeft());
+		}
+	}
+}
+
 void Window::notifyLoadingStateChanged(bool loading)
 {
 	emit loadingStateChanged(loading ? LoadingState : LoadedState);
@@ -590,6 +604,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedGeometryChange(QRect)), this, SLOT(handleGeometryChangeRequest(QRect)));
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));

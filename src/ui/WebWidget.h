@@ -188,6 +188,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
 	void requestedPermission(QString option, QUrl url, bool cancel);
+	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

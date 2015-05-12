@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,6 +29,7 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->canChangeWndowGeometryCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
 	m_ui->canAccessClipboardCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
 	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool());
@@ -67,6 +69,7 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 QVariantMap JavaScriptPreferencesDialog::getOptions() const
 {
 	QVariantMap options;
+	options[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = m_ui->canChangeWndowGeometryCheckBox->isChecked();
 	options[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = m_ui->canShowStatusMessagesCheckBox->isChecked();
 	options[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = m_ui->canAccessClipboardCheckBox->isChecked();
 	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->canDisableContextMenuCheckBox->isChecked();

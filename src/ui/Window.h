@@ -114,6 +114,7 @@ protected slots:
 	void handleIconChanged(const QIcon &icon);
 	void handleOpenUrlRequest(const QUrl &url, OpenHints hints);
 	void handleSearchRequest(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
+	void handleGeometryChangeRequest(const QRect &geometry);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
 
