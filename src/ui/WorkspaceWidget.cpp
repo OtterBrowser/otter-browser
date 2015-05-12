@@ -23,7 +23,9 @@
 #include "../core/SettingsManager.h"
 #include "../core/WindowsManager.h"
 
+#include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMdiSubWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -43,6 +45,18 @@ bool MdiWidget::eventFilter(QObject *object, QEvent *event)
 	return QMdiArea::eventFilter(object, event);
 }
 
+void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+	menu.addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	menu.addSeparator();
+	menu.addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
+	menu.addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+	menu.exec(event->globalPos());
+}
+
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_mdi(NULL),
 	m_activeWindow(NULL)
@@ -50,6 +64,7 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
 	{
 		m_mdi = new MdiWidget(this);
+		m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
 		layout->setContentsMargins(0, 0, 0, 0);
@@ -67,6 +82,51 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	if (m_activeWindow && !m_mdi)
 	{
 		m_activeWindow->resize(size());
+	}
+}
+
+void WorkspaceWidget::triggerAction(int identifier, bool checked)
+{
+	Q_UNUSED(checked)
+
+	if (!m_mdi)
+	{
+		return;
+	}
+
+	switch (identifier)
+	{
+		case ActionsManager::MaximizeAllAction:
+			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
+			{
+				m_mdi->subWindowList().at(i)->showMaximized();
+			}
+
+			break;
+		case ActionsManager::MinimizeAllAction:
+			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
+			{
+				m_mdi->subWindowList().at(i)->showMinimized();
+			}
+
+			break;
+		case ActionsManager::RestoreAllAction:
+			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
+			{
+				m_mdi->subWindowList().at(i)->showNormal();
+			}
+
+			break;
+		case ActionsManager::CascadeAllAction:
+			m_mdi->cascadeSubWindows();
+
+			break;
+		case ActionsManager::TileAllAction:
+			m_mdi->tileSubWindows();
+
+			break;
+		default:
+			break;
 	}
 }
 

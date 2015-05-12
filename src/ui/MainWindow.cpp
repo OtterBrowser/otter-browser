@@ -63,7 +63,7 @@ namespace Otter
 MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
-	m_mdiWidget(new WorkspaceWidget(this)),
+	m_workspace(new WorkspaceWidget(this)),
 	m_topToolBarArea(NULL),
 	m_bottomToolBarArea(NULL),
 	m_leftToolBarArea(NULL),
@@ -95,7 +95,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	m_splitter->setChildrenCollapsible(false);
 	m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_splitter->addWidget(m_mdiWidget);
+	m_splitter->addWidget(m_workspace);
 
 	QWidget *verticalWidget = new QWidget(this);
 	QWidget *horizontalWidget = new QWidget(verticalWidget);
@@ -459,7 +459,7 @@ void MainWindow::openUrl(const QString &text)
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
 
-		interpreter->interpret(text, ((!m_mdiWidget->getActiveWindow() || Utils::isUrlEmpty(m_mdiWidget->getActiveWindow()->getUrl())) ? CurrentTabOpen : NewTabOpen));
+		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? CurrentTabOpen : NewTabOpen));
 	}
 }
 
@@ -525,6 +525,14 @@ void MainWindow::triggerAction(int identifier, bool checked)
 					}
 				}
 			}
+
+			break;
+		case ActionsManager::MaximizeAllAction:
+		case ActionsManager::MinimizeAllAction:
+		case ActionsManager::RestoreAllAction:
+		case ActionsManager::CascadeAllAction:
+		case ActionsManager::TileAllAction:
+			m_workspace->triggerAction(identifier, checked);
 
 			break;
 		case ActionsManager::CloseWindowAction:
@@ -928,7 +936,7 @@ void MainWindow::placeSidebars()
 		m_splitter->addWidget(m_sidebarWidget);
 	}
 
-	m_splitter->addWidget(m_mdiWidget);
+	m_splitter->addWidget(m_workspace);
 
 	if (SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
 	{
@@ -1127,7 +1135,7 @@ Action* MainWindow::getAction(int identifier)
 
 WorkspaceWidget* MainWindow::getWorkspace()
 {
-	return m_mdiWidget;
+	return m_workspace;
 }
 
 TabBarWidget* MainWindow::getTabBar()
@@ -1172,7 +1180,7 @@ bool MainWindow::event(QEvent *event)
 							m_menuBar->hide();
 						}
 
-						m_mdiWidget->installEventFilter(this);
+						m_workspace->installEventFilter(this);
 					}
 					else
 					{
@@ -1188,7 +1196,7 @@ bool MainWindow::event(QEvent *event)
 							m_menuBar->show();
 						}
 
-						m_mdiWidget->removeEventFilter(this);
+						m_workspace->removeEventFilter(this);
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
@@ -1233,7 +1241,7 @@ bool MainWindow::event(QEvent *event)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_mdiWidget && event->type() == QEvent::KeyPress)
+	if (object == m_workspace && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 

@@ -102,7 +102,7 @@ protected slots:
 private:
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
-	WorkspaceWidget *m_mdiWidget;
+	WorkspaceWidget *m_workspace;
 	ToolBarAreaWidget *m_topToolBarArea;
 	ToolBarAreaWidget *m_bottomToolBarArea;
 	ToolBarAreaWidget *m_leftToolBarArea;

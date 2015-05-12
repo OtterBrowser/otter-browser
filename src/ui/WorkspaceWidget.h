@@ -36,6 +36,9 @@ public:
 	explicit MdiWidget(QWidget *parent);
 
 	bool eventFilter(QObject *object, QEvent *event);
+
+protected:
+	void contextMenuEvent(QContextMenuEvent *event);
 };
 
 class WorkspaceWidget : public QWidget
@@ -49,6 +52,9 @@ public:
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow();
 	bool eventFilter(QObject *object, QEvent *event);
+
+public slots:
+	void triggerAction(int identifier, bool checked = false);
 
 protected:
 	void resizeEvent(QResizeEvent *event);

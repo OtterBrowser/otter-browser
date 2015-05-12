@@ -272,6 +272,11 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), false);
 	registerAction(ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"));
 	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
+	registerAction(MaximizeAllAction, QT_TRANSLATE_NOOP("actions", "Maximize All"));
+	registerAction(MinimizeAllAction, QT_TRANSLATE_NOOP("actions", "Minimize All"));
+	registerAction(RestoreAllAction, QT_TRANSLATE_NOOP("actions", "Restore All"));
+	registerAction(CascadeAllAction, QT_TRANSLATE_NOOP("actions", "Cascade"));
+	registerAction(TileAllAction, QT_TRANSLATE_NOOP("actions", "Tile"));
 	registerAction(CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"));
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"));
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"));
