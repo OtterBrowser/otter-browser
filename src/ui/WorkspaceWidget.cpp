@@ -118,23 +118,35 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::MaximizeAllAction:
-			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
 			{
-				m_mdi->subWindowList().at(i)->showMaximized();
+				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+
+				for (int i = 0; i < subWindows.count(); ++i)
+				{
+					subWindows.at(i)->showMaximized();
+				}
 			}
 
 			break;
 		case ActionsManager::MinimizeAllAction:
-			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
 			{
-				m_mdi->subWindowList().at(i)->showMinimized();
+				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+
+				for (int i = 0; i < subWindows.count(); ++i)
+				{
+					subWindows.at(i)->showMinimized();
+				}
 			}
 
 			break;
 		case ActionsManager::RestoreAllAction:
-			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
 			{
-				m_mdi->subWindowList().at(i)->showNormal();
+				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+
+				for (int i = 0; i < subWindows.count(); ++i)
+				{
+					subWindows.at(i)->showNormal();
+				}
 			}
 
 			break;
@@ -183,8 +195,12 @@ void WorkspaceWidget::addWindow(Window *window)
 
 			subWindow->setSystemMenu(menu);
 
+			updateActions();
+
 			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
+			connect(subWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
 			connect(window, SIGNAL(destroyed()), subWindow, SLOT(deleteLater()));
+			connect(window, SIGNAL(destroyed()), this, SLOT(updateActions()));
 		}
 		else
 		{
@@ -206,6 +222,48 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 			MainWindow::findMainWindow(this)->getWindowsManager()->setActiveWindowByIdentifier(window->getIdentifier());
 		}
 	}
+	else
+	{
+		updateActions();
+	}
+}
+
+void WorkspaceWidget::updateActions()
+{
+	const QList<QMdiSubWindow*> subWindows = (m_mdi ? m_mdi->subWindowList() : QList<QMdiSubWindow*>());
+	int maximizedSubWindows = 0;
+	int minimizedSubWindows = 0;
+	int restoredSubWindows = 0;
+
+	for (int i = 0; i < subWindows.count(); ++i)
+	{
+		const Qt::WindowStates states = subWindows.at(i)->windowState();
+
+		if (states.testFlag(Qt::WindowMaximized))
+		{
+			++maximizedSubWindows;
+		}
+		else if (states.testFlag(Qt::WindowMinimized))
+		{
+			++minimizedSubWindows;
+		}
+		else
+		{
+			++restoredSubWindows;
+		}
+	}
+
+	ActionsManager::getAction(ActionsManager::MaximizeAllAction, this)->setEnabled(maximizedSubWindows < subWindows.count());
+	ActionsManager::getAction(ActionsManager::MinimizeAllAction, this)->setEnabled(minimizedSubWindows < subWindows.count());
+	ActionsManager::getAction(ActionsManager::RestoreAllAction, this)->setEnabled(restoredSubWindows < subWindows.count());
+	ActionsManager::getAction(ActionsManager::CascadeAllAction, this)->setEnabled(subWindows.count() > 0);
+	ActionsManager::getAction(ActionsManager::TileAllAction, this)->setEnabled(subWindows.count() > 0);
+
+	QMdiSubWindow *activeSubWindow = (m_mdi ? m_mdi->activeSubWindow() : NULL);
+
+	ActionsManager::getAction(ActionsManager::MaximizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
+	ActionsManager::getAction(ActionsManager::MinimizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
+	ActionsManager::getAction(ActionsManager::RestoreTabAction, this)->setEnabled(activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized)));
 }
 
 void WorkspaceWidget::setActiveWindow(Window *window)

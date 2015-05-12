@@ -93,6 +93,8 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	m_leftToolBarArea = new ToolBarAreaWidget(Qt::LeftToolBarArea, this);
 	m_rightToolBarArea = new ToolBarAreaWidget(Qt::RightToolBarArea, this);
 
+	m_workspace->updateActions();
+
 	m_splitter->setChildrenCollapsible(false);
 	m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_splitter->addWidget(m_workspace);

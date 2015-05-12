@@ -55,6 +55,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, bool checked = false);
+	void updateActions();
 
 protected:
 	void resizeEvent(QResizeEvent *event);
