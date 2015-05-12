@@ -489,10 +489,7 @@
         </widget>
        </item>
        <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canChangeWndowGeometryOverrideCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
+        <widget class="QCheckBox" name="canChangeWindowGeometryOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
@@ -509,10 +506,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QCheckBox" name="canChangeWndowGeometryCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
+        <widget class="QCheckBox" name="canChangeWindowGeometryCheckBox">
          <property name="text">
           <string>Allow moving and resizing of windows</string>
          </property>
@@ -1023,8 +1017,8 @@
   <tabstop>deleteCookieButton</tabstop>
   <tabstop>enableJavaScriptOverrideCheckBox</tabstop>
   <tabstop>enableJavaScriptCheckBox</tabstop>
-  <tabstop>canChangeWndowGeometryOverrideCheckBox</tabstop>
-  <tabstop>canChangeWndowGeometryCheckBox</tabstop>
+  <tabstop>canChangeWindowGeometryOverrideCheckBox</tabstop>
+  <tabstop>canChangeWindowGeometryCheckBox</tabstop>
   <tabstop>canShowStatusMessagesOverrideCheckBox</tabstop>
   <tabstop>canShowStatusMessagesCheckBox</tabstop>
   <tabstop>canHideAddressBarOverrideCheckBox</tabstop>

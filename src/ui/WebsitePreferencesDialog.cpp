@@ -135,6 +135,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->keepCookiesModeOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/CookiesKeepMode")));
 	m_ui->thirdPartyCookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/ThirdPartyCookiesPolicy")));
 	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJavaScript")));
+	m_ui->canChangeWindowGeometryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")));
 	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanAccessClipboard")));
 	m_ui->canDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
@@ -209,6 +210,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Network/CookiesKeepMode"), (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? m_ui->keepCookiesModeComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? m_ui->canChangeWindowGeometryCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->canShowStatusMessagesCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? m_ui->canAccessClipboardCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->canDisableContextMenuCheckBox->isChecked() : QVariant()), url);
@@ -255,6 +257,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canAccessClipboardCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
