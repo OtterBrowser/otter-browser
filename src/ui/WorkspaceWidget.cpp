@@ -117,7 +117,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-		case ActionsManager::StayOnTopTabAction:
+		case ActionsManager::AlwaysOnTopTabAction:
 			if (m_mdi->activeSubWindow())
 			{
 				if (checked)
@@ -177,14 +177,13 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void WorkspaceWidget::addWindow(Window *window)
+void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
 {
 	if (window)
 	{
 		if (m_mdi)
 		{
 			QMdiSubWindow *subWindow = m_mdi->addSubWindow(window, Qt::SubWindow);
-			subWindow->showNormal();
 			subWindow->installEventFilter(this);
 
 			Action *closeAction = new Action(ActionsManager::CloseTabAction);
@@ -197,7 +196,7 @@ void WorkspaceWidget::addWindow(Window *window)
 			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
 			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, this));
 			menu->addAction(ActionsManager::getAction(ActionsManager::MaximizeTabAction, this));
-			menu->addAction(ActionsManager::getAction(ActionsManager::StayOnTopTabAction, this));
+			menu->addAction(ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this));
 			menu->addSeparator();
 
 			QMenu *arrangementMenu = menu->addMenu(tr("Arrangement"));
@@ -208,7 +207,34 @@ void WorkspaceWidget::addWindow(Window *window)
 			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
 			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
+			subWindow->show();
 			subWindow->setSystemMenu(menu);
+
+			if (isAlwaysOnTop)
+			{
+				subWindow->setWindowFlags(subWindow->windowFlags() | Qt::WindowStaysOnTopHint);
+			}
+
+			if (geometry.isValid())
+			{
+				subWindow->setGeometry(geometry);
+			}
+
+			switch (state)
+			{
+				case MaximizedWindowState:
+					subWindow->showMaximized();
+
+					break;
+				case MinimizedWindowState:
+					subWindow->showMinimized();
+
+					break;
+				default:
+					subWindow->showNormal();
+
+					break;
+			}
 
 			updateActions();
 
@@ -279,8 +305,8 @@ void WorkspaceWidget::updateActions()
 	ActionsManager::getAction(ActionsManager::MaximizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
 	ActionsManager::getAction(ActionsManager::MinimizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
 	ActionsManager::getAction(ActionsManager::RestoreTabAction, this)->setEnabled(activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized)));
-	ActionsManager::getAction(ActionsManager::StayOnTopTabAction, this)->setEnabled(activeSubWindow);
-	ActionsManager::getAction(ActionsManager::StayOnTopTabAction, this)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setEnabled(activeSubWindow);
+	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 }
 
 void WorkspaceWidget::setActiveWindow(Window *window)
@@ -391,6 +417,12 @@ bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
 				}
 			}
 		}
+
+		SessionsManager::markSessionModified();
+	}
+	else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
+	{
+		SessionsManager::markSessionModified();
 	}
 
 	return QObject::eventFilter(object, event);

@@ -86,7 +86,7 @@ public:
 		MaximizeTabAction,
 		MinimizeTabAction,
 		RestoreTabAction,
-		StayOnTopTabAction,
+		AlwaysOnTopTabAction,
 		CloseTabAction,
 		CloseOtherTabsAction,
 		ClosePrivateTabsAction,

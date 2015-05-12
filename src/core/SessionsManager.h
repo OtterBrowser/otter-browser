@@ -23,11 +23,18 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QCoreApplication>
-#include <QtCore/QPoint>
+#include <QtCore/QRect>
 #include <QtCore/QPointer>
 
 namespace Otter
 {
+
+enum WindowState
+{
+	NormalWindowState = 0,
+	MaximizedWindowState = 1,
+	MinimizedWindowState = 2
+};
 
 struct WindowHistoryEntry
 {
@@ -51,13 +58,16 @@ struct SessionWindow
 {
 	QString searchEngine;
 	QString userAgent;
+	QRect geometry;
 	QList<WindowHistoryEntry> history;
+	WindowState state;
 	int group;
 	int index;
 	int reloadTime;
+	bool isAlwaysOnTop;
 	bool isPinned;
 
-	SessionWindow() : group(0), index(-1), reloadTime(-1), isPinned(false) {}
+	SessionWindow() : state(NormalWindowState), group(0), index(-1), reloadTime(-1), isAlwaysOnTop(false), isPinned(false) {}
 
 	QString getUrl() const
 	{

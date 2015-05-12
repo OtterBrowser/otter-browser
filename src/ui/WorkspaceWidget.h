@@ -20,6 +20,8 @@
 #ifndef OTTER_WORKSPACEWIDGET_H
 #define OTTER_WORKSPACEWIDGET_H
 
+#include "../core/SessionsManager.h"
+
 #include <QtCore/QPointer>
 #include <QtWidgets/QMdiArea>
 
@@ -48,7 +50,7 @@ class WorkspaceWidget : public QWidget
 public:
 	explicit WorkspaceWidget(QWidget *parent = NULL);
 
-	void addWindow(Window *window);
+	void addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop);
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow();
 	bool eventFilter(QObject *object, QEvent *event);

@@ -110,7 +110,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
-	void addWindow(Window *window, OpenHints hints = DefaultOpen, int index = -1);
+	void addWindow(Window *window, OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void openWindow(ContentsWidget *widget, OpenHints hints = DefaultOpen);
 	void cloneWindow(int index);
 	void detachWindow(int index);

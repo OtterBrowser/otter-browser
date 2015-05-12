@@ -227,13 +227,18 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 		for (int j = 1; j <= tabs; ++j)
 		{
+			const QString state = sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(i).arg(j), QString()).toString();
+			const QStringList geometry = sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(i).arg(j), QString()).toString().split(QLatin1Char(','));
 			const int history = sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
 			SessionWindow sessionWindow;
 			sessionWindow.searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
 			sessionWindow.userAgent = sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString();
+			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).toInt(), geometry.at(1).toInt(), geometry.at(2).toInt(), geometry.at(3).toInt()) : QRect());
+			sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
 			sessionWindow.group = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
 			sessionWindow.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
 			sessionWindow.reloadTime = (sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
+			sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(i).arg(j), false).toBool();
 			sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
 
 			for (int k = 1; k <= history; ++k)
@@ -421,6 +426,15 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		{
 			stream << QStringLiteral("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
 
+			if (sessionEntry.windows.at(j).state == NormalWindowState)
+			{
+				stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), QStringLiteral("%1,%2,%3,%4").arg(sessionEntry.windows.at(j).geometry.x()).arg(sessionEntry.windows.at(j).geometry.y()).arg(sessionEntry.windows.at(j).geometry.width()).arg(sessionEntry.windows.at(j).geometry.height()), true);
+			}
+			else
+			{
+				stream << Utils::formatConfigurationEntry(QLatin1String("state"), ((sessionEntry.windows.at(j).state == MaximizedWindowState) ? QLatin1String("maximized") : QLatin1String("minimized")));
+			}
+
 			if (sessionEntry.windows.at(j).searchEngine != defaultSearchEngine)
 			{
 				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).searchEngine);
@@ -434,6 +448,11 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			if (sessionEntry.windows.at(j).reloadTime != -1)
 			{
 				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).reloadTime));
+			}
+
+			if (sessionEntry.windows.at(j).isAlwaysOnTop)
+			{
+				stream << QLatin1String("alwaysOnTop=true\n");
 			}
 
 			if (sessionEntry.windows.at(j).isPinned)

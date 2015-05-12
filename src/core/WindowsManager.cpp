@@ -357,7 +357,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 			Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
 			window->setSession(session.windows.at(i));
 
-			addWindow(window);
+			addWindow(window, DefaultOpen, -1, session.windows.at(i).geometry, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
 		}
 	}
 
@@ -434,7 +434,7 @@ void WindowsManager::clearClosedWindows()
 	}
 }
 
-void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
+void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
 {
 	if (!window)
 	{
@@ -464,7 +464,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index)
 	}
 
 	m_mainWindow->getTabBar()->addTab(index, window);
-	m_mainWindow->getWorkspace()->addWindow(window);
+	m_mainWindow->getWorkspace()->addWindow(window, geometry, state, isAlwaysOnTop);
 
 	if (!m_mainWindow->getAction(ActionsManager::CloseTabAction)->isEnabled())
 	{

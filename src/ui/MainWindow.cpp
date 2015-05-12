@@ -532,7 +532,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 		case ActionsManager::MaximizeTabAction:
 		case ActionsManager::MinimizeTabAction:
 		case ActionsManager::RestoreTabAction:
-		case ActionsManager::StayOnTopTabAction:
+		case ActionsManager::AlwaysOnTopTabAction:
 		case ActionsManager::MaximizeAllAction:
 		case ActionsManager::MinimizeAllAction:
 		case ActionsManager::RestoreAllAction:

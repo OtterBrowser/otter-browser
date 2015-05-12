@@ -45,6 +45,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolButton>
 
@@ -685,6 +686,27 @@ SessionWindow Window::getSession() const
 	session.group = 0;
 	session.index = history.index;
 	session.isPinned = isPinned();
+
+	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
+	{
+		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+
+		if (subWindow)
+		{
+			if (subWindow->isMaximized())
+			{
+				session.state = MaximizedWindowState;
+			}
+			else if (subWindow->isMinimized())
+			{
+				session.state = MinimizedWindowState;
+			}
+			else
+			{
+				session.geometry = subWindow->geometry();
+			}
+		}
+	}
 
 	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
