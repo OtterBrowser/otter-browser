@@ -527,6 +527,9 @@ void MainWindow::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::MinimizeTabAction:
+		case ActionsManager::MaximizeTabAction:
+		case ActionsManager::RestoreTabAction:
 		case ActionsManager::MaximizeAllAction:
 		case ActionsManager::MinimizeAllAction:
 		case ActionsManager::RestoreAllAction:

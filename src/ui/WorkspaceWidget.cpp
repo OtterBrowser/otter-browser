@@ -96,6 +96,27 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 	switch (identifier)
 	{
+		case ActionsManager::MaximizeTabAction:
+			if (m_mdi->activeSubWindow())
+			{
+				m_mdi->activeSubWindow()->showMaximized();
+			}
+
+			break;
+		case ActionsManager::MinimizeTabAction:
+			if (m_mdi->activeSubWindow())
+			{
+				m_mdi->activeSubWindow()->showMinimized();
+			}
+
+			break;
+		case ActionsManager::RestoreTabAction:
+			if (m_mdi->activeSubWindow())
+			{
+				m_mdi->activeSubWindow()->showNormal();
+			}
+
+			break;
 		case ActionsManager::MaximizeAllAction:
 			for (int i = 0; i < m_mdi->subWindowList().count(); ++i)
 			{
@@ -138,9 +159,31 @@ void WorkspaceWidget::addWindow(Window *window)
 		{
 			QMdiSubWindow *subWindow = m_mdi->addSubWindow(window, Qt::SubWindow);
 			subWindow->showNormal();
-			subWindow->setSystemMenu(NULL);
 			subWindow->installEventFilter(this);
 
+			Action *closeAction = new Action(ActionsManager::CloseTabAction);
+			closeAction->setEnabled(true);
+			closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
+			closeAction->setIcon(QIcon());
+
+			QMenu *menu = new QMenu(subWindow);
+			menu->addAction(closeAction);
+			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, this));
+			menu->addAction(ActionsManager::getAction(ActionsManager::MaximizeTabAction, this));
+			menu->addSeparator();
+
+			QMenu *arrangementMenu = menu->addMenu(tr("Arrangement"));
+			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
+			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
+			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+			arrangementMenu->addSeparator();
+			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
+			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+
+			subWindow->setSystemMenu(menu);
+
+			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
 			connect(window, SIGNAL(destroyed()), subWindow, SLOT(deleteLater()));
 		}
 		else
