@@ -24,6 +24,7 @@
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QWindowStateChangeEvent>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QVBoxLayout>
@@ -59,7 +60,8 @@ void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
 
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_mdi(NULL),
-	m_activeWindow(NULL)
+	m_activeWindow(NULL),
+	m_ignoreStateChange(false)
 {
 	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
 	{
@@ -318,6 +320,46 @@ bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
 			event->ignore();
 
 			return true;
+		}
+	}
+	else if (event->type() == QEvent::WindowStateChange)
+	{
+		if (m_ignoreStateChange)
+		{
+			m_ignoreStateChange = false;
+		}
+		else
+		{
+			QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
+			QWindowStateChangeEvent *windowStateChangeEvent = dynamic_cast<QWindowStateChangeEvent*>(event);
+
+			if (subWindow && windowStateChangeEvent)
+			{
+				m_ignoreStateChange = true;
+
+				const bool isActive = subWindow->isActiveWindow();
+				const bool isMinimized = subWindow->isMinimized();
+
+				if (!windowStateChangeEvent->oldState().testFlag(Qt::WindowMaximized) && subWindow->windowState().testFlag(Qt::WindowMaximized))
+				{
+					subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+				}
+				else if (windowStateChangeEvent->oldState().testFlag(Qt::WindowMaximized) && !subWindow->windowState().testFlag(Qt::WindowMaximized))
+				{
+					subWindow->setWindowFlags(Qt::SubWindow);
+
+					if (isMinimized)
+					{
+						subWindow->showMinimized();
+					}
+				}
+
+				if (isActive)
+				{
+					m_mdi->setActiveSubWindow(NULL);
+					m_mdi->setActiveSubWindow(subWindow);
+				}
+			}
 		}
 	}
 
