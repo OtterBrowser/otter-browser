@@ -199,13 +199,13 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			menu->addAction(ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this));
 			menu->addSeparator();
 
-			QMenu *arrangementMenu = menu->addMenu(tr("Arrangement"));
-			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
-			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
-			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
-			arrangementMenu->addSeparator();
-			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
-			arrangementMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+			QMenu *arrangeMenu = menu->addMenu(tr("Arrange"));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+			arrangeMenu->addSeparator();
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
 			subWindow->show();
 			subWindow->setSystemMenu(menu);
