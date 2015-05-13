@@ -463,6 +463,13 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		}
 	}
 
+	const QString newTabOpeningAction = SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString();
+
+	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
+	{
+		state = MaximizedWindowState;
+	}
+
 	m_mainWindow->getTabBar()->addTab(index, window);
 	m_mainWindow->getWorkspace()->addWindow(window, geometry, state, isAlwaysOnTop);
 
@@ -478,6 +485,18 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		if (m_isRestored)
 		{
 			setActiveWindowByIndex(index);
+		}
+	}
+
+	if (m_isRestored)
+	{
+		if (newTabOpeningAction == QLatin1String("cascadeAll"))
+		{
+			ActionsManager::triggerAction(ActionsManager::CascadeAllAction, this);
+		}
+		else if (newTabOpeningAction == QLatin1String("tileAll"))
+		{
+			ActionsManager::triggerAction(ActionsManager::TileAllAction, this);
 		}
 	}
 
