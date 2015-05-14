@@ -26,7 +26,7 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
-\#include <QtWidgets/QStyleOptionTitleBar>
+#include <QtWidgets/QStyleOptionTitleBar>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
