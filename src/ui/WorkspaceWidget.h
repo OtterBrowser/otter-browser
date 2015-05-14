@@ -68,7 +68,6 @@ protected slots:
 private:
 	MdiWidget *m_mdi;
 	QPointer<Window> m_activeWindow;
-	bool m_ignoreStateChange;
 };
 
 }

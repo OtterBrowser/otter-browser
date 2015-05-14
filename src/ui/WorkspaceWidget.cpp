@@ -24,9 +24,9 @@
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QContextMenuEvent>
-#include <QtGui/QWindowStateChangeEvent>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
+\#include <QtWidgets/QStyleOptionTitleBar>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -34,16 +34,6 @@ namespace Otter
 
 MdiWidget::MdiWidget(QWidget *parent) : QMdiArea(parent)
 {
-}
-
-bool MdiWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
-	{
-		 return QAbstractScrollArea::eventFilter(object, event);
-	}
-
-	return QMdiArea::eventFilter(object, event);
 }
 
 void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -58,10 +48,19 @@ void MdiWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
+bool MdiWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
+	{
+		 return QAbstractScrollArea::eventFilter(object, event);
+	}
+
+	return QMdiArea::eventFilter(object, event);
+}
+
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_mdi(NULL),
-	m_activeWindow(NULL),
-	m_ignoreStateChange(false)
+	m_activeWindow(NULL)
 {
 	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
 	{
@@ -99,6 +98,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::MaximizeTabAction:
 			if (m_mdi->activeSubWindow())
 			{
+				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
 				m_mdi->activeSubWindow()->showMaximized();
 			}
 
@@ -106,6 +106,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::MinimizeTabAction:
 			if (m_mdi->activeSubWindow())
 			{
+				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow);
 				m_mdi->activeSubWindow()->showMinimized();
 			}
 
@@ -113,6 +114,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::RestoreTabAction:
 			if (m_mdi->activeSubWindow())
 			{
+				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow);
 				m_mdi->activeSubWindow()->showNormal();
 			}
 
@@ -137,6 +139,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
+					subWindows.at(i)->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
 					subWindows.at(i)->showMaximized();
 				}
 			}
@@ -148,6 +151,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
+					subWindows.at(i)->setWindowFlags(Qt::SubWindow);
 					subWindows.at(i)->showMinimized();
 				}
 			}
@@ -159,16 +163,21 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
+					subWindows.at(i)->setWindowFlags(Qt::SubWindow);
 					subWindows.at(i)->showNormal();
 				}
 			}
 
 			break;
 		case ActionsManager::CascadeAllAction:
+			triggerAction(ActionsManager::RestoreAllAction);
+
 			m_mdi->cascadeSubWindows();
 
 			break;
 		case ActionsManager::TileAllAction:
+			triggerAction(ActionsManager::RestoreAllAction);
+
 			m_mdi->tileSubWindows();
 
 			break;
@@ -223,6 +232,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			switch (state)
 			{
 				case MaximizedWindowState:
+					subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
 					subWindow->showMaximized();
 
 					break;
@@ -345,7 +355,33 @@ Window* WorkspaceWidget::getActiveWindow()
 
 bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::Close)
+	if (event->type() == QEvent::MouseButtonRelease)
+	{
+		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
+		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+
+		if (subWindow && mouseEvent)
+		{
+			QStyleOptionTitleBar option;
+			option.initFrom(subWindow);
+			option.titleBarFlags = subWindow->windowFlags();
+			option.titleBarState = subWindow->windowState();
+			option.subControls = QStyle::SC_All;
+			option.activeSubControls = QStyle::SC_None;
+
+			if (!subWindow->isMinimized())
+			{
+				option.rect.setHeight(subWindow->height() - subWindow->widget()->height());
+			}
+
+			if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, subWindow).contains(mouseEvent->pos()))
+			{
+				subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+				subWindow->showMaximized();
+			}
+		}
+	}
+	else if (event->type() == QEvent::Close)
 	{
 		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
 
@@ -363,64 +399,7 @@ bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (event->type() == QEvent::WindowStateChange)
-	{
-		if (m_ignoreStateChange)
-		{
-			m_ignoreStateChange = false;
-		}
-		else
-		{
-			QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
-			QWindowStateChangeEvent *windowStateChangeEvent = dynamic_cast<QWindowStateChangeEvent*>(event);
-
-			if (subWindow && windowStateChangeEvent)
-			{
-				m_ignoreStateChange = true;
-
-				const bool isActive = subWindow->isActiveWindow();
-				const bool isMinimized = subWindow->isMinimized();
-				const bool isStayOnTop = subWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint);
-
-				if (!windowStateChangeEvent->oldState().testFlag(Qt::WindowMaximized) && subWindow->windowState().testFlag(Qt::WindowMaximized))
-				{
-					Qt::WindowFlags flags = (Qt::SubWindow | Qt::CustomizeWindowHint);
-
-					if (isStayOnTop)
-					{
-						flags |= Qt::WindowStaysOnTopHint;
-					}
-
-					subWindow->setWindowFlags(flags);
-				}
-				else if (windowStateChangeEvent->oldState().testFlag(Qt::WindowMaximized) && !subWindow->windowState().testFlag(Qt::WindowMaximized))
-				{
-					Qt::WindowFlags flags = Qt::SubWindow;
-
-					if (isStayOnTop)
-					{
-						flags |= Qt::WindowStaysOnTopHint;
-					}
-
-					subWindow->setWindowFlags(flags);
-
-					if (isMinimized)
-					{
-						subWindow->showMinimized();
-					}
-				}
-
-				if (isActive)
-				{
-					m_mdi->setActiveSubWindow(NULL);
-					m_mdi->setActiveSubWindow(subWindow);
-				}
-			}
-		}
-
-		SessionsManager::markSessionModified();
-	}
-	else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
+	else if (event->type() == QEvent::Move || event->type() == QEvent::Resize || event->type() == QEvent::WindowStateChange)
 	{
 		SessionsManager::markSessionModified();
 	}
