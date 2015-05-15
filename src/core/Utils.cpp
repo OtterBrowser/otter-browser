@@ -171,9 +171,12 @@ QString formatUnit(qint64 value, bool isSpeed, int precision)
 
 QIcon getIcon(const QLatin1String &name, bool fromTheme)
 {
-	const QIcon icon(QStringLiteral(":/icons/%1.png").arg(name));
+	if (fromTheme && QIcon::hasThemeIcon(name))
+	{
+		return QIcon::fromTheme(name);
+	}
 
-	return (fromTheme ? QIcon::fromTheme(name, icon) : icon);
+	return QIcon(QStringLiteral(":/icons/%1.png").arg(name));
 }
 
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
