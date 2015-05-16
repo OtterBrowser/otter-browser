@@ -514,7 +514,10 @@ void AddressWidget::setUrl(const QUrl &url)
 
 	if (!hasFocus() && url.scheme() != QLatin1String("javascript"))
 	{
-		setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
+		const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
+
+		setText(text);
+		setToolTip(text);
 		setCursorPosition(0);
 	}
 }
