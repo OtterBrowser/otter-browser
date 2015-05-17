@@ -24,6 +24,7 @@
 
 #include <QtCore/QPointer>
 #include <QtWidgets/QMdiArea>
+#include <QtWidgets/QMdiSubWindow>
 
 namespace Otter
 {
@@ -32,8 +33,6 @@ class Window;
 
 class MdiWidget : public QMdiArea
 {
-	Q_OBJECT
-
 public:
 	explicit MdiWidget(QWidget *parent);
 
@@ -41,6 +40,19 @@ public:
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
+};
+
+class MdiWindow : public QMdiSubWindow
+{
+public:
+	explicit MdiWindow(Window *window, MdiWidget *parent);
+
+protected:
+	void changeEvent(QEvent *event);
+	void closeEvent(QCloseEvent *event);
+	void moveEvent(QMoveEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 };
 
 class WorkspaceWidget : public QWidget
@@ -53,7 +65,6 @@ public:
 	void addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop);
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow();
-	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void triggerAction(int identifier, bool checked = false);

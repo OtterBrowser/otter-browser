@@ -24,7 +24,6 @@
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QContextMenuEvent>
-#include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionTitleBar>
 #include <QtWidgets/QVBoxLayout>
@@ -56,6 +55,74 @@ bool MdiWidget::eventFilter(QObject *object, QEvent *event)
 	}
 
 	return QMdiArea::eventFilter(object, event);
+}
+
+MdiWindow::MdiWindow(Window *window, MdiWidget *parent) : QMdiSubWindow(parent, Qt::SubWindow)
+{
+	setWidget(window);
+
+	parent->addSubWindow(this);
+
+	connect(window, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+}
+
+void MdiWindow::changeEvent(QEvent *event)
+{
+	QMdiSubWindow::changeEvent(event);
+
+	if (event->type() == QEvent::WindowStateChange)
+	{
+		SessionsManager::markSessionModified();
+	}
+}
+
+void MdiWindow::closeEvent(QCloseEvent *event)
+{
+	Window *window = qobject_cast<Window*>(widget());
+
+	if (window)
+	{
+		window->close();
+	}
+
+	event->ignore();
+}
+
+void MdiWindow::moveEvent(QMoveEvent *event)
+{
+	QMdiSubWindow::moveEvent(event);
+
+	SessionsManager::markSessionModified();
+}
+
+void MdiWindow::resizeEvent(QResizeEvent *event)
+{
+	QMdiSubWindow::resizeEvent(event);
+
+	SessionsManager::markSessionModified();
+}
+
+void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+	QStyleOptionTitleBar option;
+	option.initFrom(this);
+	option.titleBarFlags = windowFlags();
+	option.titleBarState = windowState();
+	option.subControls = QStyle::SC_All;
+	option.activeSubControls = QStyle::SC_None;
+
+	if (!isMinimized())
+	{
+		option.rect.setHeight(height() - widget()->height());
+	}
+
+	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, this).contains(event->pos()))
+	{
+		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+		showMaximized();
+	}
+
+	QMdiSubWindow::mouseReleaseEvent(event);
 }
 
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
@@ -192,15 +259,13 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 	{
 		if (m_mdi)
 		{
-			QMdiSubWindow *subWindow = m_mdi->addSubWindow(window, Qt::SubWindow);
-			subWindow->installEventFilter(this);
-
+			MdiWindow *mdiWindow = new MdiWindow(window, m_mdi);
 			Action *closeAction = new Action(ActionsManager::CloseTabAction);
 			closeAction->setEnabled(true);
 			closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
 			closeAction->setIcon(QIcon());
 
-			QMenu *menu = new QMenu(subWindow);
+			QMenu *menu = new QMenu(mdiWindow);
 			menu->addAction(closeAction);
 			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
 			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, this));
@@ -216,32 +281,32 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
-			subWindow->show();
-			subWindow->setSystemMenu(menu);
+			mdiWindow->show();
+			mdiWindow->setSystemMenu(menu);
 
 			if (isAlwaysOnTop)
 			{
-				subWindow->setWindowFlags(subWindow->windowFlags() | Qt::WindowStaysOnTopHint);
+				mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
 			}
 
 			if (geometry.isValid())
 			{
-				subWindow->setGeometry(geometry);
+				mdiWindow->setGeometry(geometry);
 			}
 
 			switch (state)
 			{
 				case MaximizedWindowState:
-					subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
-					subWindow->showMaximized();
+					mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+					mdiWindow->showMaximized();
 
 					break;
 				case MinimizedWindowState:
-					subWindow->showMinimized();
+					mdiWindow->showMinimized();
 
 					break;
 				default:
-					subWindow->showNormal();
+					mdiWindow->showNormal();
 
 					break;
 			}
@@ -249,8 +314,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			updateActions();
 
 			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
-			connect(subWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
-			connect(window, SIGNAL(destroyed()), subWindow, SLOT(deleteLater()));
+			connect(mdiWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
 			connect(window, SIGNAL(destroyed()), this, SLOT(updateActions()));
 		}
 		else
@@ -351,60 +415,6 @@ void WorkspaceWidget::setActiveWindow(Window *window)
 Window* WorkspaceWidget::getActiveWindow()
 {
 	return m_activeWindow.data();
-}
-
-bool WorkspaceWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (event->type() == QEvent::MouseButtonRelease)
-	{
-		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
-		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
-
-		if (subWindow && mouseEvent)
-		{
-			QStyleOptionTitleBar option;
-			option.initFrom(subWindow);
-			option.titleBarFlags = subWindow->windowFlags();
-			option.titleBarState = subWindow->windowState();
-			option.subControls = QStyle::SC_All;
-			option.activeSubControls = QStyle::SC_None;
-
-			if (!subWindow->isMinimized())
-			{
-				option.rect.setHeight(subWindow->height() - subWindow->widget()->height());
-			}
-
-			if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, subWindow).contains(mouseEvent->pos()))
-			{
-				subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
-				subWindow->showMaximized();
-			}
-		}
-	}
-	else if (event->type() == QEvent::Close)
-	{
-		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(object);
-
-		if (subWindow)
-		{
-			Window *window = qobject_cast<Window*>(subWindow->widget());
-
-			if (window)
-			{
-				window->close();
-			}
-
-			event->ignore();
-
-			return true;
-		}
-	}
-	else if (event->type() == QEvent::Move || event->type() == QEvent::Resize || event->type() == QEvent::WindowStateChange)
-	{
-		SessionsManager::markSessionModified();
-	}
-
-	return QObject::eventFilter(object, event);
 }
 
 }
