@@ -178,6 +178,17 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
 	menu.addSeparator();
+
+	QMenu *arrangeMenu = menu.addMenu(tr("Arrange"));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+
 	menu.addMenu(createCustomizationMenu(m_identifier, actions, &menu));
 	menu.exec(event->globalPos());
 
