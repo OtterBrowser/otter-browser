@@ -75,63 +75,56 @@ void BookmarkWidget::removeBookmark(BookmarksItem *bookmark)
 
 void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 {
-	if (m_bookmark && m_bookmark == bookmark)
+	if (bookmark != m_bookmark)
 	{
-		const QString title = (m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
-		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt());
-		const bool isFolder = (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark);
+		return;
+	}
 
-		if (isFolder)
-		{
-			Menu *menu = new Menu(Menu::BookmarksMenuRole, this);
-			menu->menuAction()->setData(m_bookmark->index());
+	const QString title = (m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
+	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt());
 
-			setPopupMode(QToolButton::InstantPopup);
-			setToolTip(title);
-			setMenu(menu);
-			setEnabled(m_bookmark->rowCount() > 0);
-		}
-		else
-		{
-			QStringList toolTip;
-			toolTip.append(tr("Title: %1").arg(title));
+	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
+	{
+		Menu *menu = new Menu(Menu::BookmarksMenuRole, this);
+		menu->menuAction()->setData(m_bookmark->index());
 
-			if (!m_bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())
-			{
-				toolTip.append(tr("Address: %1").arg(m_bookmark->data(BookmarksModel::UrlRole).toString()));
-			}
-
-			if (m_bookmark->data(BookmarksModel::DescriptionRole).isValid())
-			{
-				toolTip.append(tr("Description: %1").arg(m_bookmark->data(BookmarksModel::DescriptionRole).toString()));
-			}
-
-			if (!m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isNull())
-			{
-				toolTip.append(tr("Created: %1").arg(m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().toString()));
-			}
-
-			if (!m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().isNull())
-			{
-				toolTip.append(tr("Visited: %1").arg(m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().toString()));
-			}
-
-			setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));
-			setMenu(NULL);
-		}
-
-		setText(title);
-		setStatusTip(m_bookmark->data(BookmarksModel::UrlRole).toString());
-		setIcon(m_bookmark->data(Qt::DecorationRole).value<QIcon>());
+		setPopupMode(QToolButton::InstantPopup);
+		setToolTip(title);
+		setMenu(menu);
+		setEnabled(m_bookmark->rowCount() > 0);
 	}
 	else
 	{
-		setText(QString());
-		setStatusTip(QString());
-		setToolTip(QString());
-		setIcon(Utils::getIcon(QLatin1String("text-html")));
+		QStringList toolTip;
+		toolTip.append(tr("Title: %1").arg(title));
+
+		if (!m_bookmark->data(BookmarksModel::UrlRole).toString().isEmpty())
+		{
+			toolTip.append(tr("Address: %1").arg(m_bookmark->data(BookmarksModel::UrlRole).toString()));
+		}
+
+		if (m_bookmark->data(BookmarksModel::DescriptionRole).isValid())
+		{
+			toolTip.append(tr("Description: %1").arg(m_bookmark->data(BookmarksModel::DescriptionRole).toString()));
+		}
+
+		if (!m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().isNull())
+		{
+			toolTip.append(tr("Created: %1").arg(m_bookmark->data(BookmarksModel::TimeAddedRole).toDateTime().toString()));
+		}
+
+		if (!m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().isNull())
+		{
+			toolTip.append(tr("Visited: %1").arg(m_bookmark->data(BookmarksModel::TimeVisitedRole).toDateTime().toString()));
+		}
+
+		setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));
 		setMenu(NULL);
 	}
+
+	setText(title);
+	setStatusTip(m_bookmark->data(BookmarksModel::UrlRole).toString());
+	setIcon(m_bookmark->data(Qt::DecorationRole).value<QIcon>());
 }
 
 }
