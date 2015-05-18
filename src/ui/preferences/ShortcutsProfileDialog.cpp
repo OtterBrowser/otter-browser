@@ -42,7 +42,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHa
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem* item = new QStandardItem(definitions.at(i).icon, (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description));
+		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

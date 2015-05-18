@@ -109,7 +109,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem* item = new QStandardItem(definitions.at(i).icon, (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description));
+		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
 		item->setData(ActionsManager::getActionName(definitions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -255,7 +255,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 		{
 			const ActionDefinition definition = ActionsManager::getActionDefinition(actionIdentifier);
 
-			item->setText(definition.description.isEmpty() ? definition.text : definition.description);
+			item->setText(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
 			item->setIcon(definition.icon);
 		}
 	}
