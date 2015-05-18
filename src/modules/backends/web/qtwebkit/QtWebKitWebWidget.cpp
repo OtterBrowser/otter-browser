@@ -30,7 +30,6 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
-#include "../../../../core/InputInterpreter.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -1143,22 +1142,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
 			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), true, isPrivate());
-
-			break;
-		case ActionsManager::OpenSelectionAsLinkAction:
-			{
-				const QString text(m_webView->selectedText());
-
-				if (!text.isEmpty())
-				{
-					InputInterpreter *interpreter = new InputInterpreter(this);
-
-					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
-					connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-
-					interpreter->interpret(text, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
-				}
-			}
 
 			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:

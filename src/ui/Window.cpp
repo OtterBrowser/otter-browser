@@ -39,7 +39,6 @@
 #include "../modules/windows/web/WebContentsWidget.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QClipboard>
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QApplication>
@@ -120,15 +119,6 @@ void Window::triggerAction(int identifier, bool checked)
 		{
 			m_addressWidgets.at(0)->setText(QLatin1String("? "));
 			m_addressWidgets.at(0)->setFocus(Qt::OtherFocusReason);
-		}
-		else if (identifier == ActionsManager::PasteAndGoAction)
-		{
-			if (!QApplication::clipboard()->text().isEmpty())
-			{
-				m_addressWidgets.at(0)->handleUserInput(QApplication::clipboard()->text().trimmed());
-			}
-
-			return;
 		}
 		else if (identifier == ActionsManager::GoAction)
 		{

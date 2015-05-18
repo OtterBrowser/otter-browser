@@ -160,7 +160,6 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::MediaMuteAction:
 		case ActionsManager::GoBackAction:
 		case ActionsManager::GoForwardAction:
-		case ActionsManager::GoToParentDirectoryAction:
 		case ActionsManager::RewindAction:
 		case ActionsManager::FastForwardAction:
 		case ActionsManager::StopAction:
@@ -202,11 +201,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::StartDragScrollAction:
 		case ActionsManager::StartMoveScrollAction:
 		case ActionsManager::EndScrollAction:
-		case ActionsManager::ActivateAddressFieldAction:
-		case ActionsManager::ActivateSearchFieldAction:
 		case ActionsManager::ActivateContentAction:
-		case ActionsManager::ActivateTabOnLeftAction:
-		case ActionsManager::ActivateTabOnRightAction:
 		case ActionsManager::AddBookmarkAction:
 		case ActionsManager::QuickBookmarkAccessAction:
 		case ActionsManager::PopupsPolicyAction:

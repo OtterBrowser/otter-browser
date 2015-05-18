@@ -25,11 +25,14 @@
 #include "StartPageWidget.h"
 #endif
 #include "../../../core/AddonsManager.h"
+#include "../../../core/InputInterpreter.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/MainWindow.h"
 
+#include <QtGui/QClipboard>
+#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 
 namespace Otter
@@ -94,6 +97,12 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
+	connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
 }
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
@@ -218,6 +227,34 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
 	{
+		case ActionsManager::OpenSelectionAsLinkAction:
+			{
+				const QString text(m_webWidget->getSelectedText());
+
+				if (!text.isEmpty())
+				{
+					InputInterpreter *interpreter = new InputInterpreter(this);
+
+					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
+					connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+
+					interpreter->interpret(text, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
+				}
+			}
+
+			break;
+		case ActionsManager::PasteAndGoAction:
+			if (!QGuiApplication::clipboard()->text().isEmpty())
+			{
+				InputInterpreter *interpreter = new InputInterpreter(this);
+
+				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
+				connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
+			}
+
+			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
 		case ActionsManager::FindNextAction:
