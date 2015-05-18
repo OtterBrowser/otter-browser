@@ -19,11 +19,10 @@
 
 #include "CookiesContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/AddonsManager.h"
 #include "../../../core/CookieJar.h"
+#include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/Utils.h"
-#include "../../../core/WebBackend.h"
 
 #include "ui_CookiesContentsWidget.h"
 
@@ -115,9 +114,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	}
 	else
 	{
-		WebBackend *backend = AddonsManager::getWebBackend();
-
-		domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QStringLiteral("http://%1/").arg(domain))), domain);
+		domainItem = new QStandardItem(HistoryManager::getIcon(QUrl(QStringLiteral("http://%1/").arg(domain))), domain);
 		domainItem->setToolTip(domain);
 
 		m_model->appendRow(domainItem);

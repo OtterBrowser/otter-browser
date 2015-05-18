@@ -20,8 +20,7 @@
 #include "GoBackActionWidget.h"
 #include "../ContentsWidget.h"
 #include "../Window.h"
-#include "../../core/WebBackend.h"
-#include "../../core/AddonsManager.h"
+#include "../../core/HistoryManager.h"
 
 #include <QtGui/QHelpEvent>
 #include <QtWidgets/QMenu>
@@ -56,13 +55,12 @@ void GoBackActionWidget::updateMenu()
 
 	menu()->clear();
 
-	WebBackend *backend = AddonsManager::getWebBackend();
 	const WindowHistoryInformation history = getWindow()->getContentsWidget()->getHistory();
 
 	for (int i = (history.index - 1); i >= 0; --i)
 	{
 		QString title = history.entries.at(i).title;
-		QAction *action = menu()->addAction(backend->getIconForUrl(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))));
+		QAction *action = menu()->addAction(HistoryManager::getIcon(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))));
 		action->setData(i);
 		action->setStatusTip(history.entries.at(i).url);
 	}

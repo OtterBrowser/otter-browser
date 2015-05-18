@@ -181,11 +181,4 @@ QIcon QtWebKitWebBackend::getIcon() const
 	return QIcon();
 }
 
-QIcon QtWebKitWebBackend::getIconForUrl(const QUrl &url)
-{
-	const QIcon icon = QWebSettings::iconForUrl(url);
-
-	return (icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : icon);
-}
-
 }

@@ -21,14 +21,13 @@
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "../core/ActionsManager.h"
-#include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
+#include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
-#include "../core/WebBackend.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
@@ -401,7 +400,6 @@ void Menu::populateClosedWindowsMenu()
 		addSeparator();
 	}
 
-	WebBackend *backend = AddonsManager::getWebBackend();
 	MainWindow *window = MainWindow::findMainWindow(parent());
 
 	if (window)
@@ -410,7 +408,7 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			QAction *action = QMenu::addAction(backend->getIconForUrl(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow()));
+			QAction *action = QMenu::addAction(HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow()));
 			action->setData(i + 1);
 			action->setStatusTip(tabs.at(i).window.getUrl());
 		}

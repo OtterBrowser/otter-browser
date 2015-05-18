@@ -19,11 +19,10 @@
 
 #include "CacheContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/AddonsManager.h"
+#include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/Utils.h"
-#include "../../../core/WebBackend.h"
 #include "../../../ui/ItemDelegate.h"
 
 #include "ui_CacheContentsWidget.h"
@@ -201,9 +200,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	}
 	else
 	{
-		WebBackend *backend = AddonsManager::getWebBackend();
-
-		domainItem = new QStandardItem(backend->getIconForUrl(QUrl(QStringLiteral("http://%1/").arg(domain))), domain);
+		domainItem = new QStandardItem(HistoryManager::getIcon(QUrl(QStringLiteral("http://%1/").arg(domain))), domain);
 		domainItem->setToolTip(domain);
 
 		m_model->appendRow(domainItem);

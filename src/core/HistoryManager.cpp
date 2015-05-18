@@ -20,6 +20,7 @@
 #include "HistoryManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QFile>
@@ -226,6 +227,81 @@ void HistoryManager::optionChanged(const QString &option)
 HistoryManager* HistoryManager::getInstance()
 {
 	return m_instance;
+}
+
+QIcon HistoryManager::getIcon(const QUrl &url)
+{
+	if (url.scheme() == QLatin1String("about"))
+	{
+		if (url.path() == QLatin1String("bookmarks"))
+		{
+			return Utils::getIcon(QLatin1String("bookmarks"));
+		}
+
+		if (url.path() == QLatin1String("cache"))
+		{
+			return Utils::getIcon(QLatin1String("cache"));
+		}
+
+		if (url.path() == QLatin1String("config"))
+		{
+			return Utils::getIcon(QLatin1String("configuration"));
+		}
+
+		if (url.path() == QLatin1String("cookies"))
+		{
+			return Utils::getIcon(QLatin1String("cookies"));
+		}
+
+		if (url.path() == QLatin1String("history"))
+		{
+			return Utils::getIcon(QLatin1String("view-history"));
+		}
+
+		if (url.path() == QLatin1String("notes"))
+		{
+			return Utils::getIcon(QLatin1String("notes"));
+		}
+
+		if (url.path() == QLatin1String("transfers"))
+		{
+			return Utils::getIcon(QLatin1String("transfers"));
+		}
+
+		return Utils::getIcon(QLatin1String("text-html"));
+	}
+
+	qint64 location = getLocation(url, false);
+
+	if (location == 0)
+	{
+		QUrl mutableUrl(url);
+		mutableUrl.setPath(QString());
+		mutableUrl.setFragment(QString());
+
+		location = getLocation(mutableUrl, false);
+	}
+
+	if (location > 0)
+	{
+		QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+		query.prepare(QLatin1String("SELECT \"icons\".\"icon\" FROM \"visits\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" WHERE \"visits\".\"location\" = ? LIMIT 1;"));
+		query.bindValue(0, location);
+		query.exec();
+
+		if (query.first())
+		{
+			QPixmap pixmap;
+			pixmap.loadFromData(query.record().field(QLatin1String("icon")).value().toByteArray());
+
+			if (!pixmap.isNull())
+			{
+				return QIcon(pixmap);
+			}
+		}
+	}
+
+	return Utils::getIcon(QLatin1String("text-html"));
 }
 
 HistoryEntry HistoryManager::getEntry(const QSqlRecord &record)

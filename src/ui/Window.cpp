@@ -24,11 +24,10 @@
 #include "WebWidget.h"
 #include "toolbars/AddressWidget.h"
 #include "toolbars/SearchWidget.h"
-#include "../core/AddonsManager.h"
+#include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
-#include "../core/WebBackend.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
@@ -664,7 +663,7 @@ QUrl Window::getUrl() const
 
 QIcon Window::getIcon() const
 {
-	return (m_contentsWidget ? m_contentsWidget->getIcon() : AddonsManager::getWebBackend()->getIconForUrl(m_session.getUrl()));
+	return (m_contentsWidget ? m_contentsWidget->getIcon() : HistoryManager::getIcon(m_session.getUrl()));
 }
 
 QPixmap Window::getThumbnail() const

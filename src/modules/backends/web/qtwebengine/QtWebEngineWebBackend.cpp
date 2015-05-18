@@ -163,11 +163,4 @@ QIcon QtWebEngineWebBackend::getIcon() const
 	return QIcon();
 }
 
-QIcon QtWebEngineWebBackend::getIconForUrl(const QUrl &url)
-{
-	Q_UNUSED(url)
-
-	return Utils::getIcon(QLatin1String("text-html"));
-}
-
 }

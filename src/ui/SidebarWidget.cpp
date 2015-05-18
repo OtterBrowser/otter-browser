@@ -199,31 +199,31 @@ void SidebarWidget::registerPanel(const QString &identifier)
 	}
 	else if (identifier == QLatin1String("cache"))
 	{
-		icon  = Utils::getIcon(QLatin1String("cache"));
+		icon = Utils::getIcon(QLatin1String("cache"));
 	}
 	else if (identifier == QLatin1String("config"))
 	{
-		icon  = Utils::getIcon(QLatin1String("configuration"));
+		icon = Utils::getIcon(QLatin1String("configuration"));
 	}
 	else if (identifier == QLatin1String("cookies"))
 	{
-		icon  = Utils::getIcon(QLatin1String("cookies"));
+		icon = Utils::getIcon(QLatin1String("cookies"));
 	}
 	else if (identifier == QLatin1String("history"))
 	{
-		icon  = Utils::getIcon(QLatin1String("view-history"));
+		icon = Utils::getIcon(QLatin1String("view-history"));
 	}
 	else if (identifier == QLatin1String("notes"))
 	{
-		icon  = Utils::getIcon(QLatin1String("notes"));
+		icon = Utils::getIcon(QLatin1String("notes"));
 	}
 	else if (identifier == QLatin1String("transfers"))
 	{
-		icon  = Utils::getIcon(QLatin1String("transfers"));
+		icon = Utils::getIcon(QLatin1String("transfers"));
 	}
 	else
 	{
-		icon  = Utils::getIcon(QLatin1String("text-html"));
+		icon = Utils::getIcon(QLatin1String("text-html"));
 	}
 
 	QToolButton *button = new QToolButton(this);

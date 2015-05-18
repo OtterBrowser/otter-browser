@@ -50,6 +50,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void clearHistory(int period = 0);
 	static HistoryManager* getInstance();
+	static QIcon getIcon(const QUrl &url);
 	static HistoryEntry getEntry(qint64 entry);
 	static QList<HistoryEntry> getEntries(bool typed = false);
 	static qint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed = false);
