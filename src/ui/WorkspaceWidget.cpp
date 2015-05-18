@@ -118,7 +118,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, this).contains(event->pos()))
 	{
-		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 		showMaximized();
 	}
 
@@ -165,7 +165,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::MaximizeTabAction:
 			if (m_mdi->activeSubWindow())
 			{
-				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 				m_mdi->activeSubWindow()->showMaximized();
 			}
 
@@ -206,7 +206,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					subWindows.at(i)->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+					subWindows.at(i)->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 					subWindows.at(i)->showMaximized();
 				}
 			}
@@ -297,7 +297,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			switch (state)
 			{
 				case MaximizedWindowState:
-					mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint);
+					mdiWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 					mdiWindow->showMaximized();
 
 					break;
