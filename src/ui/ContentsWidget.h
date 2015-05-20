@@ -57,7 +57,8 @@ public:
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const;
 	virtual WindowHistoryInformation getHistory() const;
-	virtual QList<FeedUrl> getFeeds() const;
+	virtual QList<LinkUrl> getFeeds() const;
+	virtual QList<LinkUrl> getSearchEngines() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
 	virtual bool canZoom() const;

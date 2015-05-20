@@ -111,7 +111,8 @@ public:
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	QStringList getAlternateStyleSheets() const;
-	virtual QList<FeedUrl> getFeeds() const;
+	virtual QList<LinkUrl> getFeeds() const;
+	virtual QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
 	virtual QVariantHash getStatistics() const = 0;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;

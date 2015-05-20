@@ -2300,10 +2300,10 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
-QList<FeedUrl> QtWebKitWebWidget::getFeeds() const
+QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements = m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]"));
-	QList<FeedUrl> feeds;
+	QList<LinkUrl> links;
 	QSet<QUrl> urls;
 
 	for (int i = 0; i < elements.count(); ++i)
@@ -2322,15 +2322,48 @@ QList<FeedUrl> QtWebKitWebWidget::getFeeds() const
 
 		urls.insert(url);
 
-		FeedUrl feed;
-		feed.title = elements.at(i).attribute(QLatin1String("title"));
-		feed.mimeType = elements.at(i).attribute(QLatin1String("type"));
-		feed.url = url;
+		LinkUrl link;
+		link.title = elements.at(i).attribute(QLatin1String("title"));
+		link.mimeType = elements.at(i).attribute(QLatin1String("type"));
+		link.url = url;
 
-		feeds.append(feed);
+		links.append(link);
 	}
 
-	return feeds;
+	return links;
+}
+
+QList<LinkUrl> QtWebKitWebWidget::getSearchEngines() const
+{
+	const QWebElementCollection elements = m_webView->page()->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]"));
+	QList<LinkUrl> links;
+	QSet<QUrl> urls;
+
+	for (int i = 0; i < elements.count(); ++i)
+	{
+		QUrl url(elements.at(i).attribute(QLatin1String("href")));
+
+		if (url.isRelative())
+		{
+			url = getUrl().resolved(url);
+		}
+
+		if (urls.contains(url))
+		{
+			continue;
+		}
+
+		urls.insert(url);
+
+		LinkUrl link;
+		link.title = elements.at(i).attribute(QLatin1String("title"));
+		link.mimeType = elements.at(i).attribute(QLatin1String("type"));
+		link.url = url;
+
+		links.append(link);
+	}
+
+	return links;
 }
 
 QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const

@@ -268,9 +268,14 @@ WindowHistoryInformation ContentsWidget::getHistory() const
 	return information;
 }
 
-QList<FeedUrl> ContentsWidget::getFeeds() const
+QList<LinkUrl> ContentsWidget::getFeeds() const
 {
-	return QList<FeedUrl>();
+	return QList<LinkUrl>();
+}
+
+QList<LinkUrl> ContentsWidget::getSearchEngines() const
+{
+	return QList<LinkUrl>();
 }
 
 int ContentsWidget::getZoom() const

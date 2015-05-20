@@ -766,9 +766,14 @@ QStringList WebWidget::getAlternateStyleSheets() const
 	return m_alternateStyleSheets;
 }
 
-QList<FeedUrl> WebWidget::getFeeds() const
+QList<LinkUrl> WebWidget::getFeeds() const
 {
-	return QList<FeedUrl>();
+	return QList<LinkUrl>();
+}
+
+QList<LinkUrl> WebWidget::getSearchEngines() const
+{
+	return QList<LinkUrl>();
 }
 
 QVariantHash WebWidget::getOptions() const

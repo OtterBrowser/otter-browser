@@ -400,7 +400,7 @@ void AddressWidget::updateBookmark()
 
 void AddressWidget::updateFeeds()
 {
-	const QList<FeedUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<FeedUrl>());
+	const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 	if (!feeds.isEmpty() && !m_feedsLabel)
 	{
@@ -624,7 +624,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
-			const QList<FeedUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<FeedUrl>());
+			const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 			if (feeds.count() == 1 && m_window)
 			{

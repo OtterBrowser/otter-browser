@@ -670,9 +670,14 @@ WindowHistoryInformation WebContentsWidget::getHistory() const
 	return m_webWidget->getHistory();
 }
 
-QList<FeedUrl> WebContentsWidget::getFeeds() const
+QList<LinkUrl> WebContentsWidget::getFeeds() const
 {
 	return m_webWidget->getFeeds();
+}
+
+QList<LinkUrl> WebContentsWidget::getSearchEngines() const
+{
+	return m_webWidget->getSearchEngines();
 }
 
 int WebContentsWidget::getZoom() const

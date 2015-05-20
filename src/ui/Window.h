@@ -40,7 +40,7 @@ enum WindowLoadingState
 	LoadedState = 2
 };
 
-struct FeedUrl
+struct LinkUrl
 {
 	QString title;
 	QString mimeType;
