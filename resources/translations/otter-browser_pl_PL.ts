@@ -3650,7 +3650,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Rozmieść</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
@@ -4790,7 +4790,7 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="276"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Rozmieść</translation>
     </message>
 </context>
 <context>
@@ -4965,7 +4965,7 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Restore Tab</source>
-        <translation type="unfinished"/>
+        <translation>Przywróć kartę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
@@ -5020,12 +5020,12 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Cascade</source>
-        <translation type="unfinished"/>
+        <translation>Rozmieść kaskadowo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation> Rozmieść sąsiadująco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="284"/>
