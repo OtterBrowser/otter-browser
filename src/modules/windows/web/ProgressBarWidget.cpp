@@ -47,6 +47,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	layout->addWidget(m_elapsedLabel);
 	layout->addWidget(m_messageLabel);
 	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
 	QPalette palette = m_elementsLabel->palette();
 	palette.setColor(QPalette::Background, palette.color(QPalette::Base));
