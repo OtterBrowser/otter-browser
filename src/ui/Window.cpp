@@ -320,6 +320,8 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 
 		if (subWindow)
 		{
+			subWindow->setWindowFlags(Qt::SubWindow);
+			subWindow->showNormal();
 			subWindow->resize((geometry.size() * ((qreal) getContentsWidget()->getZoom() / 100)) + (subWindow->geometry().size() - m_contentsWidget->size()));
 			subWindow->move(geometry.topLeft());
 		}
