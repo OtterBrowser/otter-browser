@@ -141,6 +141,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	}
 
 	adjustSize();
+	setContextMenuPolicy(Qt::PreventContextMenu);
 	setFocusPolicy(Qt::StrongFocus);
 	setWindowFlags(Qt::Widget);
 	setWindowTitle(title);
