@@ -125,6 +125,27 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 	QMdiSubWindow::mouseReleaseEvent(event);
 }
 
+void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	QStyleOptionTitleBar option;
+	option.initFrom(this);
+	option.titleBarFlags = windowFlags();
+	option.titleBarState = windowState();
+	option.subControls = QStyle::SC_All;
+	option.activeSubControls = QStyle::SC_None;
+
+	if (!isMinimized())
+	{
+		option.rect.setHeight(height() - widget()->height());
+	}
+
+	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarLabel, this).contains(event->pos()))
+	{
+		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+		showMaximized();
+	}
+}
+
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_mdi(NULL),
 	m_activeWindow(NULL)

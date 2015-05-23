@@ -53,6 +53,7 @@ protected:
 	void moveEvent(QMoveEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseDoubleClickEvent(QMouseEvent *event);
 };
 
 class WorkspaceWidget : public QWidget
