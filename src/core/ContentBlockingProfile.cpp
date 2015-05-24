@@ -22,6 +22,8 @@
 #include "ContentBlockingProfile.h"
 #include "Console.h"
 #include "ContentBlockingManager.h"
+#include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 
 #include <QtConcurrent/QtConcurrentRun>
@@ -34,8 +36,6 @@
 
 namespace Otter
 {
-
-NetworkManager* ContentBlockingProfile::m_networkManager = NULL;
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
 	m_root(NULL),
@@ -445,41 +445,35 @@ void ContentBlockingProfile::downloadUpdate()
 		return;
 	}
 
-	if (!m_networkManager)
-	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
-	}
-
-	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateDownloaded(QNetworkReply*)));
-
 	QNetworkRequest request(m_information.updateUrl);
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
-	m_networkReply = m_networkManager->get(request);
+	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
 
 	m_updateRequested = true;
 }
 
-void ContentBlockingProfile::updateDownloaded(QNetworkReply *reply)
+void ContentBlockingProfile::replyFinished()
 {
-	if (m_networkReply != reply)
+	if (!m_networkReply)
 	{
 		return;
 	}
 
-	const QByteArray downloadedDataHeader = reply->readLine();
-	const QByteArray downloadedDataChecksum = reply->readLine();
-	const QByteArray downloadedData = reply->readAll();
+	m_networkReply->deleteLater();
 
-	if (reply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
+	const QByteArray downloadedDataHeader = m_networkReply->readLine();
+	const QByteArray downloadedDataChecksum = m_networkReply->readLine();
+	const QByteArray downloadedData = m_networkReply->readAll();
+
+	if (m_networkReply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(reply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
-
-		reply->deleteLater();
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
 
 		return;
 	}
-
-	reply->deleteLater();
 
 	if (downloadedDataChecksum.contains(QByteArray("! Checksum: ")))
 	{

@@ -19,13 +19,12 @@
 **************************************************************************/
 
 #include "Transfer.h"
-#include "AddonsManager.h"
 #include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "TransfersManager.h"
 #include "Utils.h"
-#include "WebBackend.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QCoreApplication>
@@ -39,8 +38,6 @@
 
 namespace Otter
 {
-
-NetworkManager* Transfer::m_networkManager = NULL;
 
 Transfer::Transfer(QObject *parent) : QObject(parent),
 	m_reply(NULL),
@@ -91,15 +88,10 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(source));
 
-	if (!m_networkManager)
-	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
-	}
-
-	start(m_networkManager->get(request), target, quickTransfer);
+	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer);
 }
 
 Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
@@ -116,12 +108,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	m_updateTimer(0),
 	m_updateInterval(0)
 {
-	if (!m_networkManager)
-	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
-	}
-
-	start(m_networkManager->get(request), target, quickTransfer);
+	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer);
 }
 
 Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
@@ -595,16 +582,11 @@ bool Transfer::resume()
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setRawHeader(QStringLiteral("Range").toLatin1(), QStringLiteral("bytes=%1-").arg(file->size()).toLatin1());
 	request.setUrl(m_source);
 
-	if (!m_networkManager)
-	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
-	}
-
-	m_reply = m_networkManager->get(request);
+	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
 
 	downloadData();
 
@@ -642,15 +624,10 @@ bool Transfer::restart()
 
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-	request.setHeader(QNetworkRequest::UserAgentHeader, AddonsManager::getWebBackend()->getUserAgent());
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(m_source));
 
-	if (!m_networkManager)
-	{
-		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
-	}
-
-	m_reply = m_networkManager->get(request);
+	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
 
 	downloadData();
 

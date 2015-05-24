@@ -22,11 +22,10 @@
 #ifndef OTTER_CONTENTBLOCKINGPROFILE_H
 #define OTTER_CONTENTBLOCKINGPROFILE_H
 
-#include "NetworkManager.h"
-
 #include <QtCore/QObject>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QUrl>
+#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
@@ -100,7 +99,7 @@ protected:
 	bool checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request);
 
 private slots:
-	void updateDownloaded(QNetworkReply *reply);
+	void replyFinished();
 
 private:
 	Node *m_root;
@@ -116,8 +115,6 @@ private:
 	bool m_updateRequested;
 	bool m_isEmpty;
 	bool m_wasLoaded;
-
-	static NetworkManager *m_networkManager;
 
 signals:
 	void updateCustomStyleSheets();

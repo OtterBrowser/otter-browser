@@ -19,23 +19,21 @@
 
 #include "SearchSuggester.h"
 #include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SearchesManager.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
-#include <QtCore/QTimer>
 #include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
 
 SearchSuggester::SearchSuggester(const QString &engine, QObject *parent) : QObject(parent),
-	m_networkManager(new NetworkManager(true, this)),
-	m_currentReply(NULL),
+	m_networkReply(NULL),
 	m_model(NULL),
 	m_engine(engine)
 {
-	connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 void SearchSuggester::setEngine(const QString &engine)
@@ -54,13 +52,11 @@ void SearchSuggester::setQuery(const QString &query)
 	{
 		m_query = query;
 
-		if (m_currentReply)
+		if (m_networkReply)
 		{
-			m_currentReply->abort();
-
-			QTimer::singleShot(250, m_currentReply, SLOT(deleteLater()));
-
-			m_currentReply = NULL;
+			m_networkReply->abort();
+			m_networkReply->deleteLater();
+			m_networkReply = NULL;
 		}
 
 		const SearchInformation engine = SearchesManager::getSearchEngine(m_engine);
@@ -71,6 +67,8 @@ void SearchSuggester::setQuery(const QString &query)
 		}
 
 		QNetworkRequest request;
+		request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
 		QNetworkAccessManager::Operation method;
 		QByteArray body;
 
@@ -78,20 +76,22 @@ void SearchSuggester::setQuery(const QString &query)
 
 		if (method == QNetworkAccessManager::PostOperation)
 		{
-			m_currentReply = m_networkManager->post(request, body);
+			m_networkReply = NetworkManagerFactory::getNetworkManager()->post(request, body);
 		}
 		else
 		{
-			m_currentReply = m_networkManager->get(request);
+			m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 		}
+
+		connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
 	}
 }
 
-void SearchSuggester::replyFinished(QNetworkReply *reply)
+void SearchSuggester::replyFinished()
 {
-	if (reply == m_currentReply)
+	if (!m_networkReply)
 	{
-		m_currentReply = NULL;
+		return;
 	}
 
 	if (m_model)
@@ -99,14 +99,16 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 		m_model->clear();
 	}
 
-	if (reply->size() <= 0)
+	m_networkReply->deleteLater();
+
+	if (m_networkReply->size() <= 0)
 	{
-		QTimer::singleShot(250, reply, SLOT(deleteLater()));
+		m_networkReply = NULL;
 
 		return;
 	}
 
-	const QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+	const QJsonDocument document = QJsonDocument::fromJson(m_networkReply->readAll());
 
 	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)
 	{
@@ -133,7 +135,7 @@ void SearchSuggester::replyFinished(QNetworkReply *reply)
 		emit suggestionsChanged(suggestions);
 	}
 
-	QTimer::singleShot(250, reply, SLOT(deleteLater()));
+	m_networkReply = NULL;
 }
 
 QStandardItemModel* SearchSuggester::getModel()

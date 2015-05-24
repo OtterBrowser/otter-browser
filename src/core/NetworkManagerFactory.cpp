@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -38,8 +38,9 @@ namespace Otter
 {
 
 NetworkManagerFactory* NetworkManagerFactory::m_instance = NULL;
-CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
+NetworkManager* NetworkManagerFactory::m_networkManager = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
+CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
 QString NetworkManagerFactory::m_acceptLanguage;
 QStringList NetworkManagerFactory::m_userAgentsOrder;
 QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
@@ -204,14 +205,14 @@ NetworkManagerFactory* NetworkManagerFactory::getInstance()
 	return m_instance;
 }
 
-CookieJar* NetworkManagerFactory::getCookieJar()
+NetworkManager* NetworkManagerFactory::getNetworkManager()
 {
-	if (!m_cookieJar)
+	if (!m_networkManager)
 	{
-		m_cookieJar = new CookieJar(false, QCoreApplication::instance());
+		m_networkManager = new NetworkManager(true, QCoreApplication::instance());
 	}
 
-	return m_cookieJar;
+	return m_networkManager;
 }
 
 NetworkCache* NetworkManagerFactory::getCache()
@@ -224,9 +225,24 @@ NetworkCache* NetworkManagerFactory::getCache()
 	return m_cache;
 }
 
+CookieJar* NetworkManagerFactory::getCookieJar()
+{
+	if (!m_cookieJar)
+	{
+		m_cookieJar = new CookieJar(false, QCoreApplication::instance());
+	}
+
+	return m_cookieJar;
+}
+
 QString NetworkManagerFactory::getAcceptLanguage()
 {
 	return m_acceptLanguage;
+}
+
+QString NetworkManagerFactory::getUserAgent()
+{
+	return AddonsManager::getWebBackend()->getUserAgent();
 }
 
 QStringList NetworkManagerFactory::getUserAgents()

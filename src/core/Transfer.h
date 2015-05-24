@@ -95,8 +95,6 @@ private:
 	int m_updateTimer;
 	int m_updateInterval;
 
-	static NetworkManager *m_networkManager;
-
 signals:
 	void started();
 	void finished();

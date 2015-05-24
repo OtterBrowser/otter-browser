@@ -50,11 +50,10 @@ public slots:
 	void setQuery(const QString &query);
 
 protected slots:
-	void replyFinished(QNetworkReply *reply);
+	void replyFinished();
 
 private:
-	NetworkManager *m_networkManager;
-	QNetworkReply *m_currentReply;
+	QNetworkReply *m_networkReply;
 	QStandardItemModel *m_model;
 	QString m_engine;
 	QString m_query;
