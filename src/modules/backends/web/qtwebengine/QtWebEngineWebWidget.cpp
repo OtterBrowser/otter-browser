@@ -23,6 +23,7 @@
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
+#include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchesManager.h"
@@ -80,6 +81,7 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
 	m_childWidget(NULL),
+	m_iconReply(NULL),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
 	m_isUsingRockerNavigation(false),
@@ -114,6 +116,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
+	connect(m_webView->page(), SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
 	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 	connect(m_webView->page(), SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
@@ -189,7 +192,6 @@ void QtWebEngineWebWidget::pageLoadFinished()
 	m_isLoading = false;
 
 	updateNavigationActions();
-	notifyUrlChanged(getUrl());
 	startReloadTimer();
 
 	emit loadingChanged(false);
@@ -698,6 +700,43 @@ void QtWebEngineWebWidget::pasteText(const QString &text)
 	QGuiApplication::clipboard()->setMimeData(mimeData);
 }
 
+void QtWebEngineWebWidget::iconReplyFinished()
+{
+	if (!m_iconReply)
+	{
+		return;
+	}
+
+	m_icon = QIcon(QPixmap::fromImage(QImage::fromData(m_iconReply->readAll())));
+
+	emit iconChanged(getIcon());
+
+	m_iconReply->deleteLater();
+	m_iconReply = NULL;
+}
+
+void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
+{
+	if (m_iconReply && m_iconReply->url() != url)
+	{
+		m_iconReply->abort();
+		m_iconReply->deleteLater();
+	}
+
+	m_icon = QIcon();
+
+	emit iconChanged(getIcon());
+
+	QNetworkRequest request;
+	request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
+	request.setUrl(url);
+
+	m_iconReply = NetworkManagerFactory::getNetworkManager()->get(request);
+	m_iconReply->setParent(this);
+
+	connect(m_iconReply, SIGNAL(finished()), this, SLOT(iconReplyFinished()));
+}
+
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(url, authenticator, this);
@@ -969,6 +1008,9 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 	updatePageActions(url);
 	updateNavigationActions();
 
+	m_icon = QIcon();
+
+	emit iconChanged(getIcon());
 	emit urlChanged(url);
 
 	SessionsManager::markSessionModified();

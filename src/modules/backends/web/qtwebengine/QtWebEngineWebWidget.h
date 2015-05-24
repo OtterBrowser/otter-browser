@@ -22,6 +22,7 @@
 
 #include "../../../../ui/WebWidget.h"
 
+#include <QtNetwork/QNetworkReply>
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 #include <QtWebEngineWidgets/QWebEngineView>
 
@@ -141,6 +142,8 @@ protected slots:
 	void pageLoadFinished();
 	void downloadFile(QWebEngineDownloadItem *item);
 	void linkHovered(const QString &link);
+	void iconReplyFinished();
+	void handleIconChange(const QUrl &url);
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
 	void handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature);
@@ -166,6 +169,7 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 	QWidget *m_childWidget;
+	QNetworkReply *m_iconReply;
 	QIcon m_icon;
 	HitTestResult m_hitResult;
 	QPoint m_clickPosition;
