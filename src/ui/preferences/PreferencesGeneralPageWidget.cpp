@@ -148,7 +148,7 @@ void PreferencesGeneralPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), m_ui->startupBehaviorComboBox->currentData().toString());
 	SettingsManager::setValue(QLatin1String("Browser/HomePage"), m_ui->homePageLineEdit->text());
 	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereSaveFile"), m_ui->alwaysAskCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload"), m_ui->alwaysAskCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs"), m_ui->delayTabsLoadingCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/ReuseCurrentTab"), m_ui->reuseCurrentTabCheckBox->isChecked());
