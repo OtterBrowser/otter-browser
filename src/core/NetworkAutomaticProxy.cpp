@@ -193,7 +193,7 @@ QScriptValue NetworkAutomaticProxy::dnsResolve(QScriptContext *context, QScriptE
 
 	const QHostInfo host = QHostInfo::fromName(context->argument(0).toString());
 
-	if (host.error() == QHostInfo::NoError)
+	if (host.error() == QHostInfo::NoError && !host.addresses().isEmpty())
 	{
 		return host.addresses().first().toString();
 	}

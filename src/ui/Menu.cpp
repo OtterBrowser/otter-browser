@@ -374,7 +374,7 @@ void Menu::populateCharacterEncodingMenu()
 		}
 	}
 
-	if (!m_actionGroup->checkedAction())
+	if (!m_actionGroup->checkedAction() && !actions().isEmpty())
 	{
 		actions().first()->setChecked(true);
 	}

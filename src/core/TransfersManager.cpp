@@ -281,7 +281,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path)
 				break;
 			}
 
-			path = dialog.selectedFiles().first();
+			path = dialog.selectedFiles().value(0);
 		}
 
 		const bool exists = QFile::exists(path);

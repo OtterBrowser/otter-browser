@@ -64,7 +64,7 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 		return m_webBackends[name];
 	}
 
-	if (name.isEmpty())
+	if (name.isEmpty() && !m_webBackends.isEmpty())
 	{
 		const QString defaultName = SettingsManager::getValue(QLatin1String("Backends/Web")).toString();
 
