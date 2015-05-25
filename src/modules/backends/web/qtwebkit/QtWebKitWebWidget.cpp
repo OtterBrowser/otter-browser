@@ -2623,7 +2623,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (m_hitResult.element().tagName().toLower() == QLatin1String("object") || m_hitResult.element().tagName().toLower() == QLatin1String("embed")))
+				const QString tagName = m_hitResult.element().tagName().toLower();
+
+				if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
 				{
 					m_pluginToken = QUuid::createUuid().toString();
 
@@ -2725,6 +2727,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::ShortcutOverride)
 		{
+			const QString tagName = m_page->mainFrame()->findFirstElement(QLatin1String("*:focus")).tagName().toLower();
+
+			if (tagName == QLatin1String("object") || tagName == QLatin1String("embed"))
+			{
+				event->accept();
+
+				return true;
+			}
+
 			QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
 			if (keyEvent->modifiers() == Qt::ControlModifier)
