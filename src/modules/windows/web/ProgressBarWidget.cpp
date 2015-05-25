@@ -73,6 +73,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	setAutoFillBackground(true);
 	scheduleGeometryUpdate();
 	loadingChanged(webWidget->isLoading());
+	hide();
 
 	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
