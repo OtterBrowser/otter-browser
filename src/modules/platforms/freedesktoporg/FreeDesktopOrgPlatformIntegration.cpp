@@ -25,6 +25,7 @@
 
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
+#include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
 #include <QtGui/QRgb>
 
@@ -97,6 +98,13 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(notificationIgnored(quint32,quint32)));
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(notificationClicked(quint32,QString)));
+}
+
+void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+{
+	Q_UNUSED(command)
+
+	QDesktopServices::openUrl(QUrl(fileName));
 }
 
 void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)

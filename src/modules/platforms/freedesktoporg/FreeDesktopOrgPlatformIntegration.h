@@ -40,6 +40,7 @@ class FreeDesktopOrgPlatformIntegration : public PlatformIntegration
 public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
 
+	void runApplication(const QString &command, const QString &fileName = QString()) const;
 	bool canShowNotifications() const;
 
 public slots:
