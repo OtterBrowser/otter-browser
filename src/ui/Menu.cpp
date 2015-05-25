@@ -546,21 +546,13 @@ void Menu::populateUserAgentMenu()
 
 void Menu::clearModelMenu()
 {
-	if (m_role != BookmarksMenuRole)
+	const int offset = ((m_role == BookmarksMenuRole && menuAction() && !menuAction()->data().toModelIndex().isValid()) ? 3 : 0);
+
+	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
-		for (int i = (actions().count() - 1); i >= 0; --i)
-		{
-			actions().at(i)->deleteLater();
-			removeAction(actions().at(i));
-		}
-	}
-	else if (actions().count() > 3)
-	{
-		for (int i = (actions().count() - 1); i > 2; --i)
-		{
-			actions().at(i)->deleteLater();
-			removeAction(actions().at(i));
-		}
+		actions().at(i)->deleteLater();
+
+		removeAction(actions().at(i));
 	}
 
 	if (m_role != BookmarksMenuRole && menuAction())
