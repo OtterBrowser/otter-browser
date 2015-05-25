@@ -343,7 +343,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		m_isRestored = true;
 
-		if (SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString() != QLatin1String("doNothing"))
+		if (SettingsManager::getValue(QLatin1String("Interface/LastTabClosingAction")).toString() != QLatin1String("doNothing"))
 		{
 			open();
 		}
@@ -635,7 +635,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		}
 	}
 
-	const QString lastTabClosingAction = SettingsManager::getValue(QLatin1String("TabBar/LastTabClosingAction")).toString();
+	const QString lastTabClosingAction = SettingsManager::getValue(QLatin1String("Interface/LastTabClosingAction")).toString();
 
 	if (m_mainWindow->getTabBar()->count() == 1)
 	{
