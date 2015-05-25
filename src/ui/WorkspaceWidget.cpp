@@ -280,6 +280,9 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 	{
 		if (m_mdi)
 		{
+			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
+			QMdiSubWindow *activeWindow = m_mdi->activeSubWindow();
 			MdiWindow *mdiWindow = new MdiWindow(window, m_mdi);
 			Action *closeAction = new Action(ActionsManager::CloseTabAction);
 			closeAction->setEnabled(true);
@@ -303,17 +306,8 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
 			mdiWindow->show();
+			mdiWindow->lower();
 			mdiWindow->setSystemMenu(menu);
-
-			if (isAlwaysOnTop)
-			{
-				mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
-			}
-
-			if (geometry.isValid())
-			{
-				mdiWindow->setGeometry(geometry);
-			}
 
 			switch (state)
 			{
@@ -331,6 +325,23 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 
 					break;
 			}
+
+			if (isAlwaysOnTop)
+			{
+				mdiWindow->setWindowFlags(mdiWindow->windowFlags() | Qt::WindowStaysOnTopHint);
+			}
+
+			if (geometry.isValid())
+			{
+				mdiWindow->setGeometry(geometry);
+			}
+
+			if (activeWindow)
+			{
+				m_mdi->setActiveSubWindow(activeWindow);
+			}
+
+			connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
 			updateActions();
 
