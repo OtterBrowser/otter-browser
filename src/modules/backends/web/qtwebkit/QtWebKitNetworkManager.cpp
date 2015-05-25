@@ -392,6 +392,8 @@ void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
 
 void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 {
+	setParent(widget);
+
 	m_widget = widget;
 
 	m_cookieJarProxy->setWidget(widget);
