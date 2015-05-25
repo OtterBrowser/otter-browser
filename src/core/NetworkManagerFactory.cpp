@@ -75,20 +75,15 @@ void NetworkManagerFactory::initialize()
 	}
 
 	m_isInitialized = true;
-
-#if QT_VERSION < 0x050300
-	m_defaultCiphers = QSslSocket::supportedCiphers();
+	m_defaultCiphers = QSslSocket::defaultCiphers();
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
 	{
-		if (m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("NULL") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH") || m_defaultCiphers.at(i).isNull())
+		if ((m_defaultCiphers.at(i).keyExchangeMethod() == QLatin1String("DH") && m_defaultCiphers.at(i).supportedBits() < 1024) || m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("NULL") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH") || m_defaultCiphers.at(i).isNull())
 		{
 			m_defaultCiphers.removeAt(i);
 		}
 	}
-#else
-	m_defaultCiphers = QSslSocket::defaultCiphers();
-#endif
 
 	loadUserAgents();
 
