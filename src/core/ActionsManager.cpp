@@ -24,6 +24,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaEnum>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QSettings>
 
 namespace Otter
@@ -450,6 +451,7 @@ void ActionsManager::loadProfiles()
 	QVector<QKeySequence> allShortcuts;
 	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 	const bool enableSingleKeyShortcuts = SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool();
+	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
@@ -469,9 +471,14 @@ void ActionsManager::loadProfiles()
 
 			for (int k = 0; k < rawShortcuts.count(); ++k)
 			{
+				if (!enableSingleKeyShortcuts && !functionKeyExpression.match(rawShortcuts.at(k)).hasMatch() && (!rawShortcuts.at(k).contains(QLatin1Char('+')) || rawShortcuts.at(k) == QLatin1String("+")))
+				{
+					continue;
+				}
+
 				const QKeySequence shortcut(rawShortcuts.at(k));
 
-				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut) && (enableSingleKeyShortcuts || shortcut.count() > 1))
+				if (!shortcut.isEmpty() && !allShortcuts.contains(shortcut))
 				{
 					shortcuts.append(shortcut);
 					allShortcuts.append(shortcut);
