@@ -47,10 +47,11 @@ public:
 
 	explicit Transfer(QObject *parent);
 	Transfer(const QSettings &settings, QObject *parent);
-	Transfer(const QUrl &source, const QString &target, bool quickTransfer, QObject *parent);
-	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent);
-	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent);
+	Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
+	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
+	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
 
+	void setAutoDelete(bool autoDelete);
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
 	virtual QString getTarget() const;
@@ -70,7 +71,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	void start(QNetworkReply *reply, const QString &target, bool quickTransfer);
+	void start(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite);
 
 protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
@@ -94,6 +95,8 @@ private:
 	TransferState m_state;
 	int m_updateTimer;
 	int m_updateInterval;
+	bool m_isAutoDeleted;
+	bool m_isSelectingPath;
 
 signals:
 	void started();

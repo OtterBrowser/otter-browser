@@ -346,16 +346,8 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 		QNetworkRequest mutableRequest(request);
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-		Transfer *transfer = new Transfer(mutableRequest, QString(), false, this);
-
-		if (transfer->getState() == Transfer::RunningState)
-		{
-			connect(transfer, SIGNAL(finished()), transfer, SLOT(deleteLater()));
-		}
-		else
-		{
-			transfer->deleteLater();
-		}
+		Transfer *transfer = new Transfer(m_networkManager->get(mutableRequest), QString(), false, false, this);
+		transfer->setAutoDelete(true);
 	}
 	else
 	{

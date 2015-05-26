@@ -49,7 +49,9 @@ Transfer::Transfer(QObject *parent) : QObject(parent),
 	m_bytesTotal(0),
 	m_state(UnknownState),
 	m_updateTimer(0),
-	m_updateInterval(0)
+	m_updateInterval(0),
+	m_isAutoDeleted(false),
+	m_isSelectingPath(false)
 {
 }
 
@@ -68,11 +70,13 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent)
 	m_bytesTotal(settings.value(QLatin1String("bytesTotal")).toLongLong()),
 	m_state((m_bytesReceived > 0 && m_bytesTotal == m_bytesReceived) ? FinishedState : ErrorState),
 	m_updateTimer(0),
-	m_updateInterval(0)
+	m_updateInterval(0),
+	m_isAutoDeleted(false),
+	m_isSelectingPath(false)
 {
 }
 
-Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(source),
@@ -84,17 +88,19 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	m_bytesTotal(0),
 	m_state(UnknownState),
 	m_updateTimer(0),
-	m_updateInterval(0)
+	m_updateInterval(0),
+	m_isAutoDeleted(false),
+	m_isSelectingPath(false)
 {
 	QNetworkRequest request;
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 	request.setUrl(QUrl(source));
 
-	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer);
+	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer, overwrite);
 }
 
-Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(request.url()),
@@ -106,12 +112,14 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	m_bytesTotal(0),
 	m_state(UnknownState),
 	m_updateTimer(0),
-	m_updateInterval(0)
+	m_updateInterval(0),
+	m_isAutoDeleted(false),
+	m_isSelectingPath(false)
 {
-	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer);
+	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer, overwrite);
 }
 
-Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, QObject *parent) : QObject(parent),
+Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
 	m_reply(reply),
 	m_source(m_reply->url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
 	m_target(target),
@@ -122,9 +130,11 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransf
 	m_bytesTotal(0),
 	m_state(UnknownState),
 	m_updateTimer(0),
-	m_updateInterval(0)
+	m_updateInterval(0),
+	m_isAutoDeleted(false),
+	m_isSelectingPath(false)
 {
-	start(reply, target, quickTransfer);
+	start(reply, target, quickTransfer, overwrite);
 }
 
 void Transfer::timerEvent(QTimerEvent *event)
@@ -143,11 +153,16 @@ void Transfer::timerEvent(QTimerEvent *event)
 	}
 }
 
-void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTransfer)
+void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite)
 {
 	if (!reply)
 	{
 		m_state = ErrorState;
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 
 		return;
 	}
@@ -164,6 +179,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 	if (!m_device->open(QIODevice::ReadWrite))
 	{
 		m_state = ErrorState;
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 
 		return;
 	}
@@ -183,6 +203,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 	else
 	{
 		m_timeFinished = QDateTime::currentDateTime();
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 	}
 
 	m_device->reset();
@@ -255,7 +280,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 			}
 		}
 
+		m_isSelectingPath = true;
+
 		path = TransfersManager::getSavePath(fileName, path);
+
+		m_isSelectingPath = false;
 
 		if (path.isEmpty())
 		{
@@ -267,6 +296,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 			m_device = NULL;
 			m_state = CancelledState;
 
+			if (m_isAutoDeleted && !m_isSelectingPath)
+			{
+				deleteLater();
+			}
+
 			return;
 		}
 
@@ -274,12 +308,17 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 	}
 	else
 	{
-		m_target = QFileInfo(QDir::toNativeSeparators(target)).canonicalFilePath();
+		m_target = QFileInfo(QDir::toNativeSeparators(target)).absoluteFilePath();
 	}
 
-	if (!target.isEmpty() && QFile::exists(m_target) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(m_target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+	if (!target.isEmpty() && QFile::exists(m_target) && !overwrite && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(m_target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 	{
 		m_state = CancelledState;
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 
 		return;
 	}
@@ -291,6 +330,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		m_state = ErrorState;
 
 		file->deleteLater();
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 
 		return;
 	}
@@ -338,6 +382,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		if (m_bytesReceived == 0 || m_bytesReceived < m_bytesTotal)
 		{
 			m_state = ErrorState;
+
+			if (m_isAutoDeleted && !m_isSelectingPath)
+			{
+				deleteLater();
+			}
 		}
 		else
 		{
@@ -351,6 +400,11 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		file->deleteLater();
 
 		m_state = FinishedState;
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 	}
 }
 
@@ -379,6 +433,7 @@ void Transfer::downloadData()
 	}
 
 	m_device->write(m_reply->readAll());
+	m_device->seek(m_device->size());
 }
 
 void Transfer::downloadFinished()
@@ -443,6 +498,11 @@ void Transfer::downloadFinished()
 			QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
 		}
 	}
+
+	if (m_isAutoDeleted && !m_isSelectingPath)
+	{
+		deleteLater();
+	}
 }
 
 void Transfer::downloadError(QNetworkReply::NetworkError error)
@@ -452,6 +512,11 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 	stop();
 
 	m_state = ErrorState;
+
+	if (m_isAutoDeleted && !m_isSelectingPath)
+	{
+		deleteLater();
+	}
 }
 
 void Transfer::openTarget()
@@ -485,10 +550,25 @@ void Transfer::stop()
 	if (m_state == RunningState)
 	{
 		m_state = ErrorState;
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
 	}
 
 	emit stopped();
 	emit changed();
+}
+
+void Transfer::setAutoDelete(bool autoDelete)
+{
+	m_isAutoDeleted = autoDelete;
+
+	if (autoDelete && m_state != RunningState)
+	{
+		deleteLater();
+	}
 }
 
 void Transfer::setUpdateInterval(int interval)

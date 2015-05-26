@@ -203,7 +203,7 @@ TransfersManager* TransfersManager::getInstance()
 
 Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(source, target, quickTransfer, m_instance);
+	Transfer *transfer = new Transfer(source, target, quickTransfer, false, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -219,7 +219,7 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 
 Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(request, target, quickTransfer, m_instance);
+	Transfer *transfer = new Transfer(request, target, quickTransfer, false, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -235,7 +235,7 @@ Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const 
 
 Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool isPrivate)
 {
-	Transfer *transfer = new Transfer(reply, target, quickTransfer, m_instance);
+	Transfer *transfer = new Transfer(reply, target, quickTransfer, false, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{

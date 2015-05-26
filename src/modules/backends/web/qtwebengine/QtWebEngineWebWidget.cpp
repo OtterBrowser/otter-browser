@@ -394,16 +394,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				}
 				else
 				{
-					Transfer *transfer = new Transfer(m_hitResult.imageUrl, QString(), false, this);
+					QNetworkRequest request(m_hitResult.imageUrl);
+					request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-					if (transfer->getState() == Transfer::RunningState)
-					{
-						connect(transfer, SIGNAL(finished()), transfer, SLOT(deleteLater()));
-					}
-					else
-					{
-						transfer->deleteLater();
-					}
+					Transfer *transfer = new Transfer(request, QString(), false, false, this);
+					transfer->setAutoDelete(true);
 				}
 			}
 
@@ -459,16 +454,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::SaveMediaToDiskAction:
 			if (m_hitResult.mediaUrl.isValid())
 			{
-				Transfer *transfer = new Transfer(m_hitResult.mediaUrl, QString(), false, this);
+				QNetworkRequest request(m_hitResult.mediaUrl);
+				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-				if (transfer->getState() == Transfer::RunningState)
-				{
-					connect(transfer, SIGNAL(finished()), transfer, SLOT(deleteLater()));
-				}
-				else
-				{
-					transfer->deleteLater();
-				}
+				Transfer *transfer = new Transfer(request, QString(), false, false, this);
+				transfer->setAutoDelete(true);
 			}
 
 			break;
@@ -727,9 +717,8 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 
 	emit iconChanged(getIcon());
 
-	QNetworkRequest request;
+	QNetworkRequest request(url);
 	request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
-	request.setUrl(url);
 
 	m_iconReply = NetworkManagerFactory::getNetworkManager()->get(request);
 	m_iconReply->setParent(this);
