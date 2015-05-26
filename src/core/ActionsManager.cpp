@@ -259,7 +259,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), Utils::getIcon(QLatin1String("window-new")));
 	registerAction(NewWindowPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")));
 	registerAction(OpenAction, QT_TRANSLATE_NOOP("actions", "Open…"), QString(), Utils::getIcon(QLatin1String("document-open")));
-	registerAction(SaveAction, QT_TRANSLATE_NOOP("actions", "Save…"), QString(), Utils::getIcon(QLatin1String("document-save")), false);
+	registerAction(SaveAction, QT_TRANSLATE_NOOP("actions", "Save…"), QString(), Utils::getIcon(QLatin1String("document-save")));
 	registerAction(CloneTabAction, QT_TRANSLATE_NOOP("actions", "Clone Tab"));
 	registerAction(PinTabAction, QT_TRANSLATE_NOOP("actions", "Pin Tab"));
 	registerAction(DetachTabAction, QT_TRANSLATE_NOOP("actions", "Detach Tab"));

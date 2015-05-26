@@ -38,6 +38,7 @@
 #include "../../../../ui/SearchPropertiesDialog.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeData>
@@ -231,6 +232,44 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 {
 	switch (identifier)
 	{
+		case ActionsManager::SaveAction:
+			{
+				const QUrl url = getUrl();
+				QString fileName = url.fileName();
+
+				if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
+				{
+					fileName = QDir(url.path()).dirName();
+				}
+
+				if (fileName.isEmpty() && !url.host().isEmpty())
+				{
+					fileName = url.host() + QLatin1String(".html");
+				}
+
+				if (fileName.isEmpty())
+				{
+					fileName = QLatin1String("file.html");
+				}
+
+				if (!fileName.contains(QLatin1Char('.')))
+				{
+					fileName.append(QLatin1String(".html"));
+				}
+
+				const QString path = TransfersManager::getSavePath(fileName);
+
+				if (!path.isEmpty())
+				{
+					QNetworkRequest request(url);
+					request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
+
+					Transfer *transfer = new Transfer(request, path, false, true, this);
+					transfer->setAutoDelete(true);
+				}
+			}
+
+			break;
 		case ActionsManager::OpenLinkAction:
 			{
 				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
