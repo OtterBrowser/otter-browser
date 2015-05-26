@@ -48,8 +48,6 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	m_userAgentComponents[QLatin1String("applicationVersion")] = QCoreApplication::applicationName() + QLatin1Char('/') + QCoreApplication::applicationVersion();
 
 	m_engineVersion = engineExpression.match(userAgent).captured(1);
-
-	QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 }
 
 void QtWebEngineWebBackend::optionChanged(const QString &option)
@@ -81,6 +79,8 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 	if (!m_isInitialized)
 	{
 		m_isInitialized = true;
+
+		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 
 		const QString cachePath = SessionsManager::getCachePath();
 

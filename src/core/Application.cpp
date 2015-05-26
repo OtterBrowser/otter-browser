@@ -194,8 +194,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
 
-	NetworkManagerFactory::createInstance(this);
-
 	ActionsManager::createInstance(this);
 
 	AddonsManager::createInstance(this);
@@ -205,6 +203,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	GesturesManager::createInstance(this);
 
 	HistoryManager::createInstance(this);
+
+	NetworkManagerFactory::createInstance(this);
 
 	NotesManager::createInstance(this);
 
