@@ -22,6 +22,8 @@
 
 #include "WebWidget.h"
 
+#include <QtNetwork/QNetworkReply>
+
 namespace Otter
 {
 
@@ -29,6 +31,7 @@ class SourceViewerWidget;
 
 class SourceViewerWebWidget : public WebWidget
 {
+	Q_OBJECT
 
 public:
 	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = NULL);
@@ -62,8 +65,12 @@ public slots:
 protected:
 	void pasteText(const QString &text);
 
+protected slots:
+	void viewSourceReplyFinished();
+
 private:
 	SourceViewerWidget *m_sourceViewer;
+	QNetworkReply *m_viewSourceReply;
 	QUrl m_url;
 	bool m_isLoading;
 	bool m_isPrivate;

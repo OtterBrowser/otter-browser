@@ -30,6 +30,7 @@
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/SourceViewerWebWidget.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
@@ -42,7 +43,7 @@ QString WebContentsWidget::m_sharedQuickFindQuery = NULL;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_layout(new QVBoxLayout(this)),
-	m_webWidget(widget),
+	m_webWidget(NULL),
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
@@ -51,82 +52,13 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_isTabPreferencesMenuVisible(false),
 	m_showStartPage(SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool())
 {
-	if (m_webWidget)
-	{
-		m_webWidget->setParent(this);
-	}
-	else
-	{
-		m_webWidget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
-
-#if QT_VERSION >= 0x050300
-		if (window)
-		{
-			m_startPageTimer = startTimer(50);
-		}
-#endif
-	}
-
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	m_layout->setSpacing(0);
-	m_layout->addWidget(m_webWidget);
 
 	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(QLatin1String("workaround"));
-
-	if (window)
-	{
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::PasteAndGoAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::QuickFindAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindNextAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindPreviousAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
-	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
-	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
-	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
-	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
-	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
-	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
-	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
-#if QT_VERSION >= 0x050300
-	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
-#endif
-	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
-	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
-	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
-	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
+	setWidget(widget, isPrivate);
 }
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
@@ -578,6 +510,95 @@ void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 	}
 }
 
+void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
+{
+	if (m_webWidget)
+	{
+		disconnect(m_webWidget, SIGNAL(requestedCloseWindow()));
+
+		m_webWidget->hide();
+		m_webWidget->close();
+		m_webWidget->deleteLater();
+
+		layout()->removeWidget(m_webWidget);
+	}
+
+	Window *window = qobject_cast<Window*>(parentWidget());
+
+	if (widget)
+	{
+		widget->setParent(this);
+	}
+	else
+	{
+		widget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
+
+#if QT_VERSION >= 0x050300
+		if (window)
+		{
+			m_startPageTimer = startTimer(50);
+		}
+#endif
+	}
+
+	m_webWidget = widget;
+
+	layout()->addWidget(m_webWidget);
+
+	if (window)
+	{
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::PasteAndGoAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::QuickFindAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindNextAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindPreviousAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
+	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
+	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
+	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
+	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
+	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
+#if QT_VERSION >= 0x050300
+	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
+#endif
+	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
+	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
+	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
+	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
+}
+
 void WebContentsWidget::setLoading(bool loading)
 {
 	if (!m_progressBarWidget && !SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
@@ -598,7 +619,14 @@ void WebContentsWidget::setOption(const QString &key, const QVariant &value)
 
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
-	m_webWidget->setHistory(history);
+	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
+	{
+		setUrl(QUrl(history.entries.at(0).url), true);
+	}
+	else
+	{
+		m_webWidget->setHistory(history);
+	}
 }
 
 void WebContentsWidget::setZoom(int zoom)
@@ -608,6 +636,15 @@ void WebContentsWidget::setZoom(int zoom)
 
 void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 {
+	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
+	{
+		setWidget(new SourceViewerWebWidget(isPrivate(), this), isPrivate());
+	}
+	else if (url.scheme() != QLatin1String("view-source") && m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
+	{
+		setWidget(NULL, isPrivate());
+	}
+
 	m_webWidget->setRequestedUrl(url, typed);
 
 	if (typed)

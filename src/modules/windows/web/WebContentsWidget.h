@@ -76,6 +76,7 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void setWidget(WebWidget *widget, bool isPrivate);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

@@ -20,6 +20,8 @@
 #include "SourceViewerWebWidget.h"
 #include "SourceViewerWidget.h"
 #include "../core/HistoryManager.h"
+#include "../core/NetworkManager.h"
+#include "../core/NetworkManagerFactory.h"
 
 #include <QtWidgets/QVBoxLayout>
 
@@ -28,6 +30,7 @@ namespace Otter
 
 SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget(isPrivate, NULL, parent),
 	m_sourceViewer(new SourceViewerWidget(this)),
+	m_viewSourceReply(NULL),
 	m_isLoading(true),
 	m_isPrivate(isPrivate)
 {
@@ -52,6 +55,17 @@ void SourceViewerWebWidget::print(QPrinter *printer)
 void SourceViewerWebWidget::pasteText(const QString &text)
 {
 	Q_UNUSED(text)
+}
+
+void SourceViewerWebWidget::viewSourceReplyFinished()
+{
+	if (m_viewSourceReply)
+	{
+		setContents(QString(m_viewSourceReply->readAll()));
+
+		m_viewSourceReply->deleteLater();
+		m_viewSourceReply = NULL;
+	}
 }
 
 void SourceViewerWebWidget::clearSelection()
@@ -81,9 +95,26 @@ void SourceViewerWebWidget::setZoom(int zoom)
 
 void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 {
-	Q_UNUSED(typed)
+	if (m_viewSourceReply)
+	{
+		disconnect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+
+		m_viewSourceReply->abort();
+		m_viewSourceReply->deleteLater();
+		m_viewSourceReply = NULL;
+	}
 
 	m_url = url;
+
+	if (typed)
+	{
+		QNetworkRequest request(QUrl(url.toString().mid(12)));
+		request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+		m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+		connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+	}
 }
 
 void SourceViewerWebWidget::setContents(const QString &contents)
