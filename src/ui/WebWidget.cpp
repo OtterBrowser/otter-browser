@@ -781,6 +781,16 @@ QVariantHash WebWidget::getOptions() const
 	return m_options;
 }
 
+QVariantHash WebWidget::getStatistics() const
+{
+	return QVariantHash();
+}
+
+QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
+{
+	return QHash<QByteArray, QByteArray>();
+}
+
 WebWidget::ScrollMode WebWidget::getScrollMode() const
 {
 	return m_scrollMode;

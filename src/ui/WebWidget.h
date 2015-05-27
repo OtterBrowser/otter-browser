@@ -114,8 +114,8 @@ public:
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
-	virtual QVariantHash getStatistics() const = 0;
-	virtual QHash<QByteArray, QByteArray> getHeaders() const = 0;
+	virtual QVariantHash getStatistics() const;
+	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	ScrollMode getScrollMode() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;

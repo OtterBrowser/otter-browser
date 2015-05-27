@@ -106,6 +106,8 @@ SOURCES += src/main.cpp \
     src/ui/SearchPropertiesDialog.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SidebarWidget.cpp \
+    src/ui/SourceViewerWebWidget.cpp \
+    src/ui/SourceViewerWidget.cpp \
     src/ui/StartupDialog.cpp \
     src/ui/StatusBarWidget.cpp \
     src/ui/TabBarStyle.cpp \
@@ -243,6 +245,8 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/SearchPropertiesDialog.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SidebarWidget.h \
+    src/ui/SourceViewerWebWidget.h \
+    src/ui/SourceViewerWidget.h \
     src/ui/StartupDialog.h \
     src/ui/StatusBarWidget.h \
     src/ui/TabBarStyle.h \
