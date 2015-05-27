@@ -22,6 +22,7 @@
 
 #include "../../../../ui/WebWidget.h"
 
+#include <QtNetwork/QNetworkReply>
 #include <QtWebKitWidgets/QWebHitTestResult>
 #include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
@@ -37,6 +38,7 @@ class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitPage;
 class QtWebKitPluginFactory;
+class SourceViewerWebWidget;
 
 class QtWebKitWebWidget : public WebWidget
 {
@@ -118,6 +120,7 @@ protected slots:
 	void hideInspector();
 	void linkHovered(const QString &link);
 	void openFormRequest();
+	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handlePrintRequest(QWebFrame *frame);
 	void handleWindowCloseRequest();
 	void handlePermissionRequest(QWebFrame *frame, QWebPage::Feature feature);
@@ -154,6 +157,7 @@ private:
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QVector<int> m_contentBlockingProfiles;
+	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QHash<int, Action*> m_actions;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;

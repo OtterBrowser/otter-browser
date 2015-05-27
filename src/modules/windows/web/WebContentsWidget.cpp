@@ -80,6 +80,36 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 
+	if (m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::PasteAndGoAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::QuickFindAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindNextAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
+	if (m_webWidget->getAction(ActionsManager::FindPreviousAction))
+	{
+		connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
@@ -97,12 +127,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
 	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-	connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
 }
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)

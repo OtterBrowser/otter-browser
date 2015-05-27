@@ -300,7 +300,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenFrameInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Background Tab"));
 	registerAction(CopyFrameLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Frame Link to Clipboard"));
 	registerAction(ReloadFrameAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload Frame"));
-	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"));
+	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Frame Source"));
 	registerAction(OpenImageInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open Image"));
 	registerAction(SaveImageToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Image…"));
 	registerAction(CopyImageToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Image to Clipboard"));
@@ -384,7 +384,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), true, true, true);
 	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
 	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), true, true, true);
-	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), false, false, false);
+	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), true, false, false);
 	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
 	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false);
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));

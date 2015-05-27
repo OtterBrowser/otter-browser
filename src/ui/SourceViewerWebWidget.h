@@ -54,7 +54,7 @@ public slots:
 	void clearSelection();
 	void goToHistoryIndex(int index);
 	void setScrollPosition(const QPoint &position);
-	void setHistory(const WindowHistoryInformation &history) = 0;
+	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
 	void setContents(const QString &contents);
@@ -64,6 +64,7 @@ protected:
 
 private:
 	SourceViewerWidget *m_sourceViewer;
+	QUrl m_url;
 	bool m_isLoading;
 	bool m_isPrivate;
 };

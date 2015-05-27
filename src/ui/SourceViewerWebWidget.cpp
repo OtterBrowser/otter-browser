@@ -81,8 +81,9 @@ void SourceViewerWebWidget::setZoom(int zoom)
 
 void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 {
-	Q_UNUSED(url)
 	Q_UNUSED(typed)
+
+	m_url = url;
 }
 
 void SourceViewerWebWidget::setContents(const QString &contents)
@@ -120,7 +121,7 @@ QString SourceViewerWebWidget::getSelectedText() const
 
 QUrl SourceViewerWebWidget::getUrl() const
 {
-	return getRequestedUrl();
+	return m_url;
 }
 
 QIcon SourceViewerWebWidget::getIcon() const
@@ -146,8 +147,8 @@ QRect SourceViewerWebWidget::getProgressBarGeometry() const
 WindowHistoryInformation SourceViewerWebWidget::getHistory() const
 {
 	WindowHistoryEntry entry;
-	entry.url = getRequestedUrl().toString();
-	entry.url = getTitle();
+	entry.url = getUrl().toString();
+	entry.title = getTitle();
 	entry.zoom  = getZoom();
 
 	WindowHistoryInformation information;

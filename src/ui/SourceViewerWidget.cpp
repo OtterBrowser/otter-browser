@@ -55,7 +55,6 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 		{
 			painter.setPen(palette().color(QPalette::Window).darker((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150));
 			painter.drawText(0, top, right, fontMetrics().height(), Qt::AlignRight, QString::number(block.blockNumber() + 1));
-			painter.fillRect(left, top, 2, fontMetrics().height(), ((block.revision() <= m_sourceViewer->document()->revision()) ? Qt::darkGreen : Qt::red));
 		}
 
 		block = block.next();
@@ -128,7 +127,7 @@ void MarginWidget::setAmount(int amount)
 		++digits;
 	}
 
-	setFixedWidth(8 + (fontMetrics().width(QLatin1Char('9')) * digits));
+	setFixedWidth(6 + (fontMetrics().width(QLatin1Char('9')) * digits));
 
 	m_sourceViewer->setViewportMargins(width(), 0, 0, 0);
 }

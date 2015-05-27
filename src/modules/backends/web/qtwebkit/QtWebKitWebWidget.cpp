@@ -45,6 +45,7 @@
 #include "../../../../ui/ImagePropertiesDialog.h"
 #include "../../../../ui/MainWindow.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
+#include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QDataStream>
@@ -444,6 +445,20 @@ void QtWebKitWebWidget::openFormRequest()
 
 	m_formRequestUrl = QUrl();
 	m_formRequestBody = QByteArray();
+}
+
+void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
+{
+	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+	{
+		m_viewSourceReplies[reply]->setContents(QString(reply->readAll()));
+	}
+
+	m_viewSourceReplies.remove(reply);
+
+	reply->deleteLater();
 }
 
 void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)
@@ -868,7 +883,7 @@ void QtWebKitWebWidget::updateFrameActions()
 
 	if (m_actions.contains(ActionsManager::ViewFrameSourceAction))
 	{
-		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(false);
+		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(isFrame && m_hitResult.frame()->url().isValid());
 	}
 }
 
@@ -1210,6 +1225,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 				m_hitResult.frame()->setUrl(QUrl());
 				m_hitResult.frame()->setUrl(url);
+			}
+
+			break;
+		case ActionsManager::ViewFrameSourceAction:
+			if (m_hitResult.frame() && m_hitResult.frame()->url().isValid())
+			{
+				QNetworkRequest request(m_hitResult.frame()->url());
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+				QNetworkReply *reply = m_networkManager->get(request);
+				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frame()->url().toString()));
+
+				m_viewSourceReplies[reply] = sourceViewer;
+
+				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+
+				emit requestedNewWindow(sourceViewer, DefaultOpen);
 			}
 
 			break;
@@ -1617,6 +1651,24 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::ViewSourceAction:
+			{
+				QNetworkRequest request(getUrl());
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+				QNetworkReply *reply = m_networkManager->get(request);
+				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()));
+
+				m_viewSourceReplies[reply] = sourceViewer;
+
+				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+
+				emit requestedNewWindow(sourceViewer, DefaultOpen);
+			}
+
+			break;
 		case ActionsManager::InspectPageAction:
 			if (!m_inspector)
 			{
@@ -2006,7 +2058,6 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::CheckSpellingAction:
-		case ActionsManager::ViewSourceAction:
 			action->setEnabled(false);
 
 			break;

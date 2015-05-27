@@ -32,7 +32,7 @@ class MarginWidget : public QWidget
 	Q_OBJECT
 
 public:
-	MarginWidget(SourceViewerWidget *parent = NULL);
+	explicit MarginWidget(SourceViewerWidget *parent = NULL);
 
 public slots:
 	void updateNumbers(const QRect &rectangle, int offset);
