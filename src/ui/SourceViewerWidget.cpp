@@ -18,12 +18,10 @@
 **************************************************************************/
 
 #include "SourceViewerWidget.h"
+#include "../core/SettingsManager.h"
 
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
-
-
-#include <QDebug>
 
 namespace Otter
 {
@@ -32,7 +30,7 @@ MarginWidget::MarginWidget(SourceViewerWidget *parent) : QWidget(parent),
 	m_sourceViewer(parent),
 	m_lastClickedLine(-1)
 {
-	setAmount(1);
+	setAmount(m_sourceViewer->blockCount());
 	setContextMenuPolicy(Qt::NoContextMenu);
 
 	connect(m_sourceViewer, SIGNAL(blockCountChanged(int)), this, SLOT(setAmount(int)));
@@ -77,7 +75,7 @@ void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
-	textCursor.movePosition(((currentLine > m_lastClickedLine)?QTextCursor::Up:QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
+	textCursor.movePosition(((currentLine > m_lastClickedLine) ? QTextCursor::Up : QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
 
 	m_sourceViewer->setTextCursor(textCursor);
 }
@@ -153,19 +151,26 @@ bool MarginWidget::event(QEvent *event)
 }
 
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
-	m_marginWidget(new MarginWidget(this)),
+	m_marginWidget(NULL),
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
+	optionChanged(QLatin1String("SourceViewer/ShowLineNumbers"), SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")));
+	optionChanged(QLatin1String("SourceViewer/WrapLines"), SettingsManager::getValue(QLatin1String("SourceViewer/WrapLines")));
+
 	connect(this, SIGNAL(textChanged()), this, SLOT(updateSelection()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void SourceViewerWidget::resizeEvent(QResizeEvent *event)
 {
 	QPlainTextEdit::resizeEvent(event);
 
-	m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+	if (m_marginWidget)
+	{
+		m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+	}
 }
 
 void SourceViewerWidget::wheelEvent(QWheelEvent *event)
@@ -180,6 +185,30 @@ void SourceViewerWidget::wheelEvent(QWheelEvent *event)
 	}
 
 	QPlainTextEdit::wheelEvent(event);
+}
+
+void SourceViewerWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("SourceViewer/ShowLineNumbers"))
+	{
+		if (value.toBool() && !m_marginWidget)
+		{
+			m_marginWidget = new MarginWidget(this);
+			m_marginWidget->show();
+			m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+		}
+		else if (!value.toBool() && m_marginWidget)
+		{
+			m_marginWidget->deleteLater();
+			m_marginWidget = NULL;
+
+			setViewportMargins(0, 0, 0, 0);
+		}
+	}
+	else if (option == QLatin1String("SourceViewer/WrapLines"))
+	{
+		setLineWrapMode(value.toBool() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+	}
 }
 
 void SourceViewerWidget::updateTextCursor()
