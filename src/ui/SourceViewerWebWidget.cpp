@@ -48,8 +48,14 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	layout->setSpacing(0);
 	layout->addWidget(m_sourceViewer);
 
+	m_sourceViewer->setContextMenuPolicy(Qt::NoContextMenu);
+
+	setContextMenuPolicy(Qt::CustomContextMenu);
+
+	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SLOT(handleZoomChange()));
+	connect(m_sourceViewer, SIGNAL(copyAvailable(bool)), this, SLOT(updateEditActions()));
 }
 
 void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
@@ -84,9 +90,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::ContextMenuAction:
-			{
-///TODO
-			}
+			showContextMenu();
 
 			break;
 		case ActionsManager::UndoAction:
@@ -130,7 +134,8 @@ void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::ClearAllAction:
-			m_sourceViewer->clear();
+			m_sourceViewer->selectAll();
+			m_sourceViewer->textCursor().removeSelectedText();
 
 			break;
 		case ActionsManager::SearchAction:
@@ -178,6 +183,23 @@ void SourceViewerWebWidget::goToHistoryIndex(int index)
 void SourceViewerWebWidget::handleZoomChange()
 {
 	SessionsManager::markSessionModified();
+}
+
+void SourceViewerWebWidget::showContextMenu(const QPoint &position)
+{
+	QMenu menu;
+	menu.addAction(getAction(ActionsManager::UndoAction));
+	menu.addAction(getAction(ActionsManager::RedoAction));
+	menu.addSeparator();
+	menu.addAction(getAction(ActionsManager::CutAction));
+	menu.addAction(getAction(ActionsManager::CopyAction));
+	menu.addAction(getAction(ActionsManager::PasteAction));
+	menu.addAction(getAction(ActionsManager::DeleteAction));
+	menu.addSeparator();
+	menu.addAction(getAction(ActionsManager::SelectAllAction));
+	menu.addAction(getAction(ActionsManager::ClearAllAction));
+	menu.addSeparator();
+	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
 }
 
 void SourceViewerWebWidget::updateEditActions()

@@ -64,11 +64,12 @@ public slots:
 
 protected:
 	void pasteText(const QString &text);
-	void updateEditActions();
 
 protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
+	void updateEditActions();
+	void showContextMenu(const QPoint &position = QPoint(-1, -1));
 
 private:
 	SourceViewerWidget *m_sourceViewer;
