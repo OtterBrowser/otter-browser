@@ -68,6 +68,7 @@ protected:
 protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
+	void updateNavigationActions();
 	void updateEditActions();
 	void showContextMenu(const QPoint &position = QPoint(-1, -1));
 

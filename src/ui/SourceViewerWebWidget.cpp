@@ -89,6 +89,72 @@ void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::StopAction:
+			if (m_viewSourceReply)
+			{
+				disconnect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+
+				m_viewSourceReply->abort();
+				m_viewSourceReply->deleteLater();
+				m_viewSourceReply = NULL;
+
+				m_isLoading = false;
+
+				emit loadingChanged(false);
+			}
+
+			updateNavigationActions();
+
+			break;
+		case ActionsManager::ReloadAction:
+			{
+				triggerAction(ActionsManager::StopAction);
+
+				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+
+				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+				connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+
+				m_isLoading = true;
+
+				emit loadingChanged(true);
+
+				updateNavigationActions();
+			}
+
+			break;
+		case ActionsManager::ReloadOrStopAction:
+			if (m_isLoading)
+			{
+				triggerAction(ActionsManager::StopAction);
+			}
+			else
+			{
+				triggerAction(ActionsManager::ReloadAction);
+			}
+
+			break;
+		case ActionsManager::ReloadAndBypassCacheAction:
+			{
+				triggerAction(ActionsManager::StopAction);
+
+				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+				connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+
+				m_isLoading = true;
+
+				emit loadingChanged(true);
+
+				updateNavigationActions();
+			}
+
+			break;
 		case ActionsManager::ContextMenuAction:
 			showContextMenu();
 
@@ -167,6 +233,8 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 
 		m_viewSourceReply->deleteLater();
 		m_viewSourceReply = NULL;
+
+		updateNavigationActions();
 	}
 }
 
@@ -183,6 +251,24 @@ void SourceViewerWebWidget::goToHistoryIndex(int index)
 void SourceViewerWebWidget::handleZoomChange()
 {
 	SessionsManager::markSessionModified();
+}
+
+void SourceViewerWebWidget::updateNavigationActions()
+{
+	if (m_actions.contains(ActionsManager::StopAction))
+	{
+		m_actions[ActionsManager::StopAction]->setEnabled(m_isLoading);
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadAction))
+	{
+		m_actions[ActionsManager::ReloadAction]->setEnabled(!m_isLoading);
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
+	{
+		m_actions[ActionsManager::ReloadOrStopAction]->setup(ActionsManager::getAction((m_isLoading ? ActionsManager::StopAction : ActionsManager::ReloadAction), this));
+	}
 }
 
 void SourceViewerWebWidget::showContextMenu(const QPoint &position)
@@ -293,25 +379,13 @@ void SourceViewerWebWidget::setZoom(int zoom)
 
 void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 {
-	if (m_viewSourceReply)
-	{
-		disconnect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
-
-		m_viewSourceReply->abort();
-		m_viewSourceReply->deleteLater();
-		m_viewSourceReply = NULL;
-	}
+	triggerAction(ActionsManager::StopAction);
 
 	m_url = url;
 
 	if (typed)
 	{
-		QNetworkRequest request(QUrl(url.toString().mid(12)));
-		request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
-
-		m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-		connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+		triggerAction(ActionsManager::ReloadAction);
 	}
 }
 
@@ -336,6 +410,10 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
+		case ActionsManager::StopAction:
+		case ActionsManager::ReloadAction:
+		case ActionsManager::ReloadOrStopAction:
+		case ActionsManager::ReloadAndBypassCacheAction:
 		case ActionsManager::ContextMenuAction:
 		case ActionsManager::UndoAction:
 		case ActionsManager::RedoAction:
@@ -376,6 +454,19 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
+		case ActionsManager::StopAction:
+			action->setEnabled(m_isLoading);
+
+			break;
+
+		case ActionsManager::ReloadAction:
+			action->setEnabled(!m_isLoading);
+
+			break;
+		case ActionsManager::ReloadOrStopAction:
+			action->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+
+			break;
 		case ActionsManager::PasteNoteAction:
 			action->setMenu(getPasteNoteMenu());
 
