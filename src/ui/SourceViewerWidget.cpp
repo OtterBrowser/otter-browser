@@ -26,6 +26,150 @@
 namespace Otter
 {
 
+QVector<QTextCharFormat> SyntaxHighlighter::m_formats;
+
+SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
+{
+	if (m_formats.isEmpty())
+	{
+		m_formats.append(QTextCharFormat());
+
+		QTextCharFormat format;
+		format.setFontWeight(QFont::Bold);
+		format.setForeground(QColor(83, 159, 163));
+
+		m_formats.append(format);
+
+		format.setFontWeight(QFont::Bold);
+		format.setForeground(QColor(0, 0, 0));
+
+		m_formats.append(format);
+
+		format.setFontWeight(QFont::Normal);
+		format.setForeground(QColor(78, 179, 128));
+
+		m_formats.append(format);
+
+		format.setFontWeight(QFont::Normal);
+		format.setForeground(QColor(196, 177, 95));
+
+		m_formats.append(format);
+
+		format.setFontWeight(QFont::Normal);
+		format.setForeground(QColor(170, 0, 0));
+
+		m_formats.append(format);
+
+		format.setFontWeight(QFont::Normal);
+		format.setForeground(QColor(76, 81, 116));
+
+		m_formats.append(format);
+	}
+}
+
+void SyntaxHighlighter::highlightBlock(const QString &text)
+{
+	QString buffer;
+	BlockData currentData;
+	BlockState previousState = static_cast<BlockState>(qMax(previousBlockState(), 0));
+	BlockState currentState = previousState;
+	int previousStateBegin = 0;
+	int currentStateBegin = 0;
+	int position = 0;
+
+	if (currentBlock().previous().userData())
+	{
+		currentData = *static_cast<BlockData*>(currentBlock().previous().userData());
+	}
+
+	while (position < text.length())
+	{
+		buffer.append(text.at(position));
+
+		++position;
+
+		const bool isEndOfLine = (position == text.length());
+
+		if (currentState == NoState && text.at(position - 1) == QLatin1Char('<'))
+		{
+			currentState = KeywordState;
+			currentStateBegin = (position - 1);
+		}
+		else if ((currentState == KeywordState || currentState == DoctypeState) && text.at(position - 1) == QLatin1Char('>'))
+		{
+			currentState = NoState;
+			currentStateBegin = position;
+		}
+		else if (currentState == AttributeState && text.length() > position && text.at(position) == QLatin1Char('>'))
+		{
+			currentState = KeywordState;
+			currentStateBegin = position;
+		}
+		else if (currentState == KeywordState && buffer == QLatin1String("!DOCTYPE"))
+		{
+			currentState = DoctypeState;
+		}
+		else if (currentState == KeywordState && buffer == QLatin1String("!--"))
+		{
+			currentState = CommentState;
+		}
+		else if (currentState == CommentState && buffer.endsWith(QLatin1String("-->")))
+		{
+			currentState = NoState;
+			currentStateBegin = position;
+		}
+		else if (currentState == KeywordState && (text.at(position - 1) == QLatin1Char('-') || text.at(position - 1).isLetter() || text.at(position - 1).isNumber()) && (position == 1 || (position > 1 && text.at(position - 2).isSpace())))
+		{
+			currentState = AttributeState;
+			currentStateBegin = (position - 1);
+		}
+		else if (currentState == AttributeState && !(text.at(position - 1) == QLatin1Char('-') || text.at(position - 1).isLetter() || text.at(position - 1).isNumber()))
+		{
+			currentState = KeywordState;
+			currentStateBegin = (position - 1);
+		}
+		else if ((currentState == KeywordState || currentState == DoctypeState || currentState == AttributeState) && (text.at(position - 1) == QLatin1Char('\'') || text.at(position - 1) == QLatin1Char('"')))
+		{
+			currentData.context = text.at(position - 1);
+			currentData.state = currentState;
+			currentState = ValueState;
+			currentStateBegin = (position - 1);
+		}
+		else if (currentState == ValueState && text.at(position - 1) == currentData.context)
+		{
+			currentState = currentData.state;
+			currentStateBegin = position;
+			currentData.context = QString();
+			currentData.state = NoState;
+		}
+
+		if (previousState != currentState || isEndOfLine)
+		{
+			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[previousState]);
+
+			if (isEndOfLine)
+			{
+				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[currentState]);
+			}
+
+			buffer = QString();
+			previousState = currentState;
+			previousStateBegin = currentStateBegin;
+		}
+	}
+
+	if (!currentData.context.isEmpty())
+	{
+		BlockData *nextBlockData = new BlockData();
+		nextBlockData->context = currentData.context;
+		nextBlockData->state = currentData.state;
+
+		setCurrentBlockUserData(nextBlockData);
+	}
+
+	setCurrentBlockState(currentState);
+}
+
 MarginWidget::MarginWidget(SourceViewerWidget *parent) : QWidget(parent),
 	m_sourceViewer(parent),
 	m_lastClickedLine(-1)
@@ -155,6 +299,8 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
+	new SyntaxHighlighter(document());
+
 	optionChanged(QLatin1String("SourceViewer/ShowLineNumbers"), SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")));
 	optionChanged(QLatin1String("SourceViewer/WrapLines"), SettingsManager::getValue(QLatin1String("SourceViewer/WrapLines")));
 

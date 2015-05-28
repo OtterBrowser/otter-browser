@@ -22,10 +22,42 @@
 
 #include "WebWidget.h"
 
+#include <QtGui/QSyntaxHighlighter>
 #include <QtWidgets/QPlainTextEdit>
 
 namespace Otter
 {
+
+class SyntaxHighlighter : public  QSyntaxHighlighter
+{
+public:
+	enum BlockState
+	{
+		NoState = 0,
+		DoctypeState = 1,
+		KeywordState = 2,
+		AttributeState = 3,
+		EntityState = 4,
+		ValueState = 5,
+		CommentState = 6
+	};
+
+	struct BlockData : public QTextBlockUserData
+	{
+		QString context;
+		BlockState state;
+
+		BlockData() : state(NoState) {}
+	};
+
+	explicit SyntaxHighlighter(QTextDocument *parent);
+
+protected:
+	void highlightBlock(const QString &text);
+
+private:
+	static QVector<QTextCharFormat> m_formats;
+};
 
 class SourceViewerWidget;
 
