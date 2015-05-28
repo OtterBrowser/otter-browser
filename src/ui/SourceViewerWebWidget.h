@@ -67,11 +67,13 @@ protected:
 
 protected slots:
 	void viewSourceReplyFinished();
+	void handleZoomChange();
 
 private:
 	SourceViewerWidget *m_sourceViewer;
 	QNetworkReply *m_viewSourceReply;
 	QUrl m_url;
+	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	bool m_isPrivate;
 };

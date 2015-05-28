@@ -22,6 +22,9 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 
+
+#include <QDebug>
+
 namespace Otter
 {
 
@@ -30,6 +33,7 @@ MarginWidget::MarginWidget(SourceViewerWidget *parent) : QWidget(parent),
 	m_lastClickedLine(-1)
 {
 	setAmount(1);
+	setContextMenuPolicy(Qt::NoContextMenu);
 
 	connect(m_sourceViewer, SIGNAL(blockCountChanged(int)), this, SLOT(setAmount(int)));
 	connect(m_sourceViewer, SIGNAL(textChanged()), this, SLOT(setAmount()));
@@ -89,13 +93,17 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 
 		m_sourceViewer->setTextCursor(textCursor);
 	}
+	else
+	{
+		QWidget::mousePressEvent(event);
+	}
 }
 
 void MarginWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	Q_UNUSED(event)
-
 	m_lastClickedLine = -1;
+
+	QWidget::mouseReleaseEvent(event);
 }
 
 void MarginWidget::updateNumbers(const QRect &rectangle, int offset)
@@ -146,8 +154,11 @@ bool MarginWidget::event(QEvent *event)
 
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
 	m_marginWidget(new MarginWidget(this)),
+	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
+	connect(this, SIGNAL(textChanged()), this, SLOT(updateSelection()));
+	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
 }
 
 void SourceViewerWidget::resizeEvent(QResizeEvent *event)
@@ -157,15 +168,149 @@ void SourceViewerWidget::resizeEvent(QResizeEvent *event)
 	m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
 }
 
+void SourceViewerWidget::wheelEvent(QWheelEvent *event)
+{
+	if (event->modifiers().testFlag(Qt::ControlModifier))
+	{
+		setZoom(getZoom() + (event->delta() / 16));
+
+		event->accept();
+
+		return;
+	}
+
+	QPlainTextEdit::wheelEvent(event);
+}
+
+void SourceViewerWidget::updateTextCursor()
+{
+	m_findTextAnchor = textCursor();
+}
+
+void SourceViewerWidget::updateSelection()
+{
+	QList<QTextEdit::ExtraSelection> extraSelections;
+
+	if (!m_findText.isEmpty())
+	{
+		QTextEdit::ExtraSelection selection;
+		selection.format.setBackground(QColor(255, 150, 50));
+		selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+		selection.cursor = m_findTextSelection;
+
+		extraSelections.append(selection);
+
+		QTextCursor textCursor = this->textCursor();
+		textCursor.setPosition(0);
+
+		if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
+		{
+			QTextDocument::FindFlags nativeFlags;
+
+			if (m_findFlags.testFlag(WebWidget::CaseSensitiveFind))
+			{
+				nativeFlags |= QTextDocument::FindCaseSensitively;
+			}
+
+			while (!textCursor.isNull())
+			{
+				textCursor = document()->find(m_findText, textCursor, nativeFlags);
+
+				if (!textCursor.isNull() && textCursor != m_findTextSelection)
+				{
+					QTextEdit::ExtraSelection selection;
+					selection.format.setBackground(QColor(255, 255, 0));
+					selection.cursor = textCursor;
+
+					extraSelections.append(selection);
+				}
+			}
+		}
+	}
+
+	setExtraSelections(extraSelections);
+}
+
 void SourceViewerWidget::setZoom(int zoom)
 {
-///TODO
-	m_zoom = zoom;
+	if (zoom != m_zoom)
+	{
+		m_zoom = zoom;
+
+		QFont font = parentWidget()->font();
+		font.setPointSize(font.pointSize() * (qreal(zoom) / 100));
+
+		setFont(font);
+
+		emit zoomChanged(zoom);
+	}
 }
 
 int SourceViewerWidget::getZoom() const
 {
 	return m_zoom;
+}
+
+bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
+{
+	const bool isTheSame = (text == m_findText);
+
+	m_findText = text;
+	m_findFlags = flags;
+
+	if (!text.isEmpty())
+	{
+		QTextDocument::FindFlags nativeFlags;
+
+		if (flags.testFlag(WebWidget::BackwardFind))
+		{
+			nativeFlags |= QTextDocument::FindBackward;
+		}
+
+		if (flags.testFlag(WebWidget::CaseSensitiveFind))
+		{
+			nativeFlags |= QTextDocument::FindCaseSensitively;
+		}
+
+		QTextCursor findTextCursor = m_findTextAnchor;
+
+		if (!isTheSame)
+		{
+			findTextCursor = textCursor();
+		}
+		else if (!flags.testFlag(WebWidget::BackwardFind))
+		{
+			findTextCursor.setPosition(findTextCursor.selectionEnd(), QTextCursor::MoveAnchor);
+		}
+
+		m_findTextAnchor = document()->find(text, findTextCursor, nativeFlags);
+
+		if (m_findTextAnchor.isNull())
+		{
+			m_findTextAnchor = textCursor();
+			m_findTextAnchor.setPosition((flags.testFlag(WebWidget::BackwardFind) ? (document()->characterCount() - 1) : 0), QTextCursor::MoveAnchor);
+			m_findTextAnchor = document()->find(text, m_findTextAnchor, nativeFlags);
+		}
+
+		if (!m_findTextAnchor.isNull())
+		{
+			const QTextCursor currentTextCursor = textCursor();
+
+			disconnect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
+
+			setTextCursor(m_findTextAnchor);
+			ensureCursorVisible();
+			setTextCursor(currentTextCursor);
+
+			connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
+		}
+	}
+
+	m_findTextSelection = m_findTextAnchor;
+
+	updateSelection();
+
+	return !m_findTextAnchor.isNull();
 }
 
 }

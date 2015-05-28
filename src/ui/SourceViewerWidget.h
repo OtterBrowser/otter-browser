@@ -20,6 +20,8 @@
 #ifndef OTTER_SOURCEVIEWERWIDGET_H
 #define OTTER_SOURCEVIEWERWIDGET_H
 
+#include "WebWidget.h"
+
 #include <QtWidgets/QPlainTextEdit>
 
 namespace Otter
@@ -59,13 +61,26 @@ public:
 
 	void setZoom(int zoom);
 	int getZoom() const;
+	bool findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	void wheelEvent(QWheelEvent *event);
+
+protected slots:
+	void updateTextCursor();
+	void updateSelection();
 
 private:
 	MarginWidget *m_marginWidget;
+	QString m_findText;
+	QTextCursor m_findTextAnchor;
+	QTextCursor m_findTextSelection;
+	WebWidget::FindFlags m_findFlags;
 	int m_zoom;
+
+signals:
+	void zoomChanged(int zoom);
 
 friend class MarginWidget;
 };

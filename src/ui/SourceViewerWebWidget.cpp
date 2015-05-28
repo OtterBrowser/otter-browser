@@ -38,6 +38,9 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 	layout->addWidget(m_sourceViewer);
+
+	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
+	connect(m_sourceViewer, SIGNAL(zoomChanged(int)), this, SLOT(handleZoomChange()));
 }
 
 void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
@@ -78,6 +81,11 @@ void SourceViewerWebWidget::goToHistoryIndex(int index)
 	Q_UNUSED(index)
 }
 
+void SourceViewerWebWidget::handleZoomChange()
+{
+	SessionsManager::markSessionModified();
+}
+
 void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 {
 	Q_UNUSED(position)
@@ -90,7 +98,14 @@ void SourceViewerWebWidget::setHistory(const WindowHistoryInformation &history)
 
 void SourceViewerWebWidget::setZoom(int zoom)
 {
-	m_sourceViewer->setZoom(zoom);
+	if (zoom != m_sourceViewer->getZoom())
+	{
+		m_sourceViewer->setZoom(zoom);
+
+		SessionsManager::markSessionModified();
+
+		emit zoomChanged(zoom);
+	}
 }
 
 void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
@@ -135,9 +150,32 @@ WebWidget* SourceViewerWebWidget::clone(bool cloneHistory)
 
 Action* SourceViewerWebWidget::getAction(int identifier)
 {
-	Q_UNUSED(identifier)
+	switch (identifier)
+	{
+		case ActionsManager::FindAction:
+		case ActionsManager::FindNextAction:
+		case ActionsManager::FindPreviousAction:
+		case ActionsManager::QuickFindAction:
+		case ActionsManager::ZoomInAction:
+		case ActionsManager::ZoomOutAction:
+		case ActionsManager::ZoomOriginalAction:
+			break;
+		default:
+			return NULL;
+	}
 
-	return NULL;
+	if (m_actions.contains(identifier))
+	{
+		return m_actions[identifier];
+	}
+
+	Action *action = new Action(identifier, this);
+
+	m_actions[identifier] = action;
+
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	return action;
 }
 
 QString SourceViewerWebWidget::getTitle() const
@@ -206,9 +244,7 @@ bool SourceViewerWebWidget::isPrivate() const
 
 bool SourceViewerWebWidget::findInPage(const QString &text, WebWidget::FindFlags flags)
 {
-///TODO
-	Q_UNUSED(text)
-	Q_UNUSED(flags)
+	return m_sourceViewer->findText(text, flags);
 }
 
 }
