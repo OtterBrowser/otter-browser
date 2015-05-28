@@ -64,6 +64,7 @@ public slots:
 
 protected:
 	void pasteText(const QString &text);
+	void updateEditActions();
 
 protected slots:
 	void viewSourceReplyFinished();

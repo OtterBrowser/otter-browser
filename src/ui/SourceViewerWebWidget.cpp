@@ -19,10 +19,19 @@
 
 #include "SourceViewerWebWidget.h"
 #include "SourceViewerWidget.h"
+#include "../core/Console.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManager.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/NotesManager.h"
+#include "../core/SearchesManager.h"
+#include "../core/TransfersManager.h"
+#include "../core/Utils.h"
 
+#include <QtCore/QFile>
+#include <QtGui/QClipboard>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -45,9 +54,94 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 
 void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
 {
-///TODO
-	Q_UNUSED(identifier)
 	Q_UNUSED(checked)
+
+	switch (identifier)
+	{
+		case ActionsManager::SaveAction:
+			{
+				const QString path = TransfersManager::getSavePath(suggestSaveFileName());
+
+				if (!path.isEmpty())
+				{
+					QFile file(path);
+
+					if (file.open(QIODevice::WriteOnly))
+					{
+						QTextStream stream(&file);
+						stream << m_sourceViewer->toPlainText();
+
+						file.close();
+					}
+					else
+					{
+						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
+
+						QMessageBox::warning(NULL, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
+					}
+				}
+			}
+
+			break;
+		case ActionsManager::ContextMenuAction:
+			{
+///TODO
+			}
+
+			break;
+		case ActionsManager::UndoAction:
+			m_sourceViewer->undo();
+
+			break;
+		case ActionsManager::RedoAction:
+			m_sourceViewer->redo();
+
+			break;
+		case ActionsManager::CutAction:
+			m_sourceViewer->cut();
+
+			break;
+		case ActionsManager::CopyAction:
+		case ActionsManager::CopyPlainTextAction:
+			m_sourceViewer->copy();
+
+			break;
+		case ActionsManager::CopyAddressAction:
+			QApplication::clipboard()->setText(getUrl().toString());
+
+			break;
+		case ActionsManager::CopyToNoteAction:
+			{
+				BookmarksItem *note = NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl());
+				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
+			}
+
+			break;
+		case ActionsManager::PasteAction:
+			m_sourceViewer->paste();
+
+			break;
+		case ActionsManager::DeleteAction:
+			m_sourceViewer->textCursor().removeSelectedText();
+
+			break;
+		case ActionsManager::SelectAllAction:
+			m_sourceViewer->selectAll();
+
+			break;
+		case ActionsManager::ClearAllAction:
+			m_sourceViewer->clear();
+
+			break;
+		case ActionsManager::SearchAction:
+			quickSearch(getAction(ActionsManager::SearchAction));
+
+			break;
+		case ActionsManager::ActivateContentAction:
+			m_sourceViewer->setFocus();
+
+			break;
+	}
 }
 
 void SourceViewerWebWidget::print(QPrinter *printer)
@@ -84,6 +178,73 @@ void SourceViewerWebWidget::goToHistoryIndex(int index)
 void SourceViewerWebWidget::handleZoomChange()
 {
 	SessionsManager::markSessionModified();
+}
+
+void SourceViewerWebWidget::updateEditActions()
+{
+	const bool hasSelection = !getSelectedText().isEmpty();
+
+	if (m_actions.contains(ActionsManager::CutAction))
+	{
+		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyAction))
+	{
+		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
+	{
+		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyToNoteAction))
+	{
+		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection);
+	}
+
+	if (m_actions.contains(ActionsManager::PasteAction))
+	{
+		m_actions[ActionsManager::PasteAction]->setEnabled(m_sourceViewer->canPaste());
+	}
+
+	if (m_actions.contains(ActionsManager::PasteNoteAction))
+	{
+		m_actions[ActionsManager::PasteNoteAction]->setEnabled(m_sourceViewer->canPaste() && NotesManager::getModel()->getRootItem()->hasChildren());
+	}
+
+	if (m_actions.contains(ActionsManager::DeleteAction))
+	{
+		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection);
+	}
+
+	if (m_actions.contains(ActionsManager::SelectAllAction))
+	{
+		m_actions[ActionsManager::SelectAllAction]->setEnabled(m_sourceViewer->document()->characterCount() > 0);
+	}
+
+	if (m_actions.contains(ActionsManager::ClearAllAction))
+	{
+		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_sourceViewer->document()->characterCount() > 0);
+	}
+
+	if (m_actions.contains(ActionsManager::SearchAction))
+	{
+		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+		const bool isValid = !engine.identifier.isEmpty();
+
+		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
+		m_actions[ActionsManager::SearchAction]->setData(isValid ? engine.identifier : QVariant());
+		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
+		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
+	}
+
+	if (m_actions.contains(ActionsManager::SearchMenuAction))
+	{
+		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+	}
 }
 
 void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
@@ -152,13 +313,29 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 {
 	switch (identifier)
 	{
+		case ActionsManager::SaveAction:
+		case ActionsManager::ContextMenuAction:
+		case ActionsManager::UndoAction:
+		case ActionsManager::RedoAction:
+		case ActionsManager::CutAction:
+		case ActionsManager::CopyAction:
+		case ActionsManager::CopyPlainTextAction:
+		case ActionsManager::CopyAddressAction:
+		case ActionsManager::CopyToNoteAction:
+		case ActionsManager::PasteAction:
+		case ActionsManager::DeleteAction:
+		case ActionsManager::SelectAllAction:
+		case ActionsManager::ClearAllAction:
+		case ActionsManager::ZoomInAction:
+		case ActionsManager::ZoomOutAction:
+		case ActionsManager::ZoomOriginalAction:
+		case ActionsManager::SearchAction:
+		case ActionsManager::SearchMenuAction:
 		case ActionsManager::FindAction:
 		case ActionsManager::FindNextAction:
 		case ActionsManager::FindPreviousAction:
 		case ActionsManager::QuickFindAction:
-		case ActionsManager::ZoomInAction:
-		case ActionsManager::ZoomOutAction:
-		case ActionsManager::ZoomOriginalAction:
+		case ActionsManager::ActivateContentAction:
 			break;
 		default:
 			return NULL;
@@ -174,6 +351,45 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 	m_actions[identifier] = action;
 
 	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	switch (identifier)
+	{
+		case ActionsManager::PasteNoteAction:
+			action->setMenu(getPasteNoteMenu());
+
+			updateEditActions();
+
+			break;
+		case ActionsManager::UndoAction:
+			action->setEnabled(false);
+
+			connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
+
+			break;
+		case ActionsManager::RedoAction:
+			action->setEnabled(false);
+
+			connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));
+
+			break;
+		case ActionsManager::SearchMenuAction:
+			action->setMenu(getQuickSearchMenu());
+
+		case ActionsManager::CutAction:
+		case ActionsManager::CopyAction:
+		case ActionsManager::CopyPlainTextAction:
+		case ActionsManager::CopyToNoteAction:
+		case ActionsManager::PasteAction:
+		case ActionsManager::PasteAndGoAction:
+		case ActionsManager::DeleteAction:
+		case ActionsManager::ClearAllAction:
+		case ActionsManager::SearchAction:
+			updateEditActions();
+
+			break;
+		default:
+			break;
+	}
 
 	return action;
 }

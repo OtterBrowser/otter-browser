@@ -27,6 +27,7 @@
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QUrl>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QIcon>
@@ -734,6 +735,34 @@ QMenu* WebWidget::getQuickSearchMenu()
 	}
 
 	return m_quickSearchMenu;
+}
+
+QString WebWidget::suggestSaveFileName() const
+{
+	const QUrl url = getUrl();
+	QString fileName = url.fileName();
+
+	if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
+	{
+		fileName = QDir(url.path()).dirName();
+	}
+
+	if (fileName.isEmpty() && !url.host().isEmpty())
+	{
+		fileName = url.host() + QLatin1String(".html");
+	}
+
+	if (fileName.isEmpty())
+	{
+		fileName = QLatin1String("file.html");
+	}
+
+	if (!fileName.contains(QLatin1Char('.')))
+	{
+		fileName.append(QLatin1String(".html"));
+	}
+
+	return fileName;
 }
 
 QString WebWidget::getSelectedText() const

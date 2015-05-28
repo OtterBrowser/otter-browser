@@ -49,7 +49,6 @@
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QDataStream>
-#include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMimeData>
 #include <QtCore/QTimer>
@@ -1055,34 +1054,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QUrl url = getUrl();
-				QString fileName = url.fileName();
-
-				if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
-				{
-					fileName = QDir(url.path()).dirName();
-				}
-
-				if (fileName.isEmpty() && !url.host().isEmpty())
-				{
-					fileName = url.host() + QLatin1String(".html");
-				}
-
-				if (fileName.isEmpty())
-				{
-					fileName = QLatin1String("file.html");
-				}
-
-				if (!fileName.contains(QLatin1Char('.')))
-				{
-					fileName.append(QLatin1String(".html"));
-				}
-
-				const QString path = TransfersManager::getSavePath(fileName);
+				const QString path = TransfersManager::getSavePath(suggestSaveFileName());
 
 				if (!path.isEmpty())
 				{
-					QNetworkRequest request(url);
+					QNetworkRequest request(getUrl());
 					request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
 					Transfer *transfer = new Transfer(m_networkManager->get(request), path, false, true, this);
@@ -2049,14 +2025,6 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
-		case ActionsManager::InspectPageAction:
-		case ActionsManager::InspectElementAction:
-		case ActionsManager::FindAction:
-		case ActionsManager::FindNextAction:
-		case ActionsManager::FindPreviousAction:
-			action->setEnabled(true);
-
-			break;
 		case ActionsManager::CheckSpellingAction:
 			action->setEnabled(false);
 

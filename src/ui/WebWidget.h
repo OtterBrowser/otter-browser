@@ -152,6 +152,7 @@ protected:
 	QMenu* getPasteNoteMenu();
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
+	QString suggestSaveFileName() const;
 
 protected slots:
 	void triggerAction();
