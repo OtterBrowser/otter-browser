@@ -297,4 +297,3 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 }
 
 }
-
