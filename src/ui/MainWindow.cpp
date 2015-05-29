@@ -388,14 +388,19 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 
 			placeSidebars();
 		}
-		else if (!m_sidebar && value.toBool())
+		else if (value.toBool())
 		{
-			m_sidebar = new SidebarWidget(this);
+			if (!m_sidebar)
+			{
+				m_sidebar = new SidebarWidget(this);
+				m_sidebar->show();
+
+				connect(m_splitter, SIGNAL(splitterMoved(int,int)), m_sidebar, SLOT(scheduleSizeSave()));
+			}
+
 			m_sidebar->show();
 
 			placeSidebars();
-
-			connect(m_splitter, SIGNAL(splitterMoved(int,int)), m_sidebar, SLOT(scheduleSizeSave()));
 		}
 	}
 }
@@ -937,11 +942,12 @@ void MainWindow::updateSidebars()
 {
 	QList<int> sizes;
 	const int sidebarSize = ((m_sidebar && m_sidebar->isVisible()) ? m_sidebar->sizeHint().width() : 0);
-	const int toggleEdgeSize = (m_sidebarToggle ? m_sidebarToggle->width() : 0);
+	const int sidebarToggleSize = (m_sidebarToggle ? m_sidebarToggle->width() : 0);
+	const bool isReversed = SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool();
 
 	if (m_sidebarToggle)
 	{
-		sizes.append(toggleEdgeSize);
+		sizes.append(sidebarToggleSize);
 	}
 
 	if (m_sidebar && m_sidebar->isVisible())
@@ -949,9 +955,9 @@ void MainWindow::updateSidebars()
 		sizes.append(sidebarSize);
 	}
 
-	sizes.append(m_splitter->width() - sidebarSize - toggleEdgeSize - ((sizes.count() - 1) * m_splitter->handleWidth()));
+	sizes.append(m_splitter->width() - sidebarSize - sidebarToggleSize - ((sizes.count() - 1) * m_splitter->handleWidth()));
 
-	if (SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
+	if (isReversed)
 	{
 		QList<int> sizesCopy(sizes);
 
@@ -960,6 +966,16 @@ void MainWindow::updateSidebars()
 		for (int i = sizesCopy.count() - 1; i >= 0; --i)
 		{
 			sizes.append(sizesCopy[i]);
+		}
+	}
+
+	const int sidebarToggleIndex = (m_sidebarToggle ? (m_splitter->indexOf(m_sidebarToggle) + (isReversed ? 0 : 1)) : -1);
+
+	for (int i = 0; i < m_splitter->count(); ++i)
+	{
+		if (m_splitter->handle(i))
+		{
+			m_splitter->handle(i)->setMaximumWidth((i == sidebarToggleIndex || !m_sidebar || !m_sidebar->isVisible()) ? 0 : QWIDGETSIZE_MAX);
 		}
 	}
 

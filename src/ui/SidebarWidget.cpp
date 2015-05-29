@@ -68,6 +68,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
+	optionChanged(QLatin1String("Sidebar/Reverse"), SettingsManager::getValue(QLatin1String("Sidebar/Reverse")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
