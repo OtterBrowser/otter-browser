@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -44,6 +45,7 @@ namespace Otter
 
 SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	m_currentWidget(NULL),
+	m_resizeTimer(0),
 	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
@@ -75,36 +77,43 @@ SidebarWidget::~SidebarWidget()
 	delete m_ui;
 }
 
+void SidebarWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_resizeTimer)
+	{
+		SettingsManager::setValue(QString("Sidebar/Width"), width());
+
+		killTimer(m_resizeTimer);
+
+		m_resizeTimer = 0;
+	}
+}
+
 void SidebarWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			for (QHash<QString, QToolButton*>::iterator iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
+		for (QHash<QString, QToolButton*>::iterator iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
+		{
+			iterator.value()->setToolTip(getPanelTitle(iterator.key()));
+		}
+
+		if (m_ui->panelsChooseButton->menu())
+		{
+			QList<QAction*> actions = m_ui->panelsChooseButton->menu()->actions();
+
+			for (int i = 0; i < actions.count(); ++i)
 			{
-				iterator.value()->setToolTip(getPanelTitle(iterator.key()));
-			}
-
-			if (m_ui->panelsChooseButton->menu())
-			{
-				QList<QAction*> actions = m_ui->panelsChooseButton->menu()->actions();
-
-				for (int i = 0; i < actions.count(); ++i)
+				if (!actions[i]->data().toString().isEmpty())
 				{
-					if (!actions[i]->data().toString().isEmpty())
-					{
-						actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
-					}
+					actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
 				}
 			}
-
-			break;
-		default:
-			break;
+		}
 	}
 }
 
@@ -128,6 +137,41 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 		}
 
 		updatePanelsMenu();
+	}
+	else if (option == QLatin1String("Sidebar/Reverse"))
+	{
+		const bool isReversed = value.toBool();
+
+		qobject_cast<QBoxLayout*>(layout())->setDirection(isReversed ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+
+		QToolBar *toolbar = findChild<QToolBar*>();
+
+		if (toolbar)
+		{
+			toolbar->setLayoutDirection(isReversed ? Qt::RightToLeft : Qt::LeftToRight);
+
+			QList<QWidget*> widgets = toolbar->findChildren<QWidget*>();
+
+			for (int i = 0; i < widgets.count(); ++i)
+			{
+				widgets[i]->setLayoutDirection(Qt::LeftToRight);
+			}
+		}
+
+		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(Utils::getIcon(isReversed ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
+	}
+}
+
+void SidebarWidget::scheduleSizeSave()
+{
+	if (isVisible() && !SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString().isEmpty())
+	{
+		if (m_resizeTimer > 0)
+		{
+			killTimer(m_resizeTimer);
+		}
+
+		m_resizeTimer = startTimer(500);
 	}
 }
 
@@ -241,27 +285,6 @@ void SidebarWidget::registerPanel(const QString &identifier)
 
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	connect(action, SIGNAL(triggered()), this, SLOT(selectPanel()));
-}
-
-void SidebarWidget::setButtonsEdge(Qt::Edge edge)
-{
-	qobject_cast<QBoxLayout*>(layout())->setDirection((edge == Qt::RightEdge) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
-
-	QToolBar *toolbar = findChild<QToolBar*>();
-
-	if (toolbar)
-	{
-		toolbar->setLayoutDirection((edge == Qt::RightEdge) ? Qt::RightToLeft : Qt::LeftToRight);
-
-		QList<QWidget*> widgets = toolbar->findChildren<QWidget*>();
-
-		for (int i = 0; i < widgets.count(); ++i)
-		{
-			widgets[i]->setLayoutDirection(Qt::LeftToRight);
-		}
-	}
-
-	ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(Utils::getIcon((edge == Qt::RightEdge) ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
 }
 
 void SidebarWidget::updatePanelsMenu()

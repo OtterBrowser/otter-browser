@@ -81,7 +81,7 @@ protected:
 	void endToolBarDragging();
 	void moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area);
 	void createSidebar();
-	void createToggleEdge();
+	void createSidebarToggle();
 	void placeSidebars();
 	void updateSidebars();
 	void setTabBar(TabBarWidget *tabBar);
@@ -93,7 +93,6 @@ protected slots:
 	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
 	void toolBarModified(int identifier);
-	void splitterMoved();
 	void transferStarted();
 	void updateWindowTitle(const QString &title);
 	void updateShortcuts();
@@ -110,8 +109,8 @@ private:
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
-	ActionWidget *m_toggleEdge;
-	SidebarWidget *m_sidebarWidget;
+	ActionWidget *m_sidebarToggle;
+	SidebarWidget *m_sidebar;
 	QSplitter *m_splitter;
 	Window *m_currentWindow;
 	QString m_currentBookmark;
