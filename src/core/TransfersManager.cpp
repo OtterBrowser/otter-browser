@@ -69,7 +69,7 @@ void TransfersManager::scheduleSave()
 	}
 }
 
-void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
+void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate, bool canNotify)
 {
 	m_transfers.prepend(transfer);
 
@@ -80,7 +80,7 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate)
 	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
 	connect(transfer, SIGNAL(stopped()), m_instance, SLOT(transferStopped()));
 
-	if (m_initilized)
+	if (canNotify)
 	{
 		emit m_instance->transferStarted(transfer);
 
@@ -334,7 +334,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 
 			if (!history.value(QLatin1String("source")).toString().isEmpty() && !history.value(QLatin1String("target")).toString().isEmpty())
 			{
-				addTransfer(new Transfer(history, m_instance), false);
+				addTransfer(new Transfer(history, m_instance), false, false);
 			}
 
 			history.endGroup();

@@ -48,7 +48,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
-	static void addTransfer(Transfer *transfer, bool isPrivate);
+	static void addTransfer(Transfer *transfer, bool isPrivate, bool canNotify = true);
 
 protected slots:
 	void save();
