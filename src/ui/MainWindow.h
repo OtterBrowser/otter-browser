@@ -80,8 +80,6 @@ protected:
 	void startToolBarDragging();
 	void endToolBarDragging();
 	void moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area);
-	void createSidebar();
-	void createSidebarToggle();
 	void placeSidebars();
 	void updateSidebars();
 	void setTabBar(TabBarWidget *tabBar);

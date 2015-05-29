@@ -191,7 +191,6 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	int top = (int) m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).top();
 	int bottom = (top + (int) m_sourceViewer->blockBoundingRect(block).height());
 	const int right = (width() - 5);
-	const int left = (width() - 2);
 	const int selectionStart = m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionStart()).blockNumber();
 	const int selectionEnd = m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionEnd()).blockNumber();
 
