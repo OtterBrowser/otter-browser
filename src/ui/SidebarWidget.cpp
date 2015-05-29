@@ -63,8 +63,8 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	m_ui->panelLayout->addWidget(toolbar);
 
-	m_ui->panelsChooseButton->setPopupMode(QToolButton::InstantPopup);
-	m_ui->panelsChooseButton->setIcon(Utils::getIcon(QLatin1String("list-add")));
+	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
+	m_ui->panelsButton->setIcon(Utils::getIcon(QLatin1String("list-add")));
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
@@ -102,9 +102,9 @@ void SidebarWidget::changeEvent(QEvent *event)
 			iterator.value()->setToolTip(getPanelTitle(iterator.key()));
 		}
 
-		if (m_ui->panelsChooseButton->menu())
+		if (m_ui->panelsButton->menu())
 		{
-			QList<QAction*> actions = m_ui->panelsChooseButton->menu()->actions();
+			QList<QAction*> actions = m_ui->panelsButton->menu()->actions();
 
 			for (int i = 0; i < actions.count(); ++i)
 			{
@@ -129,14 +129,103 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_buttons.clear();
 
-		const QStringList panels = value.toStringList();
+		QMenu *menu = new QMenu(m_ui->panelsButton);
+		const QStringList chosenPanels = value.toStringList();
+		QStringList allPanels;
+		allPanels << QLatin1String("bookmarks") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config") << QLatin1String("history") << QLatin1String("notes") << QLatin1String("transfers");
 
-		for (int i = 0; i < panels.count(); ++i)
+		for (int i = 0; i < allPanels.count(); ++i)
 		{
-			registerPanel(panels.at(i));
+			QAction *action = new QAction(menu);
+			action->setCheckable(true);
+			action->setChecked(chosenPanels.contains(allPanels[i]));
+			action->setData(allPanels[i]);
+			action->setText(getPanelTitle(allPanels[i]));
+
+			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+
+			menu->addAction(action);
 		}
 
-		updatePanelsMenu();
+		menu->addSeparator();
+
+		for (int i = 0; i < chosenPanels.count(); ++i)
+		{
+			QToolButton *button = new QToolButton(this);
+			button->setDefaultAction(new QAction(button));
+			button->setToolTip(getPanelTitle(chosenPanels.at(i)));
+			button->setCheckable(true);
+			button->setAutoRaise(true);
+			button->defaultAction()->setData(chosenPanels.at(i));
+
+			if (chosenPanels.at(i) == QLatin1String("bookmarks"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("bookmarks")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("cache"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("cache")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("config"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("configuration")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("cookies"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("cookies")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("history"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("view-history")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("notes"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("notes")));
+			}
+			else if (chosenPanels.at(i) == QLatin1String("transfers"))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("transfers")));
+			}
+			else if (chosenPanels.at(i).startsWith(QLatin1String("web:")))
+			{
+				button->setIcon(Utils::getIcon(QLatin1String("text-html")));
+
+				QAction *action = new QAction(menu);
+				action->setCheckable(true);
+				action->setChecked(true);
+				action->setData(chosenPanels.at(i));
+				action->setText(getPanelTitle(chosenPanels.at(i)));
+
+				connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+
+				menu->addAction(action);
+			}
+			else
+			{
+				continue;
+			}
+
+			m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
+
+			m_buttons.insert(chosenPanels.at(i), button);
+
+			connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
+		}
+
+		QAction *addWebPanelAction = new QAction(menu);
+		addWebPanelAction->setText(tr("Add Web Panel…"));
+
+		connect(addWebPanelAction, SIGNAL(triggered()), this, SLOT(addWebPanel()));
+
+		menu->addSeparator();
+		menu->addAction(addWebPanelAction);
+
+		if (m_ui->panelsButton->menu())
+		{
+			m_ui->panelsButton->menu()->deleteLater();
+		}
+
+		m_ui->panelsButton->setMenu(menu);
 	}
 	else if (option == QLatin1String("Sidebar/Reverse"))
 	{
@@ -185,7 +274,7 @@ void SidebarWidget::addWebPanel()
 		url = manager->getUrl().toString(QUrl::RemovePassword);
 	}
 
-	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to show in panel:"), QLineEdit::Normal, url);
+	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to be shown in panel:"), QLineEdit::Normal, url);
 
 	if (!url.isEmpty())
 	{
@@ -218,130 +307,6 @@ void SidebarWidget::choosePanel(bool checked)
 	SettingsManager::setValue(QLatin1String("Sidebar/Panels"), chosenPanels);
 }
 
-void SidebarWidget::openPanel()
-{
-	const QUrl url(m_currentPanel.startsWith(QLatin1String("web:")) ? m_currentPanel.section(QLatin1Char(':'), 1, -1) : (QLatin1String("about:") + m_currentPanel));
-
-	if (url.scheme() != QLatin1String("about") || !SessionsManager::hasUrl(url, true))
-	{
-		MainWindow *window = MainWindow::findMainWindow(parent());
-
-		if (window)
-		{
-			window->getWindowsManager()->open(url, NewTabOpen);
-		}
-	}
-}
-
-void SidebarWidget::registerPanel(const QString &identifier)
-{
-	QIcon icon;
-
-	if (identifier == QLatin1String("bookmarks"))
-	{
-		icon = Utils::getIcon(QLatin1String("bookmarks"));
-	}
-	else if (identifier == QLatin1String("cache"))
-	{
-		icon = Utils::getIcon(QLatin1String("cache"));
-	}
-	else if (identifier == QLatin1String("config"))
-	{
-		icon = Utils::getIcon(QLatin1String("configuration"));
-	}
-	else if (identifier == QLatin1String("cookies"))
-	{
-		icon = Utils::getIcon(QLatin1String("cookies"));
-	}
-	else if (identifier == QLatin1String("history"))
-	{
-		icon = Utils::getIcon(QLatin1String("view-history"));
-	}
-	else if (identifier == QLatin1String("notes"))
-	{
-		icon = Utils::getIcon(QLatin1String("notes"));
-	}
-	else if (identifier == QLatin1String("transfers"))
-	{
-		icon = Utils::getIcon(QLatin1String("transfers"));
-	}
-	else
-	{
-		icon = Utils::getIcon(QLatin1String("text-html"));
-	}
-
-	QToolButton *button = new QToolButton(this);
-	button->setIcon(icon);
-	button->setToolTip(getPanelTitle(identifier));
-	button->setCheckable(true);
-	button->setAutoRaise(true);
-
-	QAction *action = new QAction(button);
-	action->setData(identifier);
-
-	m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
-
-	m_buttons.insert(identifier, button);
-
-	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
-	connect(action, SIGNAL(triggered()), this, SLOT(selectPanel()));
-}
-
-void SidebarWidget::updatePanelsMenu()
-{
-	QMenu *menu = new QMenu(m_ui->panelsChooseButton);
-	const QStringList chosenPanels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
-	QStringList allPanels;
-	allPanels << QLatin1String("bookmarks") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config") << QLatin1String("history") << QLatin1String("notes") << QLatin1String("transfers");
-
-	for (int i = 0; i < allPanels.count(); ++i)
-	{
-		QAction *action = new QAction(menu);
-		action->setCheckable(true);
-		action->setChecked(chosenPanels.contains(allPanels[i]));
-		action->setData(allPanels[i]);
-		action->setText(getPanelTitle(allPanels[i]));
-
-		connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-
-		menu->addAction(action);
-	}
-
-	menu->addSeparator();
-
-	for (int i = 0; i < chosenPanels.count(); ++i)
-	{
-		if (chosenPanels[i].startsWith(QLatin1String("web:")))
-		{
-			QAction *action = new QAction(menu);
-			action->setCheckable(true);
-			action->setChecked(true);
-			action->setData(chosenPanels[i]);
-			action->setText(getPanelTitle(chosenPanels[i]));
-
-			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-
-			menu->addAction(action);
-		}
-	}
-
-
-	QAction *addPanelAction = new QAction(menu);
-	addPanelAction->setText(tr("Add web panel"));
-
-	connect(addPanelAction, SIGNAL(triggered()), this, SLOT(addWebPanel()));
-
-	menu->addSeparator();
-	menu->addAction(addPanelAction);
-
-	if (m_ui->panelsChooseButton->menu())
-	{
-		m_ui->panelsChooseButton->menu()->deleteLater();
-	}
-
-	m_ui->panelsChooseButton->setMenu(menu);
-}
-
 void SidebarWidget::selectPanel()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
@@ -354,12 +319,12 @@ void SidebarWidget::selectPanel()
 
 void SidebarWidget::selectPanel(const QString &identifier)
 {
-	if (identifier == m_currentPanel && !identifier.isEmpty())
+	if (!identifier.isEmpty() && identifier == m_currentPanel)
 	{
 		return;
 	}
 
-	QWidget *widget = NULL;
+	ContentsWidget *widget = NULL;
 
 	if (identifier == QLatin1String("bookmarks"))
 	{
@@ -412,13 +377,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (m_currentWidget)
 	{
-		QWidget *currentWidget = m_currentWidget;
+		m_ui->panelLayout->removeWidget(m_currentWidget);
 
+		m_currentWidget->deleteLater();
 		m_currentWidget = NULL;
-
-		m_ui->panelLayout->removeWidget(currentWidget);
-
-		currentWidget->deleteLater();
 	}
 
 	if (m_buttons.contains(m_currentPanel) && m_buttons[m_currentPanel])
@@ -449,6 +411,11 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	m_currentWidget = widget;
 
 	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
+}
+
+ContentsWidget* SidebarWidget::getCurrentPanel()
+{
+	return m_currentWidget;
 }
 
 QString SidebarWidget::getPanelTitle(const QString &identifier)

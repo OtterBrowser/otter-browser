@@ -35,7 +35,7 @@
       <enum>QLayout::SetMinimumSize</enum>
      </property>
      <item>
-      <widget class="QToolButton" name="panelsChooseButton">
+      <widget class="QToolButton" name="panelsButton">
        <property name="text">
         <string/>
        </property>

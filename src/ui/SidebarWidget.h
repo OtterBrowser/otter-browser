@@ -42,8 +42,8 @@ public:
 	explicit SidebarWidget(QWidget *parent = NULL);
 	~SidebarWidget();
 
-	void openPanel();
 	void selectPanel(const QString &identifier);
+	ContentsWidget* getCurrentPanel();
 	static QString getPanelTitle(const QString &identifier);
 	QSize sizeHint() const;
 
@@ -53,8 +53,6 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void changeEvent(QEvent *event);
-	void registerPanel(const QString &identifier);
-	void updatePanelsMenu();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -63,7 +61,7 @@ protected slots:
 	void selectPanel();
 
 private:
-	QWidget *m_currentWidget;
+	ContentsWidget *m_currentWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
 	int m_resizeTimer;

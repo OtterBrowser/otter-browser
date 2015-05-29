@@ -651,9 +651,10 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::OpenPanelAction:
-			triggerAction(ActionsManager::ShowSidebarAction, true);
-
-			m_sidebar->openPanel();
+			if (m_sidebar && m_sidebar->getCurrentPanel())
+			{
+				m_windowsManager->open(m_sidebar->getCurrentPanel()->getUrl(), NewTabOpen);
+			}
 
 			break;
 		case ActionsManager::ClosePanelAction:
