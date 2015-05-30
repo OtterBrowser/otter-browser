@@ -164,6 +164,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/PermissionBarWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/SearchBarWidget.cpp \
+    src/modules/windows/web/StartPageModel.cpp \
     src/modules/windows/web/StartPageWidget.cpp \
     src/modules/windows/web/TileDelegate.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
@@ -303,6 +304,7 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/PermissionBarWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/SearchBarWidget.h \
+    src/modules/windows/web/StartPageModel.h \
     src/modules/windows/web/StartPageWidget.h \
     src/modules/windows/web/TileDelegate.h \
     src/modules/windows/web/WebContentsWidget.h \

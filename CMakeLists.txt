@@ -209,6 +209,7 @@ set(otter_src
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
+    src/modules/windows/web/StartPageModel.cpp
 	src/modules/windows/web/StartPageWidget.cpp
 	src/modules/windows/web/TileDelegate.cpp
 	src/modules/windows/web/WebContentsWidget.cpp

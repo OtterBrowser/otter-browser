@@ -17,41 +17,27 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_STARTPAGEWIDGET_H
-#define OTTER_STARTPAGEWIDGET_H
+#ifndef OTTER_STARTPAGEMODEL_H
+#define OTTER_STARTPAGEMODEL_H
 
-#include <QtWidgets/QListView>
-#include <QtWidgets/QScrollArea>
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
 
-class SearchWidget;
-class StartPageModel;
-class Window;
-
-class StartPageWidget : public QScrollArea
+class StartPageModel : public QStandardItemModel
 {
 	Q_OBJECT
 
 public:
-	explicit StartPageWidget(Otter::Window *window, QWidget *parent = NULL);
-
-	bool eventFilter(QObject *object, QEvent *event);
-
-protected:
-	void resizeEvent(QResizeEvent *event);
-	int getTilesPerRow() const;
+	explicit StartPageModel(QObject *parent = NULL);
 
 protected slots:
 	void optionChanged(const QString &option);
-	void updateSize();
+	void reload();
 
-private:
-	QListView *m_listView;
-	SearchWidget *m_searchWidget;
-
-	static StartPageModel *m_model;
+signals:
+	void reloaded();
 };
 
 }

@@ -18,9 +18,9 @@
 **************************************************************************/
 
 #include "StartPageWidget.h"
+#include "StartPageModel.h"
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
-#include "../../../core/BookmarksManager.h"
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
@@ -36,10 +36,17 @@
 namespace Otter
 {
 
+StartPageModel* StartPageWidget::m_model = NULL;
+
 StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
 	m_listView(new QListView(this)),
 	m_searchWidget(new SearchWidget(window, this))
 {
+	if (!m_model)
+	{
+		m_model = new StartPageModel(QCoreApplication::instance());
+	}
+
 	QWidget *widget = new QWidget(this);
 	widget->setAutoFillBackground(false);
 	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -65,7 +72,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->setDragDropMode(QAbstractItemView::InternalMove);
 	m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	m_listView->setViewMode(QListView::IconMode);
-	m_listView->setModel(BookmarksManager::getModel());
+	m_listView->setModel(m_model);
 	m_listView->setItemDelegate(new TileDelegate(m_listView));
 	m_listView->viewport()->setAttribute(Qt::WA_Hover);
 	m_listView->viewport()->installEventFilter(this);
@@ -75,7 +82,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setAlignment(Qt::AlignHCenter);
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
-	connect(m_listView->model(), SIGNAL(layoutChanged()), this, SLOT(updateSize()));
+	connect(m_model, SIGNAL(reloaded()), this, SLOT(updateSize()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -99,7 +106,7 @@ void StartPageWidget::updateSize()
 	const int tileHeight = SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt();
 	const int tileWidth = SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt();
 	const int rows = getTilesPerRow();
-	const int columns = qCeil(m_listView->model()->rowCount() / qreal(rows));
+	const int columns = qCeil(m_model->rowCount() / qreal(rows));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((rows * tileWidth) + 20), ((columns * tileHeight) + 20));
