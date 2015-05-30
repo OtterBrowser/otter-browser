@@ -70,7 +70,9 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	return QSize(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt(), SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt());
+	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100));
+
+	return QSize((SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom), (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom));
 }
 
 }

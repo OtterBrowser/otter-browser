@@ -78,6 +78,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->setModel(m_model);
 	m_listView->setItemDelegate(new TileDelegate(m_listView));
 	m_listView->viewport()->setAttribute(Qt::WA_Hover);
+	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
 
 	setWidget(widget);
@@ -122,7 +123,7 @@ void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void StartPageWidget::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth"))
+	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/Zoom"))
 	{
 		updateSize();
 	}
@@ -197,8 +198,9 @@ void StartPageWidget::removeTile()
 
 void StartPageWidget::updateSize()
 {
-	const int tileHeight = SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt();
-	const int tileWidth = SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt();
+	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100));
+	const int tileHeight = (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
+	const int tileWidth = (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
 	const int rows = getTilesPerRow();
 	const int columns = qCeil(m_model->rowCount() / qreal(rows));
 
@@ -215,7 +217,7 @@ int StartPageWidget::getTilesPerRow() const
 		return tilesPerRow;
 	}
 
-	return qMax(1, ((width() - 20) / SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt()));
+	return qMax(1, int((width() - 20) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100)))));
 }
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
