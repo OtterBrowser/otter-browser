@@ -22,10 +22,13 @@
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/SettingsManager.h"
 
+#include <QtCore/QMimeData>
+
 namespace Otter
 {
 
-StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent)
+StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
+	m_bookmark(NULL)
 {
 	reload();
 
@@ -48,23 +51,24 @@ void StartPageModel::optionChanged(const QString &option)
 void StartPageModel::reload()
 {
 	const QString path = SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString();
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getItem(path);
 
-	if (!bookmark)
+	m_bookmark = BookmarksManager::getModel()->getItem(path);
+
+	if (!m_bookmark)
 	{
 		const QStringList directories = path.split(QLatin1Char('/'), QString::SkipEmptyParts);
 
-		bookmark = BookmarksManager::getModel()->getRootItem();
+		m_bookmark = BookmarksManager::getModel()->getRootItem();
 
 		for (int i = 0; i < directories.count(); ++i)
 		{
 			bool found = false;
 
-			for (int j = 0; j < bookmark->rowCount(); ++j)
+			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
-				if (bookmark->child(j) && bookmark->child(j)->data(Qt::DisplayRole) == directories.at(i))
+				if (m_bookmark->child(j) && m_bookmark->child(j)->data(Qt::DisplayRole) == directories.at(i))
 				{
-					bookmark = dynamic_cast<BookmarksItem*>(bookmark->child(j));
+					m_bookmark = dynamic_cast<BookmarksItem*>(m_bookmark->child(j));
 
 					found = true;
 
@@ -74,25 +78,79 @@ void StartPageModel::reload()
 
 			if (!found)
 			{
-				bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, 0, QUrl(), directories.at(i), bookmark);
+				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, 0, QUrl(), directories.at(i), m_bookmark);
 			}
 		}
 	}
 
 	clear();
 
-	if (bookmark)
+	if (m_bookmark)
 	{
-		for (int i = 0; i < bookmark->rowCount(); ++i)
+		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			if (bookmark->child(i) && static_cast<BookmarksModel::BookmarkType>(bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (m_bookmark->child(i) && static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				appendRow(bookmark->child(i)->clone());
+				QStandardItem *item = m_bookmark->child(i)->clone();
+				item->setData(m_bookmark->child(i)->data(BookmarksModel::IdentifierRole), BookmarksModel::IdentifierRole);
+
+				appendRow(item);
 			}
 		}
 	}
 
 	emit reloaded();
+}
+
+QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
+{
+	QMimeData *mimeData = new QMimeData();
+	QStringList texts;
+	QList<QUrl> urls;
+
+	if (indexes.count() == 1)
+	{
+		mimeData->setProperty("x-item-index", indexes.at(0));
+	}
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && static_cast<BookmarksModel::BookmarkType>(indexes.at(i).data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+		{
+			texts.append(indexes.at(i).data(BookmarksModel::UrlRole).toString());
+			urls.append(indexes.at(i).data(BookmarksModel::UrlRole).toUrl());
+		}
+	}
+
+	mimeData->setText(texts.join(QLatin1String(", ")));
+	mimeData->setUrls(urls);
+
+	return mimeData;
+}
+
+QStringList StartPageModel::mimeTypes() const
+{
+	return QStringList(QLatin1String("text/uri-list"));
+}
+
+bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+	Q_UNUSED(action)
+
+	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
+	const QModelIndex index = data->property("x-item-index").toModelIndex();
+
+	if (index.isValid())
+	{
+		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
+		{
+			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), BookmarksManager::getModel()->getBookmark(parent.data(BookmarksModel::IdentifierRole).toULongLong()), row);
+		}
+
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), m_bookmark, parent.row());
+	}
+
+	return false;
 }
 
 }

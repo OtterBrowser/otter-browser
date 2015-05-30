@@ -69,7 +69,8 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_listView->setDragEnabled(true);
-	m_listView->setDragDropMode(QAbstractItemView::InternalMove);
+	m_listView->setDragDropMode(QAbstractItemView::DragDrop);
+	m_listView->setDefaultDropAction(Qt::CopyAction);
 	m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	m_listView->setViewMode(QListView::IconMode);
 	m_listView->setModel(m_model);

@@ -20,6 +20,7 @@
 #include "TileDelegate.h"
 #include "../../../core/SettingsManager.h"
 
+#include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
 
 namespace Otter
@@ -38,27 +39,29 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QPainterPath path;
 	path.addRoundedRect(rectangle, 5, 5);
 
-	rectangle.adjust(0, 0, 0, -textHeight);
-
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 	painter->setClipPath(path);
+	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
+
+	rectangle.adjust(0, 0, 0, -textHeight);
+
 	painter->setBrush(Qt::white);
 	painter->setPen(Qt::transparent);
 	painter->drawRect(rectangle);
 	painter->setClipping(false);
-	painter->setPen(QColor(option.palette.color(QPalette::Text)));
+	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
 	painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 
 	if (option.state.testFlag(QStyle::State_MouseOver))
 	{
-		painter->setPen(QPen(option.palette.color(QPalette::Highlight), 3));
+		painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
 	}
 	else
 	{
 		painter->setPen(QPen(QColor(200, 200, 200), 1));
 	}
 
-	painter->setBrush(QColor(option.palette.color(QPalette::Window)));
+	painter->setBrush(Qt::transparent);
 	painter->drawPath(path);
 }
 

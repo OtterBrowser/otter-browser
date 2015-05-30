@@ -25,6 +25,8 @@
 namespace Otter
 {
 
+class BookmarksItem;
+
 class StartPageModel : public QStandardItemModel
 {
 	Q_OBJECT
@@ -32,9 +34,16 @@ class StartPageModel : public QStandardItemModel
 public:
 	explicit StartPageModel(QObject *parent = NULL);
 
+	QMimeData* mimeData(const QModelIndexList &indexes) const;
+	QStringList mimeTypes() const;
+	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+
 protected slots:
 	void optionChanged(const QString &option);
 	void reload();
+
+private:
+	BookmarksItem *m_bookmark;
 
 signals:
 	void reloaded();
