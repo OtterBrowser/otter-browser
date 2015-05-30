@@ -85,6 +85,7 @@ public:
 
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
+	void removeBookmark(BookmarksItem *bookmark);
 	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(const QString &keyword) const;
@@ -111,7 +112,6 @@ public slots:
 	void emptyTrash();
 
 protected:
-	void removeBookmark(BookmarksItem *bookmark);
 	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
 	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark) const;
 

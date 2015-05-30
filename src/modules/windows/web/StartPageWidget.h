@@ -41,10 +41,18 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	int getTilesPerRow() const;
 
 protected slots:
 	void optionChanged(const QString &option);
+	void configure();
+	void addTile();
+	void addTile(const QUrl &url);
+	void openTile();
+	void editTile();
+	void reloadTile(bool full = false);
+	void removeTile();
 	void updateSize();
 
 private:

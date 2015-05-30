@@ -38,9 +38,11 @@ public:
 	QStringList mimeTypes() const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
+public slots:
+	void reload();
+
 protected slots:
 	void optionChanged(const QString &option);
-	void reload();
 
 private:
 	BookmarksItem *m_bookmark;

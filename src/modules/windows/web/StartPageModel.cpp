@@ -147,7 +147,7 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), BookmarksManager::getModel()->getBookmark(parent.data(BookmarksModel::IdentifierRole).toULongLong()), row);
 		}
 
-		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), m_bookmark, parent.row());
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
 	}
 
 	return false;

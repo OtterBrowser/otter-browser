@@ -24,7 +24,9 @@
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/toolbars/SearchWidget.h"
 
 #include <QtGui/QMouseEvent>
@@ -81,7 +83,6 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setWidget(widget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
-	setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(m_model, SIGNAL(reloaded()), this, SLOT(updateSize()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
@@ -94,11 +95,103 @@ void StartPageWidget::resizeEvent(QResizeEvent *event)
 	updateSize();
 }
 
+void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	const QModelIndex index(m_listView->indexAt(m_listView->mapFromGlobal(event->globalPos())));
+	QMenu menu(this);
+
+	if (index.isValid())
+	{
+		menu.addAction(tr("Open"), this, SLOT(openTile()));
+		menu.addSeparator();
+		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
+		menu.addAction(tr("Reload"), this, SLOT(reloadTile()));
+		menu.addSeparator();
+		menu.addAction(tr("Delete"), this, SLOT(removeTile()));
+	}
+	else
+	{
+		menu.addAction(tr("Configure…"), this, SLOT(configure()));
+		menu.addAction(tr("Add Tile…"), this, SLOT(addTile()));
+	}
+
+	menu.exec(event->globalPos());
+
+	event->accept();
+}
+
 void StartPageWidget::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth"))
 	{
 		updateSize();
+	}
+}
+
+void StartPageWidget::configure()
+{
+///TODO
+}
+
+void StartPageWidget::addTile()
+{
+	OpenAddressDialog dialog(this);
+
+	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(addTile(QUrl)));
+
+	dialog.exec();
+}
+
+void StartPageWidget::addTile(const QUrl &url)
+{
+	BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString()));
+
+	reloadTile(true);
+}
+
+void StartPageWidget::openTile()
+{
+	const QModelIndex index = m_listView->currentIndex();
+
+	if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
+	{
+		return;
+	}
+
+	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+
+	if (url.isValid())
+	{
+		qobject_cast<WebContentsWidget*>(parentWidget())->setUrl(url);
+	}
+}
+
+void StartPageWidget::editTile()
+{
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_listView->currentIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+
+	if (bookmark)
+	{
+		BookmarkPropertiesDialog(bookmark, (bookmark->isInTrash() ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
+
+		m_model->reload();
+	}
+}
+
+void StartPageWidget::reloadTile(bool full)
+{
+	Q_UNUSED(full)
+
+///TODO
+}
+
+void StartPageWidget::removeTile()
+{
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_listView->currentIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+
+	if (bookmark)
+	{
+		BookmarksManager::getModel()->removeBookmark(bookmark);
 	}
 }
 
