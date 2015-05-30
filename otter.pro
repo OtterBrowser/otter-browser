@@ -12,8 +12,6 @@ message("otter.pro is deprecated, use CMake instead.")
 
 QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
-greaterThan(QT_MINOR_VERSION, 2): QT += quick quickwidgets
-
 win32: QT += winextras
 win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
 win32: INCLUDEPATH += .\
@@ -166,10 +164,10 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/PermissionBarWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/SearchBarWidget.cpp \
+    src/modules/windows/web/StartPageWidget.cpp \
+    src/modules/windows/web/TileDelegate.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     3rdparty/mousegestures/MouseGestures.cpp
-
-greaterThan(QT_MINOR_VERSION, 2): SOURCES += src/modules/windows/web/StartPageWidget.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 unix: SOURCES += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
@@ -305,10 +303,10 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/PermissionBarWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/SearchBarWidget.h \
+    src/modules/windows/web/StartPageWidget.h \
+    src/modules/windows/web/TileDelegate.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
-
-greaterThan(QT_MINOR_VERSION, 2): HEADERS += src/modules/windows/web/StartPageWidget.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 unix: HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h

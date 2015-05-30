@@ -209,6 +209,8 @@ set(otter_src
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
+	src/modules/windows/web/StartPageWidget.cpp
+	src/modules/windows/web/TileDelegate.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
 )
@@ -262,13 +264,6 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/SearchBarWidget.ui
 )
 
-if (Qt5_VERSION_MINOR GREATER 2)
-	set(otter_src
-		${otter_src}
-		src/modules/windows/web/StartPageWidget.cpp
-	)
-endif (Qt5_VERSION_MINOR GREATER 2)
-
 if (EnableQtwebengine)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
@@ -308,10 +303,6 @@ add_executable(otter-browser
 if (EnableQtwebengine)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
-
-if (Qt5_VERSION_MINOR GREATER 2)
-	qt5_use_modules(otter-browser Quick QuickWidgets)
-endif (Qt5_VERSION_MINOR GREATER 2)
 
 if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)

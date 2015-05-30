@@ -19,8 +19,6 @@
 
 #include "AddressDelegate.h"
 
-#include <QtWidgets/QApplication>
-
 namespace Otter
 {
 

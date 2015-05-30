@@ -21,9 +21,7 @@
 #include "PermissionBarWidget.h"
 #include "ProgressBarWidget.h"
 #include "SearchBarWidget.h"
-#if QT_VERSION >= 0x050300
 #include "StartPageWidget.h"
-#endif
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/SettingsManager.h"
@@ -395,7 +393,6 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 void WebContentsWidget::handleUrlChange(const QUrl &url)
 {
-#if QT_VERSION >= 0x050300
 	Window *window = qobject_cast<Window*>(parentWidget());
 
 	if (!window)
@@ -427,7 +424,6 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		m_startPageWidget->deleteLater();
 		m_startPageWidget = NULL;
 	}
-#endif
 }
 
 void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url, bool cancel)

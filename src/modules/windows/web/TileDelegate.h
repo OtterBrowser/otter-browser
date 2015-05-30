@@ -17,38 +17,21 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_STARTPAGEWIDGET_H
-#define OTTER_STARTPAGEWIDGET_H
+#ifndef OTTER_TILEDELEGATE_H
+#define OTTER_TILEDELEGATE_H
 
-#include <QtWidgets/QListView>
-#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QStyledItemDelegate>
 
 namespace Otter
 {
 
-class SearchWidget;
-class Window;
-
-class StartPageWidget : public QScrollArea
+class TileDelegate : public QStyledItemDelegate
 {
-	Q_OBJECT
-
 public:
-	explicit StartPageWidget(Otter::Window *window, QWidget *parent = NULL);
+	explicit TileDelegate(QObject *parent = NULL);
 
-	bool eventFilter(QObject *object, QEvent *event);
-
-protected:
-	void resizeEvent(QResizeEvent *event);
-	int getTilesPerRow() const;
-
-protected slots:
-	void optionChanged(const QString &option);
-	void updateSize();
-
-private:
-	QListView *m_listView;
-	SearchWidget *m_searchWidget;
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 }

@@ -18,52 +18,144 @@
 **************************************************************************/
 
 #include "StartPageWidget.h"
+#include "TileDelegate.h"
+#include "WebContentsWidget.h"
+#include "../../../core/BookmarksManager.h"
+#include "../../../core/BookmarksModel.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
+#include "../../../ui/MainWindow.h"
 #include "../../../ui/toolbars/SearchWidget.h"
 
-#include <QtQuick/QQuickItem>
-#include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QStackedLayout>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtCore/QtMath>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QScrollBar>
 
 namespace Otter
 {
 
-StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QWidget(parent),
-	m_quickWidget(new QQuickWidget(this)),
+StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
+	m_listView(new QListView(this)),
 	m_searchWidget(new SearchWidget(window, this))
 {
-	m_quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
+	QWidget *widget = new QWidget(this);
+	widget->setAutoFillBackground(false);
+	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+	QGridLayout *layout = new QGridLayout(widget);
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
-	layout->addWidget(m_quickWidget);
+	layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
+	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 0);
+	layout->addWidget(m_searchWidget, 1, 1, 1, 1, Qt::AlignCenter);
+	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 2);
+	layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 2, 1);
+	layout->addWidget(m_listView, 3, 0, 1, 3, Qt::AlignCenter);
+	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 4, 1);
 
-	setLayout(layout);
-	updateSize();
+	m_searchWidget->setFixedWidth(300);
 
-	m_searchWidget->show();
-	m_searchWidget->raise();
+	m_listView->setStyleSheet(QLatin1String("QListView {background:transparent;}"));
+	m_listView->setFrameStyle(QFrame::NoFrame);
+	m_listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	m_listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	m_listView->setDragEnabled(true);
+	m_listView->setDragDropMode(QAbstractItemView::InternalMove);
+	m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	m_listView->setViewMode(QListView::IconMode);
+	m_listView->setModel(BookmarksManager::getModel());
+	m_listView->setItemDelegate(new TileDelegate(m_listView));
+	m_listView->viewport()->setAttribute(Qt::WA_Hover);
+	m_listView->viewport()->installEventFilter(this);
+
+	setWidget(widget);
+	setWidgetResizable(true);
+	setAlignment(Qt::AlignHCenter);
+	setContextMenuPolicy(Qt::CustomContextMenu);
+
+	connect(m_listView->model(), SIGNAL(layoutChanged()), this, SLOT(updateSize()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
 void StartPageWidget::resizeEvent(QResizeEvent *event)
 {
-	QWidget::resizeEvent(event);
+	QScrollArea::resizeEvent(event);
 
 	updateSize();
 }
 
+void StartPageWidget::optionChanged(const QString &option)
+{
+	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth"))
+	{
+		updateSize();
+	}
+}
+
 void StartPageWidget::updateSize()
 {
-	const int searchWidth = qMin(300, (width() - 20));
+	const int tileHeight = SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt();
+	const int tileWidth = SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt();
+	const int rows = getTilesPerRow();
+	const int columns = qCeil(m_listView->model()->rowCount() / qreal(rows));
 
-	m_searchWidget->setFixedWidth(searchWidth);
-	m_searchWidget->move(((width() - searchWidth) / 2), 40);
+	m_listView->setGridSize(QSize(tileWidth, tileHeight));
+	m_listView->setFixedSize(((rows * tileWidth) + 20), ((columns * tileHeight) + 20));
+}
 
-	if (m_quickWidget->rootObject())
+int StartPageWidget::getTilesPerRow() const
+{
+	const int tilesPerRow = SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt();
+
+	if (tilesPerRow > 0)
 	{
-		m_quickWidget->rootObject()->setWidth(width());
-		m_quickWidget->rootObject()->setHeight(height());
+		return tilesPerRow;
 	}
+
+	return qMax(1, ((width() - 20) / SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt()));
+}
+
+bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			const QModelIndex index = m_listView->currentIndex();
+
+			if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
+			{
+				return QObject::eventFilter(object, event);
+			}
+
+			const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+
+			if (url.isValid())
+			{
+				if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton)
+				{
+					MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
+					if (mainWindow)
+					{
+						mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
+					}
+				}
+				else if (mouseEvent->button() == Qt::LeftButton)
+				{
+					qobject_cast<WebContentsWidget*>(parentWidget())->setUrl(url);
+				}
+
+				return true;
+			}
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }
