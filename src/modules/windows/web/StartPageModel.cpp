@@ -159,6 +159,8 @@ void StartPageModel::reloadModel()
 		item->setData(tr("Add Tile…"), Qt::ToolTipRole);
 		item->setData(tr("Add Tile…"), Qt::StatusTipRole);
 		item->setData(QLatin1String("add"), Qt::AccessibleDescriptionRole);
+		item->setDragEnabled(false);
+		item->setDropEnabled(false);
 
 		appendRow(item);
 	}

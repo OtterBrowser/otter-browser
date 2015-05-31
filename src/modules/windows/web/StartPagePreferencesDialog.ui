@@ -7,13 +7,114 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>200</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Start Page Preferences</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCheckBox" name="customBackgroundCheckBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Use custom background image</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QWidget" name="backgroundWidget" native="true">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <layout class="QFormLayout" name="backgroundLayut">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="1">
+         <widget class="Otter::FilePathWidget" name="backgroundFilePathWidgetwidget" native="true"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="scalingModeLabel">
+          <property name="text">
+           <string>Scaling mode:</string>
+          </property>
+          <property name="buddy">
+           <cstring>scalingModeComboBox</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="scalingModeComboBox">
+          <item>
+           <property name="text">
+            <string>Best fit</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Stretch</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tile</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="backgroundPathLabel">
+          <property name="text">
+           <string>Image path:</string>
+          </property>
+          <property name="buddy">
+           <cstring>backgroundFilePathWidgetwidget</cstring>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
@@ -93,6 +194,21 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::FilePathWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/FilePathWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>customBackgroundCheckBox</tabstop>
+  <tabstop>scalingModeComboBox</tabstop>
+  <tabstop>columnsPerRowSpinBox</tabstop>
+  <tabstop>zoomLevelSpinBox</tabstop>
+  <tabstop>showAddTileCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -96,6 +96,11 @@ void StartPageWidget::resizeEvent(QResizeEvent *event)
 	QScrollArea::resizeEvent(event);
 
 	updateSize();
+
+	if (widget()->width() > width() && horizontalScrollBar()->value() == 0)
+	{
+		horizontalScrollBar()->setValue((widget()->width() / 2) - (width() / 2));
+	}
 }
 
 void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
