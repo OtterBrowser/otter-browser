@@ -42,6 +42,8 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
+	adjustSize();
+
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
@@ -55,14 +57,11 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

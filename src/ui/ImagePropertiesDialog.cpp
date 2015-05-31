@@ -121,6 +121,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	}
 
 	setMinimumWidth(400);
+	adjustSize();
 }
 
 ImagePropertiesDialog::~ImagePropertiesDialog()
@@ -132,14 +133,11 @@ void ImagePropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

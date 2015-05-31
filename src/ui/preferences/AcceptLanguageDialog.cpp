@@ -78,6 +78,8 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
+	adjustSize();
+
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(removeRow()));
@@ -90,6 +92,18 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 AcceptLanguageDialog::~AcceptLanguageDialog()
 {
 	delete m_ui;
+}
+
+void AcceptLanguageDialog::changeEvent(QEvent *event)
+{
+	QDialog::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		adjustSize();
+	}
 }
 
 void AcceptLanguageDialog::addLanguage()

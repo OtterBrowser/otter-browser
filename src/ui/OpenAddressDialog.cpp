@@ -41,6 +41,8 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
+	adjustSize();
+
 	connect(this, SIGNAL(accepted()), this, SLOT(handleUserInput()));
 }
 
@@ -53,14 +55,11 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

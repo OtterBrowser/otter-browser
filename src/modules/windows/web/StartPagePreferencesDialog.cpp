@@ -50,6 +50,8 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : QDialo
 	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool());
 
+	adjustSize();
+
 	connect(this, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->customBackgroundCheckBox, SIGNAL(toggled(bool)), m_ui->backgroundWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
@@ -64,14 +66,11 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

@@ -33,6 +33,8 @@ ReloadTimeDialog::ReloadTimeDialog(int time, QWidget *parent) : QDialog(parent),
 
 	m_ui->minutesSpinBox->setValue(minutes);
 	m_ui->secondsSpinBox->setValue(time - (minutes * 60));
+
+	adjustSize();
 }
 
 ReloadTimeDialog::~ReloadTimeDialog()
@@ -44,14 +46,11 @@ void ReloadTimeDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

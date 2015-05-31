@@ -55,6 +55,8 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	m_ui->userAgentsView->setModel(model);
 	m_ui->userAgentsView->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 
+	adjustSize();
+
 	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentActions()));
@@ -73,14 +75,11 @@ void UserAgentsManagerDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

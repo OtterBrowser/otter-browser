@@ -37,6 +37,8 @@ OpenBookmarkDialog::OpenBookmarkDialog(QWidget *parent) : QDialog(parent),
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
+	adjustSize();
+
 	connect(this, SIGNAL(accepted()), this, SLOT(openBookmark()));
 	connect(m_ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
 }
@@ -50,14 +52,11 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

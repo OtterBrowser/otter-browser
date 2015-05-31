@@ -64,6 +64,8 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 	m_ui->clearCachesCheckBox->setChecked(settings.contains(QLatin1String("caches")));
 	m_ui->clearStorageCheckBox->setChecked(settings.contains(QLatin1String("storage")));
 	m_ui->clearPasswordsCheckBox->setChecked(settings.contains(QLatin1String("passwords")));
+
+	adjustSize();
 }
 
 ClearHistoryDialog::~ClearHistoryDialog()
@@ -75,14 +77,11 @@ void ClearHistoryDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

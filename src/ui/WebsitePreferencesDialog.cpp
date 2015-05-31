@@ -167,6 +167,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(valueChanged()));
 	}
 
+	adjustSize();
+
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged()), this, SLOT(valueChanged()));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
@@ -180,14 +182,11 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

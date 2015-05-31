@@ -43,6 +43,9 @@ public:
 
 	SessionInformation getSession() const;
 
+protected:
+	void changeEvent(QEvent *event);
+
 protected slots:
 	void modeChanged();
 	void setSession(int index);

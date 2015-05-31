@@ -46,6 +46,7 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : QDialog(parent
 	}
 
 	setWindowTitle(m_importer->getTitle());
+	adjustSize();
 
 	connect(m_ui->importPathWidget, SIGNAL(pathChanged()), this, SLOT(setPath()));
 	connect(this, SIGNAL(accepted()), this, SLOT(import()));
@@ -54,6 +55,18 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : QDialog(parent
 ImportDialog::~ImportDialog()
 {
 	delete m_ui;
+}
+
+void ImportDialog::changeEvent(QEvent *event)
+{
+	QDialog::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		adjustSize();
+	}
 }
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)

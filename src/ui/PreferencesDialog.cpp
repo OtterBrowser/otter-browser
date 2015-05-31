@@ -66,6 +66,8 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->tabWidget->setCurrentIndex(tab);
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
+	adjustSize();
+
 	connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
@@ -82,14 +84,11 @@ void PreferencesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

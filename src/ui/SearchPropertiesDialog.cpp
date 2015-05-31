@@ -62,6 +62,8 @@ SearchPropertiesDialog::SearchPropertiesDialog(const SearchInformation &engine, 
 	m_ui->suggestionsPostMethodCheckBox->setChecked(engine.suggestionsUrl.method == QLatin1String("post"));
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(engine.suggestionsUrl.enctype);
 
+	adjustSize();
+
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
 
@@ -74,14 +76,11 @@ void SearchPropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

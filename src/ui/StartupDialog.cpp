@@ -55,6 +55,7 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : QDialog(
 	m_ui->sessionComboBox->setCurrentIndex(index);
 
 	setSession(index);
+	adjustSize();
 
 	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(modeChanged()));
 	connect(m_ui->sessionComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setSession(int)));
@@ -63,6 +64,18 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : QDialog(
 StartupDialog::~StartupDialog()
 {
 	delete m_ui;
+}
+
+void StartupDialog::changeEvent(QEvent *event)
+{
+	QDialog::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		m_ui->retranslateUi(this);
+
+		adjustSize();
+	}
 }
 
 void StartupDialog::modeChanged()

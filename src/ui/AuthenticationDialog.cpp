@@ -34,6 +34,8 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 	m_ui->userLineEdit->setText(authenticator->user());
 	m_ui->passwordLineEdit->setText(authenticator->password());
 
+	adjustSize();
+
 	connect(this, SIGNAL(accepted()), this, SLOT(setup()));
 }
 
@@ -46,14 +48,11 @@ void AuthenticationDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

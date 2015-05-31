@@ -69,6 +69,8 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : QDialog(parent),
 		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QStringLiteral("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
 	}
 
+	adjustSize();
+
 	connect(m_ui->openButton, SIGNAL(clicked()), this, SLOT(openSession()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteSession()));
 	connect(m_ui->sessionsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentChanged(int)));
@@ -85,14 +87,11 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

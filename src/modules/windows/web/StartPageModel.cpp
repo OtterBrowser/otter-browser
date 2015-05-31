@@ -238,6 +238,16 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	return false;
 }
 
+bool StartPageModel::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+	{
+		reloadModel();
+	}
+
+	return QStandardItemModel::event(event);
+}
+
 bool StartPageModel::isReloadingTile(const QModelIndex &index) const
 {
 	return m_reloads.contains(index.data(BookmarksModel::UrlRole).toUrl());

@@ -73,6 +73,8 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 	m_ui->profliesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->profliesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 
+	adjustSize();
+
 	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->confirmButtonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -86,14 +88,11 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

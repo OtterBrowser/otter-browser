@@ -37,6 +37,8 @@ SaveSessionDialog::SaveSessionDialog(QWidget *parent) : QDialog(parent),
 	m_ui->identifierLineEdit->setText(SessionsManager::getCurrentSession());
 	m_ui->identifierLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression(QLatin1String("[a-z0-9\\-_]+")), this));
 
+	adjustSize();
+
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveSession()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -50,14 +52,11 @@ void SaveSessionDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

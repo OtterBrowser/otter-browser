@@ -89,8 +89,6 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	{
 		m_ui->optionsHeader->hide();
 		m_ui->arrangementWidget->hide();
-
-		adjustSize();
 	}
 
 	QStandardItemModel *availableEntriesModel = new QStandardItemModel(this);
@@ -133,6 +131,8 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 
 	m_definition.actions.clear();
 
+	adjustSize();
+
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addEntry()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->currentEntriesItemView, SLOT(removeRow()));
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->currentEntriesItemView, SLOT(moveDownRow()));
@@ -155,14 +155,11 @@ void ToolBarDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

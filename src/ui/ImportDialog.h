@@ -44,6 +44,8 @@ public:
 protected:
 	explicit ImportDialog(Importer *importer, QWidget *parent);
 
+	void changeEvent(QEvent *event);
+
 protected slots:
 	void import();
 	void setPath();

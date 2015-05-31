@@ -30,6 +30,8 @@ BookmarksBarDialog::BookmarksBarDialog(QWidget *parent) : QDialog(parent),
 	m_ui(new Ui::BookmarksBarDialog)
 {
 	m_ui->setupUi(this);
+
+	adjustSize();
 }
 
 BookmarksBarDialog::~BookmarksBarDialog()
@@ -41,14 +43,11 @@ void BookmarksBarDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

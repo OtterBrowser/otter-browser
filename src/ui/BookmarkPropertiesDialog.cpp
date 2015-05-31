@@ -92,6 +92,8 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, Book
 		m_ui->keywordLineEdit->setEnabled(false);
 	}
 
+	adjustSize();
+
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -106,14 +108,11 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

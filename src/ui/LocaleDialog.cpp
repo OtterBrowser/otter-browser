@@ -51,6 +51,8 @@ LocaleDialog::LocaleDialog(QWidget *parent) : QDialog(parent),
 		m_ui->customFilePathWidget->setPath(currentLocale);
 	}
 
+	adjustSize();
+
 	connect(this, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 }
@@ -64,14 +66,11 @@ void LocaleDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 

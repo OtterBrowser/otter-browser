@@ -38,6 +38,7 @@ public:
 	QStringList mimeTypes() const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 	bool isReloadingTile(const QModelIndex &index) const;
+	bool event(QEvent *event);
 
 public slots:
 	void reloadModel();

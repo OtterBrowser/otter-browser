@@ -70,6 +70,8 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 
 	m_ui->buttonBox->addButton(tr("Discard"), QDialogButtonBox::RejectRole);
 
+	adjustSize();
+
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -82,14 +84,11 @@ void AcceptCookieDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
+		m_ui->retranslateUi(this);
 
-			break;
-		default:
-			break;
+		adjustSize();
 	}
 }
 
