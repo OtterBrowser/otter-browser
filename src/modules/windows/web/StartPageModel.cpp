@@ -134,8 +134,15 @@ void StartPageModel::reloadModel()
 	{
 		for (int i = 0; i < m_bookmark->rowCount(); ++i)
 		{
-			if (m_bookmark->child(i) && static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (m_bookmark->child(i))
 			{
+				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt());
+
+				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
+				{
+					continue;
+				}
+
 				const quint64 identifier = m_bookmark->child(i)->data(BookmarksModel::IdentifierRole).toULongLong();
 				const QUrl url = m_bookmark->child(i)->data(BookmarksModel::UrlRole).toUrl();
 				QStandardItem *item = m_bookmark->child(i)->clone();

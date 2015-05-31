@@ -27,6 +27,7 @@
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/toolbars/SearchWidget.h"
 
@@ -114,7 +115,7 @@ void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Open"), this, SLOT(openTile()));
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
-		menu.addAction(tr("Reload"), this, SLOT(reloadTile()));
+		menu.addAction(tr("Reload"), this, SLOT(reloadTile()))->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
 		menu.addSeparator();
 		menu.addAction(tr("Delete"), this, SLOT(removeTile()));
 	}
@@ -173,7 +174,22 @@ void StartPageWidget::openTile()
 		return;
 	}
 
-	if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
+	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+
+	if (type == BookmarksModel::FolderBookmark)
+	{
+		MainWindow *mainWindow = MainWindow::findMainWindow(this);
+		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+
+		if (mainWindow && bookmark && bookmark->rowCount() > 0)
+		{
+			mainWindow->getWindowsManager()->open(bookmark);
+		}
+
+		return;
+	}
+
+	if (!index.isValid() || type != BookmarksModel::UrlBookmark)
 	{
 		return;
 	}
@@ -274,8 +290,23 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		if (mouseEvent)
 		{
 			const QModelIndex index = m_listView->currentIndex();
+			const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
-			if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
+			if (type == BookmarksModel::FolderBookmark)
+			{
+				BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+
+				if (bookmark && bookmark->rowCount() > 0)
+				{
+					Menu menu(Menu::BookmarksMenuRole, this);
+					menu.menuAction()->setData(bookmark->index());
+					menu.exec(mouseEvent->globalPos());
+				}
+
+				return true;
+			}
+
+			if (!index.isValid() || type != BookmarksModel::UrlBookmark)
 			{
 				if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 				{
