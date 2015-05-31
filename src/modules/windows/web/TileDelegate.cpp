@@ -21,6 +21,7 @@
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
@@ -41,16 +42,33 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QPainterPath path;
 	path.addRoundedRect(rectangle, 5, 5);
 
-	if (index.data(BookmarksModel::UserRole).toBool())
+	painter->setRenderHint(QPainter::HighQualityAntialiasing);
+
+	if (index.data(BookmarksModel::UserRole).toBool() || index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 	{
+		const bool isAddTile = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
+
 		painter->setPen(QPen(QColor(200, 200, 200), 1));
-		painter->setBrush(Qt::transparent);
+
+		if (isAddTile)
+		{
+			painter->setBrush(QColor(200, 200, 200, 50));
+		}
+		else
+		{
+			painter->setBrush(Qt::transparent);
+		}
+
 		painter->drawPath(path);
 
-	return;
+		if (isAddTile)
+		{
+			Utils::getIcon(QLatin1String("list-add")).paint(painter, rectangle);
+		}
+
+		return;
 	}
 
-	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 	painter->setClipPath(path);
 	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
 
@@ -82,7 +100,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100));
+	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
 
 	return QSize((SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom), (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom));
 }

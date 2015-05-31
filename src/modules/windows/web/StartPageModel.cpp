@@ -43,7 +43,7 @@ StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 
 void StartPageModel::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("StartPage/BookmarksFolder"))
+	if (option == QLatin1String("StartPage/BookmarksFolder") || option == QLatin1String("StartPage/ShowAddTile"))
 	{
 		reloadModel();
 	}
@@ -151,6 +151,16 @@ void StartPageModel::reloadModel()
 				appendRow(item);
 			}
 		}
+	}
+
+	if (SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool())
+	{
+		QStandardItem *item = new QStandardItem();
+		item->setData(tr("Add Tile…"), Qt::ToolTipRole);
+		item->setData(tr("Add Tile…"), Qt::StatusTipRole);
+		item->setData(QLatin1String("add"), Qt::AccessibleDescriptionRole);
+
+		appendRow(item);
 	}
 
 	emit modelModified();

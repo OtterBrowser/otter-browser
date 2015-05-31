@@ -102,7 +102,7 @@ void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 	const QModelIndex index(m_listView->indexAt(m_listView->mapFromGlobal(event->globalPos())));
 	QMenu menu(this);
 
-	if (index.isValid())
+	if (index.isValid() && index.data(Qt::AccessibleDescriptionRole).toString() != QLatin1String("add"))
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTile()));
 		menu.addSeparator();
@@ -124,7 +124,7 @@ void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void StartPageWidget::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/Zoom"))
+	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/ZoomLevel"))
 	{
 		updateSize();
 	}
@@ -157,6 +157,13 @@ void StartPageWidget::addTile(const QUrl &url)
 void StartPageWidget::openTile()
 {
 	const QModelIndex index = m_listView->currentIndex();
+
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	{
+		addTile();
+
+		return;
+	}
 
 	if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
 	{
@@ -212,7 +219,7 @@ void StartPageWidget::updateThumbnail(const QModelIndex &index)
 
 void StartPageWidget::updateSize()
 {
-	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100));
+	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
 	const int tileHeight = (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
 	const int tileWidth = (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
 	const int rows = getTilesPerRow();
@@ -231,7 +238,7 @@ int StartPageWidget::getTilesPerRow() const
 		return tilesPerRow;
 	}
 
-	return qMax(1, int((width() - 20) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/Zoom")).toInt() / qreal(100)))));
+	return qMax(1, int((width() - 20) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100)))));
 }
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
@@ -246,6 +253,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (!index.isValid() || static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::UrlBookmark)
 			{
+				if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+				{
+					addTile();
+
+					return true;
+				}
+
 				return QObject::eventFilter(object, event);
 			}
 
