@@ -61,7 +61,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		if (isAddTile)
 		{
-			painter->setBrush(QColor(200, 200, 200, 50));
+			painter->setBrush(QColor(200, 200, 200, 100));
 		}
 		else
 		{
@@ -78,28 +78,26 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
+	painter->setClipPath(path);
+	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
+
+	rectangle.adjust(0, 0, 0, -textHeight);
+
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
-		rectangle.adjust(0, 0, 0, -textHeight);
-
 		Utils::getIcon(QLatin1String("inode-directory")).paint(painter, rectangle);
 	}
 	else
 	{
-		painter->setClipPath(path);
-		painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
-
-		rectangle.adjust(0, 0, 0, -textHeight);
-
 		painter->setBrush(Qt::white);
 		painter->setPen(Qt::transparent);
 		painter->drawRect(rectangle);
 		painter->drawPixmap(rectangle, QPixmap(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(index.data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png")));
-		painter->setClipping(false);
 	}
 
+	painter->setClipping(false);
 	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
 	painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 

@@ -33,6 +33,7 @@
 
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
+#include <QtGui/QPixmapCache>
 #include <QtCore/QtMath>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
@@ -42,7 +43,110 @@ namespace Otter
 
 StartPageModel* StartPageWidget::m_model = NULL;
 
+StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
+	m_backgroundMode(NoCustomBackground)
+{
+	setAutoFillBackground(true);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+}
+
+void StartPageContentsWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	QPainter painter(this);
+	painter.fillRect(geometry(), Qt::transparent);
+
+	if (m_backgroundMode != NoCustomBackground && !m_backgroundPath.isEmpty())
+	{
+		QPixmap pixmap(m_backgroundPath);
+
+		if (pixmap.isNull())
+		{
+			return;
+		}
+
+		switch (m_backgroundMode)
+		{
+			case BestFitBackground:
+				{
+					const QString key = QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
+					QPixmap *cachedBackground = QPixmapCache::find(key);
+
+					if (cachedBackground)
+					{
+						painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+					}
+					else
+					{
+						const qreal pixmapAscpectRatio = (pixmap.width() / qreal(pixmap.height()));
+						const qreal backgroundAscpectRatio = (width() / qreal(height()));
+						QPixmap newBackground(size());
+
+						if (pixmapAscpectRatio > backgroundAscpectRatio)
+						{
+							newBackground = pixmap.scaled(QSize((width() / backgroundAscpectRatio), height()), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+						}
+						else if (backgroundAscpectRatio > pixmapAscpectRatio)
+						{
+							newBackground = pixmap.scaled(QSize(width(), (height() * backgroundAscpectRatio)), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+						}
+						else
+						{
+							newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+						}
+
+						painter.drawPixmap(contentsRect(), newBackground, contentsRect());
+
+						QPixmapCache::insert(key, newBackground);
+					}
+				}
+
+				break;
+			case CenterBackground:
+				painter.drawPixmap((contentsRect().center() - pixmap.rect().center()), pixmap);
+
+				break;
+			case StretchBackground:
+				{
+					const QString key = QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
+					QPixmap *cachedBackground = QPixmapCache::find(key);
+
+					if (cachedBackground)
+					{
+						painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+					}
+					else
+					{
+						const QPixmap newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+						painter.drawPixmap(contentsRect(), newBackground, contentsRect());
+
+						QPixmapCache::insert(key, newBackground);
+					}
+				}
+
+				break;
+			case TileBackground:
+				painter.drawTiledPixmap(contentsRect(), pixmap);
+
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::BackgroundMode mode)
+{
+	m_backgroundMode = mode;
+	m_backgroundPath = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+
+	update();
+}
+
 StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
+	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
 	m_searchWidget(new SearchWidget(window, this))
 {
@@ -51,11 +155,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 		m_model = new StartPageModel(QCoreApplication::instance());
 	}
 
-	QWidget *widget = new QWidget(this);
-	widget->setAutoFillBackground(false);
-	widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	QGridLayout *layout = new QGridLayout(widget);
+	QGridLayout *layout = new QGridLayout(m_contentsWidget);
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 	layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
@@ -83,10 +183,11 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
 
-	setWidget(widget);
+	setWidget(m_contentsWidget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
 	updateTiles();
+	optionChanged(QLatin1String("StartPage/BackgroundPath"));
 
 	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
 	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
@@ -135,6 +236,31 @@ void StartPageWidget::optionChanged(const QString &option)
 	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/ZoomLevel"))
 	{
 		updateSize();
+	}
+	else if (option == QLatin1String("StartPage/BackgroundMode") || option == QLatin1String("StartPage/BackgroundPath"))
+	{
+		const QString backgroundMode = SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString();
+
+		if (backgroundMode == QLatin1String("bestFit"))
+		{
+			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::BestFitBackground);
+		}
+		else if (backgroundMode == QLatin1String("center"))
+		{
+			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::CenterBackground);
+		}
+		else if (backgroundMode == QLatin1String("stretch"))
+		{
+			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::StretchBackground);
+		}
+		else if (backgroundMode == QLatin1String("tile"))
+		{
+			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::TileBackground);
+		}
+		else
+		{
+			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
+		}
 	}
 }
 

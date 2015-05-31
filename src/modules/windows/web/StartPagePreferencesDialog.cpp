@@ -31,11 +31,27 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : QDialo
 	m_ui(new Ui::StartPagePreferencesDialog)
 {
 	m_ui->setupUi(this);
+
+	const QString backgroundModeString = SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString();
+
+	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
+	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+	m_ui->backgroundFilePathWidget->setFilter(tr("Images (*.png *.jpg *.bmp *.gif)"));
+	m_ui->backgroundModeComboBox->addItem(tr("Best fit"), QLatin1String("bestFit"));
+	m_ui->backgroundModeComboBox->addItem(tr("Center"), QLatin1String("center"));
+	m_ui->backgroundModeComboBox->addItem(tr("Stretch"), QLatin1String("stretch"));
+	m_ui->backgroundModeComboBox->addItem(tr("Tile"), QLatin1String("tile"));
+
+	const int backgroundModeIndex = m_ui->backgroundModeComboBox->findData(backgroundModeString);
+
+	m_ui->backgroundModeComboBox->setCurrentIndex((backgroundModeIndex < 0) ? 0 : backgroundModeIndex);
+	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundCheckBox->isChecked());
 	m_ui->columnsPerRowSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt());
 	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool());
 
 	connect(this, SIGNAL(accepted()), this, SLOT(save()));
+	connect(m_ui->customBackgroundCheckBox, SIGNAL(toggled(bool)), m_ui->backgroundWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 }
 
@@ -61,6 +77,10 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 
 void StartPagePreferencesDialog::save()
 {
+	const QString backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
+
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("system")));
 	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ZoomLevel"), m_ui->zoomLevelSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ShowAddTile"), m_ui->showAddTileCheckBox->isChecked());

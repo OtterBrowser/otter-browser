@@ -16,9 +16,6 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QCheckBox" name="customBackgroundCheckBox">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="text">
       <string>Use custom background image</string>
      </property>
@@ -47,9 +44,6 @@
      </item>
      <item>
       <widget class="QWidget" name="backgroundWidget" native="true">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <layout class="QFormLayout" name="backgroundLayut">
         <property name="leftMargin">
          <number>0</number>
@@ -64,41 +58,20 @@
          <number>0</number>
         </property>
         <item row="0" column="1">
-         <widget class="Otter::FilePathWidget" name="backgroundFilePathWidgetwidget" native="true"/>
+         <widget class="Otter::FilePathWidget" name="backgroundFilePathWidget" native="true"/>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="scalingModeLabel">
+         <widget class="QLabel" name="backgroundModeLabel">
           <property name="text">
            <string>Scaling mode:</string>
           </property>
           <property name="buddy">
-           <cstring>scalingModeComboBox</cstring>
+           <cstring>backgroundModeComboBox</cstring>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QComboBox" name="scalingModeComboBox">
-          <item>
-           <property name="text">
-            <string>Best fit</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Center</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Stretch</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tile</string>
-           </property>
-          </item>
-         </widget>
+         <widget class="QComboBox" name="backgroundModeComboBox"/>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="backgroundPathLabel">
@@ -106,7 +79,7 @@
            <string>Image path:</string>
           </property>
           <property name="buddy">
-           <cstring>backgroundFilePathWidgetwidget</cstring>
+           <cstring>backgroundFilePathWidget</cstring>
           </property>
          </widget>
         </item>
@@ -204,7 +177,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>customBackgroundCheckBox</tabstop>
-  <tabstop>scalingModeComboBox</tabstop>
+  <tabstop>backgroundModeComboBox</tabstop>
   <tabstop>columnsPerRowSpinBox</tabstop>
   <tabstop>zoomLevelSpinBox</tabstop>
   <tabstop>showAddTileCheckBox</tabstop>

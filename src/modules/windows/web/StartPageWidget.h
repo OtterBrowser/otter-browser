@@ -30,6 +30,30 @@ class SearchWidget;
 class StartPageModel;
 class Window;
 
+class StartPageContentsWidget : public QWidget
+{
+public:
+	enum BackgroundMode
+	{
+		NoCustomBackground = 0,
+		BestFitBackground,
+		CenterBackground,
+		StretchBackground,
+		TileBackground
+	};
+
+	explicit StartPageContentsWidget(QWidget *parent);
+
+	void setBackgroundMode(BackgroundMode mode);
+
+protected:
+	void paintEvent(QPaintEvent *event);
+
+private:
+	QString m_backgroundPath;
+	BackgroundMode m_backgroundMode;
+};
+
 class StartPageWidget : public QScrollArea
 {
 	Q_OBJECT
@@ -58,6 +82,7 @@ protected slots:
 	void updateTiles();
 
 private:
+	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
 
