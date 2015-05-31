@@ -44,6 +44,7 @@ public slots:
 
 protected slots:
 	void optionChanged(const QString &option);
+	void dragEnded();
 	void thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 
 private:

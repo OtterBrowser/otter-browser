@@ -53,6 +53,19 @@ void StartPageModel::optionChanged(const QString &option)
 	}
 }
 
+void StartPageModel::dragEnded()
+{
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		if (item(i) && item(i)->data(BookmarksModel::UserRole).toBool())
+		{
+			item(i)->setData(QVariant(), BookmarksModel::UserRole);
+
+			emit thumbnailModified(item(i)->index());
+		}
+	}
+}
+
 void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title)
 {
 	if (!m_reloads.contains(url))
@@ -160,6 +173,8 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	if (indexes.count() == 1)
 	{
 		mimeData->setProperty("x-item-index", indexes.at(0));
+
+		itemFromIndex(indexes.at(0))->setData(true, BookmarksModel::UserRole);
 	}
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -173,6 +188,8 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 
 	mimeData->setText(texts.join(QLatin1String(", ")));
 	mimeData->setUrls(urls);
+
+	connect(mimeData, SIGNAL(destroyed()), this, SLOT(dragEnded()));
 
 	return mimeData;
 }

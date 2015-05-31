@@ -71,7 +71,8 @@ public:
 		TimeAddedRole = (Qt::UserRole + 3),
 		TimeModifiedRole = (Qt::UserRole + 4),
 		TimeVisitedRole = (Qt::UserRole + 5),
-		VisitsRole = (Qt::UserRole + 6)
+		VisitsRole = (Qt::UserRole + 6),
+		UserRole
 	};
 
 	enum FormatMode

@@ -41,6 +41,15 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	QPainterPath path;
 	path.addRoundedRect(rectangle, 5, 5);
 
+	if (index.data(BookmarksModel::UserRole).toBool())
+	{
+		painter->setPen(QPen(QColor(200, 200, 200), 1));
+		painter->setBrush(Qt::transparent);
+		painter->drawPath(path);
+
+	return;
+	}
+
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 	painter->setClipPath(path);
 	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));

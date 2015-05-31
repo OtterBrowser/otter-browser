@@ -49,7 +49,7 @@ void BookmarksItem::remove()
 
 void BookmarksItem::setData(const QVariant &value, int role)
 {
-	if (model())
+	if (model() && qobject_cast<BookmarksModel*>(model()))
 	{
 		model()->setData(index(), value, role);
 	}
