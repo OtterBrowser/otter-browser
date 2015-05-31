@@ -25,6 +25,8 @@
 namespace Otter
 {
 
+class QtWebKitPage;
+
 class QtWebKitWebBackend : public WebBackend
 {
 	Q_OBJECT
@@ -40,11 +42,14 @@ public:
 	QString getUserAgent(const QString &pattern = QString()) const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
+	bool requestThumbnail(const QUrl &url, const QSize &size);
 
 protected slots:
 	void optionChanged(const QString &option);
+	void pageLoaded(bool success);
 
 private:
+	QHash<QtWebKitPage*, QPair<QUrl, QSize> > m_thumbnailRequests;
 	bool m_isInitialized;
 
 	static QMap<QString, QString> m_userAgentComponents;

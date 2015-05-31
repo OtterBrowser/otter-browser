@@ -163,4 +163,12 @@ QIcon QtWebEngineWebBackend::getIcon() const
 	return QIcon();
 }
 
+bool QtWebEngineWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
+{
+	Q_UNUSED(url)
+	Q_UNUSED(size)
+
+	return false;
+}
+
 }

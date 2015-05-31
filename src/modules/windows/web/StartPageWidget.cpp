@@ -85,7 +85,8 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
 
-	connect(m_model, SIGNAL(reloaded()), this, SLOT(updateSize()));
+	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateSize()));
+	connect(m_model, SIGNAL(thumbnailModified(QModelIndex)), this, SLOT(updateThumbnail(QModelIndex)));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -145,9 +146,12 @@ void StartPageWidget::addTile()
 
 void StartPageWidget::addTile(const QUrl &url)
 {
-	BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString()));
+	BookmarksItem *bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString()));
 
-	reloadTile(true);
+	if (bookmark)
+	{
+		m_model->reloadTile(bookmark->index(), true);
+	}
 }
 
 void StartPageWidget::openTile()
@@ -175,15 +179,13 @@ void StartPageWidget::editTile()
 	{
 		BookmarkPropertiesDialog(bookmark, (bookmark->isInTrash() ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
 
-		m_model->reload();
+		m_model->reloadModel();
 	}
 }
 
-void StartPageWidget::reloadTile(bool full)
+void StartPageWidget::reloadTile()
 {
-	Q_UNUSED(full)
-
-///TODO
+	m_model->reloadTile(m_listView->currentIndex());
 }
 
 void StartPageWidget::removeTile()
@@ -192,8 +194,20 @@ void StartPageWidget::removeTile()
 
 	if (bookmark)
 	{
-		BookmarksManager::getModel()->removeBookmark(bookmark);
+		const QString path = SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png");
+
+		if (QFile::exists(path))
+		{
+			QFile::remove(path);
+		}
+
+		bookmark->remove();
 	}
+}
+
+void StartPageWidget::updateThumbnail(const QModelIndex &index)
+{
+	m_listView->update(index);
 }
 
 void StartPageWidget::updateSize()

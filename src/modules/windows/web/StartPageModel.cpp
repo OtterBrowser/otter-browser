@@ -18,10 +18,14 @@
 **************************************************************************/
 
 #include "StartPageModel.h"
+#include "../../../core/AddonsManager.h"
 #include "../../../core/BookmarksManager.h"
 #include "../../../core/BookmarksModel.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/WebBackend.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QMimeData>
 
 namespace Otter
@@ -30,13 +34,10 @@ namespace Otter
 StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 	m_bookmark(NULL)
 {
-	reload();
+	optionChanged(QLatin1String("Backends/Web"));
+	reloadModel();
 
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(reload()));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(reload()));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*)), this, SLOT(reload()));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(reload()));
-	connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(reload()));
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -44,11 +45,42 @@ void StartPageModel::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("StartPage/BookmarksFolder"))
 	{
-		reload();
+		reloadModel();
+	}
+	else if (option == QLatin1String("Backends/Web"))
+	{
+		connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
 	}
 }
 
-void StartPageModel::reload()
+void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title)
+{
+	if (!m_reloads.contains(url))
+	{
+		return;
+	}
+
+	if (!thumbnail.isNull())
+	{
+		thumbnail.save(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
+	}
+
+	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_reloads[url].first);
+
+	if (bookmark)
+	{
+		if (m_reloads[url].second)
+		{
+			bookmark->setData(title, BookmarksModel::TitleRole);
+		}
+
+		emit thumbnailModified(index(bookmark->index().row(), bookmark->index().column()));
+	}
+
+	m_reloads.remove(url);
+}
+
+void StartPageModel::reloadModel()
 {
 	const QString path = SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString();
 
@@ -91,15 +123,32 @@ void StartPageModel::reload()
 		{
 			if (m_bookmark->child(i) && static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
+				const quint64 identifier = m_bookmark->child(i)->data(BookmarksModel::IdentifierRole).toULongLong();
+				const QUrl url = m_bookmark->child(i)->data(BookmarksModel::UrlRole).toUrl();
 				QStandardItem *item = m_bookmark->child(i)->clone();
-				item->setData(m_bookmark->child(i)->data(BookmarksModel::IdentifierRole), BookmarksModel::IdentifierRole);
+				item->setData(identifier, BookmarksModel::IdentifierRole);
+
+				if (static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
+				{
+					m_reloads[url] = qMakePair(identifier, false);
+
+					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt(), SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt()));
+				}
 
 				appendRow(item);
 			}
 		}
 	}
 
-	emit reloaded();
+	emit modelModified();
+}
+
+void StartPageModel::reloadTile(const QModelIndex &index, bool full)
+{
+	if (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && AddonsManager::getWebBackend()->requestThumbnail(index.data(BookmarksModel::UrlRole).toUrl(), QSize(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt(), SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt())))
+	{
+		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+	}
 }
 
 QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const

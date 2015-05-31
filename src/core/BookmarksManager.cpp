@@ -104,7 +104,7 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 
 	for (int i = 0; i < items.count(); ++i)
 	{
-		items.at(i)->parent()->removeRow(items.at(i)->row());
+		items.at(i)->remove();
 	}
 }
 

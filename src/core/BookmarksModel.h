@@ -31,8 +31,7 @@ namespace Otter
 class BookmarksItem : public QStandardItem
 {
 public:
-	~BookmarksItem();
-
+	void remove();
 	void setData(const QVariant &value, int role);
 	void setItemData(const QVariant &value, int role);
 	QStandardItem* clone() const;

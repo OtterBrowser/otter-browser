@@ -18,6 +18,8 @@
 **************************************************************************/
 
 #include "TileDelegate.h"
+#include "../../../core/BookmarksModel.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 
 #include <QtGui/QGuiApplication>
@@ -48,6 +50,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	painter->setBrush(Qt::white);
 	painter->setPen(Qt::transparent);
 	painter->drawRect(rectangle);
+	painter->drawPixmap(rectangle, QPixmap(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(index.data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png")));
 	painter->setClipping(false);
 	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
 	painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));

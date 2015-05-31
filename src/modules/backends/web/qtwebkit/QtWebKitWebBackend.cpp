@@ -90,6 +90,51 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 	globalSettings->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(QLatin1String("Content/OfflineWebApplicationCacheLimit")).toInt() * 1024);
 }
 
+void QtWebKitWebBackend::pageLoaded(bool success)
+{
+	QtWebKitPage *page = qobject_cast<QtWebKitPage*>(sender());
+
+	if (!page)
+	{
+		return;
+	}
+
+	if (success)
+	{
+		QSize contentsSize = page->mainFrame()->contentsSize();
+		QWidget *view = new QWidget();
+
+		page->setView(view);
+		page->setViewportSize(contentsSize);
+
+		if (contentsSize.width() > 2000)
+		{
+			contentsSize.setWidth(2000);
+		}
+
+		contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
+
+		QPixmap pixmap(contentsSize);
+		pixmap.fill(Qt::white);
+
+		QPainter painter(&pixmap);
+
+		page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+
+		painter.end();
+
+		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation), page->mainFrame()->title());
+	}
+	else
+	{
+		emit thumbnailAvailable(m_thumbnailRequests[page].first, QPixmap(), QString());
+	}
+
+	m_thumbnailRequests.remove(page);
+
+	page->deleteLater();
+}
+
 WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
@@ -179,6 +224,20 @@ QUrl QtWebKitWebBackend::getHomePage() const
 QIcon QtWebKitWebBackend::getIcon() const
 {
 	return QIcon();
+}
+
+bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
+{
+	QtWebKitPage *page = new QtWebKitPage();
+
+	m_thumbnailRequests[page] = qMakePair(url, size);
+
+	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoaded(bool)));
+
+	page->setParent(this);
+	page->mainFrame()->setUrl(url);
+
+	return true;
 }
 
 }

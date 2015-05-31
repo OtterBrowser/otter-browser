@@ -605,7 +605,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
-						delete bookmark;
+						bookmark->remove();
 					}
 				}
 

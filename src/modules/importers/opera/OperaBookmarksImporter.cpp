@@ -167,8 +167,7 @@ bool OperaBookmarksImporter::import()
 
 			if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
 			{
-				delete bookmark;
-
+				bookmark->remove();
 				bookmark = NULL;
 			}
 			else

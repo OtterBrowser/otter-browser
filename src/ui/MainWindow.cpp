@@ -842,7 +842,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
-		delete bookmark;
+		bookmark->remove();
 	}
 }
 

@@ -33,13 +33,17 @@ BookmarksItem::BookmarksItem() : QStandardItem()
 {
 }
 
-BookmarksItem::~BookmarksItem()
+void BookmarksItem::remove()
 {
 	BookmarksModel *model = qobject_cast<BookmarksModel*>(this->model());
 
 	if (model)
 	{
 		model->removeBookmark(this);
+	}
+	else
+	{
+		delete this;
 	}
 }
 
@@ -239,7 +243,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 	{
 		if (type == SeparatorBookmark || bookmark->isInTrash())
 		{
-			bookmark->parent()->removeRow(bookmark->row());
+			bookmark->remove();
 		}
 		else
 		{
@@ -293,6 +297,11 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 
 void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 {
+	if (!bookmark)
+	{
+		return;
+	}
+
 	const quint64 identifier = bookmark->data(IdentifierRole).toULongLong();
 
 	if (identifier > 0 && m_identifiers.contains(identifier))
@@ -321,6 +330,9 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 	}
 
 	emit bookmarkRemoved(bookmark);
+
+	bookmark->parent()->removeRow(bookmark->row());
+
 	emit modelModified();
 }
 

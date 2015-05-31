@@ -39,16 +39,20 @@ public:
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 
 public slots:
-	void reload();
+	void reloadModel();
+	void reloadTile(const QModelIndex &index, bool full = false);
 
 protected slots:
 	void optionChanged(const QString &option);
+	void thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 
 private:
 	BookmarksItem *m_bookmark;
+	QHash<QUrl, QPair<quint64, bool> > m_reloads;
 
 signals:
-	void reloaded();
+	void modelModified();
+	void thumbnailModified(const QModelIndex &index);
 };
 
 }

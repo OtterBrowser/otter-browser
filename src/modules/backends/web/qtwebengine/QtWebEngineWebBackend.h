@@ -40,6 +40,7 @@ public:
 	QString getUserAgent(const QString &pattern = QString()) const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
+	bool requestThumbnail(const QUrl &url, const QSize &size);
 
 protected slots:
 	void optionChanged(const QString &option);

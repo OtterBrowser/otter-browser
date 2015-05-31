@@ -51,8 +51,9 @@ protected slots:
 	void addTile(const QUrl &url);
 	void openTile();
 	void editTile();
-	void reloadTile(bool full = false);
+	void reloadTile();
 	void removeTile();
+	void updateThumbnail(const QModelIndex &index);
 	void updateSize();
 
 private:

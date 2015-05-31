@@ -39,6 +39,10 @@ public:
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
 	QUrl getUpdateUrl() const;
+	virtual bool requestThumbnail(const QUrl &url, const QSize &size) = 0;
+
+signals:
+	void thumbnailAvailable(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 };
 
 }

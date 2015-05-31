@@ -93,7 +93,7 @@ void BookmarksContentsWidget::addBookmark()
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
-		delete bookmark;
+		bookmark->remove();
 	}
 }
 
@@ -104,7 +104,7 @@ void BookmarksContentsWidget::addFolder()
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
-		delete bookmark;
+		bookmark->remove();
 	}
 }
 
