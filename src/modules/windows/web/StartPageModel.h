@@ -37,6 +37,7 @@ public:
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
 	QStringList mimeTypes() const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+	bool isReloadingTile(const QModelIndex &index) const;
 
 public slots:
 	void reloadModel();
@@ -53,7 +54,7 @@ private:
 
 signals:
 	void modelModified();
-	void thumbnailModified(const QModelIndex &index);
+	void isReloadingTileChanged(const QModelIndex &index);
 };
 
 }

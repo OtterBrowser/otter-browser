@@ -85,9 +85,10 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setWidget(widget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
+	updateTiles();
 
-	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateSize()));
-	connect(m_model, SIGNAL(thumbnailModified(QModelIndex)), this, SLOT(updateThumbnail(QModelIndex)));
+	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
+	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -200,6 +201,8 @@ void StartPageWidget::editTile()
 void StartPageWidget::reloadTile()
 {
 	m_model->reloadTile(m_listView->currentIndex());
+
+	m_listView->openPersistentEditor(m_listView->currentIndex());
 }
 
 void StartPageWidget::removeTile()
@@ -219,9 +222,10 @@ void StartPageWidget::removeTile()
 	}
 }
 
-void StartPageWidget::updateThumbnail(const QModelIndex &index)
+void StartPageWidget::updateTile(const QModelIndex &index)
 {
 	m_listView->update(index);
+	m_listView->closePersistentEditor(index);
 }
 
 void StartPageWidget::updateSize()
@@ -234,6 +238,19 @@ void StartPageWidget::updateSize()
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((rows * tileWidth) + 20), ((columns * tileHeight) + 20));
+}
+
+void StartPageWidget::updateTiles()
+{
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		if (m_model->item(i) && m_model->isReloadingTile(m_model->index(i, 0)))
+		{
+			m_listView->openPersistentEditor(m_model->index(i, 0));
+		}
+	}
+
+	updateSize();
 }
 
 int StartPageWidget::getTilesPerRow() const

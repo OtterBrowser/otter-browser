@@ -24,7 +24,9 @@
 #include "../../../core/Utils.h"
 
 #include <QtGui/QGuiApplication>
+#include <QtGui/QMovie>
 #include <QtGui/QPainter>
+#include <QtWidgets/QLabel>
 
 namespace Otter
 {
@@ -48,7 +50,14 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		const bool isAddTile = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 
-		painter->setPen(QPen(QColor(200, 200, 200), 1));
+		if (isAddTile && option.state.testFlag(QStyle::State_MouseOver))
+		{
+			painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
+		}
+		else
+		{
+			painter->setPen(QPen(QColor(200, 200, 200), 1));
+		}
 
 		if (isAddTile)
 		{
@@ -93,6 +102,32 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setBrush(Qt::transparent);
 	painter->drawPath(path);
+}
+
+void TileDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(index)
+
+	QRect rectangle(option.rect);
+	rectangle.adjust(3, 3, -3, -(3 + (option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5)));
+
+	editor->setGeometry(rectangle);
+}
+
+QWidget* TileDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+	Q_UNUSED(index)
+
+	QLabel *editor = new QLabel(parent);
+	editor->setAlignment(Qt::AlignCenter);
+
+	QMovie *movie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), editor);
+	movie->start();
+
+	editor->setMovie(movie);
+
+	return editor;
 }
 
 QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

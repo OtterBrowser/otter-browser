@@ -61,7 +61,7 @@ void StartPageModel::dragEnded()
 		{
 			item(i)->setData(QVariant(), BookmarksModel::UserRole);
 
-			emit thumbnailModified(item(i)->index());
+			emit isReloadingTileChanged(item(i)->index());
 		}
 	}
 }
@@ -87,7 +87,7 @@ void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail,
 			bookmark->setData(title, BookmarksModel::TitleRole);
 		}
 
-		emit thumbnailModified(index(bookmark->index().row(), bookmark->index().column()));
+		emit isReloadingTileChanged(index(bookmark->index().row(), bookmark->index().column()));
 	}
 
 	m_reloads.remove(url);
@@ -229,6 +229,11 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	}
 
 	return false;
+}
+
+bool StartPageModel::isReloadingTile(const QModelIndex &index) const
+{
+	return m_reloads.contains(index.data(BookmarksModel::UrlRole).toUrl());
 }
 
 }

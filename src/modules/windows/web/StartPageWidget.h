@@ -53,8 +53,9 @@ protected slots:
 	void editTile();
 	void reloadTile();
 	void removeTile();
-	void updateThumbnail(const QModelIndex &index);
+	void updateTile(const QModelIndex &index);
 	void updateSize();
+	void updateTiles();
 
 private:
 	QListView *m_listView;
