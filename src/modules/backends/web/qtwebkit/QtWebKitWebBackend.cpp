@@ -123,6 +123,8 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 
 		painter.end();
 
+		view->deleteLater();
+
 		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation), page->mainFrame()->title());
 	}
 	else
