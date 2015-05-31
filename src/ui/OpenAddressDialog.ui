@@ -64,5 +64,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Otter::OpenAddressDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

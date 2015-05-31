@@ -41,7 +41,7 @@ OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);
 	m_ui->label->setBuddy(m_addressWidget);
 
-	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(handleUserInput()));
+	connect(this, SIGNAL(accepted()), this, SLOT(handleUserInput()));
 }
 
 OpenAddressDialog::~OpenAddressDialog()
@@ -64,21 +64,11 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 	}
 }
 
-void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
-{
-	QDialog::keyPressEvent(event);
-
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-	{
-		handleUserInput();
-	}
-}
-
 void OpenAddressDialog::handleUserInput()
 {
 	if (m_addressWidget->text().trimmed().isEmpty())
 	{
-		accept();
+		close();
 	}
 	else
 	{
