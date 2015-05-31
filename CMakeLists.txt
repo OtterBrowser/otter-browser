@@ -209,7 +209,8 @@ set(otter_src
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
-    src/modules/windows/web/StartPageModel.cpp
+	src/modules/windows/web/StartPageModel.cpp
+	src/modules/windows/web/StartPagePreferencesDialog.cpp
 	src/modules/windows/web/StartPageWidget.cpp
 	src/modules/windows/web/TileDelegate.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
@@ -263,6 +264,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
 	src/modules/windows/web/PermissionBarWidget.ui
 	src/modules/windows/web/SearchBarWidget.ui
+	src/modules/windows/web/StartPagePreferencesDialog.ui
 )
 
 if (EnableQtwebengine)

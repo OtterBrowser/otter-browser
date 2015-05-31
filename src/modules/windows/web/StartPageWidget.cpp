@@ -19,6 +19,7 @@
 
 #include "StartPageWidget.h"
 #include "StartPageModel.h"
+#include "StartPagePreferencesDialog.h"
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
 #include "../../../core/BookmarksModel.h"
@@ -132,7 +133,8 @@ void StartPageWidget::optionChanged(const QString &option)
 
 void StartPageWidget::configure()
 {
-///TODO
+	StartPagePreferencesDialog dialog(this);
+	dialog.exec();
 }
 
 void StartPageWidget::addTile()

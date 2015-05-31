@@ -165,6 +165,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/SearchBarWidget.cpp \
     src/modules/windows/web/StartPageModel.cpp \
+    src/modules/windows/web/StartPagePreferencesDialog.cpp \
     src/modules/windows/web/StartPageWidget.cpp \
     src/modules/windows/web/TileDelegate.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
@@ -305,6 +306,7 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/SearchBarWidget.h \
     src/modules/windows/web/StartPageModel.h \
+    src/modules/windows/web/StartPagePreferencesDialog.h \
     src/modules/windows/web/StartPageWidget.h \
     src/modules/windows/web/TileDelegate.h \
     src/modules/windows/web/WebContentsWidget.h \
@@ -354,6 +356,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
     src/modules/windows/web/PermissionBarWidget.ui \
     src/modules/windows/web/SearchBarWidget.ui
+    src/modules/windows/web/StartPagePreferencesDialog.ui \
 
 RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
