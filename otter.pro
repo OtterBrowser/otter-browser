@@ -355,8 +355,8 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/modules/windows/notes/NotesContentsWidget.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
     src/modules/windows/web/PermissionBarWidget.ui \
-    src/modules/windows/web/SearchBarWidget.ui
-    src/modules/windows/web/StartPagePreferencesDialog.ui \
+    src/modules/windows/web/SearchBarWidget.ui \
+    src/modules/windows/web/StartPagePreferencesDialog.ui
 
 RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc

@@ -221,6 +221,7 @@ QStringList StartPageModel::mimeTypes() const
 bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
 	Q_UNUSED(action)
+	Q_UNUSED(column)
 
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
 	const QModelIndex index = data->property("x-item-index").toModelIndex();

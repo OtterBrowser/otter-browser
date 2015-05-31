@@ -20,6 +20,7 @@
 #ifndef OTTER_STARTPAGEMODEL_H
 #define OTTER_STARTPAGEMODEL_H
 
+#include <QtCore/QUrl>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
