@@ -25,6 +25,7 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
 
@@ -75,7 +76,11 @@ void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail,
 
 	if (!thumbnail.isNull())
 	{
-		thumbnail.save(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
+		const QString path = SessionsManager::getWritableDataPath(QLatin1String("thumbnails/"));
+
+		QDir().mkpath(path);
+
+		thumbnail.save(path + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
 	}
 
 	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_reloads[url].first);
