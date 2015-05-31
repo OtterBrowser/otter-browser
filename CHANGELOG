@@ -1,3 +1,19 @@
+0.9.06 (2015-06-??):
+- multiple enhancements in experimental backend for QtWebEngine (Blink):
+-- added support for restoring tab history;
+-- added support for storing cookies;
+-- added support for fetching favicons;
+-- added option to overwrite User Agent;
+-- added support for cache;
+-- added support for private mode;
+-- added support for downloading files;
+- added start page (speed dial);
+- added MDI mode (disabled by default);
+- added source viewer;
+- added option to disable single key shortcuts;
+- added support for freedesktop.org notifications;
+- lots of other fixes and improvements.
+
 0.9.05 (2015-04-01):
 - experimental backend for QtWebEngine (Blink), disabled by default;
 - added advanced options for cookies;

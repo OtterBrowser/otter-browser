@@ -1,14 +1,12 @@
 Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
 
-0.9.06 - beta 6 (2015-??-??):
+0.9.06 - beta 7 (2015-??-??):
 - address field suggestions / drop down history
-- start page
 - passwords manager
 - helper for mouse gestures
 - feeds reader (as module)
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
-- exposing MDI features
 - customizable context menu
 
 1.0.01 - first stable release (2015-??-??):
