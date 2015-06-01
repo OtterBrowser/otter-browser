@@ -217,12 +217,12 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(lineEdit()->isUndoAvailable());
-	menu.addAction(tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(lineEdit()->isRedoAvailable());
+	menu.addAction(tr("Undo"), lineEdit(), SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(lineEdit()->isUndoAvailable());
+	menu.addAction(tr("Redo"), lineEdit(), SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(lineEdit()->isRedoAvailable());
 	menu.addSeparator();
-	menu.addAction(tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(lineEdit()->hasSelectedText());
-	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(lineEdit()->hasSelectedText());
-	menu.addAction(tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+	menu.addAction(tr("Cut"), lineEdit(), SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addAction(tr("Copy"), lineEdit(), SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addAction(tr("Paste"), lineEdit(), SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
 	if (!m_isUsingSimpleMode)
 	{
@@ -233,8 +233,8 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addSeparator();
 	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!lineEdit()->text().isEmpty());
 	menu.addSeparator();
-	menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!lineEdit()->text().isEmpty());
-	menu.addAction(tr("Select All"), this, SLOT(selectAll()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addAction(tr("Clear All"), lineEdit(), SLOT(clear()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addAction(tr("Select All"), lineEdit(), SLOT(selectAll()))->setEnabled(!lineEdit()->text().isEmpty());
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
 
