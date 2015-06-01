@@ -102,9 +102,7 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 	if (success)
 	{
 		QSize contentsSize = page->mainFrame()->contentsSize();
-		QWidget *view = new QWidget();
 
-		page->setView(view);
 		page->setViewportSize(contentsSize);
 
 		if (contentsSize.width() > 2000)
@@ -122,8 +120,6 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 		page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
 
 		painter.end();
-
-		view->deleteLater();
 
 		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation), page->mainFrame()->title());
 	}
@@ -238,6 +234,7 @@ bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 
 	page->setParent(this);
 	page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
+	page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 	page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
 	page->mainFrame()->setUrl(url);
 
