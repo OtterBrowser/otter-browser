@@ -168,8 +168,8 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 
 	m_searchWidget->setFixedWidth(300);
 
-	m_listView->setStyleSheet(QLatin1String("QListView {background:transparent;}"));
 	m_listView->setFrameStyle(QFrame::NoFrame);
+	m_listView->setStyleSheet(QLatin1String("QListView {padding:0;border:0;background:transparent;}"));
 	m_listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_listView->setDragEnabled(true);
@@ -379,7 +379,7 @@ void StartPageWidget::updateSize()
 	const int columns = qCeil(m_model->rowCount() / qreal(rows));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
-	m_listView->setFixedSize(((rows * tileWidth) + 20), ((columns * tileHeight) + 20));
+	m_listView->setFixedSize(((rows * tileWidth) + 2), ((columns * tileHeight) + 20));
 }
 
 void StartPageWidget::updateTiles()
@@ -404,7 +404,7 @@ int StartPageWidget::getTilesPerRow() const
 		return tilesPerRow;
 	}
 
-	return qMax(1, int((width() - 20) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100)))));
+	return qMax(1, int((width() - 50) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100)))));
 }
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
