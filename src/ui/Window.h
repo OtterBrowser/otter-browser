@@ -117,6 +117,7 @@ protected slots:
 	void handleGeometryChangeRequest(const QRect &geometry);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
+	void updateNavigationBar();
 
 private:
 	ToolBarWidget *m_navigationBar;

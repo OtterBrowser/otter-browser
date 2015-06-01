@@ -338,6 +338,14 @@ void Window::notifyRequestedCloseWindow()
 	emit requestedCloseWindow(this);
 }
 
+void Window::updateNavigationBar()
+{
+	if (m_navigationBar)
+	{
+		m_navigationBar->reload();
+	}
+}
+
 void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
@@ -591,6 +599,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	emit canZoomChanged(m_contentsWidget->canZoom());
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
+	connect(m_contentsWidget, SIGNAL(webWidgetChanged()), this, SLOT(updateNavigationBar()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
 	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));

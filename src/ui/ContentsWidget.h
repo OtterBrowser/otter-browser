@@ -96,6 +96,7 @@ signals:
 	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);
+	void webWidgetChanged();
 	void canZoomChanged(bool can);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

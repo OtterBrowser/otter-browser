@@ -59,6 +59,7 @@ public:
 	explicit ToolBarWidget(int identifier, Window *window, QWidget *parent);
 
 	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = NULL);
+	void reload();
 	void setDefinition(const ToolBarDefinition &definition);
 	Qt::ToolBarArea getArea() const;
 	int getIdentifier() const;
@@ -69,7 +70,6 @@ protected:
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void startToolBarDragging();
 	void endToolBarDragging();
-	void setup();
 	QWidget* createWidget(const ToolBarActionDefinition &definition);
 
 protected slots:

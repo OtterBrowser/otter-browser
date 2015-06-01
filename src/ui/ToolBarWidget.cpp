@@ -128,7 +128,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	if (identifier >= 0)
 	{
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
-		setup();
+		reload();
 
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
@@ -223,7 +223,7 @@ void ToolBarWidget::endToolBarDragging()
 	}
 }
 
-void ToolBarWidget::setup()
+void ToolBarWidget::reload()
 {
 	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
@@ -236,7 +236,7 @@ void ToolBarWidget::toolBarModified(int identifier)
 {
 	if (identifier == m_identifier)
 	{
-		setup();
+		reload();
 	}
 }
 
