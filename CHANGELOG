@@ -10,7 +10,7 @@
 - added start page (speed dial);
 - added MDI mode (disabled by default);
 - added source viewer;
-- added dropdown with list o recently typed URLs;
+- added dropdown with list of recently typed URLs;
 - added option to disable single key shortcuts;
 - added support for freedesktop.org notifications;
 - lots of other fixes and improvements.
