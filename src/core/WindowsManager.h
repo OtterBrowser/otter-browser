@@ -128,6 +128,7 @@ private:
 
 signals:
 	void requestedAddBookmark(QUrl url, QString title, QString description);
+	void requestedEditBookmark(QUrl url);
 	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);

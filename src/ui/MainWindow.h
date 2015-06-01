@@ -90,6 +90,7 @@ protected slots:
 	void triggerAction();
 	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
+	void editBookmark(const QUrl &url);
 	void toolBarModified(int identifier);
 	void transferStarted();
 	void updateWindowTitle(const QString &title);

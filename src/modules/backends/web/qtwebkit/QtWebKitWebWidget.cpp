@@ -1152,9 +1152,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::BookmarkLinkAction:
 			if (m_hitResult.linkUrl().isValid())
 			{
-				const QString title = m_hitResult.element().attribute(QLatin1String("title"));
+				if (BookmarksManager::hasBookmark(m_hitResult.linkUrl()))
+				{
+					emit requestedEditBookmark(m_hitResult.linkUrl());
+				}
+				else
+				{
+					const QString title = m_hitResult.element().attribute(QLatin1String("title"));
 
-				emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title), QString());
+					emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title), QString());
+				}
 			}
 
 			break;
@@ -1594,9 +1601,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::AddBookmarkAction:
 			{
-				const QString description = m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content"));
+				const QUrl url = getUrl();
 
-				emit requestedAddBookmark(getUrl(), getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
+				if (BookmarksManager::hasBookmark(url))
+				{
+					emit requestedEditBookmark(url);
+				}
+				else
+				{
+					const QString description = m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"description\"]")).attribute(QLatin1String("content"));
+
+					emit requestedAddBookmark(url, getTitle(), (description.isEmpty() ? m_page->mainFrame()->findFirstElement(QLatin1String("[name=\"og:description\"]")).attribute(QLatin1String("property")) : description));
+				}
 			}
 
 			break;

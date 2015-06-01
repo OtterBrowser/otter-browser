@@ -187,6 +187,7 @@ signals:
 	void requestedCloseWindow();
 	void requestedOpenUrl(QUrl url, OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title, QString description);
+	void requestedEditBookmark(QUrl url);
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void requestedSearch(QString query, QString search, OpenHints hints);
 	void requestedPermission(QString option, QUrl url, bool cancel);

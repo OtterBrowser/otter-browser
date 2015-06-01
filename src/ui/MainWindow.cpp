@@ -150,6 +150,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
+	connect(m_windowsManager, SIGNAL(requestedEditBookmark(QUrl)), this, SLOT(editBookmark(QUrl)));
 	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
@@ -843,6 +844,17 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		bookmark->remove();
+	}
+}
+
+void MainWindow::editBookmark(const QUrl &url)
+{
+	const QList<BookmarksItem*> bookmarks = BookmarksManager::getModel()->getBookmarks(url);
+
+	if (!bookmarks.isEmpty())
+	{
+		BookmarkPropertiesDialog dialog(bookmarks.at(0), BookmarkPropertiesDialog::EditBookmarkMode, this);
+		dialog.exec();
 	}
 }
 
