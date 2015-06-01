@@ -509,7 +509,7 @@ void AddressWidget::updateFeeds()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
+	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
@@ -621,7 +621,7 @@ void AddressWidget::setUrl(const QUrl &url)
 
 void AddressWidget::setWindow(Window *window)
 {
-	if (m_window)
+	if (m_window && !m_window->isAboutToClose())
 	{
 		m_window->detachAddressWidget(this);
 
