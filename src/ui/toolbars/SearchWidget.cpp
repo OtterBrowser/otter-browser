@@ -55,6 +55,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
 	setEditable(true);
+	setMinimumWidth(100);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
@@ -493,14 +494,6 @@ void SearchWidget::setWindow(Window *window)
 QString SearchWidget::getCurrentSearchEngine() const
 {
 	return currentData(Qt::UserRole + 1).toString();
-}
-
-QSize SearchWidget::sizeHint() const
-{
-	QStyleOptionComboBox option;
-	initStyleOption(&option);
-
-	return style()->sizeFromContents(QStyle::CT_ComboBox, &option, QSize(-1, fontMetrics().height())).expandedTo(QApplication::globalStrut());
 }
 
 }

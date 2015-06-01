@@ -44,7 +44,6 @@ public:
 	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
 	QString getText() const;
 	QUrl getUrl() const;
-	QSize sizeHint() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:

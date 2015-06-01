@@ -63,6 +63,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 
 	setEditable(true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setMinimumWidth(100);
 	setItemDelegate(new AddressDelegate(this));
 	setModel(HistoryManager::getTypedHistoryModel());
 	setInsertPolicy(QComboBox::NoInsert);
@@ -635,14 +636,6 @@ void AddressWidget::setWindow(Window *window)
 QUrl AddressWidget::getUrl() const
 {
 	return (m_window ? m_window->getUrl() : QUrl(QLatin1String("about:blank")));
-}
-
-QSize AddressWidget::sizeHint() const
-{
-	QStyleOptionComboBox option;
-	initStyleOption(&option);
-
-	return style()->sizeFromContents(QStyle::CT_ComboBox, &option, QSize(-1, fontMetrics().height())).expandedTo(QApplication::globalStrut());
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
