@@ -375,11 +375,12 @@ void StartPageWidget::updateSize()
 	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
 	const int tileHeight = (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
 	const int tileWidth = (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
-	const int rows = getTilesPerRow();
-	const int columns = qCeil(m_model->rowCount() / qreal(rows));
+	const int amount = m_model->rowCount();
+	const int columns = getTilesPerRow();
+	const int rows = qCeil(amount / qreal(columns));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
-	m_listView->setFixedSize(((rows * tileWidth) + 2), ((columns * tileHeight) + 20));
+	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
 }
 
 void StartPageWidget::updateTiles()

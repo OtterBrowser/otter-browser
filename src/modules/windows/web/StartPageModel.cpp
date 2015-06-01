@@ -128,7 +128,11 @@ void StartPageModel::reloadModel()
 
 			if (!found)
 			{
+				disconnect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
+
 				m_bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::FolderBookmark, 0, QUrl(), directories.at(i), m_bookmark);
+
+				connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
 			}
 		}
 	}
