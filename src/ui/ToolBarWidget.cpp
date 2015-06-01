@@ -125,6 +125,8 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
 
+	layout()->setContentsMargins(0, 0, 0, 0);
+
 	if (identifier >= 0)
 	{
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
@@ -596,6 +598,20 @@ int ToolBarWidget::getIdentifier() const
 int ToolBarWidget::getMaximumButtonSize() const
 {
 	return ToolBarsManager::getToolBarDefinition(m_identifier).maximumButtonSize;
+}
+
+bool ToolBarWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::LayoutRequest)
+	{
+		const bool result = QToolBar::event(event);
+
+		layout()->setContentsMargins(0, 0, 0, 0);
+
+		return result;
+	}
+
+	return QToolBar::event(event);
 }
 
 }

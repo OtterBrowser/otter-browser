@@ -64,6 +64,7 @@ public:
 	Qt::ToolBarArea getArea() const;
 	int getIdentifier() const;
 	int getMaximumButtonSize() const;
+	bool event(QEvent *event);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
