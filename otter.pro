@@ -19,7 +19,7 @@ unix: INCLUDEPATH += ./
 unix: QT += dbus
 
 OTTER_VERSION_MAIN = 0.9.06
-OTTER_VERSION_CONTEXT = -dev
+OTTER_VERSION_CONTEXT = " beta 6"
 
 isEmpty(PREFIX): PREFIX = /usr/local
 
