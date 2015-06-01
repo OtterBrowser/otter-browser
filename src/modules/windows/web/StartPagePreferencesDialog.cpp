@@ -79,7 +79,7 @@ void StartPagePreferencesDialog::save()
 	const QString backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
 
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("system")));
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
 	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ZoomLevel"), m_ui->zoomLevelSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ShowAddTile"), m_ui->showAddTileCheckBox->isChecked());
