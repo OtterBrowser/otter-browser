@@ -54,6 +54,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setEditable(true);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
@@ -456,11 +457,6 @@ void SearchWidget::setSearchEngine(const QString &engine)
 	}
 }
 
-QString SearchWidget::getCurrentSearchEngine() const
-{
-	return currentData(Qt::UserRole + 1).toString();
-}
-
 void SearchWidget::setWindow(Window *window)
 {
 	if (m_window)
@@ -492,6 +488,19 @@ void SearchWidget::setWindow(Window *window)
 	{
 		setSearchEngine();
 	}
+}
+
+QString SearchWidget::getCurrentSearchEngine() const
+{
+	return currentData(Qt::UserRole + 1).toString();
+}
+
+QSize SearchWidget::sizeHint() const
+{
+	QStyleOptionComboBox option;
+	initStyleOption(&option);
+
+	return style()->sizeFromContents(QStyle::CT_ComboBox, &option, QSize(-1, fontMetrics().height())).expandedTo(QApplication::globalStrut());
 }
 
 }

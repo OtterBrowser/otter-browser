@@ -155,7 +155,6 @@ void SearchesManager::updateSearchEnginesModel()
 			item->setData(search.title, Qt::UserRole);
 			item->setData(search.identifier, (Qt::UserRole + 1));
 			item->setData(search.keyword, (Qt::UserRole + 2));
-			item->setData(QSize(-1, 22), Qt::SizeHintRole);
 
 			m_searchEnginesModel->appendRow(item);
 		}
@@ -169,7 +168,6 @@ void SearchesManager::updateSearchEnginesModel()
 
 		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), tr("Manage Search Engines…"));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
-		manageItem->setData(QSize(-1, 22), Qt::SizeHintRole);
 
 		m_searchEnginesModel->appendRow(separatorItem);
 		m_searchEnginesModel->appendRow(manageItem);

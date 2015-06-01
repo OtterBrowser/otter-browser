@@ -121,7 +121,7 @@ void Window::triggerAction(int identifier, bool checked)
 		}
 		else if (identifier == ActionsManager::GoAction)
 		{
-			m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->text());
+			m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText());
 
 			return;
 		}

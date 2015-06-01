@@ -24,7 +24,7 @@
 #include "ui_OpenAddressDialog.h"
 
 #include <QtGui/QKeyEvent>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
@@ -65,7 +65,7 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 
 void OpenAddressDialog::handleUserInput()
 {
-	if (m_addressWidget->text().trimmed().isEmpty())
+	if (m_addressWidget->lineEdit()->text().trimmed().isEmpty())
 	{
 		close();
 	}
@@ -78,13 +78,13 @@ void OpenAddressDialog::handleUserInput()
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 		connect(interpreter, SIGNAL(destroyed()), this, SLOT(accept()));
 
-		interpreter->interpret(m_addressWidget->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+		interpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
 	}
 }
 
 void OpenAddressDialog::setText(const QString &text)
 {
-	m_addressWidget->setText(text);
+	m_addressWidget->lineEdit()->setText(text);
 	m_addressWidget->clearFocus();
 	m_addressWidget->setFocus(Qt::OtherFocusReason);
 }

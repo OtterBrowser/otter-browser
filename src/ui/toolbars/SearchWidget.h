@@ -42,6 +42,7 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
+	QSize sizeHint() const;
 
 public slots:
 	void setWindow(Window *window = NULL);

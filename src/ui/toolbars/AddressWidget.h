@@ -23,16 +23,16 @@
 #include "../../core/WindowsManager.h"
 
 #include <QtCore/QUrl>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
 class Window;
 
-class AddressWidget : public QLineEdit
+class AddressWidget : public QComboBox
 {
 	Q_OBJECT
 
@@ -40,10 +40,13 @@ public:
 	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
 	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
+	QString getText() const;
 	QUrl getUrl() const;
+	QSize sizeHint() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void setText(const QString &text);
 	void setUrl(const QUrl &url);
 	void setWindow(Window *window = NULL);
 
