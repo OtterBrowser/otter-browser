@@ -1,4 +1,4 @@
-0.9.06 (2015-06-??):
+0.9.06 (2015-06-01):
 - multiple enhancements in experimental backend for QtWebEngine (Blink):
 -- added support for restoring tab history;
 -- added support for storing cookies;
@@ -10,6 +10,7 @@
 - added start page (speed dial);
 - added MDI mode (disabled by default);
 - added source viewer;
+- added dropdown with list o recently typed URLs;
 - added option to disable single key shortcuts;
 - added support for freedesktop.org notifications;
 - lots of other fixes and improvements.
