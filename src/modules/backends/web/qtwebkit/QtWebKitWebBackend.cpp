@@ -237,6 +237,8 @@ bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoaded(bool)));
 
 	page->setParent(this);
+	page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
+	page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
 	page->mainFrame()->setUrl(url);
 
 	return true;
