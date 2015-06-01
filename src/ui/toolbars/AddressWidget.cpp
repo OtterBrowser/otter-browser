@@ -52,6 +52,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
+	m_removeModelTimer(0),
 	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
@@ -65,7 +66,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setMinimumWidth(100);
 	setItemDelegate(new AddressDelegate(this));
-	setModel(HistoryManager::getTypedHistoryModel());
 	setInsertPolicy(QComboBox::NoInsert);
 	setWindow(window);
 
@@ -91,10 +91,27 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 		m_isUsingSimpleMode = true;
 	}
 
-	connect(this, SIGNAL(activated(int)), this, SLOT(openUrl(int)));
+	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
+}
+
+void AddressWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_removeModelTimer)
+	{
+		killTimer(m_removeModelTimer);
+
+		m_removeModelTimer = 0;
+
+		const QString text = lineEdit()->text();
+
+		setModel(new QStandardItemModel(this));
+		updateLineEdit();
+
+		lineEdit()->setText(text);
+	}
 }
 
 void AddressWidget::paintEvent(QPaintEvent *event)
@@ -253,11 +270,37 @@ void AddressWidget::wheelEvent(QWheelEvent *event)
 	event->ignore();
 }
 
+void AddressWidget::showPopup()
+{
+	if (m_removeModelTimer > 0)
+	{
+		killTimer(m_removeModelTimer);
+
+		m_removeModelTimer = 0;
+	}
+
+	const QString text = lineEdit()->text();
+
+	if (model())
+	{
+		model()->deleteLater();
+	}
+
+	setModel(HistoryManager::getTypedHistoryModel());
+	updateLineEdit();
+
+	lineEdit()->setText(text);
+
+	QComboBox::showPopup();
+}
+
 void AddressWidget::hidePopup()
 {
 	m_popupHideTime = QTime::currentTime();
 
 	QComboBox::hidePopup();
+
+	m_removeModelTimer = startTimer(250);
 }
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
@@ -360,10 +403,8 @@ void AddressWidget::openFeed(QAction *action)
 	}
 }
 
-void AddressWidget::openUrl(int index)
+void AddressWidget::openUrl(const QString &url)
 {
-	const QString url = itemData(index, Qt::DisplayRole).toString().trimmed();
-
 	setUrl(url);
 	handleUserInput(url);
 	updateLineEdit();

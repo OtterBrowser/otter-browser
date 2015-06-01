@@ -40,6 +40,7 @@ class AddressWidget : public QComboBox
 public:
 	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
+	void showPopup();
 	void hidePopup();
 	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
 	QString getText() const;
@@ -52,6 +53,7 @@ public slots:
 	void setWindow(Window *window = NULL);
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);
@@ -62,7 +64,7 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void openFeed(QAction *action);
-	void openUrl(int index);
+	void openUrl(const QString &url);
 	void copyToNote();
 	void deleteText();
 	void removeIcon();
@@ -85,6 +87,7 @@ private:
 	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
 	OpenHints m_hints;
+	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
 	bool m_isUsingSimpleMode;
 	bool m_wasPopupVisible;
