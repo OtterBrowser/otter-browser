@@ -692,7 +692,7 @@ void QtWebKitWebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
 	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup(ActionsManager::getAction((m_isLoading ? ActionsManager::StopAction : ActionsManager::ReloadAction), this));
+		m_actions[ActionsManager::ReloadOrStopAction]->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 	}
 
 	if (m_actions.contains(ActionsManager::LoadPluginsAction))
@@ -1869,6 +1869,8 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
 	updatePageActions(url);
+
+	m_webView->page()->triggerAction(QWebPage::Reload);
 }
 
 void QtWebKitWebWidget::setHistory(QDataStream &stream)
@@ -1876,8 +1878,13 @@ void QtWebKitWebWidget::setHistory(QDataStream &stream)
 	stream.device()->reset();
 	stream >> *(m_webView->page()->history());
 
-	setRequestedUrl(m_webView->page()->history()->currentItem().url(), false, true);
-	updateOptions(m_webView->page()->history()->currentItem().url());
+	const QUrl url = m_webView->page()->history()->currentItem().url();
+
+	setRequestedUrl(url, false, true);
+	updateOptions(url);
+	updatePageActions(url);
+
+	m_webView->page()->triggerAction(QWebPage::Reload);
 }
 
 void QtWebKitWebWidget::setZoom(int zoom)

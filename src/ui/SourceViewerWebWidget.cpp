@@ -267,7 +267,7 @@ void SourceViewerWebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
 	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup(ActionsManager::getAction((m_isLoading ? ActionsManager::StopAction : ActionsManager::ReloadAction), this));
+		m_actions[ActionsManager::ReloadOrStopAction]->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 	}
 }
 
