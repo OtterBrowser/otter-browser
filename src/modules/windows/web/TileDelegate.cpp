@@ -50,7 +50,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	{
 		const bool isAddTile = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 
-		if (isAddTile && option.state.testFlag(QStyle::State_MouseOver))
+		if (isAddTile && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
 		{
 			painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
 		}
@@ -101,7 +101,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
 	painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
 
-	if (option.state.testFlag(QStyle::State_MouseOver))
+	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
 	{
 		painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Highlight), 3));
 	}

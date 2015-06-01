@@ -148,7 +148,8 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
-	m_searchWidget(new SearchWidget(window, this))
+	m_searchWidget(new SearchWidget(window, this)),
+	m_isIgnoreMenu(false)
 {
 	if (!m_model)
 	{
@@ -176,9 +177,11 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->setDragDropMode(QAbstractItemView::DragDrop);
 	m_listView->setDefaultDropAction(Qt::CopyAction);
 	m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	m_listView->setTabKeyNavigation(true);
 	m_listView->setViewMode(QListView::IconMode);
 	m_listView->setModel(m_model);
 	m_listView->setItemDelegate(new TileDelegate(m_listView));
+	m_listView->installEventFilter(this);
 	m_listView->viewport()->setAttribute(Qt::WA_Hover);
 	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
@@ -410,7 +413,55 @@ int StartPageWidget::getTilesPerRow() const
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
+	if (event->type() == QEvent::KeyRelease && object == m_listView)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		{
+			const QModelIndex index = m_listView->currentIndex();
+			const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+
+			if (type == BookmarksModel::FolderBookmark)
+			{
+				if (m_isIgnoreMenu)
+				{
+					m_isIgnoreMenu = false;
+				}
+				else
+				{
+					m_isIgnoreMenu = true;
+
+					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+
+					if (bookmark && bookmark->rowCount() > 0)
+					{
+						m_isIgnoreMenu = true;
+
+						Menu menu(Menu::BookmarksMenuRole, this);
+						menu.menuAction()->setData(bookmark->index());
+						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(index).center()));
+					}
+				}
+			}
+			else if (type == BookmarksModel::UrlBookmark)
+			{
+				const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+
+				if (url.isValid())
+				{
+					qobject_cast<WebContentsWidget*>(parentWidget())->setUrl(url);
+				}
+			}
+			else if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+			{
+				addTile();
+			}
+
+			return true;
+		}
+	}
+	else if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
