@@ -22,6 +22,7 @@
 
 #include "../../core/WindowsManager.h"
 
+#include <QtCore/QTime>
 #include <QtCore/QUrl>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
@@ -39,6 +40,7 @@ class AddressWidget : public QComboBox
 public:
 	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
+	void hidePopup();
 	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
 	QString getText() const;
 	QUrl getUrl() const;
@@ -56,19 +58,19 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
+	void wheelEvent(QWheelEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void openFeed(QAction *action);
+	void openUrl(int index);
 	void copyToNote();
 	void deleteText();
 	void removeIcon();
 	void updateBookmark();
 	void updateFeeds();
 	void updateLoadPlugins();
+	void updateLineEdit();
 	void updateIcons();
 	void setCompletion(const QString &text);
 	void setIcon(const QIcon &icon);
@@ -80,9 +82,13 @@ private:
 	QLabel *m_feedsLabel;
 	QLabel *m_loadPluginsLabel;
 	QLabel *m_urlIconLabel;
+	QTime m_popupHideTime;
+	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
 	OpenHints m_hints;
-	bool m_simpleMode;
+	bool m_isHistoryDropdownEnabled;
+	bool m_isUsingSimpleMode;
+	bool m_wasPopupVisible;
 
 signals:
 	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);

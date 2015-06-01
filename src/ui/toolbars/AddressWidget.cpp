@@ -20,14 +20,15 @@
 **************************************************************************/
 
 #include "AddressWidget.h"
+#include "../AddressDelegate.h"
 #include "../BookmarkPropertiesDialog.h"
 #include "../ContentsWidget.h"
-#include "../SearchDelegate.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
 #include "../../core/AddressCompletionModel.h"
 #include "../../core/BookmarksManager.h"
 #include "../../core/InputInterpreter.h"
+#include "../../core/HistoryManager.h"
 #include "../../core/NotesManager.h"
 #include "../../core/SearchesManager.h"
 #include "../../core/Utils.h"
@@ -51,20 +52,26 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
-	m_simpleMode(false)
+	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
+	m_isUsingSimpleMode(false),
+	m_wasPopupVisible(false)
 {
-	setEditable(true);
-	setWindow(window);
-	setItemDelegate(new SearchDelegate(height(), this));
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
+	setEditable(true);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setItemDelegate(new AddressDelegate(this));
+	setModel(HistoryManager::getTypedHistoryModel());
+	setInsertPolicy(QComboBox::NoInsert);
+	setWindow(window);
+
 	lineEdit()->setCompleter(m_completer);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
+	lineEdit()->setMouseTracking(true);
+	lineEdit()->installEventFilter(this);
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
@@ -72,7 +79,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	{
 		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
 		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
-		setMouseTracking(true);
 
 		lineEdit()->setPlaceholderText(tr("Enter address or search…"));
 
@@ -81,11 +87,13 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	}
 	else
 	{
-		m_simpleMode = true;
+		m_isUsingSimpleMode = true;
 	}
 
+	connect(this, SIGNAL(activated(int)), this, SLOT(openUrl(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
+	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
 }
 
 void AddressWidget::paintEvent(QPaintEvent *event)
@@ -101,7 +109,16 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
-	if (m_simpleMode)
+	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+	{
+		QStyleOption arrow;
+		arrow.initFrom(this);
+		arrow.rect = m_historyDropdownArrowRectangle;
+
+		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
+	}
+
+	if (m_isUsingSimpleMode)
 	{
 		return;
 	}
@@ -133,26 +150,34 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	QComboBox::resizeEvent(event);
 
-	updateIcons();
+	updateLineEdit();
 
-	if (event->size().height() != event->oldSize().height())
+	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
 	{
-		setItemDelegate(new SearchDelegate(height(), this));
+		QStyleOptionFrame panel;
+		panel.initFrom(lineEdit());
+		panel.rect = rect();
+		panel.lineWidth = 1;
+
+		m_historyDropdownArrowRectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+		m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.left() + m_historyDropdownArrowRectangle.width() - 12);
 	}
+
+	updateIcons();
 }
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
 {
-	if (event->reason() == Qt::MouseFocusReason && childAt(mapFromGlobal(QCursor::pos())))
+	if (event->reason() == Qt::MouseFocusReason && lineEdit()->childAt(mapFromGlobal(QCursor::pos())))
 	{
 		return;
 	}
 
-	QCoreApplication::sendEvent(lineEdit(), event);
+	QComboBox::focusInEvent(event);
 
-	if (!lineEdit()->text().trimmed().isEmpty() && (event->reason() == Qt::MouseFocusReason || event->reason() == Qt::ShortcutFocusReason || (!m_simpleMode && (event->reason() == Qt::TabFocusReason || event->reason() == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	if (!lineEdit()->text().trimmed().isEmpty() && (event->reason() == Qt::MouseFocusReason || event->reason() == Qt::ShortcutFocusReason || (!m_isUsingSimpleMode && (event->reason() == Qt::TabFocusReason || event->reason() == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
 	{
-		QTimer::singleShot(0, this, SLOT(selectAll()));
+		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
 	}
 	else if (event->reason() != Qt::PopupFocusReason)
 	{
@@ -183,7 +208,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 		}
 	}
 
-	if (!m_simpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
+	if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
 		handleUserInput(lineEdit()->text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, CurrentTabOpen));
 	}
@@ -199,7 +224,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(lineEdit()->hasSelectedText());
 	menu.addAction(tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
-	if (!m_simpleMode)
+	if (!m_isUsingSimpleMode)
 	{
 		menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
 	}
@@ -222,54 +247,38 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
-void AddressWidget::mouseMoveEvent(QMouseEvent *event)
+void AddressWidget::wheelEvent(QWheelEvent *event)
 {
-	QComboBox::mouseMoveEvent(event);
-
-	if (!m_simpleMode)
-	{
-		if (m_securityBadgeRectangle.contains(event->pos()))
-		{
-			setCursor(Qt::ArrowCursor);
-		}
-		else
-		{
-			setCursor(Qt::IBeamCursor);
-		}
-	}
+	event->ignore();
 }
 
-void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
+void AddressWidget::hidePopup()
 {
-	if (lineEdit()->text().isEmpty() && event->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
-	{
-		handleUserInput(QApplication::clipboard()->text().trimmed());
+	m_popupHideTime = QTime::currentTime();
 
-		event->accept();
-	}
-	else
-	{
-		QComboBox::mouseReleaseEvent(event);
-	}
-}
-
-void AddressWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-	if (event->button() == Qt::LeftButton)
-	{
-		lineEdit()->selectAll();
-
-		event->accept();
-	}
-	else
-	{
-		QComboBox::mouseDoubleClickEvent(event);
-	}
+	QComboBox::hidePopup();
 }
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
+	if (option == QLatin1String("AddressField/EnableHistoryDropdown"))
+	{
+		m_isHistoryDropdownEnabled = value.toBool();
+
+		if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+		{
+			QStyleOptionFrame panel;
+			panel.initFrom(lineEdit());
+			panel.rect = rect();
+			panel.lineWidth = 1;
+
+			m_historyDropdownArrowRectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+			m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.left() + m_historyDropdownArrowRectangle.width() - 12);
+		}
+
+		updateIcons();
+	}
+	else if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
 	{
 		if (value.toBool() && !m_bookmarkLabel)
 		{
@@ -348,6 +357,15 @@ void AddressWidget::openFeed(QAction *action)
 	{
 		m_window->setUrl(action->data().toUrl());
 	}
+}
+
+void AddressWidget::openUrl(int index)
+{
+	const QString url = itemData(index, Qt::DisplayRole).toString().trimmed();
+
+	setUrl(url);
+	handleUserInput(url);
+	updateLineEdit();
 }
 
 void AddressWidget::copyToNote()
@@ -475,11 +493,16 @@ void AddressWidget::updateLoadPlugins()
 	}
 }
 
+void AddressWidget::updateLineEdit()
+{
+	lineEdit()->setGeometry(QRect(0, 0, width(), height()));
+}
+
 void AddressWidget::updateIcons()
 {
 	QMargins margins;
 
-	if (!m_simpleMode)
+	if (!m_isUsingSimpleMode)
 	{
 		margins.setLeft(30);
 	}
@@ -489,6 +512,11 @@ void AddressWidget::updateIcons()
 		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
 
 		margins.setLeft(margins.left() + 22);
+	}
+
+	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+	{
+		margins.setRight(margins.right() + m_historyDropdownArrowRectangle.width());
 	}
 
 	if (m_bookmarkLabel)
@@ -619,7 +647,56 @@ QSize AddressWidget::sizeHint() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)
+	if (object == lineEdit() && event->type() == QEvent::MouseButtonPress)
+	{
+		m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
+	}
+	else if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			if (m_historyDropdownArrowRectangle.contains(mouseEvent->pos()))
+			{
+				m_popupHideTime = QTime();
+
+				if (m_wasPopupVisible)
+				{
+					hidePopup();
+				}
+				else
+				{
+					showPopup();
+				}
+			}
+			else if (lineEdit()->text().isEmpty() && mouseEvent->button() == Qt::MiddleButton && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
+			{
+				handleUserInput(QApplication::clipboard()->text().trimmed());
+
+				mouseEvent->accept();
+
+				return true;
+			}
+		}
+	}
+	else if (object == lineEdit() && event->type() == QEvent::MouseMove)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(mouseEvent->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(mouseEvent->pos())))
+			{
+				lineEdit()->setCursor(Qt::ArrowCursor);
+			}
+			else
+			{
+				lineEdit()->setCursor(Qt::IBeamCursor);
+			}
+		}
+	}
+	else if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -699,7 +776,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	if (event->type() == QEvent::ContextMenu)
+	if (object != lineEdit() && event->type() == QEvent::ContextMenu)
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 

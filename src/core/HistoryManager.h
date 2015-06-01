@@ -24,6 +24,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
+#include <QtGui/QStandardItemModel>
 #include <QtSql/QSqlRecord>
 
 namespace Otter
@@ -50,6 +51,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void clearHistory(int period = 0);
 	static HistoryManager* getInstance();
+	static QStandardItemModel* getTypedHistoryModel();
 	static QIcon getIcon(const QUrl &url);
 	static HistoryEntry getEntry(qint64 entry);
 	static QList<HistoryEntry> getEntries(bool typed = false);
@@ -72,12 +74,14 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option);
+	void updateTypedHistoryModel();
 
 private:
 	int m_cleanupTimer;
 	int m_dayTimer;
 
 	static HistoryManager *m_instance;
+	static QStandardItemModel *m_typedHistoryModel;
 	static bool m_isEnabled;
 	static bool m_isStoringFavicons;
 
@@ -87,6 +91,7 @@ signals:
 	void entryUpdated(qint64 entry);
 	void entryRemoved(qint64 entry);
 	void dayChanged();
+	void typedHistoryModelModified();
 };
 
 }

@@ -54,8 +54,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setEditable(true);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setItemDelegate(new SearchDelegate(height(), this));
 	setModel(SearchesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
