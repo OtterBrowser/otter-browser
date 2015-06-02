@@ -61,6 +61,8 @@ endif (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+include(GNUInstallDirs)
+
 if (MSVC)
 	set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MP")
