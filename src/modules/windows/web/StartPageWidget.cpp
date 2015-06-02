@@ -467,7 +467,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent)
 		{
-			const QModelIndex index = m_listView->currentIndex();
+			const QModelIndex index = m_listView->indexAt(mouseEvent->pos());
 			const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
 			if (type == BookmarksModel::FolderBookmark)
