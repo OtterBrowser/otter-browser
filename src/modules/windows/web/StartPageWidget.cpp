@@ -169,6 +169,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 
 	m_searchWidget->setFixedWidth(300);
 
+	m_listView->setAttribute(Qt::WA_MacShowFocusRect, false);
 	m_listView->setFrameStyle(QFrame::NoFrame);
 	m_listView->setStyleSheet(QLatin1String("QListView {padding:0;border:0;background:transparent;}"));
 	m_listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
