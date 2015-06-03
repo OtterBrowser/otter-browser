@@ -41,6 +41,8 @@ public:
 	void activateTabOnLeft();
 	void activateTabOnRight();
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
+	QSize minimumSizeHint() const;
+	QSize sizeHint() const;
 	int getPinnedTabsAmount() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -67,7 +69,6 @@ protected:
 	void showPreview(int index);
 	void hidePreview();
 	QSize tabSizeHint(int index) const;
-	QSize sizeHint() const;
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -79,7 +80,6 @@ protected slots:
 	void updatePinnedTabsAmount();
 	void updateButtons();
 	void updateTabs(int index = -1);
-	void setIsMoved(bool isMoved);
 
 private:
 	PreviewWidget *m_previewWidget;
@@ -94,7 +94,6 @@ private:
 	bool m_showCloseButton;
 	bool m_showUrlIcon;
 	bool m_enablePreviews;
-	bool m_isMoved;
 
 signals:
 	void layoutChanged();

@@ -55,8 +55,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewTimer(0),
 	m_showCloseButton(true),
 	m_showUrlIcon(true),
-	m_enablePreviews(true),
-	m_isMoved(false)
+	m_enablePreviews(true)
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
 	setDrawBase(false);
@@ -66,7 +65,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setElideMode(Qt::ElideRight);
 	setMouseTracking(true);
 	setDocumentMode(true);
-	setIsMoved(false);
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setStyle(new TabBarStyle());
@@ -85,7 +83,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	{
 		setArea(toolBar->getArea());
 
-		connect(toolBar, SIGNAL(topLevelChanged(bool)), this, SLOT(setIsMoved(bool)));
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}
 
@@ -450,7 +447,7 @@ void TabBarWidget::activateTabOnRight()
 
 void TabBarWidget::showPreview(int index)
 {
-	if (!m_enablePreviews || m_isMoved || (window() && !window()->underMouse()))
+	if (!m_enablePreviews || (window() && !window()->underMouse()))
 	{
 		hidePreview();
 
@@ -778,13 +775,6 @@ void TabBarWidget::setCycle(bool enable)
 	SettingsManager::setValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll"), !enable);
 }
 
-void TabBarWidget::setIsMoved(bool isMoved)
-{
-	m_isMoved = isMoved;
-
-	hidePreview();
-}
-
 void TabBarWidget::setArea(Qt::ToolBarArea area)
 {
 	switch (area)
@@ -876,6 +866,11 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	}
 
 	return QSize(250, QTabBar::tabSizeHint(0).height());
+}
+
+QSize TabBarWidget::minimumSizeHint() const
+{
+	return QSize(0, 0);
 }
 
 QSize TabBarWidget::sizeHint() const
