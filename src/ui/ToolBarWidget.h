@@ -67,6 +67,7 @@ public:
 	bool event(QEvent *event);
 
 protected:
+	void paintEvent(QPaintEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 	void startToolBarDragging();

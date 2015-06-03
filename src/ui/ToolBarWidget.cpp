@@ -145,6 +145,14 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	}
 }
 
+void ToolBarWidget::paintEvent(QPaintEvent *event)
+{
+	if (m_identifier >= 0 && m_identifier != ToolBarsManager::StatusBar)
+	{
+		QToolBar::paintEvent(event);
+	}
+}
+
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (m_identifier < 0)
