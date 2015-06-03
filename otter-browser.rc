@@ -15,7 +15,7 @@ BEGIN
 			VALUE "FileDescription", "Otter Browser"
 			VALUE "FileVersion", "0.9.07"
 			VALUE "InternalName", "otter-browser"
-			VALUE "LegalCopyright", "Copyright (C) 2013-2015 Michal Dutkiewicz"
+			VALUE "LegalCopyright", "Copyright (C) 2013-2015 Otter Browser Team"
 			VALUE "OriginalFilename", "otter-browser.exe"
 			VALUE "ProductName", "Otter Browser"
 			VALUE "ProductVersion", "0.9.07"

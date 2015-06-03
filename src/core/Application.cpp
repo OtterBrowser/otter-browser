@@ -37,7 +37,7 @@
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
-#elif defined(Q_OS_UNIX)
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include "../modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h"
 #endif
 #include "../ui/MainWindow.h"
@@ -226,7 +226,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
-#elif defined(Q_OS_UNIX)
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 	m_platformIntegration = new FreeDesktopOrgPlatformIntegration(this);
 #endif
 

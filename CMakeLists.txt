@@ -292,6 +292,20 @@ if (WIN32)
 		otter-browser.rc
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 	)
+elseif (APPLE)
+	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
+	set(MACOSX_BUNDLE_BUNDLE_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
+	set(MACOSX_BUNDLE_LONG_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
+	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
+	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
+	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2015 Otter Browser Team. All rights reserved.")
+	set(otter_src
+		${otter_src}
+		resources/icons/otter-browser.icns
+	)
+
+	set_source_files_properties(resources/icons/otter-browser.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 elseif (UNIX)
 	set(otter_src
 		${otter_src}
@@ -299,7 +313,7 @@ elseif (UNIX)
 	)
 endif (WIN32)
 
-add_executable(otter-browser
+add_executable(otter-browser MACOSX_BUNDLE
 	${otter_ui}
 	${otter_res}
 	${otter_src}
