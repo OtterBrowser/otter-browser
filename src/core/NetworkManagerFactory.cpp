@@ -75,7 +75,12 @@ void NetworkManagerFactory::initialize()
 	}
 
 	m_isInitialized = true;
+
+#if QT_VERSION < 0x050300
+	m_defaultCiphers = QSslSocket::supportedCiphers();
+#else
 	m_defaultCiphers = QSslSocket::defaultCiphers();
+#endif
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
 	{
