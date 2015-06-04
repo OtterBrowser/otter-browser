@@ -85,7 +85,7 @@ private:
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
-	bool m_isIgnoreMenu;
+	bool m_isIgnoringEnter;
 
 	static StartPageModel *m_model;
 };

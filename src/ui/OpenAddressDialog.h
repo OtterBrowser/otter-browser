@@ -33,6 +33,7 @@ namespace Ui
 }
 
 class AddressWidget;
+class InputInterpreter;
 
 class OpenAddressDialog : public QDialog
 {
@@ -46,12 +47,14 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 
 protected slots:
 	void handleUserInput();
 
 private:
 	AddressWidget *m_addressWidget;
+	InputInterpreter *m_inputInterpreter;
 	Ui::OpenAddressDialog *m_ui;
 
 signals:

@@ -31,6 +31,7 @@ namespace Otter
 
 OpenAddressDialog::OpenAddressDialog(QWidget *parent) : QDialog(parent),
 	m_addressWidget(NULL),
+	m_inputInterpreter(NULL),
 	m_ui(new Ui::OpenAddressDialog)
 {
 	m_ui->setupUi(this);
@@ -63,22 +64,36 @@ void OpenAddressDialog::changeEvent(QEvent *event)
 	}
 }
 
+void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+	{
+		handleUserInput();
+
+		event->accept();
+	}
+	else
+	{
+		QDialog::keyPressEvent(event);
+	}
+}
+
 void OpenAddressDialog::handleUserInput()
 {
 	if (m_addressWidget->lineEdit()->text().trimmed().isEmpty())
 	{
 		close();
 	}
-	else
+	else if (!m_inputInterpreter)
 	{
-		InputInterpreter *interpreter = new InputInterpreter(this);
+		m_inputInterpreter = new InputInterpreter(this);
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-		connect(interpreter, SIGNAL(destroyed()), this, SLOT(accept()));
+		connect(m_inputInterpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(destroyed()), this, SLOT(accept()));
 
-		interpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
 	}
 }
 
