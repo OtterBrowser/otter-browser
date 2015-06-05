@@ -288,7 +288,7 @@ void ToolBarAreaWidget::controlsHiddenChanged(bool hidden)
 
 			for (int i = 0; i < toolBars.count(); ++i)
 			{
-				if (toolBars.at(i) != m_tabBarToolBar)
+				if (toolBars.at(i) != m_tabBarToolBar && toolBars.at(i)->getIdentifier() >= 0 && ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).visibility == AlwaysVisibleToolBar)
 				{
 					toolBars.at(i)->show();
 				}
