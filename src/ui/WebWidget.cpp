@@ -35,6 +35,7 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -305,6 +306,44 @@ void WebWidget::openUrl(const QUrl &url, OpenHints hints)
 	widget->setRequestedUrl(url);
 
 	emit requestedNewWindow(widget, hints);
+}
+
+void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
+{
+	const HitTestResult hitResult = getHitTestResult(event->pos());
+	const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
+	const QString link = (hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString();
+	QString text;
+
+	if (toolTipsMode != QLatin1String("disabled"))
+	{
+		const QString title = QString(hitResult.title).replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
+
+		if (toolTipsMode == QLatin1String("extended"))
+		{
+			if (!link.isEmpty())
+			{
+				text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link);
+			}
+			else if (!title.isEmpty())
+			{
+				text = title;
+			}
+		}
+		else
+		{
+			text = title;
+		}
+	}
+
+	setStatusMessage((link.isEmpty() ? hitResult.title : link), true);
+
+	if (!text.isEmpty())
+	{
+		QToolTip::showText(event->globalPos(), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), widget);
+	}
+
+	event->accept();
 }
 
 void WebWidget::showDialog(ContentsDialog *dialog)

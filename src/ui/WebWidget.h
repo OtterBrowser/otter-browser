@@ -24,6 +24,7 @@
 #include "../core/SessionsManager.h"
 #include "Window.h"
 
+#include <QtGui/QHelpEvent>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QUndoStack>
@@ -206,6 +207,7 @@ protected:
 	void openUrl(const QUrl &url, OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
+	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void setAlternateStyleSheets(const QStringList &styleSheets);
 	void setClickPosition(const QPoint &position);
 	virtual void setOptions(const QVariantHash &options);

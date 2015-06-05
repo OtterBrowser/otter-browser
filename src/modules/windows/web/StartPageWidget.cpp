@@ -59,8 +59,6 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 	if (m_backgroundMode != NoCustomBackground && !m_backgroundPath.isEmpty())
 	{
-		painter.fillRect(geometry(), palette().color(QPalette::Window));
-
 		QPixmap pixmap(m_backgroundPath);
 
 		if (pixmap.isNull())

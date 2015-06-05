@@ -63,7 +63,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -2376,17 +2375,20 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 
 	QWebElement parentElement = nativeResult.element().parent();
 
-	while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
+	if ((result.tagName == QLatin1String("input") || result.tagName == QLatin1String("button")) && (nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
 	{
-		parentElement = parentElement.parent();
-	}
+		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
+		{
+			parentElement = parentElement.parent();
+		}
 
-	if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
-	{
-		const QUrl url(parentElement.attribute(QLatin1String("action")));
+		if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
+		{
+			const QUrl url(parentElement.attribute(QLatin1String("action")));
 
-		result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-		result.flags |= IsFormTest;
+			result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+			result.flags |= IsFormTest;
+		}
 	}
 
 	if (nativeResult.isContentEditable())
@@ -2591,58 +2593,12 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else if (event->type() == QEvent::ToolTip)
 		{
-			const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
-			const QPoint position = QCursor::pos();
-			const QWebHitTestResult result = m_webView->page()->mainFrame()->hitTestContent(m_webView->mapFromGlobal(position));
-			QString link = result.linkUrl().toString();
-			QString text;
+			QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
-			if (link.isEmpty() && (result.element().tagName().toLower() == QLatin1String("input") || result.element().tagName().toLower() == QLatin1String("button")) && (result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || result.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
+			if (helpEvent)
 			{
-				QWebElement parentElement = result.element().parent();
-
-				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
-				{
-					parentElement = parentElement.parent();
-				}
-
-				if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
-				{
-					const QUrl url(parentElement.attribute(QLatin1String("action")));
-
-					link = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-				}
+				handleToolTipEvent(helpEvent, m_webView);
 			}
-
-			if (toolTipsMode != QLatin1String("disabled"))
-			{
-				const QString title = result.title().replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
-
-				if (toolTipsMode == QLatin1String("extended"))
-				{
-					if (!link.isEmpty())
-					{
-						text = (title.isEmpty() ? QString() : tr("Title: %1").arg(title) + QLatin1String("<br>")) + tr("Address: %1").arg(link);
-					}
-					else if (!title.isEmpty())
-					{
-						text = title;
-					}
-				}
-				else
-				{
-					text = title;
-				}
-			}
-
-			setStatusMessage((link.isEmpty() ? result.title() : link), true);
-
-			if (!text.isEmpty())
-			{
-				QToolTip::showText(position, QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
-			}
-
-			event->accept();
 
 			return true;
 		}
