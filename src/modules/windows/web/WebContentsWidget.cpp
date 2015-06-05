@@ -92,6 +92,11 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	ContentsWidget::resizeEvent(event);
 
+	if (m_startPageWidget)
+	{
+		m_startPageWidget->setGeometry(m_webWidget->geometry());
+	}
+
 	if (m_progressBarWidget)
 	{
 		m_progressBarWidget->scheduleGeometryUpdate();
@@ -356,7 +361,14 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		default:
-			m_webWidget->triggerAction(identifier, checked);
+			if (m_startPageWidget && identifier == ActionsManager::ContextMenuAction)
+			{
+				m_startPageWidget->showContextMenu();
+			}
+			else
+			{
+				m_webWidget->triggerAction(identifier, checked);
+			}
 
 			break;
 	}
@@ -404,23 +416,13 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 	if (showStartPage && !m_startPageWidget)
 	{
-		m_layout->removeWidget(m_webWidget);
-
-		m_webWidget->hide();
-
-		m_startPageWidget = new StartPageWidget(window, this);
-
-		m_layout->addWidget(m_startPageWidget);
+		m_startPageWidget = new StartPageWidget(window, m_webWidget);
+		m_startPageWidget->setGeometry(m_webWidget->geometry());
+		m_startPageWidget->show();
 	}
 	else if (!showStartPage && m_startPageWidget)
 	{
 		m_startPageWidget->hide();
-
-		m_layout->addWidget(m_webWidget);
-		m_layout->removeWidget(m_startPageWidget);
-
-		m_webWidget->show();
-
 		m_startPageWidget->deleteLater();
 		m_startPageWidget = NULL;
 	}

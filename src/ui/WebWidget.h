@@ -93,6 +93,57 @@ public:
 
 	Q_DECLARE_FLAGS(FindFlags, FindFlag)
 
+	enum HitTestFlag
+	{
+		NoFlagsTest = 0,
+		IsContentEditableTest = 1,
+		IsEmptyTest = 2,
+		IsFormTest = 4,
+		IsSelectedTest = 8,
+		MediaHasControlsTest = 16,
+		MediaIsLoopedTest = 32,
+		MediaIsMutedTest = 64,
+		MediaIsPausedTest = 128
+	};
+
+	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
+
+	struct HitTestResult
+	{
+		QString title;
+		QString tagName;
+		QString alternateText;
+		QString longDescription;
+		QUrl formUrl;
+		QUrl frameUrl;
+		QUrl imageUrl;
+		QUrl linkUrl;
+		QUrl mediaUrl;
+		QPoint position;
+		QRect geometry;
+		HitTestFlags flags;
+
+		HitTestResult() : flags(NoFlagsTest) {}
+
+		explicit HitTestResult(const QVariant &result)
+		{
+			const QVariantMap map = result.toMap();
+			const QVariantMap geometryMap = map.value(QLatin1String("geometry")).toMap();
+
+			title = map.value(QLatin1String("title")).toString();
+			tagName = map.value(QLatin1String("tagName")).toString();
+			alternateText = map.value(QLatin1String("alternateText")).toString();
+			longDescription = map.value(QLatin1String("longDescription")).toString();
+			formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
+			frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
+			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
+			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
+			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
+			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
+			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
+		}
+	};
+
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog);
@@ -107,9 +158,11 @@ public:
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() = 0;
+	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
 	virtual WindowHistoryInformation getHistory() const = 0;
+	virtual HitTestResult getHitTestResult(const QPoint &position);
 	QStringList getAlternateStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
@@ -118,6 +171,11 @@ public:
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	ScrollMode getScrollMode() const;
 	virtual int getZoom() const = 0;
+	virtual bool handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate = true, QObject *sender = NULL);
+	virtual bool handleMousePressEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
+	virtual bool handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
+	virtual bool handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
+	virtual bool handleWheelEvent(QWheelEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	bool hasOption(const QString &key) const;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
@@ -128,7 +186,7 @@ public slots:
 	virtual void clearOptions();
 	virtual void clearSelection() = 0;
 	virtual void goToHistoryIndex(int index) = 0;
-	void showContextMenu(const QPoint &position, MenuFlags flags);
+	virtual void showContextMenu(const QPoint &position = QPoint(), MenuFlags flags = NoMenu);
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
@@ -145,14 +203,17 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
+	void openUrl(const QUrl &url, OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void setAlternateStyleSheets(const QStringList &styleSheets);
+	void setClickPosition(const QPoint &position);
 	virtual void setOptions(const QVariantHash &options);
 	QMenu* getPasteNoteMenu();
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString suggestSaveFileName() const;
+	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
 	void triggerAction();
@@ -174,11 +235,16 @@ private:
 	QString m_overridingStatusMessage;
 	QPoint m_beginCursorPosition;
 	QPoint m_beginScrollPosition;
+	QPoint m_clickPosition;
 	QStringList m_alternateStyleSheets;
 	QVariantHash m_options;
+	HitTestResult m_hitResult;
 	ScrollMode m_scrollMode;
 	int m_reloadTimer;
 	int m_scrollTimer;
+	bool m_ignoreContextMenu;
+	bool m_ignoreContextMenuNextTime;
+	bool m_isUsingRockerNavigation;
 
 	static QMap<int, QPixmap> m_scrollCursors;
 

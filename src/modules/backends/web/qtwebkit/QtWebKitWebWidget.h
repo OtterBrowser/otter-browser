@@ -60,6 +60,7 @@ public:
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	HitTestResult getHitTestResult(const QPoint &position);
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
 	QVector<int> getContentBlockingProfiles() const;
@@ -76,6 +77,7 @@ public slots:
 	void clearSelection();
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
+	void showContextMenu(const QPoint &position = QPoint(), MenuFlags flags = NoMenu);
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	void setOption(const QString &key, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
@@ -94,9 +96,7 @@ protected:
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
-	void mousePressEvent(QMouseEvent *event);
 	void clearPluginToken();
-	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void pasteText(const QString &text);
@@ -140,7 +140,6 @@ protected slots:
 	void updateMediaActions();
 	void updateBookmarkActions();
 	void updateOptions(const QUrl &url);
-	void showContextMenu(const QPoint &position = QPoint());
 
 private:
 	QWebView *m_webView;
@@ -152,7 +151,6 @@ private:
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
-	QPoint m_clickPosition;
 	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;

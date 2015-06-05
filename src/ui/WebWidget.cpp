@@ -23,11 +23,13 @@
 #include "Menu.h"
 #include "ReloadTimeDialog.h"
 #include "../core/ActionsManager.h"
+#include "../core/GesturesManager.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QTimer>
 #include <QtCore/QUrl>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QIcon>
@@ -46,7 +48,10 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_quickSearchMenu(NULL),
 	m_scrollMode(NoScroll),
 	m_reloadTimer(0),
-	m_scrollTimer(0)
+	m_scrollTimer(0),
+	m_ignoreContextMenu(false),
+	m_ignoreContextMenuNextTime(false),
+	m_isUsingRockerNavigation(false)
 {
 	Q_UNUSED(isPrivate)
 
@@ -294,6 +299,14 @@ void WebWidget::clearOptions()
 	m_options.clear();
 }
 
+void WebWidget::openUrl(const QUrl &url, OpenHints hints)
+{
+	WebWidget *widget = clone(false);
+	widget->setRequestedUrl(url);
+
+	emit requestedNewWindow(widget, hints);
+}
+
 void WebWidget::showDialog(ContentsDialog *dialog)
 {
 	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
@@ -487,6 +500,11 @@ void WebWidget::updateQuickSearch()
 void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
 {
 	m_alternateStyleSheets = styleSheets;
+}
+
+void WebWidget::setClickPosition(const QPoint &position)
+{
+	m_clickPosition = position;
 }
 
 void WebWidget::setStatusMessage(const QString &message, bool override)
@@ -790,6 +808,11 @@ QUrl WebWidget::getRequestedUrl() const
 	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
 }
 
+QPoint WebWidget::getClickPosition() const
+{
+	return m_clickPosition;
+}
+
 QStringList WebWidget::getAlternateStyleSheets() const
 {
 	return m_alternateStyleSheets;
@@ -820,9 +843,277 @@ QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 	return QHash<QByteArray, QByteArray>();
 }
 
+WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
+{
+	Q_UNUSED(position)
+
+	return HitTestResult();
+}
+
 WebWidget::ScrollMode WebWidget::getScrollMode() const
 {
 	return m_scrollMode;
+}
+
+bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate, QObject *sender)
+{
+	Q_UNUSED(sender)
+
+	m_ignoreContextMenu = (event->reason() == QContextMenuEvent::Mouse);
+
+	if (event->reason() == QContextMenuEvent::Keyboard)
+	{
+		triggerAction(ActionsManager::ContextMenuAction);
+	}
+
+	if (canPropagate)
+	{
+		WebWidget::contextMenuEvent(event);
+	}
+
+	return false;
+}
+
+bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
+{
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(ActionsManager::EndScrollAction);
+
+		m_ignoreContextMenuNextTime = true;
+	}
+
+	if (event->button() == Qt::BackButton)
+	{
+		triggerAction(ActionsManager::GoBackAction);
+
+		event->accept();
+
+		return true;
+	}
+
+	if (event->button() == Qt::ForwardButton)
+	{
+		triggerAction(ActionsManager::GoForwardAction);
+
+		event->accept();
+
+		return true;
+	}
+
+	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && !isScrollBar(event->pos()))
+	{
+		if (event->button() == Qt::LeftButton && event->buttons().testFlag(Qt::RightButton))
+		{
+			m_isUsingRockerNavigation = true;
+
+			triggerAction(ActionsManager::GoBackAction);
+
+			return true;
+		}
+
+		m_hitResult = getHitTestResult(event->pos());
+
+		if (m_hitResult.linkUrl.isValid())
+		{
+			if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
+			{
+				return false;
+			}
+
+			openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(event->modifiers(), event->button(), CurrentTabOpen));
+
+			event->accept();
+
+			return true;
+		}
+
+		if (event->button() == Qt::MiddleButton)
+		{
+			if (!m_hitResult.linkUrl.isValid() && m_hitResult .tagName != QLatin1String("textarea") && m_hitResult .tagName != QLatin1String("input"))
+			{
+				triggerAction(ActionsManager::StartMoveScrollAction);
+
+				return true;
+			}
+		}
+	}
+	else if (event->button() == Qt::RightButton)
+	{
+		m_hitResult = getHitTestResult(event->pos());
+
+		if (event->buttons().testFlag(Qt::LeftButton))
+		{
+			triggerAction(ActionsManager::GoForwardAction);
+
+			event->ignore();
+		}
+		else
+		{
+			event->accept();
+
+			if (m_hitResult.linkUrl.isValid())
+			{
+				m_clickPosition = event->pos();
+			}
+
+			GesturesManager::startGesture((m_hitResult.linkUrl.isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), sender, event);
+		}
+
+		return true;
+	}
+
+	if (canPropagate)
+	{
+		mousePressEvent(event);
+	}
+
+	return false;
+}
+
+bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
+{
+	if (getScrollMode() == MoveScroll)
+	{
+		return true;
+	}
+
+	if (event->button() == Qt::MiddleButton)
+	{
+		m_hitResult = getHitTestResult(event->pos());
+
+		if (getScrollMode() == DragScroll)
+		{
+			triggerAction(ActionsManager::EndScrollAction);
+		}
+		else if (m_hitResult.linkUrl.isValid())
+		{
+			return true;
+		}
+	}
+	else if (event->button() == Qt::RightButton && !event->buttons().testFlag(Qt::LeftButton))
+	{
+		if (m_isUsingRockerNavigation)
+		{
+			m_isUsingRockerNavigation = false;
+			m_ignoreContextMenuNextTime = true;
+
+			if (sender)
+			{
+				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(event->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(event->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+
+				QCoreApplication::sendEvent(sender, &mousePressEvent);
+				QCoreApplication::sendEvent(sender, &mouseReleaseEvent);
+			}
+		}
+		else
+		{
+			m_ignoreContextMenu = false;
+
+			if (!GesturesManager::endGesture(sender, event))
+			{
+				if (m_ignoreContextMenuNextTime)
+				{
+					m_ignoreContextMenuNextTime = false;
+
+					event->ignore();
+
+					return false;
+				}
+
+				ContentsWidget *contentsWidget = qobject_cast<ContentsWidget*>(parentWidget());
+
+				if (contentsWidget)
+				{
+					contentsWidget->triggerAction(ActionsManager::ContextMenuAction);
+				}
+				else
+				{
+					showContextMenu(event->pos());
+				}
+			}
+		}
+
+		return true;
+	}
+
+	if (canPropagate)
+	{
+		mouseReleaseEvent(event);
+	}
+
+	return false;
+}
+
+bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
+{
+	Q_UNUSED(sender)
+
+	if (SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool() && event->button() == Qt::LeftButton)
+	{
+		m_hitResult = getHitTestResult(event->pos());
+
+		if (!m_hitResult.flags.testFlag(IsContentEditableTest) && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName!= QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
+		{
+			m_clickPosition = event->pos();
+
+			QTimer::singleShot(250, this, SLOT(showContextMenu()));
+		}
+	}
+
+	if (canPropagate)
+	{
+		mouseDoubleClickEvent(event);
+	}
+
+	return false;
+}
+
+bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject *sender)
+{
+	Q_UNUSED(sender)
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(ActionsManager::EndScrollAction);
+
+		return true;
+	}
+	else
+	{
+		if (event->buttons() == Qt::RightButton)
+		{
+			m_ignoreContextMenuNextTime = true;
+
+			event->ignore();
+
+			return false;
+		}
+
+		if (event->modifiers().testFlag(Qt::ControlModifier))
+		{
+			setZoom(getZoom() + (event->delta() / 16));
+
+			event->accept();
+
+			return true;
+		}
+	}
+
+	if (canPropagate)
+	{
+		wheelEvent(event);
+	}
+
+	return false;
+}
+
+bool WebWidget::isScrollBar(const QPoint &position) const
+{
+	Q_UNUSED(position)
+
+	return false;
 }
 
 bool WebWidget::hasOption(const QString &key) const

@@ -144,7 +144,7 @@ void GesturesManager::loadProfiles()
 
 void GesturesManager::startGesture(GesturesContext context, QObject *object, QMouseEvent *event)
 {
-	if (!m_gestures.contains(context))
+	if (!m_gestures.contains(context) || !object)
 	{
 		return;
 	}
@@ -165,6 +165,11 @@ void GesturesManager::startGesture(GesturesContext context, QObject *object, QMo
 
 bool GesturesManager::endGesture(QObject *object, QMouseEvent *event)
 {
+	if (!object)
+	{
+		return false;
+	}
+
 	object->removeEventFilter(m_instance);
 
 	if (m_recognizer && m_gestures.contains(m_context))

@@ -36,56 +36,6 @@ class QtWebEngineWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
-	enum HitTestFlag
-	{
-		NoFlagsTest = 0,
-		IsContentEditableTest = 1,
-		IsEmptyTest = 2,
-		IsFormTest = 4,
-		IsSelectedTest = 8,
-		MediaHasControlsTest = 16,
-		MediaIsLoopedTest = 32,
-		MediaIsMutedTest = 64,
-		MediaIsPausedTest = 128
-	};
-
-	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
-
-	struct HitTestResult
-	{
-		QString title;
-		QString tagName;
-		QString alternateText;
-		QString longDescription;
-		QUrl formUrl;
-		QUrl frameUrl;
-		QUrl imageUrl;
-		QUrl linkUrl;
-		QUrl mediaUrl;
-		QRect geometry;
-		HitTestFlags flags;
-
-		HitTestResult() : flags(NoFlagsTest) {}
-
-		explicit HitTestResult(const QVariant &result)
-		{
-			const QVariantMap map = result.toMap();
-			const QVariantMap geometryMap = map.value(QLatin1String("geometry")).toMap();
-
-			title = map.value(QLatin1String("title")).toString();
-			tagName = map.value(QLatin1String("tagName")).toString();
-			alternateText = map.value(QLatin1String("alternateText")).toString();
-			longDescription = map.value(QLatin1String("longDescription")).toString();
-			formUrl = QUrl(map.value(QLatin1String("formUrl")).toString());
-			frameUrl = QUrl(map.value(QLatin1String("frameUrl")).toString());
-			imageUrl = QUrl(map.value(QLatin1String("imageUrl")).toString());
-			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
-			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
-			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
-			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
-		}
-	};
-
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true);

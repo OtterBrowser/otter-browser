@@ -63,9 +63,15 @@ public:
 
 	bool eventFilter(QObject *object, QEvent *event);
 
+public slots:
+	void showContextMenu(const QPoint &position = QPoint());
+
 protected:
 	void resizeEvent(QResizeEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	void wheelEvent(QWheelEvent *event);
 	int getTilesPerRow() const;
 
 protected slots:
@@ -85,7 +91,7 @@ private:
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
-	bool m_isIgnoringEnter;
+	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;
 };

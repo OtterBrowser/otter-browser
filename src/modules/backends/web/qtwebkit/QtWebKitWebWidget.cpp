@@ -28,7 +28,6 @@
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/ContentBlockingManager.h"
-#include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -55,6 +54,7 @@
 #include <QtCore/QUuid>
 #include <QtGui/QClipboard>
 #include <QtGui/QImageWriter>
+#include <QtGui/QMouseEvent>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
@@ -168,18 +168,6 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	if (m_inspector && m_inspector->isVisible())
 	{
 		m_inspectorCloseButton->raise();
-	}
-}
-
-void QtWebKitWebWidget::mousePressEvent(QMouseEvent *event)
-{
-	WebWidget::mousePressEvent(event);
-
-	if (getScrollMode() == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-
-		m_ignoreContextMenuNextTime = true;
 	}
 }
 
@@ -410,14 +398,6 @@ void QtWebKitWebWidget::linkHovered(const QString &link)
 void QtWebKitWebWidget::clearPluginToken()
 {
 	m_pluginToken = QString();
-}
-
-void QtWebKitWebWidget::openUrl(const QUrl &url, OpenHints hints)
-{
-	WebWidget *widget = clone(false);
-	widget->setRequestedUrl(url);
-
-	emit requestedNewWindow(widget, hints);
 }
 
 void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
@@ -949,7 +929,7 @@ void QtWebKitWebWidget::updateMediaActions()
 
 	if (m_actions.contains(ActionsManager::MediaControlsAction))
 	{
-		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.loop")).toBool());
+		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.controls")).toBool());
 		m_actions[ActionsManager::MediaControlsAction]->setEnabled(isMedia);
 	}
 
@@ -1069,13 +1049,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::OpenLinkAction:
 			{
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 
 				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
 				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
 
-				m_clickPosition = QPoint();
+				setClickPosition(QPoint());
 			}
 
 			break;
@@ -1394,23 +1374,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 				if (element.isNull())
 				{
-					m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
 				}
 				else
 				{
-					m_clickPosition = element.geometry().center();
+					QPoint clickPosition = element.geometry().center();
 
 					QWebFrame *frame = element.webFrame();
 
 					while (frame)
 					{
-						m_clickPosition -= frame->scrollPosition();
+						clickPosition -= frame->scrollPosition();
 
 						frame = frame->parentFrame();
 					}
+
+					setClickPosition(clickPosition);
 				}
 
-				showContextMenu(m_clickPosition);
+				showContextMenu(getClickPosition());
 			}
 
 			break;
@@ -1723,14 +1705,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
-void QtWebKitWebWidget::showContextMenu(const QPoint &position)
+void QtWebKitWebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
-	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().isEmpty() || m_clickPosition.isNull())))
+	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().trimmed().isEmpty() || getClickPosition().isNull())))
 	{
 		return;
 	}
 
-	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
+	const QPoint hitPosition = (position.isNull() ? getClickPosition() : position);
 
 	if (isScrollBar(hitPosition))
 	{
@@ -1758,7 +1740,8 @@ void QtWebKitWebWidget::showContextMenu(const QPoint &position)
 
 	updateEditActions();
 
-	MenuFlags flags = NoMenu;
+	flags = NoMenu;
+
 	const QString tagName = m_hitResult.element().tagName().toLower();
 	const QString tagType = m_hitResult.element().attribute(QLatin1String("type")).toLower();
 
@@ -2373,6 +2356,89 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 	return information;
 }
 
+WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &position)
+{
+	const QWebHitTestResult nativeResult = m_webView->page()->mainFrame()->hitTestContent(position);
+
+	HitTestResult result;
+	result.title = nativeResult.title();
+	result.tagName = nativeResult.element().tagName().toLower();
+	result.alternateText = nativeResult.element().attribute(QLatin1String("alt"));
+	result.longDescription = nativeResult.element().attribute(QLatin1String("longDesc"));
+	result.frameUrl = (nativeResult.frame() ? nativeResult.frame()->url() : QUrl());
+	result.imageUrl = nativeResult.imageUrl();
+	result.linkUrl = nativeResult.linkUrl();
+#if QTWEBKIT_VERSION >= 0x050200
+	result.mediaUrl = nativeResult.mediaUrl();
+#endif
+	result.position = position;
+	result.geometry = nativeResult.element().geometry();
+
+	QWebElement parentElement = nativeResult.element().parent();
+
+	while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
+	{
+		parentElement = parentElement.parent();
+	}
+
+	if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
+	{
+		const QUrl url(parentElement.attribute(QLatin1String("action")));
+
+		result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+		result.flags |= IsFormTest;
+	}
+
+	if (nativeResult.isContentEditable())
+	{
+		result.flags |= IsContentEditableTest;
+
+		if (result.tagName == QLatin1String("textarea") && nativeResult.element().toPlainText().isEmpty())
+		{
+			result.flags |= IsEmptyTest;
+		}
+		else if (result.tagName == QLatin1String("input"))
+		{
+			const QString type = nativeResult.element().attribute(QLatin1String("type")).toLower();
+
+			if ((type == QLatin1String("text") || type == QLatin1String("search")) && nativeResult.element().attribute(QLatin1String("value")).isEmpty())
+			{
+				result.flags |= IsEmptyTest;
+			}
+		}
+	}
+
+	if (nativeResult.isContentSelected())
+	{
+		result.flags |= IsSelectedTest;
+	}
+
+	if (result.mediaUrl.isValid())
+	{
+		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.controls")).toBool())
+		{
+			result.flags |= MediaHasControlsTest;
+		}
+
+		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.looped")).toBool())
+		{
+			result.flags |= MediaIsLoopedTest;
+		}
+
+		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool())
+		{
+			result.flags |= MediaIsMutedTest;
+		}
+
+		if (nativeResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool())
+		{
+			result.flags |= MediaIsPausedTest;
+		}
+	}
+
+	return result;
+}
+
 QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements = m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]"));
@@ -2514,11 +2580,9 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
-			m_ignoreContextMenu = (contextMenuEvent->reason() == QContextMenuEvent::Mouse);
-
-			if (contextMenuEvent->reason() == QContextMenuEvent::Keyboard)
+			if (contextMenuEvent)
 			{
-				triggerAction(ActionsManager::ContextMenuAction);
+				handleContextMenuEvent(contextMenuEvent, false);
 			}
 		}
 		else if (event->type() == QEvent::Resize)
@@ -2586,216 +2650,65 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent->button() == Qt::BackButton)
+			if (mouseEvent)
 			{
-				triggerAction(ActionsManager::GoBackAction);
-
-				event->accept();
-
-				return true;
-			}
-
-			if (mouseEvent->button() == Qt::ForwardButton)
-			{
-				triggerAction(ActionsManager::GoForwardAction);
-
-				event->accept();
-
-				return true;
-			}
-
-			if ((mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton) && !isScrollBar(mouseEvent->pos()))
-			{
-				if (mouseEvent->button() == Qt::LeftButton && mouseEvent->buttons().testFlag(Qt::RightButton))
-				{
-					m_isUsingRockerNavigation = true;
-
-					triggerAction(ActionsManager::GoBackAction);
-
-					return true;
-				}
-
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (m_hitResult.linkUrl().isValid())
-				{
-					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() == Qt::NoModifier)
-					{
-						return false;
-					}
-
-					openUrl(m_hitResult.linkUrl(), WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), CurrentTabOpen));
-
-					event->accept();
-
-					return true;
-				}
-
-				if (mouseEvent->button() == Qt::MiddleButton)
-				{
-					const QString tagName = m_hitResult.element().tagName().toLower();
-
-					if (!m_hitResult.linkUrl().isValid() && tagName != QLatin1String("textarea") && tagName != QLatin1String("input"))
-					{
-						triggerAction(ActionsManager::StartMoveScrollAction);
-
-						return true;
-					}
-				}
-			}
-			else if (mouseEvent->button() == Qt::RightButton)
-			{
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (mouseEvent->buttons().testFlag(Qt::LeftButton))
-				{
-					triggerAction(ActionsManager::GoForwardAction);
-
-					event->ignore();
-				}
-				else
-				{
-					event->accept();
-
-					if (!m_hitResult.linkElement().isNull())
-					{
-						m_clickPosition = mouseEvent->pos();
-					}
-
-					GesturesManager::startGesture((m_hitResult.linkUrl().isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), m_webView, mouseEvent);
-				}
-
-				return true;
+				return handleMousePressEvent(mouseEvent, true, m_webView);
 			}
 		}
 		else if (event->type() == QEvent::MouseButtonRelease)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (getScrollMode() == MoveScroll)
+			if (mouseEvent)
 			{
-				return true;
-			}
-
-			if (mouseEvent->button() == Qt::MiddleButton)
-			{
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (getScrollMode() == DragScroll)
+				if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
 				{
-					triggerAction(ActionsManager::EndScrollAction);
-				}
-				else if (m_hitResult.linkUrl().isValid())
-				{
-					return true;
-				}
-			}
-			else if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
-			{
-				QWidget *widget = childAt(mouseEvent->pos());
+					QWidget *widget = childAt(mouseEvent->pos());
 
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
 
-				const QString tagName = m_hitResult.element().tagName().toLower();
+					const QString tagName = m_hitResult.element().tagName().toLower();
 
-				if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
-				{
-					m_pluginToken = QUuid::createUuid().toString();
-
-					m_hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
-
-					QWebElement element = m_hitResult.element().clone();
-
-					m_hitResult.element().replace(element);
-
-					element.removeAttribute(QLatin1String("data-otter-browser"));
-
-					if (m_actions.contains(ActionsManager::LoadPluginsAction))
+					if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
 					{
-						getAction(ActionsManager::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-					}
-				}
-			}
-			else if (mouseEvent->button() == Qt::RightButton && !mouseEvent->buttons().testFlag(Qt::LeftButton))
-			{
-				if (m_isUsingRockerNavigation)
-				{
-					m_isUsingRockerNavigation = false;
-					m_ignoreContextMenuNextTime = true;
+						m_pluginToken = QUuid::createUuid().toString();
 
-					QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
-					QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(mouseEvent->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+						m_hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
 
-					QCoreApplication::sendEvent(m_webView, &mousePressEvent);
-					QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
-				}
-				else
-				{
-					m_ignoreContextMenu = false;
+						QWebElement element = m_hitResult.element().clone();
 
-					if (!GesturesManager::endGesture(m_webView, mouseEvent))
-					{
-						if (m_ignoreContextMenuNextTime)
+						m_hitResult.element().replace(element);
+
+						element.removeAttribute(QLatin1String("data-otter-browser"));
+
+						if (m_actions.contains(ActionsManager::LoadPluginsAction))
 						{
-							m_ignoreContextMenuNextTime = false;
-
-							event->ignore();
-
-							return false;
+							getAction(ActionsManager::LoadPluginsAction)->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 						}
 
-						showContextMenu(mouseEvent->pos());
+						return true;
 					}
 				}
 
-				return true;
+				return handleMouseReleaseEvent(mouseEvent, true, m_webView);
 			}
 		}
-		else if (event->type() == QEvent::MouseButtonDblClick && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+		else if (event->type() == QEvent::MouseButtonDblClick)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+			if (mouseEvent)
 			{
-				m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-				if (!m_hitResult.isContentEditable() && m_hitResult.element().tagName().toLower() != QLatin1String("textarea") && m_hitResult.element().tagName().toLower() != QLatin1String("select") && m_hitResult.element().tagName().toLower() != QLatin1String("input"))
-				{
-					m_clickPosition = mouseEvent->pos();
-
-					QTimer::singleShot(250, this, SLOT(showContextMenu()));
-				}
+				return handleMouseDoubleClickEvent(mouseEvent, true);
 			}
 		}
 		else if (event->type() == QEvent::Wheel)
 		{
-			if (getScrollMode() == MoveScroll)
+			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+			if (wheelEvent)
 			{
-				triggerAction(ActionsManager::EndScrollAction);
-
-				return true;
-			}
-			else
-			{
-				QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-
-				if (wheelEvent->buttons() == Qt::RightButton)
-				{
-					m_ignoreContextMenuNextTime = true;
-
-					event->ignore();
-
-					return false;
-				}
-
-				if (wheelEvent->modifiers().testFlag(Qt::ControlModifier))
-				{
-					setZoom(getZoom() + (wheelEvent->delta() / 16));
-
-					event->accept();
-
-					return true;
-				}
+				return handleWheelEvent(wheelEvent, true);
 			}
 		}
 		else if (event->type() == QEvent::ShortcutOverride)
