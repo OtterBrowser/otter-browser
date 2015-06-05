@@ -346,6 +346,11 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	event->accept();
 }
 
+void WebWidget::updateHitTestResult(const QPoint &position)
+{
+	m_hitResult = getHitTestResult(position);
+}
+
 void WebWidget::showDialog(ContentsDialog *dialog)
 {
 	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
@@ -358,6 +363,78 @@ void WebWidget::showDialog(ContentsDialog *dialog)
 
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
+	const bool hasSelection = getSelectedText().trimmed().isEmpty();
+
+	if (m_ignoreContextMenu || (position.isNull() && (hasSelection || m_clickPosition.isNull())))
+	{
+		return;
+	}
+
+	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
+
+	if (isScrollBar(hitPosition) || (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool() && !canShowContextMenu(hitPosition)))
+	{
+		return;
+	}
+
+	updateHitTestResult(hitPosition);
+	updateEditActions();
+
+	if (flags == NoMenu)
+	{
+		if (m_hitResult.flags.testFlag(IsFormTest))
+		{
+			flags |= FormMenu;
+		}
+
+		if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && !hasSelection)
+		{
+			flags |= SelectionMenu;
+		}
+
+		if (m_hitResult.linkUrl.isValid())
+		{
+			if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
+			{
+				flags |= MailMenu;
+			}
+			else
+			{
+				flags |= LinkMenu;
+			}
+		}
+
+		if (!m_hitResult.imageUrl.isEmpty())
+		{
+			flags |= ImageMenu;
+		}
+
+		if (m_hitResult.mediaUrl.isValid())
+		{
+			flags |= MediaMenu;
+		}
+
+		if (m_hitResult.flags.testFlag(IsContentEditableTest))
+		{
+			flags |= EditMenu;
+		}
+
+		if (flags == NoMenu || flags == FormMenu)
+		{
+			flags |= StandardMenu;
+
+			if (m_hitResult.frameUrl.isValid())
+			{
+				flags |= FrameMenu;
+			}
+		}
+	}
+
+	if (flags == NoMenu)
+	{
+		return;
+	}
+
 	QMenu menu;
 
 	if (flags & StandardMenu)
@@ -525,7 +602,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		}
 	}
 
-	menu.exec(mapToGlobal(position));
+	menu.exec(mapToGlobal(m_hitResult.position));
 }
 
 void WebWidget::updateQuickSearch()
@@ -534,6 +611,39 @@ void WebWidget::updateQuickSearch()
 	{
 		m_quickSearchMenu->clear();
 	}
+}
+
+void WebWidget::updatePageActions(const QUrl &url)
+{
+	Q_UNUSED(url)
+}
+
+void WebWidget::updateNavigationActions()
+{
+}
+
+void WebWidget::updateEditActions()
+{
+}
+
+void WebWidget::updateLinkActions()
+{
+}
+
+void WebWidget::updateFrameActions()
+{
+}
+
+void WebWidget::updateImageActions()
+{
+}
+
+void WebWidget::updateMediaActions()
+{
+}
+
+void WebWidget::updateBookmarkActions()
+{
 }
 
 void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
@@ -882,6 +992,11 @@ QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 	return QHash<QByteArray, QByteArray>();
 }
 
+WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
+{
+	return m_hitResult;
+}
+
 WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 {
 	Q_UNUSED(position)
@@ -951,7 +1066,7 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 			return true;
 		}
 
-		m_hitResult = getHitTestResult(event->pos());
+		updateHitTestResult(event->pos());
 
 		if (m_hitResult.linkUrl.isValid())
 		{
@@ -979,7 +1094,7 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		m_hitResult = getHitTestResult(event->pos());
+		updateHitTestResult(event->pos());
 
 		if (event->buttons().testFlag(Qt::LeftButton))
 		{
@@ -1019,7 +1134,7 @@ bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, Q
 
 	if (event->button() == Qt::MiddleButton)
 	{
-		m_hitResult = getHitTestResult(event->pos());
+		updateHitTestResult(event->pos());
 
 		if (getScrollMode() == DragScroll)
 		{
@@ -1091,7 +1206,7 @@ bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagat
 
 	if (SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool() && event->button() == Qt::LeftButton)
 	{
-		m_hitResult = getHitTestResult(event->pos());
+		updateHitTestResult(event->pos());
 
 		if (!m_hitResult.flags.testFlag(IsContentEditableTest) && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName!= QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
 		{
@@ -1146,6 +1261,13 @@ bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject 
 	}
 
 	return false;
+}
+
+bool WebWidget::canShowContextMenu(const QPoint &position) const
+{
+	Q_UNUSED(position)
+
+	return true;
 }
 
 bool WebWidget::isScrollBar(const QPoint &position) const

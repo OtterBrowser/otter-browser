@@ -77,7 +77,6 @@ public slots:
 	void clearSelection();
 	void goToHistoryIndex(int index);
 	void triggerAction(int identifier, bool checked = false);
-	void showContextMenu(const QPoint &position = QPoint(), MenuFlags flags = NoMenu);
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	void setOption(const QString &key, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
@@ -106,6 +105,7 @@ protected:
 	QString getPluginToken() const;
 	QWebPage* getPage();
 	bool canLoadPlugins() const;
+	bool canShowContextMenu(const QPoint &position) const;
 	bool isScrollBar(const QPoint &position) const;
 
 protected slots:
@@ -151,7 +151,6 @@ private:
 	QSplitter *m_splitter;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
-	QWebHitTestResult m_hitResult;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QVector<int> m_contentBlockingProfiles;

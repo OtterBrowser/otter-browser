@@ -267,11 +267,7 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 {
-#if QTWEBKIT_VERSION >= 0x050200
-	if ((!m_hitResult.imageUrl().isEmpty() && request.url() == m_hitResult.imageUrl()) || (!m_hitResult.mediaUrl().isEmpty() && request.url() == m_hitResult.mediaUrl()))
-#else
-	if (!m_hitResult.imageUrl().isEmpty() && request.url() == m_hitResult.imageUrl())
-#endif
+	if ((!getCurrentHitTestResult().imageUrl.isEmpty() && request.url() == getCurrentHitTestResult().imageUrl) || (!getCurrentHitTestResult().mediaUrl.isEmpty() && request.url() == getCurrentHitTestResult().mediaUrl))
 	{
 		NetworkCache *cache = NetworkManagerFactory::getCache();
 
@@ -310,9 +306,9 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 				device->deleteLater();
 			}
 		}
-		else if (!m_hitResult.imageUrl().isEmpty() && m_hitResult.imageUrl().url().contains(QLatin1String(";base64,")))
+		else if (!getCurrentHitTestResult().imageUrl.isEmpty() && getCurrentHitTestResult().imageUrl.url().contains(QLatin1String(";base64,")))
 		{
-			const QString imageUrl = m_hitResult.imageUrl().url();
+			const QString imageUrl = getCurrentHitTestResult().imageUrl.url();
 			const QString imageType = imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11));
 			const QString path = TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType);
 
@@ -722,13 +718,14 @@ void QtWebKitWebWidget::updateEditActions()
 		m_actions[ActionsManager::DeleteAction]->setEnabled(m_page->action(QWebPage::DeleteEndOfWord)->isEnabled());
 	}
 
+	if (m_actions.contains(ActionsManager::SelectAllAction))
+	{
+		m_actions[ActionsManager::SelectAllAction]->setEnabled(!getCurrentHitTestResult().flags.testFlag(IsContentEditableTest) || !getCurrentHitTestResult().flags.testFlag(IsEmptyTest));
+	}
+
 	if (m_actions.contains(ActionsManager::ClearAllAction))
 	{
-		const QWebElement element = m_hitResult.element();
-		const QString tagName = element.tagName().toLower();
-		const QString type = element.attribute(QLatin1String("type")).toLower();
-
-		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_hitResult.isContentEditable() && ((tagName == QLatin1String("textarea") && !element.toPlainText().isEmpty()) || (tagName == QLatin1String("input") && (type.isEmpty() || type == QLatin1String("text") || type == QLatin1String("search")) && !element.attribute(QLatin1String("value")).isEmpty())));
+		m_actions[ActionsManager::ClearAllAction]->setEnabled(getCurrentHitTestResult().flags.testFlag(IsContentEditableTest) && !getCurrentHitTestResult().flags.testFlag(IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::SearchAction))
@@ -756,7 +753,7 @@ void QtWebKitWebWidget::updateEditActions()
 
 void QtWebKitWebWidget::updateLinkActions()
 {
-	const bool isLink = m_hitResult.linkUrl().isValid();
+	const bool isLink = getCurrentHitTestResult().linkUrl.isValid();
 
 	if (m_actions.contains(ActionsManager::OpenLinkAction))
 	{
@@ -815,7 +812,7 @@ void QtWebKitWebWidget::updateLinkActions()
 
 	if (m_actions.contains(ActionsManager::BookmarkLinkAction))
 	{
-		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
+		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(getCurrentHitTestResult().linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
 		m_actions[ActionsManager::BookmarkLinkAction]->setEnabled(isLink);
 	}
 
@@ -832,7 +829,7 @@ void QtWebKitWebWidget::updateLinkActions()
 
 void QtWebKitWebWidget::updateFrameActions()
 {
-	const bool isFrame = (m_hitResult.frame() && m_hitResult.frame() != m_page->mainFrame());
+	const bool isFrame = (getCurrentHitTestResult().frameUrl.isValid());
 
 	if (m_actions.contains(ActionsManager::OpenFrameInCurrentTabAction))
 	{
@@ -861,19 +858,19 @@ void QtWebKitWebWidget::updateFrameActions()
 
 	if (m_actions.contains(ActionsManager::ViewFrameSourceAction))
 	{
-		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(isFrame && m_hitResult.frame()->url().isValid());
+		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(isFrame);
 	}
 }
 
 void QtWebKitWebWidget::updateImageActions()
 {
-	const bool isImage = (!m_hitResult.pixmap().isNull() || !m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img"));
-	const bool isOpened = getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
-	const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl().fileName(), Qt::ElideMiddle, 256);
+	const bool isImage = !getCurrentHitTestResult().imageUrl.isEmpty();
+	const bool isOpened = getUrl().matches(getCurrentHitTestResult().imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+	const QString fileName = fontMetrics().elidedText(getCurrentHitTestResult().imageUrl.fileName(), Qt::ElideMiddle, 256);
 
 	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
 	{
-		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl().scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image"));
+		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image"));
 		m_actions[ActionsManager::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
 	}
 
@@ -905,14 +902,10 @@ void QtWebKitWebWidget::updateImageActions()
 
 void QtWebKitWebWidget::updateMediaActions()
 {
-#if QTWEBKIT_VERSION >= 0x050200
-	const bool isMedia = m_hitResult.mediaUrl().isValid();
-#else
-	const bool isMedia = false;
-#endif
-	const bool isVideo = (m_hitResult.element().tagName().toLower() == QLatin1String("video"));
-	const bool isPaused = m_hitResult.element().evaluateJavaScript(QLatin1String("this.paused")).toBool();
-	const bool isMuted = m_hitResult.element().evaluateJavaScript(QLatin1String("this.muted")).toBool();
+	const bool isMedia = getCurrentHitTestResult().mediaUrl.isValid();
+	const bool isVideo = (getCurrentHitTestResult().tagName == QLatin1String("video"));
+	const bool isPaused = getCurrentHitTestResult().flags.testFlag(MediaIsPausedTest);
+	const bool isMuted = getCurrentHitTestResult().flags.testFlag(MediaIsMutedTest);
 
 	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
 	{
@@ -928,13 +921,13 @@ void QtWebKitWebWidget::updateMediaActions()
 
 	if (m_actions.contains(ActionsManager::MediaControlsAction))
 	{
-		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.controls")).toBool());
+		m_actions[ActionsManager::MediaControlsAction]->setChecked(getCurrentHitTestResult().flags.testFlag(MediaHasControlsTest));
 		m_actions[ActionsManager::MediaControlsAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(ActionsManager::MediaLoopAction))
 	{
-		m_actions[ActionsManager::MediaLoopAction]->setChecked(m_hitResult.element().evaluateJavaScript(QLatin1String("this.looped")).toBool());
+		m_actions[ActionsManager::MediaLoopAction]->setChecked(getCurrentHitTestResult().flags.testFlag(MediaIsLoopedTest));
 		m_actions[ActionsManager::MediaLoopAction]->setEnabled(isMedia);
 	}
 
@@ -1059,87 +1052,88 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::OpenLinkInCurrentTabAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), CurrentTabOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, CurrentTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewTabAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewTabOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewBackgroundTabOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewBackgroundTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewWindowAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewWindowOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewWindowOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewBackgroundWindowOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewBackgroundWindowOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewPrivateTabOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewPrivateTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewPrivateBackgroundTabOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewPrivateBackgroundTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewPrivateWindowOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewPrivateWindowOpen);
 			}
 
 			break;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl(), NewPrivateBackgroundWindowOpen);
+				openUrl(getCurrentHitTestResult().linkUrl, NewPrivateBackgroundWindowOpen);
 			}
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (!m_hitResult.linkUrl().isEmpty())
+			if (!getCurrentHitTestResult().linkUrl.isEmpty())
 			{
-				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl().toString());
+				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString());
 			}
 
 			break;
 		case ActionsManager::BookmarkLinkAction:
-			if (m_hitResult.linkUrl().isValid())
+			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				if (BookmarksManager::hasBookmark(m_hitResult.linkUrl()))
+				if (BookmarksManager::hasBookmark(getCurrentHitTestResult().linkUrl))
 				{
-					emit requestedEditBookmark(m_hitResult.linkUrl());
+					emit requestedEditBookmark(getCurrentHitTestResult().linkUrl);
 				}
 				else
 				{
-					const QString title = m_hitResult.element().attribute(QLatin1String("title"));
+					const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
+					const QString title = getCurrentHitTestResult().title;
 
-					emit requestedAddBookmark(m_hitResult.linkUrl(), (title.isEmpty() ? m_hitResult.element().toPlainText() : title), QString());
+					emit requestedAddBookmark(getCurrentHitTestResult().linkUrl, (title.isEmpty() ? hitResult.element().toPlainText() : title), QString());
 				}
 			}
 
@@ -1149,56 +1143,60 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl().toString(), QString(), true, isPrivate());
+			TransfersManager::startTransfer(getCurrentHitTestResult().linkUrl.toString(), QString(), true, isPrivate());
 
 			break;
 		case ActionsManager::OpenFrameInCurrentTabAction:
-			if (m_hitResult.frame())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				setUrl(m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+				setUrl(getCurrentHitTestResult().frameUrl);
 			}
 
 			break;
 		case ActionsManager::OpenFrameInNewTabAction:
-			if (m_hitResult.frame())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), CurrentTabOpen);
+				openUrl(getCurrentHitTestResult().frameUrl, CurrentTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
-			if (m_hitResult.frame())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				openUrl((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()), NewBackgroundTabOpen);
+				openUrl(getCurrentHitTestResult().frameUrl, NewBackgroundTabOpen);
 			}
 
 			break;
 		case ActionsManager::CopyFrameLinkToClipboardAction:
-			if (m_hitResult.frame())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				QGuiApplication::clipboard()->setText((m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl()).toString());
+				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString());
 			}
 
 			break;
 		case ActionsManager::ReloadFrameAction:
-			if (m_hitResult.frame())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				const QUrl url = (m_hitResult.frame()->url().isValid() ? m_hitResult.frame()->url() : m_hitResult.frame()->requestedUrl());
+				const QUrl url = getCurrentHitTestResult().frameUrl;
+				QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
 
-				m_hitResult.frame()->setUrl(QUrl());
-				m_hitResult.frame()->setUrl(url);
+				if (hitResult.frame())
+				{
+					hitResult.frame()->setUrl(QUrl());
+					hitResult.frame()->setUrl(url);
+				}
 			}
 
 			break;
 		case ActionsManager::ViewFrameSourceAction:
-			if (m_hitResult.frame() && m_hitResult.frame()->url().isValid())
+			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				QNetworkRequest request(m_hitResult.frame()->url());
+				QNetworkRequest request(getCurrentHitTestResult().frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
 				QNetworkReply *reply = m_networkManager->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frame()->url().toString()));
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getCurrentHitTestResult().frameUrl.toString()));
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
@@ -1210,16 +1208,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
-			if (!m_hitResult.imageUrl().isEmpty())
+			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl(), NewTabOpen);
+				openUrl(getCurrentHitTestResult().imageUrl, NewTabOpen);
 			}
 
 			break;
 		case ActionsManager::SaveImageToDiskAction:
-			if (m_hitResult.imageUrl().isValid())
+			if (getCurrentHitTestResult().imageUrl.isValid())
 			{
-				downloadFile(QNetworkRequest(m_hitResult.imageUrl()));
+				downloadFile(QNetworkRequest(getCurrentHitTestResult().imageUrl));
 			}
 
 			break;
@@ -1228,33 +1226,34 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::CopyImageUrlToClipboardAction:
-			if (!m_hitResult.imageUrl().isEmpty())
+			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.imageUrl().toString());
+				QApplication::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString());
 			}
 
 			break;
 		case ActionsManager::ReloadImageAction:
-			if ((!m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img")) && !m_hitResult.element().isNull())
+			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				if (getUrl().matches(m_hitResult.imageUrl(), (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
+				if (getUrl().matches(getCurrentHitTestResult().imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
 					triggerAction(ActionsManager::ReloadAndBypassCacheAction);
 				}
 				else
 				{
-					const QUrl url(m_hitResult.imageUrl());
-					const QString src = m_hitResult.element().attribute(QLatin1String("src"));
+					const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
+					const QUrl url(getCurrentHitTestResult().imageUrl);
+					const QString src = hitResult.element().attribute(QLatin1String("src"));
 					NetworkCache *cache = NetworkManagerFactory::getCache();
 
-					m_hitResult.element().setAttribute(QLatin1String("src"), QString());
+					hitResult.element().setAttribute(QLatin1String("src"), QString());
 
 					if (cache)
 					{
 						cache->remove(url);
 					}
 
-					m_hitResult.element().setAttribute(QLatin1String("src"), src);
+					hitResult.element().setAttribute(QLatin1String("src"), src);
 
 					m_webView->page()->mainFrame()->evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
 				}
@@ -1264,18 +1263,20 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::ImagePropertiesAction:
 			{
 				QVariantMap properties;
-				properties[QLatin1String("alternativeText")] = m_hitResult.element().attribute(QLatin1String("alt"));
-				properties[QLatin1String("longDescription")] = m_hitResult.element().attribute(QLatin1String("longdesc"));
+				properties[QLatin1String("alternativeText")] = getCurrentHitTestResult().alternateText;
+				properties[QLatin1String("longDescription")] = getCurrentHitTestResult().longDescription;
 
-				if (!m_hitResult.pixmap().isNull())
+				const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
+
+				if (!hitResult.pixmap().isNull())
 				{
-					properties[QLatin1String("width")] = m_hitResult.pixmap().width();
-					properties[QLatin1String("height")] = m_hitResult.pixmap().height();
-					properties[QLatin1String("depth")] = m_hitResult.pixmap().depth();
+					properties[QLatin1String("width")] = hitResult.pixmap().width();
+					properties[QLatin1String("height")] = hitResult.pixmap().height();
+					properties[QLatin1String("depth")] = hitResult.pixmap().depth();
 				}
 
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl(), properties, (m_networkManager->cache() ? m_networkManager->cache()->data(m_hitResult.imageUrl()) : NULL), this);
+				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : NULL), this);
 				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)
@@ -1289,18 +1290,17 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
-#if QTWEBKIT_VERSION >= 0x050200
 		case ActionsManager::SaveMediaToDiskAction:
-			if (m_hitResult.mediaUrl().isValid())
+			if (getCurrentHitTestResult().mediaUrl.isValid())
 			{
-				downloadFile(QNetworkRequest(m_hitResult.mediaUrl()));
+				downloadFile(QNetworkRequest(getCurrentHitTestResult().mediaUrl));
 			}
 
 			break;
 		case ActionsManager::CopyMediaUrlToClipboardAction:
-			if (!m_hitResult.mediaUrl().isEmpty())
+			if (!getCurrentHitTestResult().mediaUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.mediaUrl().toString());
+				QApplication::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString());
 			}
 
 			break;
@@ -1320,7 +1320,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->triggerAction(QWebPage::ToggleMediaMute);
 
 			break;
-#endif
 		case ActionsManager::GoBackAction:
 			m_webView->page()->triggerAction(QWebPage::Back);
 
@@ -1456,7 +1455,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::CreateSearchAction:
 			{
-				QWebElement parentElement = m_hitResult.element().parent();
+				const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
+				QWebElement parentElement = hitResult.element().parent();
 
 				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 				{
@@ -1501,7 +1501,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 							value = inputs.at(i).attribute(QLatin1String("value"));
 						}
 
-						parameters.addQueryItem(inputs.at(i).attribute(QLatin1String("name")), ((inputs.at(i) == m_hitResult.element()) ? QLatin1String("{searchTerms}") : value));
+						parameters.addQueryItem(inputs.at(i).attribute(QLatin1String("name")), ((inputs.at(i) == hitResult.element()) ? QLatin1String("{searchTerms}") : value));
 					}
 
 					const QStringList identifiers = SearchesManager::getSearchEngines();
@@ -1702,108 +1702,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 		default:
 			break;
 	}
-}
-
-void QtWebKitWebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
-{
-	if (m_ignoreContextMenu || (position.isNull() && (m_webView->selectedText().trimmed().isEmpty() || getClickPosition().isNull())))
-	{
-		return;
-	}
-
-	const QPoint hitPosition = (position.isNull() ? getClickPosition() : position);
-
-	if (isScrollBar(hitPosition))
-	{
-		return;
-	}
-
-	if (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool())
-	{
-		QContextMenuEvent menuEvent(QContextMenuEvent::Other, hitPosition, m_webView->mapToGlobal(hitPosition), Qt::NoModifier);
-
-		if (m_page->swallowContextMenuEvent(&menuEvent))
-		{
-			return;
-		}
-	}
-
-	QWebFrame *frame = m_webView->page()->frameAt(hitPosition);
-
-	if (!frame)
-	{
-		return;
-	}
-
-	m_hitResult = frame->hitTestContent(hitPosition);
-
-	updateEditActions();
-
-	flags = NoMenu;
-
-	const QString tagName = m_hitResult.element().tagName().toLower();
-	const QString tagType = m_hitResult.element().attribute(QLatin1String("type")).toLower();
-
-	if (tagName == QLatin1String("textarea") || tagName == QLatin1String("select") || (tagName == QLatin1String("input") && (tagType.isEmpty() || tagType == QLatin1String("text") || tagType == QLatin1String("search"))))
-	{
-		QWebElement parentElement = m_hitResult.element().parent();
-
-		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
-		{
-			parentElement = parentElement.parent();
-		}
-
-		if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")) && !parentElement.findFirst(QLatin1String("input[name], select[name], textarea[name]")).isNull())
-		{
-			flags |= FormMenu;
-		}
-	}
-
-	if (m_hitResult.pixmap().isNull() && m_hitResult.isContentSelected() && !m_webView->selectedText().isEmpty())
-	{
-		flags |= SelectionMenu;
-	}
-
-	if (m_hitResult.linkUrl().isValid())
-	{
-		if (m_hitResult.linkUrl().scheme() == QLatin1String("mailto"))
-		{
-			flags |= MailMenu;
-		}
-		else
-		{
-			flags |= LinkMenu;
-		}
-	}
-
-	if (!m_hitResult.pixmap().isNull() || !m_hitResult.imageUrl().isEmpty() || m_hitResult.element().tagName().toLower() == QLatin1String("img"))
-	{
-		flags |= ImageMenu;
-	}
-
-#if QTWEBKIT_VERSION >= 0x050200
-	if (m_hitResult.mediaUrl().isValid())
-	{
-		flags |= MediaMenu;
-	}
-#endif
-
-	if (m_hitResult.isContentEditable())
-	{
-		flags |= EditMenu;
-	}
-
-	if (flags == NoMenu || flags == FormMenu)
-	{
-		flags |= StandardMenu;
-
-		if (m_hitResult.frame() != m_webView->page()->mainFrame())
-		{
-			flags |= FrameMenu;
-		}
-	}
-
-	WebWidget::showContextMenu(hitPosition, flags);
 }
 
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
@@ -2357,6 +2255,13 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 
 WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &position)
 {
+	QWebFrame *frame = m_webView->page()->frameAt(position);
+
+	if (!frame)
+	{
+		return HitTestResult();
+	}
+
 	const QWebHitTestResult nativeResult = m_webView->page()->mainFrame()->hitTestContent(position);
 
 	HitTestResult result;
@@ -2364,7 +2269,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	result.tagName = nativeResult.element().tagName().toLower();
 	result.alternateText = nativeResult.element().attribute(QLatin1String("alt"));
 	result.longDescription = nativeResult.element().attribute(QLatin1String("longDesc"));
-	result.frameUrl = (nativeResult.frame() ? nativeResult.frame()->url() : QUrl());
+	result.frameUrl = ((nativeResult.frame() && nativeResult.frame() != m_page->mainFrame()) ? (nativeResult.frame()->url().isValid() ? nativeResult.frame()->url() : nativeResult.frame()->requestedUrl()) : QUrl());
 	result.imageUrl = nativeResult.imageUrl();
 	result.linkUrl = nativeResult.linkUrl();
 #if QTWEBKIT_VERSION >= 0x050200
@@ -2374,8 +2279,9 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	result.geometry = nativeResult.element().geometry();
 
 	QWebElement parentElement = nativeResult.element().parent();
+	const bool isSubmit = ((result.tagName == QLatin1String("input") || result.tagName == QLatin1String("button")) && (nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")));
 
-	if ((result.tagName == QLatin1String("input") || result.tagName == QLatin1String("button")) && (nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")))
+	if (isSubmit)
 	{
 		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 		{
@@ -2384,9 +2290,13 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 
 		if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")))
 		{
-			const QUrl url(parentElement.attribute(QLatin1String("action")));
+			if (isSubmit)
+			{
+				const QUrl url(parentElement.attribute(QLatin1String("action")));
 
-			result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+				result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+			}
+
 			result.flags |= IsFormTest;
 		}
 	}
@@ -2532,6 +2442,13 @@ bool QtWebKitWebWidget::canLoadPlugins() const
 	return m_canLoadPlugins;
 }
 
+bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const
+{
+	QContextMenuEvent menuEvent(QContextMenuEvent::Other, position, m_webView->mapToGlobal(position), Qt::NoModifier);
+
+	return !m_page->swallowContextMenuEvent(&menuEvent);
+}
+
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 {
 	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
@@ -2620,20 +2537,18 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
 				{
 					QWidget *widget = childAt(mouseEvent->pos());
-
-					m_hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-
-					const QString tagName = m_hitResult.element().tagName().toLower();
+					const QWebHitTestResult hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+					const QString tagName = hitResult.element().tagName().toLower();
 
 					if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
 					{
 						m_pluginToken = QUuid::createUuid().toString();
 
-						m_hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
+						hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
 
-						QWebElement element = m_hitResult.element().clone();
+						QWebElement element = hitResult.element().clone();
 
-						m_hitResult.element().replace(element);
+						hitResult.element().replace(element);
 
 						element.removeAttribute(QLatin1String("data-otter-browser"));
 

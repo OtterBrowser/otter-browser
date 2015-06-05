@@ -95,7 +95,7 @@ if (element)
 
 	while (element && ((isForm && !(result.flags & 4)) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
 	{
-		if (element.title !== '')
+		if (element != document && element.title !== '')
 		{
 			result.title = element.title;
 		}

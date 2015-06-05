@@ -208,6 +208,7 @@ protected:
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
+	void updateHitTestResult(const QPoint &position);
 	void setAlternateStyleSheets(const QStringList &styleSheets);
 	void setClickPosition(const QPoint &position);
 	virtual void setOptions(const QVariantHash &options);
@@ -215,6 +216,8 @@ protected:
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString suggestSaveFileName() const;
+	HitTestResult getCurrentHitTestResult() const;
+	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
@@ -224,6 +227,14 @@ protected slots:
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void updateQuickSearch();
+	virtual void updatePageActions(const QUrl &url);
+	virtual void updateNavigationActions();
+	virtual void updateEditActions();
+	virtual void updateLinkActions();
+	virtual void updateFrameActions();
+	virtual void updateImageActions();
+	virtual void updateMediaActions();
+	virtual void updateBookmarkActions();
 	void setReloadTime(QAction *action);
 	void setStatusMessage(const QString &message, bool override = false);
 
