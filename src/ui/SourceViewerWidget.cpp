@@ -300,6 +300,7 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 {
 	new SyntaxHighlighter(document());
 
+	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 	optionChanged(QLatin1String("SourceViewer/ShowLineNumbers"), SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")));
 	optionChanged(QLatin1String("SourceViewer/WrapLines"), SettingsManager::getValue(QLatin1String("SourceViewer/WrapLines")));
 
@@ -411,7 +412,7 @@ void SourceViewerWidget::setZoom(int zoom)
 	{
 		m_zoom = zoom;
 
-		QFont font = parentWidget()->font();
+		QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 		font.setPointSize(font.pointSize() * (qreal(zoom) / 100));
 
 		setFont(font);
