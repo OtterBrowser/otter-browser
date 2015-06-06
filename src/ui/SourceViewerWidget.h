@@ -97,6 +97,7 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	void focusInEvent(QFocusEvent *event);
 	void wheelEvent(QWheelEvent *event);
 
 protected slots:

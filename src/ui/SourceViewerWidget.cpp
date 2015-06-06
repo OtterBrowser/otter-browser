@@ -22,6 +22,7 @@
 
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
+#include <QtWidgets/QScrollBar>
 
 namespace Otter
 {
@@ -229,6 +230,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 	{
 		QTextCursor textCursor = m_sourceViewer->cursorForPosition(QPoint(1, event->y()));
 		textCursor.select(QTextCursor::LineUnderCursor);
+		textCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 
 		m_lastClickedLine = textCursor.blockNumber();
 
@@ -316,6 +318,16 @@ void SourceViewerWidget::resizeEvent(QResizeEvent *event)
 	if (m_marginWidget)
 	{
 		m_marginWidget->setGeometry(QRect(contentsRect().left(), contentsRect().top(), m_marginWidget->width(), contentsRect().height()));
+	}
+}
+
+void SourceViewerWidget::focusInEvent(QFocusEvent *event)
+{
+	QPlainTextEdit::focusInEvent(event);
+
+	if (event->reason() != Qt::MouseFocusReason && !m_findText.isEmpty())
+	{
+		setTextCursor(m_findTextSelection);
 	}
 }
 
@@ -417,6 +429,8 @@ void SourceViewerWidget::setZoom(int zoom)
 
 		setFont(font);
 
+		m_marginWidget->setFont(font);
+
 		emit zoomChanged(zoom);
 	}
 }
@@ -475,7 +489,13 @@ bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 
 			setTextCursor(m_findTextAnchor);
 			ensureCursorVisible();
+
+			const QPoint position(horizontalScrollBar()->value(), verticalScrollBar()->value());
+
 			setTextCursor(currentTextCursor);
+
+			horizontalScrollBar()->setValue(position.x());
+			verticalScrollBar()->setValue(position.y());
 
 			connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
 		}
