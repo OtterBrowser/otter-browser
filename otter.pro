@@ -19,6 +19,7 @@ unix: INCLUDEPATH += ./
 unix: QT += dbus
 
 OTTER_VERSION_MAIN = 0.9.07
+OTTER_VERSION_WEEKLY = ""
 OTTER_VERSION_CONTEXT = -dev
 
 isEmpty(PREFIX): PREFIX = /usr/local
