@@ -148,6 +148,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::ReloadFrameAction:
 		case ActionsManager::ViewFrameSourceAction:
 		case ActionsManager::OpenImageInNewTabAction:
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
 		case ActionsManager::SaveImageToDiskAction:
 		case ActionsManager::CopyImageToClipboardAction:
 		case ActionsManager::CopyImageUrlToClipboardAction:
@@ -301,7 +302,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CopyFrameLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Frame Link to Clipboard"));
 	registerAction(ReloadFrameAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload Frame"));
 	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Frame Source"));
-	registerAction(OpenImageInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open Image"));
+	registerAction(OpenImageInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open Image In New Tab"));
+	registerAction(OpenImageInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open Image in New Background Tab"));
 	registerAction(SaveImageToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Image…"));
 	registerAction(CopyImageToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Image to Clipboard"));
 	registerAction(CopyImageUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Image Link to Clipboard"));

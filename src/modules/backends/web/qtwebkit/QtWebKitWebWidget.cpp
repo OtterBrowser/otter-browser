@@ -870,8 +870,14 @@ void QtWebKitWebWidget::updateImageActions()
 
 	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
 	{
-		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image"));
+		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Tab (Untitled)") : tr("Open Image in New Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Tab"));
 		m_actions[ActionsManager::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenImageInNewTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setOverrideText(isImage ? (fileName.isEmpty() || getCurrentHitTestResult().imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Background Tab (Untitled)") : tr("Open Image in New Background Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Background Tab"));
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setEnabled(isImage && !isOpened);
 	}
 
 	if (m_actions.contains(ActionsManager::SaveImageToDiskAction))
@@ -1211,6 +1217,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
 				openUrl(getCurrentHitTestResult().imageUrl, NewTabOpen);
+			}
+
+			break;
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
+			if (!getCurrentHitTestResult().imageUrl.isEmpty())
+			{
+				openUrl(getCurrentHitTestResult().imageUrl, NewBackgroundTabOpen);
 			}
 
 			break;
@@ -2039,6 +2052,7 @@ Action* QtWebKitWebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
 		case ActionsManager::SaveImageToDiskAction:
 		case ActionsManager::CopyImageToClipboardAction:
 		case ActionsManager::CopyImageUrlToClipboardAction:
