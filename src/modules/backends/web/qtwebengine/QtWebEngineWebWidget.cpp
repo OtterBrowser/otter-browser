@@ -393,6 +393,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
+			if (!m_hitResult.imageUrl.isEmpty())
+			{
+				openUrl(m_hitResult.imageUrl, NewBackgroundTabOpen);
+			}
+
+			break;
 		case ActionsManager::SaveImageToDiskAction:
 			if (m_hitResult.imageUrl.isValid())
 			{
@@ -1366,8 +1373,14 @@ void QtWebEngineWebWidget::updateImageActions()
 
 	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
 	{
-		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image (Untitled)") : tr("Open Image (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image"));
+		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Tab (Untitled)") : tr("Open Image in New Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Tab"));
 		m_actions[ActionsManager::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenImageInNewTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Background Tab (Untitled)") : tr("Open Image in New Background Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Background Tab"));
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setEnabled(isImage && !isOpened);
 	}
 
 	if (m_actions.contains(ActionsManager::SaveImageToDiskAction))
@@ -1780,6 +1793,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::OpenImageInNewTabAction:
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
 		case ActionsManager::SaveImageToDiskAction:
 		case ActionsManager::CopyImageUrlToClipboardAction:
 		case ActionsManager::ReloadImageAction:

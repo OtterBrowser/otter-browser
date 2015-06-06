@@ -122,6 +122,7 @@ public:
 		ReloadFrameAction,
 		ViewFrameSourceAction,
 		OpenImageInNewTabAction,
+		OpenImageInNewTabBackgroundAction,
 		SaveImageToDiskAction,
 		CopyImageToClipboardAction,
 		CopyImageUrlToClipboardAction,
