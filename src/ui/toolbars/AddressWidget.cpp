@@ -37,6 +37,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QPainter>
+#include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMenu>
@@ -279,9 +280,14 @@ void AddressWidget::showPopup()
 		m_removeModelTimer = 0;
 	}
 
+	if (view() && view()->isVisible())
+	{
+		return;
+	}
+
 	const QString text = lineEdit()->text();
 
-	if (model())
+	if (model() && model() != HistoryManager::getTypedHistoryModel())
 	{
 		model()->deleteLater();
 	}
