@@ -90,11 +90,54 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	setLocale(QLatin1String("system"));
 
-	QCommandLineParser *parser = createCommandLineParser();
-	parser->process(arguments());
+	m_commandLineParser.addHelpOption();
+	m_commandLineParser.addVersionOption();
+	m_commandLineParser.addPositionalArgument(QLatin1String("url"), QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("sessionchooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
 
-	const bool isPortable = parser->isSet(QLatin1String("portable"));
-	const bool isPrivate = parser->isSet(QLatin1String("privatesession"));
+	QStringList arguments = this->arguments();
+	const QString argumentsPath = QDir::current().filePath(QLatin1String("arguments.txt"));
+
+	if (QFile::exists(argumentsPath))
+	{
+		QFile argumentsFile(argumentsPath);
+
+		if (argumentsFile.open(QIODevice::ReadOnly))
+		{
+			QStringList temporaryArguments = QString(argumentsFile.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts);
+
+			if (!temporaryArguments.isEmpty())
+			{
+				if (arguments.isEmpty())
+				{
+					temporaryArguments.prepend(QFileInfo(QCoreApplication::applicationFilePath()).fileName());
+				}
+				else
+				{
+					temporaryArguments.prepend(arguments.first());
+				}
+
+				if (arguments.count() > 1)
+				{
+					temporaryArguments.append(arguments.mid(1));
+				}
+
+				arguments = temporaryArguments;
+			}
+
+			argumentsFile.close();
+		}
+	}
+
+	m_commandLineParser.process(arguments);
+
+	const bool isPortable = m_commandLineParser.isSet(QLatin1String("portable"));
+	const bool isPrivate = m_commandLineParser.isSet(QLatin1String("privatesession"));
 
 	if (isPortable)
 	{
@@ -102,9 +145,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		cachePath = applicationDirPath() + QLatin1String("/cache");
 	}
 
-	if (parser->isSet(QLatin1String("profile")))
+	if (m_commandLineParser.isSet(QLatin1String("profile")))
 	{
-		profilePath = parser->value(QLatin1String("profile"));
+		profilePath = m_commandLineParser.value(QLatin1String("profile"));
 
 		if (!profilePath.contains(QDir::separator()))
 		{
@@ -114,14 +157,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	profilePath = QFileInfo(profilePath).absoluteFilePath();
 
-	if (parser->isSet(QLatin1String("cache")))
+	if (m_commandLineParser.isSet(QLatin1String("cache")))
 	{
-		cachePath = parser->value(QLatin1String("cache"));
+		cachePath = m_commandLineParser.value(QLatin1String("cache"));
 	}
 
 	cachePath = QFileInfo(cachePath).absoluteFilePath();
-
-	delete parser;
 
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());
@@ -133,7 +174,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (socket.waitForConnected(500))
 	{
-		const QStringList decodedArguments = arguments();
+		const QStringList decodedArguments = arguments;
 		QStringList encodedArguments;
 
 #ifdef Q_OS_WIN
@@ -297,11 +338,10 @@ void Application::newConnection()
 		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
 	}
 
-	QCommandLineParser *parser = createCommandLineParser();
-	parser->parse(decodedArguments);
+	m_commandLineParser.parse(decodedArguments);
 
-	const QString session = parser->value(QLatin1String("session"));
-	const bool isPrivate = parser->isSet(QLatin1String("privatesession"));
+	const QString session = m_commandLineParser.value(QLatin1String("session"));
+	const bool isPrivate = m_commandLineParser.isSet(QLatin1String("privatesession"));
 
 	if (session.isEmpty())
 	{
@@ -325,13 +365,13 @@ void Application::newConnection()
 
 	if (window)
 	{
-		if (parser->positionalArguments().isEmpty())
+		if (m_commandLineParser.positionalArguments().isEmpty())
 		{
 			window->triggerAction(ActionsManager::NewTabAction);
 		}
 		else
 		{
-			const QStringList urls = parser->positionalArguments();
+			const QStringList urls = m_commandLineParser.positionalArguments();
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
@@ -357,8 +397,6 @@ void Application::newConnection()
 			window->restoreWindowState();
 		}
 	}
-
-	delete parser;
 }
 
 void Application::clearHistory()
@@ -451,22 +489,6 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(QLocale(identifier));
 }
 
-QCommandLineParser* Application::createCommandLineParser() const
-{
-	QCommandLineParser *parser = new QCommandLineParser();
-	parser->addHelpOption();
-	parser->addVersionOption();
-	parser->addPositionalArgument(QLatin1String("url"), QCoreApplication::translate("main", "URL to open"), QLatin1String("[url]"));
-	parser->addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
-	parser->addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
-	parser->addOption(QCommandLineOption(QLatin1String("sessionchooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
-	parser->addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
-
-	return parser;
-}
-
 MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const SessionMainWindow &windows)
 {
 	MainWindow *window = new MainWindow(isPrivate, windows);
@@ -516,6 +538,11 @@ PlatformIntegration* Application::getPlatformIntegration()
 TrayIcon* Application::getTrayIcon()
 {
 	return m_trayIcon;
+}
+
+QCommandLineParser* Application::getCommandLineParser()
+{
+	return &m_commandLineParser;
 }
 
 QString Application::getFullVersion() const

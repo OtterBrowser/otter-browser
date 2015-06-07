@@ -1,3 +1,6 @@
+0.9.07 (2015-??-??):
+- allow to specify default arguments using arguments.txt.
+
 0.9.06 (2015-06-01):
 - multiple enhancements in experimental backend for QtWebEngine (Blink):
 -- added support for restoring tab history;

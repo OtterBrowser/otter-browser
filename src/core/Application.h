@@ -47,12 +47,12 @@ public:
 	void removeWindow(MainWindow* window);
 	void showNotification(Notification *notification);
 	void setLocale(const QString &locale);
-	QCommandLineParser* createCommandLineParser() const;
 	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	MainWindow* getWindow();
 	TrayIcon* getTrayIcon();
 	PlatformIntegration* getPlatformIntegration();
+	QCommandLineParser* getCommandLineParser();
 	QString getFullVersion() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;
@@ -76,6 +76,7 @@ private:
 	QTranslator *m_applicationTranslator;
 	QLocalServer *m_localServer;
 	QString m_localePath;
+	QCommandLineParser m_commandLineParser;
 	QList<MainWindow*> m_windows;
 	bool m_isHidden;
 

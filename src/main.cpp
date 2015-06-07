@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 #include "ui/MainWindow.h"
 #include "ui/StartupDialog.h"
 
-#include <QtCore/QLibraryInfo>
 #include <QtCore/QUrl>
 
 using namespace Otter;
@@ -72,25 +71,20 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	QCommandLineParser *parser = application.createCommandLineParser();
-	parser->process(application);
-
-	const QString session = (parser->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : parser->value(QLatin1String("session")));
+	const QString session = (application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
 	const QString startupBehavior = SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString();
-	const bool isPrivate = parser->isSet(QLatin1String("privatesession"));
+	const bool isPrivate = application.getCommandLineParser()->isSet(QLatin1String("privatesession"));
 
-	if (!parser->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).clean)
+	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).clean)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), NULL, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || parser->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).clean)
+	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).clean)
 	{
 		StartupDialog dialog(session);
 
 		if (dialog.exec() == QDialog::Rejected)
 		{
-			delete parser;
-
 			return 0;
 		}
 
@@ -121,13 +115,13 @@ int main(int argc, char *argv[])
 		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), NULL, isPrivate);
 	}
 
-	if (!parser->positionalArguments().isEmpty())
+	if (!application.getCommandLineParser()->positionalArguments().isEmpty())
 	{
 		MainWindow *window = application.getWindow();
 
 		if (window)
 		{
-			QStringList urls = parser->positionalArguments();
+			QStringList urls = application.getCommandLineParser()->positionalArguments();
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
@@ -140,8 +134,6 @@ int main(int argc, char *argv[])
 	{
 		application.createWindow(isPrivate);
 	}
-
-	delete parser;
 
 	return application.exec();
 }
