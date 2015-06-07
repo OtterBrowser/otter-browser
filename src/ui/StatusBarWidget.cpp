@@ -33,10 +33,8 @@ namespace Otter
 {
 
 StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
-	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, NULL, parent))
+	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, NULL, this))
 {
-	m_toolBar->setParent(this);
-
 	optionChanged(QLatin1String("Interface/ShowSizeGrip"), SettingsManager::getValue(QLatin1String("Interface/ShowSizeGrip")));
 	setFixedHeight(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
 

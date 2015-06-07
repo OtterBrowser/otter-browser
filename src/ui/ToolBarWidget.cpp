@@ -137,9 +137,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
 
-	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parent);
-
-	if (m_mainWindow && (toolBarArea || m_identifier < 0))
+	if (m_mainWindow && m_identifier != ToolBarsManager::NavigationBar)
 	{
 		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
 	}
