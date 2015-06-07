@@ -29,6 +29,7 @@
 #include "../core/Utils.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QTextCodec>
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
@@ -229,7 +230,7 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 {
 	if (m_viewSourceReply)
 	{
-		setContents(QString(m_viewSourceReply->readAll()));
+		setContents(m_viewSourceReply->readAll());
 
 		m_viewSourceReply->deleteLater();
 		m_viewSourceReply = NULL;
@@ -389,9 +390,21 @@ void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 	}
 }
 
-void SourceViewerWebWidget::setContents(const QString &contents)
+void SourceViewerWebWidget::setContents(const QByteArray &contents)
 {
-	m_sourceViewer->setPlainText(contents);
+	QTextCodec *codec = QTextCodec::codecForHtml(contents);
+	QString text;
+
+	if (codec)
+	{
+		text = codec->toUnicode(contents);
+	}
+	else
+	{
+		text = QString(contents);
+	}
+
+	m_sourceViewer->setPlainText(text);
 
 	m_isLoading = false;
 

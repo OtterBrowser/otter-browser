@@ -427,7 +427,7 @@ void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError erro
 
 	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
 	{
-		m_viewSourceReplies[reply]->setContents(QString(reply->readAll()));
+		m_viewSourceReplies[reply]->setContents(reply->readAll());
 	}
 
 	m_viewSourceReplies.remove(reply);
