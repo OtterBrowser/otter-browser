@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@
 namespace Otter
 {
 
-SearchDelegate::SearchDelegate(int height, QObject *parent) : QItemDelegate(parent),
-	m_height(height)
+SearchDelegate::SearchDelegate(QObject *parent) : QItemDelegate(parent)
 {
 }
 
@@ -79,14 +78,16 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	Q_UNUSED(option)
+	QSize size = index.data(Qt::SizeHintRole).toSize();
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
-		return index.data(Qt::SizeHintRole).toSize();
+		return size;
 	}
 
-	return QSize(-1, m_height);
+	size.setHeight(option.fontMetrics.height() * 1.25);
+
+	return size;
 }
 
 }

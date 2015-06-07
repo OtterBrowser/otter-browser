@@ -64,7 +64,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
 	setEditable(true);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
 	setItemDelegate(new AddressDelegate(this));
 	setInsertPolicy(QComboBox::NoInsert);

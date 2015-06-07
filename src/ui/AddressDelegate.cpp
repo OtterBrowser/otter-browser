@@ -46,4 +46,12 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	drawDisplay(painter, option, titleReactangle, index.data(Qt::DisplayRole).toString());
 }
 
+QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize size = index.data(Qt::SizeHintRole).toSize();
+	size.setHeight(option.fontMetrics.height() * 1.25);
+
+	return size;
+}
+
 }

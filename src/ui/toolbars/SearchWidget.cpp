@@ -56,8 +56,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 
 	setEditable(true);
 	setMinimumWidth(100);
-	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-	setItemDelegate(new SearchDelegate(height(), this));
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
 	optionChanged(QLatin1String("Search/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")));
@@ -136,11 +136,6 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	lineEdit()->move(m_selectButtonArrowRectangle.topRight());
 
 	m_lineEditRectangle = lineEdit()->geometry();
-
-	if (event->size().height() != event->oldSize().height())
-	{
-		setItemDelegate(new SearchDelegate(height(), this));
-	}
 }
 
 void SearchWidget::focusInEvent(QFocusEvent *event)
