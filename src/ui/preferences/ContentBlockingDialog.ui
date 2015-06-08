@@ -32,7 +32,7 @@
      <item>
       <layout class="QVBoxLayout" name="profliesLayout">
        <item>
-        <widget class="Otter::ItemViewWidget" name="profliesViewWidget">
+        <widget class="Otter::ItemViewWidget" name="profilesViewWidget">
          <property name="editTriggers">
           <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
          </property>

@@ -74,6 +74,7 @@ public:
 	ContentBlockingInformation getInformation() const;
 	QMultiHash<QString, QString> getStyleSheetWhiteList();
 	QMultiHash<QString, QString> getStyleSheetBlackList();
+	bool downloadRules();
 	bool isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl);
 
 protected:
@@ -92,7 +93,6 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
 	void deleteNode(Node *node);
-	void downloadUpdate();
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
 	bool checkUrlSubstring(const QString &subString, const QNetworkRequest &request);
@@ -112,7 +112,7 @@ private:
 	QStringList m_requestSubdomainList;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
-	bool m_updateRequested;
+	bool m_isUpdating;
 	bool m_isEmpty;
 	bool m_wasLoaded;
 

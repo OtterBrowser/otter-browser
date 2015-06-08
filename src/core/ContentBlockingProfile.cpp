@@ -40,7 +40,7 @@ namespace Otter
 ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
-	m_updateRequested(false),
+	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
@@ -107,9 +107,9 @@ void ContentBlockingProfile::load(bool onlyHeader)
 	const QDateTime lastUpdate = QDateTime::fromString(profilesSettings.value(m_information.name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate);
 	const int updateInterval = profilesSettings.value(m_information.name + QLatin1String("/updateInterval")).toInt();
 
-	if (!m_updateRequested && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
+	if (!m_isUpdating && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
 	{
-		downloadUpdate();
+		downloadRules();
 	}
 
 	if (!onlyHeader)
@@ -424,39 +424,10 @@ void ContentBlockingProfile::deleteNode(Node *node)
 	delete node;
 }
 
-void ContentBlockingProfile::downloadUpdate()
-{
-	if (m_updateRequested)
-	{
-		return;
-	}
-
-	if (!m_information.updateUrl.isValid())
-	{
-		if (m_information.updateUrl.isEmpty())
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
-		}
-		else
-		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
-		}
-
-		return;
-	}
-
-	QNetworkRequest request(m_information.updateUrl);
-	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
-
-	m_updateRequested = true;
-}
-
 void ContentBlockingProfile::replyFinished()
 {
+	m_isUpdating = false;
+
 	if (!m_networkReply)
 	{
 		return;
@@ -561,11 +532,44 @@ QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 	return m_styleSheetWhiteList;
 }
 
+bool ContentBlockingProfile::downloadRules()
+{
+	if (m_isUpdating)
+	{
+		return false;
+	}
+
+	if (!m_information.updateUrl.isValid())
+	{
+		if (m_information.updateUrl.isEmpty())
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		}
+		else
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		}
+
+		return false;
+	}
+
+	QNetworkRequest request(m_information.updateUrl);
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+
+	m_isUpdating = true;
+
+	return true;
+}
+
 bool ContentBlockingProfile::loadRules()
 {
 	if (m_isEmpty)
 	{
-		downloadUpdate();
+		downloadRules();
 
 		return false;
 	}

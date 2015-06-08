@@ -43,6 +43,7 @@ public:
 	static QMultiHash<QString, QString> getStyleSheetBlackList(const QVector<int> &profiles);
 	static QMultiHash<QString, QString> getStyleSheetWhiteList(const QVector<int> &profiles);
 	static QVector<int> getProfileList(const QStringList &names);
+	static bool updateProfile(const QString &profile);
 	static bool isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl);
 
 protected:

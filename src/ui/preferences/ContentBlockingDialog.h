@@ -43,7 +43,9 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
+	void updateProfile();
 	void save();
+	void updateActions();
 
 private:
 	Ui::ContentBlockingDialog *m_ui;

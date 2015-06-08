@@ -174,6 +174,19 @@ QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
 	return profiles;
 }
 
+bool ContentBlockingManager::updateProfile(const QString &profile)
+{
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		if (m_profiles.at(i)->getInformation().name == profile)
+		{
+			return m_profiles[i]->downloadRules();
+		}
+	}
+
+	return false;
+}
+
 bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl)
 {
 	if (profiles.isEmpty())

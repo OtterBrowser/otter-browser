@@ -55,6 +55,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 		items.append(new QStandardItem(profiles.at(i).title));
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[0]->setData(profiles.at(i).name, Qt::UserRole);
+		items[0]->setData(profiles.at(i).updateUrl, (Qt::UserRole + 1));
 		items[0]->setCheckable(true);
 		items[0]->setCheckState(globalProfiles.contains(profiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
 
@@ -67,14 +68,16 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 		model->appendRow(items);
 	}
 
-	m_ui->profliesViewWidget->setModel(model);
-	m_ui->profliesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->profliesViewWidget->header()->setVisible(true);
-	m_ui->profliesViewWidget->setItemDelegate(new OptionDelegate(true, this));
-	m_ui->profliesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
+	m_ui->profilesViewWidget->setModel(model);
+	m_ui->profilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->profilesViewWidget->header()->setVisible(true);
+	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 
 	adjustSize();
 
+	connect(m_ui->profilesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	connect(m_ui->updateButton, SIGNAL(clicked(bool)), this, SLOT(updateProfile()));
 	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->confirmButtonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -96,21 +99,38 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 	}
 }
 
+void ContentBlockingDialog::updateProfile()
+{
+	const QModelIndex index = m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow());
+
+	if (index.isValid())
+	{
+		ContentBlockingManager::updateProfile(index.data(Qt::UserRole).toString());
+	}
+}
+
+void ContentBlockingDialog::updateActions()
+{
+	const QModelIndex index = m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow());
+
+	m_ui->updateButton->setEnabled(index.isValid() && index.data(Qt::UserRole + 1).toUrl().isValid());
+}
+
 void ContentBlockingDialog::save()
 {
 	QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	QStringList profiles;
 
-	for (int i = 0; i < m_ui->profliesViewWidget->getRowCount(); ++i)
+	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
 	{
-		profilesSettings.beginGroup(m_ui->profliesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
-		profilesSettings.setValue(QLatin1String("lastUpdate"), m_ui->profliesViewWidget->getIndex(i, 2).data(Qt::DisplayRole));
-		profilesSettings.setValue(QLatin1String("updateInterval"), m_ui->profliesViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
+		profilesSettings.beginGroup(m_ui->profilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+		profilesSettings.setValue(QLatin1String("lastUpdate"), m_ui->profilesViewWidget->getIndex(i, 2).data(Qt::DisplayRole));
+		profilesSettings.setValue(QLatin1String("updateInterval"), m_ui->profilesViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
 		profilesSettings.endGroup();
 
-		if (m_ui->profliesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+		if (m_ui->profilesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
 		{
-			profiles.append(m_ui->profliesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+			profiles.append(m_ui->profilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
 		}
 	}
 
