@@ -6,6 +6,7 @@
         <file>blocking/czechAndSlovak.txt</file>
         <file>blocking/dutch.txt</file>
         <file>blocking/easylist.txt</file>
+        <file>blocking/easyprivacy.txt</file>
         <file>blocking/french.txt</file>
         <file>blocking/german.txt</file>
         <file>blocking/hebrew.txt</file>
@@ -29,7 +30,7 @@
         <file>files/start.html</file>
         <file>gestures/default.ini</file>
         <file>icons/application-exit.png</file>
-		<file>icons/application-rss+xml.png</file>
+        <file>icons/application-rss+xml.png</file>
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-left.png</file>
         <file>icons/arrow-right.png</file>
