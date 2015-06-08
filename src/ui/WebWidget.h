@@ -149,7 +149,7 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog);
 	virtual WebWidget* clone(bool cloneHistory = true) = 0;
-	virtual Action* getAction(int identifier) = 0;
+	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
 	virtual QString getTitle() const = 0;
 	virtual QString getSelectedText() const;
@@ -178,6 +178,7 @@ public:
 	virtual bool handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	virtual bool handleWheelEvent(QWheelEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	bool hasOption(const QString &key) const;
+	virtual bool hasSelection() const;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
@@ -212,11 +213,15 @@ protected:
 	void setAlternateStyleSheets(const QStringList &styleSheets);
 	void setClickPosition(const QPoint &position);
 	virtual void setOptions(const QVariantHash &options);
+	Action* getExistingAction(int identifier);
 	QMenu* getPasteNoteMenu();
 	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
+	virtual int getAmountOfNotLoadedPlugins() const;
+	virtual bool canGoBack() const;
+	virtual bool canGoForward() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool isScrollBar(const QPoint &position) const;
 
@@ -250,6 +255,7 @@ private:
 	QPoint m_beginScrollPosition;
 	QPoint m_clickPosition;
 	QStringList m_alternateStyleSheets;
+	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
 	ScrollMode m_scrollMode;

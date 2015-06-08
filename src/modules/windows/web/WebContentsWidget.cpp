@@ -125,7 +125,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 
 			event->accept();
 		}
-		else if (!m_webWidget->getSelectedText().isEmpty())
+		else if (m_webWidget->hasSelection())
 		{
 			m_webWidget->clearSelection();
 

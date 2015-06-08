@@ -23,14 +23,18 @@
 #include "Menu.h"
 #include "ReloadTimeDialog.h"
 #include "../core/ActionsManager.h"
+#include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtCore/QUrl>
+#include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
@@ -363,9 +367,9 @@ void WebWidget::showDialog(ContentsDialog *dialog)
 
 void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 {
-	const bool hasSelection = getSelectedText().trimmed().isEmpty();
+	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
-	if (m_ignoreContextMenu || (position.isNull() && (hasSelection || m_clickPosition.isNull())))
+	if (m_ignoreContextMenu || (position.isNull() && (!hasSelection || m_clickPosition.isNull())))
 	{
 		return;
 	}
@@ -387,7 +391,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 			flags |= FormMenu;
 		}
 
-		if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && !hasSelection)
+		if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && hasSelection)
 		{
 			flags |= SelectionMenu;
 		}
@@ -616,35 +620,342 @@ void WebWidget::updateQuickSearch()
 
 void WebWidget::updatePageActions(const QUrl &url)
 {
-	Q_UNUSED(url)
+	if (m_actions.contains(ActionsManager::AddBookmarkAction))
+	{
+		m_actions[ActionsManager::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
+	}
+
+	if (m_actions.contains(ActionsManager::WebsitePreferencesAction))
+	{
+		m_actions[ActionsManager::WebsitePreferencesAction]->setEnabled(!url.isEmpty() && url.scheme() != QLatin1String("about"));
+	}
 }
 
 void WebWidget::updateNavigationActions()
 {
+	if (m_actions.contains(ActionsManager::GoBackAction))
+	{
+		m_actions[ActionsManager::GoBackAction]->setEnabled(canGoBack());
+	}
+
+	if (m_actions.contains(ActionsManager::GoForwardAction))
+	{
+		m_actions[ActionsManager::GoForwardAction]->setEnabled(canGoForward());
+	}
+
+	if (m_actions.contains(ActionsManager::RewindAction))
+	{
+		m_actions[ActionsManager::RewindAction]->setEnabled(canGoBack());
+	}
+
+	if (m_actions.contains(ActionsManager::FastForwardAction))
+	{
+		m_actions[ActionsManager::FastForwardAction]->setEnabled(canGoForward());
+	}
+
+	if (m_actions.contains(ActionsManager::StopAction))
+	{
+		m_actions[ActionsManager::StopAction]->setEnabled(isLoading());
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadAction))
+	{
+		m_actions[ActionsManager::ReloadAction]->setEnabled(!isLoading());
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
+	{
+		m_actions[ActionsManager::ReloadOrStopAction]->setup(isLoading() ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+	}
+
+	if (m_actions.contains(ActionsManager::LoadPluginsAction))
+	{
+		m_actions[ActionsManager::LoadPluginsAction]->setEnabled(getAmountOfNotLoadedPlugins() > 0);
+	}
 }
 
 void WebWidget::updateEditActions()
 {
+	const bool canPaste = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+
+	if (m_actions.contains(ActionsManager::CutAction))
+	{
+		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
+	}
+
+	if (m_actions.contains(ActionsManager::CopyAction))
+	{
+		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection());
+	}
+
+	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
+	{
+		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection());
+	}
+
+	if (m_actions.contains(ActionsManager::CopyToNoteAction))
+	{
+		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection());
+	}
+
+	if (m_actions.contains(ActionsManager::PasteAction))
+	{
+		m_actions[ActionsManager::PasteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(IsContentEditableTest));
+	}
+
+	if (m_actions.contains(ActionsManager::PasteAndGoAction))
+	{
+		m_actions[ActionsManager::PasteAndGoAction]->setEnabled(canPaste);
+	}
+
+	if (m_actions.contains(ActionsManager::PasteNoteAction))
+	{
+		m_actions[ActionsManager::PasteNoteAction]->setEnabled(canPaste && m_hitResult.flags.testFlag(IsContentEditableTest) && NotesManager::getModel()->getRootItem()->hasChildren());
+	}
+
+	if (m_actions.contains(ActionsManager::DeleteAction))
+	{
+		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
+	}
+
+	if (m_actions.contains(ActionsManager::SelectAllAction))
+	{
+		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsContentEditableTest) || !m_hitResult.flags.testFlag(IsEmptyTest));
+	}
+
+	if (m_actions.contains(ActionsManager::ClearAllAction))
+	{
+		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
+	}
+
+	if (m_actions.contains(ActionsManager::SearchAction))
+	{
+		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+		const bool isValid = !engine.identifier.isEmpty();
+
+		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
+		m_actions[ActionsManager::SearchAction]->setData(isValid ? engine.identifier : QVariant());
+		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
+		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
+	}
+
+	if (m_actions.contains(ActionsManager::SearchMenuAction))
+	{
+		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+	}
+
+	updateLinkActions();
+	updateFrameActions();
+	updateImageActions();
+	updateMediaActions();
 }
 
 void WebWidget::updateLinkActions()
 {
+	const bool isLink = m_hitResult.linkUrl.isValid();
+
+	if (m_actions.contains(ActionsManager::OpenLinkAction))
+	{
+		m_actions[ActionsManager::OpenLinkAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInCurrentTabAction))
+	{
+		m_actions[ActionsManager::OpenLinkInCurrentTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewTabAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewTabBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewWindowAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewWindowAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewWindowBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewWindowBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateTabAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewPrivateTabAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewPrivateTabBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateWindowAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewPrivateWindowAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyLinkToClipboardAction))
+	{
+		m_actions[ActionsManager::CopyLinkToClipboardAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::BookmarkLinkAction))
+	{
+		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
+		m_actions[ActionsManager::BookmarkLinkAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::SaveLinkToDiskAction))
+	{
+		m_actions[ActionsManager::SaveLinkToDiskAction]->setEnabled(isLink);
+	}
+
+	if (m_actions.contains(ActionsManager::SaveLinkToDownloadsAction))
+	{
+		m_actions[ActionsManager::SaveLinkToDownloadsAction]->setEnabled(isLink);
+	}
 }
 
 void WebWidget::updateFrameActions()
 {
+	const bool isFrame = (m_hitResult.frameUrl.isValid());
+
+	if (m_actions.contains(ActionsManager::OpenFrameInCurrentTabAction))
+	{
+		m_actions[ActionsManager::OpenFrameInCurrentTabAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenFrameInNewTabAction))
+	{
+		m_actions[ActionsManager::OpenFrameInNewTabAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenFrameInNewTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenFrameInNewTabBackgroundAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyFrameLinkToClipboardAction))
+	{
+		m_actions[ActionsManager::CopyFrameLinkToClipboardAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadFrameAction))
+	{
+		m_actions[ActionsManager::ReloadFrameAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::ViewFrameSourceAction))
+	{
+		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(isFrame);
+	}
 }
 
 void WebWidget::updateImageActions()
 {
+	const bool isImage = !m_hitResult.imageUrl.isEmpty();
+	const bool isOpened = getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
+	const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256);
+
+	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
+	{
+		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Tab (Untitled)") : tr("Open Image in New Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Tab"));
+		m_actions[ActionsManager::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenImageInNewTabBackgroundAction))
+	{
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Background Tab (Untitled)") : tr("Open Image in New Background Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Background Tab"));
+		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setEnabled(isImage && !isOpened);
+	}
+
+	if (m_actions.contains(ActionsManager::SaveImageToDiskAction))
+	{
+		m_actions[ActionsManager::SaveImageToDiskAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyImageToClipboardAction))
+	{
+		m_actions[ActionsManager::CopyImageToClipboardAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyImageUrlToClipboardAction))
+	{
+		m_actions[ActionsManager::CopyImageUrlToClipboardAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(ActionsManager::ReloadImageAction))
+	{
+		m_actions[ActionsManager::ReloadImageAction]->setEnabled(isImage);
+	}
+
+	if (m_actions.contains(ActionsManager::ImagePropertiesAction))
+	{
+		m_actions[ActionsManager::ImagePropertiesAction]->setEnabled(isImage);
+	}
 }
 
 void WebWidget::updateMediaActions()
 {
+	const bool isMedia = m_hitResult.mediaUrl.isValid();
+	const bool isVideo = (m_hitResult.tagName == QLatin1String("video"));
+	const bool isPaused = m_hitResult.flags.testFlag(MediaIsPausedTest);
+	const bool isMuted = m_hitResult.flags.testFlag(MediaIsMutedTest);
+
+	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
+	{
+		m_actions[ActionsManager::SaveMediaToDiskAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Save Video…") : QT_TRANSLATE_NOOP("actions", "Save Audio…"));
+		m_actions[ActionsManager::SaveMediaToDiskAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(ActionsManager::CopyMediaUrlToClipboardAction))
+	{
+		m_actions[ActionsManager::CopyMediaUrlToClipboardAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Copy Video Link to Clipboard") : QT_TRANSLATE_NOOP("actions", "Copy Audio Link to Clipboard"));
+		m_actions[ActionsManager::CopyMediaUrlToClipboardAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(ActionsManager::MediaControlsAction))
+	{
+		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.flags.testFlag(MediaHasControlsTest));
+		m_actions[ActionsManager::MediaControlsAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(ActionsManager::MediaLoopAction))
+	{
+		m_actions[ActionsManager::MediaLoopAction]->setChecked(m_hitResult.flags.testFlag(MediaIsLoopedTest));
+		m_actions[ActionsManager::MediaLoopAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(ActionsManager::MediaPlayPauseAction))
+	{
+		m_actions[ActionsManager::MediaPlayPauseAction]->setOverrideText(isPaused ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
+		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		m_actions[ActionsManager::MediaPlayPauseAction]->setEnabled(isMedia);
+	}
+
+	if (m_actions.contains(ActionsManager::MediaMuteAction))
+	{
+		m_actions[ActionsManager::MediaMuteAction]->setOverrideText(isMuted ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
+		m_actions[ActionsManager::MediaMuteAction]->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		m_actions[ActionsManager::MediaMuteAction]->setEnabled(isMedia);
+	}
 }
 
 void WebWidget::updateBookmarkActions()
 {
+	updatePageActions(getUrl());
+	updateLinkActions();
 }
 
 void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
@@ -759,18 +1070,6 @@ void WebWidget::setOptions(const QVariantHash &options)
 	m_options = options;
 }
 
-QMenu* WebWidget::getPasteNoteMenu()
-{
-	if (!m_pasteNoteMenu)
-	{
-		m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
-
-		connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
-	}
-
-	return m_pasteNoteMenu;
-}
-
 void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
 {
 	m_requestedUrl = url;
@@ -856,9 +1155,166 @@ void WebWidget::setScrollMode(WebWidget::ScrollMode mode)
 	}
 }
 
+Action* WebWidget::getAction(int identifier)
+{
+	if (identifier < 0)
+	{
+		return NULL;
+	}
+
+	if (m_actions.contains(identifier))
+	{
+		return m_actions[identifier];
+	}
+
+	Action *action = new Action(identifier, this);
+
+	m_actions[identifier] = action;
+
+	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
+
+	switch (identifier)
+	{
+		case ActionsManager::CheckSpellingAction:
+			action->setEnabled(false);
+
+			break;
+		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::WebsitePreferencesAction:
+			updatePageActions(getUrl());
+
+			break;
+		case ActionsManager::GoBackAction:
+		case ActionsManager::RewindAction:
+			action->setEnabled(canGoBack());
+
+			break;
+		case ActionsManager::GoForwardAction:
+		case ActionsManager::FastForwardAction:
+			action->setEnabled(canGoForward());
+
+			break;
+		case ActionsManager::PasteNoteAction:
+			action->setMenu(getPasteNoteMenu());
+
+			updateEditActions();
+
+			break;
+		case ActionsManager::StopAction:
+			action->setEnabled(isLoading());
+
+			break;
+
+		case ActionsManager::ReloadAction:
+			action->setEnabled(!isLoading());
+
+			break;
+		case ActionsManager::ReloadOrStopAction:
+			action->setup(isLoading() ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+
+			break;
+		case ActionsManager::ScheduleReloadAction:
+			action->setMenu(getReloadTimeMenu());
+
+			break;
+		case ActionsManager::LoadPluginsAction:
+			action->setEnabled(getAmountOfNotLoadedPlugins() > 0);
+
+			break;
+		case ActionsManager::ValidateAction:
+			action->setEnabled(false);
+			action->setMenu(new QMenu(this));
+
+			break;
+		case ActionsManager::SearchMenuAction:
+			action->setMenu(getQuickSearchMenu());
+
+		case ActionsManager::UndoAction:
+		case ActionsManager::RedoAction:
+		case ActionsManager::CutAction:
+		case ActionsManager::CopyAction:
+		case ActionsManager::CopyPlainTextAction:
+		case ActionsManager::CopyToNoteAction:
+		case ActionsManager::PasteAction:
+		case ActionsManager::PasteAndGoAction:
+		case ActionsManager::DeleteAction:
+		case ActionsManager::ClearAllAction:
+		case ActionsManager::SearchAction:
+			updateEditActions();
+
+			break;
+		case ActionsManager::OpenLinkAction:
+		case ActionsManager::OpenLinkInCurrentTabAction:
+		case ActionsManager::OpenLinkInNewTabAction:
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewWindowAction:
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
+		case ActionsManager::CopyLinkToClipboardAction:
+		case ActionsManager::BookmarkLinkAction:
+		case ActionsManager::SaveLinkToDiskAction:
+		case ActionsManager::SaveLinkToDownloadsAction:
+			updateLinkActions();
+
+			break;
+		case ActionsManager::OpenFrameInCurrentTabAction:
+		case ActionsManager::OpenFrameInNewTabAction:
+		case ActionsManager::OpenFrameInNewTabBackgroundAction:
+		case ActionsManager::CopyFrameLinkToClipboardAction:
+		case ActionsManager::ReloadFrameAction:
+		case ActionsManager::ViewFrameSourceAction:
+			updateFrameActions();
+
+			break;
+		case ActionsManager::OpenImageInNewTabAction:
+		case ActionsManager::OpenImageInNewTabBackgroundAction:
+		case ActionsManager::SaveImageToDiskAction:
+		case ActionsManager::CopyImageToClipboardAction:
+		case ActionsManager::CopyImageUrlToClipboardAction:
+		case ActionsManager::ReloadImageAction:
+		case ActionsManager::ImagePropertiesAction:
+			updateImageActions();
+
+			break;
+		case ActionsManager::SaveMediaToDiskAction:
+		case ActionsManager::CopyMediaUrlToClipboardAction:
+		case ActionsManager::MediaControlsAction:
+		case ActionsManager::MediaLoopAction:
+		case ActionsManager::MediaPlayPauseAction:
+		case ActionsManager::MediaMuteAction:
+			updateMediaActions();
+
+			break;
+		default:
+			break;
+	}
+
+	return action;
+}
+
+Action* WebWidget::getExistingAction(int identifier)
+{
+	return (m_actions.contains(identifier) ? m_actions[identifier] : NULL);
+}
+
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
+}
+
+QMenu* WebWidget::getPasteNoteMenu()
+{
+	if (!m_pasteNoteMenu)
+	{
+		m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
+
+		connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
+	}
+
+	return m_pasteNoteMenu;
 }
 
 QMenu* WebWidget::getReloadTimeMenu()
@@ -1008,6 +1464,11 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 WebWidget::ScrollMode WebWidget::getScrollMode() const
 {
 	return m_scrollMode;
+}
+
+int WebWidget::getAmountOfNotLoadedPlugins() const
+{
+	return 0;
 }
 
 bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate, QObject *sender)
@@ -1264,6 +1725,16 @@ bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject 
 	return false;
 }
 
+bool WebWidget::canGoBack() const
+{
+	return false;
+}
+
+bool WebWidget::canGoForward() const
+{
+	return false;
+}
+
 bool WebWidget::canShowContextMenu(const QPoint &position) const
 {
 	Q_UNUSED(position)
@@ -1281,6 +1752,11 @@ bool WebWidget::isScrollBar(const QPoint &position) const
 bool WebWidget::hasOption(const QString &key) const
 {
 	return m_options.contains(key);
+}
+
+bool WebWidget::hasSelection() const
+{
+	return false;
 }
 
 }

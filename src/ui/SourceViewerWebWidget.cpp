@@ -291,26 +291,24 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 void SourceViewerWebWidget::updateEditActions()
 {
-	const bool hasSelection = !getSelectedText().isEmpty();
-
 	if (m_actions.contains(ActionsManager::CutAction))
 	{
-		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection);
+		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection());
 	}
 
 	if (m_actions.contains(ActionsManager::CopyAction))
 	{
-		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection);
+		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection());
 	}
 
 	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
 	{
-		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection);
+		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection());
 	}
 
 	if (m_actions.contains(ActionsManager::CopyToNoteAction))
 	{
-		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection);
+		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection());
 	}
 
 	if (m_actions.contains(ActionsManager::PasteAction))
@@ -325,7 +323,7 @@ void SourceViewerWebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::DeleteAction))
 	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection);
+		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection());
 	}
 
 	if (m_actions.contains(ActionsManager::SelectAllAction))

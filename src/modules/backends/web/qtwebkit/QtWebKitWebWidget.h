@@ -67,6 +67,7 @@ public:
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	int getZoom() const;
+	bool hasSelection() const;
 	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
@@ -102,9 +103,12 @@ protected:
 	void handleHistory();
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
-	QString getPluginToken() const;
 	QWebPage* getPage();
+	QString getPluginToken() const;
+	int getAmountOfNotLoadedPlugins() const;
 	bool canLoadPlugins() const;
+	bool canGoBack() const;
+	bool canGoForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
 	bool isScrollBar(const QPoint &position) const;
 
@@ -131,14 +135,6 @@ protected slots:
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel);
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
-	void updatePageActions(const QUrl &url);
-	void updateNavigationActions();
-	void updateEditActions();
-	void updateLinkActions();
-	void updateFrameActions();
-	void updateImageActions();
-	void updateMediaActions();
-	void updateBookmarkActions();
 	void updateOptions(const QUrl &url);
 
 private:
@@ -155,7 +151,6 @@ private:
 	QByteArray m_formRequestBody;
 	QVector<int> m_contentBlockingProfiles;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
-	QHash<int, Action*> m_actions;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
