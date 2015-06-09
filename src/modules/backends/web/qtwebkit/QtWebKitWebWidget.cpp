@@ -1551,16 +1551,16 @@ void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 	}
 }
 
-void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
-{
-	m_webView->page()->mainFrame()->setScrollPosition(position);
-}
-
 void QtWebKitWebWidget::setOptions(const QVariantHash &options)
 {
 	WebWidget::setOptions(options);
 
 	updateOptions(getUrl());
+}
+
+void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
+{
+	m_webView->page()->mainFrame()->setScrollPosition(position);
 }
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)

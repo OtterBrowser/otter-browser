@@ -1492,13 +1492,6 @@ void QtWebEngineWebWidget::showHotClickMenu()
 	}
 }
 
-void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
-{
-	WebWidget::setOptions(options);
-
-	updateOptions(getUrl());
-}
-
 void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 {
 	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), invoke(this, &QtWebEngineWebWidget::handleScroll));
@@ -1641,6 +1634,25 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 	}
 
 	m_webView->page()->setFeaturePermission(url, feature, (policies.testFlag(GrantedPermission) ? QWebEnginePage::PermissionGrantedByUser : QWebEnginePage::PermissionDeniedByUser));
+}
+
+void QtWebEngineWebWidget::setOption(const QString &key, const QVariant &value)
+{
+	WebWidget::setOption(key, value);
+
+	updateOptions(getUrl());
+
+	if (key == QLatin1String("Content/DefaultCharacterEncoding"))
+	{
+		m_webView->reload();
+	}
+}
+
+void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
+{
+	WebWidget::setOptions(options);
+
+	updateOptions(getUrl());
 }
 
 WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory)
