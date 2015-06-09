@@ -1,3 +1,36 @@
+otter-browser (0.9.06.01-1~vivid~ppa4) vivid; urgency=medium
+
+  * Update package description and dependencies
+  * Backport workaround for Qt 5.2, revision 40167ef
+  * Backport fix for too big margins in toolbars, revision af837be
+
+ -- Michał Dutkiewicz <emdeck@gmail.com>  Thu, 04 Jun 2015 13:53:45 +0200
+
+otter-browser (0.9.06-1~vivid~ppa1) vivid; urgency=medium
+
+  * New upstream release
+
+ -- Liviu Andronic <landronimirc@gmail.com>  Wed, 03 Jun 2015 12:17:40 +0200
+
+otter-browser (0.9.05-1~trusty~ppa1) trusty; urgency=medium
+
+  * New upstream release
+
+ -- Liviu Andronic <landronimirc@gmail.com>  Sun, 05 Apr 2015 11:53:56 +0200
+
+otter-browser (0.9.04-1~trusty~ppa1) trusty; urgency=medium
+
+  * New upstream release.
+  * Add qtmultimedia5-dev
+
+ -- Liviu Andronic <landronimirc@gmail.com>  Sat, 03 Jan 2015 08:33:18 +1100
+
+otter-browser (0.9.03-1~trusty~ppa1) trusty; urgency=medium
+
+  * New upstream release.
+
+ -- Liviu Andronic <landronimirc@gmail.com>  Sat, 20 Dec 2014 08:33:18 +1100
+
 otter-browser (0.9.01+git20140602~trusty~ppa1) trusty; urgency=medium
 
   * New source, 0.9.01

@@ -4,19 +4,19 @@ Priority: extra
 Maintainer: Rog131 <samrog131@hotmail.com>
 Build-Depends: debhelper (>= 9.0),
  cmake,
- qtbase5-dev,
- libqt5webkit5-dev,
- qtdeclarative5-dev,
- qtscript5-dev,
- qtmultimedia5-dev
+ qtbase5-dev (>=5.2.0),
+ libqt5webkit5-dev (>=5.1.0),
+ qtdeclarative5-dev (>=5.2.0),
+ qtscript5-dev (>=5.2.0),
+ qtmultimedia5-dev (>=5.2.0)
 Standards-Version: 3.9.6
 Homepage: http://otter-browser.org/
 
 Package: otter-browser
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Web browser based on Qt5
- Otter is a web browser controlled by the user, not vice-versa. Its goal is to
- recreate the best aspects of the classic Opera (12.x) UI using Qt5.
- .
- http://otter-browser.org
+Recommends: gstreamer0.10-plugins-base,
+ gstreamer0.10-plugins-good
+Description: Web browser controlled by the user, not vice-versa
+ Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI
+ using Qt5
