@@ -109,6 +109,21 @@ void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::ReloadAction:
 			{
+				if (m_sourceViewer->document()->isModified())
+				{
+					const QMessageBox::StandardButton result = QMessageBox::warning(this, tr("Warning"), tr("The document has been modified.\nDo you want to save your changes or discard them?"), (QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel));
+
+					if (result == QMessageBox::Cancel)
+					{
+						return;
+					}
+
+					if (result == QMessageBox::Save)
+					{
+						triggerAction(ActionsManager::SaveAction);
+					}
+				}
+
 				triggerAction(ActionsManager::StopAction);
 
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
@@ -354,6 +369,28 @@ void SourceViewerWebWidget::updateEditActions()
 	}
 }
 
+void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
+{
+	const QString encoding = getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString();
+
+	WebWidget::setOption(key, value);
+
+	if (key == QLatin1String("Content/DefaultCharacterEncoding") && encoding != value.toString())
+	{
+		triggerAction(ActionsManager::ReloadAction);
+	}
+}
+
+void SourceViewerWebWidget::setOptions(const QVariantHash &options)
+{
+	WebWidget::setOptions(options);
+
+	if (options.contains(QLatin1String("Content/DefaultCharacterEncoding")))
+	{
+		setOption(QLatin1String("Content/DefaultCharacterEncoding"), options[QLatin1String("Content/DefaultCharacterEncoding")]);
+	}
+}
+
 void SourceViewerWebWidget::setScrollPosition(const QPoint &position)
 {
 	Q_UNUSED(position)
@@ -392,7 +429,12 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 {
 	QTextCodec *codec = NULL;
 
-	if (!contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))
+	if (hasOption(QLatin1String("Content/DefaultCharacterEncoding")))
+	{
+		codec = QTextCodec::codecForName(getOption(QLatin1String("Content/DefaultCharacterEncoding")).toByteArray());
+	}
+
+	if (!codec && !contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))
 	{
 		codec = QTextCodec::codecForName(contentType.mid(contentType.indexOf(QLatin1String("charset=")) + 8).toLatin1());
 	}
@@ -414,6 +456,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	}
 
 	m_sourceViewer->setPlainText(text);
+	m_sourceViewer->document()->setModified(false);
 
 	m_isLoading = false;
 

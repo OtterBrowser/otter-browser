@@ -56,6 +56,7 @@ public slots:
 	void triggerAction(int identifier, bool checked = false);
 	void clearSelection();
 	void goToHistoryIndex(int index);
+	void setOption(const QString &key, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -64,6 +65,7 @@ public slots:
 
 protected:
 	void pasteText(const QString &text);
+	void setOptions(const QVariantHash &options);
 
 protected slots:
 	void viewSourceReplyFinished();
