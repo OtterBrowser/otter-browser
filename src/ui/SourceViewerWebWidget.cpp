@@ -230,7 +230,7 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 {
 	if (m_viewSourceReply)
 	{
-		setContents(m_viewSourceReply->readAll());
+		setContents(m_viewSourceReply->readAll(), m_viewSourceReply->header(QNetworkRequest::ContentTypeHeader).toString());
 
 		m_viewSourceReply->deleteLater();
 		m_viewSourceReply = NULL;
@@ -388,9 +388,20 @@ void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 	}
 }
 
-void SourceViewerWebWidget::setContents(const QByteArray &contents)
+void SourceViewerWebWidget::setContents(const QByteArray &contents, const QString &contentType)
 {
-	QTextCodec *codec = QTextCodec::codecForHtml(contents);
+	QTextCodec *codec = NULL;
+
+	if (!contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))
+	{
+		codec = QTextCodec::codecForName(contentType.mid(contentType.indexOf(QLatin1String("charset=")) + 8).toLatin1());
+	}
+
+	if (!codec)
+	{
+		codec = QTextCodec::codecForHtml(contents);
+	}
+
 	QString text;
 
 	if (codec)

@@ -60,7 +60,7 @@ public slots:
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);
-	void setContents(const QByteArray &contents);
+	void setContents(const QByteArray &contents, const QString &contentType);
 
 protected:
 	void pasteText(const QString &text);
