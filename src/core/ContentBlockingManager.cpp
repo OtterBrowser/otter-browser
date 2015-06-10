@@ -73,7 +73,11 @@ void ContentBlockingManager::loadProfiles()
 
 	for (int i = 0; i < existingProfiles.count(); ++i)
 	{
-		m_profiles.append(new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance));
+		ContentBlockingProfile *profile = new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance);
+
+		m_profiles.append(profile);
+
+		connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
 	}
 }
 
@@ -95,6 +99,19 @@ QByteArray ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
 	}
 
 	return styleSheet;
+}
+
+ContentBlockingInformation ContentBlockingManager::getProfile(const QString &profile)
+{
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		if (m_profiles[i]->getInformation().name == profile)
+		{
+			return m_profiles[i]->getInformation();
+		}
+	}
+
+	return ContentBlockingInformation();
 }
 
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)

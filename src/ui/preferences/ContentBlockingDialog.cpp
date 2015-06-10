@@ -62,7 +62,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 		items.append(new QStandardItem(profilesSettings.value(profiles.at(i).name + QLatin1String("/updateInterval")).toString()));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
-		items.append(new QStandardItem(profilesSettings.value(profiles.at(i).name + QLatin1String("/lastUpdate")).toString()));
+		items.append(new QStandardItem(Utils::formatDateTime(profilesSettings.value(profiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime())));
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		model->appendRow(items);
@@ -76,6 +76,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 
 	adjustSize();
 
+	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(profileModified(QString)));
 	connect(m_ui->profilesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->updateButton, SIGNAL(clicked(bool)), this, SLOT(updateProfile()));
 	connect(m_ui->confirmButtonBox, SIGNAL(accepted()), this, SLOT(save()));
@@ -96,6 +97,31 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 		m_ui->retranslateUi(this);
 
 		adjustSize();
+	}
+}
+
+void ContentBlockingDialog::profileModified(const QString &profile)
+{
+	const ContentBlockingInformation information = ContentBlockingManager::getProfile(profile);
+
+	if (information.name.isEmpty())
+	{
+		return;
+	}
+
+	for (int i = 0; i < m_ui->profilesViewWidget->model()->rowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->profilesViewWidget->model()->index(i, 0);
+
+		if (index.data(Qt::UserRole).toString() == profile)
+		{
+			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+
+			m_ui->profilesViewWidget->model()->setData(index, information.title, Qt::DisplayRole);
+			m_ui->profilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(profile + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+
+			break;
+		}
 	}
 }
 

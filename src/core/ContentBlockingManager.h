@@ -38,6 +38,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
 	static QByteArray getStyleSheet(const QVector<int> &profiles);
+	static ContentBlockingInformation getProfile(const QString &profile);
 	static QStringList createSubdomainList(const QString &domain);
 	static QVector<ContentBlockingInformation> getProfiles();
 	static QMultiHash<QString, QString> getStyleSheetBlackList(const QVector<int> &profiles);
@@ -54,6 +55,9 @@ protected:
 private:
 	static ContentBlockingManager *m_instance;
 	static QVector<ContentBlockingProfile*> m_profiles;
+
+signals:
+	void profileModified(const QString &profile);
 };
 
 }

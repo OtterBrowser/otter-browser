@@ -495,6 +495,8 @@ void ContentBlockingProfile::replyFinished()
 	}
 
 	load(!m_wasLoaded);
+
+	emit profileModified(m_information.name);
 }
 
 QString ContentBlockingProfile::getStyleSheet()
@@ -585,11 +587,9 @@ bool ContentBlockingProfile::loadRules()
 	}
 
 	QFile file(m_information.path);
-
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);
-
 	stream.readLine(); // header
 
 	m_root = new Node();
@@ -606,8 +606,6 @@ bool ContentBlockingProfile::loadRules()
 		m_styleSheet = m_styleSheet.left(m_styleSheet.length() - 1);
 		m_styleSheet += QLatin1String("{display:none;}");
 	}
-
-	emit updateCustomStyleSheets();
 
 	return true;
 }

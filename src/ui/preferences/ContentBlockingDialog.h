@@ -43,9 +43,10 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
+	void profileModified(const QString &profile);
 	void updateProfile();
-	void save();
 	void updateActions();
+	void save();
 
 private:
 	Ui::ContentBlockingDialog *m_ui;

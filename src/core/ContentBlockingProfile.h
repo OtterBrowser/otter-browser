@@ -117,7 +117,7 @@ private:
 	bool m_wasLoaded;
 
 signals:
-	void updateCustomStyleSheets();
+	void profileModified(const QString &profile);
 };
 
 }
