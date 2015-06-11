@@ -50,7 +50,7 @@ public:
 	std::string value(const std::string &group, const std::string &key) const;
 
 protected:
-	std::string unescape(const std::string &string);
+	static std::string unescape(const std::string &string);
 
 private:
 	std::map< std::string, std::map<std::string, std::string> > values_;

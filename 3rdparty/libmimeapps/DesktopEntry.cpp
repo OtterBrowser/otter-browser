@@ -48,14 +48,13 @@ DesktopEntry::DesktopEntry():
 }
 
 DesktopEntry::DesktopEntry(const std::string &baseDirectory, const std::string &relative, const std::string &language):
+	identifier_(relative),
+	path_(baseDirectory + relative),
 	noDisplay_(false),
 	hidden_(false),
 	allowMultiple_(false),
 	allowRemote_(false)
 {
-	path_ = baseDirectory + relative;
-	identifier_ = relative;
-
 	ConfigReader config(path_);
 
 	std::replace(identifier_.begin(), identifier_.end(), '/', '-');

@@ -59,13 +59,12 @@ struct lang {
 	{
 	}
 
-	explicit lang(const std::string &string)
+	explicit lang(const std::string &string):
+		language(alnums(string, 0))
 	{
-		language = alnums(string, 0);
-
 		if (match(string, "_"))
 		{
-			country= alnums(string, string.find('_')+1);
+			country = alnums(string, string.find('_')+1);
 		}
 
 		if (match(string, "@"))
