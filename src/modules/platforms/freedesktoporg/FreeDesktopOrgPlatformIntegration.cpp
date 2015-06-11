@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,10 +23,12 @@
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
+#include "../../../../3rdparty/libmimeapps/DesktopEntry.h"
+#include "../../../../3rdparty/libmimeapps/Index.h"
 
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
-#include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
 #include <QtGui/QRgb>
 
@@ -102,9 +105,43 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
 {
-	Q_UNUSED(command)
+	std::vector<std::string> fileNames;
+	fileNames.push_back(fileName.toStdString());
 
-	QDesktopServices::openUrl(QUrl(fileName));
+	std::vector<std::string> parsed = LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames);
+
+	if (parsed.size() < 1)
+	{
+		return;
+	}
+
+	QStringList arguments;
+
+	for (int i = 1; i < parsed.size(); ++i)
+	{
+		arguments.append(QString::fromStdString(parsed.at(i)));
+	}
+
+	QProcess::startDetached(QString::fromStdString(parsed.at(0)), arguments);
+}
+
+QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+{
+	LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
+	std::vector<LibMimeApps::DesktopEntry> applications = index.appsForMime(mimeType.name().toStdString());
+	QList<ApplicationInformation> result;
+
+	for (int i = 0; i < applications.size(); ++i)
+	{
+		ApplicationInformation application;
+		application.command = QString::fromStdString(applications.at(i).executable());
+		application.name = QString::fromStdString(applications.at(i).name());
+		application.icon = QIcon::fromTheme(QString::fromStdString(applications.at(i).icon()));
+
+		result.append(application);
+	}
+
+	return result;
 }
 
 void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)

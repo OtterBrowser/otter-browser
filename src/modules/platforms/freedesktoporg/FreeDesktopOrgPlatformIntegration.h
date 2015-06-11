@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,6 +42,7 @@ public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
 
 	void runApplication(const QString &command, const QString &fileName = QString()) const;
+	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	bool canShowNotifications() const;
 
 public slots:

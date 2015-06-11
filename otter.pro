@@ -170,6 +170,10 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/StartPageWidget.cpp \
     src/modules/windows/web/TileDelegate.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
+    3rdparty/libmimeapps/ConfigReader.cpp \
+    3rdparty/libmimeapps/DesktopEntry.cpp \
+    3rdparty/libmimeapps/Index.cpp \
+    3rdparty/libmimeapps/Tools.cpp \
     3rdparty/mousegestures/MouseGestures.cpp
 
 win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
@@ -311,6 +315,10 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/StartPageWidget.h \
     src/modules/windows/web/TileDelegate.h \
     src/modules/windows/web/WebContentsWidget.h \
+    3rdparty/libmimeapps/ConfigReader.h \
+    3rdparty/libmimeapps/DesktopEntry.h \
+    3rdparty/libmimeapps/Index.h \
+    3rdparty/libmimeapps/Tools.h \
     3rdparty/mousegestures/MouseGestures.h
 
 win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
