@@ -29,6 +29,7 @@
 
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
+#include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
 #include <QtGui/QRgb>
 
@@ -105,6 +106,11 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
 {
+	if (command.isEmpty())
+	{
+		QDesktopServices::openUrl(QUrl(fileName));
+	}
+
 	std::vector<std::string> fileNames;
 	fileNames.push_back(fileName.toStdString());
 
