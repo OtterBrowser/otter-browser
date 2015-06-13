@@ -381,7 +381,6 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_es_MX.ts \
     resources/translations/otter-browser_et.ts \
     resources/translations/otter-browser_fi.ts \
-    resources/translations/otter-browser_fr_CA.ts \
     resources/translations/otter-browser_fr_FR.ts \
     resources/translations/otter-browser_hr_HR.ts \
     resources/translations/otter-browser_hu.ts \

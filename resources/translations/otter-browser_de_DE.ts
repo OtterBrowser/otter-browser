@@ -1833,7 +1833,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Geben Sie eine Webadresse ein oder wählen Sie eine aus der Liste:</translation>
+        <translation>Geben Sie eine Webadresse ein oder wählen Sie eine aus der Liste aus:</translation>
     </message>
 </context>
 <context>
@@ -1846,7 +1846,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>Stichwort des Lesezeichens eingeben:</translation>
+        <translation>Geben Sie das Stichwort des Lesezeichens ein:</translation>
     </message>
 </context>
 <context>
@@ -2209,7 +2209,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
         <source>Enable single key shortcuts</source>
-        <translation>Tastaturkürzel aktivieren</translation>
+        <translation>Einzelne Tastaturkürzel aktivieren</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
@@ -2269,7 +2269,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="221"/>
         <source>Readd</source>
-        <translation>Lesen</translation>
+        <translation>Erneut hinzufügen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="307"/>
@@ -2704,7 +2704,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="268"/>
         <source>Clear history when application closes</source>
-        <translation>Verlauf beim Beenden löschen</translation>
+        <translation>Verlauf beim Schließen der Anwendung löschen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="288"/>
@@ -2845,7 +2845,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="84"/>
         <source>Readd</source>
-        <translation>Lesen</translation>
+        <translation>Erneut hinzufügen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="151"/>
@@ -2928,17 +2928,17 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="255"/>
         <source>Receiving data from %1…</source>
-        <translation>Empfange Daten von %1</translation>
+        <translation>Daten von %1 werden empfangen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
         <source>Completed request to %1</source>
-        <translation>Anfrage an %1 beendet.</translation>
+        <translation>Anfrage an %1 beendet</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="459"/>
         <source>Sending request to %1…</source>
-        <translation>Sende Anfrage an %1...</translation>
+        <translation>Anfrage wird an %1 gesendet...</translation>
     </message>
 </context>
 <context>
@@ -2980,7 +2980,7 @@ Möchten Sie fortfahren?</translation>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="261"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="279"/>
         <source>Do not show this message again</source>
-        <translation>Diese Nachricht nicht mehr anzeigen</translation>
+        <translation>Diese Nachricht nicht erneut anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="388"/>
@@ -3000,12 +3000,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="452"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation>Das Skript dieser Webseite ist fehlerhaft.</translation>
+        <translation>Das Skript auf dieser Webseite scheint ein Problem zu haben.</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="452"/>
         <source>Do you want to stop the script?</source>
-        <translation>Möchten Sie das Script anhalten?</translation>
+        <translation>Möchten Sie das Skript stoppen?</translation>
     </message>
 </context>
 <context>
@@ -3064,12 +3064,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="521"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation>Die Seite will diesen Tab schließen. Erlauben?</translation>
+        <translation>Webseite möchte diesen Tab schließen, möchten Sie das Schließen erlauben?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="522"/>
         <source>Do not show this message again</source>
-        <translation>Diese Nachricht nicht mehr anzeigen</translation>
+        <translation>Diese Nachricht nicht erneut anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="640"/>
@@ -3606,7 +3606,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="456"/>
         <source>Transfers</source>
-        <translation>Übertragungen</translation>
+        <translation>Downloads</translation>
     </message>
 </context>
 <context>
@@ -3634,7 +3634,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>
         <source>Source Viewer</source>
-        <translation>Quellbetrachter</translation>
+        <translation>Quelltext</translation>
     </message>
 </context>
 <context>
@@ -4179,7 +4179,7 @@ Möchten Sie die Datei überschreiben?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="436"/>
         <source>Stop</source>
-        <translation>Anhalten</translation>
+        <translation>Stopp</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="206"/>
@@ -4283,7 +4283,7 @@ Fortschritt: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Copy Transfer Information</source>
-        <translation>Dateiinformationen kopieren</translation>
+        <translation>Übertragungsinformationen kopieren</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="407"/>
@@ -4293,12 +4293,12 @@ Fortschritt: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="421"/>
         <source>Clear Finished Transfers</source>
-        <translation>Fertiggestellte Übertragungen löschen</translation>
+        <translation>Fertiggestellte Downloads löschen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="545"/>
         <source>Transfers Manager</source>
-        <translation>Übertragungsverwaltung</translation>
+        <translation>Download Manager</translation>
     </message>
 </context>
 <context>
@@ -4597,7 +4597,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
         <source>Do Not Track:</source>
-        <translation>Verfolgbarkeit:</translation>
+        <translation>Nicht verfolgen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="373"/>
@@ -4622,7 +4622,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="474"/>
         <source>Scripting</source>
-        <translation>Skripten</translation>
+        <translation>Skripte</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
@@ -4632,12 +4632,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="504"/>
         <source>Allow script to hide address bar</source>
-        <translation>Skripten das Ausblenden der Adressleiste erlauben</translation>
+        <translation>Skript das Ausblenden der Adressleiste erlauben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="511"/>
         <source>Allow moving and resizing of windows</source>
-        <translation>Erlaube Bewegen und Größenänderung von Fenstern</translation>
+        <translation>Verschieben und Größenänderung von Fenstern erlauben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="532"/>
@@ -4652,17 +4652,17 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="583"/>
         <source>Allow to disable context menu</source>
-        <translation>Kontextmenü abschalten zulassen</translation>
+        <translation>Abschalten des Kontextmenüs erlauben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="597"/>
         <source>Allow to open windows</source>
-        <translation>Öffnen von Fenstern zulassen</translation>
+        <translation>Öffnen von Fenstern erlauben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>Allow to close windows:</source>
-        <translation>Fenster schließen zulassen:</translation>
+        <translation>Schließen von Fenstern erlauben:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="638"/>
@@ -4801,7 +4801,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Do not inform websites about my preference</source>
-        <translation>Internetseiten über meine Einstellung nicht informieren</translation>
+        <translation>Webseiten meine Einstellung nicht mitteilen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -4822,7 +4822,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Current session is closed</source>
-        <translation>Aktuelle Sitzung ist beendet</translation>
+        <translation>Aktuelle Sitzung ist geschlossen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
@@ -5000,7 +5000,7 @@ Bitte wählen Sie einen anderen aus.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="245"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
-        <translation>Chronik</translation>
+        <translation>Verlauf</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="246"/>
@@ -5245,7 +5245,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Open in New Private Background Window</source>
-        <translation>In neuem privaten Hintergrund-Fenster öffnen</translation>
+        <translation>In neuem privaten Hintergrundfenster öffnen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="293"/>
@@ -5271,7 +5271,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="297"/>
         <source>Go to This Address</source>
-        <translation>Zu dieser Adresse wechseln</translation>
+        <translation>Zu dieser Adresse gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
@@ -5308,7 +5308,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>View Frame Source</source>
-        <translation>Framequelle ansehen</translation>
+        <translation>Frame-Quelltext</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
@@ -5334,7 +5334,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Reload Image</source>
-        <translation>Bild erneut laden</translation>
+        <translation>Bild neu laden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
@@ -5391,7 +5391,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Go to Page or Search</source>
-        <translation>Gehe zu Seite oder Suche</translation>
+        <translation>Zur Seite oder Suche gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="320"/>
@@ -5401,7 +5401,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Go to Parent Directory</source>
-        <translation>Zum übergeordneten Verzeichnis</translation>
+        <translation>Zum übergeordneten Verzeichnis gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="322"/>
@@ -5491,7 +5491,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Paste and Go</source>
-        <translation>Einfügen und Los</translation>
+        <translation>Einfügen und aufrufen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="341"/>
@@ -5573,12 +5573,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Go to Start of the Page</source>
-        <translation>Gehe zum Anfang der Seite</translation>
+        <translation>Zum Anfang der Seite gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Go to the End of the Page</source>
-        <translation>Gehe zum Ende der Seite</translation>
+        <translation>Zum Ende der Seite gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="358"/>
@@ -5613,7 +5613,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Exit Scroll Mode</source>
-        <translation>Scroll-Modus verlassen</translation>
+        <translation>Bildlauf beenden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="365"/>
@@ -5643,12 +5643,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Go to Tab on Left</source>
-        <translation>Zum linken Tab</translation>
+        <translation>Zum linken Tab gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Go to Tab on Right</source>
-        <translation>Zum rechten Tab</translation>
+        <translation>Zum rechten Tab gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="372"/>
@@ -5729,7 +5729,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>View Source</source>
-        <translation>Quelle ansehen</translation>
+        <translation>Quelltext</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
@@ -5804,7 +5804,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>View History</source>
-        <translation>Chronik ansehen</translation>
+        <translation>Verlauf ansehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
@@ -5821,7 +5821,7 @@ Bitte wählen Sie einen anderen aus.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
-        <translation>Übertragungen</translation>
+        <translation>Downloads</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>

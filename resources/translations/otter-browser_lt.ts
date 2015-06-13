@@ -89,7 +89,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>Pageidaujama Tinklalapio Kalba</translation>
+        <translation>Pageidaujama Tinklalapių Kalba</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
@@ -893,12 +893,12 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation type="unfinished"/>
+        <translation>Visos kortelės</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation type="unfinished"/>
+        <translation>Tik esama kortelė</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
@@ -1554,12 +1554,12 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="744"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Naršyklė, valdoma vartotojo, o ne atvirkščiai.</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Naršyklė, kurią valdo naudotojas, o ne atvirkščiai.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="745"/>
         <source>Web backend: %1 %2.</source>
-        <translation>Žiniatinklio vidinė pusė: %1 %2.</translation>
+        <translation>Saityno vidinė pusė: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="749"/>
@@ -1828,12 +1828,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
         <source>Go to Page</source>
-        <translation type="unfinished"/>
+        <translation>Eiti į Puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Įveskite žiniatinklio adresą arba pasirinkite vieną iš sąrašo:</translation>
+        <translation>Įveskite saityno adresą arba pasirinkite vieną iš sąrašo:</translation>
     </message>
 </context>
 <context>
@@ -2065,7 +2065,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>User style sheet:</source>
-        <translation>Vartotojo stilių aprašas:</translation>
+        <translation>Naudotojo stilių aprašas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
@@ -2591,7 +2591,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred Webpage Language:</source>
-        <translation>Pageidaujama Tinklalapio Kalba:</translation>
+        <translation>Pageidaujama Tinklalapių Kalba:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
@@ -3561,17 +3561,17 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="217"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti Saityno Skydelį…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
         <source>Add web panel</source>
-        <translation>Pridėti žiniatinklio skydelį</translation>
+        <translation>Pridėti saityno skydelį</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Įveskite, skydelyje rodomos, svetainės adresą:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
@@ -3614,17 +3614,17 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="84"/>
         <source>Failed to save file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įrašyti failo: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Klaida</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įrašyti failo.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="349"/>
@@ -3634,7 +3634,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>Šaltinio Žiūryklė</translation>
     </message>
 </context>
 <context>
@@ -3643,7 +3643,7 @@ Ar tikrai norite jį atstatyti?</translation>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="171"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="172"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti Plytelę…</translation>
     </message>
 </context>
 <context>
@@ -3651,72 +3651,72 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Pradinio Puslapio Nuostatos</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti pasirinktiną fono paveikslą</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Išklojimo veiksena:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Paveikslo kelias:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Stulpelių eilutėje:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatiškai</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>Mastelio lygis:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti naujų įrašų pridėjimo plytelę</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Paveikslai (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Geriausias priderinimas</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centruoti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>Ištempti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Iškloti</translation>
     </message>
 </context>
 <context>
@@ -3724,32 +3724,32 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="216"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Atverti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="218"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Redaguoti…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="219"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Įkelti iš naujo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="221"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Ištrinti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="225"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Konfigūruoti…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="226"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti Plytelę…</translation>
     </message>
 </context>
 <context>
@@ -3797,7 +3797,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Sutvarkyti</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
@@ -3850,7 +3850,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="56"/>
         <source>Visible only when needed</source>
-        <translation>Matoma tik kada reikiama</translation>
+        <translation>Matoma tik kada reikia</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="64"/>
@@ -4039,7 +4039,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Sutvarkyti</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="452"/>
@@ -4547,7 +4547,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="122"/>
         <source>User style sheet:</source>
-        <translation>Vartotojo stilių aprašas:</translation>
+        <translation>Naudotojo stilių aprašas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="129"/>
@@ -4942,7 +4942,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="300"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Sutvarkyti</translation>
     </message>
 </context>
 <context>
@@ -5087,27 +5087,27 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>Detach Tab</source>
-        <translation>Atsegti Kortelę</translation>
+        <translation>Atskirti Kortelę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Maximize</source>
-        <translation type="unfinished"/>
+        <translation>Padidinti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Maximize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Padidinti Kortelę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Suskleisti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Minimize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Suskleisti Kortelę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="268"/>
@@ -5172,12 +5172,12 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Cascade</source>
-        <translation type="unfinished"/>
+        <translation>Išdėstyti pakopomis</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Iškloti</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>
@@ -5276,22 +5276,22 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti Rėmelį Šioje Kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti Rėmelį Naujoje Kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="300"/>
         <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti Rėmelį Naujoje Foninėje Kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti Rėmelio Nuorodą į Iškarpinę</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
@@ -5303,12 +5303,12 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>Iš Naujo Įkelti Rėmelį</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti Rėmelio Šaltinį</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
@@ -5946,7 +5946,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="289"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Užverti</translation>
     </message>
 </context>
 <context>

@@ -5177,7 +5177,7 @@ Wybierz inną.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Tile</source>
-        <translation> Rozmieść sąsiadująco</translation>
+        <translation>Rozmieść sąsiadująco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>

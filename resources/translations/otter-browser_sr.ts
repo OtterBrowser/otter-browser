@@ -3651,72 +3651,72 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Поставке почетне странице</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Прилагођена слика позадине</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Положај слике:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Путања слике:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Колона по реду:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Аутоматски</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>Увеличање:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи плочицу за нови унос</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Слике (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>уклопи</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>центрирај</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>развуци</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>поплочај</translation>
     </message>
 </context>
 <context>

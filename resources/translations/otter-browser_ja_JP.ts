@@ -1828,12 +1828,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="14"/>
         <source>Go to Page</source>
-        <translation>ページへ移動</translation>
+        <translation>ページ登録</translation>
     </message>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>ウェブアドレスを入力するか、リストからいずれかを選択します。</translation>
+        <translation>WEBアドレスを入力するか、リストからいずれかを選択します。</translation>
     </message>
 </context>
 <context>
@@ -3666,12 +3666,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation>画像パッチ:</translation>
+        <translation>画像のパス:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation>行あたりの列:</translation>
+        <translation>1行あたりのカラム数:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
@@ -3691,7 +3691,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation>新しいエントリを追加するためにタイルを表示</translation>
+        <translation>WEBサイトの追加ボタンを表示</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>

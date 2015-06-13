@@ -3561,7 +3561,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="217"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>新增網路面板…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
@@ -3571,7 +3571,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>輸入網頁的地址以在面板中顯示：</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
@@ -3614,27 +3614,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="84"/>
         <source>Failed to save file: %1</source>
-        <translation type="unfinished"/>
+        <translation>儲存檔案失敗：%1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>儲存檔案失敗。</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="349"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>無已定義的搜尋引擎</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>原始碼檢視器</translation>
     </message>
 </context>
 <context>
@@ -3643,7 +3643,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="171"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="172"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>新增瓷磚…</translation>
     </message>
 </context>
 <context>
@@ -3651,72 +3651,72 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>開始頁偏好設定</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>使用自訂背景圖片</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>縮放模式：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>圖片路徑：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>每行幾列：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>自動</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>縮放等級：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>顯示瓷磚以加入新的項目</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>圖片 (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>最適</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>中心</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>伸展</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>平鋪</translation>
     </message>
 </context>
 <context>
@@ -3724,32 +3724,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="216"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>開啟</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="218"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>編輯…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="219"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>重新載入</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="221"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>刪除</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="225"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>設定…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="226"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>新增瓷磚…</translation>
     </message>
 </context>
 <context>
@@ -4039,7 +4039,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>安排</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="452"/>
@@ -5308,7 +5308,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>檢視框架原始碼</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
