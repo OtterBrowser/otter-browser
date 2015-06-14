@@ -91,6 +91,7 @@ private:
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
+	QModelIndex m_currentIndex;
 	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;

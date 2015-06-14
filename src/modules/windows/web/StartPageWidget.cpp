@@ -318,21 +318,19 @@ void StartPageWidget::addTile(const QUrl &url)
 
 void StartPageWidget::openTile()
 {
-	const QModelIndex index = m_listView->currentIndex();
-
-	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 	{
 		addTile();
 
 		return;
 	}
 
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
 		MainWindow *mainWindow = MainWindow::findMainWindow(this);
-		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
 
 		if (mainWindow && bookmark && bookmark->rowCount() > 0)
 		{
@@ -342,12 +340,12 @@ void StartPageWidget::openTile()
 		return;
 	}
 
-	if (!index.isValid() || type != BookmarksModel::UrlBookmark)
+	if (!m_currentIndex.isValid() || type != BookmarksModel::UrlBookmark)
 	{
 		return;
 	}
 
-	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
 	if (url.isValid() && parentWidget() && parentWidget()->parentWidget())
 	{
@@ -362,7 +360,7 @@ void StartPageWidget::openTile()
 
 void StartPageWidget::editTile()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_listView->currentIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong()));
 
 	if (bookmark)
 	{
@@ -374,14 +372,14 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	m_model->reloadTile(m_listView->currentIndex());
+	m_model->reloadTile(m_currentIndex);
 
-	m_listView->openPersistentEditor(m_listView->currentIndex());
+	m_listView->openPersistentEditor(m_currentIndex);
 }
 
 void StartPageWidget::removeTile()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_listView->currentIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong()));
 
 	if (bookmark)
 	{
@@ -443,7 +441,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 		if (hitPosition.isNull())
 		{
-			hitPosition = ((m_listView->hasFocus() && m_listView->currentIndex().isValid()) ? m_listView->mapToGlobal(m_listView->visualRect(m_listView->currentIndex()).center()) : QCursor::pos());
+			hitPosition = ((m_listView->hasFocus() && m_currentIndex.isValid()) ? m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()) : QCursor::pos());
 		}
 	}
 
@@ -498,14 +496,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				}
 			}
 
+			m_currentIndex = m_listView->currentIndex();
+
 			if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 			{
-				const QModelIndex index = m_listView->currentIndex();
-				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -513,12 +512,12 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						Menu menu(Menu::BookmarksMenuRole, this);
 						menu.menuAction()->setData(bookmark->index());
-						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(index).center()));
+						menu.exec(m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()));
 					}
 				}
 				else if (type == BookmarksModel::UrlBookmark)
 				{
-					const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+					const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
 					if (keyEvent->modifiers() != Qt::NoModifier)
 					{
@@ -539,7 +538,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						}
 					}
 				}
-				else if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+				else if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 				{
 					addTile();
 				}
@@ -552,11 +551,16 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-		if (mouseEvent && mouseEvent->button() != Qt::LeftButton)
+		if (mouseEvent)
 		{
-			mouseEvent->ignore();
+			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
 
-			return true;
+			if (mouseEvent->button() != Qt::LeftButton)
+			{
+				mouseEvent->ignore();
+
+				return true;
+			}
 		}
 	}
 	else if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
@@ -570,14 +574,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				m_ignoreEnter = false;
 			}
 
+			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
+
 			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 			{
-				const QModelIndex index = m_listView->indexAt(mouseEvent->pos());
-				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong());
+					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -591,9 +596,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					return true;
 				}
 
-				if (!index.isValid() || type != BookmarksModel::UrlBookmark)
+				if (!m_currentIndex.isValid() || type != BookmarksModel::UrlBookmark)
 				{
-					if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+					if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 					{
 						addTile();
 
@@ -603,7 +608,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					return QObject::eventFilter(object, event);
 				}
 
-				const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
+				const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
 
 				if (url.isValid())
 				{
