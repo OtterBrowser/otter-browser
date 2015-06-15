@@ -45,6 +45,7 @@ public:
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
+	bool isViewingMedia() const;
 
 public slots:
 	void updateStyleSheets(const QUrl &url = QUrl());
@@ -69,10 +70,12 @@ private:
 	QtWebKitWebWidget *m_widget;
 	QtWebKitNetworkManager *m_networkManager;
 	bool m_ignoreJavaScriptPopups;
+	bool m_isViewingMedia;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
 	void aboutToNavigate(QWebFrame *frame, QWebPage::NavigationType navigationType);
+	void viewingMediaChanged(bool viewingMedia);
 
 friend class QtWebKitWebBackend;
 };

@@ -47,7 +47,8 @@ namespace Otter
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_networkManager(networkManager),
-	m_ignoreJavaScriptPopups(false)
+	m_ignoreJavaScriptPopups(false),
+	m_isViewingMedia(false)
 {
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
@@ -61,7 +62,8 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(NULL),
 	m_networkManager(NULL),
-	m_ignoreJavaScriptPopups(false)
+	m_ignoreJavaScriptPopups(false),
+	m_isViewingMedia(false)
 {
 }
 
@@ -125,8 +127,9 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
 	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + (m_widget ? ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()) : QByteArray());
 	QWebElement image = mainFrame()->findFirstElement(QLatin1String("img"));
+	const bool isViewingImage = (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl);
 
-	if (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl)
+	if (isViewingImage)
 	{
 		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:-webkit-flex;-webkit-align-items:center;} img {display:none;} img + img {display:block;margin:auto;max-width:100%;max-height:100%;-webkit-user-select:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {max-width:none;max-height:none;cursor:-webkit-zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {cursor:-webkit-zoom-in;}");
 
@@ -138,6 +141,13 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		mainFrame()->evaluateJavaScript(file.readAll());
 
 		file.close();
+	}
+
+	if (isViewingImage != m_isViewingMedia)
+	{
+		m_isViewingMedia = isViewingImage;
+
+		emit viewingMediaChanged(m_isViewingMedia);
 	}
 
 	if (!SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")).toBool())
@@ -464,6 +474,11 @@ bool QtWebKitPage::shouldInterruptJavaScript()
 bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 {
 	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
+}
+
+bool QtWebKitPage::isViewingMedia() const
+{
+	return m_isViewingMedia;
 }
 
 }
