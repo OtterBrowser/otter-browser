@@ -110,6 +110,7 @@ protected:
 	bool canGoBack() const;
 	bool canGoForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
+	bool canViewSource() const;
 	bool isScrollBar(const QPoint &position) const;
 
 protected slots:

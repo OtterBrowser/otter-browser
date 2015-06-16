@@ -672,6 +672,11 @@ void WebWidget::updateNavigationActions()
 	{
 		m_actions[ActionsManager::LoadPluginsAction]->setEnabled(getAmountOfNotLoadedPlugins() > 0);
 	}
+
+	if (m_actions.contains(ActionsManager::ViewSourceAction))
+	{
+		m_actions[ActionsManager::ViewSourceAction]->setEnabled(canViewSource());
+	}
 }
 
 void WebWidget::updateEditActions()
@@ -1739,6 +1744,11 @@ bool WebWidget::canShowContextMenu(const QPoint &position) const
 {
 	Q_UNUSED(position)
 
+	return true;
+}
+
+bool WebWidget::canViewSource() const
+{
 	return true;
 }
 

@@ -223,6 +223,7 @@ protected:
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
+	virtual bool canViewSource() const;
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
