@@ -126,10 +126,10 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
 	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + (m_widget ? ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()) : QByteArray());
-	QWebElement image = mainFrame()->findFirstElement(QLatin1String("img"));
-	const bool isViewingImage = (!image.isNull() && QUrl(image.attribute(QLatin1String("src"))) == currentUrl);
+	QWebElement media = mainFrame()->findFirstElement(QLatin1String("img, audio source, video source"));
+	const bool isViewingMedia = (!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
 
-	if (isViewingImage)
+	if (isViewingMedia && media.tagName().toLower() == QLatin1String("img"))
 	{
 		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:-webkit-flex;-webkit-align-items:center;} img {display:none;} img + img {display:block;margin:auto;max-width:100%;max-height:100%;-webkit-user-select:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {max-width:none;max-height:none;cursor:-webkit-zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {cursor:-webkit-zoom-in;}");
 
@@ -143,9 +143,9 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		file.close();
 	}
 
-	if (isViewingImage != m_isViewingMedia)
+	if (isViewingMedia != m_isViewingMedia)
 	{
-		m_isViewingMedia = isViewingImage;
+		m_isViewingMedia = isViewingMedia;
 
 		emit viewingMediaChanged(m_isViewingMedia);
 	}
