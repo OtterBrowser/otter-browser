@@ -166,6 +166,18 @@ void WebWidget::contextMenuEvent(QContextMenuEvent *event)
 	event->accept();
 }
 
+void WebWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(ActionsManager::EndScrollAction);
+	}
+
+	m_ignoreContextMenuNextTime = true;
+}
+
 void WebWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	if (m_scrollMode == DragScroll && event->button() == Qt::LeftButton)

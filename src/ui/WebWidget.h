@@ -204,6 +204,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
