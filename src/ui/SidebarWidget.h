@@ -61,9 +61,9 @@ protected slots:
 	void selectPanel();
 
 private:
-	ContentsWidget *m_currentWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
+	QHash<QString, ContentsWidget*> m_panels;
 	int m_resizeTimer;
 	Ui::SidebarWidget *m_ui;
 };

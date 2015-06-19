@@ -44,7 +44,6 @@ namespace Otter
 {
 
 SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
-	m_currentWidget(NULL),
 	m_resizeTimer(0),
 	m_ui(new Ui::SidebarWidget)
 {
@@ -208,7 +207,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 			m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
 
-			m_buttons.insert(chosenPanels.at(i), button);
+			m_buttons[chosenPanels.at(i)] = button;
 
 			connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
 		}
@@ -327,7 +326,11 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	ContentsWidget *widget = NULL;
 
-	if (identifier == QLatin1String("bookmarks"))
+	if (m_panels.contains(identifier) && m_panels[identifier])
+	{
+		widget = m_panels[identifier];
+	}
+	else if (identifier == QLatin1String("bookmarks"))
 	{
 		widget = new BookmarksContentsWidget(NULL);
 	}
@@ -376,12 +379,11 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		}
 	}
 
-	if (m_currentWidget)
+	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
 	{
-		m_ui->panelLayout->removeWidget(m_currentWidget);
+		m_ui->panelLayout->removeWidget(m_panels[m_currentPanel]);
 
-		m_currentWidget->deleteLater();
-		m_currentWidget = NULL;
+		m_panels[m_currentPanel]->hide();
 	}
 
 	if (m_buttons.contains(m_currentPanel) && m_buttons[m_currentPanel])
@@ -392,6 +394,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	if (widget)
 	{
 		m_ui->panelLayout->addWidget(widget);
+
+		widget->show();
+
+		m_panels[identifier] = widget;
 
 		if (m_buttons.contains(identifier) && m_buttons[identifier])
 		{
@@ -409,14 +415,13 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	m_ui->containerWidget->setVisible(widget != NULL);
 
 	m_currentPanel = identifier;
-	m_currentWidget = widget;
 
 	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
 }
 
 ContentsWidget* SidebarWidget::getCurrentPanel()
 {
-	return m_currentWidget;
+	return m_panels.value(m_currentPanel);
 }
 
 QString SidebarWidget::getPanelTitle(const QString &identifier)
