@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace LibMimeApps
 {
 
-std::vector<std::string>Index::directoryPatterns_ = Index::initDirectoryPatterns();
+std::vector<Index::lookupDirectory>Index::directoryPatterns_ = Index::initDirectoryPatterns();
 
 Index::Index()
 {
@@ -51,7 +51,7 @@ Index::Index(const std::string &language):
 	createBase();
 }
 
-std::vector<DesktopEntry> Index::appsForMime(const std::string &type)
+std::vector<DesktopEntry> Index::appsForMime(const std::string &type) const
 {
 	std::vector<DesktopEntry> result;
 
@@ -75,22 +75,22 @@ void Index::findDirectories()
 
 	do
 	{
-		std::vector<std::string> directories;
+		std::vector<lookupDirectory> directories;
 
 		again = false;
 
-		for (int i = 0; i < directories_.size(); ++i)
+		for (std::vector<lookupDirectory>::size_type i = 0; i < directories_.size(); ++i)
 		{
-			std::vector<std::string> unfolded = unfoldVariable(directories_.at(i));
+			std::vector<std::string> unfolded = unfoldVariable(directories_.at(i).path);
 
-			if (unfolded.size() > 0 && unfolded.at(0) != directories_.at(i))
+			if (unfolded.size() > 0 && unfolded.at(0) != directories_.at(i).path)
 			{
 				again = true;
 			}
 
-			for (int j = 0; j < unfolded.size(); ++j)
+			for (std::vector<std::string>::size_type j = 0; j < unfolded.size(); ++j)
 			{
-				directories.push_back(unfolded.at(j));
+				directories.push_back(lookupDirectory(directories_.at(i).withSubdirectories, unfolded.at(j)));
 			}
 		}
 
@@ -101,31 +101,34 @@ void Index::findDirectories()
 
 void Index::createBase()
 {
-	for (int i = 0; i < directories_.size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < directories_.size(); ++i)
 	{
 		processDirectory(directories_.at(i), std::string());
 	}
 }
 
-void Index::processDirectory(const std::string &baseDirectory, const std::string &relative)
+void Index::processDirectory(const lookupDirectory &baseDirectory, const std::string &relative)
 {
-	std::string directory = baseDirectory + relative;
-	std::vector<std::string> subdirectories = directoryEntries(directory);
+	std::string directory = baseDirectory.path + relative;
+	std::vector<std::string> subdirectories = directoryEntries(directory, FileType::Directory);
 
-	for (size_t i = 0; i < subdirectories.size(); ++i)
+	if (baseDirectory.withSubdirectories)
 	{
-		processDirectory(baseDirectory, relative + subdirectories.at(i) + "/");
+		for (std::vector<std::string>::size_type i = 0; i < subdirectories.size(); ++i)
+		{
+			processDirectory(baseDirectory, relative + subdirectories.at(i) + "/");
+		}
 	}
 
-	processDesktopInDirectory(baseDirectory, relative);
+	processDesktopInDirectory(baseDirectory.path, relative);
 	processMimeApps(directory + "mimeapps.list");
 }
 
 void Index::processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative)
 {
-	std::vector<std::string> filenames = directoryEntries(baseDirectory + relative);
+	std::vector<std::string> filenames = directoryEntries(baseDirectory + relative, FileType::File);
 
-	for (size_t i = 0; i < filenames.size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < filenames.size(); ++i)
 	{
 		if (endsWith(filenames.at(i), std::string(".desktop")))
 		{
@@ -141,7 +144,7 @@ void Index::processMimeApps(const std::string &path)
 
 	types = config.keys("Added Associations");
 
-	for (size_t i = 0; i < types.size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < types.size(); ++i)
 	{
 		std::vector<std::string> identifiers = split(config.value("Added Associations", types.at(i)), ';');
 
@@ -156,11 +159,11 @@ void Index::processMimeApps(const std::string &path)
 
 	types = config.keys("Removed Associations");
 
-	for (size_t i = 0; i < types.size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < types.size(); ++i)
 	{
 		std::vector<std::string> identifiers = split(config.value("Removed Associations", types.at(i)), ';');
 
-		for (size_t j = 0; j < identifiers.size(); ++j)
+		for (std::vector<std::string>::size_type j = 0; j < identifiers.size(); ++j)
 		{
 			removeFromType(types[i], identifiers[j]);
 		}
@@ -187,7 +190,7 @@ void Index::addApplication(DesktopEntry *entry)
 
 	knownApplications_[entry->identifier()] = entry;
 
-	for (size_t i = 0; i < entry->types().size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < entry->types().size(); ++i)
 	{
 		addToType(entry->types().at(i), entry);
 	}
@@ -229,14 +232,14 @@ void Index::removeFromType(const std::string &type, const std::string &entryId)
 	}
 }
 
-std::vector<std::string> Index::initDirectoryPatterns()
+std::vector<Index::lookupDirectory> Index::initDirectoryPatterns()
 {
-	std::vector<std::string> result;
+	std::vector<lookupDirectory> result;
 
-	result.push_back("$XDG_DATA_DIRS/applications/");
-	result.push_back("$XDG_DATA_HOME/applications/");
-	result.push_back("$XDG_CONFIG_DIRS/");
-	result.push_back("$XDG_CONFIG_HOME/");
+	result.push_back(lookupDirectory(true, "$XDG_DATA_DIRS/applications/"));
+	result.push_back(lookupDirectory(true, "$XDG_DATA_HOME/applications/"));
+	result.push_back(lookupDirectory(false, "$XDG_CONFIG_DIRS/"));
+	result.push_back(lookupDirectory(false, "$XDG_CONFIG_HOME/"));
 
 	return result;
 }

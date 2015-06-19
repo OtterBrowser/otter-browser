@@ -47,12 +47,23 @@ class Index
 public:
 	Index();
 	explicit Index(const std::string &language);
-	std::vector<DesktopEntry> appsForMime(const std::string &type);
+	std::vector<DesktopEntry> appsForMime(const std::string &type) const;
 
 protected:
+	struct lookupDirectory {
+		bool withSubdirectories;
+		std::string path;
+
+		lookupDirectory(bool withSubdirectories, std::string path):
+			withSubdirectories(withSubdirectories),
+			path(path)
+		{
+		}
+	};
+
 	void findDirectories();
 	void createBase();
-	void processDirectory(const std::string &baseDirectory, const std::string &relative);
+	void processDirectory(const lookupDirectory &baseDirectory, const std::string &relative);
 	void processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative);
 	void processMimeApps(const std::string &path);
 	void processDesktopFile(const std::string &baseDirectory, const std::string &relative);
@@ -61,13 +72,13 @@ protected:
 	void removeApplication(const std::string &entryId);
 	void removeFromType(const std::string &type, const std::string &entryId);
 	static std::list<std::string> resolveVariable(const std::string &name);
-	static std::vector<std::string> initDirectoryPatterns();
+	static std::vector<lookupDirectory> initDirectoryPatterns();
 
 private:
-	static std::vector<std::string> directoryPatterns_;
+	static std::vector<lookupDirectory> directoryPatterns_;
 	std::map<std::string, DesktopEntry*> knownApplications_;
 	std::map<std::string, std::list<DesktopEntry*> > applicationsCache_;
-	std::vector<std::string> directories_;
+	std::vector<lookupDirectory> directories_;
 	std::string language_;
 };
 

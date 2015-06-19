@@ -127,7 +127,7 @@ std::string ConfigReader::unescape(const std::string &string)
 {
 	std::string result;
 
-	for (int i = 0; i < string.length(); ++i)
+	for (std::string::size_type i = 0; i < string.length(); ++i)
 	{
 		if (string.at(i) == '\\')
 		{
