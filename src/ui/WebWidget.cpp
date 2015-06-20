@@ -1231,7 +1231,33 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
-			action->setMenu(getReloadTimeMenu());
+			if (!m_reloadTimeMenu)
+			{
+				m_reloadTimeMenu = new QMenu(this);
+				m_reloadTimeMenu->addAction(tr("30 Minutes"))->setData(1800);
+				m_reloadTimeMenu->addAction(tr("1 Hour"))->setData(3600);
+				m_reloadTimeMenu->addAction(tr("2 Hours"))->setData(7200);
+				m_reloadTimeMenu->addAction(tr("6 Hours"))->setData(21600);
+				m_reloadTimeMenu->addAction(tr("Never"))->setData(0);
+				m_reloadTimeMenu->addAction(tr("Custom…"))->setData(-2);
+				m_reloadTimeMenu->addSeparator();
+				m_reloadTimeMenu->addAction(tr("Page Default"))->setData(-1);
+
+				QActionGroup *actionGroup = new QActionGroup(m_reloadTimeMenu);
+				actionGroup->setExclusive(true);
+
+				for (int i = 0; i < m_reloadTimeMenu->actions().count(); ++i)
+				{
+					m_reloadTimeMenu->actions().at(i)->setCheckable(true);
+
+					actionGroup->addAction(m_reloadTimeMenu->actions().at(i));
+				}
+
+				connect(m_reloadTimeMenu, SIGNAL(aboutToShow()), this, SLOT(reloadTimeMenuAboutToShow()));
+				connect(m_reloadTimeMenu, SIGNAL(triggered(QAction*)), this, SLOT(setReloadTime(QAction*)));
+			}
+
+			action->setMenu(m_reloadTimeMenu);
 
 			break;
 		case ActionsManager::LoadPluginsAction:
@@ -1332,37 +1358,6 @@ QMenu* WebWidget::getPasteNoteMenu()
 	}
 
 	return m_pasteNoteMenu;
-}
-
-QMenu* WebWidget::getReloadTimeMenu()
-{
-	if (!m_reloadTimeMenu)
-	{
-		m_reloadTimeMenu = new QMenu(this);
-		m_reloadTimeMenu->addAction(tr("30 Minutes"))->setData(1800);
-		m_reloadTimeMenu->addAction(tr("1 Hour"))->setData(3600);
-		m_reloadTimeMenu->addAction(tr("2 Hours"))->setData(7200);
-		m_reloadTimeMenu->addAction(tr("6 Hours"))->setData(21600);
-		m_reloadTimeMenu->addAction(tr("Never"))->setData(0);
-		m_reloadTimeMenu->addAction(tr("Custom…"))->setData(-2);
-		m_reloadTimeMenu->addSeparator();
-		m_reloadTimeMenu->addAction(tr("Page Default"))->setData(-1);
-
-		QActionGroup *actionGroup = new QActionGroup(m_reloadTimeMenu);
-		actionGroup->setExclusive(true);
-
-		for (int i = 0; i < m_reloadTimeMenu->actions().count(); ++i)
-		{
-			m_reloadTimeMenu->actions().at(i)->setCheckable(true);
-
-			actionGroup->addAction(m_reloadTimeMenu->actions().at(i));
-		}
-
-		connect(m_reloadTimeMenu, SIGNAL(aboutToShow()), this, SLOT(reloadTimeMenuAboutToShow()));
-		connect(m_reloadTimeMenu, SIGNAL(triggered(QAction*)), this, SLOT(setReloadTime(QAction*)));
-	}
-
-	return m_reloadTimeMenu;
 }
 
 QMenu* WebWidget::getQuickSearchMenu()

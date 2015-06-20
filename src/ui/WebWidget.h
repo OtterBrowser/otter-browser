@@ -216,7 +216,6 @@ protected:
 	virtual void setOptions(const QVariantHash &options);
 	Action* getExistingAction(int identifier);
 	QMenu* getPasteNoteMenu();
-	QMenu* getReloadTimeMenu();
 	QMenu* getQuickSearchMenu();
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
