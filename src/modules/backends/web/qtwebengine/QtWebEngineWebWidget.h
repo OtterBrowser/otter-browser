@@ -48,9 +48,11 @@ public:
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	HitTestResult getHitTestResult(const QPoint &position);
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	int getZoom() const;
+	bool hasSelection() const;
 	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
@@ -75,7 +77,6 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void pasteText(const QString &text);
-	void handleContextMenu(const QVariant &result);
 	void handleCreateSearch(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void handleHotClick(const QVariant &result);
@@ -87,6 +88,11 @@ protected:
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
+	bool canGoBack() const;
+	bool canGoForward() const;
+	bool canShowContextMenu(const QPoint &position) const;
+	bool canViewSource() const;
+	bool isScrollBar(const QPoint &position) const;
 
 protected slots:
 	void pageLoadStarted();
@@ -106,15 +112,6 @@ protected slots:
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel);
 	void updateUndo();
 	void updateRedo();
-	void updatePageActions(const QUrl &url);
-	void updateNavigationActions();
-	void updateEditActions();
-	void updateLinkActions();
-	void updateFrameActions();
-	void updateImageActions();
-	void updateMediaActions();
-	void updateBookmarkActions();
-	void showContextMenu(const QPoint &position = QPoint(-1, -1));
 	void showHotClickMenu();
 
 private:
@@ -123,9 +120,7 @@ private:
 	QNetworkReply *m_iconReply;
 	QIcon m_icon;
 	HitTestResult m_hitResult;
-	QPoint m_clickPosition;
 	QPoint m_scrollPosition;
-	QHash<int, Action*> m_actions;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
 	bool m_isUsingRockerNavigation;

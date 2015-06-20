@@ -1055,7 +1055,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 				else
 				{
 					QPoint clickPosition = element.geometry().center();
-
 					QWebFrame *frame = element.webFrame();
 
 					while (frame)
@@ -2030,11 +2029,6 @@ bool QtWebKitWebWidget::hasSelection() const
 	return m_page->hasSelection();
 }
 
-bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
-{
-	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
-}
-
 bool QtWebKitWebWidget::isLoading() const
 {
 	return m_isLoading;
@@ -2043,6 +2037,11 @@ bool QtWebKitWebWidget::isLoading() const
 bool QtWebKitWebWidget::isPrivate() const
 {
 	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+}
+
+bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
+{
+	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
 }
 
 bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)

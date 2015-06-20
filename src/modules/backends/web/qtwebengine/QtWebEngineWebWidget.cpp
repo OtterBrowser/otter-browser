@@ -248,13 +248,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::OpenLinkAction:
 			{
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(m_clickPosition), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
 
 				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
 				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
 
-				m_clickPosition = QPoint();
+				setClickPosition(QPoint());
 			}
 
 			break;
@@ -476,7 +476,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			}
 			else
 			{
-				m_webView->page()->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleImageProperties));
+				m_webView->page()->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleImageProperties));
 			}
 
 			break;
@@ -499,19 +499,19 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.controls = %3; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.controls = %3; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
 
 			break;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.loop = %3; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.loop = %3; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()).arg(checked ? QLatin1String("true") : QLatin1String("false")));
 
 			break;
 		case ActionsManager::MediaPlayPauseAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { if (element.paused) { element.play(); } else { element.pause(); } }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()));
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { if (element.paused) { element.play(); } else { element.pause(); } }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()));
 
 			break;
 		case ActionsManager::MediaMuteAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.muted = !element.muted; }").arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()));
+			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.muted = !element.muted; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()));
 
 			break;
 		case ActionsManager::GoBackAction:
@@ -624,7 +624,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/createSearch.js"));
 				file.open(QIODevice::ReadOnly);
 
-				m_webView->page()->runJavaScript(QString(file.readAll()).arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleCreateSearch));
+				m_webView->page()->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleCreateSearch));
 
 				file.close();
 			}
@@ -794,71 +794,6 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	showDialog(&dialog);
 }
 
-void QtWebEngineWebWidget::handleContextMenu(const QVariant &result)
-{
-	m_hitResult = HitTestResult(result);
-
-	emit hitTestResultReady();
-
-	if (m_ignoreContextMenu || (!m_hitResult.geometry.isValid() && m_clickPosition.isNull()))
-	{
-		return;
-	}
-
-	updateEditActions();
-
-	MenuFlags flags = NoMenu;
-
-	if (m_hitResult.flags.testFlag(IsFormTest))
-	{
-		flags |= FormMenu;
-	}
-
-	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && !m_webView->selectedText().isEmpty())
-	{
-		flags |= SelectionMenu;
-	}
-
-	if (m_hitResult.linkUrl.isValid())
-	{
-		if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
-		{
-			flags |= MailMenu;
-		}
-		else
-		{
-			flags |= LinkMenu;
-		}
-	}
-
-	if (!m_hitResult.imageUrl.isEmpty())
-	{
-		flags |= ImageMenu;
-	}
-
-	if (m_hitResult.mediaUrl.isValid())
-	{
-		flags |= MediaMenu;
-	}
-
-	if (m_hitResult.flags.testFlag(IsContentEditableTest))
-	{
-		flags |= EditMenu;
-	}
-
-	if (flags == NoMenu || flags == FormMenu)
-	{
-		flags |= StandardMenu;
-
-		if (m_hitResult.frameUrl.isValid())
-		{
-			flags |= FrameMenu;
-		}
-	}
-
-	WebWidget::showContextMenu((m_clickPosition.isNull() ? m_hitResult.geometry.center() : m_clickPosition), flags);
-}
-
 void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 {
 	if (result.isNull())
@@ -990,7 +925,7 @@ void QtWebEngineWebWidget::handleToolTip(const QVariant &result)
 
 	if (!text.isEmpty())
 	{
-		QToolTip::showText(m_webView->mapToGlobal(m_clickPosition), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
+		QToolTip::showText(m_webView->mapToGlobal(getClickPosition()), QStringLiteral("<div style=\"white-space:pre-line;\">%1</div>").arg(text), m_webView);
 	}
 }
 
@@ -1107,351 +1042,24 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 
 void QtWebEngineWebWidget::updateUndo()
 {
-	if (m_actions.contains(ActionsManager::UndoAction))
+	Action *action = getExistingAction(ActionsManager::UndoAction);
+
+	if (action)
 	{
-		m_actions[ActionsManager::UndoAction]->setText(m_webView->pageAction(QWebEnginePage::Undo)->text());
-		m_actions[ActionsManager::UndoAction]->setEnabled(m_webView->pageAction(QWebEnginePage::Undo)->isEnabled());
+		action->setEnabled(m_webView->pageAction(QWebEnginePage::Undo)->isEnabled());
+		action->setText(m_webView->pageAction(QWebEnginePage::Undo)->text());
 	}
 }
 
 void QtWebEngineWebWidget::updateRedo()
 {
-	if (m_actions.contains(ActionsManager::RedoAction))
+	Action *action = getExistingAction(ActionsManager::RedoAction);
+
+	if (action)
 	{
-		m_actions[ActionsManager::RedoAction]->setText(m_webView->pageAction(QWebEnginePage::Redo)->text());
-		m_actions[ActionsManager::RedoAction]->setEnabled(m_webView->pageAction(QWebEnginePage::Redo)->isEnabled());
+		action->setEnabled(m_webView->pageAction(QWebEnginePage::Redo)->isEnabled());
+		action->setText(m_webView->pageAction(QWebEnginePage::Redo)->text());
 	}
-}
-
-void QtWebEngineWebWidget::updatePageActions(const QUrl &url)
-{
-	if (m_actions.contains(ActionsManager::AddBookmarkAction))
-	{
-		m_actions[ActionsManager::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url.toString()) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
-	}
-
-	if (m_actions.contains(ActionsManager::WebsitePreferencesAction))
-	{
-		m_actions[ActionsManager::WebsitePreferencesAction]->setEnabled(!url.isEmpty() && url.scheme() != QLatin1String("about"));
-	}
-}
-
-void QtWebEngineWebWidget::updateNavigationActions()
-{
-	if (m_actions.contains(ActionsManager::GoBackAction))
-	{
-		m_actions[ActionsManager::GoBackAction]->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(ActionsManager::GoForwardAction))
-	{
-		m_actions[ActionsManager::GoForwardAction]->setEnabled(m_webView->history()->canGoForward());
-	}
-
-	if (m_actions.contains(ActionsManager::RewindAction))
-	{
-		m_actions[ActionsManager::RewindAction]->setEnabled(m_webView->history()->canGoBack());
-	}
-
-	if (m_actions.contains(ActionsManager::FastForwardAction))
-	{
-		m_actions[ActionsManager::FastForwardAction]->setEnabled(m_webView->history()->canGoForward());
-	}
-
-	if (m_actions.contains(ActionsManager::StopAction))
-	{
-		m_actions[ActionsManager::StopAction]->setEnabled(m_isLoading);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadAction))
-	{
-		m_actions[ActionsManager::ReloadAction]->setEnabled(!m_isLoading);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
-	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
-	}
-
-	if (m_actions.contains(ActionsManager::LoadPluginsAction))
-	{
-		m_actions[ActionsManager::LoadPluginsAction]->setEnabled(false);
-	}
-}
-
-void QtWebEngineWebWidget::updateEditActions()
-{
-	if (m_actions.contains(ActionsManager::CutAction))
-	{
-		m_actions[ActionsManager::CutAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Cut)->isEnabled());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyAction))
-	{
-		m_actions[ActionsManager::CopyAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
-	{
-		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyToNoteAction))
-	{
-		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Copy)->isEnabled());
-	}
-
-	if (m_actions.contains(ActionsManager::PasteAction))
-	{
-		m_actions[ActionsManager::PasteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled());
-	}
-
-	if (m_actions.contains(ActionsManager::PasteAndGoAction))
-	{
-		m_actions[ActionsManager::PasteAndGoAction]->setEnabled(!QApplication::clipboard()->text().isEmpty());
-	}
-
-	if (m_actions.contains(ActionsManager::PasteNoteAction))
-	{
-		m_actions[ActionsManager::PasteNoteAction]->setEnabled(m_webView->page()->action(QWebEnginePage::Paste)->isEnabled() && NotesManager::getModel()->getRootItem()->hasChildren());
-	}
-
-	if (m_actions.contains(ActionsManager::DeleteAction))
-	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(m_webView->hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
-	}
-
-	if (m_actions.contains(ActionsManager::SelectAllAction))
-	{
-		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsContentEditableTest) || !m_hitResult.flags.testFlag(IsEmptyTest));
-	}
-
-	if (m_actions.contains(ActionsManager::ClearAllAction))
-	{
-		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
-	}
-
-	if (m_actions.contains(ActionsManager::SearchAction))
-	{
-		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
-		const bool isValid = !engine.identifier.isEmpty();
-
-		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
-		m_actions[ActionsManager::SearchAction]->setData(isValid ? engine.identifier : QVariant());
-		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
-		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
-		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
-	}
-
-	if (m_actions.contains(ActionsManager::SearchMenuAction))
-	{
-		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
-	}
-
-	updateLinkActions();
-	updateFrameActions();
-	updateImageActions();
-	updateMediaActions();
-}
-
-void QtWebEngineWebWidget::updateLinkActions()
-{
-	const bool isLink = m_hitResult.linkUrl.isValid();
-
-	if (m_actions.contains(ActionsManager::OpenLinkAction))
-	{
-		m_actions[ActionsManager::OpenLinkAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInCurrentTabAction))
-	{
-		m_actions[ActionsManager::OpenLinkInCurrentTabAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewTabAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewTabAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewTabBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewTabBackgroundAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewWindowAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewWindowAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewWindowBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewWindowBackgroundAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateTabAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewPrivateTabAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateTabBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewPrivateTabBackgroundAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateWindowAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewPrivateWindowAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::CopyLinkToClipboardAction))
-	{
-		m_actions[ActionsManager::CopyLinkToClipboardAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::BookmarkLinkAction))
-	{
-		m_actions[ActionsManager::BookmarkLinkAction]->setOverrideText(BookmarksManager::hasBookmark(m_hitResult.linkUrl.toString()) ? QT_TRANSLATE_NOOP("actions", "Edit Link Bookmark…") : QT_TRANSLATE_NOOP("actions", "Bookmark Link…"));
-		m_actions[ActionsManager::BookmarkLinkAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::SaveLinkToDiskAction))
-	{
-		m_actions[ActionsManager::SaveLinkToDiskAction]->setEnabled(isLink);
-	}
-
-	if (m_actions.contains(ActionsManager::SaveLinkToDownloadsAction))
-	{
-		m_actions[ActionsManager::SaveLinkToDownloadsAction]->setEnabled(isLink);
-	}
-}
-
-void QtWebEngineWebWidget::updateFrameActions()
-{
-	const bool isFrame = m_hitResult.frameUrl.isValid();
-
-	if (m_actions.contains(ActionsManager::OpenFrameInCurrentTabAction))
-	{
-		m_actions[ActionsManager::OpenFrameInCurrentTabAction]->setEnabled(isFrame);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenFrameInNewTabAction))
-	{
-		m_actions[ActionsManager::OpenFrameInNewTabAction]->setEnabled(isFrame);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenFrameInNewTabBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenFrameInNewTabBackgroundAction]->setEnabled(isFrame);
-	}
-
-	if (m_actions.contains(ActionsManager::CopyFrameLinkToClipboardAction))
-	{
-		m_actions[ActionsManager::CopyFrameLinkToClipboardAction]->setEnabled(isFrame);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadFrameAction))
-	{
-		m_actions[ActionsManager::ReloadFrameAction]->setEnabled(isFrame);
-	}
-
-	if (m_actions.contains(ActionsManager::ViewFrameSourceAction))
-	{
-		m_actions[ActionsManager::ViewFrameSourceAction]->setEnabled(false);
-	}
-}
-
-void QtWebEngineWebWidget::updateImageActions()
-{
-	const bool isImage = !m_hitResult.imageUrl.isEmpty();
-	const bool isOpened = getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
-	const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256);
-
-	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
-	{
-		m_actions[ActionsManager::OpenImageInNewTabAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Tab (Untitled)") : tr("Open Image in New Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Tab"));
-		m_actions[ActionsManager::OpenImageInNewTabAction]->setEnabled(isImage && !isOpened);
-	}
-
-	if (m_actions.contains(ActionsManager::OpenImageInNewTabBackgroundAction))
-	{
-		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setOverrideText(isImage ? (fileName.isEmpty() || m_hitResult.imageUrl.scheme() == QLatin1String("data")) ? tr("Open Image in New Background Tab (Untitled)") : tr("Open Image in New Background Tab (%1)").arg(fileName) : QT_TRANSLATE_NOOP("actions", "Open Image in New Background Tab"));
-		m_actions[ActionsManager::OpenImageInNewTabBackgroundAction]->setEnabled(isImage && !isOpened);
-	}
-
-	if (m_actions.contains(ActionsManager::SaveImageToDiskAction))
-	{
-		m_actions[ActionsManager::SaveImageToDiskAction]->setEnabled(isImage);
-	}
-
-	if (m_actions.contains(ActionsManager::CopyImageUrlToClipboardAction))
-	{
-		m_actions[ActionsManager::CopyImageUrlToClipboardAction]->setEnabled(isImage);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadImageAction))
-	{
-		m_actions[ActionsManager::ReloadImageAction]->setEnabled(isImage);
-	}
-
-	if (m_actions.contains(ActionsManager::ImagePropertiesAction))
-	{
-		m_actions[ActionsManager::ImagePropertiesAction]->setEnabled(isImage);
-	}
-}
-
-void QtWebEngineWebWidget::updateMediaActions()
-{
-	const bool isMedia = m_hitResult.mediaUrl.isValid();
-	const bool isVideo = (m_hitResult.tagName == QLatin1String("video"));
-
-	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
-	{
-		m_actions[ActionsManager::SaveMediaToDiskAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Save Video…") : QT_TRANSLATE_NOOP("actions", "Save Audio…"));
-		m_actions[ActionsManager::SaveMediaToDiskAction]->setEnabled(isMedia);
-	}
-
-	if (m_actions.contains(ActionsManager::CopyMediaUrlToClipboardAction))
-	{
-		m_actions[ActionsManager::CopyMediaUrlToClipboardAction]->setOverrideText(isVideo ? QT_TRANSLATE_NOOP("actions", "Copy Video Link to Clipboard") : QT_TRANSLATE_NOOP("actions", "Copy Audio Link to Clipboard"));
-		m_actions[ActionsManager::CopyMediaUrlToClipboardAction]->setEnabled(isMedia);
-	}
-
-	if (m_actions.contains(ActionsManager::MediaControlsAction))
-	{
-		m_actions[ActionsManager::MediaControlsAction]->setChecked(m_hitResult.flags.testFlag(MediaHasControlsTest));
-		m_actions[ActionsManager::MediaControlsAction]->setEnabled(isMedia);
-	}
-
-	if (m_actions.contains(ActionsManager::MediaLoopAction))
-	{
-		m_actions[ActionsManager::MediaLoopAction]->setChecked(m_hitResult.flags.testFlag(MediaIsLoopedTest));
-		m_actions[ActionsManager::MediaLoopAction]->setEnabled(isMedia);
-	}
-
-	if (m_actions.contains(ActionsManager::MediaPlayPauseAction))
-	{
-		m_actions[ActionsManager::MediaPlayPauseAction]->setOverrideText(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(Utils::getIcon(m_hitResult.flags.testFlag(MediaIsPausedTest) ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
-		m_actions[ActionsManager::MediaPlayPauseAction]->setEnabled(isMedia);
-	}
-
-	if (m_actions.contains(ActionsManager::MediaMuteAction))
-	{
-		m_actions[ActionsManager::MediaMuteAction]->setOverrideText(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-		m_actions[ActionsManager::MediaMuteAction]->setIcon(Utils::getIcon(m_hitResult.flags.testFlag(MediaIsMutedTest) ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
-		m_actions[ActionsManager::MediaMuteAction]->setEnabled(isMedia);
-	}
-}
-
-void QtWebEngineWebWidget::updateBookmarkActions()
-{
-	updatePageActions(getUrl());
-	updateLinkActions();
 }
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
@@ -1474,21 +1082,11 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	}
 }
 
-void QtWebEngineWebWidget::showContextMenu(const QPoint &position)
-{
-	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
-	file.open(QIODevice::ReadOnly);
-
-	m_webView->page()->runJavaScript(QString(file.readAll()).arg(position.x()).arg(position.y()), invoke(this, &QtWebEngineWebWidget::handleContextMenu));
-
-	file.close();
-}
-
 void QtWebEngineWebWidget::showHotClickMenu()
 {
 	if (!m_webView->selectedText().trimmed().isEmpty())
 	{
-		showContextMenu(m_clickPosition);
+		showContextMenu(getClickPosition());
 	}
 }
 
@@ -1676,157 +1274,37 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory)
 
 Action* QtWebEngineWebWidget::getAction(int identifier)
 {
-	if (identifier < 0)
+	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		return NULL;
+		Action *action = WebWidget::getAction(ActionsManager::UndoAction);
+
+		updateUndo();
+
+		connect(m_webView->pageAction(QWebEnginePage::Undo), SIGNAL(changed()), this, SLOT(updateUndo()));
+
+		return action;
 	}
 
-	if (m_actions.contains(identifier))
+	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		return m_actions[identifier];
+		Action *action = WebWidget::getAction(ActionsManager::RedoAction);
+
+		updateRedo();
+
+		connect(m_webView->pageAction(QWebEnginePage::Redo), SIGNAL(changed()), this, SLOT(updateRedo()));
+
+		return action;
 	}
 
-	Action *action = new Action(identifier, this);
-
-	m_actions[identifier] = action;
-
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
-	switch (identifier)
+	if (identifier == ActionsManager::InspectElementAction && !getExistingAction(ActionsManager::InspectElementAction))
 	{
-		case ActionsManager::StopScheduledReloadAction:
-		case ActionsManager::CopyImageToClipboardAction:
-		case ActionsManager::CheckSpellingAction:
-		case ActionsManager::ViewSourceAction:
-		case ActionsManager::InspectPageAction:
-		case ActionsManager::InspectElementAction:
-		case ActionsManager::LoadPluginsAction:
-			action->setEnabled(false);
+		Action *action = WebWidget::getAction(ActionsManager::InspectElementAction);
+		action->setEnabled(false);
 
-			break;
-		case ActionsManager::AddBookmarkAction:
-		case ActionsManager::WebsitePreferencesAction:
-			updatePageActions(getUrl());
-
-			break;
-		case ActionsManager::GoBackAction:
-		case ActionsManager::RewindAction:
-			action->setEnabled(m_webView->history()->canGoBack());
-
-			break;
-		case ActionsManager::GoForwardAction:
-		case ActionsManager::FastForwardAction:
-			action->setEnabled(m_webView->history()->canGoForward());
-
-			break;
-		case ActionsManager::PasteNoteAction:
-			action->setMenu(getPasteNoteMenu());
-
-			updateEditActions();
-
-			break;
-		case ActionsManager::StopAction:
-			action->setEnabled(m_isLoading);
-
-			break;
-
-		case ActionsManager::ReloadAction:
-			action->setEnabled(!m_isLoading);
-
-			break;
-		case ActionsManager::ReloadOrStopAction:
-			action->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
-
-			break;
-		case ActionsManager::ScheduleReloadAction:
-			action->setMenu(getReloadTimeMenu());
-
-			break;
-		case ActionsManager::ValidateAction:
-			action->setEnabled(false);
-			action->setMenu(new QMenu(this));
-
-			break;
-		case ActionsManager::UndoAction:
-			action->setEnabled(m_webView->pageAction(QWebEnginePage::Undo));
-
-			updateUndo();
-
-			connect(m_webView->pageAction(QWebEnginePage::Undo), SIGNAL(changed()), this, SLOT(updateUndo()));
-
-			break;
-		case ActionsManager::RedoAction:
-			action->setEnabled(m_webView->pageAction(QWebEnginePage::Redo));
-
-			updateRedo();
-
-			connect(m_webView->pageAction(QWebEnginePage::Redo), SIGNAL(changed()), this, SLOT(updateRedo()));
-
-			break;
-		case ActionsManager::SearchMenuAction:
-			action->setMenu(getQuickSearchMenu());
-
-		case ActionsManager::CutAction:
-		case ActionsManager::CopyAction:
-		case ActionsManager::CopyPlainTextAction:
-		case ActionsManager::CopyToNoteAction:
-		case ActionsManager::PasteAction:
-		case ActionsManager::PasteAndGoAction:
-		case ActionsManager::DeleteAction:
-		case ActionsManager::ClearAllAction:
-		case ActionsManager::SearchAction:
-			updateEditActions();
-
-			break;
-		case ActionsManager::OpenLinkAction:
-		case ActionsManager::OpenLinkInCurrentTabAction:
-		case ActionsManager::OpenLinkInNewTabAction:
-		case ActionsManager::OpenLinkInNewTabBackgroundAction:
-		case ActionsManager::OpenLinkInNewWindowAction:
-		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
-		case ActionsManager::OpenLinkInNewPrivateTabAction:
-		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
-		case ActionsManager::OpenLinkInNewPrivateWindowAction:
-		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
-		case ActionsManager::CopyLinkToClipboardAction:
-		case ActionsManager::BookmarkLinkAction:
-		case ActionsManager::SaveLinkToDiskAction:
-		case ActionsManager::SaveLinkToDownloadsAction:
-			updateLinkActions();
-
-			break;
-		case ActionsManager::OpenFrameInCurrentTabAction:
-		case ActionsManager::OpenFrameInNewTabAction:
-		case ActionsManager::OpenFrameInNewTabBackgroundAction:
-		case ActionsManager::CopyFrameLinkToClipboardAction:
-		case ActionsManager::ReloadFrameAction:
-		case ActionsManager::ViewFrameSourceAction:
-			updateFrameActions();
-
-			break;
-		case ActionsManager::OpenImageInNewTabAction:
-		case ActionsManager::OpenImageInNewTabBackgroundAction:
-		case ActionsManager::SaveImageToDiskAction:
-		case ActionsManager::CopyImageUrlToClipboardAction:
-		case ActionsManager::ReloadImageAction:
-		case ActionsManager::ImagePropertiesAction:
-			updateImageActions();
-
-			break;
-		case ActionsManager::SaveMediaToDiskAction:
-		case ActionsManager::CopyMediaUrlToClipboardAction:
-		case ActionsManager::MediaControlsAction:
-		case ActionsManager::MediaLoopAction:
-		case ActionsManager::MediaPlayPauseAction:
-		case ActionsManager::MediaMuteAction:
-			updateMediaActions();
-
-			break;
-		default:
-			break;
+		return action;
 	}
 
-	return action;
+	return WebWidget::getAction(identifier);
 }
 
 QWebEnginePage* QtWebEngineWebWidget::getPage()
@@ -1932,6 +1410,26 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 	return information;
 }
 
+WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &position)
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
+	file.open(QIODevice::ReadOnly);
+
+	QEventLoop eventLoop;
+
+	m_webView->page()->runJavaScript(QString(file.readAll()).arg(position.x() / m_webView->zoomFactor()).arg(position.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHitTest));
+
+	file.close();
+
+	connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	return m_hitResult;
+}
+
 QHash<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
 {
 	return QHash<QByteArray, QByteArray>();
@@ -1947,6 +1445,33 @@ int QtWebEngineWebWidget::getZoom() const
 	return (m_webView->zoomFactor() * 100);
 }
 
+bool QtWebEngineWebWidget::canGoBack() const
+{
+	return m_webView->history()->canGoBack();
+}
+
+bool QtWebEngineWebWidget::canGoForward() const
+{
+	return m_webView->history()->canGoForward();
+}
+
+bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const
+{
+	Q_UNUSED(position)
+
+	return true;
+}
+
+bool QtWebEngineWebWidget::canViewSource() const
+{
+	return false;
+}
+
+bool QtWebEngineWebWidget::hasSelection() const
+{
+	return m_webView->hasSelection();
+}
+
 bool QtWebEngineWebWidget::isLoading() const
 {
 	return m_isLoading;
@@ -1955,6 +1480,13 @@ bool QtWebEngineWebWidget::isLoading() const
 bool QtWebEngineWebWidget::isPrivate() const
 {
 	return m_webView->page()->profile()->isOffTheRecord();
+}
+
+bool QtWebEngineWebWidget::isScrollBar(const QPoint &position) const
+{
+	Q_UNUSED(position)
+
+	return false;
 }
 
 bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
@@ -1999,8 +1531,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (contextMenuEvent->reason() == QContextMenuEvent::Keyboard)
 			{
-				m_clickPosition = contextMenuEvent->pos();
-
+				setClickPosition(contextMenuEvent->pos());
 				showContextMenu();
 			}
 
@@ -2015,9 +1546,9 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
 			file.open(QIODevice::ReadOnly);
 
-			m_clickPosition = m_webView->mapFromGlobal(QCursor::pos());
+			setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
 
-			m_webView->page()->runJavaScript(QString(file.readAll()).arg(m_clickPosition.x() / m_webView->zoomFactor()).arg(m_clickPosition.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleToolTip));
+			m_webView->page()->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleToolTip));
 
 			file.close();
 
@@ -2129,7 +1660,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (m_hitResult.linkUrl.isValid())
 					{
-						m_clickPosition = mouseEvent->pos();
+						setClickPosition(mouseEvent->pos());
 					}
 
 					GesturesManager::startGesture((m_hitResult.linkUrl.isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), m_childWidget, mouseEvent);
@@ -2201,8 +1732,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 							return false;
 						}
 
-						m_clickPosition = mouseEvent->pos();
-
+						setClickPosition(mouseEvent->pos());
 						showContextMenu(mouseEvent->pos());
 					}
 				}
@@ -2216,7 +1746,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 			{
-				m_clickPosition = mouseEvent->pos();
+				setClickPosition(mouseEvent->pos());
 
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hitTest.js"));
 				file.open(QIODevice::ReadOnly);
