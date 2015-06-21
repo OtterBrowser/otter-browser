@@ -9,6 +9,7 @@ var result = {
 	linkUrl: '',
 	longDescription: '',
 	mediaUrl: '',
+	position: [%1, %2],
 	tagName: '',
 	title: ''
 };

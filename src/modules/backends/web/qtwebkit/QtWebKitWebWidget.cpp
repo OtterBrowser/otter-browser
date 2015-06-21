@@ -2084,7 +2084,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				handleContextMenuEvent(contextMenuEvent, false);
 			}
 		}
-		else if (event->type() == QEvent::Resize)
+		else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
 		{
 			emit progressBarGeometryChanged();
 		}

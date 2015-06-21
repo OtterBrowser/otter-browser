@@ -619,7 +619,7 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 		}
 	}
 
-	menu.exec(mapToGlobal(m_hitResult.position));
+	menu.exec(mapToGlobal(hitPosition));
 }
 
 void WebWidget::updateQuickSearch()
@@ -1651,6 +1651,8 @@ bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, Q
 				}
 
 				ContentsWidget *contentsWidget = qobject_cast<ContentsWidget*>(parentWidget());
+
+				m_clickPosition = event->pos();
 
 				if (contentsWidget)
 				{

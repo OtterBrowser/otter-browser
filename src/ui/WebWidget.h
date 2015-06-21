@@ -141,6 +141,7 @@ public:
 			linkUrl = QUrl(map.value(QLatin1String("linkUrl")).toString());
 			mediaUrl = QUrl(map.value(QLatin1String("mediaUrl")).toString());
 			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
+			position = map.value(QLatin1String("position")).toPoint();
 			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
 		}
 	};

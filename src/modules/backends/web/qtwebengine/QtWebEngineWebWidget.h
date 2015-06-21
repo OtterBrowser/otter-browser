@@ -74,16 +74,13 @@ protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
-	void mousePressEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void pasteText(const QString &text);
 	void handleCreateSearch(const QVariant &result);
 	void handleHitTest(const QVariant &result);
-	void handleHotClick(const QVariant &result);
 	void handleImageProperties(const QVariant &result);
 	void handleScroll(const QVariant &result);
 	void handleScrollToAnchor(const QVariant &result);
-	void handleToolTip(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
@@ -112,7 +109,6 @@ protected slots:
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel);
 	void updateUndo();
 	void updateRedo();
-	void showHotClickMenu();
 
 private:
 	QWebEngineView *m_webView;
@@ -121,9 +117,6 @@ private:
 	QIcon m_icon;
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
-	bool m_ignoreContextMenu;
-	bool m_ignoreContextMenuNextTime;
-	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
 
