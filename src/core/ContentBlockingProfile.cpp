@@ -289,9 +289,11 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
 	const QString baseUrlHost = m_baseUrl.host();
+	const bool blockedDomains = !rule->blockedDomains.isEmpty();
+	const bool allowedDomains = !rule->allowedDomains.isEmpty();
 
-	isBlocked = ((rule->allowedDomains.count() > 0) ? !resolveDomainExceptions(baseUrlHost, rule->allowedDomains) : isBlocked);
-	isBlocked = ((rule->blockedDomains.count() > 0) ? resolveDomainExceptions(baseUrlHost, rule->blockedDomains) : isBlocked);
+	isBlocked = ((blockedDomains) ? resolveDomainExceptions(baseUrlHost, rule->blockedDomains) : isBlocked);
+	isBlocked = ((allowedDomains) ? !resolveDomainExceptions(baseUrlHost, rule->allowedDomains) : isBlocked);
 
 	if (rule->ruleOption & ThirdPartyOption)
 	{
@@ -299,7 +301,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 		{
 			isBlocked = (rule->exceptionRuleOption & ThirdPartyOption);
 		}
-		else
+		else if (!blockedDomains && !allowedDomains)
 		{
 			isBlocked = !(rule->exceptionRuleOption & ThirdPartyOption);
 		}
