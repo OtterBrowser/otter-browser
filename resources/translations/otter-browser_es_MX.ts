@@ -621,22 +621,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al abrir el archivo de notas: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al abrir el archivo de marcadores: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar el archivo de notas: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar el archivo de marcadores: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
@@ -646,12 +646,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar el archivo de notas.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar el archivo de marcadores.</translation>
     </message>
 </context>
 <context>
@@ -1733,7 +1733,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar la configuración automática del proxy (PAC): %1</translation>
     </message>
 </context>
 <context>
@@ -1935,7 +1935,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to lock mouse pointer.</source>
-        <translation type="unfinished"/>
+        <translation>%1 quiere bloquear el cursor del ratón.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -2209,7 +2209,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
         <source>Enable single key shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar atajos de teclado simples</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
@@ -3049,7 +3049,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="341"/>
         <source>Failed to save image: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al guardar la imágen: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="467"/>
@@ -3561,7 +3561,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="217"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>Agregar panel web…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
@@ -3571,7 +3571,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Introducir la dirección de la página web para ser mostrada en el panel:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
@@ -3614,27 +3614,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="84"/>
         <source>Failed to save file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al guardar el archivo: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>Error al guardar el archivo.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="349"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Ningún motor de búsqueda definido</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>Visor de código fuente</translation>
     </message>
 </context>
 <context>
@@ -3643,7 +3643,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="171"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="172"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Agregar mosaico…</translation>
     </message>
 </context>
 <context>
@@ -3651,72 +3651,72 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Preferencias de página de inicio</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Usar imágen personalizada de fondo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>modo de escalado:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Ruta de imágen:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Columnas por fila:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automático</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>Nivel de zoom:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar mosaicos para agregar nuevas entradas</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Imágenes (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Ajuste óptimo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centrado</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>Extendido</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Mosaico</translation>
     </message>
 </context>
 <context>
@@ -3724,32 +3724,32 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="216"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="218"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Editar…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="219"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Volver a cargar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="221"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="225"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Configurar…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="226"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Agregar mosaico…</translation>
     </message>
 </context>
 <context>
@@ -3797,7 +3797,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Organizar</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
@@ -4039,7 +4039,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Organizar</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="452"/>
@@ -4928,13 +4928,13 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="236"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation type="unfinished"/>
+        <translation>No hay un sufijo válido para determinado tipo MIME: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="298"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="348"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar una ruta valida de aplicación para el tipo MIME %1: %2</translation>
     </message>
 </context>
 <context>
@@ -4942,7 +4942,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="300"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Organizar</translation>
     </message>
 </context>
 <context>
@@ -5092,37 +5092,37 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Maximize</source>
-        <translation type="unfinished"/>
+        <translation>Maximizar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Maximize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Maximizar pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Minimize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Minimizar pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>Restore</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>Restore Tab</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar pestaña</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>Stay on Top</source>
-        <translation type="unfinished"/>
+        <translation>Mantener arriba</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="270"/>
@@ -5157,27 +5157,27 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Maximize All</source>
-        <translation type="unfinished"/>
+        <translation>Maximizar todo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Minimize All</source>
-        <translation type="unfinished"/>
+        <translation>Minimizar todo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Restore All</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar todo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Cascade</source>
-        <translation type="unfinished"/>
+        <translation>Cascada</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Mosaico</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>
@@ -5308,7 +5308,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>Ver origen de marco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="304"/>
@@ -5946,7 +5946,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="289"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Cerrar</translation>
     </message>
 </context>
 <context>
@@ -5989,38 +5989,38 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="60"/>
         <source>Failed to open content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al abrir el archivo del perfil de bloqueo de contenido: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="69"/>
         <source>Failed to load content blocking profile file: invalid header</source>
-        <translation type="unfinished"/>
+        <translation>Error al cargar el archivo del perfil de bloqueo de contenido: cabecera inválida</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="438"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation type="unfinished"/>
+        <translation>Error al actualizar el perfil de bloqueo de contenido, la URL de actualización está vacía</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="442"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation type="unfinished"/>
+        <translation>Error al actualizar el perfil de bloqueo de contenido, la URL de actualización (%1) es invalida</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="473"/>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="495"/>
         <source>Failed to update content blocking profile: %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al actualizar el perfil de bloqueo de contenido: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="485"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Error al actualizar el perfil de bloqueo de contenido: La suma de verificación no coincide</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="105"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Error al analizar la entrada de la configuración automática de proxy (PAC): %1</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
@@ -6036,7 +6036,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="422"/>
         <source>Blocked request</source>
-        <translation type="unfinished"/>
+        <translation>Solicitud bloqueada</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="427"/>
@@ -6046,7 +6046,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="482"/>
         <source>Failed to register application to system registry: %1, %2</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo registrar la aplicación en el registro del sistema: %1, %2</translation>
     </message>
 </context>
 <context>

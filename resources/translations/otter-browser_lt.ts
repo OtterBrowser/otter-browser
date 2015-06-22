@@ -2204,7 +2204,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="861"/>
         <source>Clone</source>
-        <translation type="unfinished"/>
+        <translation>Klonuoti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
@@ -3170,7 +3170,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="50"/>
         <source>Store only current window</source>
-        <translation>Išsagoti tik aktyvų langą</translation>
+        <translation>Išsaugoti tik aktyvų langą</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="72"/>
@@ -3324,7 +3324,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="145"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Vietaženkliai</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="146"/>
@@ -3629,7 +3629,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="349"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nėra apibrėžtų paieškos sistemų</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>
@@ -4461,7 +4461,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="340"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Rėmelis</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="701"/>
