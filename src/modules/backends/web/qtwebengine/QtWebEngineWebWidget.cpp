@@ -36,6 +36,7 @@
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
 #include "../../../../ui/SearchPropertiesDialog.h"
+#include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
 #include <QtCore/QEventLoop>
@@ -371,6 +372,26 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::ViewFrameSourceAction:
+			if (m_hitResult.frameUrl.isValid())
+			{
+				QNetworkRequest request(m_hitResult.frameUrl);
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
+
+				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
+				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()));
+
+				m_viewSourceReplies[reply] = sourceViewer;
+
+				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+
+				emit requestedNewWindow(sourceViewer, DefaultOpen);
+			}
+
+			break;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
@@ -673,6 +694,25 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			}
 
 			break;
+		case ActionsManager::ViewSourceAction:
+			{
+				QNetworkRequest request(getUrl());
+				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
+
+				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
+				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()));
+
+				m_viewSourceReplies[reply] = sourceViewer;
+
+				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
+				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
+
+				emit requestedNewWindow(sourceViewer, DefaultOpen);
+			}
+
+			break;
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
@@ -728,6 +768,20 @@ void QtWebEngineWebWidget::iconReplyFinished()
 
 	m_iconReply->deleteLater();
 	m_iconReply = NULL;
+}
+
+void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
+{
+	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
+	{
+		m_viewSourceReplies[reply]->setContents(reply->readAll(), reply->header(QNetworkRequest::ContentTypeHeader).toString());
+	}
+
+	m_viewSourceReplies.remove(reply);
+
+	reply->deleteLater();
 }
 
 void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
@@ -1393,7 +1447,7 @@ bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const
 
 bool QtWebEngineWebWidget::canViewSource() const
 {
-	return false;
+	return true;
 }
 
 bool QtWebEngineWebWidget::hasSelection() const

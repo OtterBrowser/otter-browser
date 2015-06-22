@@ -30,6 +30,7 @@ namespace Otter
 {
 
 class ContentsDialog;
+class SourceViewerWebWidget;
 
 class QtWebEngineWebWidget : public WebWidget
 {
@@ -97,6 +98,7 @@ protected slots:
 	void downloadFile(QWebEngineDownloadItem *item);
 	void linkHovered(const QString &link);
 	void iconReplyFinished();
+	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handleIconChange(const QUrl &url);
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
@@ -117,6 +119,7 @@ private:
 	QIcon m_icon;
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
+	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	bool m_isLoading;
 	bool m_isTyped;
 
