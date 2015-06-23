@@ -38,6 +38,8 @@ class QtWebEnginePage : public QWebEnginePage
 public:
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
+	bool isViewingMedia() const;
+
 protected:
 	void javaScriptAlert(const QUrl &url, const QString &message);
 	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source);
@@ -54,9 +56,11 @@ private:
 	QtWebEngineWebWidget *m_widget;
 	QWebEnginePage::NavigationType m_previousNavigationType;
 	bool m_ignoreJavaScriptPopups;
+	bool m_isViewingMedia;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, OpenHints hints);
+	void viewingMediaChanged(bool viewingMedia);
 };
 
 }

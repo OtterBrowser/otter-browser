@@ -30,6 +30,7 @@ namespace Otter
 {
 
 class ContentsDialog;
+class QtWebEnginePage;
 class SourceViewerWebWidget;
 
 class QtWebEngineWebWidget : public WebWidget
@@ -114,6 +115,7 @@ protected slots:
 
 private:
 	QWebEngineView *m_webView;
+	QtWebEnginePage *m_page;
 	QWidget *m_childWidget;
 	QNetworkReply *m_iconReply;
 	QIcon m_icon;

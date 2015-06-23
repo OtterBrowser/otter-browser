@@ -81,12 +81,13 @@ namespace Otter
 
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
+	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_childWidget(NULL),
 	m_iconReply(NULL),
 	m_isLoading(false),
 	m_isTyped(false)
 {
-	m_webView->setPage(new QtWebEnginePage(isPrivate, this));
+	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->installEventFilter(this);
 
@@ -107,20 +108,21 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	setFocusPolicy(Qt::StrongFocus);
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
+	connect(m_page, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
+	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(m_page, SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
+	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
+	connect(m_page, SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
+	connect(m_page, SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
+	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
+	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
+	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
+	connect(m_page->profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_webView, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(notifyIconChanged()));
-	connect(m_webView->page(), SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
-	connect(m_webView->page(), SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
-	connect(m_webView->page(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
-	connect(m_webView->page(), SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
-	connect(m_webView->page(), SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
-	connect(m_webView->page(), SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
-	connect(m_webView->page(), SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
-	connect(m_webView->page(), SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
-	connect(m_webView->page(), SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
-	connect(m_webView->page(), SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
-	connect(m_webView->page()->profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
@@ -1447,7 +1449,7 @@ bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const
 
 bool QtWebEngineWebWidget::canViewSource() const
 {
-	return true;
+	return !m_page->isViewingMedia();
 }
 
 bool QtWebEngineWebWidget::hasSelection() const

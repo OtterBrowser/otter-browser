@@ -60,7 +60,8 @@ namespace Otter
 QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) : QWebEnginePage((isPrivate ? new QWebEngineProfile(parent) : QWebEngineProfile::defaultProfile()), parent),
 	m_widget(parent),
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
-	m_ignoreJavaScriptPopups(false)
+	m_ignoreJavaScriptPopups(false),
+	m_isViewingMedia(false)
 {
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 }
@@ -77,7 +78,9 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	QString string(url().toString());
 	string.truncate(1000);
 
-	if (QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1").arg(QRegularExpression::escape(string))).match(result).hasMatch())
+	const bool isViewingMedia = QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1").arg(QRegularExpression::escape(string))).match(result).hasMatch();
+
+	if (isViewingMedia)
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
 		file.open(QIODevice::ReadOnly);
@@ -85,6 +88,13 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 		runJavaScript(file.readAll());
 
 		file.close();
+	}
+
+	if (isViewingMedia != m_isViewingMedia)
+	{
+		m_isViewingMedia = isViewingMedia;
+
+		emit viewingMediaChanged(m_isViewingMedia);
 	}
 }
 
@@ -285,6 +295,11 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	}
 
 	return dialog.isAccepted();
+}
+
+bool QtWebEnginePage::isViewingMedia() const
+{
+	return m_isViewingMedia;
 }
 
 }
