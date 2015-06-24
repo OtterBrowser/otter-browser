@@ -81,7 +81,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_ignoreContextMenuNextTime(false),
 	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
-	m_isTyped(false)
+	m_isTyped(false),
+	m_isNavigating(false)
 {
 	m_splitter->addWidget(m_webView);
 	m_splitter->setChildrenCollapsible(false);
@@ -221,15 +222,20 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 
 void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType type)
 {
-	if (frame == m_page->mainFrame() && type != QWebPage::NavigationTypeBackOrForward)
+	if (frame == m_page->mainFrame())
 	{
-		pageLoadStarted();
-		handleHistory();
-
-		if (type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeFormSubmitted)
+		if (type != QWebPage::NavigationTypeBackOrForward)
 		{
-			m_isTyped = false;
+			pageLoadStarted();
+			handleHistory();
+
+			if (type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeFormSubmitted)
+			{
+				m_isTyped = false;
+			}
 		}
+
+		m_isNavigating = true;
 	}
 }
 
@@ -558,6 +564,8 @@ void QtWebKitWebWidget::notifyTitleChanged()
 
 void QtWebKitWebWidget::notifyUrlChanged(const QUrl &url)
 {
+	m_isNavigating = false;
+
 	updateOptions(url);
 	updatePageActions(url);
 	updateNavigationActions();
@@ -2037,6 +2045,11 @@ bool QtWebKitWebWidget::isLoading() const
 bool QtWebKitWebWidget::isPrivate() const
 {
 	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
+}
+
+bool QtWebKitWebWidget::isNavigating() const
+{
+	return m_isNavigating;
 }
 
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const

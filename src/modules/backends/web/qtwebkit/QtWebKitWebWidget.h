@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,6 +71,7 @@ public:
 	bool hasSelection() const;
 	bool isLoading() const;
 	bool isPrivate() const;
+	bool isNavigating() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -159,6 +161,7 @@ private:
 	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
+	bool m_isNavigating;
 
 friend class QtWebKitNetworkManager;
 friend class QtWebKitPluginFactory;
