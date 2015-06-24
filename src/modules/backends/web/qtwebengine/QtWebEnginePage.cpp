@@ -78,9 +78,10 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	QString string(url().toString());
 	string.truncate(1000);
 
-	const bool isViewingMedia = QRegularExpression(QStringLiteral("<img style=\"-webkit-user-select: none; cursor: zoom-in;\" src=\"%1").arg(QRegularExpression::escape(string))).match(result).hasMatch();
+	const QRegularExpressionMatch match = QRegularExpression(QStringLiteral("(<img style=\"-webkit-user-select: none; cursor: zoom-in;\"|<body><video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result);
+	const bool isViewingMedia = match.hasMatch();
 
-	if (isViewingMedia)
+	if (isViewingMedia && match.captured().startsWith(QLatin1String("<img")))
 	{
 		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
 		file.open(QIODevice::ReadOnly);
