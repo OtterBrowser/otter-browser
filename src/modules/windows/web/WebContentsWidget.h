@@ -39,6 +39,24 @@ class WebContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum ScrollMode
+	{
+		NoScroll = 0,
+		MoveScroll = 1,
+		DragScroll = 2
+	};
+
+	enum ScrollDirection
+	{
+		NoDirection = 0,
+		TopDirection = 1,
+		BottomDirection = 2,
+		RightDirection = 4,
+		LeftDirection = 8
+	};
+
+	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
+
 	explicit WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window);
 
 	void search(const QString &search, const QString &query);
@@ -75,7 +93,13 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void scrollContents(const QPoint &delta);
+	void setScrollMode(ScrollMode mode);
 	void setWidget(WebWidget *widget, bool isPrivate);
 
 protected slots:
@@ -96,13 +120,19 @@ private:
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
 	QString m_quickFindQuery;
+	QPoint m_beginCursorPosition;
+	QPoint m_lastCursorPosition;
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
+	ScrollMode m_scrollMode;
 	int m_quickFindTimer;
+	int m_scrollTimer;
 	int m_startPageTimer;
 	bool m_isTabPreferencesMenuVisible;
 	bool m_showStartPage;
+	bool m_ignoreRelease;
 
 	static QString m_sharedQuickFindQuery;
+	static QMap<int, QPixmap> m_scrollCursors;
 };
 
 }

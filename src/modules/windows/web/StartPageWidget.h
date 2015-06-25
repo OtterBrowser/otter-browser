@@ -61,6 +61,7 @@ class StartPageWidget : public QScrollArea
 public:
 	explicit StartPageWidget(Otter::Window *window, QWidget *parent = NULL);
 
+	void scrollContents(const QPoint &delta);
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:

@@ -662,18 +662,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->runJavaScript(QStringLiteral("window.scrollBy(%1, 0)").arg(m_webView->width()));
 
 			break;
-		case ActionsManager::StartDragScrollAction:
-			setScrollMode(DragScroll);
-
-			break;
-		case ActionsManager::StartMoveScrollAction:
-			setScrollMode(MoveScroll);
-
-			break;
-		case ActionsManager::EndScrollAction:
-			setScrollMode(NoScroll);
-
-			break;
 		case ActionsManager::ActivateContentAction:
 			{
 				m_webView->setFocus();

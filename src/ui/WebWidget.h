@@ -41,24 +41,6 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
-	enum ScrollMode
-	{
-		NoScroll = 0,
-		MoveScroll = 1,
-		DragScroll = 2
-	};
-
-	enum ScrollDirection
-	{
-		NoDirection = 0,
-		TopDirection = 1,
-		BottomDirection = 2,
-		RightDirection = 4,
-		LeftDirection = 8
-	};
-
-	Q_DECLARE_FLAGS(ScrollDirections, ScrollDirection)
-
 	enum MenuFlag
 	{
 		NoMenu = 0,
@@ -171,7 +153,6 @@ public:
 	QVariantHash getOptions() const;
 	virtual QVariantHash getStatistics() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
-	ScrollMode getScrollMode() const;
 	virtual int getZoom() const = 0;
 	virtual bool handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	virtual bool handleMousePressEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
@@ -194,7 +175,6 @@ public slots:
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
-	void setScrollMode(ScrollMode mode);
 	virtual void setZoom(int zoom) = 0;
 	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
 	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
@@ -203,10 +183,6 @@ protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
@@ -253,21 +229,15 @@ private:
 	QUrl m_requestedUrl;
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
-	QPoint m_beginCursorPosition;
-	QPoint m_beginScrollPosition;
 	QPoint m_clickPosition;
 	QStringList m_alternateStyleSheets;
 	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
-	ScrollMode m_scrollMode;
 	int m_reloadTimer;
-	int m_scrollTimer;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
 	bool m_isUsingRockerNavigation;
-
-	static QMap<int, QPixmap> m_scrollCursors;
 
 signals:
 	void aboutToReload();

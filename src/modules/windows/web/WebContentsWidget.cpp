@@ -33,11 +33,13 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QApplication>
 
 namespace Otter
 {
 
 QString WebContentsWidget::m_sharedQuickFindQuery = NULL;
+QMap<int, QPixmap> WebContentsWidget::m_scrollCursors;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_layout(new QVBoxLayout(this)),
@@ -45,10 +47,13 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
+	m_scrollMode(NoScroll),
 	m_quickFindTimer(0),
+	m_scrollTimer(0),
 	m_startPageTimer(0),
 	m_isTabPreferencesMenuVisible(false),
-	m_showStartPage(SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool())
+	m_showStartPage(SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool()),
+	m_ignoreRelease(false)
 {
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	m_layout->setSpacing(0);
@@ -68,6 +73,73 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 		m_quickFindTimer = 0;
 
 		m_searchBarWidget->hide();
+	}
+	else if (event->timerId() == m_scrollTimer)
+	{
+		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
+		ScrollDirections directions = NoDirection;
+
+		if (scrollDelta.x() < 0)
+		{
+			directions |= LeftDirection;
+		}
+		else if (scrollDelta.x() > 0)
+		{
+			directions |= RightDirection;
+		}
+
+		if (scrollDelta.y() < 0)
+		{
+			directions |= TopDirection;
+		}
+		else if (scrollDelta.y() > 0)
+		{
+			directions |= BottomDirection;
+		}
+
+		if (!m_scrollCursors.contains(directions))
+		{
+			if (directions == (BottomDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-left.png"));
+			}
+			else if (directions == (BottomDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-right.png"));
+			}
+			else if (directions == BottomDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom.png"));
+			}
+			else if (directions == LeftDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-left.png"));
+			}
+			else if (directions == RightDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-right.png"));
+			}
+			else if (directions == (TopDirection | LeftDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-left.png"));
+			}
+			else if (directions == (TopDirection | RightDirection))
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-right.png"));
+			}
+			else if (directions == TopDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top.png"));
+			}
+			else if (directions == NoDirection)
+			{
+				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
+			}
+		}
+
+		scrollContents(scrollDelta);
+
+		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
 	}
 	else if (event->timerId() == m_startPageTimer)
 	{
@@ -103,9 +175,28 @@ void WebContentsWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void WebContentsWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	if (m_scrollMode == MoveScroll || m_scrollMode == DragScroll)
+	{
+		event->accept();
+
+		return;
+	}
+}
+
 void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 {
 	QWidget::keyPressEvent(event);
+
+	if (m_scrollMode == MoveScroll)
+	{
+		triggerAction(ActionsManager::EndScrollAction);
+
+		event->accept();
+
+		return;
+	}
 
 	if (event->key() == Qt::Key_Escape)
 	{
@@ -140,6 +231,45 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 				window->triggerAction(ActionsManager::FullScreenAction);
 			}
 		}
+	}
+}
+
+void WebContentsWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (m_scrollMode == MoveScroll || m_scrollMode == DragScroll)
+	{
+		event->accept();
+
+		return;
+	}
+}
+
+void WebContentsWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (m_ignoreRelease)
+	{
+		m_ignoreRelease = false;
+
+		event->accept();
+
+		return;
+	}
+
+	if (m_scrollMode == MoveScroll || m_scrollMode == DragScroll)
+	{
+		triggerAction(ActionsManager::EndScrollAction);
+	}
+
+	ContentsWidget::mouseReleaseEvent(event);
+}
+
+void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (m_scrollMode == DragScroll)
+	{
+		scrollContents(m_lastCursorPosition - QCursor::pos());
+
+		m_lastCursorPosition = QCursor::pos();
 	}
 }
 
@@ -360,6 +490,18 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 			setZoom(100);
 
 			break;
+		case ActionsManager::StartDragScrollAction:
+			setScrollMode(DragScroll);
+
+			break;
+		case ActionsManager::StartMoveScrollAction:
+			setScrollMode(MoveScroll);
+
+			break;
+		case ActionsManager::EndScrollAction:
+			setScrollMode(NoScroll);
+
+			break;
 		default:
 			if (m_startPageWidget && identifier == ActionsManager::ContextMenuAction)
 			{
@@ -400,6 +542,18 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	if (m_searchBarWidget)
 	{
 		m_searchBarWidget->setResultsFound(found);
+	}
+}
+
+void WebContentsWidget::scrollContents(const QPoint &delta)
+{
+	if (m_startPageWidget)
+	{
+		m_startPageWidget->scrollContents(delta);
+	}
+	else if (m_webWidget)
+	{
+		m_webWidget->setScrollPosition(m_webWidget->getScrollPosition() + delta);
 	}
 }
 
@@ -505,6 +659,66 @@ void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 	{
 		m_webWidget->findInPage(QString(), (flags | WebWidget::HighlightAllFind));
 		m_webWidget->findInPage(m_searchBarWidget->getQuery(), flags);
+	}
+}
+
+void WebContentsWidget::setScrollMode(ScrollMode mode)
+{
+	m_scrollMode = mode;
+
+	switch (mode)
+	{
+		case MoveScroll:
+			if (!m_scrollCursors.contains(NoDirection))
+			{
+				m_scrollCursors[NoDirection] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
+			}
+
+			if (m_scrollTimer == 0)
+			{
+				m_scrollTimer = startTimer(10);
+			}
+
+			grabKeyboard();
+			grabMouse();
+
+			m_ignoreRelease = true;
+
+			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
+
+			break;
+		case DragScroll:
+			grabMouse();
+
+			QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+
+			break;
+		default:
+			QApplication::restoreOverrideCursor();
+
+			break;
+	}
+
+	if (mode == NoScroll)
+	{
+		m_beginCursorPosition = QPoint();
+		m_lastCursorPosition = QPoint();
+
+		if (m_scrollTimer > 0)
+		{
+			killTimer(m_scrollTimer);
+
+			m_scrollTimer = 0;
+
+			releaseKeyboard();
+		}
+
+		releaseMouse();
+	}
+	else
+	{
+		m_beginCursorPosition = QCursor::pos();
+		m_lastCursorPosition = QCursor::pos();
 	}
 }
 

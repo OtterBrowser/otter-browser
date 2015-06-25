@@ -288,6 +288,12 @@ void StartPageWidget::optionChanged(const QString &option)
 	}
 }
 
+void StartPageWidget::scrollContents(const QPoint &delta)
+{
+	horizontalScrollBar()->setValue(horizontalScrollBar()->value() + delta.x());
+	verticalScrollBar()->setValue(verticalScrollBar()->value() + delta.y());
+}
+
 void StartPageWidget::configure()
 {
 	StartPagePreferencesDialog dialog(this);
@@ -555,6 +561,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
 
+			if (mouseEvent->button() == Qt::MiddleButton && m_currentIndex.isValid())
+			{
+				mouseEvent->accept();
+
+				return false;
+			}
+
 			if (mouseEvent->button() != Qt::LeftButton)
 			{
 				mouseEvent->ignore();
@@ -605,7 +618,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						return true;
 					}
 
-					return QObject::eventFilter(object, event);
+					mouseEvent->ignore();
+
+					return true;
 				}
 
 				const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());

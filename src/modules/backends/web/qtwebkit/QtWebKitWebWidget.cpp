@@ -1238,18 +1238,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			m_webView->page()->mainFrame()->setScrollPosition(QPoint(qMin(m_webView->page()->mainFrame()->scrollBarMaximum(Qt::Horizontal), (m_webView->page()->mainFrame()->scrollPosition().x() + m_webView->width())), m_webView->page()->mainFrame()->scrollPosition().y()));
 
 			break;
-		case ActionsManager::StartDragScrollAction:
-			setScrollMode(DragScroll);
-
-			break;
-		case ActionsManager::StartMoveScrollAction:
-			setScrollMode(MoveScroll);
-
-			break;
-		case ActionsManager::EndScrollAction:
-			setScrollMode(NoScroll);
-
-			break;
 		case ActionsManager::ActivateContentAction:
 			{
 				m_webView->setFocus();
@@ -2167,6 +2155,12 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				return handleMouseDoubleClickEvent(mouseEvent, true);
 			}
+		}
+		else if (event->type() == QEvent::MouseMove)
+		{
+			event->ignore();
+
+			return QObject::eventFilter(object, event);
 		}
 		else if (event->type() == QEvent::Wheel)
 		{

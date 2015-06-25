@@ -44,16 +44,12 @@
 namespace Otter
 {
 
-QMap<int, QPixmap> WebWidget::m_scrollCursors;
-
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
 	m_pasteNoteMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
-	m_scrollMode(NoScroll),
 	m_reloadTimer(0),
-	m_scrollTimer(0),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
 	m_isUsingRockerNavigation(false)
@@ -75,114 +71,6 @@ void WebWidget::timerEvent(QTimerEvent *event)
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
-	}
-	else if (event->timerId() == m_scrollTimer)
-	{
-		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
-
-		ScrollDirections directions = NoDirection;
-
-		if (scrollDelta.x() < 0)
- 		{
- 			directions |= LeftDirection;
- 		}
-		else if (scrollDelta.x() > 0)
- 		{
- 			directions |= RightDirection;
- 		}
-
-		if (scrollDelta.y() < 0)
- 		{
- 			directions |= TopDirection;
- 		}
-		else if (scrollDelta.y() > 0)
- 		{
- 			directions |= BottomDirection;
- 		}
-
-		if (!m_scrollCursors.contains(directions))
-		{
-			if (directions == (BottomDirection | LeftDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-left.png"));
-			}
-			else if (directions == (BottomDirection | RightDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom-right.png"));
-			}
-			else if (directions == BottomDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-bottom.png"));
-			}
-			else if (directions == LeftDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-left.png"));
-			}
-			else if (directions == RightDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-right.png"));
-			}
-			else if (directions == (TopDirection | LeftDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-left.png"));
-			}
-			else if (directions == (TopDirection | RightDirection))
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top-right.png"));
-			}
-			else if (directions == TopDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-top.png"));
-			}
-			else if (directions == NoDirection)
-			{
-				m_scrollCursors[directions] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
-			}
-		}
-
- 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
-
-		setScrollPosition(getScrollPosition() + scrollDelta);
-	}
-}
-
-void WebWidget::keyPressEvent(QKeyEvent *event)
-{
-	QWidget::keyPressEvent(event);
-
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-	}
-}
-
-void WebWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-	}
-
-	event->accept();
-}
-
-void WebWidget::mousePressEvent(QMouseEvent *event)
-{
-	QWidget::mousePressEvent(event);
-
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-	}
-
-	m_ignoreContextMenuNextTime = true;
-}
-
-void WebWidget::mouseMoveEvent(QMouseEvent *event)
-{
-	if (m_scrollMode == DragScroll && event->button() == Qt::LeftButton)
-	{
-		setScrollPosition(m_beginScrollPosition + m_beginCursorPosition - QCursor::pos());
 	}
 }
 
@@ -1116,62 +1004,6 @@ void WebWidget::setReloadTime(QAction *action)
 	}
 }
 
-void WebWidget::setScrollMode(WebWidget::ScrollMode mode)
-{
-	m_scrollMode = mode;
-
-	switch (mode)
-	{
-		case MoveScroll:
-			if (!m_scrollCursors.contains(NoDirection))
-			{
-				m_scrollCursors[NoDirection] = QPixmap(QLatin1String(":/cursors/scroll-vertical.png"));
-			}
-
-			if (m_scrollTimer == 0)
-			{
-				m_scrollTimer = startTimer(10);
-			}
-
-			grabKeyboard();
-			grabMouse();
-
-			QApplication::setOverrideCursor(m_scrollCursors[NoDirection]);
-
-			break;
-		case DragScroll:
-			QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-
-			break;
-		default:
-			QApplication::restoreOverrideCursor();
-
-			break;
-	}
-
-	if (mode == NoScroll)
-	{
-		m_beginCursorPosition = QPoint();
-		m_beginScrollPosition = QPoint();
-
-		if (m_scrollTimer > 0)
-		{
-			killTimer(m_scrollTimer);
-
-			m_scrollTimer = 0;
-
-			releaseKeyboard();
-			releaseMouse();
-		}
-	}
-	else
-	{
-		m_beginCursorPosition = QCursor::pos();
-		m_beginScrollPosition = getScrollPosition();
-
-	}
-}
-
 Action* WebWidget::getAction(int identifier)
 {
 	if (identifier < 0)
@@ -1473,11 +1305,6 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 	return HitTestResult();
 }
 
-WebWidget::ScrollMode WebWidget::getScrollMode() const
-{
-	return m_scrollMode;
-}
-
 int WebWidget::getAmountOfNotLoadedPlugins() const
 {
 	return 0;
@@ -1504,13 +1331,6 @@ bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropaga
 
 bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
 {
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-
-		m_ignoreContextMenuNextTime = true;
-	}
-
 	if (event->button() == Qt::BackButton)
 	{
 		triggerAction(ActionsManager::GoBackAction);
@@ -1560,7 +1380,8 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 		{
 			if (!m_hitResult.linkUrl.isValid() && m_hitResult .tagName != QLatin1String("textarea") && m_hitResult .tagName != QLatin1String("input"))
 			{
-				triggerAction(ActionsManager::StartMoveScrollAction);
+				//TODO improve forwarding
+				ActionsManager::triggerAction(ActionsManager::StartMoveScrollAction, this);
 
 				return true;
 			}
@@ -1601,25 +1422,7 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 
 bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
 {
-	if (getScrollMode() == MoveScroll)
-	{
-		return true;
-	}
-
-	if (event->button() == Qt::MiddleButton)
-	{
-		updateHitTestResult(event->pos());
-
-		if (getScrollMode() == DragScroll)
-		{
-			triggerAction(ActionsManager::EndScrollAction);
-		}
-		else if (m_hitResult.linkUrl.isValid())
-		{
-			return true;
-		}
-	}
-	else if (event->button() == Qt::RightButton && !event->buttons().testFlag(Qt::LeftButton))
+	if (event->button() == Qt::RightButton && !event->buttons().testFlag(Qt::LeftButton))
 	{
 		if (m_isUsingRockerNavigation)
 		{
@@ -1704,13 +1507,6 @@ bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject 
 {
 	Q_UNUSED(sender)
 
-	if (m_scrollMode == MoveScroll)
-	{
-		triggerAction(ActionsManager::EndScrollAction);
-
-		return true;
-	}
-	else
 	{
 		if (event->buttons() == Qt::RightButton)
 		{
