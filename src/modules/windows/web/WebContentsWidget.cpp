@@ -346,57 +346,53 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::FindAction:
 		case ActionsManager::QuickFindAction:
+			if (!m_searchBarWidget)
+			{
+				m_searchBarWidget = new SearchBarWidget(this);
+				m_searchBarWidget->hide();
+
+				m_layout->insertWidget(0, m_searchBarWidget);
+
+				connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
+				connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
+
+				if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
+				{
+					connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
+				}
+			}
+
+			if (!m_searchBarWidget->isVisible())
+			{
+				if (identifier == ActionsManager::QuickFindAction)
+				{
+					killTimer(m_quickFindTimer);
+
+					m_quickFindTimer = startTimer(2000);
+				}
+
+				if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+				{
+					m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
+				}
+
+				m_searchBarWidget->show();
+			}
+
+			m_searchBarWidget->selectAll();
+
+			break;
 		case ActionsManager::FindNextAction:
 		case ActionsManager::FindPreviousAction:
 			{
-				if (identifier == ActionsManager::FindAction || identifier == ActionsManager::QuickFindAction)
+				WebWidget::FindFlags flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
+
+				if (identifier == ActionsManager::FindPreviousAction)
 				{
-					if (!m_searchBarWidget)
-					{
-						m_searchBarWidget = new SearchBarWidget(this);
-						m_searchBarWidget->hide();
-
-						m_layout->insertWidget(0, m_searchBarWidget);
-
-						connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
-						connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
-
-						if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
-						{
-							connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
-						}
-					}
-
-					if (!m_searchBarWidget->isVisible())
-					{
-						if (identifier == ActionsManager::QuickFindAction)
-						{
-							killTimer(m_quickFindTimer);
-
-							m_quickFindTimer = startTimer(2000);
-						}
-
-						if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
-						{
-							m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
-						}
-
-						m_searchBarWidget->show();
-					}
-
-					m_searchBarWidget->selectAll();
+					flags |= WebWidget::BackwardFind;
 				}
-				else
-				{
-					WebWidget::FindFlags flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
 
-					if (identifier == ActionsManager::FindPreviousAction)
-					{
-						flags |= WebWidget::BackwardFind;
-					}
-
-					findInPage(flags);
-				}
+				findInPage(flags);
 			}
 
 			break;
