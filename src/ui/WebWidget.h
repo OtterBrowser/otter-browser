@@ -192,8 +192,6 @@ protected:
 	void setClickPosition(const QPoint &position);
 	virtual void setOptions(const QVariantHash &options);
 	Action* getExistingAction(int identifier);
-	QMenu* getPasteNoteMenu();
-	QMenu* getQuickSearchMenu();
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual int getAmountOfNotLoadedPlugins() const;

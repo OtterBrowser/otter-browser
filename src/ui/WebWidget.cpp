@@ -1044,7 +1044,14 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::PasteNoteAction:
-			action->setMenu(getPasteNoteMenu());
+			if (!m_pasteNoteMenu)
+			{
+				m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
+
+				connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
+			}
+
+			action->setMenu(m_pasteNoteMenu);
 
 			updateEditActions();
 
@@ -1102,7 +1109,15 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::SearchMenuAction:
-			action->setMenu(getQuickSearchMenu());
+			if (!m_quickSearchMenu)
+			{
+				m_quickSearchMenu = new QMenu(this);
+
+				connect(m_quickSearchMenu, SIGNAL(aboutToShow()), this, SLOT(quickSearchMenuAboutToShow()));
+				connect(m_quickSearchMenu, SIGNAL(triggered(QAction*)), this, SLOT(quickSearch(QAction*)));
+			}
+
+			action->setMenu(m_quickSearchMenu);
 
 		case ActionsManager::UndoAction:
 		case ActionsManager::RedoAction:
@@ -1178,31 +1193,6 @@ Action* WebWidget::getExistingAction(int identifier)
 WebBackend* WebWidget::getBackend()
 {
 	return m_backend;
-}
-
-QMenu* WebWidget::getPasteNoteMenu()
-{
-	if (!m_pasteNoteMenu)
-	{
-		m_pasteNoteMenu = new Menu(Menu::NotesMenuRole, this);
-
-		connect(m_pasteNoteMenu, SIGNAL(triggered(QAction*)), this, SLOT(pasteNote(QAction*)));
-	}
-
-	return m_pasteNoteMenu;
-}
-
-QMenu* WebWidget::getQuickSearchMenu()
-{
-	if (!m_quickSearchMenu)
-	{
-		m_quickSearchMenu = new QMenu(this);
-
-		connect(m_quickSearchMenu, SIGNAL(aboutToShow()), this, SLOT(quickSearchMenuAboutToShow()));
-		connect(m_quickSearchMenu, SIGNAL(triggered(QAction*)), this, SLOT(quickSearch(QAction*)));
-	}
-
-	return m_quickSearchMenu;
 }
 
 QString WebWidget::suggestSaveFileName() const
