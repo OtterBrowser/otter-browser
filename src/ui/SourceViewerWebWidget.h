@@ -47,7 +47,9 @@ public:
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
+	HitTestResult getHitTestResult(const QPoint &position);
 	int getZoom() const;
+	bool hasSelection() const;
 	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
@@ -70,15 +72,12 @@ protected:
 protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
-	void updateNavigationActions();
-	void updateEditActions();
 	void showContextMenu(const QPoint &position = QPoint(-1, -1));
 
 private:
 	SourceViewerWidget *m_sourceViewer;
 	QNetworkReply *m_viewSourceReply;
 	QUrl m_url;
-	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	bool m_isPrivate;
 };

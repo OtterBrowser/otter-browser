@@ -24,7 +24,6 @@
 #include "../core/NetworkManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
-#include "../core/SearchesManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 
@@ -269,26 +268,11 @@ void SourceViewerWebWidget::handleZoomChange()
 	SessionsManager::markSessionModified();
 }
 
-void SourceViewerWebWidget::updateNavigationActions()
-{
-	if (m_actions.contains(ActionsManager::StopAction))
-	{
-		m_actions[ActionsManager::StopAction]->setEnabled(m_isLoading);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadAction))
-	{
-		m_actions[ActionsManager::ReloadAction]->setEnabled(!m_isLoading);
-	}
-
-	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
-	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
-	}
-}
-
 void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 {
+	updateHitTestResult(position);
+	updateEditActions();
+
 	QMenu menu;
 	menu.addAction(getAction(ActionsManager::UndoAction));
 	menu.addAction(getAction(ActionsManager::RedoAction));
@@ -302,71 +286,6 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	menu.addAction(getAction(ActionsManager::ClearAllAction));
 	menu.addSeparator();
 	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
-}
-
-void SourceViewerWebWidget::updateEditActions()
-{
-	if (m_actions.contains(ActionsManager::CutAction))
-	{
-		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyAction))
-	{
-		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
-	{
-		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection());
-	}
-
-	if (m_actions.contains(ActionsManager::CopyToNoteAction))
-	{
-		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection());
-	}
-
-	if (m_actions.contains(ActionsManager::PasteAction))
-	{
-		m_actions[ActionsManager::PasteAction]->setEnabled(m_sourceViewer->canPaste());
-	}
-
-	if (m_actions.contains(ActionsManager::PasteNoteAction))
-	{
-		m_actions[ActionsManager::PasteNoteAction]->setEnabled(m_sourceViewer->canPaste() && NotesManager::getModel()->getRootItem()->hasChildren());
-	}
-
-	if (m_actions.contains(ActionsManager::DeleteAction))
-	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection());
-	}
-
-	if (m_actions.contains(ActionsManager::SelectAllAction))
-	{
-		m_actions[ActionsManager::SelectAllAction]->setEnabled(m_sourceViewer->document()->characterCount() > 0);
-	}
-
-	if (m_actions.contains(ActionsManager::ClearAllAction))
-	{
-		m_actions[ActionsManager::ClearAllAction]->setEnabled(m_sourceViewer->document()->characterCount() > 0);
-	}
-
-	if (m_actions.contains(ActionsManager::SearchAction))
-	{
-		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
-		const bool isValid = !engine.identifier.isEmpty();
-
-		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
-		m_actions[ActionsManager::SearchAction]->setData(isValid ? engine.identifier : QVariant());
-		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
-		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
-		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
-	}
-
-	if (m_actions.contains(ActionsManager::SearchMenuAction))
-	{
-		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
-	}
 }
 
 void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
@@ -506,70 +425,27 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 			return NULL;
 	}
 
-	if (m_actions.contains(identifier))
+	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		return m_actions[identifier];
+		Action *action = WebWidget::getAction(ActionsManager::UndoAction);
+		action->setEnabled(m_sourceViewer->document()->isUndoAvailable());
+
+		connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
+
+		return action;
 	}
 
-	Action *action = new Action(identifier, this);
-
-	m_actions[identifier] = action;
-
-	connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
-
-	switch (identifier)
+	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		case ActionsManager::StopAction:
-			action->setEnabled(m_isLoading);
+		Action *action = WebWidget::getAction(ActionsManager::RedoAction);
+		action->setEnabled(m_sourceViewer->document()->isRedoAvailable());
 
-			break;
+		connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));
 
-		case ActionsManager::ReloadAction:
-			action->setEnabled(!m_isLoading);
-
-			break;
-		case ActionsManager::ReloadOrStopAction:
-			action->setup(m_isLoading ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
-
-			break;
-		case ActionsManager::PasteNoteAction:
-			action->setMenu(getPasteNoteMenu());
-
-			updateEditActions();
-
-			break;
-		case ActionsManager::UndoAction:
-			action->setEnabled(false);
-
-			connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
-
-			break;
-		case ActionsManager::RedoAction:
-			action->setEnabled(false);
-
-			connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));
-
-			break;
-		case ActionsManager::SearchMenuAction:
-			action->setMenu(getQuickSearchMenu());
-
-		case ActionsManager::CutAction:
-		case ActionsManager::CopyAction:
-		case ActionsManager::CopyPlainTextAction:
-		case ActionsManager::CopyToNoteAction:
-		case ActionsManager::PasteAction:
-		case ActionsManager::PasteAndGoAction:
-		case ActionsManager::DeleteAction:
-		case ActionsManager::ClearAllAction:
-		case ActionsManager::SearchAction:
-			updateEditActions();
-
-			break;
-		default:
-			break;
+		return action;
 	}
 
-	return action;
+	return WebWidget::getAction(identifier);
 }
 
 QString SourceViewerWebWidget::getTitle() const
@@ -621,9 +497,28 @@ WindowHistoryInformation SourceViewerWebWidget::getHistory() const
 	return information;
 }
 
+WebWidget::HitTestResult SourceViewerWebWidget::getHitTestResult(const QPoint &position)
+{
+	HitTestResult result;
+	result.position = position;
+	result.flags = IsContentEditableTest;
+
+	if (m_sourceViewer->document()->isEmpty())
+	{
+		result.flags |= IsEmptyTest;
+	}
+
+	return result;
+}
+
 int SourceViewerWebWidget::getZoom() const
 {
 	return m_sourceViewer->getZoom();
+}
+
+bool SourceViewerWebWidget::hasSelection() const
+{
+	return m_sourceViewer->textCursor().hasSelection();
 }
 
 bool SourceViewerWebWidget::isLoading() const
