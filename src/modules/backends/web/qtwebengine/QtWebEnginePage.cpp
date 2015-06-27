@@ -28,6 +28,7 @@
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
 #include <QtWebEngineWidgets/QWebEngineProfile>
+#include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
@@ -83,6 +84,8 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 
 	if (isViewingMedia && match.captured().startsWith(QLatin1String("<img")))
 	{
+		settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
+
 		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
 		file.open(QIODevice::ReadOnly);
 
