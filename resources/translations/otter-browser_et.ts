@@ -3200,7 +3200,7 @@ Kas tahad üle kirjutada?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="35"/>
         <source>Find…</source>
-        <translation type="unfinished"/>
+        <translation>Otsi…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SearchBarWidget.ui" line="45"/>
@@ -3238,7 +3238,7 @@ Kas tahad üle kirjutada?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="39"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda ikooni…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="58"/>
@@ -3342,52 +3342,52 @@ Kas tahad üle kirjutada?</translation>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="197"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Võta tagasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="198"/>
         <source>Redo</source>
-        <translation type="unfinished"/>
+        <translation>Tee uuesti</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Lõika</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopeeri</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Aseta</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
         <source>Paste and Go</source>
-        <translation type="unfinished"/>
+        <translation>Kleebi ja mine</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>Kopeeri märkmeks</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Puhasta kõik</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Vali kõik</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="318"/>
@@ -3400,7 +3400,7 @@ Kas tahad üle kirjutada?</translation>
     <message>
         <location filename="../../src/core/SearchesManager.cpp" line="170"/>
         <source>Manage Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Halda otsimootoreid...</translation>
     </message>
 </context>
 <context>
@@ -3508,7 +3508,7 @@ Kas tahad kindlasti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Otsi…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
@@ -3561,7 +3561,7 @@ Kas tahad kindlasti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="217"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa veebipaneel…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
@@ -3571,7 +3571,7 @@ Kas tahad kindlasti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="278"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Aadress paneelis näitamiseks:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
@@ -3614,22 +3614,22 @@ Kas tahad kindlasti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="84"/>
         <source>Failed to save file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud faili salvestada: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
         <source>Failed to save file.</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud faili salvestada.</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="349"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Ühtegi otsimootorit pole määratud</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="512"/>

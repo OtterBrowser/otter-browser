@@ -85,6 +85,7 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	if (isViewingMedia && match.captured().startsWith(QLatin1String("<img")))
 	{
 		settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
+		settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
 
 		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
 		file.open(QIODevice::ReadOnly);
