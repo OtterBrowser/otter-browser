@@ -34,6 +34,7 @@
 #include "ToolBarsManager.h"
 #include "Transfer.h"
 #include "TransfersManager.h"
+#include "UpdateChecker.h"
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
@@ -263,6 +264,14 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	if (SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool())
 	{
 		m_trayIcon = new TrayIcon(this);
+	}
+
+	const QDate lastUpdate = QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate);
+	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
+
+	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval)
+	{
+		new UpdateChecker(false, this);
 	}
 
 #ifdef Q_OS_WIN
