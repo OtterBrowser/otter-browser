@@ -69,6 +69,7 @@ private:
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
+	QHash<QString, int> m_blockedRequests;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;

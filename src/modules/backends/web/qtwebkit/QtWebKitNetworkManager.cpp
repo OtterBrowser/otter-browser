@@ -216,6 +216,7 @@ void QtWebKitNetworkManager::resetStatistics()
 
 	m_updateTimer = 0;
 	m_replies.clear();
+	m_blockedRequests.clear();
 	m_baseReply = NULL;
 	m_speed = 0;
 	m_bytesReceivedDifference = 0;
@@ -416,7 +417,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
 	}
 
-	++m_startedRequests;
+	const QString host = request.url().host();
 
 	if (!m_widget->isNavigating() && ContentBlockingManager::isUrlBlocked(m_widget->getContentBlockingProfiles(), request, m_widget->getUrl()))
 	{
@@ -425,8 +426,19 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		QUrl url = QUrl();
 		url.setScheme(QLatin1String("http"));
 
+		if (m_blockedRequests.contains(host))
+		{
+			++m_blockedRequests[host];
+		}
+		else
+		{
+			m_blockedRequests[host] = 1;
+		}
+
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
 	}
+
+	++m_startedRequests;
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
@@ -457,7 +469,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
 	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-	emit messageChanged(tr("Sending request to %1…").arg(request.url().host()));
+	emit messageChanged(tr("Sending request to %1…").arg(host));
 
 	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
 
