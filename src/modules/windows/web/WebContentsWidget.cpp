@@ -265,6 +265,8 @@ void WebContentsWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 {
+	Q_UNUSED(event)
+
 	if (m_scrollMode == DragScroll)
 	{
 		scrollContents(m_lastCursorPosition - QCursor::pos());
