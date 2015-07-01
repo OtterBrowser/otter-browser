@@ -148,7 +148,7 @@ signals:
 	void searchEngineChanged(const QString &engine);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
-	void urlChanged(const QUrl &url);
+	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
 	void loadingStateChanged(WindowLoadingState loading);
 	void zoomChanged(int zoom);

@@ -191,18 +191,9 @@ void Window::triggerAction(int identifier, bool checked)
 
 void Window::clear()
 {
-	if (!m_addressWidgets.isEmpty())
-	{
-		for (int i = 0; i < m_addressWidgets.count(); ++i)
-		{
-			if (m_addressWidgets.at(i))
-			{
-				m_addressWidgets.at(i)->clear();
-			}
-		}
-	}
-
 	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
+
+	emit urlChanged(getUrl(), true);
 }
 
 void Window::attachAddressWidget(AddressWidget *widget)
@@ -245,29 +236,9 @@ void Window::search(const QString &query, const QString &engine)
 		setContentsWidget(widget);
 	}
 
-	if (!m_addressWidgets.isEmpty())
-	{
-		for (int i = 0; i < m_addressWidgets.count(); ++i)
-		{
-			if (m_addressWidgets.at(i))
-			{
-				m_addressWidgets.at(i)->clearFocus();
-			}
-		}
-	}
-
 	widget->search(query, engine);
 
-	if (!m_addressWidgets.isEmpty())
-	{
-		for (int i = 0; i < m_addressWidgets.count(); ++i)
-		{
-			if (m_addressWidgets.at(i))
-			{
-				m_addressWidgets.at(i)->setUrl(getUrl());
-			}
-		}
-	}
+	emit urlChanged(getUrl(), true);
 }
 
 void Window::markActive()
@@ -403,15 +374,9 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (!m_addressWidgets.isEmpty() && m_session.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
+		if (m_session.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
-			for (int i = 0; i < m_addressWidgets.count(); ++i)
-			{
-				if (m_addressWidgets.at(i))
-				{
-					m_addressWidgets.at(i)->setUrl(m_contentsWidget ? m_contentsWidget->getUrl() : m_session.getUrl());
-				}
-			}
+			emit urlChanged(url, true);
 
 			return;
 		}
@@ -470,20 +435,9 @@ void Window::setUrl(const QUrl &url, bool typed)
 			m_contentsWidget->setUrl(url, typed);
 		}
 
-		if (!m_addressWidgets.isEmpty())
+		if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->isLoading())
 		{
-			for (int i = 0; i < m_addressWidgets.count(); ++i)
-			{
-				if (m_addressWidgets.at(i))
-				{
-					if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->isLoading())
-					{
-						m_addressWidgets.at(i)->clearFocus();
-					}
-
-					m_addressWidgets.at(i)->setUrl(url);
-				}
-			}
+			emit urlChanged(url, true);
 		}
 	}
 }

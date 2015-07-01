@@ -609,12 +609,12 @@ void AddressWidget::setText(const QString &text)
 	lineEdit()->setText(text);
 }
 
-void AddressWidget::setUrl(const QUrl &url)
+void AddressWidget::setUrl(const QUrl &url, bool force)
 {
 	updateBookmark();
 	updateFeeds();
 
-	if (!hasFocus() && url.scheme() != QLatin1String("javascript"))
+	if ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript"))
 	{
 		const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
@@ -635,7 +635,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 		disconnect(m_window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
-		disconnect(m_window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
+		disconnect(m_window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
 
@@ -660,7 +660,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
 		connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
-		connect(window, SIGNAL(urlChanged(QUrl)), this, SLOT(setUrl(QUrl)));
+		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 
 		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
 

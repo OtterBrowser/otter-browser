@@ -49,7 +49,7 @@ public:
 
 public slots:
 	void setText(const QString &text);
-	void setUrl(const QUrl &url);
+	void setUrl(const QUrl &url, bool force = false);
 	void setWindow(Window *window = NULL);
 
 protected:
