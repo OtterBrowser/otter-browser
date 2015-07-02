@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "FilePathWidget.h"
 #include "../core/FileSystemCompleterModel.h"
 
+#include <QtCore/QStandardPaths>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPushButton>
@@ -47,11 +48,6 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	connect(button, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 
-void FilePathWidget::setFilter(const QString &filter)
-{
-	m_filter = filter;
-}
-
 void FilePathWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
@@ -61,7 +57,8 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 
 void FilePathWidget::selectPath()
 {
-	const QString path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), m_lineEdit->text(), m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_lineEdit->text()));
+	QString path = (m_lineEdit->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEdit->text());
+	path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
 
 	if (!path.isEmpty())
 	{
@@ -85,6 +82,11 @@ void FilePathWidget::updateCompleter()
 
 		disconnect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
 	}
+}
+
+void FilePathWidget::setFilter(const QString &filter)
+{
+	m_filter = filter;
 }
 
 void FilePathWidget::setSelectFile(bool mode)
