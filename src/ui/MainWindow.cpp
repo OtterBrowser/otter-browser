@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +48,7 @@
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
+#include "../core/UpdateChecker.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
 
@@ -737,6 +739,10 @@ void MainWindow::triggerAction(int identifier, bool checked)
 				LocaleDialog dialog(this);
 				dialog.exec();
 			}
+
+			break;
+		case ActionsManager::CheckForUpdatesAction:
+			new UpdateChecker(true, this);
 
 			break;
 		case ActionsManager::AboutApplicationAction:

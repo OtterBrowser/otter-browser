@@ -269,7 +269,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	const QDate lastUpdate = QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate);
 	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
 
-	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).isNull())
+	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toString().isEmpty())
 	{
 		new UpdateChecker(false, this);
 	}

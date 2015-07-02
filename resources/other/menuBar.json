@@ -164,6 +164,7 @@
 		"actions":
 		[
 			"SwitchApplicationLanguage",
+			"CheckForUpdates",
 			"separator",
 			"AboutApplication",
 			"AboutQt"
