@@ -613,7 +613,7 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 			}
 			else
 			{
-				emit requestedPermission(option, frame->url(), false);
+				emit requestedPermission(option, frame->requestedUrl(), false);
 			}
 		}
 	}
@@ -1526,7 +1526,7 @@ void QtWebKitWebWidget::setPermission(const QString &key, const QUrl &url, WebWi
 	{
 		QWebFrame *frame = frames.takeFirst();
 
-		if (frame->url() == url)
+		if (frame->requestedUrl() == url)
 		{
 			m_page->setFeaturePermission(frame, feature, (policies.testFlag(GrantedPermission) ? QWebPage::PermissionGrantedByUser : QWebPage::PermissionDeniedByUser));
 		}
