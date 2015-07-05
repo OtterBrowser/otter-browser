@@ -690,6 +690,10 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QNe
 				isBlocked = true;
 			}
 		}
+		else
+		{
+			isBlocked = true;
+		}
 
 		if (isBlocked)
 		{
