@@ -455,14 +455,14 @@ void SearchWidget::setSearchEngine(const QString &engine)
 
 void SearchWidget::setWindow(Window *window)
 {
-	if (m_window)
+	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{
 		m_window->detachSearchWidget(this);
 
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
-		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window, SLOT(setSearchEngine(QString)));
-		disconnect(m_window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
-		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window.data(), SLOT(setSearchEngine(QString)));
+		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
+		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 
 		setSearchEngine();
 	}
@@ -478,7 +478,7 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
-		connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 	}
 	else
 	{

@@ -69,7 +69,7 @@ protected slots:
 	void restoreCurrentSearchEngine();
 
 private:
-	Window *m_window;
+	QPointer<Window> m_window;
 	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;

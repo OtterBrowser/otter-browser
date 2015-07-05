@@ -77,7 +77,7 @@ protected slots:
 	void setIcon(const QIcon &icon);
 
 private:
-	Window *m_window;
+	QPointer<Window> m_window;
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;

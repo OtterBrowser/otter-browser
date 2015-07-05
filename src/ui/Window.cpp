@@ -193,12 +193,17 @@ void Window::clear()
 {
 	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
 
+	m_isAboutToClose = false;
+
 	emit urlChanged(getUrl(), true);
 }
 
 void Window::attachAddressWidget(AddressWidget *widget)
 {
-	m_addressWidgets.append(widget);
+	if (!m_addressWidgets.contains(widget))
+	{
+		m_addressWidgets.append(widget);
+	}
 }
 
 void Window::detachAddressWidget(AddressWidget *widget)
@@ -208,7 +213,10 @@ void Window::detachAddressWidget(AddressWidget *widget)
 
 void Window::attachSearchWidget(SearchWidget *widget)
 {
-	m_searchWidgets.append(widget);
+	if (!m_searchWidgets.contains(widget))
+	{
+		m_searchWidgets.append(widget);
+	}
 }
 
 void Window::detachSearchWidget(SearchWidget *widget)

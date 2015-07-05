@@ -627,17 +627,17 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 
 void AddressWidget::setWindow(Window *window)
 {
-	if (m_window && !m_window->isAboutToClose())
+	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{
 		m_window->detachAddressWidget(this);
 
-		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
-		disconnect(m_window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
-		disconnect(m_window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
-		disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		disconnect(m_window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
+		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
+		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 
 		if (m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
 		{
