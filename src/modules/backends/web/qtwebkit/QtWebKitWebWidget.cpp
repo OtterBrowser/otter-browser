@@ -2156,7 +2156,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent)
 			{
-				return handleMouseDoubleClickEvent(mouseEvent, true);
+				return handleMouseDoubleClickEvent(mouseEvent, false);
 			}
 		}
 		else if (event->type() == QEvent::MouseMove)
