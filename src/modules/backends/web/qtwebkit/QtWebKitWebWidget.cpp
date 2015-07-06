@@ -1832,7 +1832,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	QWebElement parentElement = nativeResult.element().parent();
 	const bool isSubmit = ((result.tagName == QLatin1String("input") || result.tagName == QLatin1String("button")) && (nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("submit") || nativeResult.element().attribute(QLatin1String("type")).toLower() == QLatin1String("image")));
 
-	if (isSubmit)
+	if (isSubmit || result.tagName == QLatin1String("input") || result.tagName == QLatin1String("select") || result.tagName == QLatin1String("textarea"))
 	{
 		while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 		{
@@ -1848,7 +1848,10 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 				result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
 			}
 
-			result.flags |= IsFormTest;
+			if (parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).count() > 0)
+			{
+				result.flags |= IsFormTest;
+			}
 		}
 	}
 
