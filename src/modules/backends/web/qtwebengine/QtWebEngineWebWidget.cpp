@@ -956,7 +956,7 @@ void QtWebEngineWebWidget::notifyUrlChanged(const QUrl &url)
 	m_icon = QIcon();
 
 	emit iconChanged(getIcon());
-	emit urlChanged(url);
+	emit urlChanged((url.toString() == QLatin1String("about:blank")) ? m_webView->page()->requestedUrl() : url);
 
 	SessionsManager::markSessionModified();
 }
@@ -1323,7 +1323,7 @@ QUrl QtWebEngineWebWidget::getUrl() const
 {
 	const QUrl url = m_webView->url();
 
-	return (url.isEmpty() ? m_webView->page()->requestedUrl() : url);
+	return ((url.isEmpty() || url.toString() == QLatin1String("about:blank")) ? m_webView->page()->requestedUrl() : url);
 }
 
 QIcon QtWebEngineWebWidget::getIcon() const
