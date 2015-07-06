@@ -175,7 +175,19 @@ SessionInformation StartupDialog::getSession() const
 	else
 	{
 		WindowHistoryEntry entry;
-		entry.url = (m_ui->homePageButton->isChecked() ? SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString() : QString());
+
+		if (m_ui->homePageButton->isChecked())
+		{
+			entry.url = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+		}
+		else if (m_ui->startPageRadioButton->isChecked())
+		{
+			entry.url = QLatin1String("about:start");
+		}
+		else
+		{
+			entry.url = QLatin1String("about:blank");
+		}
 
 		SessionWindow tab;
 		tab.history.append(entry);

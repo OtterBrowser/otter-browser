@@ -25,7 +25,6 @@
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/SourceViewerWebWidget.h"
@@ -564,7 +563,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		return;
 	}
 
-	const bool showStartPage = ((url == QUrl(QLatin1String("about:start"))) || (Utils::isUrlEmpty(url) && m_showStartPage));
+	const bool showStartPage = ((url.isEmpty() && m_showStartPage) || url == QUrl(QLatin1String("about:start")));
 
 	if (showStartPage && !m_startPageWidget)
 	{

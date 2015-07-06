@@ -90,10 +90,26 @@ int main(int argc, char *argv[])
 
 		SessionsManager::restoreSession(dialog.getSession(), NULL, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("startHomePage") || startupBehavior == QLatin1String("startEmpty"))
+	else if (startupBehavior == QLatin1String("continuePrevious"))
+	{
+		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), NULL, isPrivate);
+	}
+	else
 	{
 		WindowHistoryEntry entry;
-		entry.url = ((startupBehavior == QLatin1String("startHomePage")) ? SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString() : QString());
+
+		if (startupBehavior == QLatin1String("startHomePage"))
+		{
+			entry.url = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+		}
+		else if (startupBehavior == QLatin1String("startStartPage"))
+		{
+			entry.url = QLatin1String("about:start");
+		}
+		else
+		{
+			entry.url = QLatin1String("about:blank");
+		}
 
 		SessionWindow tab;
 		tab.history.append(entry);
@@ -109,10 +125,6 @@ int main(int argc, char *argv[])
 		sessionData.index = 0;
 
 		SessionsManager::restoreSession(sessionData, NULL, isPrivate);
-	}
-	else
-	{
-		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), NULL, isPrivate);
 	}
 
 	if (!application.getCommandLineParser()->positionalArguments().isEmpty())

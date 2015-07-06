@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Welcome to Otter</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0">
    <item>
     <widget class="QLabel" name="headerLabel">
      <property name="font">
@@ -102,6 +102,16 @@
     <widget class="QRadioButton" name="homePageButton">
      <property name="text">
       <string>Begin with home page</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="startPageRadioButton">
+     <property name="text">
+      <string>Begin with start page</string>
      </property>
      <attribute name="buttonGroup">
       <string notr="true">buttonGroup</string>
