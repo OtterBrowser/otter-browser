@@ -322,13 +322,13 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
 
-win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h \
+win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
 
-unix: HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h
+unix: HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h \
     3rdparty/libmimeapps/ConfigReader.h \
     3rdparty/libmimeapps/DesktopEntry.h \
-    3rdparty/libmimeapps/Index.h
-    3rdparty/libmimeapps/Tools.h \
+    3rdparty/libmimeapps/Index.h \
+    3rdparty/libmimeapps/Tools.h
 
 FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/AuthenticationDialog.ui \
