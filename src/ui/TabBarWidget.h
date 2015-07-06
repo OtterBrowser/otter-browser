@@ -86,6 +86,7 @@ private:
 	QTabBar::ButtonPosition m_closeButtonPosition;
 	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
+	int m_maximumTabSize;
 	int m_minimumTabSize;
 	int m_pinnedTabsAmount;
 	int m_clickedTab;

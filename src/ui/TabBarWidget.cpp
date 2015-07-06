@@ -48,7 +48,8 @@ namespace Otter
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
 	m_tabSize(0),
-	m_minimumTabSize(40),
+	m_maximumTabSize(40),
+	m_minimumTabSize(250),
 	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
@@ -75,6 +76,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
 	optionChanged(QLatin1String("TabBar/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")));
 	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
+	optionChanged(QLatin1String("TabBar/MaximumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MaximumTabSize")));
 	optionChanged(QLatin1String("TabBar/MinimumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MinimumTabSize")));
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
@@ -592,9 +594,39 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	{
 		m_enablePreviews = value.toBool();
 	}
-	else if (option == QLatin1String("TabBar/MinimumTabSize"))
+	else if (option == QLatin1String("TabBar/MaximumTabSize"))
 	{
+		const int oldValue = m_maximumTabSize;
+
+		m_maximumTabSize = value.toInt();
+
+		if (m_maximumTabSize < 0)
+		{
+			m_maximumTabSize = 250;
+		}
+
+		if (m_maximumTabSize != oldValue)
+		{
+			updateGeometry();
+			updateTabs();
+		}
+	}
+	else if (option == QLatin1String("TabBar/MinimumTabSize") && value.toInt() != m_minimumTabSize)
+	{
+		const int oldValue = m_minimumTabSize;
+
 		m_minimumTabSize = value.toInt();
+
+		if (m_minimumTabSize < 0)
+		{
+			m_minimumTabSize = 40;
+		}
+
+		if (m_minimumTabSize != oldValue)
+		{
+			updateGeometry();
+			updateTabs();
+		}
 	}
 }
 
@@ -607,7 +639,7 @@ void TabBarWidget::currentTabChanged(int index)
 		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
 	}
 
-	if (tabsClosable())
+	if (m_showCloseButton)
 	{
 		updateButtons();
 	}
@@ -862,10 +894,10 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	{
 		const int amount = getPinnedTabsAmount();
 
-		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), 250)), QTabBar::tabSizeHint(0).height());
+		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), m_maximumTabSize)), QTabBar::tabSizeHint(0).height());
 	}
 
-	return QSize(250, QTabBar::tabSizeHint(0).height());
+	return QSize(m_maximumTabSize, QTabBar::tabSizeHint(0).height());
 }
 
 QSize TabBarWidget::minimumSizeHint() const
@@ -881,7 +913,7 @@ QSize TabBarWidget::sizeHint() const
 
 		for (int i = 0; i < count(); ++i)
 		{
-			size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : 250);
+			size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : m_maximumTabSize);
 		}
 
 		return QSize(size, QTabBar::sizeHint().height());
