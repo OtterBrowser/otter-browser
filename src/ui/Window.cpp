@@ -78,16 +78,6 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	connect(this, SIGNAL(iconChanged(QIcon)), this, SLOT(handleIconChanged(QIcon)));
 }
 
-void Window::showEvent(QShowEvent *event)
-{
-	QWidget::showEvent(event);
-
-	if (!m_contentsWidget)
-	{
-		setUrl(m_session.getUrl(), false);
-	}
-}
-
 void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
@@ -251,6 +241,11 @@ void Window::search(const QString &query, const QString &engine)
 
 void Window::markActive()
 {
+	if (!m_contentsWidget)
+	{
+		setUrl(m_session.getUrl(), false);
+	}
+
 	m_lastActivity = QDateTime::currentDateTime();
 }
 
@@ -332,7 +327,11 @@ void Window::setSession(const SessionWindow &session)
 	setSearchEngine(session.searchEngine);
 	setPinned(session.isPinned);
 
-	if (!SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
+	if (SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
+	{
+		setWindowTitle(session.getTitle());
+	}
+	else
 	{
 		setUrl(session.getUrl(), false);
 	}

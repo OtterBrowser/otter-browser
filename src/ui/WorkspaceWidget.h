@@ -69,9 +69,11 @@ public:
 
 public slots:
 	void triggerAction(int identifier, bool checked = false);
+	void markRestored();
 	void updateActions();
 
 protected:
+	void timerEvent(QTimerEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
@@ -80,6 +82,8 @@ protected slots:
 private:
 	MdiWidget *m_mdi;
 	QPointer<Window> m_activeWindow;
+	int m_restoreTimer;
+	bool m_isRestored;
 };
 
 }

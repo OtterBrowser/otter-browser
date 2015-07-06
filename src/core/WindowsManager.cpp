@@ -374,6 +374,8 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
 	setActiveWindowByIndex(session.index);
+
+	m_mainWindow->getWorkspace()->markRestored();
 }
 
 void WindowsManager::restore(int index)

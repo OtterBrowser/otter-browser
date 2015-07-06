@@ -220,7 +220,7 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 
 	QTabBar::mousePressEvent(event);
 
-	if (event->button() == Qt::MidButton)
+	if (event->button() == Qt::MiddleButton)
 	{
 		const int tab = tabAt(event->pos());
 

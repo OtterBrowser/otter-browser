@@ -148,7 +148,9 @@ void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_mdi(NULL),
-	m_activeWindow(NULL)
+	m_activeWindow(NULL),
+	m_restoreTimer(0),
+	m_isRestored(false)
 {
 	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
 	{
@@ -159,6 +161,16 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->setSpacing(0);
 		layout->addWidget(m_mdi);
+	}
+}
+
+void WorkspaceWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_restoreTimer)
+	{
+		killTimer(m_restoreTimer);
+
+		m_restoreTimer = 0;
 
 		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 	}
@@ -274,6 +286,13 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 	}
 }
 
+void WorkspaceWidget::markRestored()
+{
+	m_isRestored = true;
+
+	m_restoreTimer = startTimer(250);
+}
+
 void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
 {
 	if (window)
@@ -341,7 +360,10 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 				m_mdi->setActiveSubWindow(activeWindow);
 			}
 
-			connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+			if (m_isRestored)
+			{
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+			}
 
 			updateActions();
 

@@ -106,7 +106,6 @@ public slots:
 	void setPinned(bool pinned);
 
 protected:
-	void showEvent(QShowEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void setContentsWidget(ContentsWidget *widget);
 
