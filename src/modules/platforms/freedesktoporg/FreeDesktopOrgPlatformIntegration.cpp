@@ -23,10 +23,10 @@
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
 #include "../../../../3rdparty/libmimeapps/DesktopEntry.h"
 #include "../../../../3rdparty/libmimeapps/Index.h"
 
+#include <QtConcurrent/QtConcurrent>
 #include <QtDBus/QtDBus>
 #include <QtDBus/QDBusReply>
 #include <QtGui/QDesktopServices>
@@ -102,6 +102,8 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(notificationIgnored(quint32,quint32)));
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(notificationClicked(quint32,QString)));
+
+	QTimer::singleShot(250, this, SLOT(createApplicationsCacheThread()));
 }
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
@@ -123,7 +125,7 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 
 	QStringList arguments;
 
-	for (int i = 1; i < parsed.size(); ++i)
+	for (std::vector<std::string>::size_type i = 1; i < parsed.size(); ++i)
 	{
 		arguments.append(QString::fromStdString(parsed.at(i)));
 	}
@@ -131,23 +133,14 @@ void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, c
 	QProcess::startDetached(QString::fromStdString(parsed.at(0)), arguments);
 }
 
-QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+void FreeDesktopOrgPlatformIntegration::createApplicationsCache()
 {
-	LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
-	std::vector<LibMimeApps::DesktopEntry> applications = index.appsForMime(mimeType.name().toStdString());
-	QList<ApplicationInformation> result;
+	m_applicationsCache[QLatin1String("text/html")] = getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
+}
 
-	for (int i = 0; i < applications.size(); ++i)
-	{
-		ApplicationInformation application;
-		application.command = QString::fromStdString(applications.at(i).executable());
-		application.name = QString::fromStdString(applications.at(i).name());
-		application.icon = QIcon::fromTheme(QString::fromStdString(applications.at(i).icon()));
-
-		result.append(application);
-	}
-
-	return result;
+void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
+{
+	QtConcurrent::run(this, &FreeDesktopOrgPlatformIntegration::createApplicationsCache);
 }
 
 void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)
@@ -230,6 +223,32 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	m_notificationWatchers[watcher] = notification;
 
 	connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(notificationCallFinished(QDBusPendingCallWatcher*)));
+}
+
+QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
+{
+	if (m_applicationsCache.contains(mimeType.name()))
+	{
+		return m_applicationsCache[mimeType.name()];
+	}
+
+	LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
+	std::vector<LibMimeApps::DesktopEntry> applications = index.appsForMime(mimeType.name().toStdString());
+	QList<ApplicationInformation> result;
+
+	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < applications.size(); ++i)
+	{
+		ApplicationInformation application;
+		application.command = QString::fromStdString(applications.at(i).executable());
+		application.name = QString::fromStdString(applications.at(i).name());
+		application.icon = QIcon::fromTheme(QString::fromStdString(applications.at(i).icon()));
+
+		result.append(application);
+	}
+
+	m_applicationsCache[mimeType.name()] = result;
+
+	return result;
 }
 
 bool FreeDesktopOrgPlatformIntegration::canShowNotifications() const

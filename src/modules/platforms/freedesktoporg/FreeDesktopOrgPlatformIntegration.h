@@ -22,6 +22,7 @@
 #ifndef OTTER_FREEDESKTOPORGPLATFORMINTEGRATION_H
 #define OTTER_FREEDESKTOPORGPLATFORMINTEGRATION_H
 
+#include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
 #include <QtDBus/QDBusArgument>
@@ -49,6 +50,8 @@ public slots:
 	void showNotification(Notification *notification);
 
 protected slots:
+	void createApplicationsCache();
+	void createApplicationsCacheThread();
 	void notificationCallFinished(QDBusPendingCallWatcher *watcher);
 	void notificationIgnored(quint32 identifier, quint32 reason);
 	void notificationClicked(quint32 identifier, const QString &action);
@@ -57,6 +60,7 @@ private:
 	QDBusInterface *m_notificationsInterface;
 	QHash<QDBusPendingCallWatcher*, Notification*> m_notificationWatchers;
 	QHash<quint32, Notification*> m_notifications;
+	QHash<QString, QList<ApplicationInformation> > m_applicationsCache;
 };
 
 }
