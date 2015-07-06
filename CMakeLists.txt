@@ -219,10 +219,6 @@ set(otter_src
 	src/modules/windows/web/StartPageWidget.cpp
 	src/modules/windows/web/TileDelegate.cpp
 	src/modules/windows/web/WebContentsWidget.cpp
-	3rdparty/libmimeapps/ConfigReader.cpp
-	3rdparty/libmimeapps/DesktopEntry.cpp
-	3rdparty/libmimeapps/Index.cpp
-	3rdparty/libmimeapps/Tools.cpp
 	3rdparty/mousegestures/MouseGestures.cpp
 )
 
@@ -318,6 +314,10 @@ elseif (UNIX)
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
+		3rdparty/libmimeapps/ConfigReader.cpp
+		3rdparty/libmimeapps/DesktopEntry.cpp
+		3rdparty/libmimeapps/Index.cpp
+		3rdparty/libmimeapps/Tools.cpp
 	)
 endif (WIN32)
 
