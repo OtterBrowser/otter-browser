@@ -20,11 +20,6 @@ if (element)
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 
-	if (element.isContentEditable)
-	{
-		result.flags |= 1;
-	}
-
 	if (window.getSelection().containsNode(element, true))
 	{
 		result.flags |= 8;
@@ -78,17 +73,26 @@ if (element)
 		result.mediaUrl = link.href;
 	}
 
-	if (result.tagName == 'textarea' || (result.tagName == 'input' && element.type && (element.type == 'text' || element.type == 'search')))
+	if (result.tagName == 'textarea' || result.tagName == 'input')
 	{
-		if (!(result.flags & 1) && !element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
-		{
-			result.flags |= 1;
-		}
+		var type = (element.type ? element.type.toLowerCase() : '');
 
-		if (!element.value || element.value == '')
+		if (type == '' || result.tagName == 'textarea' || type == 'text' || type == 'search')
 		{
-			result.flags |= 2;
+			if (!element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
+			{
+				result.flags |= 1;
+			}
+
+			if (!element.value || element.value == '')
+			{
+				result.flags |= 2;
+			}
 		}
+	}
+	else if (element.isContentEditable)
+	{
+		result.flags |= 1;
 	}
 
 	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'search')));

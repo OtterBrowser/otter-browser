@@ -582,25 +582,26 @@ void WebWidget::updateNavigationActions()
 void WebWidget::updateEditActions()
 {
 	const bool canPaste = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_actions.contains(ActionsManager::CutAction))
 	{
-		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
+		m_actions[ActionsManager::CutAction]->setEnabled(hasSelection && m_hitResult.flags.testFlag(IsContentEditableTest));
 	}
 
 	if (m_actions.contains(ActionsManager::CopyAction))
 	{
-		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection());
+		m_actions[ActionsManager::CopyAction]->setEnabled(hasSelection);
 	}
 
 	if (m_actions.contains(ActionsManager::CopyPlainTextAction))
 	{
-		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection());
+		m_actions[ActionsManager::CopyPlainTextAction]->setEnabled(hasSelection);
 	}
 
 	if (m_actions.contains(ActionsManager::CopyToNoteAction))
 	{
-		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection());
+		m_actions[ActionsManager::CopyToNoteAction]->setEnabled(hasSelection);
 	}
 
 	if (m_actions.contains(ActionsManager::PasteAction))
@@ -620,12 +621,12 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::DeleteAction))
 	{
-		m_actions[ActionsManager::DeleteAction]->setEnabled(hasSelection() && m_hitResult.flags.testFlag(IsContentEditableTest));
+		m_actions[ActionsManager::DeleteAction]->setEnabled(m_hitResult.flags.testFlag(IsContentEditableTest) && !m_hitResult.flags.testFlag(IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::SelectAllAction))
 	{
-		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsContentEditableTest) || !m_hitResult.flags.testFlag(IsEmptyTest));
+		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsEmptyTest));
 	}
 
 	if (m_actions.contains(ActionsManager::ClearAllAction))
