@@ -205,6 +205,8 @@ protected slots:
 	void triggerAction();
 	void pasteNote(QAction *action);
 	void reloadTimeMenuAboutToShow();
+	void openInApplication(QAction *action);
+	void openInApplicationMenuAboutToShow();
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void updateQuickSearch();
@@ -222,6 +224,9 @@ protected slots:
 private:
 	WebBackend *m_backend;
 	Menu *m_pasteNoteMenu;
+	QMenu *m_linkApplicationsMenu;
+	QMenu *m_frameApplicationsMenu;
+	QMenu *m_pageApplicationsMenu;
 	QMenu *m_reloadTimeMenu;
 	QMenu *m_quickSearchMenu;
 	QUrl m_requestedUrl;

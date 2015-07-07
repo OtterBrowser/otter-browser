@@ -137,6 +137,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
 		case ActionsManager::OpenLinkInNewWindowAction:
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+		case ActionsManager::OpenLinkInApplicationAction:
 		case ActionsManager::CopyLinkToClipboardAction:
 		case ActionsManager::BookmarkLinkAction:
 		case ActionsManager::SaveLinkToDiskAction:
@@ -145,6 +146,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
+		case ActionsManager::OpenFrameInApplicationAction:
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 		case ActionsManager::ReloadFrameAction:
 		case ActionsManager::ViewFrameSourceAction:
@@ -219,6 +221,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::ProxyMenuAction:
 		case ActionsManager::EnableProxyAction:
 		case ActionsManager::ViewSourceAction:
+		case ActionsManager::OpenPageInApplicationAction:
 		case ActionsManager::ValidateAction:
 		case ActionsManager::InspectPageAction:
 		case ActionsManager::InspectElementAction:
@@ -292,6 +295,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenLinkInNewPrivateTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Tab"));
 	registerAction(OpenLinkInNewPrivateWindowAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Window"));
 	registerAction(OpenLinkInNewPrivateWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Window"));
+	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open link with external application"));
 	registerAction(CopyLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Link to Clipboard"));
 	registerAction(BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(SaveLinkToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Link Target As…"));
@@ -300,6 +304,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenFrameInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open"), QT_TRANSLATE_NOOP("actions", "Open Frame in This Tab"));
 	registerAction(OpenFrameInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Tab"));
 	registerAction(OpenFrameInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Background Tab"));
+	registerAction(OpenFrameInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open frame with external application"));
 	registerAction(CopyFrameLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Frame Link to Clipboard"));
 	registerAction(ReloadFrameAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload Frame"));
 	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Frame Source"));
@@ -388,6 +393,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
 	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), true, true, true);
 	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), true, false, false);
+	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open current page with external application"));
 	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
 	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false);
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));

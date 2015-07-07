@@ -32,6 +32,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QMimeData>
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
 #include <QtCore/QUrl>
 #include <QtGui/QClipboard>
@@ -47,6 +48,9 @@ namespace Otter
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
 	m_pasteNoteMenu(NULL),
+	m_linkApplicationsMenu(NULL),
+	m_frameApplicationsMenu(NULL),
+	m_pageApplicationsMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
 	m_reloadTimer(0),
@@ -151,6 +155,55 @@ void WebWidget::reloadTimeMenuAboutToShow()
 
 			break;
 	}
+}
+
+void WebWidget::openInApplication(QAction *action)
+{
+	QObject *menu = sender();
+
+	if (menu == m_pageApplicationsMenu)
+	{
+		Utils::runApplication(action->data().toString(), getUrl().url());
+	}
+	else if (menu == m_linkApplicationsMenu && m_hitResult.linkUrl.isValid())
+	{
+		Utils::runApplication(action->data().toString(), m_hitResult.linkUrl.url());
+	}
+	else if (menu == m_frameApplicationsMenu && m_hitResult.frameUrl.isValid())
+	{
+		Utils::runApplication(action->data().toString(), m_hitResult.frameUrl.url());
+	}
+}
+
+void WebWidget::openInApplicationMenuAboutToShow()
+{
+	QMenu *menu = qobject_cast<QMenu*>(sender());
+
+	if (!menu || !menu->actions().isEmpty())
+	{
+		return;
+	}
+
+	const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
+
+	if (applications.isEmpty())
+	{
+		menu->addAction(tr("Default Application"));
+	}
+	else
+	{
+		for (int i = 0; i < applications.count(); ++i)
+		{
+			menu->addAction(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name))->setData(applications.at(i).command);
+
+			if (i == 0)
+			{
+				menu->addSeparator();
+			}
+		}
+	}
+
+	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(openInApplication(QAction*)));
 }
 
 void WebWidget::quickSearch(QAction *action)
@@ -711,6 +764,11 @@ void WebWidget::updateLinkActions()
 		m_actions[ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction]->setEnabled(isLink);
 	}
 
+	if (m_actions.contains(ActionsManager::OpenLinkInApplicationAction))
+	{
+		m_actions[ActionsManager::OpenLinkInApplicationAction]->setEnabled(isLink);
+	}
+
 	if (m_actions.contains(ActionsManager::CopyLinkToClipboardAction))
 	{
 		m_actions[ActionsManager::CopyLinkToClipboardAction]->setEnabled(isLink);
@@ -750,6 +808,11 @@ void WebWidget::updateFrameActions()
 	if (m_actions.contains(ActionsManager::OpenFrameInNewTabBackgroundAction))
 	{
 		m_actions[ActionsManager::OpenFrameInNewTabBackgroundAction]->setEnabled(isFrame);
+	}
+
+	if (m_actions.contains(ActionsManager::OpenFrameInApplicationAction))
+	{
+		m_actions[ActionsManager::OpenFrameInApplicationAction]->setEnabled(isFrame);
 	}
 
 	if (m_actions.contains(ActionsManager::CopyFrameLinkToClipboardAction))
@@ -1134,6 +1197,16 @@ Action* WebWidget::getAction(int identifier)
 			updateEditActions();
 
 			break;
+		case ActionsManager::OpenLinkInApplicationAction:
+			if (!m_linkApplicationsMenu)
+			{
+				m_linkApplicationsMenu = new QMenu(this);
+
+				action->setMenu(m_linkApplicationsMenu);
+
+				connect(m_linkApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+			}
+
 		case ActionsManager::OpenLinkAction:
 		case ActionsManager::OpenLinkInCurrentTabAction:
 		case ActionsManager::OpenLinkInNewTabAction:
@@ -1151,6 +1224,16 @@ Action* WebWidget::getAction(int identifier)
 			updateLinkActions();
 
 			break;
+		case ActionsManager::OpenFrameInApplicationAction:
+			if (!m_frameApplicationsMenu)
+			{
+				m_frameApplicationsMenu = new QMenu(this);
+
+				action->setMenu(m_frameApplicationsMenu);
+
+				connect(m_frameApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+			}
+
 		case ActionsManager::OpenFrameInCurrentTabAction:
 		case ActionsManager::OpenFrameInNewTabAction:
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
@@ -1177,6 +1260,17 @@ Action* WebWidget::getAction(int identifier)
 		case ActionsManager::MediaPlayPauseAction:
 		case ActionsManager::MediaMuteAction:
 			updateMediaActions();
+
+			break;
+		case ActionsManager::OpenPageInApplicationAction:
+			if (!m_pageApplicationsMenu)
+			{
+				m_pageApplicationsMenu = new QMenu(this);
+
+				action->setMenu(m_pageApplicationsMenu);
+
+				connect(m_pageApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+			}
 
 			break;
 		default:
