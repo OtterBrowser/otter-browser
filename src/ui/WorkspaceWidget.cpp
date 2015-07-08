@@ -290,7 +290,10 @@ void WorkspaceWidget::markRestored()
 {
 	m_isRestored = true;
 
-	m_restoreTimer = startTimer(250);
+	if (m_mdi)
+	{
+		m_restoreTimer = startTimer(250);
+	}
 }
 
 void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop)
