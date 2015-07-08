@@ -306,6 +306,7 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2015 Otter Browser Team. All rights reserved.")
 	set(otter_src
 		${otter_src}
+		src/modules/platforms/mac/MacPlatformIntegration.mm
 		resources/icons/otter-browser.icns
 	)
 
@@ -335,6 +336,10 @@ if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)
 
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
+elseif (APPLE)
+	find_library(FRAMEWORK_Foundation Foundation)
+
+	target_link_libraries(otter-browser ${FRAMEWORK_Foundation})
 elseif (UNIX)
 	qt5_use_modules(otter-browser DBus)
 endif (WIN32)

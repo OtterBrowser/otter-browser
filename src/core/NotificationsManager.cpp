@@ -38,6 +38,7 @@ QVector<EventDefinition> NotificationsManager::m_definitions;
 
 Notification::Notification(const QString &message, NotificationLevel level, int event, QObject *parent) : QObject(parent),
 	m_message(message),
+	m_creationTime(QDateTime::currentDateTime()),
 	m_level(level),
 	m_event(event)
 {
@@ -60,6 +61,11 @@ void Notification::markIgnored()
 QString Notification::getMessage() const
 {
 	return m_message;
+}
+
+QDateTime Notification::getCreationTime() const
+{
+	return m_creationTime;
 }
 
 Notification::NotificationLevel Notification::getLevel() const

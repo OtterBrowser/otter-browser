@@ -4,6 +4,10 @@
 #
 #-------------------------------------------------
 
+OTTER_VERSION_MAIN = 0.9.07
+OTTER_VERSION_WEEKLY = ""
+OTTER_VERSION_CONTEXT = -dev
+
 message("otter.pro is deprecated, use CMake instead.")
 
 !greaterThan(QT_MAJOR_VERSION, 4) | !greaterThan(QT_MINOR_VERSION, 1) {
@@ -12,15 +16,49 @@ message("otter.pro is deprecated, use CMake instead.")
 
 QT += core gui multimedia network printsupport script sql webkitwidgets widgets
 
-win32: QT += winextras
-win32: LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
-win32: INCLUDEPATH += .\
-unix: INCLUDEPATH += ./
-unix: QT += dbus
+configHeader.input = config.h.qmake
+configHeader.output = config.h
+QMAKE_SUBSTITUTES += configHeader
 
-OTTER_VERSION_MAIN = 0.9.07
-OTTER_VERSION_WEEKLY = ""
-OTTER_VERSION_CONTEXT = -dev
+win32: {
+    QT += winextras
+
+    LIBS += -lOle32 -lshell32 -ladvapi32 -luser32
+
+    INCLUDEPATH += .\
+
+    SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
+
+    HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
+}
+
+macx: {
+    LIBS += -framework Foundation
+
+    OBJECTIVE_SOURCES += src/modules/platforms/mac/MacPlatformIntegration.mm
+
+    HEADERS += src/modules/platforms/mac/MacPlatformIntegration.h
+}
+
+unix: {
+    QT += dbus
+
+    INCLUDEPATH += ./
+
+   !macx {
+        SOURCES += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp \
+        3rdparty/libmimeapps/ConfigReader.cpp \
+        3rdparty/libmimeapps/DesktopEntry.cpp \
+        3rdparty/libmimeapps/Index.cpp \
+        3rdparty/libmimeapps/Tools.cpp
+
+        HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h \
+        3rdparty/libmimeapps/ConfigReader.h \
+        3rdparty/libmimeapps/DesktopEntry.h \
+        3rdparty/libmimeapps/Index.h \
+        3rdparty/libmimeapps/Tools.h
+    }
+}
 
 isEmpty(PREFIX): PREFIX = /usr/local
 
@@ -28,10 +66,6 @@ TARGET = otter-browser
 TARGET.path = $$PREFIX/
 
 TEMPLATE = app
-
-configHeader.input = config.h.qmake
-configHeader.output = config.h
-QMAKE_SUBSTITUTES += configHeader
 
 SOURCES += src/main.cpp \
     src/core/ActionsManager.cpp \
@@ -174,14 +208,6 @@ SOURCES += src/main.cpp \
     src/modules/windows/web/WebContentsWidget.cpp \
     3rdparty/mousegestures/MouseGestures.cpp
 
-win32: SOURCES += src/modules/platforms/windows/WindowsPlatformIntegration.cpp
-
-unix: SOURCES += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp \
-    3rdparty/libmimeapps/ConfigReader.cpp \
-    3rdparty/libmimeapps/DesktopEntry.cpp \
-    3rdparty/libmimeapps/Index.cpp \
-    3rdparty/libmimeapps/Tools.cpp
-
 HEADERS += src/core/ActionsManager.h \
     src/core/Addon.h \
     src/core/AddonsManager.h \
@@ -321,14 +347,6 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/web/TileDelegate.h \
     src/modules/windows/web/WebContentsWidget.h \
     3rdparty/mousegestures/MouseGestures.h
-
-win32: HEADERS += src/modules/platforms/windows/WindowsPlatformIntegration.h
-
-unix: HEADERS += src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.h \
-    3rdparty/libmimeapps/ConfigReader.h \
-    3rdparty/libmimeapps/DesktopEntry.h \
-    3rdparty/libmimeapps/Index.h \
-    3rdparty/libmimeapps/Tools.h
 
 FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/AuthenticationDialog.ui \

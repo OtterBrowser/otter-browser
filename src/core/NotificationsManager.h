@@ -20,6 +20,7 @@
 #ifndef OTTER_NOTIFICATIONSMANAGER_H
 #define OTTER_NOTIFICATIONSMANAGER_H
 
+#include <QtCore/QDateTime>
 #include <QtCore/QObject>
 
 namespace Otter
@@ -54,6 +55,7 @@ public:
 	void markClicked();
 	void markIgnored();
 	QString getMessage() const;
+	QDateTime getCreationTime() const;
 	NotificationLevel getLevel() const;
 
 protected:
@@ -61,6 +63,7 @@ protected:
 
 private:
 	QString m_message;
+	QDateTime m_creationTime;
 	NotificationLevel m_level;
 	int m_event;
 
