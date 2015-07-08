@@ -139,7 +139,7 @@ void MacPlatformIntegration::runApplication(const QString &command, const QStrin
 {
 	if (command.isEmpty())
 	{
-		QDesktopServices::openUrl(QUrl(fileName));
+		QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
 	}
 
 ///TODO
