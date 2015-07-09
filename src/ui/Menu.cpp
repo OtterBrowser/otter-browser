@@ -31,6 +31,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
 #include <QtCore/QTextCodec>
 #include <QtGui/QMouseEvent>
 
@@ -195,7 +196,17 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	QMenu::contextMenuEvent(event);
 }
 
-void Menu::load(const QJsonObject &definition)
+void Menu::load(const QString &path, const QStringList &options)
+{
+	QFile file(SessionsManager::getReadableDataPath(path));
+	file.open(QFile::ReadOnly);
+
+	load(QJsonDocument::fromJson(file.readAll()).object(), options);
+
+	file.close();
+}
+
+void Menu::load(const QJsonObject &definition, const QStringList &options)
 {
 	const QString identifier = definition.value(QLatin1String("identifier")).toString();
 
@@ -216,10 +227,26 @@ void Menu::load(const QJsonObject &definition)
 		if (actions.at(i).isObject())
 		{
 			const QJsonObject object = actions.at(i).toObject();
-			Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
-			menu->load(object);
 
-			addMenu(menu);
+			if (object.contains(QLatin1String("includeIn")) && !options.contains(object.value(QLatin1String("includeIn")).toString()))
+			{
+				continue;
+			}
+
+			Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
+			menu->load(object, options);
+
+			if (object.value(QLatin1String("type")).toString() == QLatin1String("menu"))
+			{
+				addMenu(menu);
+			}
+			else if (object.value(QLatin1String("type")).toString() == QLatin1String("include"))
+			{
+				for (int j = 0; j < menu->actions().size(); ++j)
+				{
+					QMenu::addAction(menu->actions().at(j));
+				}
+			}
 		}
 		else
 		{
@@ -235,7 +262,16 @@ void Menu::load(const QJsonObject &definition)
 
 				if (action >= 0)
 				{
-					QMenu::addAction(ActionsManager::getAction(action, parentWidget()));
+					WindowsManager *manager = SessionsManager::getWindowsManager();
+
+					if (manager && Action::isLocal(action) && manager->getAction(action))
+					{
+						QMenu::addAction(manager->getAction(action));
+					}
+					else
+					{
+						QMenu::addAction(ActionsManager::getAction(action, parentWidget()));
+					}
 				}
 			}
 		}

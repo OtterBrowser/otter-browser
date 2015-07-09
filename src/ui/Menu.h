@@ -50,7 +50,8 @@ public:
 
 	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
 
-	void load(const QJsonObject &definition);
+	void load(const QString &path, const QStringList &options = QStringList());
+	void load(const QJsonObject &definition, const QStringList &options = QStringList());
 	Action* addAction(int identifier, bool isGlobal = false);
 	MenuRole getRole() const;
 	static MenuRole getRole(const QString &identifier);

@@ -256,6 +256,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Frame"));
 
 	m_definitions.reserve(ActionsManager::OtherAction);
 

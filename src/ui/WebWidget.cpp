@@ -318,7 +318,7 @@ void WebWidget::showDialog(ContentsDialog *dialog)
 	}
 }
 
-void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
+void WebWidget::showContextMenu(const QPoint &position)
 {
 	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
@@ -337,229 +337,62 @@ void WebWidget::showContextMenu(const QPoint &position, MenuFlags flags)
 	updateHitTestResult(hitPosition);
 	updateEditActions();
 
-	if (flags == NoMenu)
+	QStringList flags;
+
+	if (m_hitResult.flags.testFlag(IsFormTest))
 	{
-		if (m_hitResult.flags.testFlag(IsFormTest))
+		flags.append(QLatin1String("form"));
+	}
+
+	if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && hasSelection)
+	{
+		flags.append(QLatin1String("selection"));
+	}
+
+	if (m_hitResult.linkUrl.isValid())
+	{
+		if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
 		{
-			flags |= FormMenu;
+			flags.append(QLatin1String("mail"));
 		}
-
-		if (!m_hitResult.imageUrl.isValid() && m_hitResult.flags.testFlag(IsSelectedTest) && hasSelection)
+		else
 		{
-			flags |= SelectionMenu;
-		}
-
-		if (m_hitResult.linkUrl.isValid())
-		{
-			if (m_hitResult.linkUrl.scheme() == QLatin1String("mailto"))
-			{
-				flags |= MailMenu;
-			}
-			else
-			{
-				flags |= LinkMenu;
-			}
-		}
-
-		if (!m_hitResult.imageUrl.isEmpty())
-		{
-			flags |= ImageMenu;
-		}
-
-		if (m_hitResult.mediaUrl.isValid())
-		{
-			flags |= MediaMenu;
-		}
-
-		if (m_hitResult.flags.testFlag(IsContentEditableTest))
-		{
-			flags |= EditMenu;
-		}
-
-		if (flags == NoMenu || flags == FormMenu)
-		{
-			flags |= StandardMenu;
-
-			if (m_hitResult.frameUrl.isValid())
-			{
-				flags |= FrameMenu;
-			}
+			flags.append(QLatin1String("link"));
 		}
 	}
 
-	if (flags == NoMenu)
+	if (!m_hitResult.imageUrl.isEmpty())
+	{
+		flags.append(QLatin1String("image"));
+	}
+
+	if (m_hitResult.mediaUrl.isValid())
+	{
+		flags.append(QLatin1String("media"));
+	}
+
+	if (m_hitResult.flags.testFlag(IsContentEditableTest))
+	{
+		flags.append(QLatin1String("edit"));
+	}
+
+	if (flags.isEmpty() || (flags.size() == 1 && flags.first() == QLatin1String("form")))
+	{
+		flags.append(QLatin1String("standard"));
+
+		if (m_hitResult.frameUrl.isValid())
+		{
+			flags.append(QLatin1String("frame"));
+		}
+	}
+
+	if (flags.isEmpty())
 	{
 		return;
 	}
 
-	QMenu menu;
-
-	if (flags & StandardMenu)
-	{
-		menu.addAction(getAction(ActionsManager::GoBackAction));
-		menu.addAction(getAction(ActionsManager::GoForwardAction));
-		menu.addAction(getAction(ActionsManager::RewindAction));
-		menu.addAction(getAction(ActionsManager::FastForwardAction));
-		menu.addSeparator();
-		menu.addAction(getAction(ActionsManager::ReloadOrStopAction));
-		menu.addAction(getAction(ActionsManager::ScheduleReloadAction));
-		menu.addSeparator();
-		menu.addAction(getAction(ActionsManager::AddBookmarkAction));
-		menu.addAction(getAction(ActionsManager::CopyAddressAction));
-		menu.addAction(getAction(ActionsManager::PrintAction));
-		menu.addSeparator();
-
-		if (flags & FormMenu)
-		{
-			menu.addAction(getAction(ActionsManager::CreateSearchAction));
-			menu.addSeparator();
-		}
-
-		menu.addAction(getAction(ActionsManager::InspectElementAction));
-		menu.addAction(getAction(ActionsManager::ViewSourceAction));
-		menu.addAction(getAction(ActionsManager::ValidateAction));
-		menu.addSeparator();
-
-		if (flags & FrameMenu)
-		{
-			QMenu *frameMenu = new QMenu(&menu);
-			frameMenu->setTitle(tr("Frame"));
-			frameMenu->addAction(getAction(ActionsManager::OpenFrameInCurrentTabAction));
-			frameMenu->addAction(getAction(ActionsManager::OpenFrameInNewTabAction));
-			frameMenu->addAction(getAction(ActionsManager::OpenFrameInNewTabBackgroundAction));
-			frameMenu->addSeparator();
-			frameMenu->addAction(getAction(ActionsManager::ViewFrameSourceAction));
-			frameMenu->addAction(getAction(ActionsManager::ReloadFrameAction));
-			frameMenu->addAction(getAction(ActionsManager::CopyFrameLinkToClipboardAction));
-
-			menu.addMenu(frameMenu);
-			menu.addSeparator();
-		}
-
-		menu.addAction(ActionsManager::getAction(ActionsManager::ContentBlockingAction, this));
-		menu.addAction(getAction(ActionsManager::WebsitePreferencesAction));
-		menu.addSeparator();
-		menu.addAction(ActionsManager::getAction(ActionsManager::FullScreenAction, this));
-	}
-	else
-	{
-		if (flags & EditMenu)
-		{
-			menu.addAction(getAction(ActionsManager::PasteNoteAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::UndoAction));
-			menu.addAction(getAction(ActionsManager::RedoAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::CutAction));
-			menu.addAction(getAction(ActionsManager::CopyAction));
-			menu.addAction(getAction(ActionsManager::PasteAction));
-			menu.addAction(getAction(ActionsManager::DeleteAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::CopyToNoteAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::SelectAllAction));
-			menu.addAction(getAction(ActionsManager::ClearAllAction));
-			menu.addSeparator();
-
-			if (flags & FormMenu)
-			{
-				menu.addAction(getAction(ActionsManager::CreateSearchAction));
-				menu.addSeparator();
-			}
-
-			if (flags == EditMenu || flags == (EditMenu | FormMenu))
-			{
-				menu.addAction(getAction(ActionsManager::InspectElementAction));
-				menu.addSeparator();
-			}
-
-			menu.addAction(getAction(ActionsManager::CheckSpellingAction));
-			menu.addSeparator();
-		}
-
-		if (flags & SelectionMenu)
-		{
-			menu.addAction(getAction(ActionsManager::SearchAction));
-			menu.addAction(getAction(ActionsManager::SearchMenuAction));
-			menu.addSeparator();
-
-			if (!(flags & EditMenu))
-			{
-				menu.addAction(getAction(ActionsManager::CopyAction));
-				menu.addAction(getAction(ActionsManager::CopyToNoteAction));
-				menu.addSeparator();
-			}
-
-			menu.addAction(getAction(ActionsManager::OpenSelectionAsLinkAction));
-			menu.addSeparator();
-		}
-
-		if (flags & MailMenu)
-		{
-			menu.addAction(getAction(ActionsManager::OpenLinkAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::CopyLinkToClipboardAction));
-
-			if (!(flags & ImageMenu))
-			{
-				menu.addAction(getAction(ActionsManager::InspectElementAction));
-			}
-
-			menu.addSeparator();
-		}
-		else if (flags & LinkMenu)
-		{
-			menu.addAction(getAction(ActionsManager::OpenLinkAction));
-			menu.addAction(getAction(ActionsManager::OpenLinkInNewTabAction));
-			menu.addAction(getAction(ActionsManager::OpenLinkInNewTabBackgroundAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::OpenLinkInNewWindowAction));
-			menu.addAction(getAction(ActionsManager::OpenLinkInNewWindowBackgroundAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::BookmarkLinkAction));
-			menu.addAction(getAction(ActionsManager::CopyLinkToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::SaveLinkToDiskAction));
-			menu.addAction(getAction(ActionsManager::SaveLinkToDownloadsAction));
-
-			if (!(flags & ImageMenu))
-			{
-				menu.addAction(getAction(ActionsManager::InspectElementAction));
-			}
-
-			menu.addSeparator();
-		}
-
-		if (flags & ImageMenu)
-		{
-			menu.addAction(getAction(ActionsManager::OpenImageInNewTabAction));
-			menu.addAction(getAction(ActionsManager::OpenImageInNewTabBackgroundAction));
-			menu.addAction(getAction(ActionsManager::ReloadImageAction));
-			menu.addAction(getAction(ActionsManager::CopyImageUrlToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::SaveImageToDiskAction));
-			menu.addAction(getAction(ActionsManager::CopyImageToClipboardAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::InspectElementAction));
-			menu.addAction(getAction(ActionsManager::ImagePropertiesAction));
-			menu.addSeparator();
-		}
-
-		if (flags & MediaMenu)
-		{
-			menu.addAction(getAction(ActionsManager::CopyMediaUrlToClipboardAction));
-			menu.addAction(getAction(ActionsManager::SaveMediaToDiskAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::MediaPlayPauseAction));
-			menu.addAction(getAction(ActionsManager::MediaMuteAction));
-			menu.addAction(getAction(ActionsManager::MediaLoopAction));
-			menu.addAction(getAction(ActionsManager::MediaControlsAction));
-			menu.addSeparator();
-			menu.addAction(getAction(ActionsManager::InspectElementAction));
-			menu.addSeparator();
-		}
-	}
-
+	Menu menu(Menu::NoMenuRole, this);
+	menu.load(QLatin1String("menu/webWidget.json"), flags);
 	menu.exec(mapToGlobal(hitPosition));
 }
 

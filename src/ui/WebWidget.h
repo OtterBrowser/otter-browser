@@ -41,22 +41,6 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
-	enum MenuFlag
-	{
-		NoMenu = 0,
-		StandardMenu = 1,
-		LinkMenu = 2,
-		MailMenu = 4,
-		ImageMenu = 8,
-		MediaMenu = 16,
-		SelectionMenu = 32,
-		EditMenu = 64,
-		FrameMenu = 128,
-		FormMenu = 256
-	};
-
-	Q_DECLARE_FLAGS(MenuFlags, MenuFlag)
-
 	enum PermissionPolicy
 	{
 		DeniedPermission = 0,
@@ -170,7 +154,7 @@ public slots:
 	virtual void clearOptions();
 	virtual void clearSelection() = 0;
 	virtual void goToHistoryIndex(int index) = 0;
-	virtual void showContextMenu(const QPoint &position = QPoint(), MenuFlags flags = NoMenu);
+	virtual void showContextMenu(const QPoint &position = QPoint());
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
