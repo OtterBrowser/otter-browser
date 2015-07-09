@@ -140,16 +140,11 @@ void WindowsPlatformIntegration::showNotification(Notification *notification)
 	}
 }
 
-void WindowsPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+void WindowsPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
 {
-	const QString nativeFileName = QDir::toNativeSeparators(fileName);
-
 	if (command.isEmpty())
 	{
-		if (!nativeFileName.isEmpty())
-		{
-			QDesktopServices::openUrl(QUrl(QLatin1String("file:///") + nativeFileName));
-		}
+		QDesktopServices::openUrl(url);
 
 		return;
 	}
@@ -167,23 +162,20 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QS
 	QStringList arguments = command.mid(indexOfExecutable + 5).split(QLatin1Char(' '), QString::SkipEmptyParts);
 	const int indexOfPlaceholder = arguments.indexOf(QLatin1String("%1"));
 
-	if (nativeFileName.isEmpty())
+	if (url.isValid())
 	{
 		if (indexOfPlaceholder > -1)
 		{
-			arguments.removeAt(indexOfPlaceholder);
-		}
-	}
-	else
-	{
-		if (indexOfPlaceholder > -1)
-		{
-			arguments.replace(indexOfPlaceholder, arguments.at(indexOfPlaceholder).arg(nativeFileName));
+			arguments.replace(indexOfPlaceholder, arguments.at(indexOfPlaceholder).arg(url.isLocalFile() ? QDir::toNativeSeparators(url.toLocalFile()) : url.url()));
 		}
 		else
 		{
-			arguments.append(nativeFileName);
+			arguments.append(url.isLocalFile() ? QDir::toNativeSeparators(url.toLocalFile()) : url.url());
 		}
+	}
+	else if (indexOfPlaceholder > -1)
+	{
+		arguments.removeAt(indexOfPlaceholder);
 	}
 
 	if (!QProcess::startDetached(application, arguments))

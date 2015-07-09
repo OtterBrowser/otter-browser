@@ -106,15 +106,15 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 	QTimer::singleShot(250, this, SLOT(createApplicationsCacheThread()));
 }
 
-void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
 {
 	if (command.isEmpty())
 	{
-		QDesktopServices::openUrl(QUrl(fileName));
+		QDesktopServices::openUrl(url);
 	}
 
 	std::vector<std::string> fileNames;
-	fileNames.push_back(fileName.toStdString());
+	fileNames.push_back((url.isLocalFile() ? QDir::toNativeSeparators(url.toLocalFile()) : url.url()).toStdString());
 
 	std::vector<std::string> parsed = LibMimeApps::DesktopEntry::parseExec(command.toStdString(), fileNames);
 

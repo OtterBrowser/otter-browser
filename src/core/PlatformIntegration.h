@@ -22,6 +22,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QMimeType>
+#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -37,7 +38,7 @@ class PlatformIntegration : public QObject
 public:
 	explicit PlatformIntegration(Application *parent);
 
-	virtual void runApplication(const QString &command, const QString &fileName = QString()) const;
+	virtual void runApplication(const QString &command, const QUrl &url = QUrl()) const;
 	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	virtual bool canShowNotifications() const;
 	virtual bool canSetAsDefaultBrowser() const;

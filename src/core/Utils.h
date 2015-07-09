@@ -22,6 +22,7 @@
 #define OTTER_UTILS_H
 
 #include <QtCore/QMimeType>
+#include <QtCore/QUrl>
 #include <QtGui/QIcon>
 
 namespace Otter
@@ -37,7 +38,7 @@ struct ApplicationInformation
 namespace Utils
 {
 
-void runApplication(const QString &command, const QString &fileName = QString());
+void runApplication(const QString &command, const QUrl &url = QUrl());
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
 QString elideText(const QString &text, QWidget *widget = NULL, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);

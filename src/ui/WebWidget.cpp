@@ -163,15 +163,15 @@ void WebWidget::openInApplication(QAction *action)
 
 	if (menu == m_pageApplicationsMenu)
 	{
-		Utils::runApplication(action->data().toString(), getUrl().url());
+		Utils::runApplication(action->data().toString(), getUrl());
 	}
 	else if (menu == m_linkApplicationsMenu && m_hitResult.linkUrl.isValid())
 	{
-		Utils::runApplication(action->data().toString(), m_hitResult.linkUrl.url());
+		Utils::runApplication(action->data().toString(), m_hitResult.linkUrl);
 	}
 	else if (menu == m_frameApplicationsMenu && m_hitResult.frameUrl.isValid())
 	{
-		Utils::runApplication(action->data().toString(), m_hitResult.frameUrl.url());
+		Utils::runApplication(action->data().toString(), m_hitResult.frameUrl);
 	}
 }
 

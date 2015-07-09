@@ -304,7 +304,7 @@ void TransfersContentsWidget::openTransfer(QAction *action)
 
 	if (transfer && action && !action->data().isNull())
 	{
-		Utils::runApplication(action->data().toString(), transfer->getTarget());
+		Utils::runApplication(action->data().toString(), QUrl::fromLocalFile(transfer->getTarget()));
 	}
 }
 
@@ -314,7 +314,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 	if (transfer)
 	{
-		Utils::runApplication(QString(), QFileInfo(transfer->getTarget()).dir().canonicalPath());
+		Utils::runApplication(QString(), QUrl::fromLocalFile(QFileInfo(transfer->getTarget()).dir().canonicalPath()));
 	}
 }
 

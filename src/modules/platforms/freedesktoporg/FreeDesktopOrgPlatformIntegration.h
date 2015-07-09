@@ -42,7 +42,7 @@ class FreeDesktopOrgPlatformIntegration : public PlatformIntegration
 public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
 
-	void runApplication(const QString &command, const QString &fileName = QString()) const;
+	void runApplication(const QString &command, const QUrl &url = QUrl()) const;
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	bool canShowNotifications() const;
 

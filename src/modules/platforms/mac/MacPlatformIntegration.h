@@ -34,7 +34,7 @@ public:
 	explicit MacPlatformIntegration(Application *parent);
 
 	void markNotificationClicked(quint64 identifier);
-	void runApplication(const QString &command, const QString &fileName = QString()) const;
+	void runApplication(const QString &command, const QUrl &url = QUrl()) const;
 	void showNotification(Notification *notification);
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	bool canShowNotifications() const;

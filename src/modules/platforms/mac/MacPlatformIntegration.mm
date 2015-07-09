@@ -135,11 +135,11 @@ void MacPlatformIntegration::markNotificationClicked(quint64 identifier)
 	}
 }
 
-void MacPlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+void MacPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
 {
 	if (command.isEmpty())
 	{
-		QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+		QDesktopServices::openUrl(url);
 	}
 
 ///TODO

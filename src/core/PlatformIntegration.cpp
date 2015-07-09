@@ -28,10 +28,10 @@ PlatformIntegration::PlatformIntegration(Application *parent) : QObject(parent)
 {
 }
 
-void PlatformIntegration::runApplication(const QString &command, const QString &fileName) const
+void PlatformIntegration::runApplication(const QString &command, const QUrl &url) const
 {
 	Q_UNUSED(command)
-	Q_UNUSED(fileName)
+	Q_UNUSED(url)
 }
 
 QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)

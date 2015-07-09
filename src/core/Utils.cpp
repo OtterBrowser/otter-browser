@@ -36,18 +36,23 @@ namespace Otter
 namespace Utils
 {
 
-void runApplication(const QString &command, const QString &fileName)
+void runApplication(const QString &command, const QUrl &url)
 {
+	if (command.isEmpty() && !url.isValid())
+	{
+		return;
+	}
+
 	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
 
 	if (integration)
 	{
-		integration->runApplication(command, fileName);
-
-		return;
+		integration->runApplication(command, url);
 	}
-
-	QDesktopServices::openUrl(QUrl(fileName));
+	else
+	{
+		QDesktopServices::openUrl(QUrl(url));
+	}
 }
 
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase)

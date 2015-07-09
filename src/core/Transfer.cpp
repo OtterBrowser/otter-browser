@@ -521,7 +521,7 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 
 void Transfer::openTarget()
 {
-	Utils::runApplication(QString(), getTarget());
+	Utils::runApplication(QString(), QUrl::fromLocalFile(getTarget()));
 }
 
 void Transfer::stop()
