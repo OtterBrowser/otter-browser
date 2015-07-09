@@ -43,6 +43,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
+	void resetAction();
 	void setWindow(Window *window);
 
 private:

@@ -489,6 +489,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_contentsWidget)
 	{
+		emit widgetChanged();
+
 		return;
 	}
 
@@ -555,6 +557,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		}
 	}
 
+	emit widgetChanged();
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
 	emit canZoomChanged(m_contentsWidget->canZoom());

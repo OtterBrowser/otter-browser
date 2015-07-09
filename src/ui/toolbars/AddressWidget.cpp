@@ -85,7 +85,11 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 		lineEdit()->setPlaceholderText(tr("Enter address or search…"));
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+
+		if (toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		{
+			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		}
 	}
 	else
 	{

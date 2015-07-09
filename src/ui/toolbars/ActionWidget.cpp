@@ -37,7 +37,7 @@ ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : To
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
-	if (toolBar)
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 	{
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
@@ -90,15 +90,13 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 	ToolButtonWidget::mouseReleaseEvent(event);
 }
 
-void ActionWidget::setWindow(Window *window)
+void ActionWidget::resetAction()
 {
 	Action *action = NULL;
 
-	m_window = window;
-
-	if (window && Action::isLocal(m_identifier) && window->getContentsWidget()->getAction(m_identifier))
+	if (m_window && Action::isLocal(m_identifier) && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
 	{
-		action = window->getContentsWidget()->getAction(m_identifier);
+		action = m_window->getContentsWidget()->getAction(m_identifier);
 	}
 	else
 	{
@@ -108,6 +106,23 @@ void ActionWidget::setWindow(Window *window)
 	removeAction(defaultAction());
 	setDefaultAction(action);
 	setText(action->getText());
+}
+
+void ActionWidget::setWindow(Window *window)
+{
+	if (m_window)
+	{
+		disconnect(m_window, SIGNAL(widgetChanged()), this, SLOT(resetAction()));
+	}
+
+	m_window = window;
+
+	if (window)
+	{
+		connect(window, SIGNAL(widgetChanged()), this, SLOT(resetAction()));
+	}
+
+	resetAction();
 }
 
 Window* ActionWidget::getWindow() const

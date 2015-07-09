@@ -152,6 +152,7 @@ signals:
 	void loadingStateChanged(WindowLoadingState loading);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
+	void widgetChanged();
 };
 
 }

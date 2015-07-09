@@ -67,7 +67,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
-	if (toolBar)
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 	{
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
