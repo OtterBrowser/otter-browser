@@ -65,13 +65,6 @@ set(CMAKE_AUTOMOC ON)
 
 include(GNUInstallDirs)
 
-if (MSVC)
-	set(CMAKE_PREFIX_PATH $ENV{QTDIR})
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MP")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MP")
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:\"mainCRTStartup\"")
-endif (MSVC)
-
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
 
 if (EnableQtwebengine)
@@ -292,6 +285,13 @@ endif (EnableQtwebengine)
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
+	if (MSVC)
+		set(CMAKE_PREFIX_PATH $ENV{QTDIR})
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MP")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MP")
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS,5.01 /ENTRY:\"mainCRTStartup\"")
+	endif (MSVC)
+
 	set(otter_src
 		${otter_src}
 		otter-browser.rc
@@ -323,7 +323,7 @@ elseif (UNIX)
 	)
 endif (WIN32)
 
-add_executable(otter-browser MACOSX_BUNDLE
+add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_ui}
 	${otter_res}
 	${otter_src}
