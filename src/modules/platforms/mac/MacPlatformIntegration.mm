@@ -177,11 +177,11 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 	NSUserNotification *nativeNotification = [[NSUserNotification alloc] init];
 	nativeNotification.title = [NSString stringWithUTF8String:title.toUtf8().data()];
 	nativeNotification.informativeText = [NSString stringWithUTF8String:notification->getMessage().toUtf8().data()];
-	nativeNotification.identifier = [NSString stringWithUTF8String:QString::number(identifier).toUtf8().data()];;
+	nativeNotification.identifier = [NSString stringWithUTF8String:QString::number(identifier).toUtf8().data()];
 
 	[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:nativeNotification];
 
-	if (m_notificationsWatcherTimer == 0)
+	if (m_notificationsWatcherTimer == 0 && SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt() > 0)
 	{
 		m_notificationsWatcherTimer = startTimer(1000);
 	}

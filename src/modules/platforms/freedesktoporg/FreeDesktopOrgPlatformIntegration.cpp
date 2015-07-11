@@ -205,6 +205,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 			break;
 	}
 
+	const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
 	QVariantMap hints;
 	hints[QLatin1String("image_data")] = Application::windowIcon().pixmap(128, 128).toImage();
 
@@ -216,7 +217,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << notification->getMessage();
 	arguments << QStringList();
 	arguments << hints;
-	arguments << int(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt() * 1000);
+	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
 	QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this);
 

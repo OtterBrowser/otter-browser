@@ -103,7 +103,12 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_animation->setEndValue(1.0);
 	m_animation->start();
 
-	QTimer::singleShot((SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt() * 1000), this, SLOT(aboutToClose()));
+	const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
+
+	if (visibilityDuration > 0)
+	{
+		QTimer::singleShot((visibilityDuration * 1000), this, SLOT(aboutToClose()));
+	}
 }
 
 void NotificationDialog::closeEvent(QCloseEvent *event)
