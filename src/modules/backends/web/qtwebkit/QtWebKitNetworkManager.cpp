@@ -314,8 +314,12 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 {
 	if (!m_backend)
 	{
-		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
-	}
+#ifdef OTTER_ENABLE_QTWEBENGINE
+        m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebengine"));
+#else
+        m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
+#endif
+    }
 
 	QString acceptLanguage = SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString();
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));

@@ -50,11 +50,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 		const QStringList keys = defaults.childGroups();
 
 		for (int j = 0; j < keys.count(); ++j)
-		{
-			const QString key = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
+        {
+            const QString key = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
 			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
 			const QVariant value = SettingsManager::getValue(key);
-			QList<QStandardItem*> optionItems;
+            QList<QStandardItem*> optionItems;
 			optionItems.append(new QStandardItem(keys.at(j)));
 			optionItems.append(new QStandardItem(type));
 			optionItems.append(new QStandardItem(value.toString()));
