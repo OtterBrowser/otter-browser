@@ -144,7 +144,6 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 					result.push_back(urls.at(i));
 				}
 
-				result.push_back(std::string());
 				break;
 
 			case 'i':
@@ -152,18 +151,15 @@ std::vector<std::string> DesktopEntry::parseExec(const std::vector<std::string> 
 				{
 					result.push_back(std::string("--icon"));
 					result.push_back(icon_);
-					result.push_back(std::string());
 				}
 				break;
 
 			case 'c':
 				result.push_back(name_);
-				result.push_back(std::string());
 				break;
 
 			case 'k':
 				result.push_back(path_);
-				result.push_back(std::string());
 				break;
 
 			case '%':

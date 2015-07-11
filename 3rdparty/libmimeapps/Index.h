@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 
 #include "DesktopEntry.h"
+#include "Tools.h"
 
 namespace LibMimeApps
 {
@@ -64,7 +65,7 @@ protected:
 	void findDirectories();
 	void createBase();
 	void processDirectory(const lookupDirectory &baseDirectory, const std::string &relative);
-	void processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative);
+	void processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative, const std::vector<file> &content);
 	void processMimeApps(const std::string &path);
 	void processDesktopFile(const std::string &baseDirectory, const std::string &relative);
 	void addApplication(DesktopEntry *entry);

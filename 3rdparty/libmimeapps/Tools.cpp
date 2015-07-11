@@ -81,9 +81,9 @@ bool match(std::string const& text, std::string const& pattern)
 	return std::search(text.begin(), text.end(),  pattern.begin(), pattern.end() ) != text.end();
 }
 
-std::vector<std::string> directoryEntries(const std::string &directory, FileType::FileType dirs)
+std::vector<file> directoryEntries(const std::string &directory)
 {
-	std::vector<std::string> result;
+	std::vector<file> result;
 	DIR *stream = opendir(directory.c_str());
 
 	if (stream == NULL)
@@ -103,9 +103,16 @@ std::vector<std::string> directoryEntries(const std::string &directory, FileType
 
 		stat(path.c_str(), &info);
 
-		if (name.size() > 0 && name.at(0) != '.' && ((dirs == FileType::File && S_ISREG(info.st_mode)) || (dirs == FileType::Directory && S_ISDIR(info.st_mode))))
+		if (name.size() > 0 && name.at(0) != '.')
 		{
-			result.push_back(name);
+			if (S_ISREG(info.st_mode))
+			{
+				result.push_back(file(name, FileType::File));
+			}
+			else if (S_ISDIR(info.st_mode))
+			{
+				result.push_back(file(name, FileType::Directory));
+			}
 		}
 	}
 
@@ -227,6 +234,20 @@ std::string alnums(const std::string &string, size_t begin)
 	}
 
 	return string.substr(begin, end-begin);
+}
+
+lang::lang(const std::string &string):
+	language(alnums(string, 0))
+{
+	if (match(string, "_"))
+	{
+		country = alnums(string, string.find('_')+1);
+	}
+
+	if (match(string, "@"))
+	{
+		modifier = alnums(string, string.find('@')+1);
+	}
 }
 
 }

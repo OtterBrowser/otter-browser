@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "Index.h"
+
 #include "ConfigReader.h"
-#include "Tools.h"
 
 namespace LibMimeApps
 {
@@ -110,29 +110,30 @@ void Index::createBase()
 void Index::processDirectory(const lookupDirectory &baseDirectory, const std::string &relative)
 {
 	std::string directory = baseDirectory.path + relative;
-	std::vector<std::string> subdirectories = directoryEntries(directory, FileType::Directory);
+	std::vector<file> content = directoryEntries(directory);
 
 	if (baseDirectory.withSubdirectories)
 	{
-		for (std::vector<std::string>::size_type i = 0; i < subdirectories.size(); ++i)
+		for (std::vector<file>::size_type i = 0; i < content.size(); ++i)
 		{
-			processDirectory(baseDirectory, relative + subdirectories.at(i) + "/");
+			if (content.at(i).type == FileType::Directory)
+			{
+				processDirectory(baseDirectory, relative + content.at(i).name + "/");
+			}
 		}
 	}
 
-	processDesktopInDirectory(baseDirectory.path, relative);
+	processDesktopInDirectory(baseDirectory.path, relative, content);
 	processMimeApps(directory + "mimeapps.list");
 }
 
-void Index::processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative)
+void Index::processDesktopInDirectory(const std::string &baseDirectory, const std::string &relative, const std::vector<file> &content)
 {
-	std::vector<std::string> filenames = directoryEntries(baseDirectory + relative, FileType::File);
-
-	for (std::vector<std::string>::size_type i = 0; i < filenames.size(); ++i)
+	for (std::vector<std::string>::size_type i = 0; i < content.size(); ++i)
 	{
-		if (endsWith(filenames.at(i), std::string(".desktop")))
+		if (content.at(i).type == FileType::File && endsWith(content.at(i).name, std::string(".desktop")))
 		{
-			processDesktopFile(baseDirectory, relative + filenames.at(i));
+			processDesktopFile(baseDirectory, relative + content.at(i).name);
 		}
 	}
 }
