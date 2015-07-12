@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
+#include "../MainWindow.h"
 #include "../PreferencesDialog.h"
 #include "../SearchDelegate.h"
 #include "../ToolBarWidget.h"
@@ -455,6 +456,8 @@ void SearchWidget::setSearchEngine(const QString &engine)
 
 void SearchWidget::setWindow(Window *window)
 {
+	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
 	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{
 		m_window->detachSearchWidget(this);
@@ -471,6 +474,11 @@ void SearchWidget::setWindow(Window *window)
 
 	if (window)
 	{
+		if (mainWindow)
+		{
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		}
+
 		window->attachSearchWidget(this);
 
 		setSearchEngine(window->getSearchEngine());
@@ -482,6 +490,11 @@ void SearchWidget::setWindow(Window *window)
 	}
 	else
 	{
+		if (mainWindow)
+		{
+			connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		}
+
 		setSearchEngine();
 	}
 }

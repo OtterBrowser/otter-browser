@@ -23,6 +23,7 @@
 #include "../AddressDelegate.h"
 #include "../BookmarkPropertiesDialog.h"
 #include "../ContentsWidget.h"
+#include "../MainWindow.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
 #include "../../core/AddressCompletionModel.h"
@@ -631,6 +632,8 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 
 void AddressWidget::setWindow(Window *window)
 {
+	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
 	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{
 		m_window->detachAddressWidget(this);
@@ -653,6 +656,13 @@ void AddressWidget::setWindow(Window *window)
 
 	if (window)
 	{
+		if (mainWindow)
+		{
+			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		}
+
 		window->attachAddressWidget(this);
 
 		if (m_urlIconLabel)
@@ -677,6 +687,12 @@ void AddressWidget::setWindow(Window *window)
 		{
 			connect(window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
+	}
+	else if (mainWindow)
+	{
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
 	}
 
 	setIcon(window ? window->getIcon() : QIcon());

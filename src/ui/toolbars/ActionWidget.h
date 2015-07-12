@@ -23,6 +23,8 @@
 #include "../ToolButtonWidget.h"
 #include "../../core/ActionsManager.h"
 
+#include <QtCore/QPointer>
+
 namespace Otter
 {
 
@@ -47,7 +49,7 @@ protected slots:
 	void setWindow(Window *window);
 
 private:
-	Window *m_window;
+	QPointer<Window> m_window;
 	int m_identifier;
 };
 
