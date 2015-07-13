@@ -1300,6 +1300,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::ViewSourceAction:
+			if (canViewSource())
 			{
 				QNetworkRequest request(getUrl());
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);

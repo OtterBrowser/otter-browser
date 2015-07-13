@@ -81,7 +81,6 @@ void LongTermTimer::updateTimer(const quint64 secondsLeft, const bool updateCoun
 	else if (updateCounter)
 	{
 		m_secondsLeft -= (timerValue / 1000);
-		
 	}
 	else
 	{
