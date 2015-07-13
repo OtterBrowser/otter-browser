@@ -303,6 +303,7 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 	new SyntaxHighlighter(document());
 
 	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
+	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 	optionChanged(QLatin1String("SourceViewer/ShowLineNumbers"), SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")));
 	optionChanged(QLatin1String("SourceViewer/WrapLines"), SettingsManager::getValue(QLatin1String("SourceViewer/WrapLines")));
 
@@ -347,7 +348,12 @@ void SourceViewerWidget::wheelEvent(QWheelEvent *event)
 
 void SourceViewerWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("SourceViewer/ShowLineNumbers"))
+	if (option == QLatin1String("Interface/ShowScrollBars"))
+	{
+		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+	}
+	else if (option == QLatin1String("SourceViewer/ShowLineNumbers"))
 	{
 		if (value.toBool() && !m_marginWidget)
 		{
