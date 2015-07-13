@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -17,35 +17,33 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_UPDATECHECKER_H
-#define OTTER_UPDATECHECKER_H
+#ifndef OTTER_LONGTERMTIMER_H
+#define OTTER_LONGTERMTIMER_H
 
-#include "SessionsManager.h"
-
-#include <QtNetwork/QNetworkReply>
+#include <QtCore/QObject>
 
 namespace Otter
 {
 
-class UpdateChecker : public QObject
+class LongTermTimer : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit UpdateChecker(QObject *parent = NULL, bool showDialog = false);
+	explicit LongTermTimer(quint64 seconds, QObject *receiver, const char *member);
+
+	static void runTimer(quint64 seconds, QObject *receiver, const char *member);
 
 protected:
-	void checkForUpdates();
-	void readUpdateData(const QByteArray &data);
-
-protected slots:
-	void runUpdateCheck();
-	void runUpdate();
+	void timerEvent(QTimerEvent *event);
+	void updateTimer(const quint64 secondsLeft, const bool updateCounter = false);
 
 private:
-	QNetworkReply *m_networkReply;
-	QString m_detailsUrl;
-	bool m_showDialog;
+	quint64 m_secondsLeft;
+	int m_timer;
+
+signals:
+	void timeout();
 };
 
 }

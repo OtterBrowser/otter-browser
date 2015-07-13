@@ -87,6 +87,7 @@ SOURCES += src/main.cpp \
     src/core/Importer.cpp \
     src/core/InputInterpreter.cpp \
     src/core/LocalListingNetworkReply.cpp \
+    src/core/LongTermTimer.cpp \
     src/core/NetworkManager.cpp \
     src/core/NetworkManagerFactory.cpp \
     src/core/NetworkAutomaticProxy.cpp \
@@ -227,6 +228,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/Importer.h \
     src/core/InputInterpreter.h \
     src/core/LocalListingNetworkReply.h \
+    src/core/LongTermTimer.h \
     src/core/NetworkAutomaticProxy.h \
     src/core/NetworkCache.h \
     src/core/NetworkManager.h \

@@ -133,9 +133,9 @@ QString formatTime(int value)
 	{
 		QString string = time.toString(QLatin1String("hh:mm:ss"));
 
-		if (value > 86400)
+		if (value > SECONDS_IN_DAY)
 		{
-			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor((qreal) value / 86400))).arg(string);
+			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor((qreal)value / SECONDS_IN_DAY))).arg(string);
 		}
 
 		return string;

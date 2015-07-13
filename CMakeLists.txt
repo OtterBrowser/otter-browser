@@ -94,6 +94,7 @@ set(otter_src
 	src/core/Importer.cpp
 	src/core/InputInterpreter.cpp
 	src/core/LocalListingNetworkReply.cpp
+	src/core/LongTermTimer.cpp
 	src/core/NetworkAutomaticProxy.cpp
 	src/core/NetworkCache.cpp
 	src/core/NetworkManager.cpp

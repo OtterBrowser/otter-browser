@@ -742,7 +742,7 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::CheckForUpdatesAction:
-			new UpdateChecker(true, this);
+			new UpdateChecker(this, true);
 
 			break;
 		case ActionsManager::AboutApplicationAction:

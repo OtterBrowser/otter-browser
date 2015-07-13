@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-UpdateChecker::UpdateChecker(bool showDialog, QObject *parent) : QObject(parent),
+UpdateChecker::UpdateChecker(QObject *parent, bool showDialog) : QObject(parent),
 	m_networkReply(NULL),
 	m_showDialog(showDialog)
 {

@@ -68,6 +68,7 @@ public slots:
 protected slots:
 	void newConnection();
 	void clearHistory();
+	void periodicUpdateCheck();
 
 private:
 	PlatformIntegration *m_platformIntegration;

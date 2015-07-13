@@ -25,6 +25,7 @@
 #include "Console.h"
 #include "GesturesManager.h"
 #include "HistoryManager.h"
+#include "LongTermTimer.h"
 #include "NetworkManagerFactory.h"
 #include "NotesManager.h"
 #include "NotificationsManager.h"
@@ -34,6 +35,7 @@
 #include "ToolBarsManager.h"
 #include "Transfer.h"
 #include "TransfersManager.h"
+#include "Utils.h"
 #include "UpdateChecker.h"
 #include "./config.h"
 #ifdef Q_OS_WIN
@@ -273,7 +275,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toString().isEmpty())
 	{
-		new UpdateChecker(false, this);
+		new UpdateChecker(this);
+
+		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 
 #ifdef Q_OS_WIN
@@ -438,6 +442,18 @@ void Application::clearHistory()
 		{
 			NetworkManagerFactory::clearCache();
 		}
+	}
+}
+
+void Application::periodicUpdateCheck()
+{
+	new UpdateChecker(this);
+
+	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
+
+	if (interval > 0 && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toString().isEmpty())
+	{
+		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 }
 
