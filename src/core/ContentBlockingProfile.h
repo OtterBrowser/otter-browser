@@ -106,7 +106,9 @@ private:
 	QNetworkReply *m_networkReply;
 	QString m_styleSheet;
 	QString m_currentRule;
-	QUrl m_baseUrl;
+	QString m_requestUrl;
+	QString m_requestHost;
+	QString m_baseUrlHost;
 	QRegularExpression m_domainExpression;
 	ContentBlockingInformation m_information;
 	QStringList m_requestSubdomainList;

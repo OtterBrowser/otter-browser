@@ -286,18 +286,16 @@ void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMulti
 
 void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked)
 {
-	const QString url = request.url().url();
 	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
-	const QString baseUrlHost = m_baseUrl.host();
 	const bool blockedDomains = !rule->blockedDomains.isEmpty();
 	const bool allowedDomains = !rule->allowedDomains.isEmpty();
 
-	isBlocked = ((blockedDomains) ? resolveDomainExceptions(baseUrlHost, rule->blockedDomains) : isBlocked);
-	isBlocked = ((allowedDomains) ? !resolveDomainExceptions(baseUrlHost, rule->allowedDomains) : isBlocked);
+	isBlocked = ((blockedDomains) ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : isBlocked);
+	isBlocked = ((allowedDomains) ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
 
 	if (rule->ruleOption & ThirdPartyOption)
 	{
-		if (baseUrlHost.isEmpty() || m_requestSubdomainList.contains(baseUrlHost))
+		if (m_baseUrlHost.isEmpty() || m_requestSubdomainList.contains(m_baseUrlHost))
 		{
 			isBlocked = (rule->exceptionRuleOption & ThirdPartyOption);
 		}
@@ -309,7 +307,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption & ImageOption)
 	{
-		if (requestHeader.contains(QByteArray("image/")) || url.endsWith(QLatin1String(".png")) || url.endsWith(QLatin1String(".jpg")) || url.endsWith(QLatin1String(".gif")))
+		if (requestHeader.contains(QByteArray("image/")) || m_requestUrl.endsWith(QLatin1String(".png")) || m_requestUrl.endsWith(QLatin1String(".jpg")) || m_requestUrl.endsWith(QLatin1String(".gif")))
 		{
 			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ImageOption) : isBlocked);
 		}
@@ -321,7 +319,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption & ScriptOption)
 	{
-		if (requestHeader.contains(QByteArray("script/")) || url.endsWith(QLatin1String(".js")))
+		if (requestHeader.contains(QByteArray("script/")) || m_requestUrl.endsWith(QLatin1String(".js")))
 		{
 			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ScriptOption) : isBlocked);
 		}
@@ -333,7 +331,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption & StyleSheetOption)
 	{
-		if (requestHeader.contains(QByteArray("text/css")) || url.endsWith(QLatin1String(".css")))
+		if (requestHeader.contains(QByteArray("text/css")) || m_requestUrl.endsWith(QLatin1String(".css")))
 		{
 			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & StyleSheetOption) : isBlocked);
 		}
@@ -675,9 +673,9 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QNe
 {
 	bool isBlocked = false;
 
-	if (request.url().url().contains(m_currentRule))
+	if (m_requestUrl.contains(m_currentRule))
 	{
-		m_requestSubdomainList = ContentBlockingManager::createSubdomainList(request.url().host());
+		m_requestSubdomainList = ContentBlockingManager::createSubdomainList(m_requestHost);
 
 		if (rule->needsDomainCheck)
 		{
@@ -716,16 +714,17 @@ bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const 
 		}
 	}
 
-	const QString url = request.url().url();
-	const int urlLenght = url.length();
+	m_baseUrlHost = baseUrl.host();
+	m_requestUrl = request.url().url();
+	m_requestHost = request.url().host();
 
-	m_baseUrl = baseUrl;
+	const int urlLenght = m_requestUrl.length();
 
 	for (int i = 0; i < urlLenght; ++i)
 	{
-		const QString testString = url.right(urlLenght - i);
+		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
 
-		if (checkUrlSubstring(testString, request))
+		if (checkUrlSubstring(urlSubstring, request))
 		{
 			return true;
 		}
