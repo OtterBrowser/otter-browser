@@ -229,7 +229,14 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			SettingsManager::setDefaultValue(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QStringLiteral("%1/value").arg(keys.at(j))));
+#ifdef OTTER_ENABLE_QTWEBENGINE
+            // Set the default backend to qtwebengine when it is avilable
+            if(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)) == "Backends/Web")
+            {
+                defaults.setValue(QStringLiteral("%1/value").arg(keys.at(j)), "qtwebengine");
+            }
+#endif
+            SettingsManager::setDefaultValue(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QStringLiteral("%1/value").arg(keys.at(j))));
 		}
 
 		defaults.endGroup();

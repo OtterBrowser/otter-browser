@@ -436,3 +436,18 @@ TRANSLATIONS += resources/translations/otter-browser_cs_CZ.ts \
     resources/translations/otter-browser_zh_TW.ts
 
 RC_FILE = otter-browser.rc
+
+greaterThan(QT_MAJOR_VERSION, 4) : greaterThan(QT_MINOR_VERSION, 3) {
+DEFINES += OTTER_ENABLE_QTWEBENGINE
+QT += webengine webenginewidgets
+
+SOURCES +=      src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp \
+                src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp \
+                src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
+
+HEADERS +=      src/modules/backends/web/qtwebengine/QtWebEnginePage.h \
+                src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.h \
+                src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.h
+
+RESOURCES += src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
+}
