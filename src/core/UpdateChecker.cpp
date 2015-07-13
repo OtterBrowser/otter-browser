@@ -1,6 +1,7 @@
-﻿/**************************************************************************
+/**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,14 +36,9 @@
 namespace Otter
 {
 
-UpdateChecker::UpdateChecker(QObject *parent, bool showDialog) : QObject(parent),
+UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(parent),
 	m_networkReply(NULL),
-	m_showDialog(showDialog)
-{
-	checkForUpdates();
-}
-
-void UpdateChecker::checkForUpdates()
+	m_isInBackground(inBackground)
 {
 	const QUrl url = SettingsManager::getValue(QLatin1String("Updates/ServerUrl")).toString();
 
@@ -76,7 +72,78 @@ void UpdateChecker::runUpdateCheck()
 		return;
 	}
 
-	readUpdateData(m_networkReply->readAll());
+	QStringList activeChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
+	activeChannels.removeAll(QString());
+
+	const QJsonObject updateData = QJsonDocument::fromJson(m_networkReply->readAll()).object();
+	const QJsonArray channels = updateData.value(QLatin1String("channels")).toArray();
+	int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
+	int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
+	QList<UpdateInformation> availableUpdates;
+	QString availableVersion;
+	QString availableChannel;
+
+	for (int i = 0; i < channels.count(); ++i)
+	{
+		if (channels.at(i).isObject())
+		{
+			const QJsonObject object = channels.at(i).toObject();
+			const QString identifier = object[QLatin1String("identifier")].toString();
+			const QString channelVersion = object[QLatin1String("version")].toString();
+
+			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
+			{
+				const int channelMainVersion = channelVersion.trimmed().remove(QChar('.')).toInt();
+
+				if (channelMainVersion == 0)
+				{
+					Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), OtherMessageCategory, ErrorMessageLevel);
+
+					continue;
+				}
+
+				const int channelSubVersion = object[QLatin1String("subVersion")].toString().toInt();
+
+				if ((mainVersion < channelMainVersion) || (channelSubVersion > 0 && subVersion < channelSubVersion))
+				{
+					UpdateInformation information;
+					information.channel = identifier;
+					information.version = channelVersion;
+					information.detailsUrl = QUrl(object[QLatin1String("detailsUrl")].toString());
+
+					if (!object[QLatin1String("subVersion")].toString().isEmpty())
+					{
+						information.version.append(QLatin1Char('#') + object[QLatin1String("subVersion")].toString());
+					}
+
+					mainVersion = channelMainVersion;
+					subVersion = channelSubVersion;
+					availableVersion = channelVersion;
+					availableChannel = identifier;
+
+					m_detailsUrl = object[QLatin1String("detailsUrl")].toString();
+
+					availableUpdates.append(information);
+				}
+			}
+		}
+	}
+
+	SettingsManager::setValue(QLatin1String("Updates/LastCheck"), QDate::currentDate().toString(Qt::ISODate));
+
+	if (m_isInBackground && !availableVersion.isEmpty())
+	{
+		Notification *notification = NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableVersion).arg(availableChannel));
+
+		connect(notification, SIGNAL(clicked()), this, SLOT(runUpdate()));
+		connect(notification, SIGNAL(ignored()), this, SLOT(deleteLater()));
+	}
+	else
+	{
+		deleteLater();
+	}
+
+	emit finished(availableUpdates);
 }
 
 void UpdateChecker::runUpdate()
@@ -92,88 +159,6 @@ void UpdateChecker::runUpdate()
 	}
 
 	deleteLater();
-}
-
-void UpdateChecker::readUpdateData(const QByteArray &data)
-{
-	const QStringList activeChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
-	const QJsonObject updateData = QJsonDocument::fromJson(data).object();
-	const QJsonArray channels = updateData.value(QLatin1String("channels")).toArray();
-	int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
-	int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
-	QString availableVersion;
-	QString availableChannel;
-
-	for (int i = 0; i < channels.count(); ++i)
-	{
-		if (channels.at(i).isObject())
-		{
-			const QJsonObject object = channels.at(i).toObject();
-			const QString identifier = object["identifier"].toString();
-			const QString channelVersion = object["version"].toString();
-
-			if (activeChannels.contains(identifier, Qt::CaseInsensitive))
-			{
-				const int channelMainVersion = channelVersion.trimmed().remove(QChar('.')).toInt();
-
-				if (channelMainVersion == 0)
-				{
-					Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), OtherMessageCategory, ErrorMessageLevel);
-
-					continue;
-				}
-
-				const int channelSubVersion = object["subVersion"].toString().toInt();
-
-				if ((mainVersion < channelMainVersion) || (channelSubVersion > 0 && subVersion < channelSubVersion))
-				{
-					mainVersion = channelMainVersion;
-					subVersion = channelSubVersion;
-					availableVersion = channelVersion;
-					availableChannel = identifier;
-					m_detailsUrl = object["detailsUrl"].toString();
-				}
-			}
-		}
-	}
-
-	SettingsManager::setValue(QLatin1String("Updates/LastCheck"), QDate::currentDate().toString(Qt::ISODate));
-
-	if (!availableVersion.isEmpty())
-	{
-		const QString text = tr("New update %1 from %2 channel is available!").arg(availableVersion).arg(availableChannel);
-
-		if (m_showDialog)
-		{
-			QMessageBox messageBox;
-			messageBox.setWindowTitle(tr("New version of Otter Browser is available"));
-			messageBox.setText(text);
-			messageBox.setInformativeText(tr("Do you want to open a new tab with download page?"));
-			messageBox.setIcon(QMessageBox::Question);
-			messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-			messageBox.setDefaultButton(QMessageBox::No);
-
-			if (messageBox.exec() == QMessageBox::Yes)
-			{
-				runUpdate();
-			}
-			else
-			{
-				deleteLater();
-			}
-		}
-		else
-		{
-			Notification *updateNotification = NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, text);
-
-			connect(updateNotification, SIGNAL(clicked()), this, SLOT(runUpdate()));
-			connect(updateNotification, SIGNAL(ignored()), this, SLOT(deleteLater()));
-		}
-	}
-	else
-	{ 
-		deleteLater();
-	}
 }
 
 }

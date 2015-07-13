@@ -35,6 +35,9 @@
     </widget>
    </item>
    <item>
+    <layout class="QGridLayout" name="gridLayout"/>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -53,7 +56,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel</set>
+      <set>QDialogButtonBox::Close</set>
      </property>
     </widget>
    </item>

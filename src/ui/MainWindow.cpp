@@ -37,6 +37,7 @@
 #include "TabSwitcherWidget.h"
 #include "ToolBarAreaWidget.h"
 #include "ToolBarWidget.h"
+#include "UpdateCheckerDialog.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
 #include "toolbars/ActionWidget.h"
@@ -48,7 +49,6 @@
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
-#include "../core/UpdateChecker.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
 
@@ -742,7 +742,10 @@ void MainWindow::triggerAction(int identifier, bool checked)
 
 			break;
 		case ActionsManager::CheckForUpdatesAction:
-			new UpdateChecker(this, true);
+			{
+				UpdateCheckerDialog *dialog = new UpdateCheckerDialog(this);
+				dialog->show();
+			}
 
 			break;
 		case ActionsManager::AboutApplicationAction:

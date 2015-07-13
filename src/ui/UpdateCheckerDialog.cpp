@@ -18,16 +18,24 @@
 **************************************************************************/
 
 #include "UpdateCheckerDialog.h"
+#include "../core/UpdateChecker.h"
+#include "../core/WindowsManager.h"
 
 #include "ui_UpdateCheckerDialog.h"
+
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
 
 UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent) : QDialog(parent),
+	m_updateChecker(new UpdateChecker(this, false)),
 	m_ui(new Ui::UpdateCheckerDialog)
 {
 	m_ui->setupUi(this);
+
+	connect(m_updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
+	connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
 }
 
 UpdateCheckerDialog::~UpdateCheckerDialog()
@@ -45,6 +53,48 @@ void UpdateCheckerDialog::changeEvent(QEvent *event)
 
 		adjustSize();
 	}
+}
+
+void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &availableUpdates)
+{
+	m_ui->progressBar->hide();
+
+	if (availableUpdates.isEmpty())
+	{
+		m_ui->label->setText(tr("There are no new updates."));
+	}
+	else
+	{
+		m_ui->label->setText(tr("Available updates:"));
+
+		for (int i = 0; i < availableUpdates.count(); ++i)
+		{
+			QPushButton *button = new QPushButton(tr("Update…"), this);
+			button->setProperty("detailsUrl", availableUpdates.at(i).detailsUrl);
+
+			m_ui->gridLayout->addWidget(new QLabel(tr("Version %1 from %2 channel").arg(availableUpdates.at(i).version).arg(availableUpdates.at(i).channel), this), i, 0);
+			m_ui->gridLayout->addWidget(button, i, 1);
+
+			connect(button, SIGNAL(clicked(bool)), this, SLOT(runUpdate()));
+		}
+	}
+}
+
+void UpdateCheckerDialog::runUpdate()
+{
+	QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+	if (button && !SessionsManager::hasUrl(button->property("detailsUrl").toUrl(), true))
+	{
+		WindowsManager *manager = SessionsManager::getWindowsManager();
+
+		if (manager)
+		{
+			manager->open(button->property("detailsUrl").toUrl());
+		}
+	}
+
+	close();
 }
 
 }

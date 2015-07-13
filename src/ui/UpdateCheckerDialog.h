@@ -30,6 +30,9 @@ namespace Ui
 	class UpdateCheckerDialog;
 }
 
+class UpdateChecker;
+struct UpdateInformation;
+
 class UpdateCheckerDialog : public QDialog
 {
 	Q_OBJECT
@@ -41,7 +44,12 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
+	void runUpdate();
+
 private:
+	UpdateChecker *m_updateChecker;
 	Ui::UpdateCheckerDialog *m_ui;
 };
 
