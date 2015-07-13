@@ -21,6 +21,8 @@
 
 #include <QtCore/QTimerEvent>
 
+#include <limits>
+
 namespace Otter
 {
 
