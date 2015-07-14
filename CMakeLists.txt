@@ -345,9 +345,10 @@ if (WIN32)
 
 	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
 elseif (APPLE)
+	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
-	target_link_libraries(otter-browser ${FRAMEWORK_Foundation})
+	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
 	qt5_use_modules(otter-browser DBus)
 endif (WIN32)

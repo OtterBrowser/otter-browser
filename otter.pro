@@ -33,7 +33,7 @@ win32: {
 }
 
 macx: {
-    LIBS += -framework Foundation
+    LIBS += -framework Cocoa -framework Foundation
 
     OBJECTIVE_SOURCES += src/modules/platforms/mac/MacPlatformIntegration.mm
 

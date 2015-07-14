@@ -21,15 +21,87 @@
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Transfer.h"
+#include "../../../core/TransfersManager.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QSysInfo>
 #include <QtGui/QDesktopServices>
 
 #import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
+
+@interface MacPlatformIntegrationDockIconView : NSView
+{
+	double m_value;
+}
+
+- (void)setProgress:(double)value;
++ (MacPlatformIntegrationDockIconView*)getSharedDockIconView;
+
+@end
+
+static MacPlatformIntegrationDockIconView *getSharedDockIconView = nil;
+
+@implementation MacPlatformIntegrationDockIconView
+
++ (MacPlatformIntegrationDockIconView*)getSharedDockIconView
+{
+	if (getSharedDockIconView == nil)
+	{
+		getSharedDockIconView = [[MacPlatformIntegrationDockIconView alloc] init];
+	}
+
+	return getSharedDockIconView;
+}
+
+- (void)setProgress:(double)value
+{
+	m_value = value;
+
+	[[NSApp dockTile] display];
+}
+
+- (void)drawRect:(NSRect)dirtyRectangle
+{
+	Q_UNUSED(dirtyRectangle)
+
+	NSRect boundary = [self bounds];
+
+	[[NSApp applicationIconImage] drawInRect:boundary fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+
+	NSRect rectangle = boundary;
+	rectangle.size.height *= 0.13;
+	rectangle.size.width *= 0.8;
+	rectangle.origin.x = ((NSWidth(boundary) - NSWidth(rectangle)) / 2.0);
+	rectangle.origin.y = (NSHeight(boundary) * 0.13);
+
+	CGFloat radius = (rectangle.size.height / 2);
+	NSBezierPath *bezierPath = [NSBezierPath bezierPathWithRoundedRect:rectangle xRadius:radius yRadius:radius];
+	[bezierPath setLineWidth:2.0];
+
+	[[NSColor grayColor] set];
+
+	[bezierPath stroke];
+
+	rectangle = NSInsetRect(rectangle, 2.0, 2.0);
+
+	radius = (rectangle.size.height / 2.0);
+
+	bezierPath = [NSBezierPath bezierPathWithRoundedRect:rectangle xRadius:radius yRadius:radius];
+	[bezierPath setLineWidth:1.0];
+	[bezierPath addClip];
+
+	rectangle.size.width = floor(rectangle.size.width * m_value);
+
+	[[NSColor colorWithSRGBRed:0.2 green:1 blue:0.2 alpha:1] set];
+
+	NSRectFill(rectangle);
+}
+
+@end
 
 @interface MacPlatformIntegrationUserNotificationCenterDelegate : NSObject<NSUserNotificationCenterDelegate>
-
 {
 	@public
 		Otter::MacPlatformIntegration *m_platformIntegration;
@@ -79,9 +151,16 @@ namespace Otter
 
 MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_notificationIdentifier(0),
-	m_notificationsWatcherTimer(0)
+	m_notificationsWatcherTimer(0),
+	m_isDockIconViewVisible(false)
 {
 	[[MacPlatformIntegrationUserNotificationCenterDelegate alloc] initWithPlatformIntegration:this];
+
+	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateDockIcon()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateDockIcon()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateDockIcon()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateDockIcon()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateDockIcon()));
 }
 
 void MacPlatformIntegration::timerEvent(QTimerEvent *event)
@@ -145,6 +224,44 @@ void MacPlatformIntegration::runApplication(const QString &command, const QUrl &
 ///TODO
 }
 
+void MacPlatformIntegration::updateDockIcon()
+{
+	const QList<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
+	qint64 bytesTotal = 0;
+	qint64 bytesReceived = 0;
+	bool hasActiveTransfers = false;
+
+	for (int i = 0; i < transfers.count(); ++i)
+	{
+		if (transfers[i]->getState() == Transfer::RunningState && transfers[i]->getBytesTotal() > 0)
+		{
+			hasActiveTransfers = true;
+			bytesTotal += transfers[i]->getBytesTotal();
+			bytesReceived += transfers[i]->getBytesReceived();
+		}
+	}
+
+	const qreal progress = ((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? ((qreal) bytesReceived / bytesTotal) : 0);
+
+	if (progress > 0)
+	{
+		if (!m_isDockIconViewVisible)
+		{
+			m_isDockIconViewVisible = true;
+
+			[[NSApp dockTile] setContentView:[MacPlatformIntegrationDockIconView getSharedDockIconView]];
+		}
+
+		[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:progress];
+	}
+	else if (m_isDockIconViewVisible)
+	{
+		m_isDockIconViewVisible = false;
+
+		[[NSApp dockTile] setContentView:nil];
+	}
+}
+
 void MacPlatformIntegration::showNotification(Notification *notification)
 {
 	if (QSysInfo::MacintoshVersion < QSysInfo::MV_10_8)
@@ -189,6 +306,8 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 QList<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
+	Q_UNUSED(mimeType)
+
 ///TODO
 
 	return QList<ApplicationInformation>();
