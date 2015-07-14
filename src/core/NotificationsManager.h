@@ -22,6 +22,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QObject>
+#include <QtCore/QVariant>
 
 namespace Otter
 {
@@ -54,8 +55,10 @@ public:
 
 	void markClicked();
 	void markIgnored();
+	void setData(const QVariant &data);
 	QString getMessage() const;
 	QDateTime getCreationTime() const;
+	QVariant getData() const;
 	NotificationLevel getLevel() const;
 
 protected:
@@ -64,6 +67,7 @@ protected:
 private:
 	QString m_message;
 	QDateTime m_creationTime;
+	QVariant m_data;
 	NotificationLevel m_level;
 	int m_event;
 

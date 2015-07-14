@@ -58,6 +58,11 @@ void Notification::markIgnored()
 	deleteLater();
 }
 
+void Notification::setData(const QVariant &data)
+{
+	m_data = data;
+}
+
 QString Notification::getMessage() const
 {
 	return m_message;
@@ -66,6 +71,11 @@ QString Notification::getMessage() const
 QDateTime Notification::getCreationTime() const
 {
 	return m_creationTime;
+}
+
+QVariant Notification::getData() const
+{
+	return m_data;
 }
 
 Notification::NotificationLevel Notification::getLevel() const
