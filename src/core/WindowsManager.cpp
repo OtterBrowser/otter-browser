@@ -445,6 +445,8 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		return;
 	}
 
+	m_windows[window->getIdentifier()] = window;
+
 	if (window->isPrivate())
 	{
 		m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
@@ -577,6 +579,8 @@ void WindowsManager::detachWindow(int index)
 			closePrivateTabsAction->setEnabled(false);
 		}
 
+		m_windows.remove(window->getIdentifier());
+
 		emit windowRemoved(window->getIdentifier());
 	}
 }
@@ -679,6 +683,8 @@ void WindowsManager::handleWindowClose(Window *window)
 	}
 
 	emit windowRemoved(window->getIdentifier());
+
+	m_windows.remove(window->getIdentifier());
 
 	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction != QLatin1String("doNothing"))
 	{
@@ -814,22 +820,12 @@ Action* WindowsManager::getAction(int identifier)
 
 Window* WindowsManager::getWindowByIndex(int index) const
 {
-	return ((index >= m_mainWindow->getTabBar()->count()) ? NULL : qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(index)));
+	return getWindowByIdentifier(m_mainWindow->getTabBar()->tabData(index).toULongLong());
 }
 
 Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
 {
-	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
-	{
-		Window *window = getWindowByIndex(i);
-
-		if (window && window->getIdentifier() == identifier)
-		{
-			return window;
-		}
-	}
-
-	return NULL;
+	return (m_windows.contains(identifier) ? m_windows[identifier] : NULL);
 }
 
 QVariant WindowsManager::getOption(const QString &key) const
@@ -941,9 +937,7 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = qvariant_cast<Window*>(m_mainWindow->getTabBar()->tabData(i));
-
-		if (window && identifier == window->getIdentifier())
+		if (m_mainWindow->getTabBar()->tabData(i).toULongLong() == identifier)
 		{
 			return i;
 		}

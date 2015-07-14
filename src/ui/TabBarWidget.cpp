@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "TabBarWidget.h"
+#include "MainWindow.h"
 #include "PreviewWidget.h"
 #include "TabBarStyle.h"
 #include "ToolBarWidget.h"
@@ -396,7 +397,7 @@ void TabBarWidget::tabHovered(int index)
 void TabBarWidget::addTab(int index, Window *window)
 {
 	insertTab(index, window->getTitle());
-	setTabData(index, QVariant::fromValue(window));
+	setTabData(index, window->getIdentifier());
 
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateTabs()));
@@ -419,7 +420,7 @@ void TabBarWidget::removeTab(int index)
 		m_tabSize = size.width();
 	}
 
-	Window *window = qvariant_cast<Window*>(tabData(index));
+	Window *window = getWindow(index);
 
 	if (window)
 	{
@@ -711,7 +712,7 @@ void TabBarWidget::updateButtons()
 
 			if (!label->buddy())
 			{
-				Window *window = qvariant_cast<Window*>(tabData(i));
+				Window *window = getWindow(i);
 
 				if (window)
 				{
@@ -754,7 +755,7 @@ void TabBarWidget::updateTabs(int index)
 	{
 		for (int i = 0; i < count(); ++i)
 		{
-			if (sender() == qvariant_cast<QObject*>(tabData(i)))
+			if (sender() == getWindow(i))
 			{
 				index = i;
 
@@ -844,7 +845,7 @@ void TabBarWidget::setTabProperty(int index, const QString &key, const QVariant 
 		return;
 	}
 
-	QObject *window = qvariant_cast<QObject*>(tabData(index));
+	Window *window = getWindow(index);
 
 	if (window)
 	{
@@ -859,6 +860,18 @@ void TabBarWidget::setTabProperty(int index, const QString &key, const QVariant 
 	}
 }
 
+Window* TabBarWidget::getWindow(int index) const
+{
+	MainWindow *mainWindow = MainWindow::findMainWindow(parentWidget());
+
+	if (mainWindow)
+	{
+		return mainWindow->getWindowsManager()->getWindowByIdentifier(tabData(index).toULongLong());
+	}
+
+	return NULL;
+}
+
 QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVariant &defaultValue) const
 {
 	if (index < 0 || index >= count())
@@ -866,7 +879,7 @@ QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVari
 		return defaultValue;
 	}
 
-	QObject *window = qvariant_cast<QObject*>(tabData(index));
+	Window *window = getWindow(index);
 
 	if (window)
 	{

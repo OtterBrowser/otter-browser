@@ -123,6 +123,7 @@ protected slots:
 private:
 	MainWindow *m_mainWindow;
 	QList<ClosedWindow> m_closedWindows;
+	QHash<quint64, Window*> m_windows;
 	bool m_isPrivate;
 	bool m_isRestored;
 

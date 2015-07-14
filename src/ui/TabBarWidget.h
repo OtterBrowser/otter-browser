@@ -40,6 +40,7 @@ public:
 	void removeTab(int index);
 	void activateTabOnLeft();
 	void activateTabOnRight();
+	Window* getWindow(int index) const;
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 	QSize minimumSizeHint() const;
 	QSize sizeHint() const;
