@@ -150,7 +150,6 @@ void ContentBlockingDialog::save()
 	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
 	{
 		profilesSettings.beginGroup(m_ui->profilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
-		profilesSettings.setValue(QLatin1String("lastUpdate"), m_ui->profilesViewWidget->getIndex(i, 2).data(Qt::DisplayRole));
 		profilesSettings.setValue(QLatin1String("updateInterval"), m_ui->profilesViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
 		profilesSettings.endGroup();
 
