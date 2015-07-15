@@ -31,8 +31,8 @@ namespace Otter
 {
 
 HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : BookmarksImporter(parent),
-	m_file(NULL),
-	m_optionsWidget(NULL)
+	m_optionsWidget(NULL),
+	m_file(NULL)
 {
 }
 

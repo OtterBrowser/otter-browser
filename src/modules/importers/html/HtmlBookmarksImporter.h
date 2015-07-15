@@ -55,8 +55,8 @@ protected:
 	void processElement(const QWebElement &element);
 
 private:
-	QFile *m_file;
 	BookmarksImporterWidget *m_optionsWidget;
+	QFile *m_file;
 };
 
 }

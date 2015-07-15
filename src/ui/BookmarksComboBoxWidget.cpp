@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +20,7 @@
 
 #include "BookmarksComboBoxWidget.h"
 #include "../core/BookmarksManager.h"
+#include "../core/NotesManager.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QInputDialog>
@@ -27,7 +29,8 @@ namespace Otter
 {
 
 BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(parent),
-	m_view(new QTreeView(this))
+	m_view(new QTreeView(this)),
+	m_mode(BookmarksModel::BookmarksMode)
 {
 	setView(m_view);
 	setModel(BookmarksManager::getModel());
@@ -39,7 +42,7 @@ BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(pa
 	m_view->setRootIsDecorated(false);
 	m_view->setStyleSheet(QLatin1String("QTreeView::branch { border-image:url(invalid.png); }"));
 
-	connect(BookmarksManager::getModel(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 }
 
 void BookmarksComboBoxWidget::createFolder()
@@ -48,7 +51,19 @@ void BookmarksComboBoxWidget::createFolder()
 
 	if (!title.isEmpty())
 	{
-		setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
+		switch (m_mode)
+		{
+			case BookmarksModel::BookmarksMode:
+				setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
+
+				break;
+			case BookmarksModel::NotesMode:
+				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
+
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -56,7 +71,7 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 {
 	if (!branch)
 	{
-		branch = BookmarksManager::getModel()->invisibleRootItem();
+		branch = qobject_cast<BookmarksModel*>(model())->invisibleRootItem();
 	}
 
 	for (int i = 0; i < branch->rowCount(); ++i)
@@ -91,11 +106,37 @@ void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
 	setRootModelIndex(QModelIndex());
 }
 
+void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
+{
+	disconnect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+
+	m_mode = mode;
+	m_index = QModelIndex();
+
+	switch (mode)
+	{
+		case BookmarksModel::BookmarksMode:
+			setModel(BookmarksManager::getModel());
+
+			break;
+		case BookmarksModel::NotesMode:
+			setModel(NotesManager::getModel());
+
+			break;
+		default:
+			break;
+	}
+
+	updateBranch();
+
+	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
+}
+
 BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
-	BookmarksItem *item = BookmarksManager::getModel()->bookmarkFromIndex(m_index);
+	BookmarksItem *item = qobject_cast<BookmarksModel*>(model())->bookmarkFromIndex(m_index);
 
-	return (item ? item :BookmarksManager::getModel()->getRootItem());
+	return (item ? item :qobject_cast<BookmarksModel*>(model())->getRootItem());
 }
 
 bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)

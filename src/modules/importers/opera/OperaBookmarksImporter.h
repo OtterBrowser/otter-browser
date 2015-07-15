@@ -62,8 +62,8 @@ protected:
 	void handleOptions();
 
 private:
-	QFile *m_file;
 	BookmarksImporterWidget *m_optionsWidget;
+	QFile *m_file;
 };
 
 }

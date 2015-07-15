@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "ImportDialog.h"
 #include "../modules/importers/html/HtmlBookmarksImporter.h"
 #include "../modules/importers/opera/OperaBookmarksImporter.h"
+#include "../modules/importers/opera/OperaNotesImporter.h"
 
 #include "ui_ImportDialog.h"
 
@@ -76,6 +77,10 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 	if (importerName == QLatin1String("OperaBookmarks"))
 	{
 		importer = new OperaBookmarksImporter();
+	}
+	else if (importerName == QLatin1String("OperaNotes"))
+	{
+		importer = new OperaNotesImporter();
 	}
 	else if (importerName == QLatin1String("HtmlBookmarks"))
 	{

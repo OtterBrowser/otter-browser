@@ -37,7 +37,8 @@ enum ImportType
 	CookiesImport = 7,
 	HistoryImport = 8,
 	FeedsImport = 9,
-	MailImport = 10
+	MailImport = 10,
+	NotesImport = 11
 };
 
 class Importer : public QObject

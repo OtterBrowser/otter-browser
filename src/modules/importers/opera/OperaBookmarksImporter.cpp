@@ -29,8 +29,8 @@ namespace Otter
 {
 
 OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImporter(parent),
-	m_file(NULL),
-	m_optionsWidget(NULL)
+	m_optionsWidget(NULL),
+	m_file(NULL)
 {
 }
 

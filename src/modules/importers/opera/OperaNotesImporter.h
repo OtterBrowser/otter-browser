@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,60 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_BOOKMARKSIMPORTER_H
-#define OTTER_BOOKMARKSIMPORTER_H
+#ifndef OTTER_OPERANOTESIMPORTER_H
+#define OTTER_OPERANOTESIMPORTER_H
 
-#include "BookmarksManager.h"
-#include "Importer.h"
+#include "../../../core/Importer.h"
+#include "../../../ui/BookmarksComboBoxWidget.h"
 
-#include <QtGui/QStandardItemModel>
+#include <QtCore/QFile>
 
 namespace Otter
 {
 
-class BookmarksImporter : public Importer
+class OperaNotesImporter : public Importer
 {
 	Q_OBJECT
 
 public:
-	explicit BookmarksImporter(QObject *parent = NULL);
+	enum OperaNoteEntry
+	{
+		NoEntry = 0,
+		NoteEntry = 1,
+		FolderStartEntry = 2,
+		FolderEndEntry = 3,
+		SeparatorEntry = 4
+	};
 
-	BookmarksItem *getCurrentFolder() const;
+	explicit OperaNotesImporter(QObject *parent = NULL);
+	~OperaNotesImporter();
+
+	BookmarksItem* getCurrentFolder() const;
+	QWidget* getOptionsWidget();
+	QString getTitle() const;
+	QString getDescription() const;
+	QString getVersion() const;
+	QString getFileFilter() const;
+	QString getSuggestedPath() const;
+	QString getBrowser() const;
 	ImportType getType() const;
-	bool allowDuplicates() const;
+
+public slots:
+	bool import();
+	bool setPath(const QString &path);
 
 protected:
 	void goToParent();
-	void removeAllBookmarks();
-	void setAllowDuplicates(bool allow);
+	void handleOptions();
 	void setCurrentFolder(BookmarksItem *folder);
 	void setImportFolder(BookmarksItem *folder);
 
 private:
+	BookmarksComboBoxWidget *m_folderComboBox;
 	BookmarksItem *m_currentFolder;
 	BookmarksItem *m_importFolder;
-	bool m_allowDuplicates;
+	QFile *m_file;
+	QWidget *m_optionsWidget;
 };
 
 }

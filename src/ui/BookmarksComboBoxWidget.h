@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,8 @@
 #ifndef OTTER_BOOKMARKSCOMBOBOXWIDGET_H
 #define OTTER_BOOKMARKSCOMBOBOXWIDGET_H
 
+#include "../core/BookmarksModel.h"
+
 #include <QtGui/QStandardItem>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QTreeView>
@@ -37,6 +40,7 @@ public:
 	explicit BookmarksComboBoxWidget(QWidget *parent = NULL);
 
 	void setCurrentFolder(const QModelIndex &index);
+	void setMode(BookmarksModel::FormatMode mode);
 	BookmarksItem* getCurrentFolder();
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -47,6 +51,7 @@ protected slots:
 private:
 	QTreeView *m_view;
 	QModelIndex m_index;
+	BookmarksModel::FormatMode m_mode;
 };
 
 }
