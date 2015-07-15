@@ -54,22 +54,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "Z:\otter-browser-inno\input\otter-browser.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icudt53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icuin53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\icuuc53.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\libeay32.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\Qt5*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\ssleay32.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\otter-browser-inno\input\iconengines\*.*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs
-Source: "Z:\otter-browser-inno\input\imageformats\*.*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs
-Source: "Z:\otter-browser-inno\input\locale\*.*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs
-Source: "Z:\otter-browser-inno\input\platforms\*.*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs
-Source: "Z:\otter-browser-inno\input\printsupport\*.*"; DestDir: "{app}\printsupport"; Flags: ignoreversion recursesubdirs
-Source: "Z:\otter-browser-inno\input\sqldrivers\*.*"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion recursesubdirs
+Source: "Z:\otter-browser-inno\input\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Registry]
 Root: HKLM; Subkey: "Software\Clients\StartMenuInternet\{#MyAppIdentifier}"; Flags: uninsdeletekey
