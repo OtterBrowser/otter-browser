@@ -226,6 +226,18 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_startedRequests = 0;
 }
 
+void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
+{
+	if (reply && !reply->isFinished())
+	{
+		m_transfers.append(reply);
+
+		setParent(NULL);
+
+		connect(reply, SIGNAL(finished()), this, SLOT(transferFinished()));
+	}
+}
+
 void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
@@ -299,6 +311,30 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 		emit messageChanged(tr("Completed request to %1").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
 
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+	}
+}
+
+void QtWebKitNetworkManager::transferFinished()
+{
+	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+	if (reply)
+	{
+		m_transfers.removeAll(reply);
+
+		reply->deleteLater();
+
+		if (m_transfers.isEmpty())
+		{
+			if (m_widget)
+			{
+				setParent(m_widget);
+			}
+			else
+			{
+				deleteLater();
+			}
+		}
 	}
 }
 

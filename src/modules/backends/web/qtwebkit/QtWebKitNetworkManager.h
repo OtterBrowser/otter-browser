@@ -23,6 +23,7 @@
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 
+#include <QtCore/QPointer>
 #include <QtNetwork/QNetworkRequest>
 
 namespace Otter
@@ -46,6 +47,7 @@ public:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void resetStatistics();
+	void registerTransfer(QNetworkReply *reply);
 	void updateStatus();
 	void updateOptions(const QUrl &url);
 	void setFormRequest(const QUrl &url);
@@ -59,15 +61,17 @@ protected slots:
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void requestFinished(QNetworkReply *reply);
+	void transferFinished();
 
 private:
-	QtWebKitWebWidget *m_widget;
+	QPointer<QtWebKitWebWidget> m_widget;
 	CookieJar *m_cookieJar;
 	CookieJarProxy *m_cookieJarProxy;
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
+	QList<QNetworkReply*> m_transfers;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	QHash<QString, int> m_blockedRequests;
 	qint64 m_speed;

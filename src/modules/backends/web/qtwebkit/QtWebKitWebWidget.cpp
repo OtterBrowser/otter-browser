@@ -348,6 +348,8 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 
 void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
+	m_networkManager->registerTransfer(reply);
+
 	TransfersManager::startTransfer(reply, QString(), false, isPrivate());
 }
 
