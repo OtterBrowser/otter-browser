@@ -269,9 +269,6 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 		}
 	}
 
-	getQuery.removeAllQueryItems(QLatin1String("sourceid"));
-	getQuery.addQueryItem(QLatin1String("sourceid"), QLatin1String("otter"));
-
 	url.setQuery(getQuery);
 
 	request->setUrl(url);

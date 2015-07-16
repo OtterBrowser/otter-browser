@@ -5,5 +5,5 @@
 	<Description>Bing. Search by Microsoft.</Description>
 	<InputEncoding>UTF-8</InputEncoding>
 	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAANpJREFUOI1j+L+T4T8lmAGZ830LM/kG/APigICA/zmJzv9Xt6mTbwAIp8a6UWYACFPFgLJ0+//LWzT+313KT54BUyoN4fyUGPf/M2v0/l+YK0aaFyJDfVDEQfgfKQZ83cz6v6PIjDQDcoFRCRID+b05z5I0F6THuf6/OFf0f0+Jyf9ANI3JwHA4PFUGdxjkJTn9n1hu/D8o0B9FY3CQ3/9FjdpYUypKUu4rNcZwbmOu1f8nK3mIywsgfHCK7P+oMJ//qUDnHp8uRVpmguFf25j//93BSHpuJAcDAC0tg9b1xzzpAAAAAElFTkSuQmCC</Image>
-	<Url type="text/html" method="GET" template="http://www.bing.com/search?q={searchTerms}" />
+	<Url type="text/html" method="GET" template="http://www.bing.com/search?q={searchTerms}&amp;sourceid=otter" />
 </OpenSearchDescription>

@@ -5,6 +5,6 @@
 	<Description>Wikipedia, the free encyclopedia</Description>
 	<InputEncoding>UTF-8</InputEncoding>
 	<Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAQVJREFUOI3Fk9ENgkAQRImhCOmAGgz/0gG2gCXgpxRBCVICNiAlYAfSA+bI22TMQS7GRBM/NrBzc7NzcxBNz8l9U9H/Bbpr54pD4fJ97ngHbC+t9dWpcsN9MIx3ePRUeSytNwf1uXZpmr4EKATAII+P0ThN09gaPQL0JgAp2SYGsgjGIhhu+ltvaxKXwCID7LABskTlgukIiYtT9ZEPIgBZGC7iTWzi/nQ4Ou7iFphIKTie2S4zTBwwAg1eI8pMlD0J+AHjSmEGvwPIWMYqQoSFiEJjiIIOCkBgAzYRkGWEmexnFBRgE2RKR8G+MN3S2095HSbFERD46F9g4noSYv6X+rOfaQaWL1wAZLls+QAAAABJRU5ErkJggg==</Image>
-	<Url type="text/html" method="GET" template="https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}" />
+	<Url type="text/html" method="GET" template="https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}&amp;sourceid=otter" />
 	<Url type="application/x-suggestions+json" rel="suggestions" method="GET" template="https://en.wikipedia.org/w/api.php?action=opensearch&amp;search={searchTerms}" />
 </OpenSearchDescription>
