@@ -213,7 +213,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 			if (reader.hasError())
 			{
-				clear();
+				getRootItem()->removeRows(0, getRootItem()->rowCount());
 
 				Console::addMessage(((m_mode == NotesMode) ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
 
