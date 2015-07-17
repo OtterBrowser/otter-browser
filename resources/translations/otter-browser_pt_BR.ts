@@ -54,8 +54,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This Session Only</source>
-        <translation>
-Só Esta Sessão</translation>
+        <translation>Só Esta Sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -77,7 +76,7 @@ Só Esta Sessão</translation>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="68"/>
         <source>Accept For This Session Only</source>
-        <translation>Aceitar Só Por Esta Sessão</translation>
+        <translation>Aceitar Só Pra Esta Sessão</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="71"/>
@@ -95,7 +94,7 @@ Só Esta Sessão</translation>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Pra adicionar idioma, por favor escolha um da lista ou digite o código dele.</translation>
+        <translation>Pra adicionar um idioma, por favor escolha um da lista ou digite o código dele.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -239,8 +238,7 @@ Só Esta Sessão</translation>
         <location filename="../../src/core/Application.cpp" line="366"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Esta sessão não foi salva corretamente.
-Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</translation>
+        <translation>Esta sessão não foi salva corretamente.  Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="589"/>
@@ -274,7 +272,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/core/Application.cpp" line="639"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Você está pra sair da sessão atual do Navegador Otter</translation>
+        <translation>Você está pra sair da sessão atual do Otter Browser</translation>
     </message>
 </context>
 <context>
@@ -594,7 +592,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="120"/>
         <source>Leave empty to import into main folder</source>
-        <translation>Deixar vazio pra importar pra pasta principal</translation>
+        <translation>Deixar vazio pra importar na pasta principal</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="127"/>
@@ -1318,7 +1316,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>Arquivos HTML (*.htm, *.html)</translation>
     </message>
 </context>
 <context>
@@ -2627,7 +2625,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar página inicial</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3610,13 +3608,14 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>O documento foi modificado.
+Você quer salvar suas mudanças ou descartá-las?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
@@ -3711,7 +3710,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Título</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
@@ -3765,7 +3764,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Começar com a página inicial</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4367,17 +4366,17 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="144"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Nova atualização %1 do canal %2 está disponível!</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
         <source>New version of Otter Browser is available</source>
-        <translation type="unfinished"/>
+        <translation>Nova versão do Otter Browser está disponível</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
         <source>Do you want to open a new tab with download page?</source>
-        <translation type="unfinished"/>
+        <translation>Você quer abrir uma nova aba com a página do download?</translation>
     </message>
 </context>
 <context>
@@ -4385,12 +4384,12 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Procurar Atualizações</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Procurando atualização...</translation>
     </message>
 </context>
 <context>
@@ -4489,22 +4488,22 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="191"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Aplicativo Padrão</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Desconhecido</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Título: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Endereço: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="426"/>
@@ -4514,27 +4513,27 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="699"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nenhuma engine de busca definida</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba (Sem Título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba em 2º Plano (Sem Título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba em 2º Plano (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
@@ -5288,7 +5287,7 @@ Selecione outro.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open in New Background Tab</source>
-        <translation>Abrir em Nova Aba em 2º Plano</translation>
+        <translation>Abrir numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
@@ -5325,12 +5324,12 @@ Selecione outro.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Abrir com...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir link com aplicativo externo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
@@ -5376,7 +5375,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir frame com aplicativo externo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
@@ -5403,13 +5402,13 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
@@ -5828,7 +5827,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir página atual com aplicativo externo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -5950,7 +5949,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Procurar Atualizações...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
@@ -6020,7 +6019,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="887"/>
@@ -6140,17 +6139,17 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="51"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Incapaz de procurar atualizações. URL inválida: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="72"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Incapaz de procurar atualizações: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="121"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Incapaz de analisar o número da versão: %1</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="123"/>

@@ -1317,7 +1317,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTML fájlok (*.htm, *.html)</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2626,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Kezdőlap mutatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3609,13 +3609,14 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Figyelem</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Módosult a weboldal.
+Menti vagy nem?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
@@ -3637,72 +3638,72 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>A kezdőlap beállításai</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Saját háttérkép használata</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Nagyítás módja:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Kép helye:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Oszlopok száma:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>Nagyítás mértéke:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Mutassa a csempéket új hozzáadásához</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Képek (*.png, *.jpg, *.bmp, *.gif, *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Legjobb kitöltés</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Középre</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>Széthúzva</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Mozaikosan</translation>
     </message>
 </context>
 <context>
@@ -3710,7 +3711,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Csempe hozzáadása</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
@@ -3764,7 +3765,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>A kezdõ oldallal induljon</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4366,17 +4367,17 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="144"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Frissebb %1 verzió érhető el a %2 csatornáról!</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
         <source>New version of Otter Browser is available</source>
-        <translation type="unfinished"/>
+        <translation>Megjelent az Otter Browser újabb verziója</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
         <source>Do you want to open a new tab with download page?</source>
-        <translation type="unfinished"/>
+        <translation>Fel akarja keresni a letöltési oldalt egy új fülön?</translation>
     </message>
 </context>
 <context>
@@ -4384,12 +4385,12 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Keresés...</translation>
     </message>
 </context>
 <context>
@@ -4488,22 +4489,22 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="191"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Alapértelmezett program</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Név: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Cím: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="426"/>
@@ -4513,27 +4514,27 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="699"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nincs megadott kereső motor</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Névtelen) kép megnyitása új fülön</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>%1 kép megnyitása új fülön</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Névtelen) kép megnyitása új fülön a háttérben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>%1 kép megnyitása új fülön a háttérben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
@@ -5326,12 +5327,12 @@ Kérem válasszon egy másikat.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Megnyitás...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Link megnyitása külső programmal</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
@@ -5377,7 +5378,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Frame megnyitása külső programmal</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
@@ -5404,13 +5405,13 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Kép megnyitása új fülön</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Kép megnyitása új fülön a háttérben</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
@@ -5829,7 +5830,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Aktuális oldal megnyitása külső programmal</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -5951,7 +5952,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
@@ -6021,7 +6022,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Kép megnyitása új fülön</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="887"/>
@@ -6141,17 +6142,17 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="51"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem tudom ellenőrizni a frissítéseket. Hibás link: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="72"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem tudom ellenőrizni a frissítéseket: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="121"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem tudom ellenőrizni a verzió számot: %1</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="123"/>

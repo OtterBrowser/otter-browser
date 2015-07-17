@@ -1317,7 +1317,7 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>Soubory HTML (*.htm, *.html)</translation>
     </message>
 </context>
 <context>
@@ -2626,7 +2626,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Ukázat začáteční stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3609,13 +3609,14 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Dokument byl změněn.
+Chcete uložit změny nebo je zahodit?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
@@ -3710,7 +3711,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Přidat dlaždici</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
@@ -3764,7 +3765,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Začít s začáteční stránkou</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4366,17 +4367,17 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="144"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Je dostupná nová aktualizace %1 z kanálu %2!</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
         <source>New version of Otter Browser is available</source>
-        <translation type="unfinished"/>
+        <translation>Je dostupná nová verze Otter Browseru</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
         <source>Do you want to open a new tab with download page?</source>
-        <translation type="unfinished"/>
+        <translation>Chcete stránku se stahováním otevřít v novém listu?</translation>
     </message>
 </context>
 <context>
@@ -4384,12 +4385,12 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Zkontrolovat aktualizace</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Prověřují se aktualizace…</translation>
     </message>
 </context>
 <context>
@@ -4488,22 +4489,22 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="191"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Výchozí program</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Název: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresa: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="426"/>
@@ -4513,27 +4514,27 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="699"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nestanoven žádný vyhledávač</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu (bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu na pozadí (bez názvu)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu na pozadí (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
@@ -5324,12 +5325,12 @@ Vyberte jinou.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít s…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít odkaz ve vnějším programu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
@@ -5375,7 +5376,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít rámeček ve vnějším programu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
@@ -5402,13 +5403,13 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu na pozadí</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
@@ -5827,7 +5828,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít nynější stránku ve vnějším programu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -5949,7 +5950,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Zkontrolovat aktualizace…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
@@ -6019,7 +6020,7 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít obrázek v novém listu</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="887"/>
@@ -6139,17 +6140,17 @@ Vyberte jinou.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="51"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nelze ověřit aktualizace. Neplatná adresa (URL): %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="72"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nelze ověřit aktualizace: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="121"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nelze zpracovat číslo verze: %1</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="123"/>

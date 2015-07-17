@@ -1317,7 +1317,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTML failai (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -2621,7 +2621,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show home page</source>
-        <translation>Rodyti pradinį tinklapį</translation>
+        <translation>Rodyti pradinį puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
@@ -3609,7 +3609,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Įspėjimas</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
@@ -3710,7 +3710,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti Plytelę</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
@@ -3759,7 +3759,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation>Atverti pagrindinį tinklapį</translation>
+        <translation>Atverti pradinį puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
@@ -4371,12 +4371,12 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
         <source>New version of Otter Browser is available</source>
-        <translation type="unfinished"/>
+        <translation>Yra prieinama nauja Otter naršyklės versija</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
         <source>Do you want to open a new tab with download page?</source>
-        <translation type="unfinished"/>
+        <translation>Ar norite atverti naują kortelę su atsiuntimo puslapiu?</translation>
     </message>
 </context>
 <context>
@@ -4493,17 +4493,17 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Antraštė: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Adresas: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="426"/>
@@ -4523,7 +4523,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje kortelėje (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
@@ -4533,7 +4533,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje foninėje kortelėje (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
@@ -5490,7 +5490,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Go to Home Page</source>
-        <translation>Eiti į Pradinį Puslapį</translation>
+        <translation>Eiti į pradinį puslapį</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="329"/>
@@ -6019,7 +6019,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="887"/>
