@@ -29,7 +29,9 @@
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -394,6 +396,23 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+	else if (event->type() == QEvent::ToolTip && object == m_ui->bookmarksView->viewport())
+	{
+		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+
+		if (helpEvent)
+		{
+			const QModelIndex index = m_ui->bookmarksView->indexAt(helpEvent->pos());
+			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index));
+
+			if (bookmark)
+			{
+				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksView).width() / 2)), m_ui->bookmarksView, m_ui->bookmarksView->visualRect(index));
+			}
+
+			return true;
 		}
 	}
 

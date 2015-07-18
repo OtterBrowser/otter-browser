@@ -29,8 +29,10 @@
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -440,6 +442,23 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+	else if (event->type() == QEvent::ToolTip && object == m_ui->notesView->viewport())
+	{
+		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+
+		if (helpEvent)
+		{
+			const QModelIndex index = m_ui->notesView->indexAt(helpEvent->pos());
+			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index));
+
+			if (bookmark)
+			{
+				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->notesView).width() / 2)), m_ui->notesView, m_ui->notesView->visualRect(index));
+			}
+
+			return true;
 		}
 	}
 

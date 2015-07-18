@@ -108,7 +108,7 @@ QString elideText(const QString &text, QWidget *widget, int width)
 		width = (QApplication::desktop()->screenGeometry(widget).width() / 4);
 	}
 
-	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), qMax(100, width));
+	return (widget ? widget->fontMetrics() : QApplication::fontMetrics()).elidedText(text, Qt::ElideRight, qMax(100, width));
 }
 
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote)
