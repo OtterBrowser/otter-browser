@@ -435,7 +435,10 @@ void SourceViewerWidget::setZoom(int zoom)
 
 		setFont(font);
 
-		m_marginWidget->setFont(font);
+		if (m_marginWidget)
+		{
+			m_marginWidget->setFont(font);
+		}
 
 		emit zoomChanged(zoom);
 	}
