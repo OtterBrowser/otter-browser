@@ -231,10 +231,9 @@ void CookiesContentsWidget::removeCookies()
 
 void CookiesContentsWidget::removeDomainCookies()
 {
-	const QModelIndex index = m_ui->cookiesView->currentIndex();
-	QStandardItem *domainItem = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(index.parent()));
+	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
 
-	if (!domainItem)
+	if (indexes.isEmpty())
 	{
 		return;
 	}
@@ -242,13 +241,26 @@ void CookiesContentsWidget::removeDomainCookies()
 	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
 	QList<QNetworkCookie> cookies;
 
-	for (int i = 0; i < domainItem->rowCount(); ++i)
+	for (int i = 0; i < indexes.count(); ++i)
 	{
-		QStandardItem *cookieItem = domainItem->child(i, 0);
+		QStandardItem *domainItem = ((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
 
-		if (cookieItem)
+		if (domainItem)
 		{
-			cookies.append(getCookie(cookieItem->index()));
+			for (int j = 0; j < domainItem->rowCount(); ++j)
+			{
+				QStandardItem *cookieItem = domainItem->child(j, 0);
+
+				if (cookieItem)
+				{
+					const QNetworkCookie cookie = getCookie(cookieItem->index());
+
+					if (!cookies.contains(cookie))
+					{
+						cookies.append(cookie);
+					}
+				}
+			}
 		}
 	}
 
