@@ -1056,25 +1056,28 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 		case ActionsManager::ContextMenuAction:
 			{
-				const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
-
-				if (element.isNull())
+				if (getContextMenuReason() != QContextMenuEvent::Mouse)
 				{
-					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
-				}
-				else
-				{
-					QPoint clickPosition = element.geometry().center();
-					QWebFrame *frame = element.webFrame();
+					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
 
-					while (frame)
+					if (element.isNull())
 					{
-						clickPosition -= frame->scrollPosition();
-
-						frame = frame->parentFrame();
+						setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
 					}
+					else
+					{
+						QPoint clickPosition = element.geometry().center();
+						QWebFrame *frame = element.webFrame();
 
-					setClickPosition(clickPosition);
+						while (frame)
+						{
+							clickPosition -= frame->scrollPosition();
+
+							frame = frame->parentFrame();
+						}
+
+						setClickPosition(clickPosition);
+					}
 				}
 
 				showContextMenu(getClickPosition());

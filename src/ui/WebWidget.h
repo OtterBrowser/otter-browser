@@ -178,6 +178,7 @@ protected:
 	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
+	QContextMenuEvent::Reason getContextMenuReason() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
@@ -221,6 +222,7 @@ private:
 	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
+	QContextMenuEvent::Reason m_contextMenuReason;
 	int m_reloadTimer;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
