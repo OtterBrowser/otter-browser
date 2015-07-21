@@ -1317,7 +1317,7 @@ Kas tahad tõesti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>HTML-failid (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
         <source>Add note…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa märge...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
@@ -2621,12 +2621,12 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="44"/>
         <source>Show home page</source>
-        <translation>Näita alglehte</translation>
+        <translation>Näita kodulehte</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Näita alglehte</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3609,18 +3609,19 @@ Kas tahad kindlasti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Hoiatus</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Dokumenti on muudetud.
+Kas salvestad muudatused või mitte?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>Lähtekood</translation>
     </message>
 </context>
 <context>
@@ -3629,7 +3630,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="175"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="176"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa ruut...</translation>
     </message>
 </context>
 <context>
@@ -3637,72 +3638,72 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Alglehe eelistused</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Määra taustapilt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Teisendus:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
         <source>Image path:</source>
-        <translation type="unfinished"/>
+        <translation>Pildi asukoht:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="96"/>
         <source>Columns per row:</source>
-        <translation type="unfinished"/>
+        <translation>Rea pikkus:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="106"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automaatne</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="113"/>
         <source>Zoom level:</source>
-        <translation type="unfinished"/>
+        <translation>Suurendus:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="123"/>
         <source>%</source>
-        <translation type="unfinished"/>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Näita lisamisruutu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Pildid (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Sobitatud</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Keskele</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>Venitatud</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Ruutudena</translation>
     </message>
 </context>
 <context>
@@ -3710,37 +3711,37 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Lisa ruut</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Ava</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="461"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="462"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>Lae uuesti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="464"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="468"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Seadista...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="469"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa ruut...</translation>
     </message>
 </context>
 <context>
@@ -3764,7 +3765,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Alusta alglehega</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -3922,7 +3923,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="241"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="250"/>
@@ -3938,7 +3939,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/ToolBarDialog.ui" line="368"/>
         <location filename="../../src/ui/ToolBarDialog.ui" line="378"/>
         <source>Filter…</source>
-        <translation type="unfinished"/>
+        <translation>Filterda…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="44"/>
@@ -4055,17 +4056,17 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="559"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>Seadista...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="561"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Taasta algseadistus…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="578"/>
         <source>Remove…</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="582"/>
@@ -4143,7 +4144,7 @@ Kas kirjutad üle?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="31"/>
         <source>Quick Download…</source>
-        <translation type="unfinished"/>
+        <translation>Kiirallalaadimine…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="126"/>
@@ -4237,7 +4238,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Allikas: %1
+Sihtkoht: %2
+Maht: %3
+Tõmmatud: %4
+Kiirus: %5&lt;/div&gt;</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="244"/>
@@ -4362,17 +4367,17 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="144"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Uuendus %1 kanalist %2 nüüd saadaval!</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
         <source>New version of Otter Browser is available</source>
-        <translation type="unfinished"/>
+        <translation>Otterist on saadaval uus väljaanne</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
         <source>Do you want to open a new tab with download page?</source>
-        <translation type="unfinished"/>
+        <translation>Kas tahad avada allalaadimislehe uuel kaardil?</translation>
     </message>
 </context>
 <context>
@@ -4380,12 +4385,12 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Kontrolli uuendusi</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Uuenduste kontroll…</translation>
     </message>
 </context>
 <context>
@@ -4484,22 +4489,22 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="191"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Süsteemi põhibrauser</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Teadmata</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Pealkiri: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="283"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Aadress: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="426"/>
@@ -4509,27 +4514,27 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="699"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Ühtegi otsimootorit pole määratud</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt uuel kaardil (pealkirjata)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt uuel kaardil (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt taustakaardil (pealkirjata)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt taustakaardil (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
@@ -4559,7 +4564,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1145"/>
         <source>Custom…</source>
-        <translation type="unfinished"/>
+        <translation>Vahetatud…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1147"/>
@@ -4670,12 +4675,12 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="373"/>
         <source>Add…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="383"/>
         <source>Edit…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda…</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="393"/>
@@ -4986,23 +4991,23 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="161"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud käivitada &quot;%1&quot;, fail ei ole käivitatav</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="191"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud käivitada &quot;%1&quot; (argumendid: &quot;%2&quot;)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="236"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Vale järelliide MIME-tüübil %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="298"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="348"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud käivitada rakendust MIME-tüüpidele %1: %2</translation>
     </message>
 </context>
 <context>
@@ -5010,7 +5015,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/WorkspaceWidget.cpp" line="319"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Korrasta</translation>
     </message>
 </context>
 <context>
@@ -5134,12 +5139,12 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>Open…</source>
-        <translation type="unfinished"/>
+        <translation>Ava…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Save…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="268"/>
@@ -5160,37 +5165,37 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Maximize</source>
-        <translation type="unfinished"/>
+        <translation>Suurenda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Maximize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Suurenda kaart</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Vähenda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Minimize Tab</source>
-        <translation type="unfinished"/>
+        <translation>Vähenda kaart</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Restore</source>
-        <translation type="unfinished"/>
+        <translation>Taasta</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Restore Tab</source>
-        <translation type="unfinished"/>
+        <translation>Taasta kaart</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Stay on Top</source>
-        <translation type="unfinished"/>
+        <translation>Kõige pealmine</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
@@ -5225,27 +5230,27 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Maximize All</source>
-        <translation type="unfinished"/>
+        <translation>Suurenda kõik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Minimize All</source>
-        <translation type="unfinished"/>
+        <translation>Vähenda kõik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Restore All</source>
-        <translation type="unfinished"/>
+        <translation>Taasta kõik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Cascade</source>
-        <translation type="unfinished"/>
+        <translation>Kaskaadi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Paani</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="285"/>
@@ -5255,12 +5260,12 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Manage Sessions…</source>
-        <translation type="unfinished"/>
+        <translation>Halda sessioone…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Save Current Session…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta praegune sessioon</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -5320,12 +5325,12 @@ Vali muu koht.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Ava programmis</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Ava link välimises rakenduses</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
@@ -5336,12 +5341,12 @@ Vali muu koht.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="300"/>
         <location filename="../../src/ui/WebWidget.cpp" line="779"/>
         <source>Bookmark Link…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta URL järgedesse…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Save Link Target As…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta fail kui…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="302"/>
@@ -5371,7 +5376,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Ava freim välimises rakenduses</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
@@ -5393,23 +5398,23 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>Vaata freimi lähtekoodi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt uuel kaardil</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt taustakaardil</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Save Image…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta pilt…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="314"/>
@@ -5429,12 +5434,12 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Image Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Pildi omadused…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Save Media…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta meedia…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="319"/>
@@ -5611,7 +5616,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Find…</source>
-        <translation type="unfinished"/>
+        <translation>Otsi…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
@@ -5642,7 +5647,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Create Search…</source>
-        <translation type="unfinished"/>
+        <translation>Loo otsing…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="361"/>
@@ -5707,7 +5712,7 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Print…</source>
-        <translation type="unfinished"/>
+        <translation>Prindi…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="374"/>
@@ -5748,7 +5753,7 @@ Vali muu koht.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <location filename="../../src/ui/WebWidget.cpp" line="578"/>
         <source>Add Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Lisa järg…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="382"/>
