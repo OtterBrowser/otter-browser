@@ -119,6 +119,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 		m_webView->settings()->setIconDatabasePath(QString());
 	}
 
+	QShortcut *selectAllShortcut = new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut);
+
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
 	optionChanged(QLatin1String("Content/BackgroundColor"), SettingsManager::getValue(QLatin1String("Content/BackgroundColor")));
 	optionChanged(QLatin1String("History/BrowsingLimitAmountWindow"), SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountWindow")));
@@ -152,6 +154,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
+	connect(selectAllShortcut, SIGNAL(activated()), getAction(ActionsManager::SelectAllAction), SLOT(trigger()));
 }
 
 QtWebKitWebWidget::~QtWebKitWebWidget()
@@ -692,7 +695,6 @@ void QtWebKitWebWidget::clearSelection()
 		m_page->mainFrame()->evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
 	}
 }
-
 
 void QtWebKitWebWidget::goToHistoryIndex(int index)
 {

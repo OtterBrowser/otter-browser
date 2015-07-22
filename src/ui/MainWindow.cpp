@@ -11,11 +11,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -1018,6 +1018,8 @@ void MainWindow::updateShortcuts()
 	m_actionShortcuts.clear();
 
 	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	QList<QKeySequence> standardShortcuts;
+	standardShortcuts << QKeySequence(QKeySequence::Copy) << QKeySequence(QKeySequence::Cut) << QKeySequence(QKeySequence::Delete) << QKeySequence(QKeySequence::Paste) << QKeySequence(QKeySequence::Redo) << QKeySequence(QKeySequence::SelectAll) << QKeySequence(QKeySequence::Undo);
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
@@ -1026,11 +1028,14 @@ void MainWindow::updateShortcuts()
 
 		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
 		{
-			QShortcut *shortcut = new QShortcut(definitions[i].shortcuts[j], this);
+			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
+			{
+				QShortcut *shortcut = new QShortcut(definitions[i].shortcuts[j], this);
 
-			shortcuts.append(shortcut);
+				shortcuts.append(shortcut);
 
-			connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
+				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
+			}
 		}
 
 		m_actionShortcuts.append(qMakePair(i, shortcuts));
