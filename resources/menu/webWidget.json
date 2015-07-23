@@ -110,6 +110,7 @@
                 "OpenLink",
                 "separator",
                 "CopyLinkToClipboard",
+                "separator",
                 "InspectElement",
                 "separator"
             ]
@@ -131,6 +132,7 @@
                 "separator",
                 "SaveLinkToDisk",
                 "SaveLinkToDownloads",
+                "separator",
                 "InspectElement",
                 "separator"
             ]
