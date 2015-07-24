@@ -256,7 +256,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewTabOpen);
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
 			}
 
 			break;
@@ -270,7 +270,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewWindowOpen);
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewWindowOpen));
 			}
 
 			break;

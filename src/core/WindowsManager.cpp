@@ -878,7 +878,7 @@ QList<ClosedWindow> WindowsManager::getClosedWindows() const
 
 OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
 {
-	const bool useNewTab = SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool();
+	const bool useNewTab = (!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
 
 	if (modifiers == Qt::NoModifier)
 	{
