@@ -341,14 +341,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::OpenFrameInCurrentTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				setUrl(m_hitResult.frameUrl);
+				setUrl(m_hitResult.frameUrl, CurrentTabOpen);
 			}
 
 			break;
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, CurrentTabOpen);
+				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
 			}
 
 			break;
@@ -397,7 +397,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, NewTabOpen);
+				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
 			}
 
 			break;
