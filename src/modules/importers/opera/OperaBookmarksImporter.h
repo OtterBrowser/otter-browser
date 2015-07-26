@@ -53,6 +53,8 @@ public:
 	QString getFileFilter() const;
 	QString getSuggestedPath() const;
 	QString getBrowser() const;
+	QUrl getHomePage() const;
+	QIcon getIcon() const;
 
 public slots:
 	bool import();

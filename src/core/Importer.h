@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #ifndef OTTER_IMPORTER_H
 #define OTTER_IMPORTER_H
 
-#include <QtCore/QObject>
+#include "Addon.h"
 
 namespace Otter
 {
@@ -30,18 +30,18 @@ enum ImportType
 	OtherImport = 0,
 	FullImport = 1,
 	BookmarksImport = 2,
-	SettingsImport = 3,
-	PasswordsImport = 4,
-	SearchEnginesImport = 5,
-	SessionsImport = 6,
-	CookiesImport = 7,
-	HistoryImport = 8,
-	FeedsImport = 9,
-	MailImport = 10,
-	NotesImport = 11
+	SettingsImport = 4,
+	PasswordsImport = 8,
+	SearchEnginesImport = 16,
+	SessionsImport = 32,
+	CookiesImport = 64,
+	HistoryImport = 128,
+	FeedsImport = 256,
+	MailImport = 512,
+	NotesImport = 1024
 };
 
-class Importer : public QObject
+class Importer : public Addon
 {
 	Q_OBJECT
 
@@ -49,12 +49,10 @@ public:
 	explicit Importer(QObject *parent = NULL);
 
 	virtual QWidget* getOptionsWidget() = 0;
-	virtual QString getTitle() const = 0;
-	virtual QString getDescription() const = 0;
-	virtual QString getVersion() const = 0;
 	virtual QString getFileFilter() const = 0;
 	virtual QString getSuggestedPath() const = 0;
 	virtual QString getBrowser() const = 0;
+	QUrl getUpdateUrl() const;
 	virtual ImportType getType() const = 0;
 
 public slots:

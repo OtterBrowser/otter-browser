@@ -195,6 +195,16 @@ QString HtmlBookmarksImporter::getBrowser() const
 	return QLatin1String("other");
 }
 
+QUrl HtmlBookmarksImporter::getHomePage() const
+{
+	return QUrl(QLatin1String("http://otter-browser.org/"));
+}
+
+QIcon HtmlBookmarksImporter::getIcon() const
+{
+	return QIcon();
+}
+
 bool HtmlBookmarksImporter::import()
 {
 	QWebPage page;

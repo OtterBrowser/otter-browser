@@ -54,6 +54,8 @@ public:
 	QString getFileFilter() const;
 	QString getSuggestedPath() const;
 	QString getBrowser() const;
+	QUrl getHomePage() const;
+	QIcon getIcon() const;
 	ImportType getType() const;
 
 public slots:

@@ -142,6 +142,16 @@ QString OperaNotesImporter::getBrowser() const
 	return QLatin1String("opera");
 }
 
+QUrl OperaNotesImporter::getHomePage() const
+{
+	return QUrl(QLatin1String("http://otter-browser.org/"));
+}
+
+QIcon OperaNotesImporter::getIcon() const
+{
+	return QIcon();
+}
+
 ImportType OperaNotesImporter::getType() const
 {
 	return NotesImport;

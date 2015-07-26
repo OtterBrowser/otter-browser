@@ -113,6 +113,16 @@ QString OperaBookmarksImporter::getBrowser() const
 	return QLatin1String("opera");
 }
 
+QUrl OperaBookmarksImporter::getHomePage() const
+{
+	return QUrl(QLatin1String("http://otter-browser.org/"));
+}
+
+QIcon OperaBookmarksImporter::getIcon() const
+{
+	return QIcon();
+}
+
 bool OperaBookmarksImporter::import()
 {
 	QTextStream stream(m_file);
