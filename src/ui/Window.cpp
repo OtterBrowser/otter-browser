@@ -694,11 +694,9 @@ SessionWindow Window::getSession() const
 
 		if (webWidget)
 		{
-			const int reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
-
-			if (reloadTime >= 0)
+			if (webWidget->getWebWidget()->hasOption(QLatin1String("Content/PageReloadTime")))
 			{
-				session.reloadTime = reloadTime;
+				session.reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
 			}
 
 			if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))
