@@ -231,11 +231,6 @@ void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType ty
 		{
 			pageLoadStarted();
 			handleHistory();
-
-			if (type == QWebPage::NavigationTypeLinkClicked || type == QWebPage::NavigationTypeFormSubmitted)
-			{
-				m_isTyped = false;
-			}
 		}
 
 		m_isNavigating = true;
@@ -479,6 +474,11 @@ void QtWebKitWebWidget::handleHistory()
 		data.append(HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
 		data.append(getZoom());
 		data.append(QPoint(0, 0));
+
+		if (m_isTyped)
+		{
+			m_isTyped = false;
+		}
 
 		m_page->history()->currentItem().setUserData(data);
 
