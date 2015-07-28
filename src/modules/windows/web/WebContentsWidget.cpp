@@ -787,6 +787,11 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
 	}
 
+	if (m_webWidget->isLoading())
+	{
+		setLoading(true);
+	}
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_webWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
