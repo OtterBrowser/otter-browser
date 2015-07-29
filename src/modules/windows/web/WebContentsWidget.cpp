@@ -730,6 +730,8 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		m_webWidget->deleteLater();
 
 		layout()->removeWidget(m_webWidget);
+
+		setLoading(false);
 	}
 
 	Window *window = qobject_cast<Window*>(parentWidget());
