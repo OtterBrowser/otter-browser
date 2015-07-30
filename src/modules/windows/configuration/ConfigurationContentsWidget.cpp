@@ -146,9 +146,9 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 	}
 }
 
-void ConfigurationContentsWidget::triggerAction(int identifier, bool checked)
+void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

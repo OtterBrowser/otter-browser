@@ -225,9 +225,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
 }
 
-void BookmarksContentsWidget::triggerAction(int identifier, bool checked)
+void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

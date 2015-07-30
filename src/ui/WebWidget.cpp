@@ -85,7 +85,14 @@ void WebWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(action->getIdentifier(), (action->isCheckable() && action->isChecked()));
+		QVariantMap parameters;
+
+		if (action->isCheckable())
+		{
+			parameters[QLatin1String("isChecked")] = action->isChecked();
+		}
+
+		triggerAction(action->getIdentifier(), parameters);
 	}
 }
 

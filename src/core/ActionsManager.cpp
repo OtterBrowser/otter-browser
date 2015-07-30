@@ -511,13 +511,13 @@ void ActionsManager::loadProfiles()
 	emit m_instance->shortcutsChanged();
 }
 
-void ActionsManager::triggerAction(int identifier, QObject *parent, bool checked)
+void ActionsManager::triggerAction(int identifier, QObject *parent, const QVariantMap &parameters)
 {
 	MainWindow *window = MainWindow::findMainWindow(parent);
 
 	if (window)
 	{
-		window->triggerAction(identifier, checked);
+		window->triggerAction(identifier, parameters);
 	}
 }
 

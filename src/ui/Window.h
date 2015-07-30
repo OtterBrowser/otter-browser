@@ -95,7 +95,7 @@ public:
 	bool isPrivate() const;
 
 public slots:
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void close();
 	void search(const QString &query, const QString &engine);
 	void markActive();

@@ -466,9 +466,9 @@ void TransfersContentsWidget::print(QPrinter *printer)
 	m_ui->transfersView->render(printer);
 }
 
-void TransfersContentsWidget::triggerAction(int identifier, bool checked)
+void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

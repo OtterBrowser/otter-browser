@@ -205,7 +205,10 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
 	if (action == InspectElement && m_widget)
 	{
-		m_widget->triggerAction(ActionsManager::InspectPageAction, true);
+		QVariantMap parameters;
+		parameters[QLatin1String("isChecked")] = true;
+
+		m_widget->triggerAction(ActionsManager::InspectPageAction, parameters);
 	}
 
 	QWebPage::triggerAction(action, checked);

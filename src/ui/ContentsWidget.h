@@ -66,7 +66,7 @@ public:
 	virtual bool isPrivate() const;
 
 public slots:
-	virtual void triggerAction(int identifier, bool checked = false);
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	virtual void print(QPrinter *printer) = 0;
 	virtual void goToHistoryIndex(int index);
 	void showDialog(ContentsDialog *dialog);

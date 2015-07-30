@@ -49,7 +49,7 @@ public:
 	QIcon getIcon() const;
 
 public slots:
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 
 protected:
 	void changeEvent(QEvent *event);

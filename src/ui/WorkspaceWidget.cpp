@@ -186,7 +186,7 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void WorkspaceWidget::triggerAction(int identifier, bool checked)
+void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (!m_mdi)
 	{
@@ -222,7 +222,7 @@ void WorkspaceWidget::triggerAction(int identifier, bool checked)
 		case ActionsManager::AlwaysOnTopTabAction:
 			if (m_mdi->activeSubWindow())
 			{
-				if (checked)
+				if (parameters.value(QLatin1String("isChecked")).toBool())
 				{
 					m_mdi->activeSubWindow()->setWindowFlags(m_mdi->activeSubWindow()->windowFlags() | Qt::WindowStaysOnTopHint);
 				}

@@ -328,9 +328,9 @@ void CookiesContentsWidget::print(QPrinter *printer)
 	m_ui->cookiesView->render(printer);
 }
 
-void CookiesContentsWidget::triggerAction(int identifier, bool checked)
+void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

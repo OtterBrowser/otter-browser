@@ -58,9 +58,9 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	connect(m_sourceViewer, SIGNAL(copyAvailable(bool)), this, SLOT(updateEditActions()));
 }
 
-void SourceViewerWebWidget::triggerAction(int identifier, bool checked)
+void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

@@ -92,7 +92,7 @@ void Window::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void Window::triggerAction(int identifier, bool checked)
+void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
 	{
@@ -175,7 +175,7 @@ void Window::triggerAction(int identifier, bool checked)
 	}
 	else
 	{
-		getContentsWidget()->triggerAction(identifier, checked);
+		getContentsWidget()->triggerAction(identifier, parameters);
 	}
 }
 

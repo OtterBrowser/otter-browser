@@ -108,9 +108,9 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void HistoryContentsWidget::triggerAction(int identifier, bool checked)
+void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{

@@ -64,7 +64,7 @@ public slots:
 	void clearOptions();
 	void clearSelection();
 	void goToHistoryIndex(int index);
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	void setOption(const QString &key, const QVariant &value);
 	void setScrollPosition(const QPoint &position);

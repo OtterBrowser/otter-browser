@@ -389,7 +389,10 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 
 void QtWebKitWebWidget::hideInspector()
 {
-	triggerAction(ActionsManager::InspectPageAction, false);
+	QVariantMap parameters;
+	parameters[QLatin1String("isChecked")] = false;
+
+	triggerAction(ActionsManager::InspectPageAction, parameters);
 }
 
 void QtWebKitWebWidget::linkHovered(const QString &link)
@@ -701,7 +704,7 @@ void QtWebKitWebWidget::goToHistoryIndex(int index)
 	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
 }
 
-void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
+void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)
 	{
@@ -994,11 +997,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 			break;
 #if QTWEBKIT_VERSION >= 0x050200
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, checked);
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, parameters.value(QLatin1String("isChecked")).toBool());
 
 			break;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop, checked);
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked")).toBool());
 
 			break;
 		case ActionsManager::MediaPlayPauseAction:
@@ -1345,9 +1348,9 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 				connect(m_inspectorCloseButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
 			}
 
-			m_inspector->setVisible(checked);
+			m_inspector->setVisible(parameters.value(QLatin1String("isChecked")).toBool());
 
-			if (checked)
+			if (parameters.value(QLatin1String("isChecked")).toBool())
 			{
 				m_inspectorCloseButton->setFixedSize(16, 16);
 				m_inspectorCloseButton->show();
@@ -1359,15 +1362,20 @@ void QtWebKitWebWidget::triggerAction(int identifier, bool checked)
 				m_inspectorCloseButton->hide();
 			}
 
-			getAction(ActionsManager::InspectPageAction)->setChecked(checked);
+			getAction(ActionsManager::InspectPageAction)->setChecked(parameters.value(QLatin1String("isChecked")).toBool());
 
 			emit progressBarGeometryChanged();
 
 			break;
 		case ActionsManager::InspectElementAction:
-			triggerAction(ActionsManager::InspectPageAction, true);
+			{
+				QVariantMap inspectPageParameters;
+				inspectPageParameters[QLatin1String("isChecked")] = true;
 
-			m_webView->triggerPageAction(QWebPage::InspectElement);
+				triggerAction(ActionsManager::InspectPageAction, inspectPageParameters);
+
+				m_webView->triggerPageAction(QWebPage::InspectElement);
+			}
 
 			break;
 		case ActionsManager::WebsitePreferencesAction:

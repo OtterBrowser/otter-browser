@@ -313,7 +313,7 @@ void WebContentsWidget::goToHistoryIndex(int index)
 	m_webWidget->goToHistoryIndex(index);
 }
 
-void WebContentsWidget::triggerAction(int identifier, bool checked)
+void WebContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)
 	{
@@ -506,7 +506,7 @@ void WebContentsWidget::triggerAction(int identifier, bool checked)
 			}
 			else
 			{
-				m_webWidget->triggerAction(identifier, checked);
+				m_webWidget->triggerAction(identifier, parameters);
 			}
 
 			break;

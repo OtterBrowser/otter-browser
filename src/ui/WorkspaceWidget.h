@@ -68,7 +68,7 @@ public:
 	Window* getActiveWindow();
 
 public slots:
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void markRestored();
 	void updateActions();
 

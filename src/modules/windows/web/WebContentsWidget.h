@@ -83,7 +83,7 @@ public:
 
 public slots:
 	void goToHistoryIndex(int index);
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setOption(const QString &key, const QVariant &value);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);

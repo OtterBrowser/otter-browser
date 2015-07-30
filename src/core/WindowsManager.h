@@ -90,7 +90,7 @@ public:
 	bool hasUrl(const QUrl &url, bool activate = false);
 
 public slots:
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);

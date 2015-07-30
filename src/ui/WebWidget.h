@@ -150,7 +150,7 @@ public:
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
 public slots:
-	virtual void triggerAction(int identifier, bool checked = false) = 0;
+	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) = 0;
 	virtual void clearOptions();
 	virtual void clearSelection() = 0;
 	virtual void goToHistoryIndex(int index) = 0;

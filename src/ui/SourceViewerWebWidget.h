@@ -55,7 +55,7 @@ public:
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 
 public slots:
-	void triggerAction(int identifier, bool checked = false);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void clearSelection();
 	void goToHistoryIndex(int index);
 	void setOption(const QString &key, const QVariant &value);

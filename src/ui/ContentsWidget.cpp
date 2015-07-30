@@ -89,10 +89,10 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void ContentsWidget::triggerAction(int identifier, bool checked)
+void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	Q_UNUSED(identifier)
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 }
 
 void ContentsWidget::triggerAction()
@@ -101,7 +101,14 @@ void ContentsWidget::triggerAction()
 
 	if (action)
 	{
-		triggerAction(action->getIdentifier(), action->isChecked());
+		QVariantMap parameters;
+
+		if (action->isCheckable())
+		{
+			parameters[QLatin1String("isChecked")] = action->isChecked();
+		}
+
+		triggerAction(action->getIdentifier(), parameters);
 	}
 }
 

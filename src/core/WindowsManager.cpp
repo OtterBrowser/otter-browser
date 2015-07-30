@@ -43,7 +43,7 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 {
 }
 
-void WindowsManager::triggerAction(int identifier, bool checked)
+void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
@@ -126,7 +126,7 @@ void WindowsManager::triggerAction(int identifier, bool checked)
 			}
 			else if (window)
 			{
-				window->triggerAction(identifier, checked);
+				window->triggerAction(identifier, parameters);
 			}
 	}
 }

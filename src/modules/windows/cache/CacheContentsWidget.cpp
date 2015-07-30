@@ -84,9 +84,9 @@ void CacheContentsWidget::print(QPrinter *printer)
 	m_ui->cacheView->render(printer);
 }
 
-void CacheContentsWidget::triggerAction(int identifier, bool checked)
+void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(checked)
+	Q_UNUSED(parameters)
 
 	switch (identifier)
 	{
