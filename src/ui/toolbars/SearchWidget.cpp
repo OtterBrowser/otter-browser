@@ -85,16 +85,11 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 
 void SearchWidget::changeEvent(QEvent *event)
 {
-	QWidget::changeEvent(event);
+	QComboBox::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange && itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
-		case QEvent::LanguageChange:
-			lineEdit()->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
-
-			break;
-		default:
-			break;
+		lineEdit()->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
 	}
 }
 

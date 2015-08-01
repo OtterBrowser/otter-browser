@@ -53,6 +53,7 @@ public slots:
 	void setWindow(Window *window = NULL);
 
 protected:
+	void changeEvent(QEvent *event);
 	void timerEvent(QTimerEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);

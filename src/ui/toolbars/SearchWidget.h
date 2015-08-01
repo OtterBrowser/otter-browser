@@ -40,7 +40,6 @@ class SearchWidget : public QComboBox
 public:
 	explicit SearchWidget(Window *window, QWidget *parent = NULL);
 
-	void changeEvent(QEvent *event);
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
 
@@ -49,6 +48,7 @@ public slots:
 	void setSearchEngine(const QString &engine = QString());
 
 protected:
+	void changeEvent(QEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void focusInEvent(QFocusEvent *event);

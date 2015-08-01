@@ -103,6 +103,16 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
 }
 
+void AddressWidget::changeEvent(QEvent *event)
+{
+	QComboBox::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange && !m_isUsingSimpleMode)
+	{
+		lineEdit()->setPlaceholderText(tr("Enter address or search…"));
+	}
+}
+
 void AddressWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_removeModelTimer)
