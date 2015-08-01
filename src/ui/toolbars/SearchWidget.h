@@ -40,6 +40,7 @@ class SearchWidget : public QComboBox
 public:
 	explicit SearchWidget(Window *window, QWidget *parent = NULL);
 
+	void changeEvent(QEvent *event);
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
 

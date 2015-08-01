@@ -83,6 +83,21 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	setWindow(window);
 }
 
+void SearchWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	switch (event->type())
+	{
+		case QEvent::LanguageChange:
+			lineEdit()->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
+
+			break;
+		default:
+			break;
+	}
+}
+
 void SearchWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
