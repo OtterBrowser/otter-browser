@@ -17,34 +17,36 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_ADDONSMANAGER_H
-#define OTTER_ADDONSMANAGER_H
-
-#include <QtCore/QObject>
+#include "PasswordsManager.h"
+#include "../ui/WebWidget.h"
 
 namespace Otter
 {
 
-class WebBackend;
+PasswordsManager* PasswordsManager::m_instance = NULL;
 
-class AddonsManager : public QObject
+PasswordsManager::PasswordsManager(QObject *parent) : QObject(parent)
 {
-	Q_OBJECT
-
-public:
-	static void createInstance(QObject *parent = NULL);
-	static void registerWebBackend(WebBackend *backend, const QString &name);
-	static WebBackend* getWebBackend(const QString &backend = QString());
-	static QStringList getWebBackends();
-
-protected:
-	explicit AddonsManager(QObject *parent = NULL);
-
-private:
-	static AddonsManager *m_instance;
-	static QHash<QString, WebBackend*> m_webBackends;
-};
-
 }
 
-#endif
+void PasswordsManager::createInstance(QObject *parent)
+{
+	if (!m_instance)
+	{
+		m_instance = new PasswordsManager(parent);
+	}
+}
+
+void PasswordsManager::addPassword(const QUrl &url, const QMap<QString, QString> &values, PasswordsManager::PasswordType type)
+{
+	Q_UNUSED(url)
+	Q_UNUSED(values)
+	Q_UNUSED(type)
+}
+
+void PasswordsManager::applyPassword(WebWidget *widget)
+{
+	Q_UNUSED(widget)
+}
+
+}

@@ -102,6 +102,7 @@ set(otter_src
 	src/core/NetworkProxyFactory.cpp
 	src/core/NotesManager.cpp
 	src/core/NotificationsManager.cpp
+	src/core/PasswordsManager.cpp
 	src/core/PlatformIntegration.cpp
 	src/core/SearchesManager.cpp
 	src/core/SearchSuggester.cpp

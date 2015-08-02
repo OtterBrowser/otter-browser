@@ -95,6 +95,7 @@ SOURCES += src/main.cpp \
     src/core/NetworkProxyFactory.cpp \
     src/core/NotesManager.cpp \
     src/core/NotificationsManager.cpp \
+    src/core/PasswordsManager.cpp \
     src/core/PlatformIntegration.cpp \
     src/core/SearchesManager.cpp \
     src/core/SearchSuggester.cpp \
@@ -237,6 +238,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/NetworkProxyFactory.h \
     src/core/NotesManager.h \
     src/core/NotificationsManager.h \
+    src/core/PasswordsManager.h \
     src/core/PlatformIntegration.h \
     src/core/SearchesManager.h \
     src/core/SearchSuggester.h \
