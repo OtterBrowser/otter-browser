@@ -293,7 +293,7 @@ void WebWidget::clearOptions()
 void WebWidget::openUrl(const QUrl &url, OpenHints hints)
 {
 	WebWidget *widget = clone(false);
-	widget->setRequestedUrl(url);
+	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);
 }
