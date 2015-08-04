@@ -59,6 +59,13 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
 {
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+
+	if (!toolBar)
+	{
+		m_isUsingSimpleMode = true;
+	}
+
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
@@ -76,8 +83,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	lineEdit()->setMouseTracking(true);
 	lineEdit()->installEventFilter(this);
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
-
 	if (toolBar)
 	{
 		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
@@ -91,10 +96,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 		{
 			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 		}
-	}
-	else
-	{
-		m_isUsingSimpleMode = true;
 	}
 
 	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
@@ -626,8 +627,11 @@ void AddressWidget::setText(const QString &text)
 
 void AddressWidget::setUrl(const QUrl &url, bool force)
 {
-	updateBookmark();
-	updateFeeds();
+	if (!m_isUsingSimpleMode)
+	{
+		updateBookmark();
+		updateFeeds();
+	}
 
 	if ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript"))
 	{
@@ -698,7 +702,7 @@ void AddressWidget::setWindow(Window *window)
 			connect(window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 	}
-	else if (mainWindow)
+	else if (mainWindow && !m_isUsingSimpleMode)
 	{
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
 		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,OpenHints)));
