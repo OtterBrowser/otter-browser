@@ -131,7 +131,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 
 	if (isViewingMedia && media.tagName().toLower() == QLatin1String("img"))
 	{
-		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:-webkit-flex;-webkit-align-items:center;} img {display:none;} img + img {display:block;margin:auto;max-width:100%;max-height:100%;-webkit-user-select:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {max-width:none;max-height:none;cursor:-webkit-zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {cursor:-webkit-zoom-in;}");
+		styleSheet += QLatin1String("html {width:100%;height:100%;} body {display:-webkit-flex;margin:0;padding:0;-webkit-align-items:center;text-align:center;} img {max-width:100%;max-height:100%;margin:auto;-webkit-user-select:none;} .zoomedIn {display:table;} .zoomedIn body {display:table-cell;vertical-align:middle;} .zoomedIn img {max-width:none;max-height:none;cursor:-webkit-zoom-out;} .zoomedIn .drag {cursor:move;} .zoomedOut img {cursor:-webkit-zoom-in;}");
 
 		settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);

@@ -1,19 +1,14 @@
 (function(window)
 {
-	var originalImage = document.querySelector('img');
+	var image = document.querySelector('img');
 	var drag = null;
 	var dragEnd = null;
 	var dragInterval = 50;
 	var ignore = false;
 
-	if (originalImage && !originalImage.classList.contains('imageViewer'))
+	if (image && !image.classList.contains('imageViewer'))
 	{
-		originalImage.classList.add('imageViewer');
-
-		var image = originalImage.cloneNode(true);
-		image.removeAttribute('width');
-		image.removeAttribute('height');
-		image.removeAttribute('style');
+		image.classList.add('imageViewer');
 
 		image.addEventListener('click', function(event)
 		{
@@ -41,7 +36,6 @@
 				if (document.documentElement.classList.contains('zoomedOut') || (image.classList.contains('loaded') && document.documentElement.classList.length === 0))
 				{
 					var imageComputedSize = [image.clientWidth, image.clientHeight];
-
 					var ratioX = (imageComputedSize[0] / imageSize[0]);
 					var ratioY = (imageComputedSize[1] / imageSize[1]);
 					var scrollToX = (event.offsetX / ratioX) - (imageComputedSize[0] / 2);
@@ -62,15 +56,10 @@
 			ignore = false;
 		});
 
-		image.addEventListener('load', function()
-		{
-			image.click();
-			image.classList.add('loaded');
-		});
-
 		this.addEventListener('resize', function()
 		{
 			ignore = true;
+
 			image.click();
 		});
 
@@ -117,6 +106,30 @@
 			drag = null;
 		});
 
-		document.body.appendChild(image);
+		if (image.complete)
+		{
+			image.click();
+			image.classList.add('loaded');
+		}
+		else
+		{
+			image.addEventListener('load', function()
+			{
+				image.click();
+				image.classList.add('loaded');
+			});
+		}
+
+		image.removeAttribute('width');
+		image.removeAttribute('height');
+		image.removeAttribute('style');
+
+		var observer = new MutationObserver(function()
+		{
+			image.removeAttribute('width');
+			image.removeAttribute('height');
+			image.removeAttribute('style');
+		});
+		observer.observe(image, { attributes: true });
 	}
 })(window);
