@@ -79,10 +79,10 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	QString string(url().toString());
 	string.truncate(1000);
 
-	const QRegularExpressionMatch match = QRegularExpression(QStringLiteral("(<img style=\"-webkit-user-select: none; cursor: zoom-in;\"|<body><video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result);
+	const QRegularExpressionMatch match = QRegularExpression(QStringLiteral(">(<img style=\"-webkit-user-select: none;(?: cursor: zoom-in;)?\"|<video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result);
 	const bool isViewingMedia = match.hasMatch();
 
-	if (isViewingMedia && match.captured().startsWith(QLatin1String("<img")))
+	if (isViewingMedia && match.captured().startsWith(QLatin1String("><img")))
 	{
 		settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
 		settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
