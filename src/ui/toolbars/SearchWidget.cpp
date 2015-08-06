@@ -153,14 +153,7 @@ void SearchWidget::focusInEvent(QFocusEvent *event)
 {
 	QComboBox::focusInEvent(event);
 
-	if (!lineEdit()->text().trimmed().isEmpty() && (event->reason() == Qt::MouseFocusReason || event->reason() == Qt::ShortcutFocusReason || event->reason() == Qt::TabFocusReason || event->reason() == Qt::BacktabFocusReason) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
-	{
-		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
-	}
-	else if (event->reason() != Qt::PopupFocusReason)
-	{
-		lineEdit()->deselect();
-	}
+	activate(event->reason());
 }
 
 void SearchWidget::keyPressEvent(QKeyEvent *event)
@@ -429,6 +422,25 @@ void SearchWidget::restoreCurrentSearchEngine()
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+}
+
+void SearchWidget::activate(Qt::FocusReason reason)
+{
+	if (!hasFocus() && isEnabled() && focusPolicy() != Qt::NoFocus)
+	{
+		setFocus(reason);
+
+		return;
+	}
+
+	if (!lineEdit()->text().trimmed().isEmpty() && (reason == Qt::MouseFocusReason || reason == Qt::ShortcutFocusReason || reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	{
+		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
+	}
+	else if (reason != Qt::PopupFocusReason)
+	{
+		lineEdit()->deselect();
+	}
 }
 
 void SearchWidget::setSearchEngine(const QString &engine)

@@ -48,6 +48,7 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
+	void activate(Qt::FocusReason reason);
 	void setText(const QString &text);
 	void setUrl(const QUrl &url, bool force = false);
 	void setWindow(Window *window = NULL);

@@ -96,18 +96,18 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
 	{
-		m_searchWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
+		m_searchWidgets.at(0)->activate(Qt::ShortcutFocusReason);
 	}
 	else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 	{
 		if (identifier == ActionsManager::ActivateAddressFieldAction)
 		{
-			m_addressWidgets.at(0)->setFocus(Qt::ShortcutFocusReason);
+			m_addressWidgets.at(0)->activate(Qt::ShortcutFocusReason);
 		}
 		else if (identifier == ActionsManager::ActivateSearchFieldAction)
 		{
 			m_addressWidgets.at(0)->setText(QLatin1String("? "));
-			m_addressWidgets.at(0)->setFocus(Qt::OtherFocusReason);
+			m_addressWidgets.at(0)->activate(Qt::OtherFocusReason);
 		}
 		else if (identifier == ActionsManager::GoAction)
 		{

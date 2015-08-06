@@ -44,6 +44,7 @@ public:
 	QString getCurrentSearchEngine() const;
 
 public slots:
+	void activate(Qt::FocusReason reason);
 	void setWindow(Window *window = NULL);
 	void setSearchEngine(const QString &engine = QString());
 

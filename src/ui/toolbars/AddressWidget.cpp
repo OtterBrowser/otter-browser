@@ -210,14 +210,7 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 
 	QComboBox::focusInEvent(event);
 
-	if (!lineEdit()->text().trimmed().isEmpty() && (event->reason() == Qt::MouseFocusReason || event->reason() == Qt::ShortcutFocusReason || (!m_isUsingSimpleMode && (event->reason() == Qt::TabFocusReason || event->reason() == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
-	{
-		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
-	}
-	else if (event->reason() != Qt::PopupFocusReason)
-	{
-		lineEdit()->deselect();
-	}
+	activate(event->reason());
 }
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
@@ -605,6 +598,25 @@ void AddressWidget::updateIcons()
 	}
 
 	lineEdit()->setTextMargins(margins);
+}
+
+void AddressWidget::activate(Qt::FocusReason reason)
+{
+	if (!hasFocus() && isEnabled() && focusPolicy() != Qt::NoFocus)
+	{
+		setFocus(reason);
+
+		return;
+	}
+
+	if (!lineEdit()->text().trimmed().isEmpty() && (reason == Qt::MouseFocusReason || reason == Qt::ShortcutFocusReason || (!m_isUsingSimpleMode && (reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	{
+		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
+	}
+	else if (reason != Qt::PopupFocusReason)
+	{
+		lineEdit()->deselect();
+	}
 }
 
 void AddressWidget::setCompletion(const QString &text)

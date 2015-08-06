@@ -100,8 +100,7 @@ void OpenAddressDialog::handleUserInput()
 void OpenAddressDialog::setText(const QString &text)
 {
 	m_addressWidget->lineEdit()->setText(text);
-	m_addressWidget->clearFocus();
-	m_addressWidget->setFocus(Qt::OtherFocusReason);
+	m_addressWidget->activate(Qt::OtherFocusReason);
 }
 
 }
