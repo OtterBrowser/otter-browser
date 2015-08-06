@@ -134,6 +134,7 @@
         <file>menu/menuButton.json</file>
         <file>menu/webWidget.json</file>
         <file>other/notifications.ini</file>
+        <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.ini</file>
         <file>schemas/browsingHistory.sql</file>

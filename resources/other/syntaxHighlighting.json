@@ -1,0 +1,47 @@
+{
+	"Html":
+	{
+		"Doctype":
+		{
+			"foreground": "#539FA3",
+			"fontStyle": "normal",
+			"fontWeight": "bold",
+			"isUnderlined": false
+		},
+		"Keyword":
+		{
+			"foreground": "#000",
+			"fontStyle": "normal",
+			"fontWeight": "bold",
+			"isUnderlined": false
+		},
+		"Attribute":
+		{
+			"foreground": "#4EB380",
+			"fontStyle": "normal",
+			"fontWeight": "normal",
+			"isUnderlined": false
+		},
+		"Entity":
+		{
+			"foreground": "#C4B15F",
+			"fontStyle": "normal",
+			"fontWeight": "normal",
+			"isUnderlined": false
+		},
+		"Value":
+		{
+			"foreground": "#AA0000",
+			"fontStyle": "normal",
+			"fontWeight": "normal",
+			"isUnderlined": false
+		},
+		"Comment":
+		{
+			"foreground": "#4C5174",
+			"fontStyle": "normal",
+			"fontWeight": "normal",
+			"isUnderlined": false
+		}
+	}
+}

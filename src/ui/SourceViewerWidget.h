@@ -30,8 +30,18 @@ namespace Otter
 
 class SyntaxHighlighter : public  QSyntaxHighlighter
 {
+	Q_OBJECT
+	Q_ENUMS(HighlightingSyntax)
+	Q_ENUMS(HighlightingState)
+
 public:
-	enum BlockState
+	enum HighlightingSyntax
+	{
+		NoSyntax = 0,
+		HtmlSyntax = 1
+	};
+
+	enum HighlightingState
 	{
 		NoState = 0,
 		DoctypeState = 1,
@@ -45,9 +55,11 @@ public:
 	struct BlockData : public QTextBlockUserData
 	{
 		QString context;
-		BlockState state;
+		HighlightingSyntax currentSyntax;
+		HighlightingSyntax previousSyntax;
+		HighlightingState state;
 
-		BlockData() : state(NoState) {}
+		BlockData() : currentSyntax(HtmlSyntax), previousSyntax(HtmlSyntax), state(NoState) {}
 	};
 
 	explicit SyntaxHighlighter(QTextDocument *parent);
@@ -56,7 +68,7 @@ protected:
 	void highlightBlock(const QString &text);
 
 private:
-	static QVector<QTextCharFormat> m_formats;
+	static QMap<HighlightingSyntax, QMap<HighlightingState, QTextCharFormat> > m_formats;
 };
 
 class SourceViewerWidget;

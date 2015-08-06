@@ -20,6 +20,10 @@
 #include "SourceViewerWidget.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QMetaEnum>
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 #include <QtWidgets/QScrollBar>
@@ -27,44 +31,65 @@
 namespace Otter
 {
 
-QVector<QTextCharFormat> SyntaxHighlighter::m_formats;
+QMap<SyntaxHighlighter::HighlightingSyntax, QMap<SyntaxHighlighter::HighlightingState, QTextCharFormat> > SyntaxHighlighter::m_formats;
 
 SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
-	if (m_formats.isEmpty())
+	if (m_formats[HtmlSyntax].isEmpty())
 	{
-		m_formats.append(QTextCharFormat());
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
+		file.open(QFile::ReadOnly);
 
-		QTextCharFormat format;
-		format.setFontWeight(QFont::Bold);
-		format.setForeground(QColor(83, 159, 163));
+		const QJsonObject syntaxes = QJsonDocument::fromJson(file.readAll()).object();
+		const QMetaEnum highlightingSyntaxEnum = metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data()));
+		const QMetaEnum highlightingStateEnum = metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data()));
 
-		m_formats.append(format);
+		for (int i = 1; i < highlightingSyntaxEnum.keyCount(); ++i)
+		{
+			QMap<HighlightingState, QTextCharFormat> formats;
+			QString syntax = highlightingSyntaxEnum.valueToKey(i);
+			syntax.chop(6);
 
-		format.setFontWeight(QFont::Bold);
-		format.setForeground(QColor(0, 0, 0));
+			const QJsonObject definitions = syntaxes.value(syntax).toObject();
 
-		m_formats.append(format);
+			for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
+			{
+				QString state = highlightingStateEnum.valueToKey(j);
+				state.chop(5);
 
-		format.setFontWeight(QFont::Normal);
-		format.setForeground(QColor(78, 179, 128));
+				const QJsonObject definition = definitions.value(state).toObject();
+				const QString foreground = definition.value(QLatin1String("foreground")).toString(QLatin1String("auto"));
+				const QString fontStyle = definition.value(QLatin1String("fontStyle")).toString(QLatin1String("auto"));
+				const QString fontWeight = definition.value(QLatin1String("fontWeight")).toString(QLatin1String("auto"));
+				QTextCharFormat format;
 
-		m_formats.append(format);
+				if (foreground != QLatin1String("auto"))
+				{
+					format.setForeground(QColor(foreground));
+				}
 
-		format.setFontWeight(QFont::Normal);
-		format.setForeground(QColor(196, 177, 95));
+				if (fontStyle == QLatin1String("italic"))
+				{
+					format.setFontItalic(true);
+				}
 
-		m_formats.append(format);
+				if (fontWeight != QLatin1String("auto"))
+				{
+					format.setFontWeight((fontWeight == QLatin1String("bold")) ? QFont::Bold : QFont::Normal);
+				}
 
-		format.setFontWeight(QFont::Normal);
-		format.setForeground(QColor(170, 0, 0));
+				if (definition.value(QLatin1String("isUnderlined")).toBool(false))
+				{
+					format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
+				}
 
-		m_formats.append(format);
+				formats[static_cast<HighlightingState>(j)] = format;
+			}
 
-		format.setFontWeight(QFont::Normal);
-		format.setForeground(QColor(76, 81, 116));
+			m_formats[static_cast<HighlightingSyntax>(i)] = formats;
+		}
 
-		m_formats.append(format);
+		file.close();
 	}
 }
 
@@ -72,8 +97,8 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 {
 	QString buffer;
 	BlockData currentData;
-	BlockState previousState = static_cast<BlockState>(qMax(previousBlockState(), 0));
-	BlockState currentState = previousState;
+	HighlightingState previousState = static_cast<HighlightingState>(qMax(previousBlockState(), 0));
+	HighlightingState currentState = previousState;
 	int previousStateBegin = 0;
 	int currentStateBegin = 0;
 	int position = 0;
@@ -146,11 +171,11 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 
 		if (previousState != currentState || isEndOfLine)
 		{
-			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[previousState]);
+			setFormat(previousStateBegin, (position - previousStateBegin), m_formats[HtmlSyntax][previousState]);
 
 			if (isEndOfLine)
 			{
-				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[currentState]);
+				setFormat(currentStateBegin, (position - currentStateBegin), m_formats[HtmlSyntax][currentState]);
 			}
 
 			buffer = QString();
