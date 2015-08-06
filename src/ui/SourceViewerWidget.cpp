@@ -224,7 +224,10 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	{
 		if (block.isVisible() && bottom >= event->rect().top())
 		{
-			painter.setPen(palette().color(QPalette::Window).darker((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150));
+			QColor textColor(palette().color(QPalette::Text));
+			textColor.setAlpha((block.blockNumber() >= selectionStart && block.blockNumber() <= selectionEnd) ? 250 : 150);
+
+			painter.setPen(textColor);
 			painter.drawText(0, top, right, fontMetrics().height(), Qt::AlignRight, QString::number(block.blockNumber() + 1));
 		}
 
