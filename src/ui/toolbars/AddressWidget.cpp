@@ -57,6 +57,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_removeModelTimer(0),
 	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
 	m_isUsingSimpleMode(false),
+	m_shouldSelectAllOnRelease(false),
 	m_wasPopupVisible(false)
 {
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
@@ -450,6 +451,16 @@ void AddressWidget::removeIcon()
 	}
 }
 
+void AddressWidget::clearSelectAllOnRelease()
+{
+	if (m_shouldSelectAllOnRelease && lineEdit()->hasSelectedText())
+	{
+		disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+		m_shouldSelectAllOnRelease = false;
+	}
+}
+
 void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
 {
 	if (!text.isEmpty())
@@ -609,13 +620,27 @@ void AddressWidget::activate(Qt::FocusReason reason)
 		return;
 	}
 
-	if (!lineEdit()->text().trimmed().isEmpty() && (reason == Qt::MouseFocusReason || reason == Qt::ShortcutFocusReason || (!m_isUsingSimpleMode && (reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	if (!lineEdit()->text().trimmed().isEmpty())
 	{
-		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
-	}
-	else if (reason != Qt::PopupFocusReason)
-	{
-		lineEdit()->deselect();
+		const bool selectAllOnFocus = SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool();
+
+		if (selectAllOnFocus && reason == Qt::MouseFocusReason)
+		{
+			m_shouldSelectAllOnRelease = true;
+
+			connect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+			return;
+		}
+
+		if (selectAllOnFocus && (reason == Qt::ShortcutFocusReason || (!m_isUsingSimpleMode && (reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))))
+		{
+			QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
+		}
+		else if (reason != Qt::PopupFocusReason)
+		{
+			lineEdit()->deselect();
+		}
 	}
 }
 
@@ -743,6 +768,15 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent)
 		{
+			if (m_shouldSelectAllOnRelease && mouseEvent->button() == Qt::LeftButton)
+			{
+				disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+				lineEdit()->selectAll();
+
+				m_shouldSelectAllOnRelease = false;
+			}
+
 			if (m_historyDropdownArrowRectangle.contains(mouseEvent->pos()))
 			{
 				m_popupHideTime = QTime();

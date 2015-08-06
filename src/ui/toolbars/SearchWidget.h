@@ -42,6 +42,7 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void activate(Qt::FocusReason reason);
@@ -69,6 +70,7 @@ protected slots:
 	void pasteAndGo();
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
+	void clearSelectAllOnRelease();
 
 private:
 	QPointer<Window> m_window;
@@ -84,6 +86,7 @@ private:
 	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
 	bool m_isPopupUpdated;
+	bool m_shouldSelectAllOnRelease;
 	bool m_wasPopupVisible;
 
 signals:

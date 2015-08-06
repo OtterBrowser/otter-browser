@@ -70,6 +70,7 @@ protected slots:
 	void copyToNote();
 	void deleteText();
 	void removeIcon();
+	void clearSelectAllOnRelease();
 	void updateBookmark();
 	void updateFeeds();
 	void updateLoadPlugins();
@@ -92,6 +93,7 @@ private:
 	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
 	bool m_isUsingSimpleMode;
+	bool m_shouldSelectAllOnRelease;
 	bool m_wasPopupVisible;
 
 signals:

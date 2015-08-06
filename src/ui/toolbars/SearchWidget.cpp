@@ -49,6 +49,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_lastValidIndex(0),
 	m_isIgnoringActivation(false),
 	m_isPopupUpdated(false),
+	m_shouldSelectAllOnRelease(false),
 	m_wasPopupVisible(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -65,6 +66,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 
 	lineEdit()->setCompleter(m_completer);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
+	lineEdit()->installEventFilter(this);
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
@@ -424,6 +426,16 @@ void SearchWidget::restoreCurrentSearchEngine()
 	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
+void SearchWidget::clearSelectAllOnRelease()
+{
+	if (m_shouldSelectAllOnRelease && lineEdit()->hasSelectedText())
+	{
+		disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+		m_shouldSelectAllOnRelease = false;
+	}
+}
+
 void SearchWidget::activate(Qt::FocusReason reason)
 {
 	if (!hasFocus() && isEnabled() && focusPolicy() != Qt::NoFocus)
@@ -433,13 +445,27 @@ void SearchWidget::activate(Qt::FocusReason reason)
 		return;
 	}
 
-	if (!lineEdit()->text().trimmed().isEmpty() && (reason == Qt::MouseFocusReason || reason == Qt::ShortcutFocusReason || reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason) && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+	if (!lineEdit()->text().trimmed().isEmpty())
 	{
-		QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
-	}
-	else if (reason != Qt::PopupFocusReason)
-	{
-		lineEdit()->deselect();
+		const bool selectAllOnFocus = SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool();
+
+		if (selectAllOnFocus && reason == Qt::MouseFocusReason)
+		{
+			m_shouldSelectAllOnRelease = true;
+
+			connect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+			return;
+		}
+
+		if (selectAllOnFocus && (reason == Qt::ShortcutFocusReason || reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))
+		{
+			QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
+		}
+		else if (reason != Qt::PopupFocusReason)
+		{
+			lineEdit()->deselect();
+		}
 	}
 }
 
@@ -524,6 +550,25 @@ void SearchWidget::setWindow(Window *window)
 QString SearchWidget::getCurrentSearchEngine() const
 {
 	return currentData(Qt::UserRole + 1).toString();
+}
+
+bool SearchWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease && m_shouldSelectAllOnRelease)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
+		{
+			disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
+
+			lineEdit()->selectAll();
+
+			m_shouldSelectAllOnRelease = false;
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }
