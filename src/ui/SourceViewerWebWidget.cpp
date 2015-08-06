@@ -273,19 +273,37 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	updateHitTestResult(position);
 	updateEditActions();
 
+	QWidget *child = childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position);
 	QMenu menu;
-	menu.addAction(getAction(ActionsManager::UndoAction));
-	menu.addAction(getAction(ActionsManager::RedoAction));
-	menu.addSeparator();
-	menu.addAction(getAction(ActionsManager::CutAction));
-	menu.addAction(getAction(ActionsManager::CopyAction));
-	menu.addAction(getAction(ActionsManager::PasteAction));
-	menu.addAction(getAction(ActionsManager::DeleteAction));
-	menu.addSeparator();
-	menu.addAction(getAction(ActionsManager::SelectAllAction));
-	menu.addAction(getAction(ActionsManager::ClearAllAction));
-	menu.addSeparator();
+
+	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
+	{
+		QAction *showLineNumbersAction = menu.addAction(tr("Show Line Numbers"));
+		showLineNumbersAction->setCheckable(true);
+		showLineNumbersAction->setChecked(SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")).toBool());
+
+		connect(showLineNumbersAction, SIGNAL(triggered(bool)), this, SLOT(setShowLineNumbers(bool)));
+	}
+	else
+	{
+		menu.addAction(getAction(ActionsManager::UndoAction));
+		menu.addAction(getAction(ActionsManager::RedoAction));
+		menu.addSeparator();
+		menu.addAction(getAction(ActionsManager::CutAction));
+		menu.addAction(getAction(ActionsManager::CopyAction));
+		menu.addAction(getAction(ActionsManager::PasteAction));
+		menu.addAction(getAction(ActionsManager::DeleteAction));
+		menu.addSeparator();
+		menu.addAction(getAction(ActionsManager::SelectAllAction));
+		menu.addAction(getAction(ActionsManager::ClearAllAction));
+	}
+
 	menu.exec(position.isNull() ? QCursor::pos() : mapToGlobal(position));
+}
+
+void SourceViewerWebWidget::setShowLineNumbers(bool show)
+{
+	SettingsManager::setValue(QLatin1String("SourceViewer/ShowLineNumbers"), show);
 }
 
 void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)

@@ -73,6 +73,7 @@ protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
 	void showContextMenu(const QPoint &position = QPoint(-1, -1));
+	void setShowLineNumbers(bool show);
 
 private:
 	SourceViewerWidget *m_sourceViewer;
