@@ -2626,7 +2626,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti pradinį puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3615,7 +3615,8 @@ Ar tikrai norite jį atstatyti?</translation>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Dokumentas buvo modifikuotas.
+Norite įrašyti pakeitimus ar juos atmesti?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
@@ -3764,7 +3765,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Atverti pradinį puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4384,12 +4385,12 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Tikrinti ar yra atnaujinimų</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Tikrinama ar yra atnaujinimų…</translation>
     </message>
 </context>
 <context>
@@ -4488,7 +4489,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="191"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Numatytoji Programa</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="197"/>
@@ -4513,7 +4514,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="699"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Nėra apibrėžtų paieškos sistemų</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
@@ -5324,12 +5325,12 @@ Pasirinkite kitą.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Atverti, naudojant…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Atverti nuorodą per išorinę programą</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
@@ -5375,7 +5376,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Atverti rėmelį per išorinę programą</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
@@ -5402,13 +5403,13 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <location filename="../../src/ui/WebWidget.cpp" line="848"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje foninėje kortelėje</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
@@ -5827,7 +5828,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Atverti esamą puslapį per išorinę programą</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
@@ -5949,7 +5950,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Tikrinti ar yra atnaujinimų…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
@@ -6139,17 +6140,17 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="51"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko patikrinti atnaujinimų. Neteisingas URL: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="72"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko patikrinti atnaujinimų: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="121"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko gauti versijos numerio: %1</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="123"/>
