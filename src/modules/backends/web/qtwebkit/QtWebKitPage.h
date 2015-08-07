@@ -21,7 +21,6 @@
 #ifndef OTTER_QTWEBKITPAGE_H
 #define OTTER_QTWEBKITPAGE_H
 
-#include "../../../../core/ActionsManager.h"
 #include "../../../../core/WindowsManager.h"
 
 #include <QtWebKitWidgets/QWebPage>

@@ -20,7 +20,6 @@
 #ifndef OTTER_QQTWEBENGINEPAGE_H
 #define OTTER_QQTWEBENGINEPAGE_H
 
-#include "../../../../core/ActionsManager.h"
 #include "../../../../core/WindowsManager.h"
 
 #include <QtWebEngineWidgets/QWebEnginePage>
