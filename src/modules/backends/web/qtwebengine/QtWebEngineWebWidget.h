@@ -79,6 +79,7 @@ protected:
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void pasteText(const QString &text);
 	void handleCreateSearch(const QVariant &result);
+	void handleEditingCheck(const QVariant &result);
 	void handleHitTest(const QVariant &result);
 	void handleImageProperties(const QVariant &result);
 	void handleScroll(const QVariant &result);
@@ -122,6 +123,7 @@ private:
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	bool m_isEditing;
 	bool m_isLoading;
 	bool m_isTyped;
 

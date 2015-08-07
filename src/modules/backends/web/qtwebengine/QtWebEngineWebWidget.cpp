@@ -84,6 +84,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_childWidget(NULL),
 	m_iconReply(NULL),
+	m_isEditing(false),
 	m_isLoading(false),
 	m_isTyped(false)
 {
@@ -862,6 +863,13 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	SearchesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
 }
 
+void QtWebEngineWebWidget::handleEditingCheck(const QVariant &result)
+{
+	m_isEditing = result.toBool();
+
+	emit unlockEventLoop();
+}
+
 void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
 {
 	m_hitResult = HitTestResult(result);
@@ -1560,6 +1568,25 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		if (wheelEvent)
 		{
 			return handleWheelEvent(wheelEvent, true);
+		}
+	}
+	else if (event->type() == QEvent::ShortcutOverride)
+	{
+		QEventLoop eventLoop;
+
+		m_webView->page()->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), invoke(this, &QtWebEngineWebWidget::handleEditingCheck));
+
+		connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+		eventLoop.exec();
+
+		if (m_isEditing)
+		{
+			event->accept();
+
+			return true;
 		}
 	}
 
