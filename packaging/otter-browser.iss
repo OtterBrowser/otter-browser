@@ -19,6 +19,7 @@ OutputDir=Z:\otter-browser-inno\output\
 OutputBaseFilename=otter-browser-{#MyAppVersion}-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
+VersionInfoVersion=0.9.07
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
