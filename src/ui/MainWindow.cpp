@@ -828,6 +828,8 @@ void MainWindow::triggerAction()
 
 void MainWindow::triggerAction(bool checked)
 {
+	Q_UNUSED(checked)
+
 	Action *action = qobject_cast<Action*>(sender());
 
 	if (action)
