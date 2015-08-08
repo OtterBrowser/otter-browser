@@ -69,7 +69,7 @@ void LongTermTimer::updateTimer(const quint64 secondsLeft, const bool updateCoun
 	int timerValue = std::numeric_limits<int>::max();
 	const quint64 milisecondsLeft = (secondsLeft * 1000);
 
-	if (milisecondsLeft <= timerValue)
+	if (milisecondsLeft <= static_cast<quint64>(timerValue))
 	{
 		timerValue = milisecondsLeft;
 
