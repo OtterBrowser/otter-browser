@@ -857,6 +857,7 @@ void TabBarWidget::setTabProperty(int index, const QString &key, const QVariant 
 		updatePinnedTabsAmount();
 		moveTab(index, (value.toBool() ? 0 : getPinnedTabsAmount()));
 		updateButtons();
+		updateGeometry();
 	}
 }
 
