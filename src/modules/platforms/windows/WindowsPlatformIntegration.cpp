@@ -113,7 +113,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 				m_taskbarButtons[window]->progress()->show();
 			}
 
-			m_taskbarButtons[window]->progress()->setValue((bytesReceived > 0) ? qFloor(((qreal) bytesReceived / bytesTotal) * 100) : 0);
+			m_taskbarButtons[window]->progress()->setValue((bytesReceived > 0) ? qFloor((static_cast<qreal>(bytesReceived) / bytesTotal) * 100) : 0);
 		}
 		else if (m_taskbarButtons.contains(window))
 		{

@@ -135,7 +135,7 @@ QString formatTime(int value)
 
 		if (value > SECONDS_IN_DAY)
 		{
-			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor((qreal)value / SECONDS_IN_DAY))).arg(string);
+			string = QCoreApplication::translate("utils", "%n days %1", "", (qFloor(static_cast<qreal>(value) / SECONDS_IN_DAY))).arg(string);
 		}
 
 		return string;

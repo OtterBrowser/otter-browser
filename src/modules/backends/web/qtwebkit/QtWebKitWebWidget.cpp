@@ -1469,7 +1469,7 @@ void QtWebKitWebWidget::setZoom(int zoom)
 {
 	if (zoom != getZoom())
 	{
-		m_webView->setZoomFactor(qBound(0.1, ((qreal) zoom / 100), (qreal) 100));
+		m_webView->setZoomFactor(qBound(0.1, (static_cast<qreal>(zoom) / 100), static_cast<qreal>(100)));
 
 		SessionsManager::markSessionModified();
 

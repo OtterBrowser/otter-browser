@@ -204,7 +204,7 @@ int Recognizer::recognizeGesture()
 
 				if (match)
 				{
-					return (int) i;
+					return static_cast<int>(i);
 				}
 			}
 		}

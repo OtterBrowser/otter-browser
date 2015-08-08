@@ -241,7 +241,7 @@ void MacPlatformIntegration::updateDockIcon()
 		}
 	}
 
-	const qreal progress = ((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? ((qreal) bytesReceived / bytesTotal) : 0);
+	const qreal progress = ((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
 
 	if (progress > 0)
 	{

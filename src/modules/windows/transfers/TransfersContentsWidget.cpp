@@ -113,7 +113,7 @@ void TransfersContentsWidget::addTransfer(Transfer *transfer)
 {
 	QList<QStandardItem*> items;
 	QStandardItem *item = new QStandardItem();
-	item->setData(qVariantFromValue((void*) transfer), Qt::UserRole);
+	item->setData(qVariantFromValue(static_cast<void*>(transfer)), Qt::UserRole);
 
 	items.append(item);
 
@@ -235,13 +235,13 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 	m_model->item(row, 0)->setIcon(icon);
 	m_model->item(row, 1)->setText(QFileInfo(transfer->getTarget()).fileName());
 	m_model->item(row, 2)->setText(Utils::formatUnit(transfer->getBytesTotal(), false, 1));
-	m_model->item(row, 3)->setText((transfer->getBytesTotal() > 0) ? QString::number(qFloor(((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100), 'f', 0) : QString());
+	m_model->item(row, 3)->setText((transfer->getBytesTotal() > 0) ? QString::number(qFloor((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100), 'f', 0) : QString());
 	m_model->item(row, 4)->setText(remainingTime);
 	m_model->item(row, 5)->setText((transfer->getState() == Transfer::RunningState) ? Utils::formatUnit(transfer->getSpeed(), true, 1) : QString());
 	m_model->item(row, 6)->setText(transfer->getTimeStarted().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 	m_model->item(row, 7)->setText(transfer->getTimeFinished().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 
-	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg((transfer->getBytesTotal() > 0) ? tr("%1 (%n B)", "", transfer->getBytesTotal()).arg(Utils::formatUnit(transfer->getBytesTotal())) : QString('?')).arg(tr("%1 (%n B)", "", transfer->getBytesReceived()).arg(Utils::formatUnit(transfer->getBytesReceived()))).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? (((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
+	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg((transfer->getBytesTotal() > 0) ? tr("%1 (%n B)", "", transfer->getBytesTotal()).arg(Utils::formatUnit(transfer->getBytesTotal())) : QString('?')).arg(tr("%1 (%n B)", "", transfer->getBytesReceived()).arg(Utils::formatUnit(transfer->getBytesReceived()))).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -449,7 +449,7 @@ void TransfersContentsWidget::updateActions()
 		m_ui->targetLabelWidget->setText(transfer->getTarget());
 		m_ui->sizeLabelWidget->setText((transfer->getBytesTotal() > 0) ? tr("%1 (%n B)", "", transfer->getBytesTotal()).arg(Utils::formatUnit(transfer->getBytesTotal())) : QString('?'));
 		m_ui->downloadedLabelWidget->setText(tr("%1 (%n B)", "", transfer->getBytesReceived()).arg(Utils::formatUnit(transfer->getBytesReceived())));
-		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? (((qreal) transfer->getBytesReceived() / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
+		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
 	}
 	else
 	{
