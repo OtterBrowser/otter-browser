@@ -48,6 +48,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : QDialo
 	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundCheckBox->isChecked());
 	m_ui->columnsPerRowSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt());
 	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt());
+	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowSearchField")).toBool());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool());
 
 	adjustSize();
@@ -82,6 +83,7 @@ void StartPagePreferencesDialog::save()
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
 	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ZoomLevel"), m_ui->zoomLevelSpinBox->value());
+	SettingsManager::setValue(QLatin1String("StartPage/ShowSearchField"), m_ui->showSearchFieldCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("StartPage/ShowAddTile"), m_ui->showAddTileCheckBox->isChecked());
 }
 

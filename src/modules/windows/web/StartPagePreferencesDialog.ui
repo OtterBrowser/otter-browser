@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>250</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -134,6 +134,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="showSearchFieldCheckBox">
+     <property name="text">
+      <string>Show search field</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="showAddTileCheckBox">

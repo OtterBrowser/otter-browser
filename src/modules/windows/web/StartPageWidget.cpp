@@ -146,28 +146,16 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 }
 
 StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
+	m_window(window),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
-	m_searchWidget(new SearchWidget(window, this)),
+	m_searchWidget(NULL),
 	m_ignoreEnter(false)
 {
 	if (!m_model)
 	{
 		m_model = new StartPageModel(QCoreApplication::instance());
 	}
-
-	QGridLayout *layout = new QGridLayout(m_contentsWidget);
-	layout->setContentsMargins(0, 0, 0, 0);
-	layout->setSpacing(0);
-	layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
-	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 0);
-	layout->addWidget(m_searchWidget, 1, 1, 1, 1, Qt::AlignCenter);
-	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 2);
-	layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 2, 1);
-	layout->addWidget(m_listView, 3, 0, 1, 3, Qt::AlignCenter);
-	layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 4, 1);
-
-	m_searchWidget->setFixedWidth(300);
 
 	m_listView->setAttribute(Qt::WA_MacShowFocusRect, false);
 	m_listView->setFrameStyle(QFrame::NoFrame);
@@ -191,11 +179,12 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
 	updateTiles();
-	optionChanged(QLatin1String("StartPage/BackgroundPath"));
+	optionChanged(QLatin1String("StartPage/BackgroundPath"), SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")));
+	optionChanged(QLatin1String("StartPage/ShowSearchField"), SettingsManager::getValue(QLatin1String("StartPage/ShowSearchField")));
 
 	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
 	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void StartPageWidget::resizeEvent(QResizeEvent *event)
@@ -255,7 +244,7 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 	}
 }
 
-void StartPageWidget::optionChanged(const QString &option)
+void StartPageWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/ZoomLevel"))
 	{
@@ -284,6 +273,68 @@ void StartPageWidget::optionChanged(const QString &option)
 		else
 		{
 			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
+		}
+	}
+	else if (option == QLatin1String("StartPage/ShowSearchField"))
+	{
+		QGridLayout *layout = NULL;
+		const bool needsInitialization = (m_contentsWidget->layout() == NULL);
+
+		if (needsInitialization)
+		{
+			layout = new QGridLayout(m_contentsWidget);
+			layout->setContentsMargins(0, 0, 0, 0);
+			layout->setSpacing(0);
+		}
+		else if ((m_searchWidget && !value.toBool()) || (!m_searchWidget && value.toBool()))
+		{
+			layout = qobject_cast<QGridLayout*>(m_contentsWidget->layout());
+
+			for (int i = (layout->count() - 1); i >=0; --i)
+			{
+				QLayoutItem *item = layout->takeAt(i);
+
+				if (item)
+				{
+					if (item->widget())
+					{
+						item->widget()->setParent(m_contentsWidget);
+					}
+
+					delete item;
+				}
+			}
+		}
+
+		if (value.toBool() && (needsInitialization || !m_searchWidget))
+		{
+			if (!m_searchWidget)
+			{
+				m_searchWidget = new SearchWidget(m_window, this);
+				m_searchWidget->setFixedWidth(300);
+			}
+
+			layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 0, 1);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 0);
+			layout->addWidget(m_searchWidget, 1, 1, 1, 1, Qt::AlignCenter);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding), 1, 2);
+			layout->addItem(new QSpacerItem(1, 50, QSizePolicy::Fixed, QSizePolicy::Fixed), 2, 1);
+			layout->addWidget(m_listView, 3, 0, 1, 3, Qt::AlignCenter);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 4, 1);
+		}
+		else if (!value.toBool() && (needsInitialization || m_searchWidget))
+		{
+			if (m_searchWidget)
+			{
+				m_searchWidget->deleteLater();
+				m_searchWidget = NULL;
+			}
+
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 0, 1);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 0);
+			layout->addWidget(m_listView, 1, 1, 1, 1, Qt::AlignCenter);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 2);
+			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 2, 1);
 		}
 	}
 }

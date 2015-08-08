@@ -76,7 +76,7 @@ protected:
 	int getTilesPerRow() const;
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(const QString &option, const QVariant &value);
 	void configure();
 	void addTile();
 	void addTile(const QUrl &url);
@@ -89,6 +89,7 @@ protected slots:
 	void updateTiles();
 
 private:
+	Window *m_window;
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
