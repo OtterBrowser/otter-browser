@@ -134,11 +134,6 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransf
 	m_isAutoDeleted(false),
 	m_isSelectingPath(false)
 {
-	if (reply)
-	{
-		connect(reply, SIGNAL(destroyed(QObject*)), this, SLOT(stop()));
-	}
-
 	start(reply, target, quickTransfer, overwrite);
 }
 
