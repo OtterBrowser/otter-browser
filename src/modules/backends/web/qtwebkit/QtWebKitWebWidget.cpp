@@ -838,7 +838,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenFrameInCurrentTabAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				setUrl(getCurrentHitTestResult().frameUrl, CurrentTabOpen);
+				setUrl(getCurrentHitTestResult().frameUrl, false);
 			}
 
 			return;
