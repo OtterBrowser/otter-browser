@@ -158,6 +158,10 @@ void ConfigurationContentsWidget::triggerAction(int identifier, const QVariantMa
 			m_ui->filterLineEdit->setFocus();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->configurationView->setFocus();
+
+			break;
 		default:
 			break;
 	}

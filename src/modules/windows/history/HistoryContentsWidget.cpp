@@ -120,8 +120,12 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 			m_ui->filterLineEdit->setFocus();
 
 			break;
-	default:
-		break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->historyView->setFocus();
+
+			break;
+		default:
+			break;
 	}
 }
 

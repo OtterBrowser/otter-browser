@@ -348,6 +348,10 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 			m_ui->filterLineEdit->setFocus();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->cookiesView->setFocus();
+
+			break;
 		default:
 			break;
 	}

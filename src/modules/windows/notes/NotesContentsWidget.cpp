@@ -249,6 +249,10 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			m_ui->filterLineEdit->setFocus();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->notesView->setFocus();
+
+			break;
 		default:
 			break;
 	}

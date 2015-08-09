@@ -100,6 +100,10 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 			m_ui->filterLineEdit->setFocus();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->cacheView->setFocus();
+
+			break;
 		default:
 			break;
 	}

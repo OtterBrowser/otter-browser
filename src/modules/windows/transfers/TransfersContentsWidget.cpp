@@ -504,6 +504,10 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			m_ui->downloadLineEdit->selectAll();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->transfersView->setFocus();
+
+			break;
 		default:
 			break;
 	}

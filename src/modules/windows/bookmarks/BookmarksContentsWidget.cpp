@@ -248,6 +248,10 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			m_ui->filterLineEdit->setFocus();
 
 			break;
+		case ActionsManager::ActivateContentAction:
+			m_ui->bookmarksView->setFocus();
+
+			break;
 		default:
 			break;
 	}
