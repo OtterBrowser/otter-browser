@@ -84,6 +84,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_childWidget(NULL),
 	m_iconReply(NULL),
+	m_scrollTimer(startTimer(1000)),
 	m_isEditing(false),
 	m_isLoading(false),
 	m_isTyped(false)
@@ -124,6 +125,18 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_webView, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(notifyIconChanged()));
+}
+
+void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_scrollTimer)
+	{
+		m_webView->page()->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), invoke(this, &QtWebEngineWebWidget::handleScroll));
+	}
+	else
+	{
+		WebWidget::timerEvent(event);
+	}
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)

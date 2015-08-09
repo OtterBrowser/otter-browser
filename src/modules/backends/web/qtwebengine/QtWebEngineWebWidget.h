@@ -75,6 +75,7 @@ public slots:
 protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
 	void pasteText(const QString &text);
@@ -123,6 +124,7 @@ private:
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isLoading;
 	bool m_isTyped;
