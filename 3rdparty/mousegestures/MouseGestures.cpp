@@ -113,7 +113,7 @@ int Recognizer::registerGesture(const ActionList &actions)
 {
 	d->gestures.push_back(actions);
 
-	return (d->gestures.size() - 1);
+	return (static_cast<int>(d->gestures.size()) - 1);
 }
 
 int Recognizer::endGesture(int x, int y)
