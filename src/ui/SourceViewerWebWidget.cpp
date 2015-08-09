@@ -60,7 +60,10 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 
 void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Q_UNUSED(parameters)
+	if (parameters.contains(QLatin1String("isBounced")))
+	{
+		return;
+	}
 
 	switch (identifier)
 	{
@@ -88,7 +91,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				}
 			}
 
-			break;
+			return;
 		case ActionsManager::StopAction:
 			if (m_viewSourceReply)
 			{
@@ -105,7 +108,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 			updateNavigationActions();
 
-			break;
+			return;
 		case ActionsManager::ReloadAction:
 			{
 				if (m_sourceViewer->document()->isModified())
@@ -139,7 +142,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				updateNavigationActions();
 			}
 
-			break;
+			return;
 		case ActionsManager::ReloadOrStopAction:
 			if (m_isLoading)
 			{
@@ -150,7 +153,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				triggerAction(ActionsManager::ReloadAction);
 			}
 
-			break;
+			return;
 		case ActionsManager::ReloadAndBypassCacheAction:
 			{
 				triggerAction(ActionsManager::StopAction);
@@ -169,65 +172,67 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				updateNavigationActions();
 			}
 
-			break;
+			return;
 		case ActionsManager::ContextMenuAction:
 			showContextMenu();
 
-			break;
+			return;
 		case ActionsManager::UndoAction:
 			m_sourceViewer->undo();
 
-			break;
+			return;
 		case ActionsManager::RedoAction:
 			m_sourceViewer->redo();
 
-			break;
+			return;
 		case ActionsManager::CutAction:
 			m_sourceViewer->cut();
 
-			break;
+			return;
 		case ActionsManager::CopyAction:
 		case ActionsManager::CopyPlainTextAction:
 			m_sourceViewer->copy();
 
-			break;
+			return;
 		case ActionsManager::CopyAddressAction:
 			QApplication::clipboard()->setText(getUrl().toString());
 
-			break;
+			return;
 		case ActionsManager::CopyToNoteAction:
 			{
 				BookmarksItem *note = NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl());
 				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
 			}
 
-			break;
+			return;
 		case ActionsManager::PasteAction:
 			m_sourceViewer->paste();
 
-			break;
+			return;
 		case ActionsManager::DeleteAction:
 			m_sourceViewer->textCursor().removeSelectedText();
 
-			break;
+			return;
 		case ActionsManager::SelectAllAction:
 			m_sourceViewer->selectAll();
 
-			break;
+			return;
 		case ActionsManager::ClearAllAction:
 			m_sourceViewer->selectAll();
 			m_sourceViewer->textCursor().removeSelectedText();
 
-			break;
+			return;
 		case ActionsManager::SearchAction:
 			quickSearch(getAction(ActionsManager::SearchAction));
 
-			break;
+			return;
 		case ActionsManager::ActivateContentAction:
 			m_sourceViewer->setFocus();
 
-			break;
+			return;
 	}
+
+	bounceAction(identifier, parameters);
 }
 
 void SourceViewerWebWidget::print(QPrinter *printer)

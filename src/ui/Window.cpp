@@ -94,42 +94,45 @@ void Window::focusInEvent(QFocusEvent *event)
 
 void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
+	if (parameters.contains(QLatin1String("isBounced")))
 	{
-		m_searchWidgets.at(0)->activate(Qt::ShortcutFocusReason);
-	}
-	else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
-	{
-		if (identifier == ActionsManager::ActivateAddressFieldAction)
+		if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
 		{
-			m_addressWidgets.at(0)->activate(Qt::ShortcutFocusReason);
+			m_searchWidgets.at(0)->activate(Qt::ShortcutFocusReason);
 		}
-		else if (identifier == ActionsManager::ActivateSearchFieldAction)
+		else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
 		{
-			m_addressWidgets.at(0)->setText(QLatin1String("? "));
-			m_addressWidgets.at(0)->activate(Qt::OtherFocusReason);
+			if (identifier == ActionsManager::ActivateAddressFieldAction)
+			{
+				m_addressWidgets.at(0)->activate(Qt::ShortcutFocusReason);
+			}
+			else if (identifier == ActionsManager::ActivateSearchFieldAction)
+			{
+				m_addressWidgets.at(0)->setText(QLatin1String("? "));
+				m_addressWidgets.at(0)->activate(Qt::OtherFocusReason);
+			}
+			else if (identifier == ActionsManager::GoAction)
+			{
+				m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText());
+
+				return;
+			}
 		}
-		else if (identifier == ActionsManager::GoAction)
+		else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 		{
-			m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText());
+			OpenAddressDialog dialog(this);
 
-			return;
+			if (identifier == ActionsManager::ActivateSearchFieldAction)
+			{
+				dialog.setText(QLatin1String("? "));
+			}
+
+			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
+			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
+			connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+
+			dialog.exec();
 		}
-	}
-	else if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
-	{
-		OpenAddressDialog dialog(this);
-
-		if (identifier == ActionsManager::ActivateSearchFieldAction)
-		{
-			dialog.setText(QLatin1String("? "));
-		}
-
-		connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-		connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
-
-		dialog.exec();
 	}
 
 	if (identifier == ActionsManager::GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
